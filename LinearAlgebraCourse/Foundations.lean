@@ -242,17 +242,19 @@ theorem elementary_rank_reduction {m n 𝕜 : Type*} [Fintype m] [DecidableEq m]
 
 abbrev Dual (𝕜 V : Type*) [Semiring 𝕜] [AddCommMonoid V] [Module 𝕜 V] := V →ₗ[𝕜] 𝕜 -- 050
 def dualBasis {ι 𝕜 V : Type*} [Fintype ι] [DecidableEq ι] [Field 𝕜]
-    [AddCommGroup V] [Module 𝕜 V] (b : Basis ι 𝕜 V) : Basis ι 𝕜 (Module.Dual 𝕜 V) :=
+    [AddCommGroup V] [Module 𝕜 V] (b : Module.Basis ι 𝕜 V) :
+    Module.Basis ι 𝕜 (Module.Dual 𝕜 V) :=
   b.dualBasis -- 051
-theorem dual_dimension {𝕜 V : Type*} [DivisionRing 𝕜] [AddCommGroup V]
+theorem dual_dimension {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V]
     [Module 𝕜 V] [FiniteDimensional 𝕜 V] :
     Module.finrank 𝕜 (Module.Dual 𝕜 V) = Module.finrank 𝕜 V :=
   Subspace.dual_finrank_eq -- 052
 theorem dual_change_basis_inverse_transpose {n 𝕜 : Type*} [Fintype n] [DecidableEq n]
-    [Field 𝕜] (P : Matrix n n 𝕜) : (P⁻¹).transpose = (P.transpose)⁻¹ := by simp -- 053
-def annihilator {𝕜 V : Type*} [DivisionRing 𝕜] [AddCommGroup V] [Module 𝕜 V]
+    [Field 𝕜] (P : Matrix n n 𝕜) : (P⁻¹).transpose = (P.transpose)⁻¹ :=
+  Matrix.transpose_nonsing_inv P -- 053
+def annihilator {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V]
     (U : Submodule 𝕜 V) : Submodule 𝕜 (Module.Dual 𝕜 V) := U.dualAnnihilator -- 054
-theorem annihilator_dimension {𝕜 V : Type*} [DivisionRing 𝕜] [AddCommGroup V]
+theorem annihilator_dimension {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V]
     [Module 𝕜 V] [FiniteDimensional 𝕜 V] (U : Submodule 𝕜 V) :
     Module.finrank 𝕜 U + Module.finrank 𝕜 U.dualAnnihilator = Module.finrank 𝕜 V :=
   Submodule.finrank_add_finrank_dualAnnihilator_eq U -- 055
@@ -268,7 +270,7 @@ theorem dual_matrix_transpose {m n 𝕜 : Type*} [Fintype m] [DecidableEq m]
 theorem dual_kernel_range_relations {𝕜 V W : Type*} [Field 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [AddCommGroup W] [Module 𝕜 W]
     (f : V →ₗ[𝕜] W) : LinearMap.ker (LinearMap.dualMap f) = (LinearMap.range f).dualAnnihilator :=
-  LinearMap.ker_dualMap_eq_dualAnnihilator_range -- 059
+  LinearMap.ker_dualMap_eq_dualAnnihilator_range f -- 059
 def evaluationMap {𝕜 V : Type*} [CommSemiring 𝕜] [AddCommMonoid V] [Module 𝕜 V] :
     V →ₗ[𝕜] Module.Dual 𝕜 (Module.Dual 𝕜 V) := Module.Dual.eval 𝕜 V -- 060
 theorem evaluation_isomorphism {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V]
