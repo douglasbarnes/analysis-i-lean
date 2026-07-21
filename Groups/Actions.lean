@@ -51,7 +51,7 @@ theorem orbit_stabilizer_card (G : Type u) {X : Type v} [Group G] [Fintype G]
     [MulAction G X] (x : X) :
     Nat.card (MulAction.orbit G x) * Nat.card (MulAction.stabilizer G x) = Nat.card G := by
   rw [← Nat.card_prod]
-  exact Nat.card_congr (MulAction.orbitProdStabilizerEquivGroup x)
+  exact Nat.card_congr (MulAction.orbitProdStabilizerEquivGroup G x)
 
 /-- 091. Left multiplication gives a faithful and transitive action of a group on itself. -/
 theorem left_regular_action (G : Type u) [Group G] :
