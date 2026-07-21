@@ -89,7 +89,7 @@ theorem totalEnergy1D_hasDerivAt_zero {m : ℝ} {x v a V : ℝ → ℝ} {t : ℝ
     (hx : HasDerivAt x (v t) t) (hv : HasDerivAt v (a t) t)
     (hV : HasDerivAt V (-m * a t) (x t)) :
     HasDerivAt (fun s => totalEnergy1D m (x s) (v s) V) 0 t := by
-  convert (((hv.mul_const m).mul v).const_mul (1 / 2 : ℝ)).add (hV.comp t hx) using 1 <;>
+  convert ((hv.mul hv).const_mul ((1 / 2 : ℝ) * m)).add (hV.comp t hx) using 1 <;>
     simp [totalEnergy1D] <;> ring
 
 /- 16. Equilibrium point. -/
@@ -197,7 +197,15 @@ theorem polar_unit_vector_derivatives (theta : ℝ) :
       (![-Real.sin theta, Real.cos theta] i) theta) ∧
     (∀ i, HasDerivAt (fun t => (![-Real.sin t, Real.cos t] : Fin 2 → ℝ) i)
       (![-Real.cos theta, -Real.sin theta] i) theta) := by
-  constructor <;> intro i <;> fin_cases i <;> simp
+  constructor
+  · intro i
+    fin_cases i
+    · simpa using Real.hasDerivAt_cos theta
+    · simpa using Real.hasDerivAt_sin theta
+  · intro i
+    fin_cases i
+    · simpa using (Real.hasDerivAt_sin theta).neg
+    · simpa using Real.hasDerivAt_cos theta
 
 /- 37. Radial and angular velocity. -/
 structure PolarVelocity where
@@ -466,5 +474,7 @@ noncomputable def fourForce (P : ℝ → MinkowskiSpacetime) (tau : ℝ) : Minko
 /- 86. Centre-of-momentum frame. -/
 def IsCenterOfMomentumFrame {n : ℕ} (momentum : Fin n → Vec3) : Prop :=
   ∑ i, momentum i = 0
+
+end
 
 end DynamicsRelativity
