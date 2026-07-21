@@ -4,7 +4,8 @@ import Mathlib
 
 namespace NumbersAndSets
 
-noncomputable def Indicator {α : Type*} (A : Set α) (x : α) : ℕ := if x ∈ A then 1 else 0
+noncomputable def Indicator {α : Type*} (A : Set α) (x : α) : ℕ :=
+  @ite (x ∈ A) (Classical.propDecidable _) ℕ 1 0
 
 theorem indicator_eq_iff {α : Type*} (A B : Set α) :
     Indicator A = Indicator B ↔ A = B := by
@@ -30,7 +31,8 @@ theorem card_union_add_card_inter {α : Type*} [DecidableEq α] (A B : Finset α
 theorem sum_choose (n : ℕ) : ∑ r ∈ Finset.range (n + 1), n.choose r = 2 ^ n := by
   simpa using Nat.sum_range_choose n
 
-theorem choose_symm (n r : ℕ) (h : r ≤ n) : n.choose r = n.choose (n - r) := Nat.choose_symm h
+theorem choose_symm (n r : ℕ) (h : r ≤ n) : n.choose r = n.choose (n - r) :=
+  (Nat.choose_symm h).symm
 
 theorem pascal (n r : ℕ) (hr : 0 < r) : n.choose (r - 1) + n.choose r = (n + 1).choose r := by
   cases r with
