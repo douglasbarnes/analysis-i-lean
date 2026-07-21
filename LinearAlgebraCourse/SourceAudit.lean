@@ -5,7 +5,7 @@ import Mathlib
 namespace Cambridge.LinearAlgebraCourse.SourceAudit
 
 inductive EnvironmentKind where
-  | definition | lemma | theorem_ | proposition | corollary | notation
+  | definition | lemma_ | theorem_ | proposition | corollary | notation_
   deriving DecidableEq, Repr
 
 def sourceLines : List Nat :=
@@ -27,27 +27,27 @@ def sourceLines : List Nat :=
 open EnvironmentKind
 
 def sourceKinds : List EnvironmentKind :=
-  [notation, definition, proposition, definition, definition, proposition, definition,
-   definition, definition, definition, definition, definition, lemma, proposition, theorem_,
-   corollary, corollary, definition, lemma, proposition, proposition, definition, definition,
-   definition, definition, definition, definition, lemma, definition, proposition, corollary,
+  [notation_, definition, proposition, definition, definition, proposition, definition,
+   definition, definition, definition, definition, definition, lemma_, proposition, theorem_,
+   corollary, corollary, definition, lemma_, proposition, proposition, definition, definition,
+   definition, definition, definition, definition, lemma_, definition, proposition, corollary,
    proposition, proposition, corollary, definition, proposition, theorem_, definition, corollary,
-   proposition, corollary, lemma, theorem_, definition, corollary, definition, theorem_, definition,
-   proposition, definition, lemma, corollary, proposition, definition, proposition, definition,
-   proposition, proposition, lemma, lemma, lemma, lemma, proposition, definition, definition,
-   proposition, lemma, definition, definition, definition, lemma, definition, lemma, lemma,
-   definition, lemma, lemma, corollary, theorem_, theorem_, corollary, definition, theorem_, notation,
-   lemma, definition, theorem_, lemma, corollary, definition, lemma, definition, definition, lemma,
-   definition, definition, definition, lemma, lemma, definition, theorem_, definition, definition,
-   lemma, lemma, definition, lemma, corollary, corollary, theorem_, notation, theorem_, definition,
-   lemma, theorem_, theorem_, theorem_, definition, lemma, theorem_, lemma, definition, lemma, lemma,
-   definition, theorem_, theorem_, theorem_, definition, definition, lemma, lemma, definition,
+   proposition, corollary, lemma_, theorem_, definition, corollary, definition, theorem_, definition,
+   proposition, definition, lemma_, corollary, proposition, definition, proposition, definition,
+   proposition, proposition, lemma_, lemma_, lemma_, lemma_, proposition, definition, definition,
+   proposition, lemma_, definition, definition, definition, lemma_, definition, lemma_, lemma_,
+   definition, lemma_, lemma_, corollary, theorem_, theorem_, corollary, definition, theorem_, notation_,
+   lemma_, definition, theorem_, lemma_, corollary, definition, lemma_, definition, definition, lemma_,
+   definition, definition, definition, lemma_, lemma_, definition, theorem_, definition, definition,
+   lemma_, lemma_, definition, lemma_, corollary, corollary, theorem_, notation_, theorem_, definition,
+   lemma_, theorem_, theorem_, theorem_, definition, lemma_, theorem_, lemma_, definition, lemma_, lemma_,
+   definition, theorem_, theorem_, theorem_, definition, definition, lemma_, lemma_, definition,
    definition, proposition, theorem_, theorem_, corollary, theorem_, definition, theorem_, definition,
-   corollary, definition, definition, definition, lemma, proposition, lemma, theorem_, definition,
-   theorem_, corollary, definition, definition, definition, lemma, theorem_, corollary, definition,
-   definition, proposition, definition, proposition, lemma, definition, definition, definition, lemma,
-   corollary, definition, proposition, definition, EnvironmentKind.lemma, corollary, definition,
-   proposition, EnvironmentKind.lemma,
+   corollary, definition, definition, definition, lemma_, proposition, lemma_, theorem_, definition,
+   theorem_, corollary, definition, definition, definition, lemma_, theorem_, corollary, definition,
+   definition, proposition, definition, proposition, lemma_, definition, definition, definition, lemma_,
+   corollary, definition, proposition, definition, EnvironmentKind.lemma_, corollary, definition,
+   proposition, EnvironmentKind.lemma_,
    theorem_, corollary, corollary, corollary, corollary, corollary, proposition, theorem_]
 
 def sourceInventory : List (Nat × EnvironmentKind) := sourceLines.zip sourceKinds
@@ -57,11 +57,11 @@ theorem line_and_kind_inventory_complete :
     sourceLines.length = sourceKinds.length := by native_decide
 theorem source_lines_strictly_ordered : sourceLines.Pairwise (· < ·) := by native_decide
 theorem definition_count : (sourceKinds.filter (· = definition)).length = 70 := by native_decide
-theorem lemma_count : (sourceKinds.filter (· = EnvironmentKind.lemma)).length = 38 := by native_decide
+theorem lemma_count : (sourceKinds.filter (· = EnvironmentKind.lemma_)).length = 38 := by native_decide
 theorem theorem_count : (sourceKinds.filter (· = theorem_)).length = 27 := by native_decide
 theorem proposition_count : (sourceKinds.filter (· = proposition)).length = 24 := by native_decide
 theorem corollary_count : (sourceKinds.filter (· = corollary)).length = 24 := by native_decide
-theorem notation_count : (sourceKinds.filter (· = EnvironmentKind.notation)).length = 3 := by native_decide
+theorem notation_count : (sourceKinds.filter (· = EnvironmentKind.notation_)).length = 3 := by native_decide
 theorem kind_partition_complete : 70 + 38 + 27 + 24 + 24 + 3 = 186 := by decide
 
 end Cambridge.LinearAlgebraCourse.SourceAudit
