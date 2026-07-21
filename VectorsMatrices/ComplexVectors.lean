@@ -130,7 +130,7 @@ theorem noncoplanar_basis (a b c : Vec3) (h : scalarTriple a b c ≠ 0) :
   intro hd
   apply h
   simp [scalarTriple, coordinateDot, cross, Fin.sum_univ_three]
-  rw [Matrix.det_fin_three] at hd
+  simp [Matrix.det_fin_three] at hd
   linear_combination hd -- 036
 
 def IsLinearlyIndependent {E I : Type*} [AddCommGroup E] [Module ℝ E]
@@ -156,6 +156,7 @@ theorem cross_epsilon (a b : Vec3) (i : Fin 3) :
     cross a b i = ∑ j, ∑ k, epsilon i j k * a j * b k := by
   fin_cases i <;> simp [cross, epsilon, Fin.sum_univ_three] <;> ring    -- 048
 
+set_option maxRecDepth 10000 in
 theorem epsilon_contraction (j k p q : Fin 3) :
     ∑ i, epsilon i j k * epsilon i p q =
       kroneckerDelta j p * kroneckerDelta k q -
