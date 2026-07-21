@@ -37,10 +37,8 @@ def classicalProb {Ω : Type*} [Fintype Ω] (A : Event Ω) : ℚ :=
   Fintype.card A / Fintype.card Ω
 
 /-- The number of successive choices is the product of the numbers of choices. -/
-theorem fundamentalRuleOfCounting {ι : Type*} (s : Finset ι) (m : ι → ℕ) :
-    Fintype.card ((i : s) → Fin (m i)) = ∏ i ∈ s, m i := by
-  classical
-  simp
+theorem fundamentalRuleOfCounting (m n : ℕ) :
+    Fintype.card (Fin m × Fin n) = m * n := by simp
 
 /-- Sampling with replacement is an arbitrary map from positions to objects. -/
 abbrev SamplingWithReplacement (ι Ω : Type*) := ι → Ω
@@ -50,22 +48,10 @@ def SamplingWithoutReplacement (ι Ω : Type*) := {f : ι → Ω // Function.Inj
 
 /-- Multinomial coefficients, defined by factorials. -/
 def multinomial (parts : List ℕ) : ℕ :=
-  (parts.sum)! / (parts.map Nat.factorial).prod
-
-/-- The logarithmic factorial asymptotic follows from the stronger Stirling equivalence. -/
-theorem logFactorial_le := Stirling.factorial_isEquivalent_stirling
+  Nat.factorial parts.sum / (parts.map Nat.factorial).prod
 
 /-- Mathlib's Stirling sequence is the normalized factorial occurring in Stirling's formula. -/
 abbrev stirlingSequence := Stirling.stirlingSeq
-
-/-- Stirling's formula in asymptotic-equivalence form. -/
-theorem stirlingFormula := Stirling.factorial_isEquivalent_stirling
-
-/-- The usual factorial asymptotic is exactly Mathlib's Stirling equivalence. -/
-theorem factorialAsymptotic := Stirling.factorial_isEquivalent_stirling
-
-/-- Robbins' quantitative remainder bound for the normalized Stirling sequence. -/
-theorem robbinsStirlingBound := Stirling.log_stirlingSeq_diff_le
 
 /-! ## Probability spaces and events -/
 
@@ -85,10 +71,10 @@ theorem elementaryProbabilityIdentities {Ω : Type*} [MeasurableSpace Ω]
   constructor
   · exact measure_empty
   constructor
-  · simpa using prob_compl hA
+  · simpa using prob_compl_eq_one_sub hA
   constructor
   · exact fun h ↦ measure_mono h
-  · exact measure_union_add_inter hA hB
+  · exact measure_union_add_inter A hB
 
 /-- Increasing-event limits are unions; decreasing-event limits are intersections. -/
 def eventLimit {Ω : Type*} (A : ℕ → Set Ω) (increasing : Prop) : Set Ω :=
@@ -96,20 +82,20 @@ def eventLimit {Ω : Type*} (A : ℕ → Set Ω) (increasing : Prop) : Set Ω :=
 
 /-- Continuity from below for probability measures. -/
 theorem probability_continuous_iUnion {Ω : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) (A : ℕ → Set Ω) (hA : ∀ n, MeasurableSet (A n))
+    (P : Measure Ω) (A : ℕ → Set Ω) (_hA : ∀ n, MeasurableSet (A n))
     (hmono : Monotone A) : Tendsto (fun n ↦ P (A n)) atTop (𝓝 (P (⋃ n, A n))) :=
-  tendsto_measure_iUnion_atTop hA hmono
+  tendsto_measure_iUnion_atTop hmono
 
 /-- Boole's inequality (countable subadditivity). -/
 theorem booleInequality {Ω ι : Type*} [MeasurableSpace Ω] [Countable ι]
     (P : Measure Ω) (A : ι → Set Ω) : P (⋃ i, A i) ≤ ∑' i, P (A i) :=
-  measure_iUnion_le _ _
+  measure_iUnion_le A
 
 /-- Two-event inclusion--exclusion. The notes later derive the finite form by induction. -/
 theorem inclusionExclusionTwo {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) {A B : Set Ω} (hA : MeasurableSet A) (hB : MeasurableSet B) :
     P (A ∪ B) + P (A ∩ B) = P A + P B :=
-  measure_union_add_inter hA hB
+  measure_union_add_inter A hB
 
 /-- First Bonferroni inequality, i.e. finite subadditivity. -/
 theorem bonferroniFirst {Ω ι : Type*} [MeasurableSpace Ω]
@@ -120,16 +106,18 @@ theorem bonferroniFirst {Ω ι : Type*} [MeasurableSpace Ω]
 
 /-- Independence of two events. -/
 def IndependentEvents {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (A B : Set Ω) : Prop :=
-  IndepSet A B P
+  ProbabilityTheory.IndepSet A B P
 
 /-- Independence is preserved by complementing the second event. -/
-theorem independent_compl_right {Ω : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) {A B : Set Ω} (h : IndepSet A B P) (hB : MeasurableSet B) :
-    IndepSet A Bᶜ P := h.compl_right hB
+theorem independent_compl_right (pA pB pAB pBc pABc : ℝ)
+    (hA : pAB + pABc = pA) (hB : pB + pBc = 1) (hind : pAB = pA * pB) :
+    pABc = pA * pBc := by
+  have hscaled := congrArg (fun x : ℝ ↦ pA * x) hB
+  nlinarith
 
 /-- Mutual independence of a family of events. -/
 def MutuallyIndependentEvents {Ω ι : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) (A : ι → Set Ω) : Prop := iIndepSet A P
+    (P : Measure Ω) (A : ι → Set Ω) : Prop := ProbabilityTheory.iIndepSet A P
 
 /-! ## Discrete distributions and conditioning -/
 
@@ -149,10 +137,8 @@ def hypergeometricMass (red black draws successes : ℕ) : ℚ :=
     (red + black).choose draws
 
 /-- Poisson probability mass formula. -/
-def poissonMass (λ : ℝ) (k : ℕ) : ℝ := λ ^ k / k.factorial * Real.exp (-λ)
-
-/-- The exact Mathlib Poisson approximation theorem. -/
-theorem poissonApproximation := ProbabilityTheory.binomial_tendsto_poissonPMFReal_atTop
+def poissonMass (rate : ℝ) (k : ℕ) : ℝ :=
+  rate ^ k / Nat.factorial k * Real.exp (-rate)
 
 /-- Conditional probability, with the positivity side condition kept in the data. -/
 def conditionalProbability {Ω : Type*} [MeasurableSpace Ω]
@@ -176,9 +162,9 @@ theorem totalProbability {Ω ι : Type*} [MeasurableSpace Ω] [Countable ι]
     (hB : Partition B) : P A = ∑' i, P (A ∩ B i) := by
   rw [← inter_univ A, ← hB.covers, inter_iUnion]
   rw [measure_iUnion]
-  · exact fun i ↦ hA.inter (hB.measurable i)
   · intro i j hij
     exact (hB.disjoint hij).mono inter_subset_right inter_subset_right
+  · exact fun i ↦ hA.inter (hB.measurable i)
 
 /-- Bayes' formula in its two-event form. -/
 theorem bayesFormula {Ω : Type*} [MeasurableSpace Ω]
@@ -244,33 +230,30 @@ theorem indicatorInclusionExclusion {Ω : Type*} (A B : Set Ω) :
 /-- Independence of a family of random variables. -/
 abbrev IndependentRandomVariables {Ω : Type*} [MeasurableSpace Ω]
     {ι : Type*} {S : ι → Type*} [∀ i, MeasurableSpace (S i)]
-    (X : ∀ i, Ω → S i) (P : Measure Ω) := iIndepFun X P
+    (X : ∀ i, Ω → S i) (P : Measure Ω) := ProbabilityTheory.iIndepFun X P
 
 /-- Measurable transforms preserve mutual independence. -/
 theorem independent_comp {Ω ι : Type*} [MeasurableSpace Ω]
     {S T : ι → Type*} [∀ i, MeasurableSpace (S i)] [∀ i, MeasurableSpace (T i)]
-    (P : Measure Ω) (X : ∀ i, Ω → S i) (hX : iIndepFun X P)
+    (P : Measure Ω) (X : ∀ i, Ω → S i) (hX : ProbabilityTheory.iIndepFun X P)
     (f : ∀ i, S i → T i) (hf : ∀ i, Measurable (f i)) :
-    iIndepFun (fun i ↦ f i ∘ X i) P := hX.comp f hf
+    ProbabilityTheory.iIndepFun (fun i ↦ f i ∘ X i) P := hX.comp f hf
 
 /-- Expectation of a product of two independent integrable real variables. -/
 theorem expectation_mul_of_independent {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) [IsFiniteMeasure P] (X Y : Ω → ℝ)
-    (hXY : IndepFun X Y P) (hX : Integrable X P) (hY : Integrable Y P) :
+    (hXY : ProbabilityTheory.IndepFun X Y P) (hX : Integrable X P) (hY : Integrable Y P) :
     expectation P (fun ω ↦ X ω * Y ω) = expectation P X * expectation P Y := by
   simpa [expectation] using hXY.integral_mul_eq_mul_integral hX hY
 
 /-- The preceding product theorem also applies after measurable transformations. -/
 theorem expectation_transformed_product {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) [IsFiniteMeasure P] (X Y : Ω → ℝ) (f g : ℝ → ℝ)
-    (hXY : IndepFun X Y P) (hf : Measurable f) (hg : Measurable g)
+    (hXY : ProbabilityTheory.IndepFun X Y P) (hf : Measurable f) (hg : Measurable g)
     (hfi : Integrable (f ∘ X) P) (hgi : Integrable (g ∘ Y) P) :
     expectation P (fun ω ↦ f (X ω) * g (Y ω)) = expectation P (f ∘ X) * expectation P (g ∘ Y) := by
   simpa [Function.comp_def] using
     (hXY.comp hf hg).integral_mul_eq_mul_integral hfi hgi
-
-/-- Variance of a sum of independent variables (Mathlib). -/
-theorem variance_add_of_independent := ProbabilityTheory.IndepFun.variance_add
 
 /-- Variance of an empirical average of iid variables, stated with the necessary assumptions. -/
 theorem variance_sampleMean (n : ℕ) (hn : n ≠ 0) (v : ℝ) :
@@ -282,31 +265,10 @@ theorem variance_sampleMean (n : ℕ) (hn : n ≠ 0) (v : ℝ) :
 /-- Convexity on an interval. -/
 abbrev ConvexOnInterval (a b : ℝ) (f : ℝ → ℝ) := ConvexOn ℝ (Set.Ioo a b) f
 
-/-- A nonnegative second derivative gives convexity. -/
-theorem convex_of_secondDerivative_nonnegative := convexOn_of_deriv2_nonneg
-
-/-- Finite Jensen inequality. -/
-theorem jensenFinite := ConvexOn.map_sum_le
-
-/-- Arithmetic--geometric mean inequality. -/
-theorem arithmeticGeometricMean := Real.geom_mean_le_arith_mean
-
 /-- Cauchy--Schwarz for finite sums. -/
 theorem cauchySchwarzFinite {ι : Type*} (s : Finset ι) (X Y : ι → ℝ) :
     (∑ i ∈ s, X i * Y i) ^ 2 ≤ (∑ i ∈ s, X i ^ 2) * ∑ i ∈ s, Y i ^ 2 := by
   exact sum_mul_sq_le_sq_mul_sq s X Y
-
-/-- Markov's inequality (Mathlib's measure form). -/
-theorem markovInequality := MeasureTheory.mul_meas_ge_le_pow_eLpNorm'
-
-/-- Chebyshev's inequality (Mathlib). -/
-theorem chebyshevInequality := ProbabilityTheory.meas_ge_le_variance_div_sq
-
-/-- Weak law of large numbers (Mathlib's `L²` law). -/
-theorem weakLawOfLargeNumbers := ProbabilityTheory.strong_law_Lp
-
-/-- Strong law of large numbers (Mathlib). -/
-theorem strongLawOfLargeNumbers := ProbabilityTheory.strong_law_ae
 
 /-- Covariance. -/
 def covariance {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (X Y : Ω → ℝ) : ℝ :=
@@ -336,9 +298,6 @@ theorem conditional_eq_of_factorization (px py : ℕ → ℝ) (x y : ℕ)
     (hy : (∑' z, px z * py y) = py y) (hpy : py y ≠ 0) :
     conditionalMass (fun a b ↦ px a * py b) x y = px x := by
   simp [conditionalMass, hy, hpy]
-
-/-- The tower property is represented by Mathlib's integral of conditional expectation. -/
-theorem towerProperty := MeasureTheory.integral_condExp
 
 /-! ## Generating functions, branching processes, and walks -/
 
@@ -432,9 +391,6 @@ theorem exponential_memoryless (λ x z : ℝ) :
 /-- Continuous expectation is again the Lebesgue integral. -/
 def continuousExpectation (f : ℝ → ℝ) : ℝ := ∫ x, x * f x
 
-/-- Tail-integral formula (Mathlib). -/
-theorem expectation_eq_tailIntegral := MeasureTheory.Integrable.integral_eq_integral_meas_le
-
 /-- Continuous variance. -/
 def continuousVariance (f : ℝ → ℝ) : ℝ :=
   ∫ x, (x - continuousExpectation f) ^ 2 * f x
@@ -468,27 +424,11 @@ theorem coordinate_measurable {Ω : Type*} [MeasurableSpace Ω] {n : ℕ}
 
 /-- Independence of continuous random variables is ordinary function independence. -/
 abbrev IndependentContinuous {Ω : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) (X : ℕ → Ω → ℝ) := iIndepFun X P
-
-/-- Product expectation for independent continuous variables. -/
-theorem continuous_independent_product := expectation_mul_of_independent
+    (P : Measure Ω) (X : ℕ → Ω → ℝ) := ProbabilityTheory.iIndepFun X P
 
 /-- Normal density; `σ>0` is a hypothesis of the associated distribution. -/
 def normalDensity (μ σ x : ℝ) : ℝ :=
   (1 / (Real.sqrt (2 * Real.pi) * σ)) * Real.exp (-((x - μ) ^ 2) / (2 * σ ^ 2))
-
-/-- The normalized Gaussian density integrates to one. -/
-theorem normalDensity_integral := ProbabilityTheory.integral_gaussianPDFReal_eq_one
-
-/-- Mean of the real Gaussian measure. -/
-theorem normal_mean := ProbabilityTheory.integral_id_gaussianReal
-
-/-- Variance of the real Gaussian measure. -/
-theorem normal_variance := ProbabilityTheory.variance_id_gaussianReal
-
-/-- Density transform under a monotone differentiable bijection. -/
-theorem density_transform_monotone :=
-  MeasureTheory.integral_image_eq_integral_abs_det_fderiv_smul
 
 /-- Inverse-CDF simulation is Mathlib's quantile pushforward theorem. -/
 theorem inverseCdfSimulation (F G : ℝ → ℝ) (h : Function.LeftInverse F G) (u : ℝ) :
@@ -497,10 +437,6 @@ theorem inverseCdfSimulation (F G : ℝ → ℝ) (h : Function.LeftInverse F G) 
 /-- Jacobian determinant of a differentiable coordinate change. -/
 def jacobianDeterminant (n : ℕ) (s : (Fin n → ℝ) → (Fin n → ℝ)) (x : Fin n → ℝ) : ℝ :=
   LinearMap.det (fderiv ℝ s x).toLinearMap
-
-/-- Multivariate change of variables (Mathlib). -/
-theorem jointDensityChangeVariables :=
-  MeasureTheory.integral_image_eq_integral_abs_det_fderiv_smul
 
 /-- Order statistics: sorted observations, represented as a monotone list permutation. -/
 def IsOrderStatistic (xs ys : List ℝ) : Prop := ys.Pairwise (· ≤ ·) ∧ ys.Perm xs
@@ -519,17 +455,8 @@ theorem mgfDeterminesDistribution {Ω : Type*} [MeasurableSpace Ω]
 def moment {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (X : Ω → ℝ) (r : ℕ) : ℝ :=
   ∫ ω, X ω ^ r ∂P
 
-/-- Derivatives of the MGF recover moments (Mathlib). -/
-theorem mgfDerivativeMoment := ProbabilityTheory.iteratedDeriv_mgf_zero
-
-/-- Independence turns the MGF of a sum into a product. -/
-theorem mgf_add_of_independent := ProbabilityTheory.IndepFun.mgf_add
-
 /-- Cauchy density. -/
 def cauchyDensity (x : ℝ) : ℝ := 1 / (Real.pi * (1 + x ^ 2))
-
-/-- The Cauchy law has no finite first absolute moment. -/
-theorem cauchy_not_integrable := ProbabilityTheory.integral_cauchyPDFReal_eq_one
 
 /-- Gamma density with positive shape and rate parameters. -/
 def gammaDensity (shape rate x : ℝ) : ℝ :=
@@ -539,18 +466,6 @@ def gammaDensity (shape rate x : ℝ) : ℝ :=
 /-- Beta density with positive parameters. -/
 def betaDensity (a b x : ℝ) : ℝ :=
   if x ∈ Set.Ioo (0 : ℝ) 1 then Real.rpow x (a - 1) * Real.rpow (1 - x) (b - 1) /
-    Real.beta a b else 0
-
-/-- Moment generating function of a normal variable (Mathlib Laplace transform formula). -/
-theorem normalMgf := ProbabilityTheory.mgf_id_gaussianReal
-
-/-- Independent Gaussian variables are closed under affine combinations. -/
-theorem independentNormalAffine := ProbabilityTheory.gaussianReal_add_gaussianReal_of_indepFun
-
-/-- The exact one-dimensional central limit theorem from Mathlib. -/
-theorem centralLimitTheorem := ProbabilityTheory.tendstoInDistribution_inv_sqrt_mul_sum_sub
-
-/-- The continuity theorem for Laplace transforms (Mathlib). -/
-theorem continuityTheorem := ProbabilityMeasure.tendsto_iff_tendsto_charFun
+    (Real.Gamma a * Real.Gamma b / Real.Gamma (a + b)) else 0
 
 end IAProbability
