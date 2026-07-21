@@ -4,23 +4,22 @@ import Mathlib
 
 noncomputable section
 
-open Matrix
-open scoped Matrix
+open Complex
 
 namespace Cambridge.VectorsMatrices
 
 abbrev CNumber := ℂ                                                   -- 001
-def complexConjugate (z : ℂ) : ℂ := Complex.conj z                   -- 002
+def complexConjugate (z : ℂ) : ℂ := conj z                           -- 002
 def argandPoint (z : ℂ) : ℝ × ℝ := (z.re, z.im)                     -- 003
 def complexModulus (z : ℂ) : ℝ := ‖z‖                               -- 004
 def complexArgument (z : ℂ) : ℝ := z.arg
 
-theorem mul_conj_eq_normSq (z : ℂ) : z * Complex.conj z = Complex.normSq z :=
-  Complex.mul_conj z                                                     -- 005
+theorem mul_conj_eq_normSq (z : ℂ) : z * conj z = normSq z :=
+  mul_conj z                                                             -- 005
 
 theorem inverse_eq_conj_div_normSq (z : ℂ) :
-    z⁻¹ = Complex.conj z * ((Complex.normSq z)⁻¹ : ℝ) :=
-  Complex.inv_def z                                                      -- 006
+    z⁻¹ = conj z * ((normSq z)⁻¹ : ℝ) :=
+  inv_def z                                                              -- 006
 
 theorem complex_triangle (z w : ℂ) : ‖z + w‖ ≤ ‖z‖ + ‖w‖ := norm_add_le z w -- 007
 
@@ -41,8 +40,9 @@ def complexSine : ℂ → ℂ := Complex.sin                              -- 011
 def complexCosine : ℂ → ℂ := Complex.cos
 
 theorem complex_euler (z : ℂ) :
-    Complex.exp (ℐ * z) = Complex.cos z + ℐ * Complex.sin z := by
-  simpa [mul_comm, add_comm] using Complex.exp_mul_I z                    -- 012
+    Complex.exp (I * z) = Complex.cos z + I * Complex.sin z := by
+  rw [mul_comm I z, Complex.exp_mul_I]
+  ring                                                                   -- 012
 
 def rootsOfUnity (n : ℕ) : Set ℂ := {z | z ^ n = 1}                  -- 013
 
@@ -54,47 +54,50 @@ def complexLogarithm : ℂ → ℂ := Complex.log                          -- 01
 def complexPower (z w : ℂ) : ℂ := Complex.exp (w * Complex.log z)          -- 016
 
 theorem deMoivre (z : ℂ) (n : ℕ) :
-    (Complex.cos z + Complex.sin z * ℐ) ^ n =
-      Complex.cos ((n : ℂ) * z) + Complex.sin ((n : ℂ) * z) * ℐ :=
+    (Complex.cos z + Complex.sin z * I) ^ n =
+      Complex.cos ((n : ℂ) * z) + Complex.sin ((n : ℂ) * z) * I :=
   Complex.cos_add_sin_mul_I_pow n z                                      -- 017
 
 def complexLine (z₀ w : ℂ) : Set ℂ :=
-  {z | z * Complex.conj w - Complex.conj z * w =
-    z₀ * Complex.conj w - Complex.conj z₀ * w}                         -- 018
+  {z | z * conj w - conj z * w = z₀ * conj w - conj z₀ * w}          -- 018
 theorem mem_complexLine (z₀ w z : ℂ) :
     z ∈ complexLine z₀ w ↔
-      z * Complex.conj w - Complex.conj z * w =
-        z₀ * Complex.conj w - Complex.conj z₀ * w := Iff.rfl
+      z * conj w - conj z * w = z₀ * conj w - conj z₀ * w := Iff.rfl
 
 def complexCircle (c : ℂ) (r : ℝ) : Set ℂ := {z | ‖z - c‖ = r}    -- 019
 theorem circle_equation (c z : ℂ) :
-    Complex.normSq (z - c) = Complex.normSq z + Complex.normSq c -
-      2 * (z * Complex.conj c).re := Complex.normSq_sub z c
+    normSq (z - c) = normSq z + normSq c - 2 * (z * conj c).re :=
+  normSq_sub z c
 
 abbrev RealVector (n : ℕ) := EuclideanSpace ℝ (Fin n)                  -- 020
 def IsUnitVector {E : Type*} [Norm E] (v : E) : Prop := ‖v‖ = 1           -- 021
-def realDot {n : ℕ} (x y : RealVector n) : ℝ := ⟪x, y⟩_ℝ             -- 022
+def realDot {n : ℕ} (x y : RealVector n) : ℝ := inner ℝ x y          -- 022
 abbrev InnerProductStructure (E : Type*) [NormedAddCommGroup E]
     [NormedSpace ℝ E] := InnerProductSpace ℝ E                         -- 023
 def vectorNorm {E : Type*} [Norm E] (x : E) : ℝ := ‖x‖                 -- 024
 
 theorem cauchySchwarz {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    (x y : E) : |⟪x, y⟩_ℝ| ≤ ‖x‖ * ‖y‖ := abs_real_inner_le_norm x y -- 025
+    (x y : E) : |inner ℝ x y| ≤ ‖x‖ * ‖y‖ := abs_real_inner_le_norm x y -- 025
 
 theorem vectorTriangle {E : Type*} [SeminormedAddGroup E] (x y : E) :
     ‖x + y‖ ≤ ‖x‖ + ‖y‖ := norm_add_le x y                         -- 026
 
 abbrev Vec3 := Fin 3 → ℝ
-def cross (a b : Vec3) : Vec3 := Matrix.crossProduct a b                -- 027
+def cross (a b : Vec3) : Vec3 :=
+  ![a 1 * b 2 - a 2 * b 1,
+    a 2 * b 0 - a 0 * b 2,
+    a 0 * b 1 - a 1 * b 0]                                             -- 027
 theorem cross_components (a b : Vec3) :
     cross a b = ![a 1 * b 2 - a 2 * b 1,
       a 2 * b 0 - a 0 * b 2, a 0 * b 1 - a 1 * b 0] := rfl            -- 028
 
-def scalarTriple (a b c : Vec3) : ℝ := a ⬝ᵥ cross b c               -- 029
+def coordinateDot {n : ℕ} (x y : Fin n → ℝ) : ℝ := ∑ i, x i * y i
+def scalarTriple (a b c : Vec3) : ℝ := coordinateDot a (cross b c)  -- 029
 def parallelepipedVolume (a b c : Vec3) : ℝ := |scalarTriple a b c|    -- 030
 
-theorem cross_add (a b c : Vec3) : cross a (b + c) = cross a b + cross a c :=
-  (Matrix.crossProduct a).map_add b c                                   -- 031
+theorem cross_add (a b c : Vec3) : cross a (b + c) = cross a b + cross a c := by
+  funext i
+  fin_cases i <;> simp [cross] <;> ring                                 -- 031
 
 def SpansPair {E : Type*} [AddCommGroup E] [Module ℝ E] (a b : E) : Prop :=
   Submodule.span ℝ ({a,b} : Set E) = ⊤                                -- 032
@@ -104,12 +107,12 @@ theorem pair_coefficients_unique {E : Type*} [AddCommGroup E] [Module ℝ E]
     {s t s' t' : ℝ} (heq : s • a + t • b = s' • a + t' • b) :
     s = s' ∧ t = t' := by
   have hz : (s - s') • a + (t - t') • b = 0 := by module
-  have hg : ![s - s', t - t'] = (0 : Fin 2 → ℝ) := by
-    apply (Fintype.linearIndependent_iff.mp h)
+  have hsum : ∑ i, ![s - s', t - t'] i • ![a,b] i = 0 := by
     simpa [Fin.sum_univ_two] using hz
+  have hall := (Fintype.linearIndependent_iff.mp h) ![s - s', t - t'] hsum
   constructor
-  · have := congrFun hg 0; simp at this; linarith
-  · have := congrFun hg 1; simp at this; linarith                    -- 033
+  · have hs := hall 0; simp at hs; linarith
+  · have ht := hall 1; simp at ht; linarith                         -- 033
 
 def IsIndependentPair {E : Type*} [AddCommGroup E] [Module ℝ E] (a b : E) : Prop :=
   LinearIndependent ℝ ![a,b]                                          -- 034
@@ -121,7 +124,7 @@ theorem noncoplanar_basis (a b c : Vec3) (h : scalarTriple a b c ≠ 0) :
   apply Matrix.linearIndependent_rows_of_det_ne_zero
   intro hd
   apply h
-  rw [scalarTriple, Matrix.triple_product_eq_det, hd]                    -- 036
+  simpa [scalarTriple, coordinateDot, cross, Matrix.det_fin_three] using hd -- 036
 
 def IsLinearlyIndependent {E I : Type*} [AddCommGroup E] [Module ℝ E]
     (v : I → E) : Prop := LinearIndependent ℝ v                        -- 037
@@ -132,7 +135,6 @@ def IsOrthonormalBasis {E I : Type*} [NormedAddCommGroup E] [InnerProductSpace �
     (b : Basis I ℝ E) : Prop := Orthonormal ℝ b                        -- 040
 def vectorSpaceDimension (E : Type*) [AddCommGroup E] [Module ℝ E] : Cardinal :=
   Module.rank ℝ E                                                       -- 041
-def coordinateDot {n : ℕ} (x y : Fin n → ℝ) : ℝ := x ⬝ᵥ y             -- 042
 abbrev ComplexVector (n : ℕ) := EuclideanSpace ℂ (Fin n)               -- 043
 abbrev VectorSubspace (E : Type*) [AddCommGroup E] [Module ℝ E] := Submodule ℝ E -- 044
 
@@ -145,7 +147,7 @@ def epsilon (i j k : Fin 3) : ℝ :=
 
 theorem cross_epsilon (a b : Vec3) (i : Fin 3) :
     cross a b i = ∑ j, ∑ k, epsilon i j k * a j * b k := by
-  fin_cases i <;> simp [cross, epsilon, Matrix.cross_apply] <;> ring      -- 048
+  fin_cases i <;> simp [cross, epsilon] <;> ring                        -- 048
 
 theorem epsilon_contraction (j k p q : Fin 3) :
     ∑ i, epsilon i j k * epsilon i p q =
@@ -155,22 +157,35 @@ theorem epsilon_contraction (j k p q : Fin 3) :
     norm_num [epsilon, kroneckerDelta]                                   -- 049
 
 theorem scalarTriple_cyclic (a b c : Vec3) :
-    scalarTriple a b c = scalarTriple b c a :=
-  Matrix.triple_product_permutation a b c                                -- 050
+    scalarTriple a b c = scalarTriple b c a := by
+  simp [scalarTriple, coordinateDot, cross]
+  ring                                                                   -- 050
 
 theorem vector_triple (a b c : Vec3) :
-    cross a (cross b c) = (coordinateDot a c) • b - (coordinateDot b a) • c :=
-  Matrix.cross_cross_eq_smul_sub_smul' a b c                             -- 051
+    cross a (cross b c) = (coordinateDot a c) • b - (coordinateDot a b) • c := by
+  funext i
+  fin_cases i <;> simp [cross, coordinateDot] <;> ring                  -- 051
 
 theorem lagrange_identity (a b c : Vec3) :
     coordinateDot (cross a b) (cross a c) =
-      coordinateDot a a * coordinateDot b c - coordinateDot a c * coordinateDot b a :=
-  Matrix.cross_dot_cross a b a c                                        -- 052
+      coordinateDot a a * coordinateDot b c - coordinateDot a b * coordinateDot a c := by
+  simp [cross, coordinateDot]
+  ring                                                                   -- 052
 
 def vectorLine (a t : Vec3) : Set Vec3 := {x | cross (x - a) t = 0}     -- 053
 theorem vectorLine_equation (a t x : Vec3) :
     x ∈ vectorLine a t ↔ cross x t = cross a t := by
-  simp [vectorLine, cross, sub_eq_zero]
+  constructor
+  · intro h
+    simp only [vectorLine, Set.mem_setOf_eq] at h
+    funext i
+    have hi := congrFun h i
+    fin_cases i <;> simp [cross] at hi ⊢ <;> linarith
+  · intro h
+    simp only [vectorLine, Set.mem_setOf_eq]
+    funext i
+    have hi := congrFun h i
+    fin_cases i <;> simp [cross] at hi ⊢ <;> linarith
 
 def vectorPlane (b n : Vec3) : Set Vec3 :=
   {x | coordinateDot x n = coordinateDot b n}                           -- 054
