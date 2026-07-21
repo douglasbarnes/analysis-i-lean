@@ -4,6 +4,8 @@ import VectorCalculus.Operators
 
 namespace Cambridge.VectorCalculus
 
+noncomputable section
+
 abbrev Tensor (n rank : Nat) := (Fin rank → Fin n) → ℝ
 
 def tensorAdd {n rank : Nat} (T S : Tensor n rank) : Tensor n rank := T + S
@@ -39,7 +41,7 @@ def TensorDivergenceTheorem (boundaryIntegral volumeIntegral : Tensor 3 1) : Pro
 
 def inertiaTensor {ι : Type*} [Fintype ι] (mass : ι → ℝ) (position : ι → Vec 3) :
     Matrix (Fin 3) (Fin 3) ℝ :=
-  fun i j => ∑ a, mass a * (inner (position a) (position a) * if i = j then 1 else 0
+  fun i j => ∑ a, mass a * (inner ℝ (position a) (position a) * if i = j then 1 else 0
     - position a i * position a j)
 
 def IsInvariantTensor {n rank : Nat} (T : Tensor n rank)
