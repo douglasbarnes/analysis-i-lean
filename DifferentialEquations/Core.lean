@@ -9,18 +9,26 @@ L'Hopital), or which treat distributions as ordinary functions, are represented
 by Mathlib's rigorous notions rather than copied literally.
 -/
 
-open Filter Measure Matrix
+open Filter Matrix MeasureTheory
 open scoped Topology
 
 namespace DifferentialEquations
+
+noncomputable section
 
 /-! ## One-variable calculus -/
 
 def DerivativeAt (f : ℝ → ℝ) (x d : ℝ) : Prop := HasDerivAt f d x
 
+noncomputable def firstDerivative (f : ℝ → ℝ) : ℝ → ℝ := deriv f
+
+noncomputable def secondDerivative (f : ℝ → ℝ) : ℝ → ℝ := deriv (deriv f)
+
 def LittleOAt (f g : ℝ → ℝ) (x : ℝ) : Prop := f =o[𝓝 x] g
 
 def BigOAt (f g : ℝ → ℝ) (x : ℝ) : Prop := f =O[𝓝 x] g
+
+def AntiderivativeOf (F f : ℝ → ℝ) : Prop := ∀ x, HasDerivAt F (f x) x
 
 theorem derivative_first_order_approximation {f : ℝ → ℝ} {x d : ℝ}
     (h : HasDerivAt f d x) :
@@ -45,7 +53,7 @@ def LeibnizFormulaAt (n : ℕ) (u v : ℝ → ℝ) (x : ℝ) : Prop :=
 /- The source's L'Hopital statement omits the non-vanishing and derivative-ratio
 conditions.  This small wrapper records the valid final limit passage used in
 its argument. -/
-theorem quotient_limit {f g : ℝ → ℝ} {l a b : ℝ}
+theorem quotient_limit {f g : ℝ → ℝ} {l : Filter ℝ} {a b : ℝ}
     (hf : Tendsto f l (𝓝 a)) (hg : Tendsto g l (𝓝 b)) (hb : b ≠ 0) :
     Tendsto (fun x => f x / g x) l (𝓝 (a / b)) := by
   exact hf.div hg (by simpa using hb)
@@ -58,14 +66,20 @@ def PartialDerivativeXAt (f : ℝ × ℝ → ℝ) (p : ℝ × ℝ) (d : ℝ) : P
 def PartialDerivativeYAt (f : ℝ × ℝ → ℝ) (p : ℝ × ℝ) (d : ℝ) : Prop :=
   HasDerivAt (fun y => f (p.1, y)) d p.2
 
+noncomputable def partialX (f : ℝ × ℝ → ℝ) (p : ℝ × ℝ) : ℝ :=
+  deriv (fun x => f (x, p.2)) p.1
+
+noncomputable def partialY (f : ℝ × ℝ → ℝ) (p : ℝ × ℝ) : ℝ :=
+  deriv (fun y => f (p.1, y)) p.2
+
 def Eigenfunction (f : ℝ → ℝ) (λ : ℝ) : Prop :=
   ∀ x, HasDerivAt f (λ * f x) x
 
-theorem exp_is_eigenfunction (λ : ℝ) :
-    Eigenfunction (fun x : ℝ => Real.exp (λ * x)) λ := by
+theorem exp_is_eigenfunction (lam : ℝ) :
+    Eigenfunction (fun x : ℝ => Real.exp (lam * x)) lam := by
   intro x
-  convert (Real.hasDerivAt_exp (λ * x)).comp x
-    (((hasDerivAt_id x).const_mul λ)) using 1 <;> ring
+  convert (Real.hasDerivAt_exp (lam * x)).comp x
+    (((hasDerivAt_id x).const_mul lam)) using 1 <;> ring
 
 def LinearODE (a b forcing : ℝ → ℝ) (y : ℝ → ℝ) : Prop :=
   ∀ x, HasDerivAt y ((forcing x - b x * y x) / a x) x
@@ -78,17 +92,17 @@ def ConstantCoefficientSecondOrder (a b c : ℝ) (y : ℝ → ℝ) : Prop :=
 def FirstOrderODE (F : ℝ → ℝ → ℝ) (y : ℝ → ℝ) : Prop :=
   ∀ x, HasDerivAt y (F x (y x)) x
 
-def characteristicPolynomial (a b c λ : ℝ) : ℝ := a * λ ^ 2 + b * λ + c
+def characteristicPolynomial (a b c lam : ℝ) : ℝ := a * lam ^ 2 + b * lam + c
 
-theorem exp_solution_constantCoefficient {a b c λ : ℝ}
-    (hroot : characteristicPolynomial a b c λ = 0) :
-    ∀ x, a * (λ ^ 2 * Real.exp (λ * x)) +
-        b * (λ * Real.exp (λ * x)) + c * Real.exp (λ * x) = 0 := by
+theorem exp_solution_constantCoefficient {a b c lam : ℝ}
+    (hroot : characteristicPolynomial a b c lam = 0) :
+    ∀ x, a * (lam ^ 2 * Real.exp (lam * x)) +
+        b * (lam * Real.exp (lam * x)) + c * Real.exp (lam * x) = 0 := by
   intro x
   calc
-    a * (λ ^ 2 * Real.exp (λ * x)) + b * (λ * Real.exp (λ * x)) +
-        c * Real.exp (λ * x) =
-        characteristicPolynomial a b c λ * Real.exp (λ * x) := by
+    a * (lam ^ 2 * Real.exp (lam * x)) + b * (lam * Real.exp (lam * x)) +
+        c * Real.exp (lam * x) =
+        characteristicPolynomial a b c lam * Real.exp (lam * x) := by
           simp only [characteristicPolynomial]
           ring
     _ = 0 := by rw [hroot, zero_mul]
@@ -188,7 +202,7 @@ theorem positiveDefinite₂_of_leadingMinors {a b c : ℝ} (ha : 0 < a)
   · subst y
     have hx : x ≠ 0 := by simpa using hxy
     simp only [quadraticForm₂, mul_zero, add_zero]
-    exact mul_pos ha (sq_pos_of_ne_zero hx)
+    simpa using mul_pos ha (sq_pos_of_ne_zero hx)
   · have hsquare : 0 ≤ (a * x + b * y) ^ 2 := sq_nonneg _
     have hy2 : 0 < y ^ 2 := sq_pos_of_ne_zero hy
     dsimp [quadraticForm₂]
