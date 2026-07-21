@@ -3,14 +3,20 @@ from __future__ import annotations
 
 import pathlib
 import re
-import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-audit = (ROOT / "AnalysisI" / "SourceAudit.lean").read_text(encoding="utf-8")
-ids = [int(x) for x in re.findall(r"\bid := (\d+)", audit)]
-expected = list(range(1, 102))
-if ids != expected:
-    raise SystemExit(f"audit IDs are not exactly 1..101: {ids}")
+
+AUDITS = {
+    ROOT / "AnalysisI" / "SourceAudit.lean": 101,
+    ROOT / "AnalysisII" / "SourceAudit.lean": 68,
+}
+
+for path, count in AUDITS.items():
+    audit = path.read_text(encoding="utf-8")
+    ids = [int(x) for x in re.findall(r"\bid := (\d+)", audit)]
+    expected = list(range(1, count + 1))
+    if ids != expected:
+        raise SystemExit(f"{path.relative_to(ROOT)} IDs are not exactly 1..{count}: {ids}")
 
 forbidden = {
     "sorry": re.compile(r"\bsorry\b"),
@@ -18,11 +24,8 @@ forbidden = {
     "axiom": re.compile(r"^[ \t]*axiom\b", re.MULTILINE),
     "opaque": re.compile(r"^[ \t]*opaque\b", re.MULTILINE),
 }
-violations = []
-
+violations: list[str] = []
 for path in sorted(ROOT.rglob("*.lean")):
-    if ".lake" in path.parts:
-        continue
     text = path.read_text(encoding="utf-8")
     for name, pattern in forbidden.items():
         if pattern.search(text):
@@ -30,4 +33,4 @@ for path in sorted(ROOT.rglob("*.lean")):
 if violations:
     raise SystemExit("\n".join(violations))
 
-print("OK: 101 sequential audit entries; no proof placeholders or proof-hiding declarations")
+print("OK: Analysis I has 101 entries; Analysis II has 68 entries; no proof placeholders")
