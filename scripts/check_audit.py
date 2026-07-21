@@ -19,7 +19,10 @@ forbidden = {
     "opaque": re.compile(r"^[ \t]*opaque\b", re.MULTILINE),
 }
 violations = []
+
 for path in sorted(ROOT.rglob("*.lean")):
+    if ".lake" in path.parts:
+        continue
     text = path.read_text(encoding="utf-8")
     for name, pattern in forbidden.items():
         if pattern.search(text):
