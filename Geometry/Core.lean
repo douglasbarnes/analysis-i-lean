@@ -182,7 +182,8 @@ structure RiemannianMetric2 where
   smoothE : ContDiff ℝ ∞ E
   smoothF : ContDiff ℝ ∞ F
   smoothG : ContDiff ℝ ∞ G
-  positive : ∀ p x, x ≠ 0 → 0 < E p * x 0 ^ 2 + 2 * F p * x 0 * x 1 + G p * x 1 ^ 2
+  positive : ∀ (p x : Vec2), x ≠ 0 →
+    0 < E p * x 0 ^ 2 + 2 * F p * x 0 * x 1 + G p * x 1 ^ 2
 
 /- 36. Riemannian length. -/
 def riemannianLength (speedSq : ℝ → ℝ) (a b : ℝ) : ℝ := ∫ t in a..b, Real.sqrt (speedSq t)
