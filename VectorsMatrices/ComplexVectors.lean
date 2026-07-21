@@ -164,10 +164,15 @@ theorem epsilon_contraction (j k p q : Fin 3) :
   fin_cases j <;> fin_cases k <;> fin_cases p <;> fin_cases q <;>
     norm_num [epsilon, kroneckerDelta, Fin.sum_univ_three, Fin.ext_iff]  -- 049
 
-set_option maxRecDepth 100000 in
 theorem scalarTriple_cyclic (a b c : Vec3) :
     scalarTriple a b c = scalarTriple b c a := by
-  simp [scalarTriple, coordinateDot, cross, Fin.sum_univ_three]
+  change
+    (a 0 * (b 1 * c 2 - b 2 * c 1) +
+      a 1 * (b 2 * c 0 - b 0 * c 2) +
+      a 2 * (b 0 * c 1 - b 1 * c 0)) =
+    (b 0 * (c 1 * a 2 - c 2 * a 1) +
+      b 1 * (c 2 * a 0 - c 0 * a 2) +
+      b 2 * (c 0 * a 1 - c 1 * a 0))
   ring                                                                   -- 050
 
 theorem vector_triple (a b c : Vec3) :
