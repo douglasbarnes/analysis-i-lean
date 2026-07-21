@@ -72,8 +72,8 @@ noncomputable def partialX (f : ℝ × ℝ → ℝ) (p : ℝ × ℝ) : ℝ :=
 noncomputable def partialY (f : ℝ × ℝ → ℝ) (p : ℝ × ℝ) : ℝ :=
   deriv (fun y => f (p.1, y)) p.2
 
-def Eigenfunction (f : ℝ → ℝ) (λ : ℝ) : Prop :=
-  ∀ x, HasDerivAt f (λ * f x) x
+def Eigenfunction (f : ℝ → ℝ) (lam : ℝ) : Prop :=
+  ∀ x, HasDerivAt f (lam * f x) x
 
 theorem exp_is_eigenfunction (lam : ℝ) :
     Eigenfunction (fun x : ℝ => Real.exp (lam * x)) lam := by
@@ -249,5 +249,7 @@ theorem negativeDefinite₂_iff_leadingMinors {a b c : ℝ} :
 
 def Equilibrium₂ (F : (Fin 2 → ℝ) → (Fin 2 → ℝ)) (x : Fin 2 → ℝ) : Prop :=
   F x = 0
+
+end
 
 end DifferentialEquations
