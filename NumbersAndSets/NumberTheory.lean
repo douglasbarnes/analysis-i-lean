@@ -49,7 +49,9 @@ theorem prime_dvd_finset_product {ι : Type*} {s : Finset ι} {f : ι → ℕ} {
     (hp : p.Prime) (h : p ∣ ∏ i ∈ s, f i) : ∃ i ∈ s, p ∣ f i := by
   classical
   induction s using Finset.induction_on with
-  | empty => simp at h
+  | empty =>
+      have hp1 : p = 1 := by simpa using h
+      exact (hp.ne_one hp1).elim
   | @insert i s hi ih =>
       simp only [Finset.prod_insert hi] at h
       rcases hp.dvd_mul.mp h with hfi | hs
