@@ -107,7 +107,7 @@ theorem equivalence_classes_eq_or_disjoint {α : Type*} {r : Relation α}
     exact hxy (h.trans (h.symm hzx) hzy)
 
 abbrev PartialOrderRelation {α : Type*} (r : Relation α) :=
-  IsRefl α r ∧ _root_.Antisymm r ∧ _root_.Transitive r
+  IsRefl α r ∧ Std.Antisymm r ∧ Std.Transitive r
 
 abbrev TotalOrderRelation {α : Type*} (r : Relation α) :=
   PartialOrderRelation r ∧ ∀ x y, r x y ∨ r y x
