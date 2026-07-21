@@ -8,6 +8,8 @@ universe u
 
 open Matrix
 
+noncomputable section
+
 /-- 113. The general linear group. -/
 abbrev GeneralLinearGroup (n : Type u) (F : Type u) [Fintype n] [DecidableEq n]
     [CommRing F] := (Matrix n n F)ˣ
@@ -93,7 +95,8 @@ def reflection2 : Matrix (Fin 2) (Fin 2) ℝ := !![1, 0; 0, -1]
 /-- 126. The standard reflection is orthogonal and has determinant `-1`. -/
 theorem reflection2_orthogonal : IsOrthogonalMatrix reflection2 ∧ Matrix.det reflection2 = -1 := by
   constructor
-  · decide
+  · ext i j <;> fin_cases i <;> fin_cases j <;>
+      norm_num [IsOrthogonalMatrix, reflection2, Matrix.mul_apply]
   · norm_num [reflection2, Matrix.det_fin_two]
 
 /-- 127. A rotation around an axis fixes that axis. -/
@@ -121,8 +124,9 @@ theorem unitary_det_norm_sq {n : Type u} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : IsUnitaryMatrix A) :
     Complex.normSq (Matrix.det A) = 1 := by
   have h := congrArg Matrix.det hA
-  simpa [IsUnitaryMatrix, Matrix.det_mul, Complex.normSq_eq_conj_mul_self,
-    Matrix.det_conjTranspose] using h
+  apply Complex.ofReal_injective
+  rw [Complex.ofReal_one, Complex.normSq_eq_conj_mul_self]
+  simpa [IsUnitaryMatrix, Matrix.det_mul, Matrix.det_conjTranspose] using h
 
 /-- 131. Special unitary matrices. -/
 def IsSpecialUnitary {n : Type u} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) : Prop :=
@@ -174,7 +178,7 @@ theorem equiv_ext_three_or_more {X : Type u} (f g : X ≃ X) (h : ∀ x, f x = g
   exact h x
 
 /-- 142. Conjugation of a self-equivalence. -/
-def conjugateEquiv {X : Type u} (g f : X ≃ X) : X ≃ X := g.symm.trans (f.trans g)
+def conjugateEquiv {X : Type u} (g f : X ≃ X) : X ≃ X := g.trans (f.trans g.symm)
 
 /-- 143. Fixed points are transported by conjugacy. -/
 theorem fixedPoint_conjugate {X : Type u} (g f : X ≃ X) (x : X) :
@@ -200,7 +204,7 @@ def IsSharplyThreeTransitive (G : Type u) (X : Type u) [Group G] [MulAction G X]
 
 /-- 147. General real equation used to encode a circle or a line in `ℂ`. -/
 def OnGeneralizedCircle (A C : ℝ) (B z : ℂ) : Prop :=
-  A * Complex.normSq z + (B.conj * z + B * z.conj).re + C = 0
+  A * Complex.normSq z + ((starRingEnd ℂ) B * z + B * (starRingEnd ℂ) z).re + C = 0
 
 /-- 148. A generalized circle is transported by any equivalence, as a set. -/
 theorem image_preimage_generalized_circle (f : RiemannSphere ≃ RiemannSphere)
@@ -221,8 +225,14 @@ theorem crossRatio_double_swap (z₁ z₂ z₃ z₄ : ℂ) :
 theorem crossRatio_affine (a b z₁ z₂ z₃ z₄ : ℂ) (ha : a ≠ 0) :
     crossRatio (a*z₁+b) (a*z₂+b) (a*z₃+b) (a*z₄+b) = crossRatio z₁ z₂ z₃ z₄ := by
   simp only [crossRatio]
-  field_simp
-  ring
+  have hxy (x y : ℂ) : (a * x + b) - (a * y + b) = a * (x - y) := by ring
+  rw [hxy, hxy, hxy, hxy]
+  calc
+    (a * (z₁ - z₃) * (a * (z₂ - z₄))) / (a * (z₁ - z₄) * (a * (z₂ - z₃))) =
+        a ^ 2 * ((z₁ - z₃) * (z₂ - z₄)) /
+          (a ^ 2 * ((z₁ - z₄) * (z₂ - z₃))) := by ring
+    _ = ((z₁ - z₃) * (z₂ - z₄)) / ((z₁ - z₄) * (z₂ - z₃)) :=
+      mul_div_mul_left _ _ (pow_ne_zero 2 ha)
 
 /-- 152. The cross-ratio criterion is recorded by the real-valued predicate. -/
 def CrossRatioReal (z₁ z₂ z₃ z₄ : ℂ) : Prop := (crossRatio z₁ z₂ z₃ z₄).im = 0
