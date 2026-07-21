@@ -40,6 +40,10 @@ python3 scripts/check_audit.py
 - `SOURCE_CORRECTIONS.md` — exact corrections needed before formalisation.
 - `.github/workflows/lean.yml` — reproducible build and no-placeholder checks.
 
+## Verification status
+
+See [`VERIFICATION.md`](VERIFICATION.md). The static audit and Lean syntax checks pass. A full `lake build` was not available in this execution environment, so kernel verification remains the first CI gate.
+
 ## Policy
 
 The project treats a theorem as closed only when one of the following holds:
