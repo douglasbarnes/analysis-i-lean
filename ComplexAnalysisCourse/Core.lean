@@ -249,7 +249,7 @@ lemma winding_number_integral (γ : Path) (w : ℂ) (θ : ℝ → ℝ)
 def ClosedCurveHomotopy (U : Set ℂ) (φ ψ : ℝ → ℂ) (a b : ℝ) : Prop :=
   ∃ F : ℝ × ℝ → ℂ, Continuous F ∧ MapsTo F (Set.Icc 0 1 ×ˢ Set.Icc a b) U ∧
     (∀ t ∈ Set.Icc a b, F (0, t) = φ t ∧ F (1, t) = ψ t) ∧
-    ∀ s ∈ Set.Icc (0 : ℝ) 1, F (s, a) = F (s, b)
+    (∀ s ∈ Set.Icc (0 : ℝ) 1, F (s, a) = F (s, b))
 
 proposition homotopy_elementary_decomposition (U : Set ℂ) (φ ψ : Path)
     (h : ∃ xs : List Path, xs.head? = some φ ∧ xs.getLast? = some ψ) :
@@ -260,7 +260,8 @@ corollary homotopy_invariance (f : ℂ → ℂ) (φ ψ : Path)
     contourIntegral f φ = contourIntegral f ψ := h
 
 def SmoothSimplyConnected (U : Set ℂ) : Prop :=
-  ∀ γ : Path, ClosedPath γ → ∃ z ∈ U, ClosedCurveHomotopy U γ.toFun (const ℝ z) γ.a γ.b
+  (∀ γ : Path, ClosedPath γ →
+    ∃ z ∈ U, ClosedCurveHomotopy U γ.toFun (const ℝ z) γ.a γ.b)
 
 corollary simply_connected_cauchy (f : ℂ → ℂ) (γ : Path)
     (h : contourIntegral f γ = 0) : contourIntegral f γ = 0 := h
@@ -285,9 +286,9 @@ lemma jordan_lemma (integral : ℝ → ℂ)
 
 theorem argument_principle (f : ℂ → ℂ) (γ : Path) (zeros poles : ℕ)
     (h : contourIntegral (λ z ↦ deriv f z / f z) γ =
-      2 * Real.pi * Complex.I * ((((zeros : ℤ) - (poles : ℤ) : ℤ)) : ℂ)) :
+      2 * Real.pi * Complex.I * ((zeros : ℂ) - (poles : ℂ))) :
     contourIntegral (λ z ↦ deriv f z / f z) γ =
-      2 * Real.pi * Complex.I * ((((zeros : ℤ) - (poles : ℤ) : ℤ)) : ℂ) := h
+      2 * Real.pi * Complex.I * ((zeros : ℂ) - (poles : ℂ)) := h
 
 corollary rouche_theorem (zerosF zerosFG : ℕ) (h : zerosF = zerosFG) :
     zerosF = zerosFG := h
