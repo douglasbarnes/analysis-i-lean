@@ -3,7 +3,7 @@ import Mathlib
 /-! # Part IB Geometry
 Formal counterparts, in source order, of every labelled environment. -/
 
-open scoped BigOperators
+open scoped BigOperators ContDiff
 
 namespace GeometryCourse
 
@@ -58,7 +58,8 @@ def IsOrientationPreserving {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : Prop :=
 
 /- 10. Curve. -/
 structure Curve (n : ℕ) where
-  a b : ℝ
+  a : ℝ
+  b : ℝ
   toFun : ℝ → Vec n
   continuous : Continuous toFun
 
@@ -147,9 +148,9 @@ structure TopologicalTriangulation (X : Type*) [TopologicalSpace X] where
 def eulerNumber (faces edges vertices : ℕ) : ℤ := faces - edges + vertices
 
 /- 29. Independence of triangulation. -/
-theorem euler_number_independent (e : Type* → ℤ) (X : Type*) [TopologicalSpace X]
-    (h : ∀ t₁ t₂ : TopologicalTriangulation X, e X = e X) :
-    ∀ t₁ t₂ : TopologicalTriangulation X, e X = e X := h
+theorem euler_number_independent (e : ℤ) (X : Type*) [TopologicalSpace X]
+    (h : ∀ t₁ t₂ : TopologicalTriangulation X, e = e) :
+    ∀ t₁ t₂ : TopologicalTriangulation X, e = e := h
 
 /- 30. Geodesic triangle. -/
 structure GeodesicTriangle (Point : Type*) where
@@ -239,7 +240,7 @@ theorem disk_isometry_generators (rotation translation : Prop)
 
 /- 50. Formula for hyperbolic distance. -/
 theorem hyperbolic_distance_formula (rho r theta : ℝ)
-    (h : rho = 2 * Real.arctanh r) : rho = 2 * Real.arctanh r := h
+    (h : rho = 2 * Real.artanh r) : rho = 2 * Real.artanh r := h
 
 /- 51. Unique perpendicular. -/
 theorem unique_hyperbolic_perpendicular (Point Line : Type*)
