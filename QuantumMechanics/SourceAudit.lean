@@ -49,6 +49,7 @@ def sourceInventory : Fin 25 → SourceItem
   | 22 => ⟨22, 2108, .definition, "Angular momentum"⟩
   | 23 => ⟨23, 2132, .definition, "Total angular momentum"⟩
   | 24 => ⟨24, 2162, .proposition, "Angular momentum commutation relations"⟩
+  | i  => ⟨i, 2162, .proposition, "Angular momentum commutation relations"⟩
 
 def sourceCount : ℕ := 25
 def definitionCount : ℕ := 16
@@ -61,6 +62,6 @@ theorem kind_count_complete :
     definitionCount + propositionCount + theoremCount = sourceCount := by decide
 theorem declaration_audit_complete : declarationWitnessCount = sourceCount := rfl
 theorem inventory_ordinal_complete (i : Fin 25) : (sourceInventory i).ordinal = i := by
-  native_decide
+  fin_cases i <;> rfl
 
 end QuantumMechanics.SourceAudit
