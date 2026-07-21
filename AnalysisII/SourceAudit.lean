@@ -1,4 +1,4 @@
-/-- Machine-readable inventory of the 68 theorem-like environments in the supplied Analysis II notes. -/
+/-! Machine-readable inventory of the 68 theorem-like environments in the supplied Analysis II notes. -/
 namespace AnalysisII
 
 inductive CoverageStatus where
