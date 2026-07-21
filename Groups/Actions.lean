@@ -48,10 +48,10 @@ theorem orbit_relation_equivalence (G : Type u) (X : Type v) [Group G] [MulActio
 
 /-- 090. Orbit--stabilizer theorem for finite groups. -/
 theorem orbit_stabilizer_card (G : Type u) {X : Type v} [Group G] [Fintype G]
-    [MulAction G X] (x : X) [Fintype (MulAction.orbit G x)] :
-    Fintype.card (MulAction.orbit G x) * Fintype.card (MulAction.stabilizer G x) =
-      Fintype.card G := by
-  exact MulAction.card_orbit_mul_card_stabilizer_eq_card_group G x
+    [MulAction G X] (x : X) :
+    Nat.card (MulAction.orbit G x) * Nat.card (MulAction.stabilizer G x) = Nat.card G := by
+  rw [← Nat.card_prod]
+  exact Nat.card_congr (MulAction.orbitProdStabilizerEquivGroup x)
 
 /-- 091. Left multiplication gives a faithful and transitive action of a group on itself. -/
 theorem left_regular_action (G : Type u) [Group G] :
@@ -167,7 +167,6 @@ abbrev QuaternionEight := QuaternionGroup 2
 /-- 111. The quaternion relations, represented by the bundled quaternion group. -/
 theorem quaternion_order : Nat.card QuaternionEight = 8 := by
   rw [Nat.card_eq_fintype_card, QuaternionGroup.card]
-  norm_num
 
 /-- 112. For a group of order eight, every element has order dividing eight. -/
 theorem order_eight_element_orders {G : Type u} [Group G] [Fintype G]
