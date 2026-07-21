@@ -77,7 +77,7 @@ theorem chebyshevInterpolationBound (error derivativeNorm : ℝ) (n : ℕ)
     error ≤ derivativeNorm / (2 ^ n * (n + 1).factorial) := h
 
 /-- Orthogonality in a real inner-product space. -/
-def AreOrthogonal {V : Type*} [AddCommGroup V] [Module ℝ V] [InnerProductSpace ℝ V]
+def AreOrthogonal {V : Type*} [SeminormedAddCommGroup V] [InnerProductSpace ℝ V]
     (f g : V) : Prop := inner ℝ f g = 0
 
 /-- A degree-`n` polynomial orthogonal to every lower-degree polynomial. -/
@@ -92,7 +92,7 @@ theorem uniqueMonicOrthogonalPolynomial {V : Type*} (p : V)
     (isUnique : ∀ q : V, q = p) : ∃! q : V, q = p := by
   exact ⟨p, rfl, fun y _ => isUnique y⟩
 
-theorem orthogonalPolynomialThreeTerm (next xpk pk previous α β : Polynomial ℝ)
+theorem orthogonalPolynomialThreeTerm (next xpk pk previous : Polynomial ℝ) (α β : ℝ)
     (h : next = (xpk - Polynomial.C α) * pk - Polynomial.C β * previous) :
     next = (xpk - Polynomial.C α) * pk - Polynomial.C β * previous := h
 
@@ -119,12 +119,12 @@ theorem gaussianQuadratureExactness (degree ν : ℕ)
 def IsSharpErrorBound (c : ℝ) (attained : ℝ → Prop) : Prop :=
   ∀ ε > 0, ∃ e, attained e ∧ c - ε ≤ e
 
-theorem peanoKernelTheorem (λf kernelIntegral : ℝ)
-    (h : λf = kernelIntegral) : λf = kernelIntegral := h
+theorem peanoKernelTheorem (functionalValue kernelIntegral : ℝ)
+    (h : functionalValue = kernelIntegral) : functionalValue = kernelIntegral := h
 
 /-- The Peano kernel `K(θ)=λ((x-θ)⁺^k)`, abstracting the functional argument. -/
-def peanoKernel (λ : (ℝ → ℝ) → ℝ) (k : ℕ) (θ : ℝ) : ℝ :=
-  λ (fun x => (max (x - θ) 0) ^ k)
+def peanoKernel (functional : (ℝ → ℝ) → ℝ) (k : ℕ) (θ : ℝ) : ℝ :=
+  functional (fun x => (max (x - θ) 0) ^ k)
 
 /-- Lipschitz continuity in the state variable, uniformly in time. -/
 def IsLipschitz (f : ℝ → ℝ → ℝ) (K : ℝ) : Prop :=
@@ -229,7 +229,7 @@ theorem symmetricLDLFactorization (nonsingularLeadingMinors uniqueLDL : Prop)
 
 /-- Positive definiteness of a real square matrix. -/
 def IsPositiveDefinite {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : Prop :=
-  ∀ x : Fin n → ℝ, x ≠ 0 → 0 < dotProduct x (A *ᵥ x)
+  ∀ x : Fin n → ℝ, x ≠ 0 → 0 < dotProduct x (Matrix.mulVec A x)
 
 theorem positiveDefiniteLeadingMinors (positiveDefinite leadingMinorsNonzero : Prop)
     (h : positiveDefinite → leadingMinorsNonzero) : positiveDefinite → leadingMinorsNonzero := h
