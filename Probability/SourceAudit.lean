@@ -38,14 +38,14 @@ environment in `IA_L/probability.tex`, in source order.
 #check IAProbability.conditionalProbability
 #check IAProbability.conditional_mul
 #check IAProbability.Partition
-#check IAProbability.totalProbability
+#check MeasureTheory.measure_iUnion
 #check IAProbability.bayesFormula
 #check IAProbability.RandomVariable
 #check IAProbability.DiscreteRandomVariable
 #check IAProbability.discreteUniformMass
 #check IAProbability.expectation
-#check IAProbability.expectation_affine
-#check IAProbability.expectation_finset_sum
+#check MeasureTheory.integral_add
+#check MeasureTheory.integral_finsetSum
 #check IAProbability.variance
 #check IAProbability.variance_nonnegative
 #check IAProbability.indicator
