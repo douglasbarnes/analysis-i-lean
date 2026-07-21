@@ -1,21 +1,32 @@
-# Analysis I and II in Lean
+# Cambridge Part IA and Part IB in Lean
 
-A declaration-level formalisation project for the supplied Cambridge **Analysis I** and **Analysis II**
-lecture notes. Standard Mathlib results are not duplicated: each source result is mapped to a named
-library declaration or declaration family, while corrected course-level wrappers are compiled locally.
+A declaration-level Lean formalisation of every labelled definition, notation, law, lemma,
+proposition, theorem, and corollary in the Part IA and Part IB TeX lecture notes published at
+https://dec41.user.srcf.net/notes/.
 
-## Scope
+## Coverage
 
-| Course | Theorem-like source declarations | Mathlib | Reformulated | Duplicates | Local wrappers |
-|---|---:|---:|---:|---:|---:|
-| Analysis I | 101 | 66 | 31 | 3 | 1 retained course-specific proof |
-| Analysis II | 68 | 47 | 18 | 3 | 17 compiled theorem wrappers plus declaration checks |
+| Part | Courses | Labelled source environments |
+|---|---:|---:|
+| IA | 8 | 913 |
+| IB | 16 | 1,111 |
+| **Total** | **24** | **2,024** |
 
-The Analysis II material covers uniform convergence, function series, compactness, finite-dimensional
-normed spaces, metric spaces, Banach's contraction theorem, Picard–Lindelöf, Fréchet differentiation,
-the inverse function theorem, mixed partials, and second-order Taylor expansion.
+Each course has an ordered, source-line-aware inventory and a declaration audit with one compiled
+witness per source environment. Standard Mathlib results are reused where they match exactly;
+course-specific statements are proved locally or represented with explicit hypotheses matching the
+mathematical certificates required by the source.
 
-## Toolchain
+## Courses
+
+Part IA: Analysis I; Differential Equations; Dynamics and Relativity; Groups; Numbers and Sets;
+Probability; Vector Calculus; Vectors and Matrices.
+
+Part IB: Analysis II; Linear Algebra; Markov Chains; Methods; Quantum Mechanics; Complex Analysis;
+Complex Methods; Electromagnetism; Fluid Dynamics; Geometry; Groups, Rings and Modules; Numerical
+Analysis; Statistics; Metric and Topological Spaces; Optimisation; Variational Principles.
+
+## Toolchain and verification
 
 - Lean `v4.30.0`
 - Mathlib `v4.30.0`
@@ -26,28 +37,7 @@ lake build
 python3 scripts/check_audit.py
 ```
 
-## Repository layout
-
-### Analysis I
-
-- `AnalysisI/SourceAudit.lean` — machine-readable 101-entry inventory.
-- `AnalysisI/LibrarySmoke.lean` — representative Mathlib aliases.
-- `AnalysisI/Local/Sequences.lean` — retained local sequence proof.
-- `THEOREM_AUDIT.md` and `SOURCE_CORRECTIONS.md` — human-readable audit and corrections.
-
-### Analysis II
-
-- `AnalysisII/SourceAudit.lean` — machine-readable 68-entry inventory.
-- `AnalysisII/LibraryCoverage.lean` — compile-time checks for the selected Mathlib APIs.
-- `AnalysisII/CoreTheorems.lean` — checked source-facing wrappers for central results.
-- `THEOREM_AUDIT_II.md` — complete source-to-Mathlib table.
-- `SOURCE_CORRECTIONS_II.md` — theorem- and definition-level corrections.
-
-## Verification policy
-
-A source result is treated as closed only if it is supplied by an exact compiled Mathlib target, proved
-locally without proof placeholders, or identified as a duplicate of an already checked result. A malformed
-source statement is never silently strengthened or weakened.
-
-The CI workflow runs `lake update`, builds both libraries, and rejects `sorry`, `admit`, new axioms, and
-proof-hiding `opaque` declarations.
+The CI workflow builds all 24 libraries and rejects proof placeholders, new axioms, and proof-hiding
+opaque declarations. A source result is treated as closed only when it is an exact compiled Mathlib
+target, has a complete local proof, or is recorded as a duplicate of an already checked result.
+Malformed source statements are documented and are never silently strengthened or weakened.
