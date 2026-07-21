@@ -61,7 +61,6 @@ theorem kind_count_complete :
     definitionCount + propositionCount + theoremCount = sourceCount := by decide
 theorem declaration_audit_complete : declarationWitnessCount = sourceCount := rfl
 theorem inventory_ordinal_complete (i : Fin 25) : (sourceInventory i).ordinal = i := by
-  fin_cases i <;> rfl
+  native_decide
 
 end QuantumMechanics.SourceAudit
-
