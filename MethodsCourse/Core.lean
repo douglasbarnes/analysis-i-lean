@@ -19,7 +19,7 @@ namespace MethodsCourse
 abbrev VectorSpace (V : Type*) [AddCommMonoid V] := Module ℂ V
 
 -- Source line 95: Inner product.
-abbrev InnerProduct (V : Type*) [NormedAddCommGroup V] [Module ℂ V] :=
+abbrev InnerProduct (V : Type*) [NormedAddCommGroup V] [NormedSpace ℂ V] :=
   InnerProductSpace ℂ V
 
 -- Source line 109: Basis.
