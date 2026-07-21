@@ -163,7 +163,7 @@ def productTopology (X Y : Type*) [TopologicalSpace X] [TopologicalSpace Y] :
     TopologicalSpace (X × Y) := inferInstance
 /- 48. Basis. -/
 def TopologicalBasisDefinition {X : Type*} [TopologicalSpace X]
-    (B : Set (Set X)) : Prop := IsTopologicalBasis B
+    (B : Set (Set X)) : Prop := TopologicalSpace.IsTopologicalBasis B
 /- 49. Quotient topology. -/
 def quotientTopology {X Q : Type*} [TopologicalSpace X] (π : X → Q) : TopologicalSpace Q :=
   TopologicalSpace.coinduced π inferInstance
@@ -271,7 +271,7 @@ theorem maximum_value {X : Type*} [TopologicalSpace X] [CompactSpace X]
 theorem maximum_value_interval {f : ℝ → ℝ} (hf : ContinuousOn f (Set.Icc 0 1)) :
     ∃ x ∈ Set.Icc (0:ℝ) 1, ∀ y ∈ Set.Icc (0:ℝ) 1, f y ≤ f x :=
   by
-    simpa [IsMaxOn] using isCompact_Icc.exists_isMaxOn
+    simpa [IsMaxOn, IsMaxFilter] using isCompact_Icc.exists_isMaxOn
       (by exact ⟨0, by norm_num⟩) hf
 /- 79. Products of compact spaces are compact. -/
 theorem compact_product (X Y : Type*) [TopologicalSpace X] [TopologicalSpace Y]
