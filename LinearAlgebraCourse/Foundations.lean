@@ -49,8 +49,8 @@ theorem basis_iff_unique_representation {ι 𝕜 V : Type*} [Fintype ι] [Decida
   · rintro hb x
     let B : Module.Basis ι 𝕜 V := Module.Basis.mk hb.1 (by simpa using hb.2.ge)
     refine ⟨B.repr x, ?_, ?_⟩
-    · change x = ∑ i, (B.repr x) i • B i
-      exact (B.sum_repr x).symm
+    · rw [← B.sum_repr x]
+      simp only [B, Module.Basis.mk_apply]
     · intro y hy
       apply funext
       intro i
@@ -58,8 +58,8 @@ theorem basis_iff_unique_representation {ι 𝕜 V : Type*} [Fintype ι] [Decida
       calc
         ∑ j, y j • b j = x := hy.symm
         _ = ∑ j, (B.repr x) j • b j := by
-          change x = ∑ j, (B.repr x) j • B j
-          exact (B.sum_repr x).symm
+          rw [← B.sum_repr x]
+          simp only [B, Module.Basis.mk_apply]
   · intro h
     constructor
     · rw [Fintype.linearIndependent_iff]
@@ -68,7 +68,7 @@ theorem basis_iff_unique_representation {ι 𝕜 V : Type*} [Fintype ι] [Decida
       have hg' : (0 : V) = ∑ j, g j • b j := hg.symm
       exact congrFun (huniq g hg') i |>.trans (congrFun (huniq 0 (by simp)) i).symm
     · rw [eq_top_iff]
-      intro x
+      intro x _
       obtain ⟨c, hc, _⟩ := h x
       rw [hc]
       exact Submodule.sum_mem _ fun i _ =>
@@ -171,7 +171,7 @@ def standardBasisCorrespondence {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V]
 theorem basis_extension_unique {ι 𝕜 U V : Type*} [Fintype ι] [DecidableEq ι]
     [DivisionRing 𝕜] [AddCommGroup U] [Module 𝕜 U] [AddCommGroup V] [Module 𝕜 V]
     (b : Module.Basis ι 𝕜 U) (f : ι → V) : ∃! g : U →ₗ[𝕜] V, ∀ i, g (b i) = f i := by
-  let g₀ : U →ₗ[𝕜] V := (Finsupp.linearCombination 𝕜 f).comp b.repr
+  let g₀ : U →ₗ[𝕜] V := (Finsupp.linearCombination 𝕜 f).comp b.repr.toLinearMap
   refine ⟨g₀, ?_, ?_⟩
   · intro i
     simp [g₀]
