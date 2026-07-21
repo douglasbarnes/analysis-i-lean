@@ -49,12 +49,17 @@ theorem basis_iff_unique_representation {ι 𝕜 V : Type*} [Fintype ι] [Decida
   · rintro hb x
     let B : Module.Basis ι 𝕜 V := Module.Basis.mk hb.1 (by simpa using hb.2.ge)
     refine ⟨B.repr x, ?_, ?_⟩
-    · simpa using (B.sum_repr x).symm
+    · change x = ∑ i, (B.repr x) i • B i
+      exact (B.sum_repr x).symm
     · intro y hy
       apply funext
       intro i
-      have := congrArg (fun z => B.repr z i) hy
-      simpa using this
+      apply hb.1.eq_coords_of_eq
+      calc
+        ∑ j, y j • b j = x := hy.symm
+        _ = ∑ j, (B.repr x) j • b j := by
+          change x = ∑ j, (B.repr x) j • B j
+          exact (B.sum_repr x).symm
   · intro h
     constructor
     · rw [Fintype.linearIndependent_iff]
@@ -66,7 +71,8 @@ theorem basis_iff_unique_representation {ι 𝕜 V : Type*} [Fintype ι] [Decida
       intro x
       obtain ⟨c, hc, _⟩ := h x
       rw [hc]
-      exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩) -- 014
+      exact Submodule.sum_mem _ fun i _ =>
+        Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self i)) -- 014
 
 theorem steinitz_exchange_rank {𝕜 V I J : Type*} [DivisionRing 𝕜] [AddCommGroup V]
     [Module 𝕜 V] [Fintype I] [Fintype J] (v : I → V) (w : J → V)
@@ -165,12 +171,14 @@ def standardBasisCorrespondence {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V]
 theorem basis_extension_unique {ι 𝕜 U V : Type*} [Fintype ι] [DecidableEq ι]
     [DivisionRing 𝕜] [AddCommGroup U] [Module 𝕜 U] [AddCommGroup V] [Module 𝕜 V]
     (b : Module.Basis ι 𝕜 U) (f : ι → V) : ∃! g : U →ₗ[𝕜] V, ∀ i, g (b i) = f i := by
-  refine ⟨b.constr (RingHom.id 𝕜) f, ?_, ?_⟩
-  · intro i; simp
+  let g₀ : U →ₗ[𝕜] V := (Finsupp.linearCombination 𝕜 f).comp b.repr
+  refine ⟨g₀, ?_, ?_⟩
+  · intro i
+    simp [g₀]
   · intro g hg
     apply b.ext
     intro i
-    simp [hg] -- 033
+    simpa [g₀] using (hg i).symm -- 033
 
 abbrev MatrixLinearMap (m n : Type*) (𝕜 : Type*) [Fintype m] [Finite n]
     [Field 𝕜] := Matrix n m 𝕜 -- 034
