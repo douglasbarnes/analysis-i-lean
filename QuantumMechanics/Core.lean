@@ -9,7 +9,7 @@ model are explicit fields or predicates; none are introduced as logical
 primitives.
 -/
 
-open scoped BigOperators ComplexConjugate
+open scoped BigOperators ComplexConjugate InnerProductSpace
 
 namespace QuantumMechanics
 
@@ -101,17 +101,21 @@ structure EhrenfestModel (State : Type*) [NormedAddCommGroup State]
     [InnerProductSpace ℂ State] where
   mass : ℝ
   mass_ne_zero : mass ≠ 0
-  position momentum potentialDerivative : Operator State
+  position : Operator State
+  momentum : Operator State
+  potentialDerivative : Operator State
   trajectory : ℝ → State
-  positionExpectationDerivative momentumExpectationDerivative : ℝ → ℂ
+  positionExpectationDerivative : ℝ → ℂ
+  momentumExpectationDerivative : ℝ → ℂ
   position_law : ∀ t,
-    positionExpectationDerivative t = (1 / mass : ℝ) • expectationValue momentum (trajectory t)
+    positionExpectationDerivative t =
+      ((1 / mass : ℝ) : ℂ) * expectationValue momentum (trajectory t)
   momentum_law : ∀ t,
     momentumExpectationDerivative t = -expectationValue potentialDerivative (trajectory t)
 
 theorem ehrenfest_position_momentum (M : EhrenfestModel State) (t : ℝ) :
     M.positionExpectationDerivative t =
-        (1 / M.mass : ℝ) • expectationValue M.momentum (M.trajectory t) ∧
+        ((1 / M.mass : ℝ) : ℂ) * expectationValue M.momentum (M.trajectory t) ∧
       M.momentumExpectationDerivative t =
         -expectationValue M.potentialDerivative (M.trajectory t) :=
   ⟨M.position_law t, M.momentum_law t⟩
@@ -120,7 +124,8 @@ theorem ehrenfest_position_momentum (M : EhrenfestModel State) (t : ℝ) :
 structure CanonicalUncertaintyModel (State : Type*) [NormedAddCommGroup State]
     [InnerProductSpace ℂ State] where
   ℏ : ℝ
-  position momentum : Operator State
+  position : Operator State
+  momentum : Operator State
   normalized : State → Prop
   uncertainty_bound : ∀ ψ, normalized ψ →
     ℏ / 2 ≤ uncertainty position ψ * uncertainty momentum ψ
@@ -147,7 +152,8 @@ def IsGaussianWavepacket (α : ℝ) (γ : ℝ → ℂ) (Ψ : ℝ → ℝ → ℂ
       (1 / Complex.sqrt (γ t)) * Complex.exp (-(x ^ 2 : ℂ) / (2 * γ t))
 
 /- 17. Ground and excited states. -/
-def IsEigenstate (H : Operator State) (E : ℝ) (ψ : State) : Prop := H ψ = E • ψ
+def IsEigenstate (H : Operator State) (E : ℝ) (ψ : State) : Prop :=
+  H ψ = (E : ℂ) • ψ
 
 def IsGroundState (H : Operator State) (energy : State → ℝ) (ψ : State) : Prop :=
   IsEigenstate H (energy ψ) ψ ∧ ∀ φ, IsEigenstate H (energy φ) φ → energy ψ ≤ energy φ
@@ -177,17 +183,19 @@ theorem hermitian_spectral_properties {ι : Type*} [Fintype ι]
   exact D.eigenvector.repr.surjective
 
 /- 19. Expectation and variance in a spectral probability distribution. -/
-def spectralExpectation {ι : Type*} [Fintype ι] (λ probability : ι → ℝ) : ℝ :=
-  ∑ i, λ i * probability i
+def spectralExpectation {ι : Type*} [Fintype ι] (eigenvalues probability : ι → ℝ) : ℝ :=
+  ∑ i, eigenvalues i * probability i
 
-def spectralVariance {ι : Type*} [Fintype ι] (λ probability : ι → ℝ) : ℝ :=
-  ∑ i, (λ i - spectralExpectation λ probability) ^ 2 * probability i
+def spectralVariance {ι : Type*} [Fintype ι]
+    (eigenvalues probability : ι → ℝ) : ℝ :=
+  ∑ i, (eigenvalues i - spectralExpectation eigenvalues probability) ^ 2 * probability i
 
 theorem spectral_expectation_and_uncertainty {ι : Type*} [Fintype ι]
-    (λ probability : ι → ℝ) :
-    spectralExpectation λ probability = ∑ i, λ i * probability i ∧
-      spectralVariance λ probability =
-        ∑ i, (λ i - spectralExpectation λ probability) ^ 2 * probability i :=
+    (eigenvalues probability : ι → ℝ) :
+    spectralExpectation eigenvalues probability =
+        ∑ i, eigenvalues i * probability i ∧
+      spectralVariance eigenvalues probability =
+        ∑ i, (eigenvalues i - spectralExpectation eigenvalues probability) ^ 2 * probability i :=
   ⟨rfl, rfl⟩
 
 /- 20. General Ehrenfest theorem. -/
@@ -203,17 +211,18 @@ theorem general_ehrenfest {ℏ : ℝ} {H Q : Operator State} {Ψ : ℝ → State
       expectationValue (commutator Q H) (Ψ t) := h t
 
 /- 21. Degeneracy. -/
-def eigenspace (Q : Operator State) (λ : ℂ) : Submodule ℂ State :=
-  LinearMap.ker (Q - λ • LinearMap.id)
+def eigenspace (Q : Operator State) (eigenvalue : ℂ) : Submodule ℂ State :=
+  LinearMap.ker (Q - eigenvalue • LinearMap.id)
 
-def degeneracy [FiniteDimensional ℂ State] (Q : Operator State) (λ : ℂ) : ℕ :=
-  Module.finrank ℂ (eigenspace Q λ)
+def degeneracy [FiniteDimensional ℂ State] (Q : Operator State) (eigenvalue : ℂ) : ℕ :=
+  Module.finrank ℂ (eigenspace Q eigenvalue)
 
-def IsNondegenerate [FiniteDimensional ℂ State] (Q : Operator State) (λ : ℂ) : Prop :=
-  degeneracy Q λ = 1
+def IsNondegenerate [FiniteDimensional ℂ State]
+    (Q : Operator State) (eigenvalue : ℂ) : Prop :=
+  degeneracy Q eigenvalue = 1
 
 def AreDegenerate (Q : Operator State) (ψ φ : State) : Prop :=
-  ∃ λ, Q ψ = λ • ψ ∧ Q φ = λ • φ
+  ∃ eigenvalue, Q ψ = eigenvalue • ψ ∧ Q φ = eigenvalue • φ
 
 /- 22. Structureless particle. -/
 def IsStructurelessParticle (generatedByPositionMomentum : Operator State → Prop) : Prop :=
@@ -234,7 +243,9 @@ structure AngularMomentumAlgebra (State : Type*) [NormedAddCommGroup State]
     [InnerProductSpace ℂ State] where
   ℏ : ℝ
   ε : Fin 3 → Fin 3 → Fin 3 → ℂ
-  position momentum angular : Fin 3 → Operator State
+  position : Fin 3 → Operator State
+  momentum : Fin 3 → Operator State
+  angular : Fin 3 → Operator State
   angular_commutator : ∀ i j,
     commutator (angular i) (angular j) =
       ∑ k, (Complex.I * ℏ * ε i j k) • angular k
