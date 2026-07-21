@@ -30,7 +30,7 @@ def IsSpanning {𝕜 V : Type*} [Semiring 𝕜] [AddCommMonoid V] [Module 𝕜 V
 def IsLinearlyIndependent {𝕜 V I : Type*} [Ring 𝕜] [AddCommGroup V] [Module 𝕜 V]
     (v : I → V) : Prop := LinearIndependent 𝕜 v -- 010
 abbrev VectorBasis (I 𝕜 V : Type*) [Ring 𝕜] [AddCommGroup V] [Module 𝕜 V] :=
-  Basis I 𝕜 V -- 011
+  Module.Basis I 𝕜 V -- 011
 def IsFiniteDimensional (𝕜 V : Type*) [DivisionRing 𝕜] [AddCommGroup V] [Module 𝕜 V] : Prop :=
   Module.Finite 𝕜 V -- 012
 
@@ -47,7 +47,7 @@ theorem basis_iff_unique_representation {ι 𝕜 V : Type*} [Fintype ι] [Decida
   classical
   constructor
   · rintro hb x
-    let B : Basis ι 𝕜 V := Basis.mk hb.1 (by simpa using hb.2.ge)
+    let B : Module.Basis ι 𝕜 V := Module.Basis.mk hb.1 (by simpa using hb.2.ge)
     refine ⟨B.repr x, ?_, ?_⟩
     · simpa using (B.sum_repr x).symm
     · intro y hy
@@ -72,7 +72,11 @@ theorem steinitz_exchange_rank {𝕜 V I J : Type*} [DivisionRing 𝕜] [AddComm
     [Module 𝕜 V] [Fintype I] [Fintype J] (v : I → V) (w : J → V)
     (hv : LinearIndependent 𝕜 v) (hw : Submodule.span 𝕜 (Set.range w) = ⊤) :
     Fintype.card I ≤ Fintype.card J :=
-  hv.fintype_card_le_finrank.trans (finrank_le_of_span_eq_top hw) -- 015
+  by
+    letI : Module.Finite 𝕜 V := Module.Finite.of_surjective
+      (Finsupp.linearCombination 𝕜 w) (by
+        rw [← LinearMap.range_eq_top, Finsupp.range_linearCombination, hw])
+    exact hv.fintype_card_le_finrank.trans (finrank_le_of_span_eq_top hw) -- 015
 
 theorem exchange_reordering_cardinality {𝕜 V I J : Type*} [DivisionRing 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [Fintype I] [Fintype J] (v : I → V) (w : J → V)
@@ -81,7 +85,7 @@ theorem exchange_reordering_cardinality {𝕜 V I J : Type*} [DivisionRing 𝕜]
 
 theorem finite_basis_consequences {𝕜 V I J : Type*} [DivisionRing 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [Fintype I] [Fintype J]
-    (b : Basis I 𝕜 V) (c : Basis J 𝕜 V) : Fintype.card I = Fintype.card J :=
+    (b : Module.Basis I 𝕜 V) (c : Module.Basis J 𝕜 V) : Fintype.card I = Fintype.card J :=
   (Module.finrank_eq_card_basis b).symm.trans (Module.finrank_eq_card_basis c) -- 017
 
 def dimension (𝕜 V : Type*) [DivisionRing 𝕜] [AddCommGroup V] [Module 𝕜 V] : Cardinal :=
@@ -94,7 +98,7 @@ theorem proper_subspace_dimension_lt {𝕜 V : Type*} [DivisionRing 𝕜]
 
 theorem dimension_sum_intersection {𝕜 V : Type*} [DivisionRing 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [FiniteDimensional 𝕜 V] (U W : Submodule 𝕜 V) :
-    Module.finrank 𝕜 (U ⊔ W) + Module.finrank 𝕜 (U ⊓ W) =
+    Module.finrank 𝕜 (↥(U ⊔ W)) + Module.finrank 𝕜 (↥(U ⊓ W)) =
       Module.finrank 𝕜 U + Module.finrank 𝕜 W :=
   Submodule.finrank_sup_add_finrank_inf_eq U W -- 020
 
@@ -122,8 +126,8 @@ theorem isomorphism_iff_bijective {𝕜 U V : Type*} [Semiring 𝕜]
     Function.Bijective f ↔ ∃ e : U ≃ₗ[𝕜] V, (e : U → V) = f := by
   constructor
   · exact fun h => ⟨LinearEquiv.ofBijective f h, rfl⟩
-  · rintro ⟨e, rfl⟩
-    exact e.bijective -- 028
+  · rintro ⟨e, he⟩
+    simpa only [← he] using e.bijective -- 028
 
 def image {𝕜 U V : Type*} [Semiring 𝕜] [AddCommMonoid U] [Module 𝕜 U]
     [AddCommMonoid V] [Module 𝕜 V] (f : U →ₗ[𝕜] V) := LinearMap.range f
@@ -138,7 +142,7 @@ theorem maps_independent_spanning_basis {𝕜 U V I : Type*} [DivisionRing 𝕜]
       Submodule.span 𝕜 (Set.range (f ∘ v)) = ⊤) := by
   constructor
   · intro hf hv
-    exact hv.map' f hf
+    exact hv.map' f (LinearMap.ker_eq_bot.mpr hf)
   · intro hf hv
     have hrange : Set.range (f ∘ v) = f '' Set.range v := by
       ext y
@@ -155,12 +159,12 @@ theorem isomorphic_finrank_eq {𝕜 U V : Type*} [DivisionRing 𝕜]
     Module.finrank 𝕜 U = Module.finrank 𝕜 V := LinearEquiv.finrank_eq e -- 031
 
 def standardBasisCorrespondence {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V]
-    [Module 𝕜 V] {n : ℕ} (b : Basis (Fin n) 𝕜 V) : (Fin n → 𝕜) ≃ₗ[𝕜] V :=
+    [Module 𝕜 V] {n : ℕ} (b : Module.Basis (Fin n) 𝕜 V) : (Fin n → 𝕜) ≃ₗ[𝕜] V :=
   b.equivFun.symm -- 032
 
 theorem basis_extension_unique {ι 𝕜 U V : Type*} [Fintype ι] [DecidableEq ι]
     [DivisionRing 𝕜] [AddCommGroup U] [Module 𝕜 U] [AddCommGroup V] [Module 𝕜 V]
-    (b : Basis ι 𝕜 U) (f : ι → V) : ∃! g : U →ₗ[𝕜] V, ∀ i, g (b i) = f i := by
+    (b : Module.Basis ι 𝕜 U) (f : ι → V) : ∃! g : U →ₗ[𝕜] V, ∀ i, g (b i) = f i := by
   refine ⟨b.constr (RingHom.id 𝕜) f, ?_, ?_⟩
   · intro i; simp
   · intro g hg
