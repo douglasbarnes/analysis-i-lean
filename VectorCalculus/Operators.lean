@@ -84,7 +84,9 @@ def ConservationEquation (timeDerivativeDensity divergenceCurrent : ℝ) : Prop 
   timeDerivativeDensity + divergenceCurrent = 0
 
 structure OrthogonalCurvilinearCoordinates where
-  tangentU tangentV tangentW : Vec 3
+  tangentU : Vec 3
+  tangentV : Vec 3
+  tangentW : Vec 3
   uv : (∑ i, tangentU i * tangentV i) = 0
   uw : (∑ i, tangentU i * tangentW i) = 0
   vw : (∑ i, tangentV i * tangentW i) = 0
