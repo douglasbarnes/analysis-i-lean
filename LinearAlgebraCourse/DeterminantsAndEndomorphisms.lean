@@ -18,7 +18,7 @@ def bilinearFormMatrix {m n 𝕜 V W : Type*} [Fintype m] [Fintype n]
   fun i j => B (bV i) (bW j) -- 065
 theorem bilinear_change_basis {m n 𝕜 : Type*} [Fintype m] [DecidableEq m]
     [Fintype n] [DecidableEq n] [CommRing 𝕜]
-    (P A : Matrix m m 𝕜) (Q : Matrix n n 𝕜) :
+    (P : Matrix m m 𝕜) (A : Matrix m n 𝕜) (Q : Matrix n n 𝕜) :
     P.transpose * A * Q = P.transpose * A * Q := rfl -- 066
 theorem bilinear_dual_matrix {m n 𝕜 : Type*} [Fintype m] [Fintype n]
     [CommSemiring 𝕜] (A : Matrix m n 𝕜) : A.transpose.transpose = A :=
@@ -38,8 +38,7 @@ def bilinearRank {𝕜 V W : Type*} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V
 theorem nondegenerate_implies_left_injective {𝕜 V W : Type*} [Field 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [AddCommGroup W] [Module 𝕜 W]
     (B : BilinearForm 𝕜 V W) (h : IsNondegenerate B) : Function.Injective B := by
-  rw [LinearMap.ker_eq_bot]
-  exact h.1 -- 071
+  exact LinearMap.ker_eq_bot'.mp h.1 -- 071
 
 def determinant {n 𝕜 : Type*} [Fintype n] [DecidableEq n] [CommRing 𝕜]
     (A : Matrix n n 𝕜) : 𝕜 := Matrix.det A -- 072
@@ -56,7 +55,7 @@ def determinantVolumeForm (n : Type*) (𝕜 : Type*) [Fintype n] [DecidableEq n]
     [CommRing 𝕜] : VolumeForm n 𝕜 := Matrix.detRowAlternating -- 076
 theorem volume_form_swap {n 𝕜 : Type*} [Fintype n] [DecidableEq n] [CommRing 𝕜]
     (d : VolumeForm n 𝕜) (v : n → n → 𝕜) {i j : n} (hij : i ≠ j) :
-    d (v ∘ Equiv.swap i j) = -d v := d.map_swap hij -- 077
+    d (v ∘ Equiv.swap i j) = -d v := d.map_swap v hij -- 077
 theorem volume_form_permutation {n 𝕜 : Type*} [Fintype n] [DecidableEq n]
     [CommRing 𝕜] (d : VolumeForm n 𝕜) (v : n → n → 𝕜) (σ : Equiv.Perm n) :
     d (v ∘ σ) = Equiv.Perm.sign σ • d v := d.map_perm v σ -- 078
@@ -73,13 +72,13 @@ def IsSingular {n 𝕜 : Type*} [Fintype n] [DecidableEq n] [CommRing 𝕜]
     (A : Matrix n n 𝕜) : Prop := Matrix.det A = 0 -- 082
 theorem nonsingular_iff_invertible {n 𝕜 : Type*} [Fintype n] [DecidableEq n]
     [Field 𝕜] (A : Matrix n n 𝕜) : Matrix.det A ≠ 0 ↔ IsUnit A :=
-  Matrix.isUnit_iff_isUnit_det.trans isUnit_iff_ne_zero |>.symm -- 083
+  by simpa [isUnit_iff_ne_zero] using A.isUnit_iff_isUnit_det.symm -- 083
 def deleteRowColumn {n 𝕜 : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n 𝕜) (i j : n) : Matrix {x // x ≠ i} {y // y ≠ j} 𝕜 :=
   A.submatrix Subtype.val Subtype.val -- 084
 theorem laplace_expansion {n : ℕ} {𝕜 : Type*} [CommRing 𝕜]
     (A : Matrix (Fin (n + 1)) (Fin (n + 1)) 𝕜) (i : Fin (n + 1)) :
-    Matrix.det A = ∑ j, (-1) ^ (i + j : ℕ) * A i j *
+    Matrix.det A = ∑ j : Fin (n + 1), (-1) ^ (i + j : ℕ) * A i j *
       Matrix.det (A.submatrix i.succAbove j.succAbove) := Matrix.det_succ_row A i -- 085
 def adjugate {n 𝕜 : Type*} [Fintype n] [DecidableEq n] [CommRing 𝕜]
     (A : Matrix n n 𝕜) : Matrix n n 𝕜 := Matrix.adjugate A -- 086
@@ -125,19 +124,19 @@ theorem distinct_eigenspaces_independent {𝕜 V : Type*} [Field 𝕜]
   Module.End.eigenspaces_iSupIndep f -- 099
 def IsDiagonalizable {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V]
     [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V) : Prop :=
-  f.IsSemisimple ∧ (LinearMap.minpoly 𝕜 f).Splits -- 100
+  Module.End.IsSemisimple f ∧ (minpoly 𝕜 f).Splits -- 100
 theorem diagonalizable_iff_eigenspace_iSup {𝕜 V : Type*} [Field 𝕜]
     [IsAlgClosed 𝕜] [AddCommGroup V] [Module 𝕜 V] [FiniteDimensional 𝕜 V]
-    (f : V →ₗ[𝕜] V) (hf : f.IsSemisimple) :
+    (f : V →ₗ[𝕜] V) (hf : Module.End.IsSemisimple f) :
     ⨆ μ : 𝕜, Module.End.eigenspace f μ = ⊤ := hf.iSup_eigenspace_eq_top -- 101
 abbrev PolynomialOver (𝕜 : Type*) [Semiring 𝕜] := Polynomial 𝕜 -- 102
 def polynomialDegree {𝕜 : Type*} [Semiring 𝕜] (p : 𝕜[X]) : WithBot ℕ := p.degree -- 103
 theorem polynomial_division {𝕜 : Type*} [Field 𝕜] (f g : 𝕜[X]) (hg : g ≠ 0) :
     ∃ q r : 𝕜[X], f = g * q + r ∧ r.degree < g.degree := by
-  exact ⟨f / g, f % g, (Polynomial.div_add_mod f g).symm,
+  exact ⟨f / g, f % g, (EuclideanDomain.div_add_mod f g).symm,
     Polynomial.degree_mod_lt f hg⟩ -- 104
 theorem root_factor {𝕜 : Type*} [Field 𝕜] (f : 𝕜[X]) (a : 𝕜) :
-    Polynomial.IsRoot f a ↔ Polynomial.X - C a ∣ f := Polynomial.isRoot_iff_dvd -- 105
+    Polynomial.IsRoot f a ↔ Polynomial.X - C a ∣ f := Polynomial.dvd_iff_isRoot.symm -- 105
 def rootMultiplicity {𝕜 : Type*} [Field 𝕜] (a : 𝕜) (f : 𝕜[X]) : ℕ∞ :=
   Polynomial.rootMultiplicity a f -- 106
 theorem roots_count_le_degree {𝕜 : Type*} [Field 𝕜] (f : 𝕜[X]) :
@@ -159,23 +158,23 @@ theorem fundamental_theorem_algebra (f : ℂ[X]) (h : f.degree ≠ 0) : ∃ z : 
         simpa [Polynomial.degree_eq_natDegree hf, hn]) -- 110
 def evaluatePolynomialAtMatrix {n 𝕜 : Type*} [Fintype n] [DecidableEq n]
     [CommSemiring 𝕜] (A : Matrix n n 𝕜) : 𝕜[X] →+* Matrix n n 𝕜 :=
-  Polynomial.aeval A -- 111
+  (Polynomial.aeval A).toRingHom -- 111
 theorem diagonalizable_of_split_squarefree_minpoly {𝕜 V : Type*} [Field 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V)
-    (hs : (LinearMap.minpoly 𝕜 f).Splits) (hf : Squarefree (LinearMap.minpoly 𝕜 f)) :
+    (hs : (minpoly 𝕜 f).Splits) (hf : Squarefree (minpoly 𝕜 f)) :
     IsDiagonalizable f := by
-  refine ⟨Module.End.isSemisimple_of_squarefree_aeval_eq_zero hf (LinearMap.minpoly.aeval 𝕜 f), ?_⟩
+  refine ⟨Module.End.isSemisimple_of_squarefree_aeval_eq_zero hf (minpoly.aeval 𝕜 f), ?_⟩
   exact hs -- 112
 def minimalPolynomial {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V]
-    [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V) : 𝕜[X] := LinearMap.minpoly 𝕜 f -- 113
+    [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V) : 𝕜[X] := minpoly 𝕜 f -- 113
 theorem minpoly_dvd_annihilating {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V]
     [Module 𝕜 V] [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V) (p : 𝕜[X])
-    (hp : Polynomial.aeval f p = 0) : LinearMap.minpoly 𝕜 f ∣ p :=
+    (hp : Polynomial.aeval f p = 0) : minpoly 𝕜 f ∣ p :=
   minpoly.dvd 𝕜 f hp -- 114
 theorem diagonalizable_iff_minpoly_squarefree {𝕜 V : Type*} [Field 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V)
-    (hs : (LinearMap.minpoly 𝕜 f).Splits) :
-    IsDiagonalizable f ↔ Squarefree (LinearMap.minpoly 𝕜 f) := by
+    (hs : (minpoly 𝕜 f).Splits) :
+    IsDiagonalizable f ↔ Squarefree (minpoly 𝕜 f) := by
   constructor
   · exact fun h => h.1.minpoly_squarefree
   · exact fun h => diagonalizable_of_split_squarefree_minpoly f hs h -- 115
@@ -187,16 +186,13 @@ theorem commuting_diagonalizable_simultaneously {𝕜 V : Type*} [Field 𝕜]
   refine ⟨{f, g}, by simp, by simp, ?_⟩
   intro a ha b hb
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
-  rcases ha with rfl | rfl <;> rcases hb with rfl | rfl
-  · exact Commute.refl f
-  · exact hfg
-  · exact hfg.symm
-  · exact Commute.refl g -- 116
+  rcases ha with ha | ha <;> rcases hb with hb | hb <;>
+    subst a <;> subst b <;> simp_all [Commute.refl] -- 116
 theorem cayley_hamilton {n 𝕜 : Type*} [Fintype n] [DecidableEq n]
     [CommRing 𝕜] (A : Matrix n n 𝕜) : Polynomial.aeval A (Matrix.charpoly A) = 0 :=
   Matrix.aeval_self_charpoly A -- 117
 def IsTriangulable {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V]
-    (f : V →ₗ[𝕜] V) : Prop := f.charpoly.Splits -- 118
+    [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V) : Prop := f.charpoly.Splits -- 118
 theorem triangulable_iff_charpoly_splits {𝕜 V : Type*} [Field 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V) :
     IsTriangulable f ↔ (LinearMap.charpoly f).Splits := Iff.rfl -- 119
@@ -206,7 +202,7 @@ theorem cayley_hamilton_endomorphism {𝕜 V : Type*} [Field 𝕜]
 theorem eigenvalue_iff_charpoly_root {𝕜 V : Type*} [Field 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [FiniteDimensional 𝕜 V]
     (f : V →ₗ[𝕜] V) (μ : 𝕜) : Module.End.HasEigenvalue f μ ↔ (LinearMap.charpoly f).IsRoot μ :=
-  LinearMap.hasEigenvalue_iff_isRoot_charpoly -- 121
+  Module.End.hasEigenvalue_iff_isRoot_charpoly f μ -- 121
 def algebraicMultiplicity {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V]
     [FiniteDimensional 𝕜 V] (f : V →ₗ[𝕜] V) (μ : 𝕜) : ℕ∞ :=
   Polynomial.rootMultiplicity μ (LinearMap.charpoly f)
@@ -223,7 +219,7 @@ theorem complex_diagonalizable_criterion (A : Matrix (Fin 1) (Fin 1) ℂ) :
 def jordanBlock (n : ℕ) (μ : ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   fun i j => if i = j then μ else if i.val + 1 = j.val then 1 else 0 -- 125
 theorem jordan_normal_form_exists (A : Matrix (Fin 1) (Fin 1) ℂ) :
-    ∃ μ : ℂ, A = Matrix.jordanBlock μ := by
+    ∃ μ : ℂ, A = jordanBlock 1 μ := by
   refine ⟨A 0 0, ?_⟩
   ext i j
   fin_cases i <;> fin_cases j
