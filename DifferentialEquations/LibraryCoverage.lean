@@ -8,8 +8,8 @@ import DifferentialEquations.Core
 #check HasDerivAt.mul
 #check HasDerivAt.lhopital_zero_nhds
 #check HasFDerivAt.comp
-#check IsLittleO
-#check IsBigO
+#check Asymptotics.IsLittleO
+#check Asymptotics.IsBigO
 #check Real.exp
 #check Real.hasDerivAt_exp
 #check intervalIntegral
