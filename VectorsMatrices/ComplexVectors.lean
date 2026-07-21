@@ -107,7 +107,11 @@ theorem pair_coefficients_unique {E : Type*} [AddCommGroup E] [Module ℝ E]
     {a b : E} (h : LinearIndependent ℝ ![a,b])
     {s t s' t' : ℝ} (heq : s • a + t • b = s' • a + t' • b) :
     s = s' ∧ t = t' := by
-  have hz : (s - s') • a + (t - t') • b = 0 := by module
+  have hz : (s - s') • a + (t - t') • b = 0 := by
+    calc
+      (s - s') • a + (t - t') • b =
+          (s • a + t • b) - (s' • a + t' • b) := by module
+      _ = 0 := sub_eq_zero.mpr heq
   have hsum : ∑ i, ![s - s', t - t'] i • ![a,b] i = 0 := by
     simpa [Fin.sum_univ_two] using hz
   have hall := (Fintype.linearIndependent_iff.mp h) ![s - s', t - t'] hsum
@@ -125,8 +129,9 @@ theorem noncoplanar_basis (a b c : Vec3) (h : scalarTriple a b c ≠ 0) :
   apply Matrix.linearIndependent_rows_of_det_ne_zero
   intro hd
   apply h
-  simpa [scalarTriple, coordinateDot, cross, Matrix.det_fin_three,
-    Fin.sum_univ_three] using hd -- 036
+  simp [scalarTriple, coordinateDot, cross, Fin.sum_univ_three]
+  rw [Matrix.det_fin_three] at hd
+  linear_combination hd -- 036
 
 def IsLinearlyIndependent {E I : Type*} [AddCommGroup E] [Module ℝ E]
     (v : I → E) : Prop := LinearIndependent ℝ v                        -- 037
@@ -156,7 +161,7 @@ theorem epsilon_contraction (j k p q : Fin 3) :
       kroneckerDelta j p * kroneckerDelta k q -
         kroneckerDelta j q * kroneckerDelta k p := by
   fin_cases j <;> fin_cases k <;> fin_cases p <;> fin_cases q <;>
-    norm_num [epsilon, kroneckerDelta, Fin.sum_univ_three]               -- 049
+    norm_num [epsilon, kroneckerDelta, Fin.sum_univ_three, Fin.ext_iff]  -- 049
 
 theorem scalarTriple_cyclic (a b c : Vec3) :
     scalarTriple a b c = scalarTriple b c a := by
