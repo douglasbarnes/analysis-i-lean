@@ -13,6 +13,8 @@ open scoped BigOperators
 
 namespace DynamicsRelativity
 
+noncomputable section
+
 abbrev Vec3 := Fin 3 → ℝ
 abbrev Event := ℝ × ℝ
 
@@ -21,7 +23,8 @@ def cross (a b : Vec3) : Vec3 := ![
   a 2 * b 0 - a 0 * b 2,
   a 0 * b 1 - a 1 * b 0]
 
-def dot (a b : Vec3) : ℝ := ∑ i, a i * b i
+def dot (a b : Vec3) : ℝ :=
+  a 0 * b 0 + a 1 * b 1 + a 2 * b 2
 def normSq (a : Vec3) : ℝ := dot a a
 
 /- 1. Particle. -/
@@ -37,7 +40,7 @@ structure FrameOfReference where
 
 /- 3. Velocity. -/
 noncomputable def velocity (r : ℝ → Vec3) (t : ℝ) : Vec3 :=
-  fun i ⇒ deriv (fun s ⇒ r s i) t
+  fun i => deriv (fun s => r s i) t
 
 /- 4. Acceleration. -/
 noncomputable def acceleration (r : ℝ → Vec3) (t : ℝ) : Vec3 :=
@@ -52,7 +55,7 @@ def NewtonFirstLaw (force velocity : ℝ → Vec3) : Prop :=
 
 /- 7. Newton's second law: an empirical model predicate. -/
 def NewtonSecondLaw (p force : ℝ → Vec3) : Prop :=
-  ∀ t i, HasDerivAt (fun s ⇒ p s i) (force t i) t
+  ∀ t i, HasDerivAt (fun s => p s i) (force t i) t
 
 /- 8. Newton's third law: an empirical model predicate. -/
 def NewtonThirdLaw {Body : Type*} (mutualForce : Body → Body → Vec3) : Prop :=
@@ -85,7 +88,7 @@ def totalEnergy1D (m x v : ℝ) (potential : ℝ → ℝ) : ℝ :=
 theorem totalEnergy1D_hasDerivAt_zero {m : ℝ} {x v a V : ℝ → ℝ} {t : ℝ}
     (hx : HasDerivAt x (v t) t) (hv : HasDerivAt v (a t) t)
     (hV : HasDerivAt V (-m * a t) (x t)) :
-    HasDerivAt (fun s ⇒ totalEnergy1D m (x s) (v s) V) 0 t := by
+    HasDerivAt (fun s => totalEnergy1D m (x s) (v s) V) 0 t := by
   convert (((hv.mul_const m).mul v).const_mul (1 / 2 : ℝ)).add (hV.comp t hx) using 1 <;>
     simp [totalEnergy1D] <;> ring
 
@@ -104,14 +107,14 @@ noncomputable def work (force : Vec3 → Vec3) (path : ℝ → Vec3) (a b : ℝ)
 
 /- 20. Conservative force and potential energy. -/
 def IsConservativeForce (force : Vec3 → Vec3) (potential : Vec3 → ℝ) : Prop :=
-  ∀ x, HasGradientAt potential (-force x) x
+  ∀ x i, HasDerivAt (fun s => potential (Function.update x i s)) (-force x i) (x i)
 
 /- 21. Energy conservation for conservative force. -/
 theorem conservative_energy_derivative_zero {m : ℝ} {x v a : ℝ → Vec3}
     {V : Vec3 → ℝ} {t : ℝ}
-    (hK : HasDerivAt (fun s ⇒ kineticEnergy m (v s)) (m * dot (v t) (a t)) t)
-    (hV : HasDerivAt (fun s ⇒ V (x s)) (-m * dot (v t) (a t)) t) :
-    HasDerivAt (fun s ⇒ kineticEnergy m (v s) + V (x s)) 0 t := by
+    (hK : HasDerivAt (fun s => kineticEnergy m (v s)) (m * dot (v t) (a t)) t)
+    (hV : HasDerivAt (fun s => V (x s)) (-m * dot (v t) (a t)) t) :
+    HasDerivAt (fun s => kineticEnergy m (v s) + V (x s)) 0 t := by
   convert hK.add hV using 1 <;> ring
 
 /- 22. Central force. -/
@@ -134,9 +137,9 @@ def angularMomentum (r p : Vec3) : Vec3 := cross r p
 
 /- 26. Angular momentum conservation under a central force. -/
 theorem angularMomentum_derivative_zero {L G : ℝ → Vec3} {t : ℝ}
-    (hTorque : ∀ i, HasDerivAt (fun s ⇒ L s i) (G t i) t)
+    (hTorque : ∀ i, HasDerivAt (fun s => L s i) (G t i) t)
     (hcentral : G t = 0) :
-    ∀ i, HasDerivAt (fun s ⇒ L s i) 0 t := by
+    ∀ i, HasDerivAt (fun s => L s i) 0 t := by
   intro i
   simpa [hcentral] using hTorque i
 
@@ -166,7 +169,7 @@ def LorentzForceLaw (q : ℝ) (electric magnetic velocity force : Vec3) : Prop :
 
 /- 32. Electrostatic potential. -/
 def IsElectrostaticPotential (electric : Vec3 → Vec3) (potential : Vec3 → ℝ) : Prop :=
-  ∀ x, HasGradientAt potential (-electric x) x
+  ∀ x i, HasDerivAt (fun s => potential (Function.update x i s)) (-electric x i) (x i)
 
 /- 33. Magnetic forces do no work (the algebraic core of energy conservation). -/
 theorem magnetic_force_power_zero (q : ℝ) (v B : Vec3) :
@@ -176,7 +179,7 @@ theorem magnetic_force_power_zero (q : ℝ) (v B : Vec3) :
 
 theorem static_electromagnetic_energy_derivative_zero {K V : ℝ → ℝ} {t w : ℝ}
     (hK : HasDerivAt K w t) (hV : HasDerivAt V (-w) t) :
-    HasDerivAt (fun s ⇒ K s + V s) 0 t := by
+    HasDerivAt (fun s => K s + V s) 0 t := by
   convert hK.add hV using 1 <;> ring
 
 /- 34. Coulomb's law: an empirical model predicate. -/
@@ -190,9 +193,9 @@ structure ElectricConstant where
 
 /- 36. Derivatives of polar unit vectors. -/
 theorem polar_unit_vector_derivatives (theta : ℝ) :
-    (∀ i, HasDerivAt (fun t ⇒ (![Real.cos t, Real.sin t] : Fin 2 → ℝ) i)
+    (∀ i, HasDerivAt (fun t => (![Real.cos t, Real.sin t] : Fin 2 → ℝ) i)
       (![-Real.sin theta, Real.cos theta] i) theta) ∧
-    (∀ i, HasDerivAt (fun t ⇒ (![-Real.sin t, Real.cos t] : Fin 2 → ℝ) i)
+    (∀ i, HasDerivAt (fun t => (![-Real.sin t, Real.cos t] : Fin 2 → ℝ) i)
       (![-Real.cos theta, -Real.sin theta] i) theta) := by
   constructor <;> intro i <;> fin_cases i <;> simp
 
@@ -303,15 +306,15 @@ def totalExternalForce {n : ℕ} (force : Fin n → Vec3) : Vec3 := ∑ i, force
 /- 57. Centre-of-mass equation. -/
 theorem center_of_mass_equation {M : ℝ} {R F : ℝ → Vec3} {t : ℝ}
     (hM : M ≠ 0)
-    (h : ∀ i, HasDerivAt (fun s ⇒ deriv (fun q ⇒ R q i) s) (F t i / M) t) :
-    ∀ i, HasDerivAt (fun s ⇒ M * deriv (fun q ⇒ R q i) s) (F t i) t := by
+    (h : ∀ i, HasDerivAt (fun s => deriv (fun q => R q i) s) (F t i / M) t) :
+    ∀ i, HasDerivAt (fun s => M * deriv (fun q => R q i) s) (F t i) t := by
   intro i
   convert (h i).const_mul M using 1 <;> field_simp
 
 /- 58. Conservation of momentum. -/
 theorem momentum_conserved_if_no_external_force {P F : ℝ → Vec3}
     (hNewton : NewtonSecondLaw P F) (hzero : ∀ t, F t = 0) :
-    ∀ t i, HasDerivAt (fun s ⇒ P s i) 0 t := by
+    ∀ t i, HasDerivAt (fun s => P s i) 0 t := by
   intro t i
   simpa [hzero t] using hNewton t i
 
@@ -372,11 +375,21 @@ theorem parallel_axis_theorem {n : ℕ} (mass x : Fin n → ℝ) (d : ℝ)
     (hcenter : ∑ i, mass i * x i = 0) :
     (∑ i, mass i * (x i - d) ^ 2) =
       (∑ i, mass i * x i ^ 2) + (∑ i, mass i) * d ^ 2 := by
-  simp_rw [sub_sq]
-  rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
-  rw [hcenter]
-  simp
-  ring
+  calc
+    (∑ i, mass i * (x i - d) ^ 2) =
+        ∑ i, (mass i * x i ^ 2 + mass i * d ^ 2 - 2 * d * (mass i * x i)) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      ring
+    _ = (∑ i, mass i * x i ^ 2) + (∑ i, mass i * d ^ 2) -
+        (∑ i, 2 * d * (mass i * x i)) := by
+      rw [Finset.sum_sub_distrib, Finset.sum_add_distrib]
+    _ = (∑ i, mass i * x i ^ 2) + (∑ i, mass i) * d ^ 2 -
+        2 * d * (∑ i, mass i * x i) := by
+      rw [Finset.sum_mul, ← Finset.mul_sum]
+    _ = (∑ i, mass i * x i ^ 2) + (∑ i, mass i) * d ^ 2 := by
+      rw [hcenter]
+      ring
 
 /- 70. Lorentz factor. -/
 noncomputable def lorentzFactor (v c : ℝ) : ℝ := 1 / Real.sqrt (1 - (v / c) ^ 2)
@@ -406,7 +419,7 @@ def intervalSq (c : ℝ) (P Q : Event) : ℝ :=
 /- 76. Lorentz invariance of the interval. -/
 theorem lorentz_interval_invariant {beta gamma : ℝ} (hgamma : gamma ^ 2 * (1 - beta ^ 2) = 1)
     (P Q : Event) :
-    let L : Event → Event := fun X ⇒
+    let L : Event → Event := fun X =>
       (gamma * (X.1 - beta * X.2), gamma * (X.2 - beta * X.1))
     intervalSq 1 (L P) (L Q) = intervalSq 1 P Q := by
   dsimp [intervalSq]
@@ -431,10 +444,10 @@ def properTimeDifference (interval c : ℝ) : ℝ := interval / c
 
 /- 81. Position four-vector and four-velocity. -/
 def positionFourVector (c t : ℝ) (x : Vec3) : MinkowskiSpacetime :=
-  fun i ⇒ Fin.cases (c * t) x i
+  fun i => Fin.cases (c * t) x i
 
 noncomputable def fourVelocity (X : ℝ → MinkowskiSpacetime) (tau : ℝ) : MinkowskiSpacetime :=
-  fun i ⇒ deriv (fun s ⇒ X s i) tau
+  fun i => deriv (fun s => X s i) tau
 
 /- 82. Four-vector. -/
 structure FourVector where
@@ -448,7 +461,7 @@ def relativisticEnergy (c : ℝ) (P : MinkowskiSpacetime) : ℝ := P 0 * c
 
 /- 85. Four-force. -/
 noncomputable def fourForce (P : ℝ → MinkowskiSpacetime) (tau : ℝ) : MinkowskiSpacetime :=
-  fun i ⇒ deriv (fun s ⇒ P s i) tau
+  fun i => deriv (fun s => P s i) tau
 
 /- 86. Centre-of-momentum frame. -/
 def IsCenterOfMomentumFrame {n : ℕ} (momentum : Fin n → Vec3) : Prop :=
