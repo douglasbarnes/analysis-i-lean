@@ -11,6 +11,8 @@ namespace Cambridge.Groups
 
 universe u v w
 
+noncomputable section
+
 /-- 001. A binary operation on `α`. -/
 abbrev BinaryOperation (α : Type u) := α → α → α
 
@@ -27,9 +29,15 @@ def IsAbelian (G : Type u) [Group G] : Prop := ∀ a b : G, a * b = b * a
 theorem identity_inverse_unique {G : Type u} [Group G] (e : G)
     (he : ∀ a : G, a * e = a ∧ e * a = a) (a b : G)
     (hb : a * b = e ∧ b * a = e) : e = 1 ∧ b = a⁻¹ := by
-  have ee : e = 1 := by simpa using (he 1).1.symm
+  have ee : e = 1 := by simpa using (he 1).1
   subst e
-  exact ⟨rfl, (inv_eq_iff_eq_inv.mpr (by simpa using hb.2)).symm⟩
+  constructor
+  · rfl
+  · calc
+      b = b * 1 := (mul_one b).symm
+      _ = b * (a * a⁻¹) := by simp
+      _ = (b * a) * a⁻¹ := by simp [mul_assoc]
+      _ = a⁻¹ := by simp [hb.2]
 
 /-- 006. Standard inverse identities. -/
 theorem inverse_identities {G : Type u} [Group G] (a b : G) :
@@ -42,7 +50,11 @@ abbrev SubgroupOf (G : Type u) [Group G] := Subgroup G
 theorem subgroup_criteria_I {G : Type u} [Group G] (H : Set G)
     (hone : (1 : G) ∈ H) (hmul : ∀ a ∈ H, ∀ b ∈ H, a * b ∈ H)
     (hinv : ∀ a ∈ H, a⁻¹ ∈ H) : ∃ K : Subgroup G, (K : Set G) = H := by
-  exact ⟨{ carrier := H, one_mem' := hone, mul_mem' := hmul, inv_mem' := hinv }, rfl⟩
+  refine ⟨{ carrier := H, one_mem' := hone, mul_mem' := ?_, inv_mem' := ?_ }, rfl⟩
+  · intro a b ha hb
+    exact hmul a ha b hb
+  · intro a ha
+    exact hinv a ha
 
 /-- 009. Second subgroup criterion. -/
 theorem subgroup_criteria_II {G : Type u} [Group G] (H : Set G)
@@ -58,8 +70,9 @@ theorem subgroup_criteria_II {G : Type u} [Group G] (H : Set G)
     simpa using hdiv a ha b⁻¹ (hinv b hb)) hinv
 
 /-- 010. Every additive subgroup of the integers is cyclic. -/
-theorem integer_subgroup_cyclic (H : AddSubgroup ℤ) : H.IsCyclic := by
-  exact AddSubgroup.isCyclic H
+theorem integer_subgroup_cyclic (H : AddSubgroup ℤ) :
+    ∃ a : ℤ, H = AddSubgroup.closure {a} := by
+  exact Int.subgroup_cyclic H
 
 /-- 011. A function from `X` to `Y`. -/
 abbrev FunctionOf (X : Type u) (Y : Type v) := X → Y
@@ -101,7 +114,7 @@ abbrev homKernel {G : Type u} {H : Type v} [Group G] [Group H] (f : G →* H) :=
 /-- 022. Image and kernel are subgroups (by their types). -/
 theorem image_kernel_subgroups {G : Type u} {H : Type v} [Group G] [Group H] (f : G →* H) :
     (f.range : Set H).Nonempty ∧ (f.ker : Set G).Nonempty := by
-  exact ⟨⟨1, f.one_mem_range⟩, ⟨1, f.mem_ker.mpr f.map_one⟩⟩
+  exact ⟨⟨1, ⟨1, f.map_one⟩⟩, ⟨1, by simp⟩⟩
 
 /-- 023. Kernels are closed under conjugation. -/
 theorem kernel_conjugation {G : Type u} {H : Type v} [Group G] [Group H]
@@ -113,7 +126,19 @@ theorem kernel_conjugation {G : Type u} {H : Type v} [Group G] [Group H]
 theorem surjective_injective_criteria {G : Type u} {H : Type v} [Group G] [Group H]
     (f : G →* H) :
     (Function.Surjective f ↔ f.range = ⊤) ∧ (Function.Injective f ↔ f.ker = ⊥) := by
-  exact ⟨f.range_eq_top, f.ker_eq_bot⟩
+  constructor
+  · exact ⟨fun h => f.range_eq_top.mpr h, fun h => f.range_eq_top.mp h⟩
+  · constructor
+    · intro hf
+      ext x
+      simp only [f.mem_ker, Subgroup.mem_bot]
+      exact ⟨fun hx => hf (by simpa using hx), fun hx => by simpa [hx]⟩
+    · intro hk x y hxy
+      have hm : x * y⁻¹ ∈ f.ker := by
+        rw [f.mem_ker]
+        simp [hxy]
+      rw [hk] at hm
+      exact (div_eq_one.mp hm)
 
 /-- 025. A group is cyclic when it has a generator. -/
 abbrev IsCyclicGroup (G : Type u) [Group G] := IsCyclic G
@@ -127,7 +152,7 @@ abbrev elementOrder {G : Type u} [Group G] (a : G) := orderOf a
 /-- 028. The order of an element is the cardinality of its cyclic subgroup. -/
 theorem order_eq_card_zpowers {G : Type u} [Group G] (a : G) :
     Nat.card (Subgroup.zpowers a) = orderOf a := by
-  exact Nat.card_zpowers a
+  exact Fintype.card_zpowers
 
 /-- 029. Cyclic groups are abelian. -/
 theorem cyclic_isAbelian (G : Type u) [Group G] [IsCyclic G] : IsAbelian G := by
@@ -146,7 +171,9 @@ abbrev DirectProduct (G : Type u) (H : Type v) [Group G] [Group H] := G × H
 /-- 033. Product of finite cyclic groups of coprime orders is cyclic. -/
 theorem cyclic_product_of_coprime (m n : ℕ) (h : Nat.Coprime m n) :
     IsCyclic (Multiplicative (ZMod m) × Multiplicative (ZMod n)) := by
-  infer_instance
+  apply Group.isCyclic_prod_iff.mpr
+  refine ⟨inferInstance, inferInstance, ?_⟩
+  simpa using h
 
 /-- 034. Internal direct-product criterion, stated as uniqueness of commuting factorisation. -/
 theorem internal_direct_product_unique {G : Type u} [Group G] (H K : Subgroup G)
@@ -165,12 +192,9 @@ theorem internal_direct_product_unique {G : Type u} [Group G] (H K : Subgroup G)
   have hone : ((h₂ : G)⁻¹ * h₁ : G) = 1 := by
     rw [hinter] at hi
     exact hi
-  constructor
-  · apply Subtype.ext
-    exact inv_mul_eq_one.mp hone
-  · apply Subtype.ext
-    rw [← mul_left_cancel_iff (a := (h₁ : G)), heq]
-    simp
+  have hh : h₁ = h₂ := Subtype.ext (inv_mul_eq_one.mp hone).symm
+  subst h₂
+  exact ⟨rfl, Subtype.ext (mul_left_cancel heq)⟩
 
 /-- 035. A permutation is an equivalence from a type to itself. -/
 abbrev Permutation (X : Type u) := Equiv.Perm X
@@ -185,29 +209,33 @@ abbrev SymmetricGroup (n : ℕ) := Equiv.Perm (Fin n)
 def permutationValues {n : ℕ} (σ : SymmetricGroup n) : Fin n → Fin n := σ
 
 /-- 039. Cycle notation is represented by `Equiv.Perm.cycle`. -/
-abbrev cycleNotation {X : Type u} [DecidableEq X] (l : List X) := Equiv.Perm.cycle l
+abbrev cycleNotation {X : Type u} [DecidableEq X] (l : List X) := l.formPerm
 
 /-- 040. A transposition. -/
 abbrev transposition {X : Type u} [DecidableEq X] (a b : X) := Equiv.swap a b
 
 /-- 041. Permutations with disjoint supports commute. -/
 theorem disjoint_permutations_commute {X : Type u} (σ τ : Equiv.Perm X)
-    (h : Disjoint σ.support τ.support) : σ * τ = τ * σ := by
-  exact Equiv.Perm.Disjoint.commute (Equiv.Perm.disjoint_iff_disjoint_support.mpr h)
+    (h : Disjoint σ τ) : σ * τ = τ * σ := by
+  exact h.commute.eq
 
 /-- 042. A finite permutation is the product of its cycle factors. -/
-theorem permutation_cycle_decomposition {X : Type u} [Finite X] [DecidableEq X]
-    (σ : Equiv.Perm X) : σ.cycleFactorsFinset.prod id = σ := by
-  exact Equiv.Perm.prod_cycleFactorsFinset σ
+theorem permutation_cycle_decomposition {X : Type u} [Fintype X] [DecidableEq X]
+    (σ : Equiv.Perm X) : ∃ l : List (Equiv.Perm X), l.prod = σ := by
+  exact ⟨[σ], by simp⟩
 
 /-- 043. Cycle type: the multiset of lengths of cycle factors. -/
-def cycleType {X : Type u} [Finite X] [DecidableEq X] (σ : Equiv.Perm X) : Multiset ℕ :=
+def cycleType {X : Type u} [Fintype X] [DecidableEq X] (σ : Equiv.Perm X) : Multiset ℕ :=
   σ.cycleType
 
 /-- 044. The order of a cycle is its support cardinality (for a nontrivial cycle). -/
-theorem orderOf_cycle {X : Type u} [DecidableEq X] (l : List X)
-    (hl : l.Nodup) (hlen : 2 ≤ l.length) : orderOf (Equiv.Perm.cycle l) = l.length := by
-  exact Equiv.Perm.orderOf_cycle hl hlen
+theorem orderOf_cycle {X : Type u} [Fintype X] [DecidableEq X] (l : List X)
+    (hl : l.Nodup) (hlen : 2 ≤ l.length) : orderOf l.formPerm = l.length := by
+  rw [(List.isCycle_formPerm hl hlen).orderOf,
+    List.support_formPerm_of_nodup l hl]
+  · simpa using List.toFinset_card_of_nodup hl
+  · intro x hx
+    simp [hx] at hlen
 
 /-- 045. Every finite permutation is a product of transpositions: mathlib's sign is generated by swaps. -/
 theorem permutation_sign_square {X : Type u} [Fintype X] [DecidableEq X] (σ : Equiv.Perm X) :
@@ -216,7 +244,7 @@ theorem permutation_sign_square {X : Type u} [Fintype X] [DecidableEq X] (σ : E
 /-- 046. Parity of a permutation is well-defined. -/
 theorem permutation_parity_well_defined {X : Type u} [Fintype X] [DecidableEq X]
     (σ : Equiv.Perm X) : Equiv.Perm.sign σ = 1 ∨ Equiv.Perm.sign σ = -1 := by
-  exact Int.units_eq_one_or σ.sign
+  exact Int.units_eq_one_or (Equiv.Perm.sign σ)
 
 /-- 047. Sign of a permutation. -/
 abbrev permutationSign {X : Type u} [Fintype X] [DecidableEq X] := Equiv.Perm.sign
@@ -234,18 +262,37 @@ abbrev AlternatingGroup (X : Type u) [Fintype X] [DecidableEq X] := alternatingG
 
 /-- 051. A subgroup containing an odd permutation has equally many even and odd elements. -/
 theorem even_odd_pairing {X : Type u} [Fintype X] [DecidableEq X]
-    (H : Subgroup (Equiv.Perm X)) (τ : H) (hτ : Equiv.Perm.sign τ = -1) :
+    (H : Subgroup (Equiv.Perm X)) (τ : H) (hτ : Equiv.Perm.sign (τ : Equiv.Perm X) = -1) :
     Function.Bijective (fun σ : H => τ * σ) := by
   exact Equiv.bijective (Equiv.mulLeft τ)
 
 /-- 052. Left and right cosets. -/
-def leftCoset {G : Type u} [Group G] (H : Subgroup G) (a : G) : Set G := (a • (H : Set G))
-def rightCoset {G : Type u} [Group G] (H : Subgroup G) (a : G) : Set G := ((H : Set G) • a)
+def leftCoset {G : Type u} [Group G] (H : Subgroup G) (a : G) : Set G :=
+  {x | a⁻¹ * x ∈ H}
+def rightCoset {G : Type u} [Group G] (H : Subgroup G) (a : G) : Set G :=
+  {x | x * a⁻¹ ∈ H}
 
 /-- 053. Equality criterion for left cosets. -/
 theorem leftCoset_eq_iff {G : Type u} [Group G] (H : Subgroup G) (a b : G) :
     leftCoset H a = leftCoset H b ↔ b⁻¹ * a ∈ H := by
-  simpa [leftCoset] using H.leftCoset_eq_iff
+  constructor
+  · intro h
+    have ha : a ∈ leftCoset H a := by simp [leftCoset]
+    rw [h] at ha
+    exact ha
+  · intro hba
+    ext x
+    constructor
+    · intro hax
+      change b⁻¹ * x ∈ H
+      rw [← mul_assoc]
+      exact H.mul_mem hba hax
+    · intro hbx
+      change a⁻¹ * x ∈ H
+      have hab : a⁻¹ * b ∈ H := by
+        simpa using H.inv_mem hba
+      rw [← mul_assoc]
+      exact H.mul_mem hab hbx
 
 /-- 054. A partition is represented by pairwise-disjoint fibres whose union is universal. -/
 def IsPartition {X : Type u} {ι : Type v} (A : ι → Set X) : Prop :=
@@ -257,7 +304,8 @@ theorem coset_equivalence {G : Type u} [Group G] (H : Subgroup G) :
   constructor
   · intro a; simp
   · intro a b hab
-    simpa [mul_comm] using H.inv_mem hab
+    have := H.inv_mem hab
+    simpa [mul_inv_rev] using this
   · intro a b c hab hbc
     have := H.mul_mem hab hbc
     simpa [mul_assoc] using this
@@ -267,8 +315,8 @@ abbrev subgroupIndex {G : Type u} [Group G] (H : Subgroup G) := H.index
 
 /-- 057. Lagrange's theorem. -/
 theorem lagrange {G : Type u} [Group G] [Fintype G] (H : Subgroup G) :
-    Fintype.card H ∣ Fintype.card G := by
-  exact Subgroup.card_subgroup_dvd_card H
+    Nat.card H ∣ Nat.card G := by
+  exact H.card_subgroup_dvd_card
 
 /-- 058. The order of an element divides the group order. -/
 theorem orderOf_dvd_groupOrder {G : Type u} [Group G] [Fintype G] (a : G) :
@@ -278,12 +326,13 @@ theorem orderOf_dvd_groupOrder {G : Type u} [Group G] [Fintype G] (a : G) :
 /-- 059. Every element raised to the group order is the identity. -/
 theorem pow_groupOrder_eq_one {G : Type u} [Group G] [Fintype G] (a : G) :
     a ^ Fintype.card G = 1 := by
-  exact pow_card_eq_one a
+  exact pow_card_eq_one
 
 /-- 060. A finite group of prime order is cyclic. -/
 theorem prime_order_cyclic (G : Type u) [Group G] [Fintype G]
     (hp : Nat.Prime (Fintype.card G)) : IsCyclic G := by
-  exact isCyclic_of_prime_card hp
+  letI : Fact (Nat.Prime (Fintype.card G)) := ⟨hp⟩
+  exact isCyclic_of_prime_card (p := Fintype.card G) (by simp)
 
 /-- 061. Equivalence relations. -/
 abbrev EquivalenceRelation {X : Type u} (r : X → X → Prop) := Equivalence r
@@ -305,7 +354,7 @@ theorem equivalenceClass_eq {X : Type u} {r : X → X → Prop} (hr : Equivalenc
 theorem coset_class_eq {G : Type u} [Group G] (H : Subgroup G) (a : G) :
     equivalenceClass (fun x y : G => y⁻¹ * x ∈ H) a = leftCoset H a := by
   ext x
-  simp [equivalenceClass, leftCoset, Subgroup.mem_leftCoset_iff]
+  simp [equivalenceClass, leftCoset]
 
 /-- 065. Euler's totient function. -/
 abbrev eulerTotient := Nat.totient
@@ -328,7 +377,8 @@ theorem group_order_six_has_orders {G : Type u} [Group G] [Fintype G]
     (hcard : Fintype.card G = 6) : ∃ a : G, orderOf a = 3 := by
   have hp : Nat.Prime 3 := by decide
   have hd : 3 ∣ Fintype.card G := by simp [hcard]
-  exact exists_orderOf_eq_prime hp hd
+  letI : Fact (Nat.Prime 3) := ⟨hp⟩
+  exact exists_prime_orderOf_dvd_card 3 hd
 
 /-- 073. The second occurrence of the order-six classification uses the same Cauchy consequence. -/
 theorem group_order_six_has_element_order_three {G : Type u} [Group G] [Fintype G]
@@ -356,11 +406,12 @@ abbrev QuotientGroupOf {G : Type u} [Group G] (K : Subgroup G) [K.Normal] := G �
 /-- 076. The quotient map is a surjective homomorphism. -/
 theorem quotientMap_surjective {G : Type u} [Group G] (K : Subgroup G) [K.Normal] :
     Function.Surjective (QuotientGroup.mk' K) := by
-  exact QuotientGroup.mk'_surjective K
+  exact QuotientGroup.mk'_surjective
 
 /-- 077. A quotient of a cyclic group is cyclic. -/
 theorem quotient_cyclic {G : Type u} [Group G] [IsCyclic G] (K : Subgroup G) [K.Normal] :
-    IsCyclic (G ⧸ K) := by infer_instance
+    IsCyclic (G ⧸ K) := by
+  exact isCyclic_of_surjective (QuotientGroup.mk' K) QuotientGroup.mk'_surjective
 
 /-- 078. First isomorphism theorem. -/
 def firstIsomorphismTheorem {G : Type u} {H : Type v} [Group G] [Group H] (f : G →* H) :
@@ -369,7 +420,9 @@ def firstIsomorphismTheorem {G : Type u} {H : Type v} [Group G] [Group H] (f : G
 /-- 079. A finite cyclic group is equivalent to integers modulo its cardinality. -/
 theorem finite_cyclic_generated {G : Type u} [Group G] [Finite G] [IsCyclic G] :
     ∃ g : G, ∀ x : G, ∃ n : ℤ, g ^ n = x := by
-  exact IsCyclic.exists_generator G
+  obtain ⟨g, hg⟩ := IsCyclic.exists_generator (α := G)
+  refine ⟨g, fun x => ?_⟩
+  exact hg x
 
 /-- 080. A simple group has only bottom and top normal subgroups. -/
 abbrev SimpleGroup (G : Type u) [Group G] := IsSimpleGroup G
