@@ -1,6 +1,6 @@
 name = "analysis-formalization"
-version = "0.2.0"
-defaultTargets = ["AnalysisI", "AnalysisII"]
+version = "0.3.0"
+defaultTargets = ["AnalysisI", "AnalysisII", "DynamicsRelativity"]
 
 [[require]]
 name = "mathlib"
@@ -12,3 +12,6 @@ name = "AnalysisI"
 
 [[lean_lib]]
 name = "AnalysisII"
+
+[[lean_lib]]
+name = "DynamicsRelativity"
