@@ -160,7 +160,8 @@ theorem epsilon_contraction (j k p q : Fin 3) :
     ∑ i, epsilon i j k * epsilon i p q =
       kroneckerDelta j p * kroneckerDelta k q -
         kroneckerDelta j q * kroneckerDelta k p := by
-  fin_cases j <;> fin_cases k <;> fin_cases p <;> fin_cases q <;> native_decide -- 049
+  fin_cases j <;> fin_cases k <;> fin_cases p <;> fin_cases q <;>
+    norm_num [epsilon, kroneckerDelta, Fin.sum_univ_three] -- 049
 
 theorem scalarTriple_cyclic (a b c : Vec3) :
     scalarTriple a b c = scalarTriple b c a := by
