@@ -124,8 +124,7 @@ theorem dirichlet_problem_exists_unique {X B : Type*}
   rintro ψ ⟨hψ, hψb⟩
   have hdiff_harmonic : IsHarmonic laplacian (fun x => ψ x - φ x) := by
     unfold IsHarmonic SatisfiesLaplaceEquation at hφ hψ ⊢
-    rw [hsub, hφ, hψ]
-    rfl
+    simp [hsub, hφ, hψ]
   have hdiff_boundary : trace (fun x => ψ x - φ x) = 0 := by
     rw [tsub, hψb, hφb]
     simp
@@ -270,7 +269,7 @@ theorem greens_third_identity {X B : Type*} (G : GreenCalculus X B)
       G.volume (fun x => kernel x * F x) := by
   have h := greens_second_identity G φ kernel
   rw [hφ, hkernel] at h
-  simp only [Pi.neg_apply, mul_neg] at h
+  simp only [Pi.neg_apply, mul_neg, sub_neg_eq_add] at h
   rw [map_add, hreproduce] at h
   linarith
 
