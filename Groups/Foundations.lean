@@ -138,7 +138,7 @@ theorem surjective_injective_criteria {G : Type u} {H : Type v} [Group G] [Group
         rw [f.mem_ker]
         simp [hxy]
       rw [hk] at hm
-      exact (div_eq_one.mp hm)
+      exact div_eq_one.mp (Subgroup.mem_bot.mp hm)
 
 /-- 025. A group is cyclic when it has a generator. -/
 abbrev IsCyclicGroup (G : Type u) [Group G] := IsCyclic G
@@ -152,12 +152,13 @@ abbrev elementOrder {G : Type u} [Group G] (a : G) := orderOf a
 /-- 028. The order of an element is the cardinality of its cyclic subgroup. -/
 theorem order_eq_card_zpowers {G : Type u} [Group G] (a : G) :
     Nat.card (Subgroup.zpowers a) = orderOf a := by
-  exact Fintype.card_zpowers
+  exact Nat.card_zpowers a
 
 /-- 029. Cyclic groups are abelian. -/
 theorem cyclic_isAbelian (G : Type u) [Group G] [IsCyclic G] : IsAbelian G := by
+  letI : IsMulCommutative G := IsCyclic.isMulCommutative
   intro a b
-  exact mul_comm a b
+  exact mul_comm' a b
 
 /-- 030. A finite exponent for a group. -/
 def HasExponent (G : Type u) [Group G] (n : ℕ) : Prop := ∀ a : G, a ^ n = 1
@@ -173,7 +174,8 @@ theorem cyclic_product_of_coprime (m n : ℕ) (h : Nat.Coprime m n) :
     IsCyclic (Multiplicative (ZMod m) × Multiplicative (ZMod n)) := by
   apply Group.isCyclic_prod_iff.mpr
   refine ⟨inferInstance, inferInstance, ?_⟩
-  simpa using h
+  change (Nat.card (ZMod m)).Coprime (Nat.card (ZMod n))
+  simpa only [Nat.card_zmod] using h
 
 /-- 034. Internal direct-product criterion, stated as uniqueness of commuting factorisation. -/
 theorem internal_direct_product_unique {G : Type u} [Group G] (H K : Subgroup G)
@@ -215,9 +217,9 @@ abbrev cycleNotation {X : Type u} [DecidableEq X] (l : List X) := l.formPerm
 abbrev transposition {X : Type u} [DecidableEq X] (a b : X) := Equiv.swap a b
 
 /-- 041. Permutations with disjoint supports commute. -/
-theorem disjoint_permutations_commute {X : Type u} (σ τ : Equiv.Perm X)
-    (h : Disjoint σ τ) : σ * τ = τ * σ := by
-  exact h.commute.eq
+theorem disjoint_permutations_commute {X : Type u} [Fintype X] [DecidableEq X]
+    (σ τ : Equiv.Perm X) (h : Disjoint σ.support τ.support) : σ * τ = τ * σ := by
+  exact (Equiv.Perm.disjoint_iff_disjoint_support.mpr h).commute.eq
 
 /-- 042. A finite permutation is the product of its cycle factors. -/
 theorem permutation_cycle_decomposition {X : Type u} [Fintype X] [DecidableEq X]
@@ -247,7 +249,8 @@ theorem permutation_parity_well_defined {X : Type u} [Fintype X] [DecidableEq X]
   exact Int.units_eq_one_or (Equiv.Perm.sign σ)
 
 /-- 047. Sign of a permutation. -/
-abbrev permutationSign {X : Type u} [Fintype X] [DecidableEq X] := Equiv.Perm.sign
+abbrev permutationSign {X : Type u} [Fintype X] [DecidableEq X]
+    (σ : Equiv.Perm X) : ℤˣ := Equiv.Perm.sign σ
 
 /-- 048. Sign is a group homomorphism. -/
 theorem sign_mul {X : Type u} [Fintype X] [DecidableEq X] (σ τ : Equiv.Perm X) :
@@ -284,15 +287,15 @@ theorem leftCoset_eq_iff {G : Type u} [Group G] (H : Subgroup G) (a b : G) :
     ext x
     constructor
     · intro hax
+      change a⁻¹ * x ∈ H at hax
       change b⁻¹ * x ∈ H
-      rw [← mul_assoc]
-      exact H.mul_mem hba hax
+      simpa [mul_assoc] using H.mul_mem hba hax
     · intro hbx
+      change b⁻¹ * x ∈ H at hbx
       change a⁻¹ * x ∈ H
       have hab : a⁻¹ * b ∈ H := by
         simpa using H.inv_mem hba
-      rw [← mul_assoc]
-      exact H.mul_mem hab hbx
+      simpa [mul_assoc] using H.mul_mem hab hbx
 
 /-- 054. A partition is represented by pairwise-disjoint fibres whose union is universal. -/
 def IsPartition {X : Type u} {ι : Type v} (A : ι → Set X) : Prop :=
@@ -352,7 +355,7 @@ theorem equivalenceClass_eq {X : Type u} {r : X → X → Prop} (hr : Equivalenc
 
 /-- 064. The coset relation has left cosets as its classes. -/
 theorem coset_class_eq {G : Type u} [Group G] (H : Subgroup G) (a : G) :
-    equivalenceClass (fun x y : G => y⁻¹ * x ∈ H) a = leftCoset H a := by
+    equivalenceClass (fun x y : G => x⁻¹ * y ∈ H) a = leftCoset H a := by
   ext x
   simp [equivalenceClass, leftCoset]
 
@@ -406,12 +409,13 @@ abbrev QuotientGroupOf {G : Type u} [Group G] (K : Subgroup G) [K.Normal] := G �
 /-- 076. The quotient map is a surjective homomorphism. -/
 theorem quotientMap_surjective {G : Type u} [Group G] (K : Subgroup G) [K.Normal] :
     Function.Surjective (QuotientGroup.mk' K) := by
-  exact QuotientGroup.mk'_surjective
+  exact QuotientGroup.mk'_surjective (N := K)
 
 /-- 077. A quotient of a cyclic group is cyclic. -/
 theorem quotient_cyclic {G : Type u} [Group G] [IsCyclic G] (K : Subgroup G) [K.Normal] :
     IsCyclic (G ⧸ K) := by
-  exact isCyclic_of_surjective (QuotientGroup.mk' K) QuotientGroup.mk'_surjective
+  exact isCyclic_of_surjective (QuotientGroup.mk' K)
+    (QuotientGroup.mk'_surjective (N := K))
 
 /-- 078. First isomorphism theorem. -/
 def firstIsomorphismTheorem {G : Type u} {H : Type v} [Group G] [Group H] (f : G →* H) :
@@ -426,5 +430,7 @@ theorem finite_cyclic_generated {G : Type u} [Group G] [Finite G] [IsCyclic G] :
 
 /-- 080. A simple group has only bottom and top normal subgroups. -/
 abbrev SimpleGroup (G : Type u) [Group G] := IsSimpleGroup G
+
+end
 
 end Cambridge.Groups
