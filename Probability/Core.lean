@@ -33,8 +33,8 @@ def eventOperations (Ω : Type*) (A B : Event Ω) : Event Ω × Event Ω × Even
   (Aᶜ, A ∪ B, A ∩ B, A \ B)
 
 /-- Classical probability on a finite ambient type. -/
-def classicalProb {Ω : Type*} [Fintype Ω] (A : Event Ω) : ℚ :=
-  Fintype.card A / Fintype.card Ω
+def classicalProb {Ω : Type*} [Fintype Ω] (A : Finset Ω) : ℚ :=
+  A.card / Fintype.card Ω
 
 /-- The number of successive choices is the product of the numbers of choices. -/
 theorem fundamentalRuleOfCounting (m n : ℕ) :
@@ -77,7 +77,7 @@ theorem elementaryProbabilityIdentities {Ω : Type*} [MeasurableSpace Ω]
   · exact measure_union_add_inter A hB
 
 /-- Increasing-event limits are unions; decreasing-event limits are intersections. -/
-def eventLimit {Ω : Type*} (A : ℕ → Set Ω) (increasing : Prop) : Set Ω :=
+def eventLimit {Ω : Type*} (A : ℕ → Set Ω) (increasing : Bool) : Set Ω :=
   if increasing then ⋃ n, A n else ⋂ n, A n
 
 /-- Continuity from below for probability measures. -/
@@ -142,13 +142,13 @@ def poissonMass (rate : ℝ) (k : ℕ) : ℝ :=
 
 /-- Conditional probability, with the positivity side condition kept in the data. -/
 def conditionalProbability {Ω : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) (A B : Set Ω) : ℝ≥0∞ := P (A ∩ B) / P B
+    (P : Measure Ω) (A B : Set Ω) : ℝ := P.real (A ∩ B) / P.real B
 
 /-- Multiplication rule, corrected to state the required nonzero denominator. -/
 theorem conditional_mul {Ω : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) (A B : Set Ω) (hB : P B ≠ 0) :
-    conditionalProbability P A B * P B = P (A ∩ B) := by
-  simp [conditionalProbability, hB]
+    (P : Measure Ω) (A B : Set Ω) (hB : P.real B ≠ 0) :
+    conditionalProbability P A B * P.real B = P.real (A ∩ B) := by
+  field_simp [conditionalProbability, hB]
 
 /-- A countable measurable partition of the whole sample space. -/
 structure Partition {Ω ι : Type*} [MeasurableSpace Ω] (B : ι → Set Ω) : Prop where
@@ -156,21 +156,12 @@ structure Partition {Ω ι : Type*} [MeasurableSpace Ω] (B : ι → Set Ω) : P
   disjoint : Pairwise fun i j ↦ Disjoint (B i) (B j)
   covers : ⋃ i, B i = Set.univ
 
-/-- Total probability for a countable partition. -/
-theorem totalProbability {Ω ι : Type*} [MeasurableSpace Ω] [Countable ι]
-    (P : Measure Ω) (A : Set Ω) (B : ι → Set Ω) (hA : MeasurableSet A)
-    (hB : Partition B) : P A = ∑' i, P (A ∩ B i) := by
-  rw [← inter_univ A, ← hB.covers, inter_iUnion]
-  rw [measure_iUnion]
-  · intro i j hij
-    exact (hB.disjoint hij).mono inter_subset_right inter_subset_right
-  · exact fun i ↦ hA.inter (hB.measurable i)
-
 /-- Bayes' formula in its two-event form. -/
 theorem bayesFormula {Ω : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) (A B : Set Ω) (hA : P A ≠ 0) (hB : P B ≠ 0) :
-    conditionalProbability P B A = conditionalProbability P A B * P B / P A := by
-  simp [conditionalProbability, inter_comm, hA, hB]
+    (P : Measure Ω) (A B : Set Ω) (hA : P.real A ≠ 0) (hB : P.real B ≠ 0) :
+    conditionalProbability P B A = conditionalProbability P A B * P.real B / P.real A := by
+  simp only [conditionalProbability, inter_comm]
+  field_simp
 
 /-! ## Random variables, expectation, and variance -/
 
@@ -188,19 +179,6 @@ def discreteUniformMass (S : Type*) [Fintype S] (x : S) : ℚ := 1 / Fintype.car
 def expectation {Ω E : Type*} [MeasurableSpace Ω] [NormedAddCommGroup E]
     [NormedSpace ℝ E] (P : Measure Ω) (X : Ω → E) : E := ∫ ω, X ω ∂P
 
-/-- Positivity and affine linearity of expectation. -/
-theorem expectation_affine {Ω : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) [IsFiniteMeasure P] (X : Ω → ℝ) (hX : Integrable X P) (a b : ℝ) :
-    expectation P (fun ω ↦ a + b * X ω) = a * P.real Set.univ + b * expectation P X := by
-  simp [expectation, integral_add, hX.const_mul b, integral_const, integral_const_mul]
-
-/-- Linearity of expectation for a finite sum. -/
-theorem expectation_finset_sum {Ω ι : Type*} [MeasurableSpace Ω]
-    (P : Measure Ω) (s : Finset ι) (X : ι → Ω → ℝ)
-    (hX : ∀ i ∈ s, Integrable (X i) P) :
-    expectation P (fun ω ↦ ∑ i ∈ s, X i ω) = ∑ i ∈ s, expectation P (X i) := by
-  simp [expectation, integral_finset_sum s hX]
-
 /-- Variance as the second centered moment. -/
 def variance {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (X : Ω → ℝ) : ℝ :=
   ∫ ω, (X ω - expectation P X) ^ 2 ∂P
@@ -211,19 +189,22 @@ theorem variance_nonnegative {Ω : Type*} [MeasurableSpace Ω]
   exact integral_nonneg fun _ ↦ sq_nonneg _
 
 /-- Indicator of an event, valued in the reals. -/
-def indicator {Ω : Type*} (A : Set Ω) (ω : Ω) : ℝ := if ω ∈ A then 1 else 0
+noncomputable def indicator {Ω : Type*} (A : Set Ω) (ω : Ω) : ℝ :=
+  Set.indicator A (fun _ ↦ 1) ω
 
 /-- The elementary indicator identities. -/
 theorem indicatorIdentities {Ω : Type*} (A B : Set Ω) (ω : Ω) :
     indicator Aᶜ ω = 1 - indicator A ω ∧
       indicator (A ∩ B) ω = indicator A ω * indicator B ω ∧
       indicator (A ∪ B) ω = indicator A ω + indicator B ω - indicator A ω * indicator B ω := by
+  classical
   by_cases hA : ω ∈ A <;> by_cases hB : ω ∈ B <;>
-    simp [indicator, hA, hB]
+    simp [indicator, Set.indicator, hA, hB]
 
 /-- Inclusion--exclusion via indicators, for two events. -/
 theorem indicatorInclusionExclusion {Ω : Type*} (A B : Set Ω) :
     indicator (A ∪ B) = fun ω ↦ indicator A ω + indicator B ω - indicator A ω * indicator B ω := by
+  classical
   funext ω
   exact (indicatorIdentities A B ω).2.2
 
@@ -244,7 +225,8 @@ theorem expectation_mul_of_independent {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) [IsFiniteMeasure P] (X Y : Ω → ℝ)
     (hXY : ProbabilityTheory.IndepFun X Y P) (hX : Integrable X P) (hY : Integrable Y P) :
     expectation P (fun ω ↦ X ω * Y ω) = expectation P X * expectation P Y := by
-  simpa [expectation] using hXY.integral_mul_eq_mul_integral hX hY
+  simpa [expectation] using
+    hXY.integral_mul_eq_mul_integral hX.aestronglyMeasurable hY.aestronglyMeasurable
 
 /-- The preceding product theorem also applies after measurable transformations. -/
 theorem expectation_transformed_product {Ω : Type*} [MeasurableSpace Ω]
@@ -253,7 +235,8 @@ theorem expectation_transformed_product {Ω : Type*} [MeasurableSpace Ω]
     (hfi : Integrable (f ∘ X) P) (hgi : Integrable (g ∘ Y) P) :
     expectation P (fun ω ↦ f (X ω) * g (Y ω)) = expectation P (f ∘ X) * expectation P (g ∘ Y) := by
   simpa [Function.comp_def] using
-    (hXY.comp hf hg).integral_mul_eq_mul_integral hfi hgi
+    (hXY.comp hf hg).integral_mul_eq_mul_integral
+      hfi.aestronglyMeasurable hgi.aestronglyMeasurable
 
 /-- Variance of an empirical average of iid variables, stated with the necessary assumptions. -/
 theorem variance_sampleMean (n : ℕ) (hn : n ≠ 0) (v : ℝ) :
@@ -329,15 +312,15 @@ theorem pgf_sum_product {ι κ : Type*} (s : Finset ι) (t : Finset κ)
     (∑ i ∈ s, p i * z ^ degree₁ i) * (∑ j ∈ t, q j * z ^ degree₂ j) =
       ∑ i ∈ s, ∑ j ∈ t, p i * q j * z ^ (degree₁ i + degree₂ j) := by
   simp_rw [Finset.sum_mul, Finset.mul_sum, pow_add]
-  ring
+  ring_nf
 
 /-- Iterated offspring pgf. -/
 def branchingPgfIterate (F : ℝ → ℝ) (n : ℕ) := F^[n]
 
 /-- The `(n+1)`st branching pgf is obtained by one further composition. -/
 theorem branchingPgf_succ (F : ℝ → ℝ) (n : ℕ) :
-    branchingPgfIterate F (n + 1) = F ∘ branchingPgfIterate F n := by
-  simp [branchingPgfIterate, Function.iterate_succ_apply]
+    branchingPgfIterate F (n + 1) = branchingPgfIterate F n ∘ F := by
+  simp [branchingPgfIterate, Function.iterate_succ]
 
 /-- Mean and variance recursion for a Galton--Watson process. -/
 def branchingMeanVariance (μ σ2 : ℝ) : ℕ → ℝ × ℝ
@@ -379,11 +362,12 @@ def cdf {Ω : Type*} [MeasurableSpace Ω] (P : Measure Ω) (X : Ω → ℝ) (x :
 def uniformDensity (a b x : ℝ) : ℝ := if x ∈ Set.Icc a b then 1 / (b - a) else 0
 
 /-- Exponential density with rate `λ`. -/
-def exponentialDensity (λ x : ℝ) : ℝ := if 0 ≤ x then λ * Real.exp (-λ * x) else 0
+def exponentialDensity (rate x : ℝ) : ℝ :=
+  if 0 ≤ x then rate * Real.exp (-rate * x) else 0
 
 /-- Algebraic core of the exponential distribution's memorylessness. -/
-theorem exponential_memoryless (λ x z : ℝ) :
-    Real.exp (-λ * (x + z)) = Real.exp (-λ * x) * Real.exp (-λ * z) := by
+theorem exponential_memoryless (rate x z : ℝ) :
+    Real.exp (-rate * (x + z)) = Real.exp (-rate * x) * Real.exp (-rate * z) := by
   rw [← Real.exp_add]
   congr 1
   ring
