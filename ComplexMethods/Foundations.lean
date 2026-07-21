@@ -56,12 +56,13 @@ def HarmonicConjugates (u v : ℂ → ℝ) (z : ℂ) : Prop :=
 
 /-- Source 12 (line 267), definition: harmonicity on an open set. -/
 def HarmonicOn (u : ℂ → ℝ) (D : Set ℂ) : Prop :=
-  IsOpen D ∧ HarmonicOnNhd u D
+  IsOpen D ∧ InnerProductSpace.HarmonicOnNhd u D
 
 /-- Source 13 (line 272), proposition: real and imaginary parts of an analytic map are harmonic. -/
 theorem analytic_parts_harmonic {f : ℂ → ℂ} {D : Set ℂ}
     (hf : AnalyticOnNhd ℂ f D) :
-    HarmonicOnNhd (fun z ↦ (f z).re) D ∧ HarmonicOnNhd (fun z ↦ (f z).im) D := by
+    InnerProductSpace.HarmonicOnNhd (fun z ↦ (f z).re) D ∧
+      InnerProductSpace.HarmonicOnNhd (fun z ↦ (f z).im) D := by
   constructor <;> intro z hz
   · exact (hf z hz).harmonicAt_re
   · exact (hf z hz).harmonicAt_im
