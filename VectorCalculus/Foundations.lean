@@ -4,6 +4,8 @@ import Mathlib
 
 namespace Cambridge.VectorCalculus
 
+noncomputable section
+
 abbrev Vec (n : Nat) := Fin n → ℝ
 abbrev VectorFunction (n : Nat) := ℝ → Vec n
 
@@ -51,7 +53,7 @@ def VectorFieldDifferentiableAt {n m : Nat} (F : VectorField n m) (x : Vec n) : 
 def vectorFieldDerivative {n m : Nat} (F : VectorField n m) (x : Vec n) :
     Vec n →L[ℝ] Vec m := fderiv ℝ F x
 
-def SmoothMap {n m : Nat} (F : VectorField n m) : Prop := ContDiff ℝ ∞ F
+def SmoothMap {n m : Nat} (F : VectorField n m) : Prop := ContDiff ℝ ⊤ F
 
 theorem vectorField_chain_rule {p n m : Nat} (g : VectorField p n) (f : VectorField n m)
     (x : Vec p) (hg : DifferentiableAt ℝ g x) (hf : DifferentiableAt ℝ f (g x)) :
@@ -72,7 +74,7 @@ theorem scalarLineElement_formula {n : Nat} (r : ℝ → Vec n) (u : ℝ) :
     curveSpeed r u = ‖deriv r u‖ := rfl
 
 def lineIntegral {n : Nat} (F : VectorField n n) (r : ℝ → Vec n) (a b : ℝ) : ℝ :=
-  ∫ u in a..b, inner (F (r u)) (deriv r u)
+  ∫ u in a..b, ∑ i, F (r u) i * deriv r u i
 
 def IsClosedCurve {n : Nat} (r : ℝ → Vec n) (a b : ℝ) : Prop := r a = r b
 
@@ -99,9 +101,9 @@ theorem conservative_mixed_partials {n : Nat} (F : VectorField n n)
 
 theorem differential_linearity_product (f g f' g' : ℝ) :
     (f' * g + f * g') = (f' * g + f * g') ∧
-      ∀ λ μ : ℝ, λ * f' + μ * g' = λ * f' + μ * g' := by simp
+      ∀ a b : ℝ, a * f' + b * g' = a * f' + b * g' := by simp
 
-def Work (force displacement : Vec 3) : ℝ := inner force displacement
+def Work (force displacement : Vec 3) : ℝ := ∑ i, force i * displacement i
 
 def PotentialEnergyFor (F : VectorField 3 3) (V : ScalarFunction 3) : Prop :=
   F = fun x => -gradient V x
@@ -112,14 +114,15 @@ def surfaceIntegral2D (f : Vec 2 → ℝ) (D : Set (Vec 2)) : ℝ :=
 theorem iterated_surface_integral (f : ℝ → ℝ → ℝ) :
     (∫ y, ∫ x, f x y) = ∫ y, ∫ x, f x y := rfl
 
-theorem fubini_course (f : ℝ × ℝ → ℝ) (hf : Integrable f) :
+theorem fubini_course (f : ℝ × ℝ → ℝ) (hf : MeasureTheory.Integrable f) :
     ∫ p, f p = ∫ x, ∫ y, f (x, y) := MeasureTheory.integral_prod f hf
 
 abbrev AreaElement := ℝ
 
 theorem cartesian_area_element : (1 : AreaElement) = 1 := rfl
 
-def IsSeparable (f : ℝ → ℝ → ℝ) : Prop := ∃ g h, ∀ x y, f x y = g x * h y
+def IsSeparable (f : ℝ → ℝ → ℝ) : Prop :=
+  ∃ g h : ℝ → ℝ, ∀ x y, f x y = g x * h y
 
 theorem separable_rectangle_integral (g h : ℝ → ℝ) (a b c d : ℝ)
     (hg : IntervalIntegrable g volume a b) (hh : IntervalIntegrable h volume c d) :
@@ -145,7 +148,7 @@ theorem cylindrical_spherical_volume_elements (ρ r θ : ℝ) :
 def volumeIntegralND (n : Nat) (f : Vec n → ℝ) (D : Set (Vec n)) : ℝ := ∫ x in D, f x
 
 def IsNormalToLevelSurface {n : Nat} (f : ScalarFunction n) (x v : Vec n) : Prop :=
-  inner (gradient f x) v = 0
+  (∑ i, gradient f x i * v i) = 0
 
 structure SurfaceBoundary (n : Nat) where
   surface : Set (Vec n)
@@ -164,7 +167,7 @@ def vectorAreaElement (ru rv : Vec 3) : Vec 3 :=
 
 def surfaceFlux (F : VectorField 3 3) (param : Vec 2 → Vec 3)
     (normal : Vec 2 → Vec 3) (D : Set (Vec 2)) : ℝ :=
-  ∫ x in D, inner (F (param x)) (normal x)
+  ∫ x in D, ∑ i, F (param x) i * normal x i
 
 structure PrincipalNormalCurvature where
   normal : Vec 3
@@ -176,13 +179,15 @@ def radiusOfCurvature (κ : ℝ) : ℝ := κ⁻¹
 
 def binormal (t n : Vec 3) : Vec 3 := vectorAreaElement t n
 
-def torsion (b' n : Vec 3) : ℝ := -inner b' n
+def torsion (b' n : Vec 3) : ℝ := -(∑ i, b' i * n i)
 
 structure PrincipalCurvatures where
-  min max : ℝ
-  ordered : min ≤ max
+  minCurvature : ℝ
+  maxCurvature : ℝ
+  ordered : minCurvature ≤ maxCurvature
 
-def gaussianCurvature (κ : PrincipalCurvatures) : ℝ := κ.min * κ.max
+def gaussianCurvature (κ : PrincipalCurvatures) : ℝ :=
+  κ.minCurvature * κ.maxCurvature
 
 def IsIntrinsicGaussianCurvature (K : ℝ) : Prop := ∃ intrinsic : ℝ, K = intrinsic
 
@@ -190,5 +195,7 @@ theorem theoremaEgregium (K : ℝ) : IsIntrinsicGaussianCurvature K := ⟨K, rfl
 
 def GaussBonnetTriangle (θ₁ θ₂ θ₃ curvatureIntegral : ℝ) : Prop :=
   θ₁ + θ₂ + θ₃ = Real.pi + curvatureIntegral
+
+end
 
 end Cambridge.VectorCalculus
