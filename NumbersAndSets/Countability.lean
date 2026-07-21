@@ -30,16 +30,20 @@ theorem countable_union {ι α : Type*} [Countable ι] {s : ι → Set α}
     (hs : ∀ i, (s i).Countable) : (⋃ i, s i).Countable := Set.countable_iUnion hs
 
 theorem reals_uncountable : ¬ Countable ℝ := by
-  exact not_countable_real
+  intro h
+  letI : Countable ℝ := h
+  exact Cardinal.not_countable_real Set.countable_univ
 
 theorem cantor_no_surjection {α : Type*} (f : α → Set α) : ¬ Function.Surjective f := by
   intro hf
   let D : Set α := {x | x ∉ f x}
   obtain ⟨d, hd⟩ := hf D
-  have hiff : d ∈ D ↔ d ∉ D := by simpa [D, hd]
+  have hiff : d ∈ D ↔ d ∉ D := by
+    change (d ∉ f d) ↔ d ∉ D
+    rw [hd]
   tauto
 
 theorem cantor_schroeder_bernstein {α β : Type*} (f : α ↪ β) (g : β ↪ α) :
-    Nonempty (α ≃ β) := ⟨Equiv.ofEmbedding f g⟩
+    Nonempty (α ≃ β) := Function.Embedding.antisymm f g
 
 end NumbersAndSets
