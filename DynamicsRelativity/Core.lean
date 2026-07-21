@@ -89,8 +89,12 @@ theorem totalEnergy1D_hasDerivAt_zero {m : ℝ} {x v a V : ℝ → ℝ} {t : ℝ
     (hx : HasDerivAt x (v t) t) (hv : HasDerivAt v (a t) t)
     (hV : HasDerivAt V (-m * a t) (x t)) :
     HasDerivAt (fun s => totalEnergy1D m (x s) (v s) V) 0 t := by
-  convert ((hv.mul hv).const_mul ((1 / 2 : ℝ) * m)).add (hV.comp t hx) using 1 <;>
-    simp [totalEnergy1D] <;> ring
+  have h := ((hv.mul hv).const_mul ((1 / 2 : ℝ) * m)).add (hV.comp t hx)
+  convert h using 1
+  · funext s
+    simp [totalEnergy1D, Function.comp_def]
+    ring
+  · ring
 
 /- 16. Equilibrium point. -/
 def IsEquilibrium (V : ℝ → ℝ) (x₀ : ℝ) : Prop := HasDerivAt V 0 x₀
