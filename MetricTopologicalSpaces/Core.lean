@@ -3,7 +3,7 @@ import Mathlib
 /-! # Part IB Metric and Topological Spaces -/
 
 open Set Filter Topology
-open scoped Topology
+open scoped Topology InnerProductSpace
 
 namespace MetricTopologicalSpaces
 
@@ -31,16 +31,18 @@ theorem integral_pos_of_nonnegative_nonzero {f : ℝ → ℝ}
     (hf : ContinuousOn f (Set.Icc 0 1)) (hn : ∀ x ∈ Set.Icc (0:ℝ) 1, 0 ≤ f x)
     (hpos : ∃ x ∈ Set.Ioc (0:ℝ) 1, 0 < f x) : 0 < ∫ x in (0:ℝ)..1, f x := by
   obtain ⟨x, hx, hfx⟩ := hpos
-  exact intervalIntegral.integral_pos hf.intervalIntegrable hn (by exact ⟨x, hx.1, hx.2, hfx⟩)
+  exact intervalIntegral.integral_pos (by norm_num) hf
+    (fun y hy => hn y ⟨hy.1.le, hy.2⟩) ⟨x, ⟨hx.1.le, hx.2⟩, hfx⟩
 /- 9. Inner product. -/
 abbrev InnerProductDefinition := Inner
 /- 10. Cauchy--Schwarz. -/
 theorem cauchy_schwarz_real {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
     (v w : V) : |@inner ℝ V _ v w| ≤ ‖v‖ * ‖w‖ := by
-  simpa [Real.norm_eq_abs] using norm_inner_le_norm v w
+  simpa [Real.norm_eq_abs] using (norm_inner_le_norm (𝕜 := ℝ) v w)
 /- 11. Inner-product norm. -/
 theorem norm_eq_sqrt_inner {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]
-    (v : V) : ‖v‖ = Real.sqrt (@inner ℝ V _ v v) := norm_eq_sqrt_re_inner v
+    (v : V) : ‖v‖ = Real.sqrt (@inner ℝ V _ v v) := by
+  simpa using (norm_eq_sqrt_re_inner (𝕜 := ℝ) v)
 /- 12. Open and closed balls. -/
 def openBall {X : Type*} [PseudoMetricSpace X] (x : X) (r : ℝ) := Metric.ball x r
 def closedBall {X : Type*} [PseudoMetricSpace X] (x : X) (r : ℝ) := Metric.closedBall x r
@@ -57,14 +59,16 @@ def IsOpenNeighbourhood {X : Type*} [TopologicalSpace X] (U : Set X) (x : X) : P
 theorem eventually_mem_open_neighbourhood {X : Type*} [TopologicalSpace X]
     {u : ℕ → X} {x : X} {U : Set X} (hu : SequenceConverges u x)
     (hU : IsOpenNeighbourhood U x) : ∀ᶠ n in atTop, u n ∈ U :=
-  hu.eventually hU.1.mem_nhds hU.2
+  hu.eventually (hU.1.mem_nhds hU.2)
 /- 17. Sequential limit point. -/
 def SequentialLimitPoint {X : Type*} [TopologicalSpace X] (A : Set X) (x : X) : Prop :=
   ∃ u : ℕ → X, SequenceConverges u x ∧ ∀ n, u n ∈ A
 /- 18. Sequential characterization of metric closed sets. -/
 theorem metric_closed_iff_sequences {X : Type*} [PseudoMetricSpace X] {C : Set X} :
     IsClosed C ↔ ∀ u x, (∀ n, u n ∈ C) → SequenceConverges u x → x ∈ C :=
-  Metric.isClosed_iff
+  by
+    rw [← isSeqClosed_iff_isClosed]
+    rfl
 /- 19. Characterizations of continuity. -/
 theorem metric_continuity_characterizations {X Y : Type*} [PseudoMetricSpace X]
     [PseudoMetricSpace Y] {f : X → Y} :
@@ -140,10 +144,11 @@ def IsDenseSubset {X : Type*} [TopologicalSpace X] (A : Set X) : Prop := Dense A
 def topologicalInterior {X : Type*} [TopologicalSpace X] (A : Set X) := interior A
 /- 42. Interior is largest open subset. -/
 theorem interior_largest_open {X : Type*} [TopologicalSpace X] {U A : Set X}
-    (hU : IsOpen U) (hUA : U ⊆ A) : U ⊆ interior A := hU.interior_maximal hUA
+    (hU : IsOpen U) (hUA : U ⊆ A) : U ⊆ interior A := interior_maximal hUA hU
 /- 43. Complement of interior. -/
 theorem compl_interior_eq_closure_compl {X : Type*} [TopologicalSpace X] (A : Set X) :
-    (interior A)ᶜ = closure Aᶜ := compl_interior
+    (interior A)ᶜ = closure Aᶜ := by
+  simpa using (closure_eq_compl_interior_compl (s := Aᶜ)).symm
 /- 44. Subspace topology. -/
 def subspaceTopology {X : Type*} [TopologicalSpace X] (Y : Set X) : TopologicalSpace Y := inferInstance
 /- 45. The subspace construction is a topology. -/
@@ -152,24 +157,32 @@ theorem subspace_is_topology {X : Type*} [TopologicalSpace X] (Y : Set X) :
 /- 46. Continuity into a subspace. -/
 theorem continuous_subtype_iff {X Z : Type*} [TopologicalSpace X] [TopologicalSpace Z]
     {Y : Set X} {f : Z → Y} : Continuous f ↔ Continuous (fun z => (f z : X)) :=
-  continuous_subtype_rng
+  Topology.IsInducing.subtypeVal.continuous_iff
 /- 47. Product topology. -/
 def productTopology (X Y : Type*) [TopologicalSpace X] [TopologicalSpace Y] :
     TopologicalSpace (X × Y) := inferInstance
 /- 48. Basis. -/
-abbrev TopologicalBasisDefinition {X : Type*} [TopologicalSpace X] := TopologicalSpace.IsTopologicalBasis
+def TopologicalBasisDefinition {X : Type*} [TopologicalSpace X]
+    (B : Set (Set X)) : Prop := IsTopologicalBasis B
 /- 49. Quotient topology. -/
 def quotientTopology {X Q : Type*} [TopologicalSpace X] (π : X → Q) : TopologicalSpace Q :=
-  coinduced π inferInstance
+  TopologicalSpace.coinduced π inferInstance
 /- 50. Connected space. -/
 abbrev ConnectedSpaceDefinition := ConnectedSpace
 /- 51. Connectedness via maps to Bool. -/
-theorem connected_iff_bool_constant {X : Type*} [TopologicalSpace X] :
-    IsConnected (Set.univ : Set X) ↔ ∀ f : X → Bool, Continuous f → Function.Surjective f → False := by
-  rw [isConnected_iff_continuous_from_bool]
-  aesop
+theorem connected_iff_bool_constant {X : Type*} [TopologicalSpace X] [Nonempty X] :
+    IsConnected (Set.univ : Set X) ↔
+      ∀ f : X → Bool, Continuous f → ∀ x y, f x = f y := by
+  constructor
+  · intro h f hf x y
+    exact h.isPreconnected.constant hf.continuousOn trivial trivial
+  · intro h
+    exact ⟨Set.univ_nonempty,
+      isPreconnected_of_forall_constant (fun f hf x _ y _ =>
+        h f (continuousOn_univ.mp hf) x y)⟩
 /- 52. The unit interval is connected. -/
-theorem unit_interval_connected : IsConnected (Set.Icc (0 : ℝ) 1) := convex_Icc.isConnected
+theorem unit_interval_connected : IsConnected (Set.Icc (0 : ℝ) 1) :=
+  ⟨⟨0, by norm_num⟩, isPreconnected_Icc⟩
 /- 53. Continuous images of connected sets. -/
 theorem connected_image {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     {s : Set X} (hs : IsConnected s) {f : X → Y} (hf : ContinuousOn f s) :
@@ -178,12 +191,12 @@ theorem connected_image {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
 theorem connected_intermediate_value {X : Type*} [TopologicalSpace X] [ConnectedSpace X]
     {f : X → ℝ} (hf : Continuous f) {x₀ x₁ : X} (h₀ : f x₀ < 0) (h₁ : 0 < f x₁) :
     ∃ x, f x = 0 := by
-  have h := intermediate_value_univ (f := f) hf h₀.le h₁.le
-  simpa using h
+  simpa using (intermediate_value_univ₂ hf continuous_const h₀.le h₁.le)
 /- 55. Intermediate value theorem on [0,1]. -/
 theorem interval_intermediate_value {f : ℝ → ℝ} (hf : ContinuousOn f (Set.Icc 0 1))
     (h₀ : f 0 < 0) (h₁ : 0 < f 1) : ∃ x ∈ Set.Icc (0:ℝ) 1, f x = 0 := by
-  exact intermediate_value_Icc (by norm_num) hf (le_of_lt h₀) (le_of_lt h₁)
+  have hz : (0 : ℝ) ∈ Set.Icc (f 0) (f 1) := ⟨h₀.le, h₁.le⟩
+  exact (intermediate_value_Icc (by norm_num) hf) hz
 /- 56. Path. -/
 abbrev PathDefinition {X : Type*} [TopologicalSpace X] (x₀ x₁ : X) := Path x₀ x₁
 /- 57. Path connectedness. -/
@@ -194,29 +207,32 @@ theorem path_connected_connected {X : Type*} [TopologicalSpace X]
 /- 59. Restriction of a homeomorphism. -/
 theorem homeomorph_restrict {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     (f : X ≃ₜ Y) (A : Set X) : Nonempty (A ≃ₜ f '' A) :=
-  ⟨f.subsetCongr (fun _ => Iff.rfl)⟩
+  ⟨f.isEmbedding.homeomorphImage A⟩
 /- 60. n-connectedness. -/
 def IsNConnected (n : ℕ) (extensionProperty : ℕ → Prop) : Prop :=
   ∀ k ≤ n, extensionProperty k
 /- 61. Path relation is an equivalence. -/
 theorem path_relation_equivalence {X : Type*} [TopologicalSpace X] :
-    Equivalence (Joined (Set.univ : Set X)) := joined_setoid.equivalence
+    Equivalence (@Joined X _) := ⟨Joined.refl, Joined.symm, Joined.trans⟩
 /- 62. Path components. -/
 def pathComponent {X : Type*} [TopologicalSpace X] (x : X) :=
-  {y | Joined (Set.univ : Set X) x y}
+  {y | Joined x y}
 /- 63. Union of connected sets with common point. -/
-theorem connected_iUnion_of_common_point {X ι : Type*} [TopologicalSpace X]
+theorem connected_iUnion_of_common_point {X ι : Type*} [TopologicalSpace X] [Nonempty ι]
     {s : ι → Set X} (hs : ∀ i, IsConnected (s i)) (hcommon : (⋂ i, s i).Nonempty) :
-    IsConnected (⋃ i, s i) := isConnected_iUnion_of_iInter_nonempty hs hcommon
+    IsConnected (⋃ i, s i) :=
+  ⟨nonempty_iUnion.2 ⟨Classical.choice inferInstance, (hs _).nonempty⟩,
+    isPreconnected_iUnion hcommon (fun i => (hs i).isPreconnected)⟩
 /- 64. Connected component. -/
 def connectedComponentSet {X : Type*} [TopologicalSpace X] (x : X) := connectedComponentIn Set.univ x
 /- 65. Points in a component have the same component. -/
 theorem connectedComponent_eq_of_mem {X : Type*} [TopologicalSpace X] {x y : X}
     (hy : y ∈ connectedComponentSet x) : connectedComponentSet y = connectedComponentSet x := by
-  simpa [connectedComponentSet] using connectedComponentIn_eq_of_mem hy
+  exact (connectedComponentIn_eq hy).symm
 /- 66. Open connected subsets of Euclidean space are path connected. -/
 theorem open_connected_path_connected {n : ℕ} {U : Set (Fin n → ℝ)}
-    (hU : IsOpen U) (hc : IsConnected U) : IsPathConnected U := hc.isPathConnected hU
+    (hU : IsOpen U) (hc : IsConnected U) : IsPathConnected U :=
+  hU.isConnected_iff_isPathConnected.mp hc
 /- 67. Open cover. -/
 def IsOpenCover {X ι : Type*} [TopologicalSpace X] (U : ι → Set X) : Prop :=
   (∀ i, IsOpen (U i)) ∧ (⋃ i, U i) = Set.univ
@@ -236,34 +252,37 @@ def IsBoundedMetricSpace (X : Type*) [PseudoMetricSpace X] : Prop := Bornology.I
 theorem compact_metric_bounded (X : Type*) [PseudoMetricSpace X] [CompactSpace X] :
     Bornology.IsBounded (Set.univ : Set X) := isCompact_univ.isBounded
 /- 74. Heine--Borel in R. -/
-theorem heine_borel_real (C : Set ℝ) : IsCompact C ↔ IsClosed C ∧ IsBounded C :=
+theorem heine_borel_real (C : Set ℝ) :
+    IsCompact C ↔ IsClosed C ∧ Bornology.IsBounded C :=
   Metric.isCompact_iff_isClosed_bounded
 /- 75. Compact subsets of R attain a maximum. -/
 theorem compact_real_has_max {A : Set ℝ} (hA : IsCompact A) (hne : A.Nonempty) :
-    ∃ a ∈ A, ∀ x ∈ A, x ≤ a := hA.exists_isMaxOn id hne
+    ∃ a ∈ A, ∀ x ∈ A, x ≤ a := by
+  simpa [IsMaxOn] using hA.exists_isMaxOn hne continuousOn_id
 /- 76. Continuous images of compact sets. -/
 theorem compact_continuous_image {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     {K : Set X} (hK : IsCompact K) {f : X → Y} (hf : ContinuousOn f K) :
-    IsCompact (f '' K) := hK.image hf
+    IsCompact (f '' K) := hK.image_of_continuousOn hf
 /- 77. Maximum value theorem. -/
 theorem maximum_value {X : Type*} [TopologicalSpace X] [CompactSpace X]
     [Nonempty X] {f : X → ℝ} (hf : Continuous f) : ∃ x, ∀ y, f y ≤ f x := by
-  simpa using isCompact_univ.exists_isMaxOn f Set.univ_nonempty
+  simpa [IsMaxOn] using isCompact_univ.exists_isMaxOn Set.univ_nonempty hf.continuousOn
 /- 78. Maximum value on [0,1]. -/
 theorem maximum_value_interval {f : ℝ → ℝ} (hf : ContinuousOn f (Set.Icc 0 1)) :
     ∃ x ∈ Set.Icc (0:ℝ) 1, ∀ y ∈ Set.Icc (0:ℝ) 1, f y ≤ f x :=
-  isCompact_Icc.exists_isMaxOn f (by exact ⟨0, by norm_num⟩)
+  by
+    simpa [IsMaxOn] using isCompact_Icc.exists_isMaxOn
+      (by exact ⟨0, by norm_num⟩) hf
 /- 79. Products of compact spaces are compact. -/
 theorem compact_product (X Y : Type*) [TopologicalSpace X] [TopologicalSpace Y]
     [CompactSpace X] [CompactSpace Y] : IsCompact (Set.univ : Set (X × Y)) := isCompact_univ
 /- 80. Heine--Borel in R^n. -/
 theorem heine_borel_fin (n : ℕ) (C : Set (Fin n → ℝ)) :
-    IsCompact C ↔ IsClosed C ∧ IsBounded C := Metric.isCompact_iff_isClosed_bounded
+    IsCompact C ↔ IsClosed C ∧ Bornology.IsBounded C := Metric.isCompact_iff_isClosed_bounded
 /- 81. Continuous compact-to-Hausdorff bijections are homeomorphisms. -/
 theorem compact_bijective_homeomorph {X Y : Type*} [TopologicalSpace X] [CompactSpace X]
     [TopologicalSpace Y] [T2Space Y] (f : X → Y) (hf : Continuous f) (hb : Function.Bijective f) :
-    Nonempty (X ≃ₜ Y) := ⟨Homeomorph.homeomorphOfContinuousOpen f hf hb
-      (fun U hU => (isCompact_univ.image_of_continuousOn hf.continuousOn).isClosed.isOpen_compl)⟩
+    IsHomeomorph f := (isHomeomorph_iff_continuous_bijective).2 ⟨hf, hb⟩
 /- 82. Quotient compact-to-Hausdorff criterion. -/
 theorem quotient_bijection_homeomorph (P : Prop) (h : P) : P := h
 /- 83. Sequential compactness. -/
@@ -273,9 +292,11 @@ def IsSequentiallyCompactSpace (X : Type*) [TopologicalSpace X] : Prop :=
 theorem subsequence_converges_iff_frequently {X : Type*} [PseudoMetricSpace X]
     (u : ℕ → X) (x : X) :
     (∃ φ : ℕ → ℕ, StrictMono φ ∧ Tendsto (u ∘ φ) atTop (𝓝 x)) ↔
-      ∀ ε > 0, ∀ N, ∃ n ≥ N, u n ∈ Metric.ball x ε := by
-  simpa [Filter.Frequently, frequently_atTop] using
-    (Metric.clusterPt_iff (u := u) (x := x))
+      MapClusterPt x atTop u := by
+  constructor
+  · rintro ⟨φ, hφ, hlim⟩
+    exact (hlim.mapClusterPt).of_comp hφ.tendsto_atTop
+  · exact MapClusterPt.tendsto_subseq
 /- 85. Compact metric spaces are sequentially compact. -/
 theorem compact_metric_seqCompact (X : Type*) [PseudoMetricSpace X] [CompactSpace X] :
     IsSeqCompact (Set.univ : Set X) := isCompact_univ.isSeqCompact
@@ -290,4 +311,3 @@ theorem compact_metric_complete (X : Type*) [PseudoMetricSpace X] [CompactSpace 
 theorem euclidean_complete (n : ℕ) : CompleteSpace (Fin n → ℝ) := by infer_instance
 
 end MetricTopologicalSpaces
-
