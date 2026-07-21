@@ -1,4 +1,5 @@
 import NumbersAndSets.Foundations
+import NumbersAndSets.Definitions
 import NumbersAndSets.NumberTheory
 import NumbersAndSets.Combinatorics
 import NumbersAndSets.RealAndSequences
