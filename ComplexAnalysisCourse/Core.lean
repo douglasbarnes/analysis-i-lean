@@ -99,7 +99,8 @@ lemma norm_interval_integral_le (f : ℝ → ℂ) (a b C : ℝ)
     intervalIntegral.norm_integral_le_of_norm_le_const hbound
 
 structure Path where
-  a b : ℝ
+  a : ℝ
+  b : ℝ
   toFun : ℝ → ℂ
   continuousOn : ContinuousOn toFun (Set.Icc a b)
 
@@ -237,13 +238,13 @@ lemma continuous_polar_lift (γ : ℝ → ℂ) (a b : ℝ) (w : ℂ)
     ∃ r θ : ℝ → ℝ, Continuous r ∧ Continuous θ ∧
       ∀ t ∈ Set.Icc a b, γ t = w + (r t : ℂ) * Complex.exp (Complex.I * θ t) := h
 
-def WindingNumber (θ : ℝ → ℝ) (a b : ℝ) : ℝ := (θ b - θ a) / (2 * π)
+def WindingNumber (θ : ℝ → ℝ) (a b : ℝ) : ℝ := (θ b - θ a) / (2 * Real.pi)
 
 lemma winding_number_integral (γ : Path) (w : ℂ) (θ : ℝ → ℝ)
     (h : (WindingNumber θ γ.a γ.b : ℂ) =
-      (2 * π * Complex.I)⁻¹ * contourIntegral (λ z ↦ (z - w)⁻¹) γ) :
+      (2 * Real.pi * Complex.I)⁻¹ * contourIntegral (λ z ↦ (z - w)⁻¹) γ) :
     (WindingNumber θ γ.a γ.b : ℂ) =
-      (2 * π * Complex.I)⁻¹ * contourIntegral (λ z ↦ (z - w)⁻¹) γ := h
+      (2 * Real.pi * Complex.I)⁻¹ * contourIntegral (λ z ↦ (z - w)⁻¹) γ := h
 
 def ClosedCurveHomotopy (U : Set ℂ) (φ ψ : ℝ → ℂ) (a b : ℝ) : Prop :=
   ∃ F : ℝ × ℝ → ℂ, Continuous F ∧ MapsTo F (Set.Icc 0 1 ×ˢ Set.Icc a b) U ∧
@@ -266,8 +267,8 @@ corollary simply_connected_cauchy (f : ℂ → ℂ) (γ : Path)
 
 theorem cauchy_residue_theorem (f : ℂ → ℂ) (γ : Path) (poles : Finset ℂ)
     (index residue : ℂ → ℂ)
-    (h : contourIntegral f γ = 2 * π * Complex.I * ∑ z ∈ poles, index z * residue z) :
-    contourIntegral f γ = 2 * π * Complex.I * ∑ z ∈ poles, index z * residue z := h
+    (h : contourIntegral f γ = 2 * Real.pi * Complex.I * ∑ z ∈ poles, index z * residue z) :
+    contourIntegral f γ = 2 * Real.pi * Complex.I * ∑ z ∈ poles, index z * residue z := h
 
 lemma residue_at_pole (f : ℂ → ℂ) (a : ℂ) (res : ℂ)
     (h : Tendsto (fun z ↦ (z - a) * f z) (nhdsWithin a {a}ᶜ) (nhds res)) :
@@ -284,9 +285,9 @@ lemma jordan_lemma (integral : ℝ → ℂ)
 
 theorem argument_principle (f : ℂ → ℂ) (γ : Path) (zeros poles : ℕ)
     (h : contourIntegral (λ z ↦ deriv f z / f z) γ =
-      2 * π * Complex.I * ((((zeros : ℤ) - (poles : ℤ) : ℤ)) : ℂ)) :
+      2 * Real.pi * Complex.I * ((((zeros : ℤ) - (poles : ℤ) : ℤ)) : ℂ)) :
     contourIntegral (λ z ↦ deriv f z / f z) γ =
-      2 * π * Complex.I * ((((zeros : ℤ) - (poles : ℤ) : ℤ)) : ℂ) := h
+      2 * Real.pi * Complex.I * ((((zeros : ℤ) - (poles : ℤ) : ℤ)) : ℂ) := h
 
 corollary rouche_theorem (zerosF zerosFG : ℕ) (h : zerosF = zerosFG) :
     zerosF = zerosFG := h
