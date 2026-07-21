@@ -168,15 +168,15 @@ structure HermitianSpectralData (ι : Type*) [Fintype ι] (State : Type*)
     [NormedAddCommGroup State] [InnerProductSpace ℂ State] where
   observable : Operator State
   eigenvalue : ι → ℝ
-  eigenvector : Basis ι ℂ State
-  eigen_equation : ∀ i, observable (eigenvector i) = eigenvalue i • eigenvector i
+  eigenvector : Module.Basis ι ℂ State
+  eigen_equation : ∀ i, observable (eigenvector i) = (eigenvalue i : ℂ) • eigenvector i
   orthogonal : ∀ i j, i ≠ j → ⟪eigenvector i, eigenvector j⟫_ℂ = 0
   hermitian : IsHermitian observable
 
 theorem hermitian_spectral_properties {ι : Type*} [Fintype ι]
     (D : HermitianSpectralData ι State) :
     IsHermitian D.observable ∧
-      (∀ i, D.observable (D.eigenvector i) = D.eigenvalue i • D.eigenvector i) ∧
+      (∀ i, D.observable (D.eigenvector i) = (D.eigenvalue i : ℂ) • D.eigenvector i) ∧
       (∀ i j, i ≠ j → ⟪D.eigenvector i, D.eigenvector j⟫_ℂ = 0) ∧
       Function.Surjective D.eigenvector.repr := by
   refine ⟨D.hermitian, D.eigen_equation, D.orthogonal, ?_⟩
@@ -222,7 +222,7 @@ def IsNondegenerate [FiniteDimensional ℂ State]
   degeneracy Q eigenvalue = 1
 
 def AreDegenerate (Q : Operator State) (ψ φ : State) : Prop :=
-  ∃ eigenvalue, Q ψ = eigenvalue • ψ ∧ Q φ = eigenvalue • φ
+  ∃ eigenvalue : ℂ, Q ψ = eigenvalue • ψ ∧ Q φ = eigenvalue • φ
 
 /- 22. Structureless particle. -/
 def IsStructurelessParticle (generatedByPositionMomentum : Operator State → Prop) : Prop :=
