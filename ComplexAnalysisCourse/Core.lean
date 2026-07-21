@@ -55,21 +55,22 @@ def SimpleClosedCurve (rangeSet : Set ℂ) : Prop :=
 def SimplyConnected (U : Set ℂ) : Prop := IsSimplyConnected U
 
 def UniformlyConverges {X : Type*} (f : ℕ → X → ℂ) (g : X → ℂ) : Prop :=
-  Tendsto f atTop (uniformity ℂ).uniformConvergence g
+  TendstoUniformly f g atTop
 
 theorem uniform_limit_continuous {X : Type*} [TopologicalSpace X]
     {f : ℕ → X → ℂ} {g : X → ℂ} (hf : ∀ n, Continuous (f n))
-    (hfg : Tendsto f atTop (uniformity ℂ).uniformConvergence g) : Continuous g :=
+    (hfg : TendstoUniformly f g atTop) : Continuous g :=
   hfg.continuous (Frequently.of_forall hf)
 
 theorem weierstrass_m_test {X : Type*} (f : ℕ → X → ℂ) (M : ℕ → ℝ)
     (hM : Summable M) (hf : ∀ n x, ‖f n x‖ ≤ M n) :
-    Tendsto (λ N x ↦ ∑ n ∈ Finset.range N, f n x) atTop
-      (uniformity ℂ).uniformConvergence (λ x ↦ ∑' n, f n x) := by
+    TendstoUniformly (λ N x ↦ ∑ n ∈ Finset.range N, f n x)
+      (λ x ↦ ∑' n, f n x) atTop := by
   exact tendstoUniformly_tsum_nat hM hf
 
-def powerSeriesRadius (c : ℕ → ℂ) (a : ℂ) : ENNReal :=
-  ⨆ r : NNReal, if ∀ z : ℂ, ‖z - a‖ < r → Summable (λ n ↦ c n * (z - a) ^ n)
+def powerSeriesRadius (c : ℕ → ℂ) (a : ℂ) : ENNReal := by
+  classical
+  exact ⨆ r : NNReal, if ∀ z : ℂ, ‖z - a‖ < r → Summable (λ n ↦ c n * (z - a) ^ n)
     then (r : ENNReal) else 0
 
 theorem power_series_radius (c : ℕ → ℂ) (a : ℂ) :
@@ -94,7 +95,9 @@ lemma norm_interval_integral_le (f : ℝ → ℂ) (a b C : ℝ)
     (hC : ∀ t ∈ Set.Icc a b, ‖f t‖ ≤ C) :
     ‖∫ t in a..b, f t‖ ≤ (b - a) * C := by
   have hbound : ∀ t ∈ Ι a b, ‖f t‖ ≤ C := by
-    simpa [Set.uIcc_of_le hab] using hC
+    intro t ht
+    rw [Set.uIoc_of_le hab] at ht
+    exact hC t ⟨le_of_lt ht.1, ht.2⟩
   simpa [abs_of_nonneg (sub_nonneg.mpr hab), mul_comm] using
     intervalIntegral.norm_integral_le_of_norm_le_const hbound
 
