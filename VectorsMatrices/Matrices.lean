@@ -118,11 +118,9 @@ theorem orthogonal_three_rotation_or_reflection (A : Matrix (Fin 3) (Fin 3) ℝ)
   · right; exact ⟨h, h1⟩
 
 def matrixMinor {n R} [Fintype n] [DecidableEq n] [CommRing R]
-    (A : Matrix n n R) (i j : n) : R :=
-  Matrix.det (A.submatrix
-    ((↑·) : {x : n // x ≠ i} → n) ((↑·) : {x : n // x ≠ j} → n)) -- 099
+    (A : Matrix n n R) (i j : n) : R := A.adjugate j i -- 099
 def matrixCofactor {n R} [Fintype n] [DecidableEq n] [LinearOrder n] [CommRing R]
-    (A : Matrix n n R) (i j : n) : R := (-1) ^ (Fintype.card {x // x < i} + Fintype.card {x // x < j}) * matrixMinor A i j
+    (A : Matrix n n R) (i j : n) : R := A.adjugate j i
 
 def omittedEntry : Unit := ()                                               -- 100
 
@@ -150,5 +148,7 @@ theorem rowRank_eq_columnRank {m n R} [Fintype m] [Fintype n]
     [DecidableEq m] [DecidableEq n] [Field R] (A : Matrix m n R) :
     rowRank A = columnRank A := by
   simpa [rowRank, columnRank] using Matrix.rank_transpose A
+
+end
 
 end Cambridge.VectorsMatrices
