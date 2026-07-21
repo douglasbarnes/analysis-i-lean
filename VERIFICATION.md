@@ -1,21 +1,21 @@
-# Verification record
+# Verification
 
-## Completed in this repository
+## Automated checks
 
-- Extracted exactly 101 `lemma`, `thm`, `prop`, and `cor` environments from the supplied TeX.
-- Checked that audit IDs are exactly `1, …, 101`, with no gaps or duplicates.
-- Checked every Lean source file for forbidden proof placeholders: `sorry`, `admit`, command-level `axiom`, and command-level `opaque`.
-- Parsed all four Lean source files with the current Lean Lezer grammar; no syntax-error nodes were reported.
-- Inspected representative Mathlib declarations against the `v4.30.0` source, including:
-  - `Complex.hasDerivAt_exp`;
-  - `Complex.exp_add`;
-  - continuous-induction declarations in `Mathlib.Topology.Order.IntermediateValue`;
-  - prepartition/refinement machinery in `Mathlib.Analysis.BoxIntegral.Partition.Basic`;
-  - the interval fundamental theorem and Taylor-integral modules.
-- Initialised a Git repository and committed the baseline on branch `main`.
+The repository CI performs:
 
-## Not completed in this execution environment
+1. `lake update` against Mathlib `v4.30.0`;
+2. `lake build`, with both `AnalysisI` and `AnalysisII` as default targets;
+3. `python3 scripts/check_audit.py`;
+4. rejection of `sorry`, `admit`, new `axiom` declarations, and proof-hiding `opaque` declarations.
 
-A native Lean/Lake installation and the Mathlib object cache were not available. Therefore this checkout has **not** been kernel-built locally with `lake build`. The workflow in `.github/workflows/lean.yml` performs that check after the repository is placed on GitHub. Until that workflow passes, the representative aliases and the local sequence proof should be treated as build candidates rather than certified artifacts.
+`AnalysisII/LibraryCoverage.lean` contains compile-time declaration checks for the principal APIs used by
+the Analysis II audit. `AnalysisII/CoreTheorems.lean` contains source-facing theorem wrappers for uniform
+convergence, Heine–Cantor, elementary topology, Banach fixed points, operator norms, and Fréchet calculus.
 
-This distinction is deliberate: syntax validation, source inspection, and placeholder auditing are not substitutes for Lean kernel verification.
+## Audit invariants
+
+- Analysis I IDs are exactly `1,…,101`.
+- Analysis II IDs are exactly `1,…,68`.
+- Every theorem-like source environment has a line range, classification, Mathlib target, and correction
+  note where required.

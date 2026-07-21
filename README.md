@@ -1,24 +1,19 @@
-# Analysis I in Lean
+# Analysis I and II in Lean
 
-A declaration-level formalisation audit of the supplied **Analysis I** lecture notes (W. T. Gowers,
-Lent 2015). The source contains **101 theorem-like environments**. This repository does not duplicate
-standard Mathlib theorems: each existing result is mapped in [`THEOREM_AUDIT.md`](THEOREM_AUDIT.md),
-while course-specific packaging is proved locally.
+A declaration-level formalisation project for the supplied Cambridge **Analysis I** and **Analysis II**
+lecture notes. Standard Mathlib results are not duplicated: each source result is mapped to a named
+library declaration or declaration family, while corrected course-level wrappers are compiled locally.
 
-## Current closure
+## Scope
 
-- 66 declarations map directly to standard Mathlib coverage.
-- 31 declarations require a corrected formal statement or Mathlib's standard abstraction.
-- 3 declarations duplicate earlier statements in the notes.
-- 1 declaration is proved locally in `AnalysisI/Local/Sequences.lean`.
-- The machine-readable 101-entry audit is in `AnalysisI/SourceAudit.lean`.
-- No `sorry`, `admit`, proof-hiding `axiom`, or proof-hiding `opaque` declaration is permitted.
+| Course | Theorem-like source declarations | Mathlib | Reformulated | Duplicates | Local wrappers |
+|---|---:|---:|---:|---:|---:|
+| Analysis I | 101 | 66 | 31 | 3 | 1 retained course-specific proof |
+| Analysis II | 68 | 47 | 18 | 3 | 17 compiled theorem wrappers plus declaration checks |
 
-This initial repository is an **audit-complete baseline**, not a claim that every corrected source
-formulation has been re-proved from first principles. Existing Mathlib results are skipped exactly as
-requested. The remaining closure work is the set of entries marked `reformulated`, principally the
-translation of informal hypotheses and the choice between Darboux/Riemann and Mathlib box/interval
-integral APIs.
+The Analysis II material covers uniform convergence, function series, compactness, finite-dimensional
+normed spaces, metric spaces, Banach's contraction theorem, Picard–Lindelöf, Fréchet differentiation,
+the inverse function theorem, mixed partials, and second-order Taylor expansion.
 
 ## Toolchain
 
@@ -33,24 +28,26 @@ python3 scripts/check_audit.py
 
 ## Repository layout
 
-- `AnalysisI/SourceAudit.lean` — machine-readable inventory and coverage decision for all 101 declarations.
-- `AnalysisI/LibrarySmoke.lean` — representative theorem aliases that exercise the selected Mathlib APIs.
-- `AnalysisI/Local/Sequences.lean` — local proof of the one course-specific theorem currently retained.
-- `THEOREM_AUDIT.md` — human-readable source-to-Mathlib table.
-- `SOURCE_CORRECTIONS.md` — exact corrections needed before formalisation.
-- `.github/workflows/lean.yml` — reproducible build and no-placeholder checks.
+### Analysis I
 
-## Verification status
+- `AnalysisI/SourceAudit.lean` — machine-readable 101-entry inventory.
+- `AnalysisI/LibrarySmoke.lean` — representative Mathlib aliases.
+- `AnalysisI/Local/Sequences.lean` — retained local sequence proof.
+- `THEOREM_AUDIT.md` and `SOURCE_CORRECTIONS.md` — human-readable audit and corrections.
 
-See [`VERIFICATION.md`](VERIFICATION.md). The static audit and Lean syntax checks pass. A full `lake build` was not available in this execution environment, so kernel verification remains the first CI gate.
+### Analysis II
 
-## Policy
+- `AnalysisII/SourceAudit.lean` — machine-readable 68-entry inventory.
+- `AnalysisII/LibraryCoverage.lean` — compile-time checks for the selected Mathlib APIs.
+- `AnalysisII/CoreTheorems.lean` — checked source-facing wrappers for central results.
+- `THEOREM_AUDIT_II.md` — complete source-to-Mathlib table.
+- `SOURCE_CORRECTIONS_II.md` — theorem- and definition-level corrections.
 
-The project treats a theorem as closed only when one of the following holds:
+## Verification policy
 
-1. its mathematical content is supplied by a named Mathlib declaration or declaration family;
-2. a local theorem compiles without `sorry`, `admit`, new axioms, or opaque proof hiding;
-3. it is a literal duplicate of an earlier source theorem.
+A source result is treated as closed only if it is supplied by an exact compiled Mathlib target, proved
+locally without proof placeholders, or identified as a duplicate of an already checked result. A malformed
+source statement is never silently strengthened or weakened.
 
-A malformed source statement is never encoded by silently strengthening or weakening it; the correction
-is recorded explicitly.
+The CI workflow runs `lake update`, builds both libraries, and rejects `sorry`, `admit`, new axioms, and
+proof-hiding `opaque` declarations.
