@@ -74,17 +74,19 @@ theorem inverse_unique {α β : Type*} {f : α → β} {g h : β → α}
     (gl : LeftInverse g f) (gr : RightInverse g f)
     (hl : LeftInverse h f) (hr : RightInverse h f) : g = h := by
   funext y
-  rw [← hr y, gl]
+  calc
+    g y = g (f (h y)) := congrArg g (hr y).symm
+    _ = h y := gl (h y)
 
 abbrev Relation (α : Type*) := α → α → Prop
 abbrev Reflexive {α : Type*} (r : Relation α) := IsRefl α r
-abbrev Symmetric {α : Type*} (r : Relation α) := Symmetric r
-abbrev Transitive {α : Type*} (r : Relation α) := Transitive r
+abbrev Symmetric {α : Type*} (r : Relation α) := _root_.Symmetric r
+abbrev Transitive {α : Type*} (r : Relation α) := _root_.Transitive r
 abbrev EquivalenceRelation {α : Type*} (r : Relation α) := Equivalence r
 abbrev EquivalenceClass {α : Type*} (r : Relation α) (x : α) := {y | r y x}
 
 theorem equivalence_classes_cover {α : Type*} {r : Relation α} (h : Equivalence r) (x : α) :
-    x ∈ EquivalenceClass r x := h.1 x
+    x ∈ EquivalenceClass r x := h.refl x
 
 theorem equivalence_classes_eq_or_disjoint {α : Type*} {r : Relation α}
     (h : Equivalence r) (x y : α) :
@@ -96,16 +98,16 @@ theorem equivalence_classes_eq_or_disjoint {α : Type*} {r : Relation α}
     ext z
     constructor
     · intro hzx
-      exact h.2.2 hzx hxy
+      exact h.trans hzx hxy
     · intro hzy
-      exact h.2.2 hzy (h.2.1 hxy)
+      exact h.trans hzy (h.symm hxy)
   · right
     rw [Set.disjoint_left]
     intro z hzx hzy
-    exact hxy (h.2.2 (h.2.1 hzx) hzy)
+    exact hxy (h.trans (h.symm hzx) hzy)
 
 abbrev PartialOrderRelation {α : Type*} (r : Relation α) :=
-  IsRefl α r ∧ Antisymm r ∧ Transitive r
+  IsRefl α r ∧ _root_.Antisymm r ∧ _root_.Transitive r
 
 abbrev TotalOrderRelation {α : Type*} (r : Relation α) :=
   PartialOrderRelation r ∧ ∀ x y, r x y ∨ r y x
@@ -114,6 +116,7 @@ abbrev WellOrderedRelation {α : Type*} (r : Relation α) := IsWellOrder α r
 
 theorem nat_well_ordering (S : Set ℕ) (hne : S.Nonempty) :
     ∃ m ∈ S, ∀ n ∈ S, m ≤ n := by
+  classical
   let P : ℕ → Prop := fun n => n ∈ S
   have hex : ∃ n, P n := hne
   refine ⟨Nat.find hex, Nat.find_spec hex, ?_⟩
