@@ -26,4 +26,3 @@ stale prose mapping.
 #check ContinuousLinearMap.le_opNorm
 #check HasFDerivAt.comp
 #check Convex.norm_image_sub_le_of_norm_hasFDerivWithin_le
-#check norm_integral_le_integral_norm
