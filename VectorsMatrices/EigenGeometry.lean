@@ -4,8 +4,10 @@ import VectorsMatrices.Matrices
 
 namespace Cambridge.VectorsMatrices
 
+noncomputable section
+
 theorem fundamentalTheoremOfAlgebra (p : Polynomial ℂ) (h : 0 < p.degree) : ∃ z, p.IsRoot z := by
-  exact Polynomial.exists_root h
+  exact Complex.exists_root h
 
 def rootMultiplicity (p : Polynomial ℂ) (z : ℂ) : ℕ := p.rootMultiplicity z -- 108
 def IsEigenvector {K V} [Field K] [AddCommGroup V] [Module K V]
@@ -41,25 +43,33 @@ theorem distinct_eigenvectors_independent {K V ι} [Field K] [AddCommGroup V] [M
     {A : V →ₗ[K] V} {v : ι → V} {c : ι → K}
     (hv : ∀ i, A (v i) = c i • v i) (hc : Function.Injective c)
     (hn : ∀ i, v i ≠ 0) : LinearIndependent K v := by
-  exact LinearIndependent.of_comp_subtype (Module.End.hasEigenvector_apply hv hc hn)
+  exact A.eigenvectors_linearIndependent' c hc v fun i ⇒ ⟨by simpa [Module.End.mem_eigenspace_iff] using hv i, hn i⟩
 
 def coordinatesUnderBasis {K V ι} [Field K] [AddCommGroup V] [Module K V]
-    (b : Basis ι K V) : V ≃ₗ[K] (ι →₀ K) := b.equivFun                  -- 118
+    [Finite ι] (b : Basis ι K V) : V ≃ₗ[K] (ι → K) := b.equivFun       -- 118
 theorem change_basis_coordinates {K V ι} [Field K] [AddCommGroup V] [Module K V]
-    (b : Basis ι K V) (x : V) : b.equivFun.symm (b.equivFun x) = x := b.equivFun.symm_apply_apply x
+    [Finite ι] (b : Basis ι K V) (x : V) : b.equivFun.symm (b.equivFun x) = x :=
+  b.equivFun.symm_apply_apply x
 
 def changeBasisMatrix {n K} [Fintype n] [DecidableEq n] [Field K]
-    (P A : Matrix n n K) [Invertible P] : Matrix n n K := ⁻¹₀ P * A * P -- 119
+    (P A : Matrix n n K) [Invertible P] : Matrix n n K := P⁻¹ * A * P -- 119
 theorem change_basis_formula {n K} [Fintype n] [DecidableEq n] [Field K]
-    (P A : Matrix n n K) [Invertible P] : changeBasisMatrix P A = ⁻¹₀ P * A * P := rfl
+    (P A : Matrix n n K) [Invertible P] : changeBasisMatrix P A = P⁻¹ * A * P := rfl
 
 def AreSimilar {n K} [Fintype n] [DecidableEq n] [Field K]
     (A B : Matrix n n K) : Prop := ∃ P : Matrix n n K, IsUnit P ∧ B = P⁻¹ * A * P -- 120
 
 theorem similar_invariants {n K} [Fintype n] [DecidableEq n] [Field K]
-    {A B : Matrix n n K} (h : A ∼ B) :
+    {A B : Matrix n n K} (h : AreSimilar A B) :
     A.det = B.det ∧ Matrix.trace A = Matrix.trace B ∧ A.charpoly = B.charpoly := by
-  exact ⟨Matrix.det_eq_of_equivalent h, Matrix.trace_eq_of_equivalent h, Matrix.charpoly_eq_of_equivalent h⟩
+  obtain ⟨P, hP, rfl⟩ := h
+  constructor
+  · rw [Matrix.det_mul, Matrix.det_mul, ← mul_assoc,
+      Matrix.det_nonsing_inv_mul_det P hP, one_mul]
+  constructor
+  · exact (Matrix.trace_conj' hP A).symm
+  · have hval : (hP.unit : Matrix n n K) = P := hP.unit_spec
+    simpa [hval] using (Matrix.charpoly_units_conj' hP.unit A).symm
 
 def IsDiagonalizable {n K} [Fintype n] [DecidableEq n] [Field K]
     (A : Matrix n n K) : Prop := ∃ P : Matrix n n K, IsUnit P ∧ Matrix.IsDiag (P⁻¹ * A * P) -- 122
@@ -86,9 +96,9 @@ theorem complex_two_by_two_has_canonical_form (A : Matrix (Fin 2) (Fin 2) ℂ)
     (h : ∃ P, IsUnit P ∧ IsJordanCanonical2 (P⁻¹ * A * P)) :
     ∃ P, IsUnit P ∧ IsJordanCanonical2 (P⁻¹ * A * P) := h
 
-def IsJordanNormalForm {n} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) : Prop :=
-  Matrix.IsUpperTriangular A                                             -- 126
-theorem jordan_normal_form_exists {n} [Fintype n] [DecidableEq n]
+def IsJordanNormalForm {n} [Fintype n] [DecidableEq n] [LinearOrder n]
+    (A : Matrix n n ℂ) : Prop := A.BlockTriangular id                 -- 126
+theorem jordan_normal_form_exists {n} [Fintype n] [DecidableEq n] [LinearOrder n]
     (A : Matrix n n ℂ)
     (h : ∃ P, IsUnit P ∧ IsJordanNormalForm (P⁻¹ * A * P)) :
     ∃ P, IsUnit P ∧ IsJordanNormalForm (P⁻¹ * A * P) := h
@@ -98,19 +108,27 @@ theorem cayleyHamilton {n R} [Fintype n] [DecidableEq n] [CommRing R]
 
 theorem hermitian_eigenvalue_real {n} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.IsHermitian) {c : ℂ} {v : n → ℂ}
-    (hv : v ≠ 0) (he : H.mulVec v = c • v) : c.im = 0 := by
-  exact Matrix.IsHermitian.eigenvalues_real hH hv he
+    (hv : v ≠ 0) (he : H.mulVec v = c • v) : conj c = c := by
+  have hs := Matrix.isSymmetric_toEuclideanLin_iff.mpr hH
+  apply hs.conj_eigenvalue_eq_self
+  exact Module.End.hasEigenvalue_of_hasEigenvector
+    ⟨by simpa [Module.End.mem_eigenspace_iff] using he, hv⟩
 
 theorem hermitian_distinct_eigenvectors_orthogonal {n} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.IsHermitian) {a b : ℂ} {x y : n → ℂ}
     (hx : H.mulVec x = a • x) (hy : H.mulVec y = b • y) (hab : a ≠ b) :
     ⟪x, y⟩_ℂ = 0 := by
-  exact hH.eigenvectors_orthogonal hx hy hab
+  have hs := Matrix.isSymmetric_toEuclideanLin_iff.mpr hH
+  apply hs.orthogonalFamily_eigenspaces hab
+  · exact ⟨x, by simpa [Module.End.mem_eigenspace_iff] using hx⟩
+  · exact ⟨y, by simpa [Module.End.mem_eigenspace_iff] using hy⟩
 
 def HasOrthogonalEigenbasis {n} [Fintype n] [DecidableEq n] (H : Matrix n n ℂ) : Prop :=
   ∃ b : OrthonormalBasis n ℂ (n → ℂ), ∀ i, ∃ c, H.mulVec (b i) = c • b i -- 130
 theorem hermitian_has_orthogonal_eigenbasis {n} [Fintype n] [DecidableEq n]
-    (H : Matrix n n ℂ) (h : HasOrthogonalEigenbasis H) : HasOrthogonalEigenbasis H := h
+    (H : Matrix n n ℂ) (h : H.IsHermitian) : HasOrthogonalEigenbasis H := by
+  refine ⟨h.eigenvectorBasis, fun i ⇒ ?_⟩
+  exact ⟨(h.eigenvalues i : ℂ), h.mulVec_eigenvectorBasis i⟩
 
 def IsNormalMatrix {n} [Fintype n] [DecidableEq n] (N : Matrix n n ℂ) : Prop :=
   N * N.conjTranspose = N.conjTranspose * N                              -- 131
@@ -126,7 +144,8 @@ def quadraticForm {n} [Fintype n] (A : Matrix n n ℝ) (x : n → ℝ) : ℝ :=
 theorem hermitian_form_real {n} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.IsHermitian) (x : n → ℂ) :
     (sesquilinearForm A x).im = 0 := by
-  exact hA.mulVec_inner_self_im x
+  simpa [sesquilinearForm, EuclideanSpace.inner_eq_star_dotProduct] using
+    hA.im_star_dotProduct_mulVec_self x
 
 def Quadric {n} (A : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ) (c : ℝ) : Set (Fin n → ℝ) :=
   {x | quadraticForm A x + ∑ i, b i * x i + c = 0}                  -- 135
@@ -143,7 +162,7 @@ def specialOrthogonalGroup (n : Type*) [Fintype n] [DecidableEq n] :=
 
 theorem orthogonal_equivalences {n} [Fintype n] [DecidableEq n]
     (P : Matrix n n ℝ) (hP : IsOrthogonalMatrix P) (x y : n → ℝ) :
-    (‖P.mulVec x‖ = ‖x‖) ∧ (⟨P.mulVec x, P.mulVec y⟩_ℝ = ⟪x,y⟩_ℝ) := by
+    (‖P.mulVec x‖ = ‖x‖) ∧ (⟪P.mulVec x, P.mulVec y⟫_ℝ = ⟪x, y⟫_ℝ) := by
   constructor
   · have hs : ‖P.mulVec x‖ ^ 2 = ‖x‖ ^ 2 := by
       simp [EuclideanSpace.norm_eq, hP.1]
@@ -156,5 +175,7 @@ def PreservesMinkowski (M : Matrix (Fin 2) (Fin 2) ℝ) : Prop :=
 def lorentzMatrix (v : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
   (1 / Real.sqrt (1 - v^2)) • !![1,v; v,1]                           -- 143
 def LorentzGroup : Set (Matrix (Fin 2) (Fin 2) ℝ) := {M | PreservesMinkowski M} -- 144
+
+end
 
 end Cambridge.VectorsMatrices
