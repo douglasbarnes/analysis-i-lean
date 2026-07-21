@@ -80,7 +80,7 @@ theorem cauchyIntegralFormula {R : ℝ} {c w : ℂ} {f : ℂ → ℂ}
   simpa [smul_eq_mul] using hf.two_pi_i_inv_smul_circleIntegral_sub_inv_smul hw
 
 /-- Source 31 (line 1179), theorem: Liouville's theorem. -/
-theorem liouvilleTheorem {f : ℂ → ℂ} (hf : Entire f) (hb : IsBounded (range f)) :
+theorem liouvilleTheorem {f : ℂ → ℂ} (hf : Entire f) (hb : Bornology.IsBounded (range f)) :
     ∃ c : ℂ, f = Function.const ℂ c :=
   hf.exists_eq_const_of_bounded hb
 
@@ -115,8 +115,8 @@ def residue (a : ℤ → ℂ) : ℂ := a (-1)
 
 /-- Source 37 (line 1468), proposition: the residue formula at a simple pole. -/
 theorem residue_at_simple_pole {f : ℂ → ℂ} {z₀ r : ℂ}
-    (hlim : Tendsto (fun z ↦ (z - z₀) * f z) (𝓝[≠] z₀) (𝓝 r)) :
-    Tendsto (fun z ↦ (z - z₀) * f z) (𝓝[≠] z₀) (𝓝 r) := hlim
+    (hlim : Tendsto (fun z ↦ (z - z₀) * f z) (nhdsWithin z₀ {z₀}ᶜ) (𝓝 r)) :
+    Tendsto (fun z ↦ (z - z₀) * f z) (nhdsWithin z₀ {z₀}ᶜ) (𝓝 r) := hlim
 
 /-- Source 38 (line 1485), proposition: the derivative formula for a pole of order `N`. -/
 theorem residue_at_pole_of_order {f : ℂ → ℂ} {z₀ r : ℂ} {N : ℕ}
@@ -124,11 +124,11 @@ theorem residue_at_pole_of_order {f : ℂ → ℂ} {z₀ r : ℂ} {N : ℕ}
     (hlim : Tendsto
       (fun z ↦ ((Nat.factorial (N - 1) : ℂ)⁻¹) *
         iteratedDeriv (N - 1) (fun w ↦ (w - z₀) ^ N * f w) z)
-      (𝓝[≠] z₀) (𝓝 r)) :
+      (nhdsWithin z₀ {z₀}ᶜ) (𝓝 r)) :
     Tendsto
       (fun z ↦ ((Nat.factorial (N - 1) : ℂ)⁻¹) *
         iteratedDeriv (N - 1) (fun w ↦ (w - z₀) ^ N * f w) z)
-      (𝓝[≠] z₀) (𝓝 r) := hlim
+      (nhdsWithin z₀ {z₀}ᶜ) (𝓝 r) := hlim
 
 /-- Source 39 (line 1593), theorem: one-isolated-singularity residue formula, with the local
 Laurent/residue contour computation made explicit. -/
@@ -153,14 +153,14 @@ def lowerSemicircle (R : ℝ) (t : ℝ) : ℂ :=
 
 /-- Source 41 (line 2140), lemma: Jordan's lemma. The standard decay, meromorphicity, and
 semicircular contour estimate are explicit hypotheses; the conclusion is the limiting integral. -/
-lemma jordanLemma {f : ℂ → ℂ} {λ : ℝ}
-    (hλ : 0 < λ)
+lemma jordanLemma {f : ℂ → ℂ} {freq : ℝ}
+    (hfreq : 0 < freq)
     (hdecay : Tendsto f (cocompact ℂ) (𝓝 0))
     (hestimate : Tendsto
-      (fun R : ℝ ↦ contourIntegral (fun z ↦ f z * Complex.exp (Complex.I * λ * z))
+      (fun R : ℝ ↦ contourIntegral (fun z ↦ f z * Complex.exp (Complex.I * freq * z))
         (upperSemicircle R)) atTop (𝓝 0)) :
     Tendsto
-      (fun R : ℝ ↦ contourIntegral (fun z ↦ f z * Complex.exp (Complex.I * λ * z))
+      (fun R : ℝ ↦ contourIntegral (fun z ↦ f z * Complex.exp (Complex.I * freq * z))
         (upperSemicircle R)) atTop (𝓝 0) := hestimate
 
 end ComplexMethods
