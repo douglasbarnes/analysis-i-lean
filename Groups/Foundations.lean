@@ -138,7 +138,8 @@ theorem surjective_injective_criteria {G : Type u} {H : Type v} [Group G] [Group
         rw [f.mem_ker]
         simp [hxy]
       rw [hk] at hm
-      exact div_eq_one.mp (Subgroup.mem_bot.mp hm)
+      have hdiv : x * y⁻¹ = 1 := Subgroup.mem_bot.mp hm
+      exact div_eq_one.mp (by simpa [div_eq_mul_inv] using hdiv)
 
 /-- 025. A group is cyclic when it has a generator. -/
 abbrev IsCyclicGroup (G : Type u) [Group G] := IsCyclic G
