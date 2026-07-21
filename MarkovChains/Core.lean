@@ -13,6 +13,8 @@ open Filter Finset
 
 namespace MarkovChains
 
+noncomputable section
+
 variable {S : Type*}
 
 /-- A probability vector on a finite state space. -/
@@ -32,18 +34,19 @@ structure HomogeneousMarkovChain (S : Type*) where
     past₂.getLast? = some i → conditional past₁ j = conditional past₂ j
 
 /-- Source line 71: initial and transition probabilities have the expected normalizations. -/
-theorem initial_transition_are_probabilities [Fintype S] (λ : S → ℝ) (P : S → S → ℝ)
-    (hλ : IsDistribution λ) (hP : IsStochastic P) :
-    IsDistribution λ ∧ IsStochastic P := ⟨hλ, hP⟩
+theorem initial_transition_are_probabilities [Fintype S] (initDist : S → ℝ)
+    (P : S → S → ℝ) (hinit : IsDistribution initDist) (hP : IsStochastic P) :
+    IsDistribution initDist ∧ IsStochastic P := ⟨hinit, hP⟩
 
 /-- The factorized finite-dimensional distribution appearing in the chain specification theorem. -/
-def HasFactorizedLaw (λ : S → ℝ) (P : S → S → ℝ) (joint : List S → ℝ) : Prop :=
-  ∀ i : S, joint [i] = λ i
+def HasFactorizedLaw (initDist : S → ℝ) (P : S → S → ℝ)
+    (joint : List S → ℝ) : Prop :=
+  ∀ i : S, joint [i] = initDist i
 
 /-- Source line 91: factorized finite-dimensional laws characterize the specified chain law. -/
-theorem markov_chain_iff_factorized (λ : S → ℝ) (P : S → S → ℝ)
-    (joint : List S → ℝ) (h : HasFactorizedLaw λ P joint) :
-    HasFactorizedLaw λ P joint ↔ ∀ i : S, joint [i] = λ i := by
+theorem markov_chain_iff_factorized (initDist : S → ℝ) (P : S → S → ℝ)
+    (joint : List S → ℝ) (h : HasFactorizedLaw initDist P joint) :
+    HasFactorizedLaw initDist P joint ↔ ∀ i : S, joint [i] = initDist i := by
   rfl
 
 /-- Source line 126: the extended Markov property. -/
@@ -62,7 +65,8 @@ theorem chapman_kolmogorov [Fintype S] [DecidableEq S] (P : Matrix S S ℝ)
   simp [nstep, pow_add, Matrix.mul_apply]
 
 /-- Source line 163: notation for the matrix of `n`-step transition probabilities. -/
-def transitionMatrixNotation [Fintype S] (P : Matrix S S ℝ) (n : ℕ) : Matrix S S ℝ := P ^ n
+def transitionMatrixNotation [Fintype S] [DecidableEq S]
+    (P : Matrix S S ℝ) (n : ℕ) : Matrix S S ℝ := P ^ n
 
 scoped notation P "⁽" n "⁾" => transitionMatrixNotation P n
 
@@ -124,7 +128,8 @@ def Recurrent (returnProbability : S → ℝ) (i : S) : Prop := returnProbabilit
 def Transient (returnProbability : S → ℝ) (i : S) : Prop := ¬ Recurrent returnProbability i
 
 /-- Renewal mass associated to a return probability. -/
-def totalReturnMass (f : ℝ) : WithTop ℝ := if f = 1 then ⊤ else (1 - f)⁻¹
+def totalReturnMass (f : ℝ) : WithTop ℝ :=
+  if f = 1 then ⊤ else (↑((1 - f)⁻¹) : WithTop ℝ)
 
 /-- Source line 401: recurrence iff the total return mass is infinite. -/
 theorem recurrent_iff_total_return_mass (f : ℝ) :
@@ -149,7 +154,10 @@ theorem recurrence_class_property (P : S → S → ℝ) (r : S → Prop)
     (hclass : ∀ ⦃i j⦄, Communicates P i j → (r i ↔ r j))
     (hclosed : ∀ ⦃i j⦄, r i → LeadsTo P i j → r j) :
     (∀ ⦃i j⦄, Communicates P i j → (r i ↔ r j)) ∧
-      ∀ i, r i → ∀ j, LeadsTo P i j → r j := ⟨hclass, hclosed⟩
+      ∀ i, r i → ∀ j, LeadsTo P i j → r j := by
+  refine ⟨hclass, ?_⟩
+  intro i hi j hij
+  exact hclosed hi hij
 
 /-- Source line 513: a finite chain has a recurrent state; irreducibility propagates recurrence. -/
 theorem finite_recurrence [Fintype S] [Nonempty S] (P : S → S → ℝ) (r : S → Prop)
@@ -211,7 +219,7 @@ theorem visit_count_geometric (f : ℝ) (r : ℕ) (visitProbability : ℕ → �
 
 /-- Source line 958: mean recurrence time. -/
 def meanRecurrenceTime (firstReturn : ℕ → ℝ) : WithTop ℝ :=
-  ∑' n, (n : WithTop ℝ) * firstReturn n
+  ∑' n : ℕ, (n : WithTop ℝ) * (firstReturn n : WithTop ℝ)
 
 /-- Source line 969: null and positive recurrent states. -/
 def NullRecurrent (recurrent : Prop) (μ : WithTop ℝ) : Prop := recurrent ∧ μ = ⊤
