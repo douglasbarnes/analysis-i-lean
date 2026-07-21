@@ -156,14 +156,11 @@ theorem cross_epsilon (a b : Vec3) (i : Fin 3) :
     cross a b i = ∑ j, ∑ k, epsilon i j k * a j * b k := by
   fin_cases i <;> simp [cross, epsilon, Fin.sum_univ_three] <;> ring    -- 048
 
-set_option maxHeartbeats 1000000 in
-set_option maxRecDepth 1000000 in
 theorem epsilon_contraction (j k p q : Fin 3) :
     ∑ i, epsilon i j k * epsilon i p q =
       kroneckerDelta j p * kroneckerDelta k q -
         kroneckerDelta j q * kroneckerDelta k p := by
-  fin_cases j <;> fin_cases k <;> fin_cases p <;> fin_cases q <;>
-    norm_num [epsilon, kroneckerDelta, Fin.sum_univ_three, Fin.ext_iff]  -- 049
+  fin_cases j <;> fin_cases k <;> fin_cases p <;> fin_cases q <;> native_decide -- 049
 
 theorem scalarTriple_cyclic (a b c : Vec3) :
     scalarTriple a b c = scalarTriple b c a := by
