@@ -5,6 +5,7 @@ import Mathlib
 noncomputable section
 
 open Complex
+open scoped ComplexConjugate
 
 namespace Cambridge.VectorsMatrices
 
@@ -111,8 +112,8 @@ theorem pair_coefficients_unique {E : Type*} [AddCommGroup E] [Module ℝ E]
     simpa [Fin.sum_univ_two] using hz
   have hall := (Fintype.linearIndependent_iff.mp h) ![s - s', t - t'] hsum
   constructor
-  · have hs := hall 0; simp at hs; linarith
-  · have ht := hall 1; simp at ht; linarith                         -- 033
+  · exact sub_eq_zero.mp (by simpa using hall 0)
+  · exact sub_eq_zero.mp (by simpa using hall 1)                    -- 033
 
 def IsIndependentPair {E : Type*} [AddCommGroup E] [Module ℝ E] (a b : E) : Prop :=
   LinearIndependent ℝ ![a,b]                                          -- 034
@@ -124,15 +125,16 @@ theorem noncoplanar_basis (a b c : Vec3) (h : scalarTriple a b c ≠ 0) :
   apply Matrix.linearIndependent_rows_of_det_ne_zero
   intro hd
   apply h
-  simpa [scalarTriple, coordinateDot, cross, Matrix.det_fin_three] using hd -- 036
+  simpa [scalarTriple, coordinateDot, cross, Matrix.det_fin_three,
+    Fin.sum_univ_three] using hd -- 036
 
 def IsLinearlyIndependent {E I : Type*} [AddCommGroup E] [Module ℝ E]
     (v : I → E) : Prop := LinearIndependent ℝ v                        -- 037
 def IsSpanning {E I : Type*} [AddCommGroup E] [Module ℝ E] (v : I → E) : Prop :=
   Submodule.span ℝ (Set.range v) = ⊤                                  -- 038
-abbrev VectorBasis (I E : Type*) [AddCommGroup E] [Module ℝ E] := Basis I ℝ E -- 039
+abbrev VectorBasis (I E : Type*) [AddCommGroup E] [Module ℝ E] := Module.Basis I ℝ E -- 039
 def IsOrthonormalBasis {E I : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    (b : Basis I ℝ E) : Prop := Orthonormal ℝ b                        -- 040
+    (b : Module.Basis I ℝ E) : Prop := Orthonormal ℝ b                 -- 040
 def vectorSpaceDimension (E : Type*) [AddCommGroup E] [Module ℝ E] : Cardinal :=
   Module.rank ℝ E                                                       -- 041
 abbrev ComplexVector (n : ℕ) := EuclideanSpace ℂ (Fin n)               -- 043
@@ -147,29 +149,29 @@ def epsilon (i j k : Fin 3) : ℝ :=
 
 theorem cross_epsilon (a b : Vec3) (i : Fin 3) :
     cross a b i = ∑ j, ∑ k, epsilon i j k * a j * b k := by
-  fin_cases i <;> simp [cross, epsilon] <;> ring                        -- 048
+  fin_cases i <;> simp [cross, epsilon, Fin.sum_univ_three] <;> ring    -- 048
 
 theorem epsilon_contraction (j k p q : Fin 3) :
     ∑ i, epsilon i j k * epsilon i p q =
       kroneckerDelta j p * kroneckerDelta k q -
         kroneckerDelta j q * kroneckerDelta k p := by
   fin_cases j <;> fin_cases k <;> fin_cases p <;> fin_cases q <;>
-    norm_num [epsilon, kroneckerDelta]                                   -- 049
+    norm_num [epsilon, kroneckerDelta, Fin.sum_univ_three]               -- 049
 
 theorem scalarTriple_cyclic (a b c : Vec3) :
     scalarTriple a b c = scalarTriple b c a := by
-  simp [scalarTriple, coordinateDot, cross]
+  simp [scalarTriple, coordinateDot, cross, Fin.sum_univ_three]
   ring                                                                   -- 050
 
 theorem vector_triple (a b c : Vec3) :
     cross a (cross b c) = (coordinateDot a c) • b - (coordinateDot a b) • c := by
   funext i
-  fin_cases i <;> simp [cross, coordinateDot] <;> ring                  -- 051
+  fin_cases i <;> simp [cross, coordinateDot, Fin.sum_univ_three] <;> ring -- 051
 
 theorem lagrange_identity (a b c : Vec3) :
     coordinateDot (cross a b) (cross a c) =
       coordinateDot a a * coordinateDot b c - coordinateDot a b * coordinateDot a c := by
-  simp [cross, coordinateDot]
+  simp [cross, coordinateDot, Fin.sum_univ_three]
   ring                                                                   -- 052
 
 def vectorLine (a t : Vec3) : Set Vec3 := {x | cross (x - a) t = 0}     -- 053
