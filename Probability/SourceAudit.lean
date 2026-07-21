@@ -119,4 +119,4 @@ environment in `IA_L/probability.tex`, in source order.
 #check ProbabilityTheory.mgf_id_gaussianReal
 #check ProbabilityTheory.gaussianReal_add_gaussianReal_of_indepFun
 #check ProbabilityTheory.tendstoInDistribution_inv_sqrt_mul_sum_sub
-#check ProbabilityMeasure.tendsto_iff_tendsto_charFun
+#check MeasureTheory.ProbabilityMeasure.tendsto_iff_tendsto_charFun
