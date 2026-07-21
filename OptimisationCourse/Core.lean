@@ -60,16 +60,17 @@ theorem stationary_point_minimizes (stationary convex minimum : Prop)
 
 /-- Source line 176: the Lagrangian. -/
 def lagrangian {Decision : Type*} (objective constraint : Decision → ℝ)
-    (λ target : ℝ) (x : Decision) : ℝ := objective x - λ * (constraint x - target)
+    (multiplier target : ℝ) (x : Decision) : ℝ :=
+  objective x - multiplier * (constraint x - target)
 
 /-- Source line 193: Lagrangian sufficiency. -/
 theorem lagrangian_sufficiency {Decision : Type*} (objective constraint : Decision → ℝ)
-    (target λ : ℝ) (xstar : Decision)
-    (hmin : ∀ x, lagrangian objective constraint λ target xstar ≤
-      lagrangian objective constraint λ target x)
+    (target multiplier : ℝ) (xstar : Decision)
+    (hmin : ∀ x, lagrangian objective constraint multiplier target xstar ≤
+      lagrangian objective constraint multiplier target x)
     (hfeasible : constraint xstar = target)
     (hconstraint : ∀ x, constraint x = target →
-      lagrangian objective constraint λ target x = objective x) :
+      lagrangian objective constraint multiplier target x = objective x) :
     ∀ x, constraint x = target → objective xstar ≤ objective x := by
   intro x hx
   simpa [lagrangian, hfeasible] using (hmin x).trans_eq (hconstraint x hx)
@@ -193,16 +194,19 @@ def IsDirectedWalk {V : Type*} (E : V → V → Prop) (u v : V) : Prop :=
 def IsUndirectedWalk {V : Type*} (E : V → V → Prop) (u v : V) : Prop :=
   Relation.ReflTransGen (fun a b ↦ E a b ∨ E b a) u v
 
+def ConsecutiveEdges {V : Type*} (E : V → V → Prop) : List V → Prop
+  | [] => True
+  | [_] => True
+  | u :: v :: rest => E u v ∧ ConsecutiveEdges E (v :: rest)
+
 /-- Source line 1377: a path is a walk with no repeated vertices. -/
 def IsPath {V : Type*} (E : V → V → Prop) (vertices : List V) : Prop :=
-  vertices.Nodup ∧ ∀ i, i + 1 < vertices.length → E (vertices.get ⟨i, by omega⟩)
-    (vertices.get ⟨i + 1, by omega⟩)
+  vertices.Nodup ∧ ConsecutiveEdges E vertices
 
 /-- Source line 1381: a cycle has distinct intermediate vertices and equal endpoints. -/
 def IsCycle {V : Type*} (E : V → V → Prop) (vertices : List V) : Prop :=
   1 < vertices.length ∧ vertices.head? = vertices.getLast? ∧
-    ∀ i, i + 1 < vertices.length → E (vertices.get ⟨i, by omega⟩)
-      (vertices.get ⟨i + 1, by omega⟩)
+    ConsecutiveEdges E vertices
 
 /-- Source line 1385: connected graph. -/
 def IsConnected {V : Type*} (E : V → V → Prop) : Prop := ∀ u v, IsUndirectedWalk E u v
