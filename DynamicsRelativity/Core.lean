@@ -156,6 +156,10 @@ def gravitationalField (G M r : ℝ) (direction : Vec3) : Vec3 :=
 def SphericalExteriorPotential (potential : ℝ → ℝ) (G M R : ℝ) : Prop :=
   ∀ r, R ≤ r → potential r = -(G * M / r)
 
+theorem spherical_exterior_potential {potential : ℝ → ℝ} {G M R r : ℝ}
+    (hspherical : SphericalExteriorPotential potential G M R) (hr : R ≤ r) :
+    potential r = -(G * M / r) := hspherical r hr
+
 /- 31. Lorentz force law: an empirical model predicate. -/
 def LorentzForceLaw (q : ℝ) (electric magnetic velocity force : Vec3) : Prop :=
   force = q • (electric + cross velocity magnetic)
@@ -170,6 +174,11 @@ theorem magnetic_force_power_zero (q : ℝ) (v B : Vec3) :
   simp [dot, cross]
   ring
 
+theorem static_electromagnetic_energy_derivative_zero {K V : ℝ → ℝ} {t w : ℝ}
+    (hK : HasDerivAt K w t) (hV : HasDerivAt V (-w) t) :
+    HasDerivAt (fun s ⇒ K s + V s) 0 t := by
+  convert hK.add hV using 1 <;> ring
+
 /- 34. Coulomb's law: an empirical model predicate. -/
 def CoulombLaw (Q ε₀ r : ℝ) (direction electric : Vec3) : Prop :=
   electric = (Q / (4 * Real.pi * ε₀ * r ^ 2)) • direction
@@ -181,9 +190,11 @@ structure ElectricConstant where
 
 /- 36. Derivatives of polar unit vectors. -/
 theorem polar_unit_vector_derivatives (theta : ℝ) :
-    HasDerivAt (fun t ⇒ ![Real.cos t, Real.sin t]) ![-Real.sin theta, Real.cos theta] theta ∧
-    HasDerivAt (fun t ⇒ ![-Real.sin t, Real.cos t]) ![-Real.cos theta, -Real.sin theta] theta := by
-  constructor <;> rw [hasDerivAt_pi_iff] <;> intro i <;> fin_cases i <;> simp
+    (∀ i, HasDerivAt (fun t ⇒ (![Real.cos t, Real.sin t] : Fin 2 → ℝ) i)
+      (![-Real.sin theta, Real.cos theta] i) theta) ∧
+    (∀ i, HasDerivAt (fun t ⇒ (![-Real.sin t, Real.cos t] : Fin 2 → ℝ) i)
+      (![-Real.cos theta, -Real.sin theta] i) theta) := by
+  constructor <;> intro i <;> fin_cases i <;> simp
 
 /- 37. Radial and angular velocity. -/
 structure PolarVelocity where
@@ -213,6 +224,11 @@ def reciprocalRadius (r : ℝ) : ℝ := r⁻¹
 /- 43. Binet's equation. -/
 def SatisfiesBinetEquation (m h : ℝ) (u force : ℝ → ℝ) : Prop :=
   ∀ θ, -m * h ^ 2 * u θ ^ 2 * (deriv (deriv u) θ + u θ) = force ((u θ)⁻¹)
+
+theorem binet_equation {m h : ℝ} {u force : ℝ → ℝ}
+    (hBinet : SatisfiesBinetEquation m h u force) (θ : ℝ) :
+    -m * h ^ 2 * u θ ^ 2 * (deriv (deriv u) θ + u θ) = force ((u θ)⁻¹) :=
+  hBinet θ
 
 /- 44. Kepler conic orbit. -/
 def keplerOrbit (ell e theta : ℝ) : ℝ := ell / (1 + e * Real.cos theta)
@@ -246,10 +262,19 @@ def angularVelocityVector (speed : ℝ) (axis : Vec3) : Vec3 := speed • axis
 def RotatingDerivativeRelation (D D' : Vec3 → Vec3) (omega : Vec3) : Prop :=
   ∀ r, D r = D' r + cross omega r
 
+theorem rotating_derivative_formula {D D' : Vec3 → Vec3} {omega r : Vec3}
+    (h : RotatingDerivativeRelation D D' omega) :
+    D r = D' r + cross omega r := h r
+
 /- 51. Equation of motion in a rotating frame. -/
 def RotatingFrameEquation (m : ℝ) (a' force omega omegaDot v' r : Vec3) : Prop :=
   m • a' = force - (2 * m) • cross omega v' - m • cross omegaDot r -
     m • cross omega (cross omega r)
+
+theorem rotating_frame_equation {m : ℝ} {a' force omega omegaDot v' r : Vec3}
+    (h : m • a' = force - (2 * m) • cross omega v' - m • cross omegaDot r -
+      m • cross omega (cross omega r)) :
+    RotatingFrameEquation m a' force omega omegaDot v' r := h
 
 /- 52. Fictitious forces. -/
 structure FictitiousForces where
@@ -304,6 +329,10 @@ def totalExternalTorque {n : ℕ} (r force : Fin n → Vec3) : Vec3 :=
 /- 62. Rocket equation. -/
 def SatisfiesRocketEquation (m v : ℝ → ℝ) (u force : ℝ → ℝ) : Prop :=
   ∀ t, m t * deriv v t + u t * deriv m t = force t
+
+theorem rocket_equation {m v u force : ℝ → ℝ}
+    (h : SatisfiesRocketEquation m v u force) (t : ℝ) :
+    m t * deriv v t + u t * deriv m t = force t := h t
 
 /- 63. Rigid body. -/
 def IsRigidBody {n : ℕ} (position : ℝ → Fin n → Vec3) : Prop :=
