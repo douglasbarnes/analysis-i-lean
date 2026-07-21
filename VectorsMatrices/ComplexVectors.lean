@@ -146,11 +146,12 @@ abbrev ComplexVector (n : ℕ) := EuclideanSpace ℂ (Fin n)               -- 04
 abbrev VectorSubspace (E : Type*) [AddCommGroup E] [Module ℝ E] := Submodule ℝ E -- 044
 
 notation3 "∑ₑ " i ", " r:67 => ∑ i, r                            -- 045
-def kroneckerDelta (i j : Fin 3) : ℝ := if i = j then 1 else 0          -- 046
+def kroneckerDelta (i j : Fin 3) : ℝ := if i.val = j.val then 1 else 0  -- 046
 def epsilon (i j k : Fin 3) : ℝ :=
-  if i = j ∨ j = k ∨ i = k then 0
-  else if (i = 0 ∧ j = 1 ∧ k = 2) ∨ (i = 1 ∧ j = 2 ∧ k = 0) ∨
-      (i = 2 ∧ j = 0 ∧ k = 1) then 1 else -1                      -- 047
+  if i.val = j.val ∨ j.val = k.val ∨ i.val = k.val then 0
+  else if (i.val = 0 ∧ j.val = 1 ∧ k.val = 2) ∨
+      (i.val = 1 ∧ j.val = 2 ∧ k.val = 0) ∨
+      (i.val = 2 ∧ j.val = 0 ∧ k.val = 1) then 1 else -1           -- 047
 
 theorem cross_epsilon (a b : Vec3) (i : Fin 3) :
     cross a b i = ∑ j, ∑ k, epsilon i j k * a j * b k := by
