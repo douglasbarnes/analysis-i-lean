@@ -4,18 +4,18 @@ import Groups.Actions
 
 namespace Cambridge.Groups
 
-universe u
+universe u v
 
 open Matrix
 
 noncomputable section
 
 /-- 113. The general linear group. -/
-abbrev GeneralLinearGroup (n : Type u) (F : Type u) [Fintype n] [DecidableEq n]
+abbrev GeneralLinearGroup (n : Type u) (F : Type v) [Fintype n] [DecidableEq n]
     [CommRing F] := (Matrix n n F)ˣ
 
 /-- 114. `GL n F` is a group. -/
-def generalLinearGroup_group (n : Type u) (F : Type u) [Fintype n] [DecidableEq n]
+def generalLinearGroup_group (n : Type u) (F : Type v) [Fintype n] [DecidableEq n]
     [CommRing F] : Group (GeneralLinearGroup n F) := inferInstance
 
 /-- 115. Determinant is multiplicative on invertible matrices. -/
@@ -26,20 +26,20 @@ theorem det_mul_general_linear (n : Type u) (F : Type u) [Fintype n] [DecidableE
   exact Matrix.det_mul _ _
 
 /-- 116. The special linear group. -/
-abbrev SpecialLinearGroup (n : Type u) (F : Type u) [Fintype n] [DecidableEq n]
+abbrev SpecialLinearGroup (n : Type u) (F : Type v) [Fintype n] [DecidableEq n]
     [CommRing F] := Matrix.SpecialLinearGroup n F
 
 /-- 117. Left multiplication by invertible matrices is faithful. -/
-theorem general_linear_action_faithful (n : Type u) (F : Type u) [Fintype n] [DecidableEq n]
+theorem general_linear_action_faithful (n : Type u) (F : Type v) [Fintype n] [DecidableEq n]
     [CommRing F] (A B : GeneralLinearGroup n F)
     (h : ∀ x : n → F, (A : Matrix n n F) *ᵥ x = (B : Matrix n n F) *ᵥ x) : A = B := by
   apply Units.ext
   ext i j
-  have hj := h (fun k => if k = j then 1 else 0)
-  simpa [Matrix.mulVec, Finset.mul_sum] using congrFun hj i
+  have hj := h (Pi.single j 1)
+  simpa only [Matrix.mulVec_single_one] using congrFun hj i
 
 /-- 118. Conjugation is an action law on invertible matrices. -/
-theorem matrix_conjugation_action (n : Type u) (F : Type u) [Fintype n] [DecidableEq n]
+theorem matrix_conjugation_action (n : Type u) (F : Type v) [Fintype n] [DecidableEq n]
     [CommRing F] (A B X : GeneralLinearGroup n F) :
     (A * B) * X * (A * B)⁻¹ = A * (B * X * B⁻¹) * A⁻¹ := by
   simp [mul_assoc]
@@ -52,7 +52,13 @@ def IsOrthogonalMatrix {n : Type u} [Fintype n] [DecidableEq n] (A : Matrix n n 
 theorem orthogonal_preserves_dot {n : Type u} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℝ) (hA : IsOrthogonalMatrix A) (x y : n → ℝ) :
     dotProduct (A *ᵥ x) (A *ᵥ y) = dotProduct x y := by
-  simpa [IsOrthogonalMatrix] using Matrix.dotProduct_mulVec_mulVec A x y hA
+  calc
+    dotProduct (A *ᵥ x) (A *ᵥ y) = dotProduct (x ᵥ* A.transpose) (A *ᵥ y) := by
+      rw [Matrix.vecMul_transpose]
+    _ = dotProduct x (A.transpose *ᵥ (A *ᵥ y)) :=
+      (Matrix.dotProduct_mulVec x A.transpose (A *ᵥ y)).symm
+    _ = dotProduct x ((A.transpose * A) *ᵥ y) := by rw [Matrix.mulVec_mulVec]
+    _ = dotProduct x y := by rw [hA]; simp
 
 /-- 120. Orthogonal group, as the units satisfying `AᵀA = I`. -/
 def OrthogonalGroup (n : Type u) [Fintype n] [DecidableEq n] :=
@@ -76,7 +82,7 @@ def IsSpecialOrthogonal {n : Type u} [Fintype n] [DecidableEq n] (A : Matrix n n
 theorem orthogonal_det_cases {n : Type u} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℝ) (hA : IsOrthogonalMatrix A) : Matrix.det A = 1 ∨ Matrix.det A = -1 := by
   have h := orthogonal_det_sq A hA
-  nlinarith
+  exact mul_self_eq_one_iff.mp h
 
 /-- 125. Standard two-dimensional rotation matrix. -/
 def rotation2 (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
@@ -86,8 +92,10 @@ def rotation2 (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
 theorem rotation2_special (θ : ℝ) : IsSpecialOrthogonal (rotation2 θ) := by
   constructor
   · ext i j <;> fin_cases i <;> fin_cases j <;>
-      simp [IsOrthogonalMatrix, rotation2, Matrix.mul_apply, Real.sin_sq_add_cos_sq]
-  · simp [rotation2, Matrix.det_fin_two, Real.sin_sq_add_cos_sq]
+      simp [IsOrthogonalMatrix, rotation2, Matrix.mul_apply] <;>
+      nlinarith [Real.sin_sq_add_cos_sq θ]
+  · simp [rotation2, Matrix.det_fin_two]
+    nlinarith [Real.sin_sq_add_cos_sq θ]
 
 /-- 126. Standard reflection in the `x`-axis. -/
 def reflection2 : Matrix (Fin 2) (Fin 2) ℝ := !![1, 0; 0, -1]
@@ -183,7 +191,8 @@ def conjugateEquiv {X : Type u} (g f : X ≃ X) : X ≃ X := g.trans (f.trans g.
 /-- 143. Fixed points are transported by conjugacy. -/
 theorem fixedPoint_conjugate {X : Type u} (g f : X ≃ X) (x : X) :
     IsFixedPoint (conjugateEquiv g f) x ↔ IsFixedPoint f (g x) := by
-  simp [IsFixedPoint, conjugateEquiv]
+  change g.symm (f (g x)) = x ↔ f (g x) = g x
+  exact g.symm_apply_eq
 
 /-- 144. Maps agreeing on a determining set are equal. -/
 theorem map_eq_of_determining_set {X : Type u} (f g : X → X) (S : Set X)
@@ -236,5 +245,7 @@ theorem crossRatio_affine (a b z₁ z₂ z₃ z₄ : ℂ) (ha : a ≠ 0) :
 
 /-- 152. The cross-ratio criterion is recorded by the real-valued predicate. -/
 def CrossRatioReal (z₁ z₂ z₃ z₄ : ℂ) : Prop := (crossRatio z₁ z₂ z₃ z₄).im = 0
+
+end
 
 end Cambridge.Groups
