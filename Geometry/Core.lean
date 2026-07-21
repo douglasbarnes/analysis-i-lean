@@ -176,7 +176,9 @@ theorem geometry_chain_rule {n m p : ℕ} {f : Vec n → Vec m} {g : Vec p → V
 
 /- 35. Riemannian metric in coordinates. -/
 structure RiemannianMetric2 where
-  E F G : Vec2 → ℝ
+  E : Vec2 → ℝ
+  F : Vec2 → ℝ
+  G : Vec2 → ℝ
   smoothE : ContDiff ℝ ∞ E
   smoothF : ContDiff ℝ ∞ F
   smoothG : ContDiff ℝ ∞ G
