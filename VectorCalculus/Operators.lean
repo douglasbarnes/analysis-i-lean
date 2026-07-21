@@ -4,6 +4,8 @@ import VectorCalculus.Foundations
 
 namespace Cambridge.VectorCalculus
 
+noncomputable section
+
 def divergence {n : Nat} (F : VectorField n n) (x : Vec n) : ℝ :=
   ∑ i, fderiv ℝ (fun y => F y i) x (Pi.single i 1)
 
@@ -83,9 +85,9 @@ def ConservationEquation (timeDerivativeDensity divergenceCurrent : ℝ) : Prop 
 
 structure OrthogonalCurvilinearCoordinates where
   tangentU tangentV tangentW : Vec 3
-  uv : inner tangentU tangentV = 0
-  uw : inner tangentU tangentW = 0
-  vw : inner tangentV tangentW = 0
+  uv : (∑ i, tangentU i * tangentV i) = 0
+  uw : (∑ i, tangentU i * tangentW i) = 0
+  vw : (∑ i, tangentV i * tangentW i) = 0
 
 def curvilinearGradient (hu hv hw fu fv fw : ℝ) (eu ev ew : Vec 3) : Vec 3 :=
   (fu / hu) • eu + (fv / hv) • ev + (fw / hw) • ew
@@ -152,5 +154,7 @@ structure MaxwellsEquations where
   gaussMagnetic : Prop
   faraday : Prop
   ampereMaxwell : Prop
+
+end
 
 end Cambridge.VectorCalculus
