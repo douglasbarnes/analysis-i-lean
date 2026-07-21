@@ -128,7 +128,8 @@ theorem separable_rectangle_integral (g h : ℝ → ℝ) (a b c d : ℝ)
     (hg : IntervalIntegrable g volume a b) (hh : IntervalIntegrable h volume c d) :
     (∫ y in c..d, ∫ x in a..b, g x * h y) =
       (∫ x in a..b, g x) * ∫ y in c..d, h y := by
-  simp_rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_mul_const]
+  simp only [intervalIntegral.integral_mul_const,
+    intervalIntegral.integral_const_mul]
 
 def jacobian2 (φ : Vec 2 → Vec 2) (x : Vec 2) : ℝ :=
   LinearMap.det (fderiv ℝ φ x).toLinearMap
