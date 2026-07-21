@@ -28,7 +28,7 @@ theorem source002_uniform_limit_continuous
     {F : ℕ → α → β} {f : α → β}
     (hF : TendstoUniformly F f atTop) (hcont : ∀ n, Continuous (F n)) :
     Continuous f :=
-  hF.continuous (Filter.Eventually.of_forall hcont)
+  hF.continuous ((Filter.Eventually.of_forall hcont).frequently)
 
 /-- Analysis II, source theorem 10/49: Heine--Cantor on a compact set. -/
 theorem source010_heineCantor
@@ -85,7 +85,7 @@ theorem source044_finite_closed
 /-- Analysis II, source theorem 52: Banach's contraction mapping theorem. -/
 theorem source052_contraction_unique_fixedPoint
     {α : Type*} [MetricSpace α] [CompleteSpace α] [Nonempty α]
-    {K : ℝ≥0} {f : α → α} (hf : ContractingWith K f) :
+    {K : NNReal} {f : α → α} (hf : ContractingWith K f) :
     ∃! x, IsFixedPt f x := by
   refine ⟨ContractingWith.fixedPoint f hf, hf.fixedPoint_isFixedPt, ?_⟩
   intro y hy
@@ -94,7 +94,7 @@ theorem source052_contraction_unique_fixedPoint
 /-- Analysis II, source theorem 52, contracting-iterate extension. -/
 theorem source052_fixedPoint_of_contracting_iterate
     {α : Type*} [MetricSpace α] [CompleteSpace α] [Nonempty α]
-    {K : ℝ≥0} {f : α → α} {n : ℕ} (hf : ContractingWith K (f^[n])) :
+    {K : NNReal} {f : α → α} {n : ℕ} (hf : ContractingWith K (f^[n])) :
     IsFixedPt f (ContractingWith.fixedPoint (f^[n]) hf) :=
   hf.isFixedPt_fixedPoint_iterate
 
@@ -129,8 +129,8 @@ theorem source055_continuousLinearMap_derivative
 /-- Analysis II, source theorem 57(iv): the defining operator-norm estimate. -/
 theorem source057_apply_le_opNorm
     {𝕜 E F : Type*} [NontriviallyNormedField 𝕜]
-    [NormedAddCommGroup E] [NormedSpace 𝕜 E]
-    [NormedAddCommGroup F] [NormedSpace 𝕜 F]
+    [SeminormedAddCommGroup E] [SeminormedAddCommGroup F]
+    [NormedSpace 𝕜 E] [NormedSpace 𝕜 F]
     (A : E →L[𝕜] F) (x : E) : ‖A x‖ ≤ ‖A‖ * ‖x‖ :=
   A.le_opNorm x
 
@@ -141,7 +141,7 @@ theorem source059_chain_rule
     [NormedAddCommGroup F] [NormedSpace 𝕜 F]
     [NormedAddCommGroup G] [NormedSpace 𝕜 G]
     {f : E → F} {g : F → G} {f' : E →L[𝕜] F} {g' : F →L[𝕜] G} {x : E}
-    (hf : HasFDerivAt f f' x) (hg : HasFDerivAt g g' (f x)) :
+    (hg : HasFDerivAt g g' (f x)) (hf : HasFDerivAt f f' x) :
     HasFDerivAt (g ∘ f) (g'.comp f') x :=
   hg.comp x hf
 
