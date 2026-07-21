@@ -26,10 +26,13 @@ forbidden = {
 }
 violations: list[str] = []
 for path in sorted(ROOT.rglob("*.lean")):
+    relative = path.relative_to(ROOT)
+    if relative.parts and relative.parts[0] == ".lake":
+        continue
     text = path.read_text(encoding="utf-8")
     for name, pattern in forbidden.items():
         if pattern.search(text):
-            violations.append(f"{path.relative_to(ROOT)}: forbidden {name}")
+            violations.append(f"{relative}: forbidden {name}")
 if violations:
     raise SystemExit("\n".join(violations))
 
