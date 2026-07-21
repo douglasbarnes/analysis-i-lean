@@ -49,8 +49,7 @@ theorem basis_iff_unique_representation {ι 𝕜 V : Type*} [Fintype ι] [Decida
   · rintro hb x
     let B : Module.Basis ι 𝕜 V := Module.Basis.mk hb.1 (by simpa using hb.2.ge)
     refine ⟨B.repr x, ?_, ?_⟩
-    · rw [← B.sum_repr x]
-      simp only [B, Module.Basis.mk_apply]
+    · simpa only [B, Module.Basis.mk_apply] using (B.sum_repr x).symm
     · intro y hy
       apply funext
       intro i
@@ -58,8 +57,7 @@ theorem basis_iff_unique_representation {ι 𝕜 V : Type*} [Fintype ι] [Decida
       calc
         ∑ j, y j • b j = x := hy.symm
         _ = ∑ j, (B.repr x) j • b j := by
-          rw [← B.sum_repr x]
-          simp only [B, Module.Basis.mk_apply]
+          simpa only [B, Module.Basis.mk_apply] using (B.sum_repr x).symm
   · intro h
     constructor
     · rw [Fintype.linearIndependent_iff]
@@ -178,7 +176,7 @@ theorem basis_extension_unique {ι 𝕜 U V : Type*} [Fintype ι] [DecidableEq �
   · intro g hg
     apply b.ext
     intro i
-    simpa [g₀] using (hg i).symm -- 033
+    simpa [g₀] using hg i -- 033
 
 abbrev MatrixLinearMap (m n : Type*) (𝕜 : Type*) [Fintype m] [Finite n]
     [Field 𝕜] := Matrix n m 𝕜 -- 034
