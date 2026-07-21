@@ -148,7 +148,7 @@ def conditionalProbability {Ω : Type*} [MeasurableSpace Ω]
 theorem conditional_mul {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) (A B : Set Ω) (hB : P.real B ≠ 0) :
     conditionalProbability P A B * P.real B = P.real (A ∩ B) := by
-  field_simp [conditionalProbability, hB]
+  exact div_mul_cancel₀ _ hB
 
 /-- A countable measurable partition of the whole sample space. -/
 structure Partition {Ω ι : Type*} [MeasurableSpace Ω] (B : ι → Set Ω) : Prop where
@@ -312,7 +312,11 @@ theorem pgf_sum_product {ι κ : Type*} (s : Finset ι) (t : Finset κ)
     (∑ i ∈ s, p i * z ^ degree₁ i) * (∑ j ∈ t, q j * z ^ degree₂ j) =
       ∑ i ∈ s, ∑ j ∈ t, p i * q j * z ^ (degree₁ i + degree₂ j) := by
   simp_rw [Finset.sum_mul, Finset.mul_sum, pow_add]
-  ring_nf
+  apply Finset.sum_congr rfl
+  intro i hi
+  apply Finset.sum_congr rfl
+  intro j hj
+  ring
 
 /-- Iterated offspring pgf. -/
 def branchingPgfIterate (F : ℝ → ℝ) (n : ℕ) := F^[n]
