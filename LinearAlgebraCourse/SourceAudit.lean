@@ -46,7 +46,8 @@ def sourceKinds : List EnvironmentKind :=
    corollary, definition, definition, definition, lemma, proposition, lemma, theorem_, definition,
    theorem_, corollary, definition, definition, definition, lemma, theorem_, corollary, definition,
    definition, proposition, definition, proposition, lemma, definition, definition, definition, lemma,
-   corollary, definition, proposition, definition, lemma, corollary, definition, proposition, lemma,
+   corollary, definition, proposition, definition, EnvironmentKind.lemma, corollary, definition,
+   proposition, EnvironmentKind.lemma,
    theorem_, corollary, corollary, corollary, corollary, corollary, proposition, theorem_]
 
 def sourceInventory : List (Nat × EnvironmentKind) := sourceLines.zip sourceKinds
@@ -56,11 +57,11 @@ theorem line_and_kind_inventory_complete :
     sourceLines.length = sourceKinds.length := by native_decide
 theorem source_lines_strictly_ordered : sourceLines.Pairwise (· < ·) := by native_decide
 theorem definition_count : (sourceKinds.filter (· = definition)).length = 70 := by native_decide
-theorem lemma_count : (sourceKinds.filter (· = lemma)).length = 38 := by native_decide
+theorem lemma_count : (sourceKinds.filter (· = EnvironmentKind.lemma)).length = 38 := by native_decide
 theorem theorem_count : (sourceKinds.filter (· = theorem_)).length = 27 := by native_decide
 theorem proposition_count : (sourceKinds.filter (· = proposition)).length = 24 := by native_decide
 theorem corollary_count : (sourceKinds.filter (· = corollary)).length = 24 := by native_decide
-theorem notation_count : (sourceKinds.filter (· = notation)).length = 3 := by native_decide
+theorem notation_count : (sourceKinds.filter (· = EnvironmentKind.notation)).length = 3 := by native_decide
 theorem kind_partition_complete : 70 + 38 + 27 + 24 + 24 + 3 = 186 := by decide
 
 end Cambridge.LinearAlgebraCourse.SourceAudit
