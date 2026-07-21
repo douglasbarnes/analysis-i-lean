@@ -5,7 +5,9 @@ import Mathlib
 namespace NumbersAndSets
 
 noncomputable def Indicator {α : Type*} (A : Set α) (x : α) : ℕ :=
-  @ite (x ∈ A) (Classical.propDecidable _) ℕ 1 0
+  by
+    classical
+    exact if x ∈ A then 1 else 0
 
 theorem indicator_eq_iff {α : Type*} (A B : Set α) :
     Indicator A = Indicator B ↔ A = B := by
