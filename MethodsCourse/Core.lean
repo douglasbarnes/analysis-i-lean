@@ -272,7 +272,19 @@ theorem greens_second_identity {X B : Type*} (G : GreenCalculus X B) (φ ψ : X 
         (fun z => G.trace ψ z * G.normalDerivative φ z)
   rw [hv, hb]
   rw [G.integration_by_parts φ ψ, G.integration_by_parts ψ φ]
-  simp_rw [G.volume.map_add]
+  have ha :
+      G.volume (fun x => φ x * G.laplacian ψ x + G.gradientProduct φ ψ x) =
+        G.volume (fun x => φ x * G.laplacian ψ x) +
+          G.volume (G.gradientProduct φ ψ) := by
+    simpa only [Pi.add_apply] using
+      G.volume.map_add (fun x => φ x * G.laplacian ψ x) (G.gradientProduct φ ψ)
+  have hb' :
+      G.volume (fun x => ψ x * G.laplacian φ x + G.gradientProduct ψ φ x) =
+        G.volume (fun x => ψ x * G.laplacian φ x) +
+          G.volume (G.gradientProduct ψ φ) := by
+    simpa only [Pi.add_apply] using
+      G.volume.map_add (fun x => ψ x * G.laplacian φ x) (G.gradientProduct ψ φ)
+  rw [ha, hb']
   rw [G.gradient_symm φ ψ]
   ring
 
@@ -287,7 +299,7 @@ theorem greens_third_identity {X B : Type*} (G : GreenCalculus X B)
       G.volume (fun x => kernel x * F x) := by
   have h := greens_second_identity G φ kernel
   rw [hφ, hkernel] at h
-  simp only [Pi.neg_apply, mul_neg, sub_neg_eq_add] at h
+  simp only [mul_neg, sub_neg_eq_add] at h
   have hv :
       G.volume (fun x => φ x * delta x + kernel x * F x) =
         G.volume (fun x => φ x * delta x) + G.volume (fun x => kernel x * F x) := by
