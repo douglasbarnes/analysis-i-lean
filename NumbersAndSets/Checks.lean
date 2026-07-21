@@ -141,8 +141,8 @@ import NumbersAndSets.Countability
 #check Nat.infinite_setOf_prime
 #check Nat.factorization
 #check Nat.gcd_eq_right_iff_dvd
-#check Finset.card_congr
-#check Nat.add_pow
+#check Fintype.card_congr
+#check add_pow
 #check Nat.choose_symm
 #check Nat.choose_succ_succ
 #check Nat.totient
