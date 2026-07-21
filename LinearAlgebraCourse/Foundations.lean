@@ -172,14 +172,16 @@ abbrev MatrixLinearMap (m n : Type*) (𝕜 : Type*) [Fintype m] [Finite n]
     [Field 𝕜] := Matrix n m 𝕜 -- 034
 def matrixRepresentation {m n 𝕜 U V : Type*} [Fintype m] [DecidableEq m]
     [Fintype n] [DecidableEq n] [Field 𝕜] [AddCommGroup U] [Module 𝕜 U]
-    [AddCommGroup V] [Module 𝕜 V] (bU : Basis m 𝕜 U) (bV : Basis n 𝕜 V)
+    [AddCommGroup V] [Module 𝕜 V] (bU : Module.Basis m 𝕜 U)
+    (bV : Module.Basis n 𝕜 V)
     (f : U →ₗ[𝕜] V) : Matrix n m 𝕜 := LinearMap.toMatrix bU bV f -- 035
 
 theorem matrix_representation_comp {l m n 𝕜 U V W : Type*}
     [Fintype l] [DecidableEq l] [Fintype m] [DecidableEq m]
     [Fintype n] [DecidableEq n] [Field 𝕜] [AddCommGroup U] [Module 𝕜 U]
     [AddCommGroup V] [Module 𝕜 V] [AddCommGroup W] [Module 𝕜 W]
-    (bU : Basis l 𝕜 U) (bV : Basis m 𝕜 V) (bW : Basis n 𝕜 W)
+    (bU : Module.Basis l 𝕜 U) (bV : Module.Basis m 𝕜 V)
+    (bW : Module.Basis n 𝕜 W)
     (f : U →ₗ[𝕜] V) (g : V →ₗ[𝕜] W) :
     LinearMap.toMatrix bU bW (g.comp f) =
       LinearMap.toMatrix bV bW g * LinearMap.toMatrix bU bV f :=
@@ -257,7 +259,7 @@ def annihilator {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V]
 theorem annihilator_dimension {𝕜 V : Type*} [Field 𝕜] [AddCommGroup V]
     [Module 𝕜 V] [FiniteDimensional 𝕜 V] (U : Submodule 𝕜 V) :
     Module.finrank 𝕜 U + Module.finrank 𝕜 U.dualAnnihilator = Module.finrank 𝕜 V :=
-  Submodule.finrank_add_finrank_dualAnnihilator_eq U -- 055
+  Subspace.finrank_add_finrank_dualAnnihilator_eq U -- 055
 def dualMap {𝕜 V W : Type*} [CommSemiring 𝕜] [AddCommMonoid V] [Module 𝕜 V]
     [AddCommMonoid W] [Module 𝕜 W] (f : V →ₗ[𝕜] W) : Module.Dual 𝕜 W →ₗ[𝕜] Module.Dual 𝕜 V :=
   LinearMap.dualMap f -- 056
