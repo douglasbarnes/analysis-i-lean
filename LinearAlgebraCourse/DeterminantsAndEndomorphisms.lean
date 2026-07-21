@@ -38,7 +38,10 @@ def bilinearRank {𝕜 V W : Type*} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V
 theorem nondegenerate_implies_left_injective {𝕜 V W : Type*} [Field 𝕜]
     [AddCommGroup V] [Module 𝕜 V] [AddCommGroup W] [Module 𝕜 W]
     (B : BilinearForm 𝕜 V W) (h : IsNondegenerate B) : Function.Injective B := by
-  exact LinearMap.ker_eq_bot'.mp h.1 -- 071
+  intro x y hxy
+  apply sub_eq_zero.mp
+  apply LinearMap.ker_eq_bot'.mp h.1
+  rw [map_sub, hxy, sub_self] -- 071
 
 def determinant {n 𝕜 : Type*} [Fintype n] [DecidableEq n] [CommRing 𝕜]
     (A : Matrix n n 𝕜) : 𝕜 := Matrix.det A -- 072
@@ -186,8 +189,13 @@ theorem commuting_diagonalizable_simultaneously {𝕜 V : Type*} [Field 𝕜]
   refine ⟨{f, g}, by simp, by simp, ?_⟩
   intro a ha b hb
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
-  rcases ha with ha | ha <;> rcases hb with hb | hb <;>
-    subst a <;> subst b <;> simp_all [Commute.refl] -- 116
+  rcases ha with rfl | rfl
+  · rcases hb with rfl | rfl
+    · exact Commute.refl _
+    · exact hfg
+  · rcases hb with rfl | rfl
+    · exact hfg.symm
+    · exact Commute.refl _ -- 116
 theorem cayley_hamilton {n 𝕜 : Type*} [Fintype n] [DecidableEq n]
     [CommRing 𝕜] (A : Matrix n n 𝕜) : Polynomial.aeval A (Matrix.charpoly A) = 0 :=
   Matrix.aeval_self_charpoly A -- 117
