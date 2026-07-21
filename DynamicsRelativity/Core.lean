@@ -92,8 +92,7 @@ theorem totalEnergy1D_hasDerivAt_zero {m : ℝ} {x v a V : ℝ → ℝ} {t : ℝ
   have h := ((hv.mul hv).const_mul ((1 / 2 : ℝ) * m)).add (hV.comp t hx)
   convert h using 1
   · funext s
-    simp [totalEnergy1D, Function.comp_def]
-    ring
+    simp [totalEnergy1D, Function.comp_def] <;> ring <;> simp
   · ring
 
 /- 16. Equilibrium point. -/
