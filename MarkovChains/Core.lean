@@ -116,8 +116,9 @@ def expectationFrom (conditionalExpectation : S → (S → ℝ) → ℝ)
     (i : S) (Z : S → ℝ) : ℝ := conditionalExpectation i Z
 
 /-- Source line 378: first-passage time and first-passage probability. -/
-def firstPassageTime [DecidableEq S] (X : ℕ → S) (j : S) : Option ℕ :=
-  if h : ∃ n, 1 ≤ n ∧ X n = j then some (Nat.find h) else none
+noncomputable def firstPassageTime [DecidableEq S] (X : ℕ → S) (j : S) : Option ℕ := by
+  classical
+  exact if h : ∃ n, 1 ≤ n ∧ X n = j then some (Nat.find h) else none
 
 def firstPassageProbability (prob : S → Option ℕ → ℝ) (i : S) (n : ℕ) : ℝ :=
   prob i (some n)
@@ -175,8 +176,10 @@ def PolyaRecurrent (d : ℕ) : Prop := d = 1 ∨ d = 2
 theorem polya_theorem (d : ℕ) : PolyaRecurrent d ↔ d = 1 ∨ d = 2 := Iff.rfl
 
 /-- Source line 655: hitting time and hitting probability. -/
-def hittingTime (X : ℕ → S) (A : Set S) [DecidablePred (· ∈ A)] : Option ℕ :=
-  if h : ∃ n, X n ∈ A then some (Nat.find h) else none
+noncomputable def hittingTime (X : ℕ → S) (A : Set S)
+    [DecidablePred (· ∈ A)] : Option ℕ := by
+  classical
+  exact if h : ∃ n, X n ∈ A then some (Nat.find h) else none
 
 def IsHittingEquation [Fintype S] (P : S → S → ℝ) (A : Set S)
     [DecidablePred (· ∈ A)] (h : S → ℝ) : Prop :=
@@ -307,5 +310,7 @@ theorem detailed_balance_invariant [Fintype S] (P : S → S → ℝ) (π : S →
       exact hdb i j
     _ = π j * ∑ i, P j i := by rw [Finset.mul_sum]
     _ = π j := by rw [hP.2 j, mul_one]
+
+end
 
 end MarkovChains
