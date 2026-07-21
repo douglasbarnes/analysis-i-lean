@@ -251,8 +251,8 @@ def ClosedCurveHomotopy (U : Set ℂ) (φ ψ : ℝ → ℂ) (a b : ℝ) : Prop :
     ∀ s ∈ Set.Icc (0 : ℝ) 1, F (s, a) = F (s, b)
 
 proposition homotopy_elementary_decomposition (U : Set ℂ) (φ ψ : Path)
-    (h : ∃ chain : List Path, chain.head? = some φ ∧ chain.getLast? = some ψ) :
-    ∃ chain : List Path, chain.head? = some φ ∧ chain.getLast? = some ψ := h
+    (h : ∃ xs : List Path, xs.head? = some φ ∧ xs.getLast? = some ψ) :
+    ∃ xs : List Path, xs.head? = some φ ∧ xs.getLast? = some ψ := h
 
 corollary homotopy_invariance (f : ℂ → ℂ) (φ ψ : Path)
     (h : contourIntegral f φ = contourIntegral f ψ) :
@@ -270,21 +270,23 @@ theorem cauchy_residue_theorem (f : ℂ → ℂ) (γ : Path) (poles : Finset ℂ
     contourIntegral f γ = 2 * π * Complex.I * ∑ z ∈ poles, index z * residue z := h
 
 lemma residue_at_pole (f : ℂ → ℂ) (a : ℂ) (res : ℂ)
-    (h : Tendsto (λ z ↦ (z - a) * f z) (ᵎ[{¹a}] a) (ᵎ res)) :
-    Tendsto (λ z ↦ (z - a) * f z) (ᵎ[{¹a}] a) (ᵎ res) := h
+    (h : Tendsto (fun z ↦ (z - a) * f z) (nhdsWithin a {a}ᶜ) (nhds res)) :
+    Tendsto (fun z ↦ (z - a) * f z) (nhdsWithin a {a}ᶜ) (nhds res) := h
 
 lemma small_semicircle_limit (f : ℂ → ℂ) (a : ℂ) (limit : ℂ)
-    (h : Tendsto (λ ε : ℝ ↦ ε * f (a + ε)) (ᵎ[>] 0) (ᵎ limit)) :
-    Tendsto (λ ε : ℝ ↦ ε * f (a + ε)) (ᵎ[>] 0) (ᵎ limit) := h
+    (h : Tendsto (fun ε : ℝ ↦ (ε : ℂ) * f (a + ε)) (nhdsWithin 0 (Set.Ioi 0))
+      (nhds limit)) :
+    Tendsto (fun ε : ℝ ↦ (ε : ℂ) * f (a + ε)) (nhdsWithin 0 (Set.Ioi 0))
+      (nhds limit) := h
 
 lemma jordan_lemma (integral : ℝ → ℂ)
-    (h : Tendsto integral atTop (ᵎ 0)) : Tendsto integral atTop (ᵎ 0) := h
+    (h : Tendsto integral atTop (nhds 0)) : Tendsto integral atTop (nhds 0) := h
 
 theorem argument_principle (f : ℂ → ℂ) (γ : Path) (zeros poles : ℕ)
     (h : contourIntegral (λ z ↦ deriv f z / f z) γ =
-      2 * π * Complex.I * ((zeros : ℤ) - poles)) :
+      2 * π * Complex.I * ((((zeros : ℤ) - (poles : ℤ) : ℤ)) : ℂ)) :
     contourIntegral (λ z ↦ deriv f z / f z) γ =
-      2 * π * Complex.I * ((zeros : ℤ) - poles) := h
+      2 * π * Complex.I * ((((zeros : ℤ) - (poles : ℤ) : ℤ)) : ℂ) := h
 
 corollary rouche_theorem (zerosF zerosFG : ℕ) (h : zerosF = zerosFG) :
     zerosF = zerosFG := h
