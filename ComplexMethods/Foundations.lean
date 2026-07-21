@@ -83,7 +83,10 @@ def Circline (S : Set ℂ) : Prop :=
 
 /-- A Möbius transformation, including its nondegeneracy certificate. -/
 structure MobiusMap where
-  a b c d : ℂ
+  a : ℂ
+  b : ℂ
+  c : ℂ
+  d : ℂ
   det_ne_zero : a * d - b * c ≠ 0
 
 namespace MobiusMap
