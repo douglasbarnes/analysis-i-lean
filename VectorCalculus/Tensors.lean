@@ -41,7 +41,7 @@ def TensorDivergenceTheorem (boundaryIntegral volumeIntegral : Tensor 3 1) : Pro
 
 def inertiaTensor {ι : Type*} [Fintype ι] (mass : ι → ℝ) (position : ι → Vec 3) :
     Matrix (Fin 3) (Fin 3) ℝ :=
-  fun i j => ∑ a, mass a * (inner ℝ (position a) (position a) * if i = j then 1 else 0
+  fun i j => ∑ a, mass a * ((∑ k, position a k * position a k) * if i = j then 1 else 0
     - position a i * position a j)
 
 def IsInvariantTensor {n rank : Nat} (T : Tensor n rank)
@@ -60,5 +60,7 @@ def momentTensor {n rank : Nat} (weightedMoment : (Fin rank → Fin n) → ℝ) 
 
 theorem momentTensor_transforms (n rank : Nat) (T : Tensor n rank) :
     momentTensor T = T := rfl
+
+end
 
 end Cambridge.VectorCalculus
