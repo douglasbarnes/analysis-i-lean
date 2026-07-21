@@ -39,9 +39,9 @@ def IsPeriodic (f : ℝ → ℂ) : Prop := ∃ R : ℝ, R ≠ 0 ∧ ∀ x, f (x 
 -- Source line 354: Parseval's theorem.
 theorem parseval_theorem {a b : ℝ} {f : ℝ → ℂ} (hab : a < b)
     (hf : MemLp f 2 (volume.restrict (Ioc a b))) :
-    HasSum (fun n : ℤ => ‖AddCircle.fourierCoeffOn hab f n‖ ^ 2)
+    HasSum (fun n : ℤ => ‖fourierCoeffOn hab f n‖ ^ 2)
       ((b - a)⁻¹ • ∫ x in a..b, ‖f x‖ ^ 2) :=
-  AddCircle.hasSum_sq_fourierCoeffOn hab hf
+  hasSum_sq_fourierCoeffOn hab hf
 
 -- Source line 404: Adjoint and self-adjoint.
 structure AdjointPair {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
@@ -70,7 +70,7 @@ theorem distinct_eigenfunctions_orthogonal
     {T : E →ₗ[ℂ] E} (hT : T.IsSymmetric) {μ ν : ℂ} (hμν : μ ≠ ν)
     {u v : E} (hu : u ∈ Module.End.eigenspace T μ)
     (hv : v ∈ Module.End.eigenspace T ν) : inner ℂ u v = 0 := by
-  exact hT.orthogonalFamily_eigenspaces μ ν hμν ⟨u, hu⟩ ⟨v, hv⟩
+  exact hT.orthogonalFamily_eigenspaces hμν ⟨u, hu⟩ ⟨v, hv⟩
 
 -- Source line 547: countable, discrete eigenvalue sequence.
 structure DiscreteSpectrum (T : Type*) where
@@ -83,7 +83,7 @@ theorem compact_sturm_liouville_discrete {T : Type*} (s : DiscreteSpectrum T) :
   constructor
   · exact Set.countable_range _
   · intro i j
-    exact ⟨s.discrete, congrArg _⟩
+    exact ⟨(fun h => s.discrete h), (fun h => congrArg s.eigenvalue h)⟩
 
 -- Source line 555: completeness/eigenfunction expansion.
 theorem eigenfunction_completeness
@@ -124,14 +124,17 @@ theorem dirichlet_problem_exists_unique {X B : Type*}
   rintro ψ ⟨hψ, hψb⟩
   have hdiff_harmonic : IsHarmonic laplacian (fun x => ψ x - φ x) := by
     unfold IsHarmonic SatisfiesLaplaceEquation at hφ hψ ⊢
-    simp [hsub, hφ, hψ]
+    rw [hsub, hψ, hφ]
+    ext
+    simp
   have hdiff_boundary : trace (fun x => ψ x - φ x) = 0 := by
     rw [tsub, hψb, hφb]
+    ext
     simp
   have hz := maximum_principle _ hdiff_harmonic hdiff_boundary
   funext x
   have hx := congrFun hz x
-  simpa using hx
+  exact sub_eq_zero.mp hx
 
 -- Source line 1195: Heat equation.
 def SatisfiesHeatEquation {X : Type*} (timeDerivative laplacian :
@@ -252,9 +255,24 @@ theorem greens_second_identity {X B : Type*} (G : GreenCalculus X B) (φ ψ : X 
     G.volume (fun x => φ x * G.laplacian ψ x - ψ x * G.laplacian φ x) =
       G.boundary (fun z => G.trace φ z * G.normalDerivative ψ z -
         G.trace ψ z * G.normalDerivative φ z) := by
-  rw [map_sub, map_sub]
+  have hv :
+      G.volume (fun x => φ x * G.laplacian ψ x - ψ x * G.laplacian φ x) =
+        G.volume (fun x => φ x * G.laplacian ψ x) -
+          G.volume (fun x => ψ x * G.laplacian φ x) := by
+    simpa only [Pi.sub_apply] using
+      G.volume.map_sub (fun x => φ x * G.laplacian ψ x)
+        (fun x => ψ x * G.laplacian φ x)
+  have hb :
+      G.boundary (fun z => G.trace φ z * G.normalDerivative ψ z -
+          G.trace ψ z * G.normalDerivative φ z) =
+        G.boundary (fun z => G.trace φ z * G.normalDerivative ψ z) -
+          G.boundary (fun z => G.trace ψ z * G.normalDerivative φ z) := by
+    simpa only [Pi.sub_apply] using
+      G.boundary.map_sub (fun z => G.trace φ z * G.normalDerivative ψ z)
+        (fun z => G.trace ψ z * G.normalDerivative φ z)
+  rw [hv, hb]
   rw [G.integration_by_parts φ ψ, G.integration_by_parts ψ φ]
-  simp_rw [map_add]
+  simp_rw [G.volume.map_add]
   rw [G.gradient_symm φ ψ]
   ring
 
@@ -270,7 +288,12 @@ theorem greens_third_identity {X B : Type*} (G : GreenCalculus X B)
   have h := greens_second_identity G φ kernel
   rw [hφ, hkernel] at h
   simp only [Pi.neg_apply, mul_neg, sub_neg_eq_add] at h
-  rw [map_add, hreproduce] at h
+  have hv :
+      G.volume (fun x => φ x * delta x + kernel x * F x) =
+        G.volume (fun x => φ x * delta x) + G.volume (fun x => kernel x * F x) := by
+    simpa only [Pi.add_apply] using
+      G.volume.map_add (fun x => φ x * delta x) (fun x => kernel x * F x)
+  rw [hv, hreproduce] at h
   linarith
 
 end MethodsCourse
