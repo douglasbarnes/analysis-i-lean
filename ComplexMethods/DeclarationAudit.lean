@@ -1,0 +1,56 @@
+import ComplexMethods.Transforms
+
+open ComplexMethods
+open scoped ComplexMethods
+
+-- Exactly one witness for each labelled source environment, in source order.
+#check modulusArgument
+#check principalArgument
+#check ComplexOpenSet
+#check IsComplexNeighbourhood
+#check ExtendedComplexPlane
+#check ComplexDifferentiableAt
+#check AnalyticAtPoint
+#check Entire
+#check cauchyRiemannEquations
+#check differentiableAt_of_cauchyRiemann
+#check HarmonicConjugates
+#check HarmonicOn
+#check analytic_parts_harmonic
+#check BranchPoint
+#check Circline
+#check mobius_maps_circlines
+#check mobius_map_three_points
+#check IsConformalMapOn
+#check conformal_map_preserves_angles
+#check Curve
+#check ClosedCurve
+#check SimpleCurve
+#check Contour
+#check contourOperations
+#check contourIntegral
+#check contour_integral_rules
+#check SimplyConnectedDomain
+#check cauchyTheorem_on_disc
+#check contour_deformation_invariance
+#check cauchyIntegralFormula
+#check liouvilleTheorem
+#check laurentSeries_on_annulus
+#check HasZeroOfOrder
+#check HasSimpleZero
+#check IsolatedSingularity
+#check residue
+#check residue_at_simple_pole
+#check residue_at_pole_of_order
+#check integral_eq_two_pi_i_mul_residue
+#check residueTheorem
+#check jordanLemma
+#check fourierTransform
+#check ℱ
+#check laplaceTransform
+#check ℒ
+#check laplace_transform_rules
+#check inverse_laplace_bromwich
+#check inverse_laplace_finite_residues
+#check convolution
+#check laplace_convolution_theorem
