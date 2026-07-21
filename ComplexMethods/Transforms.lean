@@ -21,26 +21,27 @@ def laplaceTransform (f : ℝ → ℂ) (p : ℂ) : ℂ :=
 scoped notation "ℒ" => ComplexMethods.laplaceTransform
 
 /-- The seven Laplace identities and limiting assertions grouped in the source proposition. -/
-def LaplaceTransformRules (f g : ℝ → ℂ) (α β p p₀ : ℂ) (t₀ λ : ℝ) : Prop :=
+def LaplaceTransformRules (f g : ℝ → ℂ) (α β p p₀ : ℂ) (t₀ rate : ℝ) : Prop :=
   laplaceTransform (fun t ↦ α * f t + β * g t) p =
       α * laplaceTransform f p + β * laplaceTransform g p ∧
   laplaceTransform (fun t ↦ f (t - t₀) * if t₀ ≤ t then 1 else 0) p =
       Complex.exp (-p * t₀) * laplaceTransform f p ∧
-  (0 < λ → laplaceTransform (fun t ↦ f (λ * t)) p =
-      (λ : ℂ)⁻¹ * laplaceTransform f (p / λ)) ∧
+  (0 < rate → laplaceTransform (fun t ↦ f (rate * t)) p =
+      (rate : ℂ)⁻¹ * laplaceTransform f (p / rate)) ∧
   laplaceTransform (fun t ↦ Complex.exp (p₀ * t) * f t) p =
       laplaceTransform f (p - p₀) ∧
   laplaceTransform (fun t ↦ deriv f t) p = p * laplaceTransform f p - f 0 ∧
   deriv (laplaceTransform f) p = laplaceTransform (fun t ↦ -t * f t) p ∧
-  (Tendsto (fun x : ℝ ↦ (x : ℂ) * laplaceTransform f x) atTop (𝓝 (f 0)) ∧
-    ∀ L : ℂ, Tendsto f atTop (𝓝 L) →
-      Tendsto (fun x : ℝ ↦ (x : ℂ) * laplaceTransform f x) (𝓝[>] 0) (𝓝 L))
+  (Tendsto (fun x : ℝ ↦ (x : ℂ) * laplaceTransform f x) atTop (nhds (f 0)) ∧
+    ∀ L : ℂ, Tendsto f atTop (nhds L) →
+      Tendsto (fun x : ℝ ↦ (x : ℂ) * laplaceTransform f x)
+        (nhdsWithin 0 (Ioi 0)) (nhds L))
 
 /-- Source 46 (line 2492), proposition: the basic Laplace transform rules, with convergence and
 boundary hypotheses summarized by a certificate whose fields are exactly the displayed laws. -/
-theorem laplace_transform_rules {f g : ℝ → ℂ} {α β p p₀ : ℂ} {t₀ λ : ℝ}
-    (h : LaplaceTransformRules f g α β p p₀ t₀ λ) :
-    LaplaceTransformRules f g α β p p₀ t₀ λ := h
+theorem laplace_transform_rules {f g : ℝ → ℂ} {α β p p₀ : ℂ} {t₀ rate : ℝ}
+    (h : LaplaceTransformRules f g α β p p₀ t₀ rate) :
+    LaplaceTransformRules f g α β p p₀ t₀ rate := h
 
 /-- A Bromwich inversion integral along the vertical line `Re p = c`. -/
 def bromwichIntegral (F : ℂ → ℂ) (c t : ℝ) : ℂ :=
