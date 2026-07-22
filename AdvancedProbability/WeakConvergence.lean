@@ -42,7 +42,7 @@ theorem PortmanteauCertificate {E : Type u} [MeasurableSpace E] [TopologicalSpac
     · intro A hA
       exact ProbabilityMeasure.tendsto_measure_of_null_frontier_of_tendsto' h hA
   · rintro ⟨hOpen, -, -⟩
-    exact ProbabilityMeasure.tendsto_of_forall_isOpen_le_liminf' hOpen
+    exact tendsto_of_forall_isOpen_le_liminf' hOpen
 
 /-- Source 82: tightness of a sequence of probability measures. -/
 def Tight {E : Type u} [MeasurableSpace E] [TopologicalSpace E]
