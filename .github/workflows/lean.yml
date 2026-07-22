@@ -24,30 +24,16 @@ jobs:
           "$HOME/.elan/bin/elan" default "$(cat lean-toolchain)"
           "$HOME/.elan/bin/lean" --version
           "$HOME/.elan/bin/lake" --version
-      - name: Compile Analysis II modules
+      - name: Build Analysis II and audit placeholders
         shell: bash
         run: |
-          set -uo pipefail
-          status=0
+          set -euo pipefail
           {
             lake update
             lake exe cache get
-            for file in \
-              AnalysisII/UniformConvergence.lean \
-              AnalysisII/NormedMetricCore.lean \
-              AnalysisII/CalculusCore.lean \
-              AnalysisII/CompactnessAndContractions.lean \
-              AnalysisII/SequentialTopology.lean \
-              AnalysisII/MeanValueAndConstancy.lean
-            do
-              echo "===== $file ====="
-              lake env lean "$file" || status=1
-            done
-            echo "===== aggregate AnalysisII target ====="
-            lake build AnalysisII || status=1
-            python3 scripts/check_audit.py || status=1
+            lake build AnalysisII
+            python3 scripts/check_audit.py
           } 2>&1 | tee lean-build.log
-          exit "$status"
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
