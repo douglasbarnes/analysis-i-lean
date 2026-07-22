@@ -549,8 +549,9 @@ theorem simply_connected_maps_to_disc (M : RiemannMappingModel) (U : Set ℂ)
     have heq : f =ᶠ[𝓝 z] const ℂ c := by
       filter_upwards [hU.1.mem_nhds hz] with w hw
       exact hc hw
-    have hderiv : deriv f z = deriv (const ℂ c) z := heq.deriv_eq
-    exact (hconf z hz).2 (by simpa [Function.const] using hderiv)
+    have hzero : HasDerivAt f 0 z :=
+      (hasDerivAt_const z c).congr_of_eventuallyEq heq
+    exact (hconf z hz).2 hzero.deriv
 
 end
 
