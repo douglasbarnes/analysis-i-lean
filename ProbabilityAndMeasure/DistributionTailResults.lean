@@ -68,6 +68,7 @@ theorem source062_tail_measurable_ae_constant {Ω : Type*} [m0 : MeasurableSpace
     (h_le : ∀ n, s n ≤ m0) (h_indep : ProbabilityTheory.iIndep s P)
     (X : Ω → ℝ) (hX : @Measurable Ω ℝ (limsup s atTop) (borel ℝ) X) :
     ∃ c : ℝ, X =ᵐ[P] Function.const Ω c := by
+  classical
   letI : IsProbabilityMeasure P := h_indep.isProbabilityMeasure
   have htail_le : limsup s atTop ≤ m0 := limsup_le_iSup.trans (iSup_le h_le)
   refine Filter.exists_eventuallyEq_const_of_forall_separating (l := ae P) MeasurableSet ?_
@@ -77,12 +78,12 @@ theorem source062_tail_measurable_ae_constant {Ω : Type*} [m0 : MeasurableSpace
   rcases ProbabilityTheory.measure_zero_or_one_of_measurableSet_limsup_atTop
       h_le h_indep hpre_tail with h0 | h1
   · refine Or.inr ?_
-    rw [ae_iff]
-    simpa only [Set.mem_preimage, not_not, Set.setOf_mem_eq] using h0
+    apply ae_iff.2
+    change P (X ⁻¹' U) = 0
+    exact h0
   · refine Or.inl ?_
-    rw [ae_iff]
-    have hc : P (X ⁻¹' U)ᶜ = 0 := by
-      rw [ProbabilityTheory.prob_compl_eq_one_sub hpre, h1, tsub_self]
-    simpa only [Set.mem_preimage, Set.compl_setOf, Set.setOf_mem_eq] using hc
+    apply ae_iff.2
+    change P (X ⁻¹' U)ᶜ = 0
+    rw [MeasureTheory.prob_compl_eq_one_sub hpre, h1, tsub_self]
 
 end ProbabilityAndMeasure
