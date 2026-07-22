@@ -30,15 +30,15 @@ structure FiniteBasis {V : Type*} [AddCommMonoid V] [Module ℂ V] (n : ℕ) whe
   coordinates_unique : ∀ u c, (∑ i, c i • vectors i) = u → c = coordinates u
 
 def FiniteBasis.IsOrthogonal {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
-    {n : ℕ} (b : FiniteBasis n) : Prop :=
+    {n : ℕ} (b : FiniteBasis (V := V) n) : Prop :=
   ∀ i j, i ≠ j → inner ℂ (b.vectors i) (b.vectors j) = 0
 
 def FiniteBasis.IsOrthonormal {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
-    {n : ℕ} (b : FiniteBasis n) : Prop :=
+    {n : ℕ} (b : FiniteBasis (V := V) n) : Prop :=
   b.IsOrthogonal ∧ ∀ i, inner ℂ (b.vectors i) (b.vectors i) = 1
 
 def FiniteBasis.dimension {V : Type*} [AddCommMonoid V] [Module ℂ V]
-    {n : ℕ} (_b : FiniteBasis n) : ℕ := n
+    {n : ℕ} (_b : FiniteBasis (V := V) n) : ℕ := n
 
 -- Source line 164: Homogeneous boundary conditions.
 def IsHomogeneousBoundary {X : Type*} (P : (X → ℂ) → Prop) : Prop :=
@@ -299,7 +299,7 @@ theorem greens_second_identity {X B VectorField : Type*} (G : GreenCalculus X B 
       G.boundary.map_sub (fun z => G.trace φ z * G.normalDerivative ψ z)
         (fun z => G.trace ψ z * G.normalDerivative φ z)
   rw [hv, hb]
-  rw [G.integration_by_parts φ ψ, G.integration_by_parts ψ φ]
+  rw [greens_first_identity G φ ψ, greens_first_identity G ψ φ]
   have ha :
       G.volume (fun x => φ x * G.laplacian ψ x + G.gradientProduct φ ψ x) =
         G.volume (fun x => φ x * G.laplacian ψ x) +
