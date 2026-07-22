@@ -34,14 +34,32 @@ theorem source005_linear_combination
     TendstoUniformly
       (fun n x => a * F n x + b * G n x)
       (fun x => a * f x + b * g x) atTop := by
-  have ha : TendstoUniformly (fun n x => a * F n x) (fun x => a * f x) atTop := by
-    simpa [Function.comp_def] using
-      (Real.uniformContinuous_const_mul (x := a)).comp_tendstoUniformly hF
-  have hb : TendstoUniformly (fun n x => b * G n x) (fun x => b * g x) atTop := by
-    simpa [Function.comp_def] using
-      (Real.uniformContinuous_const_mul (x := b)).comp_tendstoUniformly hG
-  simpa [Function.comp_def] using
-    Real.uniformContinuous_add.comp_tendstoUniformly (ha.prodMk hb)
+  rw [Metric.tendstoUniformly_iff] at hF hG ⊢
+  intro ε hε
+  let D : ℝ := 2 * (|a| + |b| + 1)
+  have hD : 0 < D := by
+    dsimp [D]
+    positivity
+  filter_upwards [hF (ε / D) (div_pos hε hD), hG (ε / D) (div_pos hε hD)]
+    with n hFn hGn
+  intro x
+  simp only [Real.dist_eq] at hFn hGn ⊢
+  have hFle : |F n x - f x| ≤ ε / D := by
+    simpa [abs_sub_comm] using (hFn x).le
+  have hGle : |G n x - g x| ≤ ε / D := by
+    simpa [abs_sub_comm] using (hGn x).le
+  calc
+    |(a * f x + b * g x) - (a * F n x + b * G n x)| =
+        |a * (f x - F n x) + b * (g x - G n x)| := by ring_nf
+    _ ≤ |a| * |f x - F n x| + |b| * |g x - G n x| := by
+      simpa [abs_mul] using abs_add (a * (f x - F n x)) (b * (g x - G n x))
+    _ ≤ |a| * (ε / D) + |b| * (ε / D) := by
+      gcongr <;> simpa [abs_sub_comm]
+    _ = (|a| + |b|) * ε / D := by ring
+    _ < ε := by
+      apply (div_lt_iff₀ hD).2
+      dsimp [D]
+      nlinarith [abs_nonneg a, abs_nonneg b]
 
 /-- Analysis II source 5(ii): multiplication by a bounded real function preserves
 uniform convergence.  Boundedness is supplied by an explicit positive bound. -/
