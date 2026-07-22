@@ -67,7 +67,8 @@ theorem similar_invariants {n K} [Fintype n] [DecidableEq n] [Field K]
   obtain ⟨P, hP, rfl⟩ := h
   constructor
   · rw [Matrix.det_mul, Matrix.det_mul]
-    have hinv : P⁻¹.det * P.det = 1 := Matrix.det_nonsing_inv_mul_det P hP
+    have hdet : IsUnit P.det := P.isUnit_iff_isUnit_det.mp hP
+    have hinv : P⁻¹.det * P.det = 1 := Matrix.det_nonsing_inv_mul_det P hdet
     calc
       A.det = 1 * A.det := by rw [one_mul]
       _ = (P⁻¹.det * P.det) * A.det := by rw [hinv]
@@ -114,13 +115,13 @@ theorem cayleyHamilton {n R} [Fintype n] [DecidableEq n] [CommRing R]
 
 theorem hermitian_eigenvalue_real {n} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.IsHermitian) {c : ℂ} {v : n → ℂ}
-    (hv : v ≠ 0) (he : H.mulVec v = c • v) : Complex.conj c = c := by
+    (hv : v ≠ 0) (he : H.mulVec v = c • v) : star c = c := by
   have hs := Matrix.isSymmetric_toEuclideanLin_iff.mpr hH
-  let w : EuclideanSpace ℂ n := toLp 2 v
+  let w : EuclideanSpace ℂ n := WithLp.toLp 2 v
   have hw : w ≠ 0 := by simpa [w] using hv
   have hew : H.toEuclideanLin w = c • w := by
-    simp only [w, Matrix.toEuclideanLin_apply_piLp_toLp, map_smul]
-    exact congrArg (toLp 2) he
+    simpa [w, Matrix.toEuclideanLin_apply_piLp_toLp] using
+      congrArg (WithLp.toLp 2) he
   apply hs.conj_eigenvalue_eq_self
   exact Module.End.hasEigenvalue_of_hasEigenvector
     ⟨by simpa [Module.End.mem_eigenspace_iff] using hew, hw⟩
@@ -130,26 +131,26 @@ theorem hermitian_distinct_eigenvectors_orthogonal {n} [Fintype n] [DecidableEq 
     (hx : H.mulVec x = a • x) (hy : H.mulVec y = b • y) (hab : a ≠ b) :
     star x ⬝ᵥ y = 0 := by
   have hs := Matrix.isSymmetric_toEuclideanLin_iff.mpr hH
-  let u : EuclideanSpace ℂ n := toLp 2 x
-  let v : EuclideanSpace ℂ n := toLp 2 y
+  let u : EuclideanSpace ℂ n := WithLp.toLp 2 x
+  let v : EuclideanSpace ℂ n := WithLp.toLp 2 y
   have hu : H.toEuclideanLin u = a • u := by
-    simp only [u, Matrix.toEuclideanLin_apply_piLp_toLp, map_smul]
-    exact congrArg (toLp 2) hx
+    simpa [u, Matrix.toEuclideanLin_apply_piLp_toLp] using
+      congrArg (WithLp.toLp 2) hx
   have hv : H.toEuclideanLin v = b • v := by
-    simp only [v, Matrix.toEuclideanLin_apply_piLp_toLp, map_smul]
-    exact congrArg (toLp 2) hy
-  have ho := hs.orthogonalFamily_eigenspaces a b hab
+    simpa [v, Matrix.toEuclideanLin_apply_piLp_toLp] using
+      congrArg (WithLp.toLp 2) hy
+  have ho := hs.orthogonalFamily_eigenspaces hab
     ⟨u, by simpa [Module.End.mem_eigenspace_iff] using hu⟩
     ⟨v, by simpa [Module.End.mem_eigenspace_iff] using hv⟩
   simpa [u, v, EuclideanSpace.inner_toLp_toLp, Matrix.dotProduct_comm] using ho
 
 def HasOrthogonalEigenbasis {n} [Fintype n] [DecidableEq n] (H : Matrix n n ℂ) : Prop :=
   ∃ b : OrthonormalBasis n ℂ (EuclideanSpace ℂ n),
-    ∀ i, ∃ c, H.mulVec ⇑(b i) = c • ⇑(b i) -- 130
+    ∀ i, ∃ c : ℂ, H.mulVec ⇑(b i) = c • ⇑(b i) -- 130
 theorem hermitian_has_orthogonal_eigenbasis {n} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (h : H.IsHermitian) : HasOrthogonalEigenbasis H := by
-  refine ⟨h.eigenvectorBasis, fun i => ?_⟩
-  exact ⟨(h.eigenvalues i : ℂ), h.mulVec_eigenvectorBasis i⟩
+  exact ⟨h.eigenvectorBasis, fun i =>
+    ⟨(h.eigenvalues i : ℂ), h.mulVec_eigenvectorBasis i⟩⟩
 
 def IsNormalMatrix {n} [Fintype n] [DecidableEq n] (N : Matrix n n ℂ) : Prop :=
   N * N.conjTranspose = N.conjTranspose * N                              -- 131
@@ -182,11 +183,17 @@ def specialOrthogonalGroup (n : Type*) [Fintype n] [DecidableEq n] :=
 
 theorem orthogonal_equivalences {n} [Fintype n] [DecidableEq n]
     (P : Matrix n n ℝ) (hP : IsOrthogonalMatrix P) (x y : n → ℝ) :
-    (‖P.mulVec x‖ = ‖x‖) ∧ ((P.mulVec x) ⬝ᵥ (P.mulVec y) = x ⬝ᵥ y) := by
+    (‖WithLp.toLp 2 (P.mulVec x)‖ = ‖WithLp.toLp 2 x‖) ∧
+      ((P.mulVec x) ⬝ᵥ (P.mulVec y) = x ⬝ᵥ y) := by
   constructor
-  · have hs : ‖P.mulVec x‖ ^ 2 = ‖x‖ ^ 2 := by
-      simp [EuclideanSpace.norm_eq, hP.1]
-    nlinarith [norm_nonneg (P.mulVec x), norm_nonneg x]
+  · have hd : (P.mulVec x) ⬝ᵥ (P.mulVec x) = x ⬝ᵥ x := by
+      rw [Matrix.dotProduct_mulVec]
+      simpa [← Matrix.vecMul_transpose, ← Matrix.mulVec_mulVec, hP.1]
+    have hs : ‖WithLp.toLp 2 (P.mulVec x)‖ ^ 2 = ‖WithLp.toLp 2 x‖ ^ 2 := by
+      rw [EuclideanSpace.real_norm_sq_eq, EuclideanSpace.real_norm_sq_eq]
+      simpa [dotProduct] using hd
+    nlinarith [norm_nonneg (WithLp.toLp 2 (P.mulVec x)),
+      norm_nonneg (WithLp.toLp 2 x)]
   · rw [Matrix.dotProduct_mulVec]
     simpa [← Matrix.vecMul_transpose, ← Matrix.mulVec_mulVec, hP.1]
 
