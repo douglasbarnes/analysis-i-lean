@@ -9,5 +9,6 @@ import ProbabilityAndMeasure.ProbabilityResults
 import ProbabilityAndMeasure.ProductAndFubiniResults
 import ProbabilityAndMeasure.FunctionalAnalysisResults
 import ProbabilityAndMeasure.TransformLimitResults
+import ProbabilityAndMeasure.MeasurabilityConvergenceResults
 import ProbabilityAndMeasure.LibraryCoverage
 import ProbabilityAndMeasure.SourceAudit
