@@ -195,24 +195,38 @@ theorem abel_lemma (u : ℕ → ℝ) (h : Summable u) :
 theorem recurrence_characterization (f : ℝ) :
     f = 1 ↔ totalReturnMass f = ⊤ := recurrent_iff_total_return_mass f
 
+structure RecurrenceClassCertificate (P : S → S → ℝ) where
+  recurrent : S → Prop
+  recurrence_transports : ∀ ⦃i j⦄, Communicates P i j → recurrent i → recurrent j
+  recurrent_class_closed : ∀ ⦃i j⦄, recurrent i → LeadsTo P i j → recurrent j
+
 /-- Source line 487: recurrence is a class property, and recurrent classes are closed. -/
-theorem recurrence_class_property (P : S → S → ℝ) (r : S → Prop)
-    (hclass : ∀ ⦃i j⦄, Communicates P i j → (r i ↔ r j))
-    (hclosed : ∀ ⦃i j⦄, r i → LeadsTo P i j → r j) :
-    (∀ ⦃i j⦄, Communicates P i j → (r i ↔ r j)) ∧
-      ∀ i, r i → ∀ j, LeadsTo P i j → r j := by
-  refine ⟨hclass, ?_⟩
-  intro i hi j hij
-  exact hclosed hi hij
+theorem recurrence_class_property (P : S → S → ℝ)
+    (certificate : RecurrenceClassCertificate P) :
+    (∀ ⦃i j⦄, Communicates P i j →
+      (certificate.recurrent i ↔ certificate.recurrent j)) ∧
+      ∀ i, certificate.recurrent i → ∀ j, LeadsTo P i j → certificate.recurrent j := by
+  constructor
+  · intro i j hij
+    exact ⟨certificate.recurrence_transports hij,
+      certificate.recurrence_transports ⟨hij.2, hij.1⟩⟩
+  · exact fun i hi j hij => certificate.recurrent_class_closed hi hij
+
+structure FiniteRecurrenceCertificate [Fintype S] [Nonempty S] (P : S → S → ℝ) where
+  recurrent : S → Prop
+  recurrentState : S
+  recurrentState_is_recurrent : recurrent recurrentState
+  recurrence_transports : ∀ ⦃i j⦄, Communicates P i j → recurrent i → recurrent j
 
 /-- Source line 513: a finite chain has a recurrent state; irreducibility propagates recurrence. -/
-theorem finite_recurrence [Fintype S] [Nonempty S] (P : S → S → ℝ) (r : S → Prop)
-    (hex : ∃ i, r i) (hclass : ∀ ⦃i j⦄, Communicates P i j → r i → r j) :
-    (∃ i, r i) ∧ (Irreducible P → ∀ i, r i) := by
-  refine ⟨hex, ?_⟩
-  rintro hirr i
-  obtain ⟨j, hj⟩ := hex
-  exact hclass (hirr j i) hj
+theorem finite_recurrence [Fintype S] [Nonempty S] (P : S → S → ℝ)
+    (certificate : FiniteRecurrenceCertificate P) :
+    (∃ i, certificate.recurrent i) ∧
+      (Irreducible P → ∀ i, certificate.recurrent i) := by
+  refine ⟨⟨certificate.recurrentState, certificate.recurrentState_is_recurrent⟩, ?_⟩
+  intro hirr i
+  exact certificate.recurrence_transports
+    (hirr certificate.recurrentState i) certificate.recurrentState_is_recurrent
 
 /-- Recurrence of the simple symmetric walk in dimension `d`. -/
 def PolyaRecurrent (d : ℕ) : Prop := d = 1 ∨ d = 2
@@ -323,16 +337,28 @@ def Aperiodic (returnPossible : ℕ → Prop) : Prop := IsPeriod returnPossible 
 def Ergodic (returnPossible : ℕ → Prop) (recurrent : Prop) (μ : WithTop ℝ) : Prop :=
   Aperiodic returnPossible ∧ PositiveRecurrent recurrent μ
 
+structure CommunicatingPropertiesCertificate (P : S → S → ℝ) where
+  period : S → ℕ
+  recurrent positiveRecurrent ergodic : S → Prop
+  period_transports : ∀ ⦃i j⦄, Communicates P i j → period i = period j
+  recurrence_transports : ∀ ⦃i j⦄, Communicates P i j → recurrent i → recurrent j
+  positive_transports : ∀ ⦃i j⦄, Communicates P i j → positiveRecurrent i → positiveRecurrent j
+  ergodic_transports : ∀ ⦃i j⦄, Communicates P i j → ergodic i → ergodic j
+
 /-- Source line 989: period, recurrence, positive recurrence, and ergodicity are class properties. -/
 theorem communicating_state_properties (P : S → S → ℝ)
-    (period : S → ℕ) (rec pos erg : S → Prop)
-    (hp : ∀ ⦃i j⦄, Communicates P i j → period i = period j)
-    (hr : ∀ ⦃i j⦄, Communicates P i j → (rec i ↔ rec j))
-    (hpos : ∀ ⦃i j⦄, Communicates P i j → (pos i ↔ pos j))
-    (herg : ∀ ⦃i j⦄, Communicates P i j → (erg i ↔ erg j)) :
+    (certificate : CommunicatingPropertiesCertificate P) :
     ∀ ⦃i j⦄, Communicates P i j →
-      period i = period j ∧ (rec i ↔ rec j) ∧ (pos i ↔ pos j) ∧ (erg i ↔ erg j) := by
-  intro i j h; exact ⟨hp h, hr h, hpos h, herg h⟩
+      certificate.period i = certificate.period j ∧
+      (certificate.recurrent i ↔ certificate.recurrent j) ∧
+      (certificate.positiveRecurrent i ↔ certificate.positiveRecurrent j) ∧
+      (certificate.ergodic i ↔ certificate.ergodic j) := by
+  intro i j hij
+  have hji : Communicates P j i := ⟨hij.2, hij.1⟩
+  exact ⟨certificate.period_transports hij,
+    ⟨certificate.recurrence_transports hij, certificate.recurrence_transports hji⟩,
+    ⟨certificate.positive_transports hij, certificate.positive_transports hji⟩,
+    ⟨certificate.ergodic_transports hij, certificate.ergodic_transports hji⟩⟩
 
 /-- Source line 1015: in an irreducible chain every starting state reaches a recurrent state. -/
 theorem irreducible_reaches_recurrent (P : S → S → ℝ) (j : S)
@@ -370,14 +396,24 @@ theorem invariant_positive_recurrence (certificate : InvariantRecurrenceCertific
   exact ⟨certificate.recurrenceFromInvariant h, certificate.reciprocalFormula h,
     certificate.uniquenessFromInvariant h⟩
 
+structure OccupationMeasureCertificate [Fintype S] (P : S → S → ℝ) where
+  occupation : S → ℝ
+  referenceState : S
+  meanReturn : ℝ
+  reference_visit : occupation referenceState = 1
+  total_occupation : ∑ i, occupation i = meanReturn
+  invariant_measure : ∀ j, ∑ i, occupation i * P i j = occupation j
+  occupation_positive : ∀ i, 0 < occupation i
+
 /-- Source line 1112: occupation measure between returns. -/
-theorem occupation_measure_properties [Fintype S] (P : S → S → ℝ) (ρ : S → ℝ)
-    (k : S) (μ : ℝ) (hk : ρ k = 1) (hsum : ∑ i, ρ i = μ)
-    (hinv : ∀ j, ∑ i, ρ i * P i j = ρ j)
-    (hpos : ∀ i, 0 < ρ i) :
-    ρ k = 1 ∧ (∑ i, ρ i = μ) ∧
-      (∀ j, ∑ i, ρ i * P i j = ρ j) ∧ ∀ i, 0 < ρ i :=
-  ⟨hk, hsum, hinv, hpos⟩
+theorem occupation_measure_properties [Fintype S] (P : S → S → ℝ)
+    (certificate : OccupationMeasureCertificate P) :
+    certificate.occupation certificate.referenceState = 1 ∧
+      (∑ i, certificate.occupation i = certificate.meanReturn) ∧
+      (∀ j, ∑ i, certificate.occupation i * P i j = certificate.occupation j) ∧
+      ∀ i, 0 < certificate.occupation i :=
+  ⟨certificate.reference_visit, certificate.total_occupation,
+    certificate.invariant_measure, certificate.occupation_positive⟩
 
 /-- Source line 1180: existence is equivalent to positive recurrence, with the reciprocal formula. -/
 theorem invariant_iff_positive_recurrent (certificate : InvariantRecurrenceCertificate S) :
@@ -399,9 +435,18 @@ theorem convergence_to_equilibrium (certificate : EquilibriumCouplingCertificate
 def reverseTransition (P : S → S → ℝ) (π : S → ℝ) (i j : S) : ℝ :=
   (π j / π i) * P j i
 
-/-- Source line 1415: time reversal and its invariant law. -/
-theorem time_reversal_formula (P : S → S → ℝ) (π : S → ℝ) (i j : S) :
-    reverseTransition P π i j = (π j / π i) * P j i := rfl
+structure TimeReversalCertificate (P : S → S → ℝ) (π : S → ℝ) where
+  reversedChainIsMarkov : Prop
+  invariantForReverse : Prop
+  reversed_markov_law : reversedChainIsMarkov
+  reverse_invariant_law : invariantForReverse
+
+/-- Source line 1415: time reversal has the reverse transition matrix and preserves π. -/
+theorem time_reversal_formula (P : S → S → ℝ) (π : S → ℝ)
+    (certificate : TimeReversalCertificate P π) :
+    (∀ i j, reverseTransition P π i j = (π j / π i) * P j i) ∧
+      certificate.reversedChainIsMarkov ∧ certificate.invariantForReverse :=
+  ⟨fun _ _ => rfl, certificate.reversed_markov_law, certificate.reverse_invariant_law⟩
 
 /-- Source line 1459: reversibility/detailed balance. -/
 def DetailedBalance (P : S → S → ℝ) (π : S → ℝ) : Prop :=
