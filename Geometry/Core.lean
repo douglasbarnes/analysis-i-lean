@@ -197,7 +197,7 @@ structure TopologicalTriangulation (X : Type*) [TopologicalSpace X] where
     (commonEdge t u).isSome ∨ (commonVertex t u).isSome
   incident : Edge → Triangle → Prop
   exactly_two_per_edge : ∀ e, ∃! pair : {p : Triangle × Triangle // p.1 ≠ p.2},
-    incident e pair.1 ∧ incident e pair.2
+    incident e pair.1.1 ∧ incident e pair.1.2
 
 /- 28. Euler number. -/
 def eulerNumber (faces edges vertices : ℕ) : ℤ := faces - edges + vertices
@@ -221,14 +221,15 @@ structure SphereTorusTriangulationModel where
   Sphere Torus : Type*
   sphereTopology : TopologicalSpace Sphere
   torusTopology : TopologicalSpace Torus
-  sphereEuler : TopologicalTriangulation Sphere → ℤ
-  torusEuler : TopologicalTriangulation Torus → ℤ
+  sphereEuler : @TopologicalTriangulation Sphere sphereTopology → ℤ
+  torusEuler : @TopologicalTriangulation Torus torusTopology → ℤ
   sphere_value : ∀ t, sphereEuler t = 2
   torus_value : ∀ t, torusEuler t = 0
 
 /- 31. Euler numbers of sphere and torus. -/
 theorem sphere_torus_euler_numbers (M : SphereTorusTriangulationModel)
-    (s : TopologicalTriangulation M.Sphere) (t : TopologicalTriangulation M.Torus) :
+    (s : @TopologicalTriangulation M.Sphere M.sphereTopology)
+    (t : @TopologicalTriangulation M.Torus M.torusTopology) :
     M.sphereEuler s = 2 ∧ M.torusEuler t = 0 := ⟨M.sphere_value s, M.torus_value t⟩
 
 /- 32. Smooth function. -/
