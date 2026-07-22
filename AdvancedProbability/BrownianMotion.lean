@@ -12,20 +12,22 @@ universe u v
 /-! ## 5. Brownian motion -/
 
 /-- Gaussianity expressed by the real and imaginary parts of the characteristic function. -/
-def HasGaussianLaw {Ω : Type u} (𝔼 : Expectation Ω) (X : Ω → ℝ)
+def HasGaussianLaw {Ω : Type u} (expectation : Expectation Ω) (X : Ω → ℝ)
     (mean variance : ℝ) : Prop :=
   ∀ t : ℝ,
-    𝔼 (fun ω ↦ Real.cos (t * X ω)) = Real.exp (-(variance * t ^ 2) / 2) * Real.cos (mean * t) ∧
-    𝔼 (fun ω ↦ Real.sin (t * X ω)) = Real.exp (-(variance * t ^ 2) / 2) * Real.sin (mean * t)
+    expectation (fun ω ↦ Real.cos (t * X ω)) =
+        Real.exp (-(variance * t ^ 2) / 2) * Real.cos (mean * t) ∧
+      expectation (fun ω ↦ Real.sin (t * X ω)) =
+        Real.exp (-(variance * t ^ 2) / 2) * Real.sin (mean * t)
 
 /-- Source 89: standard one-dimensional Brownian motion. -/
-structure BrownianMotion (Ω : Type u) (𝔼 : Expectation Ω)
+structure BrownianMotion (Ω : Type u) (expectation : Expectation Ω)
     (Independent : (Ω → ℝ) → (Ω → ℝ) → Prop) where
   path : ContinuousProcess Ω
   startsAtZero : ∀ ω, path 0 ω = 0
   continuousPaths : IsContinuousProcess path
   gaussianIncrements : ∀ s t : ℝ≥0, s ≤ t →
-    HasGaussianLaw 𝔼 (fun ω ↦ path t ω - path s ω) 0 ((t - s : ℝ≥0) : ℝ)
+    HasGaussianLaw expectation (fun ω ↦ path t ω - path s ω) 0 ((t - s : ℝ≥0) : ℝ)
   independentIncrements : ∀ r s t : ℝ≥0, r ≤ s → s ≤ t →
     Independent (fun ω ↦ path s ω - path r ω) (fun ω ↦ path t ω - path s ω)
 
