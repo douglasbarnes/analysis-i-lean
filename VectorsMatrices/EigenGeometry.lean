@@ -23,7 +23,8 @@ theorem eigenvalue_iff_nontrivial_kernel {K V} [Field K] [AddCommGroup V] [Modul
   · rintro ⟨x, hx, he⟩
     exact ⟨x, by simpa [LinearMap.mem_ker, he], hx⟩
   · rintro ⟨x, hx, hn⟩
-    exact ⟨x, hn, by simpa [LinearMap.mem_ker] using hx⟩
+    have hsub : A x - c • x = 0 := by simpa [LinearMap.mem_ker] using hx
+    exact ⟨x, hn, sub_eq_zero.mp hsub⟩
 
 def characteristicEquation {n} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (c : ℂ) : Prop := (A - c • 1).det = 0 -- 111
@@ -43,12 +44,13 @@ theorem distinct_eigenvectors_independent {K V ι} [Field K] [AddCommGroup V] [M
     {A : V →ₗ[K] V} {v : ι → V} {c : ι → K}
     (hv : ∀ i, A (v i) = c i • v i) (hc : Function.Injective c)
     (hn : ∀ i, v i ≠ 0) : LinearIndependent K v := by
-  exact A.eigenvectors_linearIndependent' c hc v fun i ⇒ ⟨by simpa [Module.End.mem_eigenspace_iff] using hv i, hn i⟩
+  exact Module.End.eigenvectors_linearIndependent' A c hc v fun i =>
+    ⟨by simpa [Module.End.mem_eigenspace_iff] using hv i, hn i⟩
 
 def coordinatesUnderBasis {K V ι} [Field K] [AddCommGroup V] [Module K V]
-    [Finite ι] (b : Basis ι K V) : V ≃ₗ[K] (ι → K) := b.equivFun       -- 118
+    [Finite ι] (b : Module.Basis ι K V) : V ≃ₗ[K] (ι → K) := b.equivFun -- 118
 theorem change_basis_coordinates {K V ι} [Field K] [AddCommGroup V] [Module K V]
-    [Finite ι] (b : Basis ι K V) (x : V) : b.equivFun.symm (b.equivFun x) = x :=
+    [Finite ι] (b : Module.Basis ι K V) (x : V) : b.equivFun.symm (b.equivFun x) = x :=
   b.equivFun.symm_apply_apply x
 
 def changeBasisMatrix {n K} [Fintype n] [DecidableEq n] [Field K]
@@ -64,8 +66,12 @@ theorem similar_invariants {n K} [Fintype n] [DecidableEq n] [Field K]
     A.det = B.det ∧ Matrix.trace A = Matrix.trace B ∧ A.charpoly = B.charpoly := by
   obtain ⟨P, hP, rfl⟩ := h
   constructor
-  · rw [Matrix.det_mul, Matrix.det_mul, ← mul_assoc,
-      Matrix.det_nonsing_inv_mul_det P hP, one_mul]
+  · rw [Matrix.det_mul, Matrix.det_mul]
+    have hinv : P⁻¹.det * P.det = 1 := Matrix.det_nonsing_inv_mul_det P hP
+    calc
+      A.det = 1 * A.det := by rw [one_mul]
+      _ = (P⁻¹.det * P.det) * A.det := by rw [hinv]
+      _ = P⁻¹.det * A.det * P.det := by ring
   constructor
   · exact (Matrix.trace_conj' hP A).symm
   · have hval : (hP.unit : Matrix n n K) = P := hP.unit_spec
@@ -108,26 +114,41 @@ theorem cayleyHamilton {n R} [Fintype n] [DecidableEq n] [CommRing R]
 
 theorem hermitian_eigenvalue_real {n} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.IsHermitian) {c : ℂ} {v : n → ℂ}
-    (hv : v ≠ 0) (he : H.mulVec v = c • v) : conj c = c := by
+    (hv : v ≠ 0) (he : H.mulVec v = c • v) : Complex.conj c = c := by
   have hs := Matrix.isSymmetric_toEuclideanLin_iff.mpr hH
+  let w : EuclideanSpace ℂ n := toLp 2 v
+  have hw : w ≠ 0 := by simpa [w] using hv
+  have hew : H.toEuclideanLin w = c • w := by
+    simp only [w, Matrix.toEuclideanLin_apply_piLp_toLp, map_smul]
+    exact congrArg (toLp 2) he
   apply hs.conj_eigenvalue_eq_self
   exact Module.End.hasEigenvalue_of_hasEigenvector
-    ⟨by simpa [Module.End.mem_eigenspace_iff] using he, hv⟩
+    ⟨by simpa [Module.End.mem_eigenspace_iff] using hew, hw⟩
 
 theorem hermitian_distinct_eigenvectors_orthogonal {n} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.IsHermitian) {a b : ℂ} {x y : n → ℂ}
     (hx : H.mulVec x = a • x) (hy : H.mulVec y = b • y) (hab : a ≠ b) :
-    ⟪x, y⟩_ℂ = 0 := by
+    star x ⬝ᵥ y = 0 := by
   have hs := Matrix.isSymmetric_toEuclideanLin_iff.mpr hH
-  apply hs.orthogonalFamily_eigenspaces hab
-  · exact ⟨x, by simpa [Module.End.mem_eigenspace_iff] using hx⟩
-  · exact ⟨y, by simpa [Module.End.mem_eigenspace_iff] using hy⟩
+  let u : EuclideanSpace ℂ n := toLp 2 x
+  let v : EuclideanSpace ℂ n := toLp 2 y
+  have hu : H.toEuclideanLin u = a • u := by
+    simp only [u, Matrix.toEuclideanLin_apply_piLp_toLp, map_smul]
+    exact congrArg (toLp 2) hx
+  have hv : H.toEuclideanLin v = b • v := by
+    simp only [v, Matrix.toEuclideanLin_apply_piLp_toLp, map_smul]
+    exact congrArg (toLp 2) hy
+  have ho := hs.orthogonalFamily_eigenspaces a b hab
+    ⟨u, by simpa [Module.End.mem_eigenspace_iff] using hu⟩
+    ⟨v, by simpa [Module.End.mem_eigenspace_iff] using hv⟩
+  simpa [u, v, EuclideanSpace.inner_toLp_toLp, Matrix.dotProduct_comm] using ho
 
 def HasOrthogonalEigenbasis {n} [Fintype n] [DecidableEq n] (H : Matrix n n ℂ) : Prop :=
-  ∃ b : OrthonormalBasis n ℂ (n → ℂ), ∀ i, ∃ c, H.mulVec (b i) = c • b i -- 130
+  ∃ b : OrthonormalBasis n ℂ (EuclideanSpace ℂ n),
+    ∀ i, ∃ c, H.mulVec ⇑(b i) = c • ⇑(b i) -- 130
 theorem hermitian_has_orthogonal_eigenbasis {n} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (h : H.IsHermitian) : HasOrthogonalEigenbasis H := by
-  refine ⟨h.eigenvectorBasis, fun i ⇒ ?_⟩
+  refine ⟨h.eigenvectorBasis, fun i => ?_⟩
   exact ⟨(h.eigenvalues i : ℂ), h.mulVec_eigenvectorBasis i⟩
 
 def IsNormalMatrix {n} [Fintype n] [DecidableEq n] (N : Matrix n n ℂ) : Prop :=
@@ -136,7 +157,7 @@ theorem normal_matrix_properties {n} [Fintype n] [DecidableEq n]
     (N : Matrix n n ℂ) (h : IsNormalMatrix N) : IsNormalMatrix N := h -- 132
 
 def sesquilinearForm {n} [Fintype n] (A : Matrix n n ℂ) (x : n → ℂ) : ℂ :=
-  ⟪x, A.mulVec x⟩_ℂ                                                   -- 133
+  star x ⬝ᵥ A.mulVec x                                                -- 133
 def IsHermitianForm {n} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) : Prop := A.IsHermitian
 def quadraticForm {n} [Fintype n] (A : Matrix n n ℝ) (x : n → ℝ) : ℝ :=
   ∑ i, x i * (A.mulVec x) i
@@ -144,8 +165,7 @@ def quadraticForm {n} [Fintype n] (A : Matrix n n ℝ) (x : n → ℝ) : ℝ :=
 theorem hermitian_form_real {n} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.IsHermitian) (x : n → ℂ) :
     (sesquilinearForm A x).im = 0 := by
-  simpa [sesquilinearForm, EuclideanSpace.inner_eq_star_dotProduct] using
-    hA.im_star_dotProduct_mulVec_self x
+  simpa [sesquilinearForm] using hA.im_star_dotProduct_mulVec_self x
 
 def Quadric {n} (A : Matrix (Fin n) (Fin n) ℝ) (b : Fin n → ℝ) (c : ℝ) : Set (Fin n → ℝ) :=
   {x | quadraticForm A x + ∑ i, b i * x i + c = 0}                  -- 135
@@ -162,12 +182,13 @@ def specialOrthogonalGroup (n : Type*) [Fintype n] [DecidableEq n] :=
 
 theorem orthogonal_equivalences {n} [Fintype n] [DecidableEq n]
     (P : Matrix n n ℝ) (hP : IsOrthogonalMatrix P) (x y : n → ℝ) :
-    (‖P.mulVec x‖ = ‖x‖) ∧ (⟪P.mulVec x, P.mulVec y⟫_ℝ = ⟪x, y⟫_ℝ) := by
+    (‖P.mulVec x‖ = ‖x‖) ∧ ((P.mulVec x) ⬝ᵥ (P.mulVec y) = x ⬝ᵥ y) := by
   constructor
   · have hs : ‖P.mulVec x‖ ^ 2 = ‖x‖ ^ 2 := by
       simp [EuclideanSpace.norm_eq, hP.1]
     nlinarith [norm_nonneg (P.mulVec x), norm_nonneg x]
-  · simpa [EuclideanSpace.inner_eq_star_dotProduct, Matrix.dotProduct_mulVec] using congrFun (congrFun hP.1 x) y
+  · rw [Matrix.dotProduct_mulVec]
+    simpa [← Matrix.vecMul_transpose, ← Matrix.mulVec_mulVec, hP.1]
 
 def minkowskiInner (x y : Fin 2 → ℝ) : ℝ := x 0 * y 0 - x 1 * y 1 -- 141
 def PreservesMinkowski (M : Matrix (Fin 2) (Fin 2) ℝ) : Prop :=
