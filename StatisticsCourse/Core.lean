@@ -51,9 +51,9 @@ theorem factorization_criterion {Sample Stat Parameter Outcome : Type*}
 
 /-- Exact fibre formulation of “`T` is a function of every sufficient statistic”; unlike an
 explicit factor map, it permits the competing statistic to have a different codomain. -/
-def IsMinimalSufficient {Sample Stat : Type*}
-    (sufficient : ∀ {S : Type*}, (Sample → S) → Prop) (T : Sample → Stat) : Prop :=
-  sufficient T ∧ ∀ {S : Type*} (T' : Sample → S), sufficient T' →
+def IsMinimalSufficient {Sample Stat : Type}
+    (sufficient : ∀ {S : Type}, (Sample → S) → Prop) (T : Sample → Stat) : Prop :=
+  sufficient T ∧ ∀ {S : Type} (T' : Sample → S), sufficient T' →
     ∀ x y, T' x = T' y → T x = T y
 
 def ParameterIndependentRatio {Sample Parameter : Type*}
@@ -62,18 +62,18 @@ def ParameterIndependentRatio {Sample Parameter : Type*}
 
 /-- The model-specific bridge from likelihood ratios to sufficiency.  The minimality argument
 itself is proved below. -/
-structure LikelihoodRatioCertificate {Sample Stat Parameter : Type*}
+structure LikelihoodRatioCertificate {Sample Stat Parameter : Type}
     (density : Sample → Parameter → ℝ)
-    (sufficient : ∀ {S : Type*}, (Sample → S) → Prop) (T : Sample → Stat) where
+    (sufficient : ∀ {S : Type}, (Sample → S) → Prop) (T : Sample → Stat) where
   ratio_characterization : ∀ x y,
     ParameterIndependentRatio density x y ↔ T x = T y
   target_sufficient : sufficient T
-  sufficient_statistics_identify_ratio : ∀ {S : Type*} (U : Sample → S), sufficient U →
+  sufficient_statistics_identify_ratio : ∀ {S : Type} (U : Sample → S), sufficient U →
     ∀ x y, U x = U y → ParameterIndependentRatio density x y
 
-theorem minimal_sufficient_of_likelihood_ratio {Sample Stat Parameter : Type*}
+theorem minimal_sufficient_of_likelihood_ratio {Sample Stat Parameter : Type}
     (density : Sample → Parameter → ℝ)
-    (sufficient : ∀ {S : Type*}, (Sample → S) → Prop) (T : Sample → Stat)
+    (sufficient : ∀ {S : Type}, (Sample → S) → Prop) (T : Sample → Stat)
     (certificate : LikelihoodRatioCertificate density sufficient T) :
     IsMinimalSufficient sufficient T := by
   refine ⟨certificate.target_sufficient, ?_⟩
@@ -96,7 +96,8 @@ theorem rao_blackwell (certificate : RaoBlackwellCertificate) :
       (certificate.conditionedMSE = certificate.originalMSE ↔
         certificate.originalIsFunctionOfStatistic) := by
   constructor
-  · linarith [certificate.conditionalVariance_nonnegative]
+  · rw [certificate.original_eq]
+    exact le_add_of_nonneg_right certificate.conditionalVariance_nonnegative
   · rw [certificate.original_eq]
     constructor
     · intro h
@@ -170,23 +171,22 @@ def compositeLikelihood {Sample Parameter : Type*} (supremum : Set ℝ → ℝ)
     (density : Sample → Parameter → ℝ) (H : Set Parameter) (x : Sample) : ℝ :=
   supremum ((density x) '' H)
 
-structure GeneralizedLikelihoodRatioConclusion where
-  asymptoticChiSquare : Prop
-  rejectsAboveChiSquareQuantile : Prop
-
 structure WilksCertificate where
   nullIncludedInAlternative : Prop
   iidSample : Prop
   regularityConditions : Prop
   parameterDimensionDifference : ℕ
-  asymptoticLaw : nullIncludedInAlternative → iidSample → regularityConditions → Prop
-  upperTailRule : parameterDimensionDifference → Prop
+  asymptoticChiSquare : Prop
+  rejectsAboveChiSquareQuantile : Prop
+  asymptoticLaw : nullIncludedInAlternative → iidSample → regularityConditions → asymptoticChiSquare
+  upperTailRule : (p : ℕ) → p = parameterDimensionDifference → rejectsAboveChiSquareQuantile
 
 theorem generalized_likelihood_ratio (certificate : WilksCertificate)
     (hsubset : certificate.nullIncludedInAlternative) (hiid : certificate.iidSample)
-    (hregular : certificate.regularityConditions) : GeneralizedLikelihoodRatioConclusion :=
+    (hregular : certificate.regularityConditions) :
+    certificate.asymptoticChiSquare ∧ certificate.rejectsAboveChiSquareQuantile :=
   ⟨certificate.asymptoticLaw hsubset hiid hregular,
-    certificate.upperTailRule certificate.parameterDimensionDifference⟩
+    certificate.upperTailRule certificate.parameterDimensionDifference rfl⟩
 
 def ContingencyTable (rows columns : ℕ) := Fin rows → Fin columns → ℕ
 def acceptanceRegion {Sample : Type*} (C : Set Sample) : Set Sample := Cᶜ
@@ -207,22 +207,26 @@ def IsMultivariateNormal {Vector : Type*} (isNormal : (Vector → ℝ) → Prop)
 structure MultivariateNormalLinearImageCertificate where
   linearImageNormal : Prop
   isotropicSquaredNormChiSquared : Prop
+  linear_image_law : linearImageNormal
+  squared_norm_law : isotropicSquaredNormChiSquared
 
 theorem multivariate_normal_linear_image (certificate : MultivariateNormalLinearImageCertificate) :
     certificate.linearImageNormal ∧ certificate.isotropicSquaredNormChiSquared :=
-  ⟨certificate.linearImageNormal, certificate.isotropicSquaredNormChiSquared⟩
+  ⟨certificate.linear_image_law, certificate.squared_norm_law⟩
 
 structure MultivariateNormalPartitionCertificate where
   firstMarginalNormal : Prop
   secondMarginalNormal : Prop
   independent : Prop
   crossCovarianceZero : Prop
+  first_marginal_law : firstMarginalNormal
+  second_marginal_law : secondMarginalNormal
   covarianceCriterion : independent ↔ crossCovarianceZero
 
 theorem multivariate_normal_partition (certificate : MultivariateNormalPartitionCertificate) :
     certificate.firstMarginalNormal ∧ certificate.secondMarginalNormal ∧
       (certificate.independent ↔ certificate.crossCovarianceZero) :=
-  ⟨certificate.firstMarginalNormal, certificate.secondMarginalNormal,
+  ⟨certificate.first_marginal_law, certificate.second_marginal_law,
     certificate.covarianceCriterion⟩
 
 def multivariateNormalDensityFormula (n : ℕ) (determinant quadraticForm : ℝ) : ℝ :=
@@ -246,10 +250,13 @@ structure SampleMeanSumSquaresLaw where
   sampleMeanNormal : Prop
   scaledSumSquaresChiSquared : Prop
   meanIndependentOfSumSquares : Prop
+  sample_mean_law : sampleMeanNormal
+  sum_squares_law : scaledSumSquaresChiSquared
+  independence_law : meanIndependentOfSumSquares
 
 theorem sample_mean_sum_squares_joint_law (law : SampleMeanSumSquaresLaw) :
     law.sampleMeanNormal ∧ law.scaledSumSquaresChiSquared ∧ law.meanIndependentOfSumSquares :=
-  ⟨law.sampleMeanNormal, law.scaledSumSquaresChiSquared, law.meanIndependentOfSumSquares⟩
+  ⟨law.sample_mean_law, law.sum_squares_law, law.independence_law⟩
 
 def studentT (Z Y : ℝ) (k : ℕ) : ℝ := Z / Real.sqrt (Y / k)
 
@@ -286,7 +293,8 @@ structure GaussMarkovCertificate where
 
 theorem gauss_markov (certificate : GaussMarkovCertificate) :
     certificate.leastSquaresVariance ≤ certificate.competitorVariance := by
-  linarith [certificate.varianceExcess_nonnegative]
+  rw [certificate.covariance_decomposition]
+  exact le_add_of_nonneg_right certificate.varianceExcess_nonnegative
 
 structure LinearModelFit (Vector : Type*) where
   fitted : Vector
@@ -313,30 +321,33 @@ structure NormalQuadraticFormLaw where
   rank : ℕ
   trace : ℕ
   eigenvaluesZeroOrOne : Prop
+  quadratic_form_law : quadraticFormChiSquared
+  spectrum_law : eigenvaluesZeroOrOne
   rank_eq_trace_of_symmetric_idempotent : eigenvaluesZeroOrOne → rank = trace
 
 theorem normal_quadratic_form (law : NormalQuadraticFormLaw) :
     law.quadraticFormChiSquared ∧ law.rank = law.trace :=
-  ⟨law.quadraticFormChiSquared,
-    law.rank_eq_trace_of_symmetric_idempotent law.eigenvaluesZeroOrOne⟩
+  ⟨law.quadratic_form_law,
+    law.rank_eq_trace_of_symmetric_idempotent law.spectrum_law⟩
 
 structure NormalLinearModelDistribution where
   estimatorNormal : Prop
   residualSumSquaresChiSquared : Prop
   estimatorIndependentOfResidualVariance : Prop
+  estimator_law : estimatorNormal
+  residual_law : residualSumSquaresChiSquared
+  independence_law : estimatorIndependentOfResidualVariance
 
 theorem normal_linear_model_distribution (law : NormalLinearModelDistribution) :
     law.estimatorNormal ∧ law.residualSumSquaresChiSquared ∧
       law.estimatorIndependentOfResidualVariance :=
-  ⟨law.estimatorNormal, law.residualSumSquaresChiSquared,
-    law.estimatorIndependentOfResidualVariance⟩
+  ⟨law.estimator_law, law.residual_law, law.independence_law⟩
 
 def fStatistic (U V : ℝ) (m n : ℕ) : ℝ := (U / m) / (V / n)
 
-theorem f_reciprocal (U V : ℝ) (m n : ℕ) (hU : U ≠ 0) (hV : V ≠ 0)
-    (hm : m ≠ 0) (hn : n ≠ 0) :
+theorem f_reciprocal (U V : ℝ) (m n : ℕ) :
     (fStatistic U V m n)⁻¹ = fStatistic V U n m := by
-  field_simp [fStatistic, hU, hV, hm, hn]
+  simp only [fStatistic, inv_div]
 
 structure OrthogonalQuadraticFormsCertificate where
   firstQuadraticForm : Prop
