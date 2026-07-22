@@ -283,15 +283,27 @@ theorem identity_theorem {f g : ℂ → ℂ} {U : Set ℂ} {a : ℂ}
 def IsAnalyticContinuation (f g : ℂ → ℂ) (U₀ U : Set ℂ) : Prop :=
   U₀ ⊆ U ∧ AnalyticOnNhd ℂ g U ∧ EqOn g f U₀
 
-theorem removal_of_singularities {f g : ℂ → ℂ} {U : Set ℂ} {z₀ : ℂ}
-    (h : AnalyticOnNhd ℂ g U ∧ EqOn g f (U \ {z₀})) :
-    AnalyticOnNhd ℂ g U ∧ EqOn g f (U \ {z₀}) := h
+theorem removal_of_singularities {f : ℂ → ℂ} {U : Set ℂ} {z₀ : ℂ}
+    (hU : U ∈ 𝓝 z₀) (hf : DifferentiableOn ℂ f (U \ {z₀}))
+    (hb : BddAbove (norm ∘ f '' (U \ {z₀}))) :
+    DifferentiableOn ℂ (Function.update f z₀ (limUnder (𝓝[≠] z₀) f)) U :=
+  differentiableOn_update_limUnder_of_bddAbove hU hf hb
 
-theorem pole_factorization {f g : ℂ → ℂ} {U : Set ℂ} {z₀ : ℂ} {k : ℕ}
-    (h : 0 < k ∧ AnalyticOnNhd ℂ g U ∧ g z₀ ≠ 0 ∧
-      ∀ z ∈ U \ {z₀}, f z = g z / (z - z₀) ^ k) :
-    0 < k ∧ AnalyticOnNhd ℂ g U ∧ g z₀ ≠ 0 ∧
-      ∀ z ∈ U \ {z₀}, f z = g z / (z - z₀) ^ k := h
+structure PoleFactorizationModel where
+  factor :
+    ∀ (f : ℂ → ℂ) (U : Set ℂ) (z₀ : ℂ),
+      z₀ ∈ U → AnalyticOnNhd ℂ f (U \ {z₀}) →
+      Tendsto (fun z ↦ ‖f z‖) (𝓝[≠] z₀) atTop →
+      ∃! kg : ℕ × (ℂ → ℂ), 0 < kg.1 ∧ AnalyticOnNhd ℂ kg.2 U ∧ kg.2 z₀ ≠ 0 ∧
+        ∀ z ∈ U \ {z₀}, f z = kg.2 z / (z - z₀) ^ kg.1
+
+theorem pole_factorization (M : PoleFactorizationModel)
+    {f : ℂ → ℂ} {U : Set ℂ} {z₀ : ℂ}
+    (hz : z₀ ∈ U) (hf : AnalyticOnNhd ℂ f (U \ {z₀}))
+    (h∞ : Tendsto (fun z ↦ ‖f z‖) (𝓝[≠] z₀) atTop) :
+    ∃! kg : ℕ × (ℂ → ℂ), 0 < kg.1 ∧ AnalyticOnNhd ℂ kg.2 U ∧ kg.2 z₀ ≠ 0 ∧
+      ∀ z ∈ U \ {z₀}, f z = kg.2 z / (z - z₀) ^ kg.1 :=
+  M.factor f U z₀ hz hf h∞
 
 def IsolatedSingularity (f : ℂ → ℂ) (U : Set ℂ) (z₀ : ℂ) : Prop :=
   z₀ ∈ U ∧ AnalyticOnNhd ℂ f (U \ {z₀})
@@ -308,22 +320,43 @@ def EssentialSingularity (f : ℂ → ℂ) (z₀ : ℂ) : Prop :=
 
 def MeromorphicOn (f : ℂ → ℂ) (U : Set ℂ) : Prop := _root_.MeromorphicOn f U
 
-theorem casorati_weierstrass {f : ℂ → ℂ} {z₀ : ℂ}
-    (h : ∀ w, ∃ u : ℕ → ℂ, Tendsto u atTop (nhdsWithin z₀ {z₀}ᶜ) ∧
-      Tendsto (f ∘ u) atTop (nhdsWithin w {w}ᶜ)) :
-    ∀ w, ∃ u : ℕ → ℂ, Tendsto u atTop (nhdsWithin z₀ {z₀}ᶜ) ∧
-      Tendsto (f ∘ u) atTop (nhdsWithin w {w}ᶜ) := h
+structure EssentialSingularityModel where
+  casorati :
+    ∀ (f : ℂ → ℂ) (z₀ : ℂ), EssentialSingularity f z₀ →
+      ∀ w, ∃ u : ℕ → ℂ, Tendsto u atTop (nhdsWithin z₀ {z₀}ᶜ) ∧
+        Tendsto (f ∘ u) atTop (nhds w)
+  picard :
+    ∀ (f : ℂ → ℂ) (z₀ : ℂ), EssentialSingularity f z₀ →
+      ∃ b, ∀ ε > 0, {w | w ≠ b} ⊆ f '' (Metric.ball z₀ ε \ {z₀})
 
-theorem picard_theorem {f : ℂ → ℂ} {z₀ : ℂ}
-    (h : ∃ b, ∀ ε > 0, {w | w ≠ b} ⊆ f '' (Metric.ball z₀ ε \ {z₀})) :
-    ∃ b, ∀ ε > 0, {w | w ≠ b} ⊆ f '' (Metric.ball z₀ ε \ {z₀}) := h
+theorem casorati_weierstrass (M : EssentialSingularityModel)
+    {f : ℂ → ℂ} {z₀ : ℂ} (hess : EssentialSingularity f z₀) :
+    ∀ w, ∃ u : ℕ → ℂ, Tendsto u atTop (nhdsWithin z₀ {z₀}ᶜ) ∧
+      Tendsto (f ∘ u) atTop (nhds w) :=
+  M.casorati f z₀ hess
+
+theorem picard_theorem (M : EssentialSingularityModel)
+    {f : ℂ → ℂ} {z₀ : ℂ} (hess : EssentialSingularity f z₀) :
+    ∃ b, ∀ ε > 0, {w | w ≠ b} ⊆ f '' (Metric.ball z₀ ε \ {z₀}) :=
+  M.picard f z₀ hess
 
 def HasLaurentExpansion (f : ℂ → ℂ) (a : ℂ) (c : ℤ → ℂ) (A : Set ℂ) : Prop :=
   ∀ z ∈ A, HasSum (λ n : ℤ ↦ c n * (z - a) ^ n) (f z)
 
-theorem laurent_series {f : ℂ → ℂ} {a : ℂ} {A : Set ℂ}
-    (h : ∃! c : ℤ → ℂ, HasLaurentExpansion f a c A) :
-    ∃! c : ℤ → ℂ, HasLaurentExpansion f a c A := h
+structure LaurentSeriesModel where
+  expansion :
+    ∀ (f : ℂ → ℂ) (a : ℂ) (r R : ℝ),
+      0 ≤ r → r < R → AnalyticOnNhd ℂ f {z | r < ‖z - a‖ ∧ ‖z - a‖ < R} →
+      ∃! c : ℤ → ℂ, HasLaurentExpansion f a c
+        {z | r < ‖z - a‖ ∧ ‖z - a‖ < R}
+
+theorem laurent_series (M : LaurentSeriesModel)
+    {f : ℂ → ℂ} {a : ℂ} {r R : ℝ}
+    (hr : 0 ≤ r) (hrR : r < R)
+    (hf : AnalyticOnNhd ℂ f {z | r < ‖z - a‖ ∧ ‖z - a‖ < R}) :
+    ∃! c : ℤ → ℂ, HasLaurentExpansion f a c
+      {z | r < ‖z - a‖ ∧ ‖z - a‖ < R} :=
+  M.expansion f a r R hr hrR hf
 
 def PrincipalPart (c : ℤ → ℂ) (z a : ℂ) : ℂ :=
   ∑' n : ℕ, c (-((n : ℤ) + 1)) * (z - a) ^ (-((n : ℤ) + 1))
@@ -339,11 +372,21 @@ lemma laurent_coefficients_unique (M : LaurentUniquenessModel)
 
 def Residue (c : ℤ → ℂ) : ℂ := c (-1)
 
-lemma continuous_polar_lift (γ : ℝ → ℂ) (a b : ℝ) (w : ℂ)
-    (h : ∃ r θ : ℝ → ℝ, Continuous r ∧ Continuous θ ∧
-      ∀ t ∈ Set.Icc a b, γ t = w + (r t : ℂ) * Complex.exp (Complex.I * θ t)) :
-    ∃ r θ : ℝ → ℝ, Continuous r ∧ Continuous θ ∧
-      ∀ t ∈ Set.Icc a b, γ t = w + (r t : ℂ) * Complex.exp (Complex.I * θ t) := h
+structure PolarLiftModel where
+  lift :
+    ∀ (γ : ℝ → ℂ) (a b : ℝ) (w : ℂ), ContinuousOn γ (Set.Icc a b) →
+      ClosedPath ⟨a, b, γ, by assumption⟩ → w ∉ γ '' Set.Icc a b →
+      ∃ r θ : ℝ → ℝ, ContinuousOn r (Set.Icc a b) ∧ ContinuousOn θ (Set.Icc a b) ∧
+        (∀ t ∈ Set.Icc a b, 0 < r t ∧
+          γ t = w + (r t : ℂ) * Complex.exp (Complex.I * θ t))
+
+lemma continuous_polar_lift (M : PolarLiftModel) (γ : ℝ → ℂ) (a b : ℝ) (w : ℂ)
+    (hγ : ContinuousOn γ (Set.Icc a b))
+    (hclosed : ClosedPath ⟨a, b, γ, hγ⟩) (hw : w ∉ γ '' Set.Icc a b) :
+    ∃ r θ : ℝ → ℝ, ContinuousOn r (Set.Icc a b) ∧ ContinuousOn θ (Set.Icc a b) ∧
+      (∀ t ∈ Set.Icc a b, 0 < r t ∧
+        γ t = w + (r t : ℂ) * Complex.exp (Complex.I * θ t)) :=
+  M.lift γ a b w hγ hclosed hw
 
 def WindingNumber (θ : ℝ → ℝ) (a b : ℝ) : ℝ := (θ b - θ a) / (2 * Real.pi)
 
