@@ -124,7 +124,8 @@ structure DirichletUniqueness (sameBoundaryData sameSolution : Prop) where
   implication : sameBoundaryData → sameSolution
 
 /-- Source 109: the Poincaré exterior-cone condition. -/
-def PoincareConeCondition {E : Type u} (D : Set E) (HasExteriorCone : E → Prop) : Prop :=
+def PoincareConeCondition {E : Type u} [TopologicalSpace E]
+    (D : Set E) (HasExteriorCone : E → Prop) : Prop :=
   ∀ x, x ∈ frontier D → HasExteriorCone x
 
 /-- Source 110: a uniform positive probability of hitting an open cone before leaving a ball. -/
