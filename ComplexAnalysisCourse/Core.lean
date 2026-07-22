@@ -546,7 +546,11 @@ theorem simply_connected_maps_to_disc (M : RiemannMappingModel) (U : Set ℂ)
     exact (hconf z hz).1.analyticAt
   · rintro ⟨c, hc⟩
     obtain ⟨z, hz⟩ := hU.2.nonempty
-    exact (hconf z hz).2 (by simpa [hc hz] using deriv_const (c := c) (x := z))
+    have heq : f =ᶠ[𝓝 z] const ℂ c := by
+      filter_upwards [hU.1.mem_nhds hz] with w hw
+      exact hc hw
+    have hderiv : deriv f z = deriv (const ℂ c) z := heq.deriv_eq
+    exact (hconf z hz).2 (by simpa using hderiv)
 
 end
 
