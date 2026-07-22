@@ -1,0 +1,56 @@
+name: Advanced Probability
+
+on:
+  pull_request:
+    paths:
+      - 'AdvancedProbability.lean'
+      - 'AdvancedProbability/**'
+      - 'lakefile.toml'
+      - 'lean-toolchain'
+      - '.github/workflows/advanced-probability.yml'
+  push:
+    branches:
+      - 'agent/advanced-probability'
+    paths:
+      - 'AdvancedProbability.lean'
+      - 'AdvancedProbability/**'
+      - 'lakefile.toml'
+      - 'lean-toolchain'
+      - '.github/workflows/advanced-probability.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: advanced-probability-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Elan and Lean
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
+          "$HOME/.elan/bin/elan" default "$(cat lean-toolchain)"
+      - name: Build Advanced Probability
+        shell: bash
+        run: |
+          set -o pipefail
+          {
+            lake update
+            lake exe cache get
+            lake build AdvancedProbability
+            python3 scripts/check_audit.py
+          } 2>&1 | tee advanced-probability-build.log
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: advanced-probability-build-log
+          path: advanced-probability-build.log
+          if-no-files-found: warn
