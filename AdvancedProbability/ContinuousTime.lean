@@ -45,12 +45,12 @@ structure Dyadic where
 
 /-- Source 60: a filtration indexed by non-negative real time. -/
 structure ContinuousFiltration (Ω : Type u) where
-  at : ℝ≥0 → SigmaField Ω
-  mono : ∀ s t : ℝ≥0, s ≤ t → (at s).Subfield (at t)
+  sigma : ℝ≥0 → SigmaField Ω
+  mono : ∀ s t : ℝ≥0, s ≤ t → (sigma s).Subfield (sigma t)
 
 /-- Source 61: a continuous-time stopping time. -/
 def IsContinuousStoppingTime {Ω : Type u} (ℱ : ContinuousFiltration Ω)
-    (T : Ω → ℝ≥0) : Prop := ∀ t, {ω | T ω ≤ t} ∈ (ℱ.at t).sets
+    (T : Ω → ℝ≥0) : Prop := ∀ t, {ω | T ω ≤ t} ∈ (ℱ.sigma t).sets
 
 /-- Source 62: maximum/minimum/stopping operations in continuous time. -/
 structure ContinuousStoppingCalculus {Ω : Type u} (ℱ : ContinuousFiltration Ω) where
@@ -68,9 +68,9 @@ def HittingTime {Ω : Type u} (X : ContinuousProcess Ω) (A : Set ℝ) (ω : Ω)
   {t | X t ω ∈ A}
 
 /-- Source 65: closed-set hitting times of continuous paths are stopping times. -/
-structure ClosedSetHittingTime (closed continuous stopping : Prop) where
-  closedHypothesis : closed
-  continuousHypothesis : continuous
+structure ClosedSetHittingTime (isClosed continuousPaths stopping : Prop) where
+  closedHypothesis : isClosed
+  continuousHypothesis : continuousPaths
   conclusion : stopping
 
 /-- Source 66: right-continuous augmentation `F_{t+}`. -/
@@ -78,7 +78,7 @@ def rightContinuousFiltration {Ω : Type u} (_ℱ : ContinuousFiltration Ω)
     (rightLimit : ℝ≥0 → SigmaField Ω)
     (hmono : ∀ s t : ℝ≥0, s ≤ t → (rightLimit s).Subfield (rightLimit t)) :
     ContinuousFiltration Ω :=
-  { at := rightLimit
+  { sigma := rightLimit
     mono := hmono }
 
 /-- Source 67: completeness and right-continuity (the usual conditions). -/
@@ -87,8 +87,8 @@ structure UsualConditions {Ω : Type u} (ℱ : ContinuousFiltration Ω) where
   rightContinuous : Prop
 
 /-- Source 68: open-set hitting times are stopping times for the right-continuous filtration. -/
-structure OpenSetHittingTime (open cadlag stopping : Prop) where
-  openHypothesis : open
+structure OpenSetHittingTime (isOpen cadlag stopping : Prop) where
+  openHypothesis : isOpen
   cadlagHypothesis : cadlag
   conclusion : stopping
 
@@ -96,9 +96,9 @@ structure OpenSetHittingTime (open cadlag stopping : Prop) where
 def IsContinuousTimeMartingale {Ω : Type u} (expectation : Expectation Ω)
     (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ) (ℱ : ContinuousFiltration Ω)
     (X : ContinuousProcess Ω) : Prop :=
-  (∀ t, Observable (ℱ.at t) (X t)) ∧
+  (∀ t, Observable (ℱ.sigma t) (X t)) ∧
     (∀ t, IntegrableFor expectation (X t)) ∧
-    ∀ s t, s ≤ t → CE (ℱ.at s) (X t) = X s
+    ∀ s t, s ≤ t → CE (ℱ.sigma s) (X t) = X s
 
 /-- Source 70: bounded continuous-time optional stopping. -/
 structure ContinuousOptionalStoppingBounded {Ω : Type u} (expectation : Expectation Ω)
