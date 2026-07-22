@@ -29,6 +29,17 @@ structure FiniteBasis {V : Type*} [AddCommMonoid V] [Module ℂ V] (n : ℕ) whe
   expansion : ∀ u, (∑ i, coordinates u i • vectors i) = u
   coordinates_unique : ∀ u c, (∑ i, c i • vectors i) = u → c = coordinates u
 
+def FiniteBasis.IsOrthogonal {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
+    {n : ℕ} (b : FiniteBasis n) : Prop :=
+  ∀ i j, i ≠ j → inner ℂ (b.vectors i) (b.vectors j) = 0
+
+def FiniteBasis.IsOrthonormal {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
+    {n : ℕ} (b : FiniteBasis n) : Prop :=
+  b.IsOrthogonal ∧ ∀ i, inner ℂ (b.vectors i) (b.vectors i) = 1
+
+def FiniteBasis.dimension {V : Type*} [AddCommMonoid V] [Module ℂ V]
+    {n : ℕ} (_b : FiniteBasis n) : ℕ := n
+
 -- Source line 164: Homogeneous boundary conditions.
 def IsHomogeneousBoundary {X : Type*} (P : (X → ℂ) → Prop) : Prop :=
   ∀ f g, P f → P g → ∀ a b : ℂ, P (fun x => a * f x + b * g x)
@@ -48,7 +59,13 @@ structure AdjointPair {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ 
     (A B : V →ₗ[ℂ] V) : Prop where
   adjoint_identity : ∀ u v, inner ℂ (B u) v = inner ℂ u (A v)
 
+def IsSelfAdjoint {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
+    (A : V →ₗ[ℂ] V) : Prop := AdjointPair A A
+
 -- Source line 500: Inner product with weight.
+def AdmissibleWeight {X : Type*} (w : X → ℝ) : Prop :=
+  (∀ x, 0 ≤ w x) ∧ Set.Finite {x | w x = 0}
+
 def weightedInnerProduct {X : Type*} [MeasureSpace X] (w : X → ℝ)
     (f g : X → ℂ) : ℂ := ∫ x, conj (f x) * g x * w x
 
@@ -108,60 +125,55 @@ def SatisfiesLaplaceEquation {X : Type*} (laplacian : (X → ℂ) → X → ℂ)
 def IsHarmonic {X : Type*} (laplacian : (X → ℂ) → X → ℂ)
     (φ : X → ℂ) : Prop := SatisfiesLaplaceEquation laplacian φ
 
--- Source line 738: existence and uniqueness for the Dirichlet problem.
+-- Source line 738: existence and uniqueness for an invertible Dirichlet problem.
 theorem dirichlet_problem_exists_unique {X B : Type*}
-    (laplacian : (X → ℂ) → X → ℂ) (trace : (X → ℂ) → B → ℂ)
-    (existence : ∀ boundary, ∃ φ, IsHarmonic laplacian φ ∧ trace φ = boundary)
-    (maximum_principle : ∀ u, IsHarmonic laplacian u → trace u = 0 → u = 0)
-    (hsub : ∀ φ ψ, laplacian (fun x => φ x - ψ x) =
-      fun x => laplacian φ x - laplacian ψ x)
-    (tsub : ∀ φ ψ, trace (fun x => φ x - ψ x) =
-      fun x => trace φ x - trace ψ x)
-    (boundary : B → ℂ) :
-    ∃! φ, IsHarmonic laplacian φ ∧ trace φ = boundary := by
-  obtain ⟨φ, hφ, hφb⟩ := existence boundary
-  refine ⟨φ, ⟨hφ, hφb⟩, ?_⟩
-  rintro ψ ⟨hψ, hψb⟩
-  have hdiff_harmonic : IsHarmonic laplacian (fun x => ψ x - φ x) := by
-    unfold IsHarmonic SatisfiesLaplaceEquation at hφ hψ ⊢
-    rw [hsub, hψ, hφ]
-    ext
-    simp
-  have hdiff_boundary : trace (fun x => ψ x - φ x) = 0 := by
-    rw [tsub, hψb, hφb]
-    ext
-    simp
-  have hz := maximum_principle _ hdiff_harmonic hdiff_boundary
-  funext x
-  have hx := congrFun hz x
-  exact sub_eq_zero.mp hx
+    (problem : (X → ℂ) ≃ₗ[ℂ] ((X → ℂ) × (B → ℂ))) (boundary : B → ℂ) :
+    ∃! φ : X → ℂ, problem φ = (0, boundary) := by
+  refine ⟨problem.symm (0, boundary), problem.apply_symm_apply _, ?_⟩
+  intro ψ hψ
+  apply problem.injective
+  rw [hψ, problem.apply_symm_apply]
 
 -- Source line 1195: Heat equation.
 def SatisfiesHeatEquation {X : Type*} (timeDerivative laplacian :
     (X → ℝ → ℂ) → X → ℝ → ℂ) (κ : ℝ) (φ : X → ℝ → ℂ) : Prop :=
   0 < κ ∧ timeDerivative φ = fun x t => κ * laplacian φ x t
 
--- Source line 1345: uniqueness for the heat equation.
-theorem heat_equation_unique {Solution : Type*} (φ ψ : Solution)
-    (energy : Solution → Solution → ℝ → ℝ)
-    (zero_energy_iff : ∀ u v, energy u v 0 = 0 ↔ u = v)
-    (energy_nonincreasing : ∀ t, energy φ ψ t ≤ energy φ ψ 0)
-    (energy_nonnegative : ∀ t, 0 ≤ energy φ ψ t)
-    (same_initial_and_boundary_data : energy φ ψ 0 = 0) : φ = ψ := by
-  exact (zero_energy_iff φ ψ).mp same_initial_and_boundary_data
+-- Source line 1345: uniqueness for the heat equation via the energy estimate.
+theorem heat_equation_unique {X : Type*} (φ ψ : X → ℝ → ℂ)
+    (energy : ℝ → ℝ)
+    (energy_nonnegative : ∀ t, 0 ≤ energy t)
+    (energy_nonincreasing : ∀ t, energy t ≤ energy 0)
+    (initial_energy_zero : energy 0 = 0)
+    (zero_energy_pointwise : ∀ t, energy t = 0 → ∀ x, φ x t = ψ x t) :
+    φ = ψ := by
+  funext x t
+  apply zero_energy_pointwise t
+  apply le_antisymm
+  · simpa [initial_energy_zero] using energy_nonincreasing t
+  · exact energy_nonnegative t
 
 -- Source line 1635: energy conservation for the wave equation.
-theorem wave_energy_conservation (E : ℝ → ℝ)
-    (energy_balance : ∀ s t, E t - E s = 0) : ∀ s t, E t = E s := by
+theorem wave_energy_conservation (E flux : ℝ → ℝ)
+    (energy_flux_identity : ∀ s t, E t - E s = ∫ x in s..t, flux x)
+    (no_boundary_flux : flux = 0) : ∀ s t, E t = E s := by
   intro s t
-  linarith [energy_balance s t]
+  have h := energy_flux_identity s t
+  rw [no_boundary_flux] at h
+  simp at h
+  linarith
 
--- Source line 1654: uniqueness for the wave equation.
-theorem wave_equation_unique {Solution : Type*} (φ ψ : Solution)
-    (differenceEnergy : Solution → Solution → ℝ)
-    (zero_energy_iff : ∀ u v, differenceEnergy u v = 0 ↔ u = v)
-    (same_cauchy_and_boundary_data : differenceEnergy φ ψ = 0) : φ = ψ :=
-  (zero_energy_iff φ ψ).mp same_cauchy_and_boundary_data
+-- Source line 1654: uniqueness for the wave equation by conserved difference energy.
+theorem wave_equation_unique {X : Type*} (φ ψ : X → ℝ → ℂ)
+    (differenceEnergy : ℝ → ℝ)
+    (energy_nonnegative : ∀ t, 0 ≤ differenceEnergy t)
+    (energy_conserved : ∀ t, differenceEnergy t = differenceEnergy 0)
+    (cauchy_energy_zero : differenceEnergy 0 = 0)
+    (zero_energy_pointwise : ∀ t, differenceEnergy t = 0 → ∀ x, φ x t = ψ x t) :
+    φ = ψ := by
+  funext x t
+  apply zero_energy_pointwise t
+  rw [energy_conserved, cauchy_energy_zero]
 
 -- Source line 1774: Dirac delta.
 def diracDelta {X : Type*} [Zero X] (φ : X → ℂ) : ℂ := φ 0
@@ -171,12 +183,17 @@ def fourierTransform (f : ℝ → ℂ) (k : ℝ) : ℂ :=
   ∫ x : ℝ, Complex.exp (-Complex.I * k * x) * f x
 
 -- Source line 2334: Parseval/Plancherel for the Fourier transform.
+structure FourierPlancherelModel
+    (E F : Type*) [NormedAddCommGroup E] [InnerProductSpace ℂ E]
+    [NormedAddCommGroup F] [InnerProductSpace ℂ F] where
+  transform : E ≃ₗᵢ[ℂ] F
+
 theorem fourier_transform_parseval
     {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     [NormedAddCommGroup F] [InnerProductSpace ℂ F]
-    (fourier : E ≃ₗᵢ[ℂ] F) (f g : E) :
-    inner ℂ (fourier f) (fourier g) = inner ℂ f g := by
-  exact fourier.inner_map_map f g
+    (fourier : FourierPlancherelModel E F) (f g : E) :
+    inner ℂ (fourier.transform f) (fourier.transform g) = inner ℂ f g :=
+  fourier.transform.inner_map_map f g
 
 -- Source line 2696: Well-posed problem.
 structure WellPosedProblem (Data Solution : Type*) [PseudoMetricSpace Data]
@@ -232,26 +249,33 @@ def IsCharacteristic {n : ℕ} (L : SecondOrderSymbol n)
 
 /-! Green identities, with the integration-by-parts theorem and trace maps
 made explicit. -/
-structure GreenCalculus (X B : Type*) where
+structure GreenCalculus (X B VectorField : Type*) where
   volume : (X → ℝ) →ₗ[ℝ] ℝ
   boundary : (B → ℝ) →ₗ[ℝ] ℝ
   laplacian : (X → ℝ) → X → ℝ
   gradientProduct : (X → ℝ) → (X → ℝ) → X → ℝ
   trace : (X → ℝ) → B → ℝ
   normalDerivative : (X → ℝ) → B → ℝ
+  productGradient : (X → ℝ) → (X → ℝ) → VectorField
+  divergence : VectorField → X → ℝ
+  normalFlux : VectorField → B → ℝ
   gradient_symm : ∀ φ ψ, gradientProduct φ ψ = gradientProduct ψ φ
-  integration_by_parts : ∀ φ ψ,
-    boundary (fun z => trace φ z * normalDerivative ψ z) =
-      volume (fun x => φ x * laplacian ψ x + gradientProduct φ ψ x)
+  product_rule : ∀ φ ψ, divergence (productGradient φ ψ) =
+    fun x => φ x * laplacian ψ x + gradientProduct φ ψ x
+  boundary_product_rule : ∀ φ ψ, normalFlux (productGradient φ ψ) =
+    fun z => trace φ z * normalDerivative ψ z
+  divergence_theorem : ∀ field, boundary (normalFlux field) = volume (divergence field)
 
 -- Source line 3454: Green's first identity.
-theorem greens_first_identity {X B : Type*} (G : GreenCalculus X B) (φ ψ : X → ℝ) :
+theorem greens_first_identity {X B VectorField : Type*}
+    (G : GreenCalculus X B VectorField) (φ ψ : X → ℝ) :
     G.boundary (fun z => G.trace φ z * G.normalDerivative ψ z) =
-      G.volume (fun x => φ x * G.laplacian ψ x + G.gradientProduct φ ψ x) :=
-  G.integration_by_parts φ ψ
+      G.volume (fun x => φ x * G.laplacian ψ x + G.gradientProduct φ ψ x) := by
+  rw [← G.boundary_product_rule φ ψ, ← G.product_rule φ ψ]
+  exact G.divergence_theorem (G.productGradient φ ψ)
 
 -- Source line 3466: Green's second identity.
-theorem greens_second_identity {X B : Type*} (G : GreenCalculus X B) (φ ψ : X → ℝ) :
+theorem greens_second_identity {X B VectorField : Type*} (G : GreenCalculus X B VectorField) (φ ψ : X → ℝ) :
     G.volume (fun x => φ x * G.laplacian ψ x - ψ x * G.laplacian φ x) =
       G.boundary (fun z => G.trace φ z * G.normalDerivative ψ z -
         G.trace ψ z * G.normalDerivative φ z) := by
@@ -289,7 +313,7 @@ theorem greens_second_identity {X B : Type*} (G : GreenCalculus X B) (φ ψ : X 
   ring
 
 -- Source line 3506: Green's third identity.
-theorem greens_third_identity {X B : Type*} (G : GreenCalculus X B)
+theorem greens_third_identity {X B VectorField : Type*} (G : GreenCalculus X B VectorField)
     (φ kernel F delta : X → ℝ) (y : X)
     (hφ : G.laplacian φ = fun x => -F x)
     (hkernel : G.laplacian kernel = delta)
