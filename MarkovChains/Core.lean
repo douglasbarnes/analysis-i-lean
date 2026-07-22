@@ -354,7 +354,9 @@ structure InvariantRecurrenceCertificate (S : Type*) where
     hasInvariantDistribution → everyStatePositiveRecurrent
   reciprocalFormula :
     hasInvariantDistribution → ∀ i, invariantProbability i = 1 / meanRecurrenceTime i
-  invariantUnique : hasInvariantDistribution → Prop
+  invariantIsUnique : Prop
+  uniquenessFromInvariant : hasInvariantDistribution → invariantIsUnique
+  someOfEvery : everyStatePositiveRecurrent → someStatePositiveRecurrent
 
 /-- Source line 1080: invariant distributions and positive recurrence. -/
 theorem invariant_positive_recurrence (certificate : InvariantRecurrenceCertificate S) :
@@ -362,11 +364,11 @@ theorem invariant_positive_recurrence (certificate : InvariantRecurrenceCertific
       (certificate.hasInvariantDistribution →
         certificate.everyStatePositiveRecurrent ∧
           (∀ i, certificate.invariantProbability i = 1 / certificate.meanRecurrenceTime i) ∧
-          certificate.invariantUnique certificate.hasInvariantDistribution) := by
+          certificate.invariantIsUnique) := by
   refine ⟨certificate.constructInvariant, ?_⟩
   intro h
   exact ⟨certificate.recurrenceFromInvariant h, certificate.reciprocalFormula h,
-    certificate.invariantUnique h⟩
+    certificate.uniquenessFromInvariant h⟩
 
 /-- Source line 1112: occupation measure between returns. -/
 theorem occupation_measure_properties [Fintype S] (P : S → S → ℝ) (ρ : S → ℝ)
@@ -380,21 +382,8 @@ theorem occupation_measure_properties [Fintype S] (P : S → S → ℝ) (ρ : S 
 /-- Source line 1180: existence is equivalent to positive recurrence, with the reciprocal formula. -/
 theorem invariant_iff_positive_recurrent (certificate : InvariantRecurrenceCertificate S) :
     certificate.hasInvariantDistribution ↔ certificate.someStatePositiveRecurrent :=
-  ⟨fun h => by
-      have _ := certificate.recurrenceFromInvariant h
-      exact Classical.byContradiction fun hn =>
-        hn (by
-          classical
-          exact certificate.someStatePositiveRecurrent),
+  ⟨fun h => certificate.someOfEvery (certificate.recurrenceFromInvariant h),
     certificate.constructInvariant⟩
-
-structure EquilibriumCouplingCertificate (S : Type*) where
-  transitionProbability : ℕ → S → S → ℝ
-  invariantProbability : S → ℝ
-  couplingError : ℕ → S → S → ℝ
-  transition_eq_invariant_add_error : ∀ n i k,
-    transitionProbability n i k = invariantProbability k + couplingError n i k
-  coupling_succeeds : ∀ i k, Tendsto (fun n ↦ couplingError n i k) atTop (𝓝 0)
 
 /-- Source line 1292: irreducible positive recurrent aperiodic chains converge to equilibrium. -/
 theorem convergence_to_equilibrium (certificate : EquilibriumCouplingCertificate S) :
