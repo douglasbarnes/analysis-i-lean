@@ -5,6 +5,7 @@ Quantum Mechanics notes.  Analytic/physical laws are obligations on explicit
 models, never global axioms. -/
 
 open scoped BigOperators ComplexConjugate InnerProductSpace
+open Filter
 
 namespace QuantumMechanics
 
@@ -38,8 +39,14 @@ def probabilityCurrentDerivative (kinetic : ℝ)
   -(Complex.I * kinetic) * (starψ * ψxx - starψxx * ψ)
 
 structure PointSchrodingerData where
-  kinetic potential : ℝ
-  ψ ψxx starψ starψxx dψdt dstarψdt : ℂ
+  kinetic : ℝ
+  potential : ℝ
+  ψ : ℂ
+  ψxx : ℂ
+  starψ : ℂ
+  starψxx : ℂ
+  dψdt : ℂ
+  dstarψdt : ℂ
   schrodinger : dψdt = Complex.I * kinetic * ψxx - Complex.I * potential * ψ
   conjugate_schrodinger : dstarψdt =
     -(Complex.I * kinetic) * starψxx + Complex.I * potential * starψ
@@ -77,7 +84,9 @@ def IsHermitian (Q : Operator State) : Prop :=
 The domain-sensitive analytic obligations belong to the representation. -/
 structure SchrodingerRepresentation (State : Type*) [NormedAddCommGroup State]
     [InnerProductSpace ℂ State] where
-  position momentum hamiltonian : Operator State
+  position : Operator State
+  momentum : Operator State
+  hamiltonian : Operator State
   position_hermitian : IsHermitian position
   momentum_hermitian : IsHermitian momentum
   realPotential_hamiltonian_hermitian : IsHermitian hamiltonian
@@ -92,9 +101,12 @@ structure EhrenfestModel (State : Type*) [NormedAddCommGroup State]
     [InnerProductSpace ℂ State] where
   mass : ℝ
   mass_ne_zero : mass ≠ 0
-  position momentum potentialDerivative : Operator State
+  position : Operator State
+  momentum : Operator State
+  potentialDerivative : Operator State
   trajectory : ℝ → State
-  positionExpectationDerivative momentumExpectationDerivative : ℝ → ℂ
+  positionExpectationDerivative : ℝ → ℂ
+  momentumExpectationDerivative : ℝ → ℂ
   positionEquation : ∀ t, positionExpectationDerivative t =
     ((1 / mass : ℝ) : ℂ) * expectationValue momentum (trajectory t)
   momentumEquation : ∀ t, momentumExpectationDerivative t =
@@ -140,22 +152,25 @@ Mathlib's exact self-adjoint spectral theorem: real eigenvalues, mutually
 orthogonal eigenspaces, and their internal direct-sum completeness. -/
 theorem hermitian_spectral_properties [FiniteDimensional ℂ State]
     (Q : Operator State) (hQ : Q.IsSymmetric) :
-    (∀ μ, LinearMap.HasEigenvalue Q μ → star μ = μ) ∧
-      OrthogonalFamily ℂ (fun μ => LinearMap.eigenspace Q μ)
-        (fun μ => (LinearMap.eigenspace Q μ).subtypeₗᵢ) ∧
-      DirectSum.IsInternal (fun μ : LinearMap.Eigenvalues Q => LinearMap.eigenspace Q μ) := by
+    (∀ mu, Module.End.HasEigenvalue Q mu → star mu = mu) ∧
+      OrthogonalFamily ℂ (fun mu => Module.End.eigenspace Q mu)
+        (fun mu => (Module.End.eigenspace Q mu).subtypeₗᵢ) ∧
+      DirectSum.IsInternal (fun mu : Module.End.Eigenvalues Q => Module.End.eigenspace Q mu) := by
   exact ⟨fun _ hμ => hQ.conj_eigenvalue_eq_self hμ,
     hQ.orthogonalFamily_eigenspaces, hQ.direct_sum_isInternal⟩
 
 /- 19. Expectation and variance of the spectral probability distribution. -/
-def spectralExpectation {ι : Type*} [Fintype ι] (λ P : ι → ℝ) : ℝ := ∑ i, λ i * P i
+def spectralExpectation {ι : Type*} [Fintype ι] (eigenvalue P : ι → ℝ) : ℝ :=
+  ∑ i, eigenvalue i * P i
 
-def spectralVariance {ι : Type*} [Fintype ι] (λ P : ι → ℝ) : ℝ :=
-  ∑ i, (λ i - spectralExpectation λ P) ^ 2 * P i
+def spectralVariance {ι : Type*} [Fintype ι] (eigenvalue P : ι → ℝ) : ℝ :=
+  ∑ i, (eigenvalue i - spectralExpectation eigenvalue P) ^ 2 * P i
 
-theorem spectral_expectation_and_uncertainty {ι : Type*} [Fintype ι] (λ P : ι → ℝ) :
-    spectralExpectation λ P = ∑ i, λ i * P i ∧
-      spectralVariance λ P = ∑ i, (λ i - spectralExpectation λ P) ^ 2 * P i := ⟨rfl, rfl⟩
+theorem spectral_expectation_and_uncertainty {ι : Type*} [Fintype ι]
+    (eigenvalue P : ι → ℝ) :
+    spectralExpectation eigenvalue P = ∑ i, eigenvalue i * P i ∧
+      spectralVariance eigenvalue P =
+        ∑ i, (eigenvalue i - spectralExpectation eigenvalue P) ^ 2 * P i := ⟨rfl, rfl⟩
 
 /- 20. General Ehrenfest equation.  The analytic derivative is supplied by a
 concrete dynamical model and must satisfy the equation for every observable. -/
@@ -169,17 +184,17 @@ structure GeneralEhrenfestDynamics (State : Type*) [NormedAddCommGroup State]
     expectationValue (commutator Q hamiltonian) (trajectory t)
 
 /- 21. Degeneracy. -/
-def eigenspace (Q : Operator State) (λ : ℂ) : Submodule ℂ State :=
-  LinearMap.ker (Q - λ • LinearMap.id)
+def eigenspace (Q : Operator State) (eigenvalue : ℂ) : Submodule ℂ State :=
+  LinearMap.ker (Q - eigenvalue • LinearMap.id)
 
-def degeneracy [FiniteDimensional ℂ State] (Q : Operator State) (λ : ℂ) : ℕ :=
-  Module.finrank ℂ (eigenspace Q λ)
+def degeneracy [FiniteDimensional ℂ State] (Q : Operator State) (eigenvalue : ℂ) : ℕ :=
+  Module.finrank ℂ (eigenspace Q eigenvalue)
 
-def IsNondegenerate [FiniteDimensional ℂ State] (Q : Operator State) (λ : ℂ) : Prop :=
-  degeneracy Q λ = 1
+def IsNondegenerate [FiniteDimensional ℂ State]
+    (Q : Operator State) (eigenvalue : ℂ) : Prop := degeneracy Q eigenvalue = 1
 
 def AreDegenerate (Q : Operator State) (ψ φ : State) : Prop :=
-  ∃ λ : ℂ, Q ψ = λ • ψ ∧ Q φ = λ • φ
+  ∃ eigenvalue : ℂ, Q ψ = eigenvalue • ψ ∧ Q φ = eigenvalue • φ
 
 /- 22. Structureless particle: the observable algebra is generated by x,p. -/
 def IsStructurelessParticle (position momentum : Operator State) : Prop :=
@@ -200,7 +215,9 @@ structure AngularMomentumAlgebra (State : Type*) [NormedAddCommGroup State]
     [InnerProductSpace ℂ State] where
   ℏ : ℝ
   ε : Fin 3 → Fin 3 → Fin 3 → ℂ
-  position momentum angular : Fin 3 → Operator State
+  position : Fin 3 → Operator State
+  momentum : Fin 3 → Operator State
+  angular : Fin 3 → Operator State
   angular_definition : ∀ i, angular i = angularMomentum ε position momentum i
   angular_commutator : ∀ i j, commutator (angular i) (angular j) =
     ∑ k, (Complex.I * ℏ * ε i j k) • angular k
