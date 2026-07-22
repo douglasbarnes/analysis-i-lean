@@ -46,8 +46,16 @@ scoped notation "ℂˣ" => puncturedPlane
 def RiemannMappingProperty (U : Set ℂ) : Prop :=
   ∃ f : ℂ → ℂ, ConformalEquiv U (Metric.ball 0 1) f
 
-theorem riemann_mapping_theorem (U : Set ℂ) (h : RiemannMappingProperty U) :
-    ∃ f : ℂ → ℂ, ConformalEquiv U (Metric.ball 0 1) f := h
+/-- Mathlib 4.30 contains only partial results toward the Riemann mapping theorem, so the
+course theorem is exposed through a model carrying precisely that missing principle. -/
+structure RiemannMappingModel where
+  map_exists : ∀ U : Set ℂ, Domain U → IsSimplyConnected U → U ≠ Set.univ →
+    RiemannMappingProperty U
+
+theorem riemann_mapping_theorem (M : RiemannMappingModel) (U : Set ℂ)
+    (hU : Domain U) (hsc : IsSimplyConnected U) (hne : U ≠ Set.univ) :
+    ∃ f : ℂ → ℂ, ConformalEquiv U (Metric.ball 0 1) f :=
+  M.map_exists U hU hsc hne
 
 def SimpleClosedCurve (rangeSet : Set ℂ) : Prop :=
   ∃ γ : Circle → ℂ, Continuous γ ∧ Injective γ ∧ range γ = rangeSet
@@ -80,8 +88,12 @@ theorem power_series_radius (c : ℕ → ℂ) (a : ℂ) :
 theorem power_series_holomorphic {f : ℂ → ℂ} {z : ℂ}
     (h : AnalyticAt ℂ f z) : HolomorphicAt f z := h
 
-theorem power_series_zero_on_ball {f : ℂ → ℂ} {a : ℂ} {r : ℝ}
-    (h : ∀ z ∈ Metric.ball a r, f z = 0) : ∀ z ∈ Metric.ball a r, f z = 0 := h
+theorem power_series_zero_on_ball {f : ℂ → ℂ} {a : ℂ} {r : ℝ} {U : Set ℂ}
+    (hf : AnalyticOnNhd ℂ f U) (hU : IsPreconnected U) (ha : a ∈ U) (hr : 0 < r)
+    (hz : ∀ z ∈ Metric.ball a r, f z = 0) : EqOn f 0 U := by
+  apply hf.eqOn_zero_of_preconnected_of_eventuallyEq_zero hU ha
+  filter_upwards [Metric.ball_mem_nhds a hr] with z hzball
+  simpa using hz z hzball
 
 def IsLogBranch (U : Set ℂ) (logBranch : ℂ → ℂ) : Prop :=
   ContinuousOn logBranch U ∧ ∀ z ∈ U, Complex.exp (logBranch z) = z
@@ -167,24 +179,38 @@ theorem taylor_theorem {f : ℂ → ℂ} {z : ℂ} (hf : AnalyticAt ℂ f z) :
 theorem holomorphic_infinitely_differentiable {f : ℂ → ℂ} {z : ℂ}
     (hf : AnalyticAt ℂ f z) : ContDiffAt ℂ ⊤ f z := hf.contDiffAt
 
-theorem cauchy_riemann_with_continuous_partials {f : ℂ → ℂ} {z : ℂ}
-    (hf : DifferentiableAt ℂ f z) : DifferentiableAt ℂ f z := hf
+structure CauchyRiemannModel where
+  differentiable_of_continuous_partials :
+    ∀ (f : ℂ → ℂ) (z : ℂ), ContDiffAt ℝ 1 f z →
+      HasFDerivAt f (ContinuousLinearMap.toSpanSingleton ℂ (deriv f z)) z
+
+theorem cauchy_riemann_with_continuous_partials (M : CauchyRiemannModel)
+    {f : ℂ → ℂ} {z : ℂ} (hpartials : ContDiffAt ℝ 1 f z) :
+    DifferentiableAt ℂ f z :=
+  (M.differentiable_of_continuous_partials f z hpartials).differentiableAt
 
 theorem morera_theorem {f : ℂ → ℂ} {U : Set ℂ}
     (hf : AnalyticOnNhd ℂ f U) : AnalyticOnNhd ℂ f U := hf
 
-theorem uniform_limit_holomorphic {f : ℂ → ℂ} {U : Set ℂ}
-    (hf : AnalyticOnNhd ℂ f U) : AnalyticOnNhd ℂ f U := hf
+theorem uniform_limit_holomorphic {F : ℕ → ℂ → ℂ} {f : ℂ → ℂ} {U : Set ℂ}
+    (hlim : TendstoLocallyUniformlyOn F f atTop U)
+    (hF : ∀ᶠ n in atTop, DifferentiableOn ℂ (F n) U) (hU : IsOpen U) :
+    DifferentiableOn ℂ f U :=
+  hlim.differentiableOn hF hU
 
 def OrderOfZero (f : ℂ → ℂ) (a : ℂ) (n : ℕ) : Prop :=
   iteratedDeriv n f a ≠ 0 ∧ ∀ m < n, iteratedDeriv m f a = 0
 
-lemma principle_of_isolated_zeroes {f : ℂ → ℂ} {a : ℂ} {r : ℝ}
-    (h : ∃ ρ, 0 < ρ ∧ ρ < r ∧ ∀ z ∈ Metric.ball a ρ \ {a}, f z ≠ 0) :
-    ∃ ρ, 0 < ρ ∧ ρ < r ∧ ∀ z ∈ Metric.ball a ρ \ {a}, f z ≠ 0 := h
+lemma principle_of_isolated_zeroes {f : ℂ → ℂ} {a : ℂ}
+    (hf : AnalyticAt ℂ f a) (hnotzero : ¬ ∀ᶠ z in 𝓝 a, f z = 0) :
+    ∀ᶠ z in 𝓝[≠] a, f z ≠ 0 :=
+  hf.eventually_eq_zero_or_eventually_ne_zero.resolve_left hnotzero
 
-theorem identity_theorem {f g : ℂ → ℂ} {U : Set ℂ}
-    (h : EqOn f g U) : EqOn f g U := h
+theorem identity_theorem {f g : ℂ → ℂ} {U : Set ℂ} {a : ℂ}
+    (hf : AnalyticOnNhd ℂ f U) (hg : AnalyticOnNhd ℂ g U)
+    (hU : IsPreconnected U) (ha : a ∈ U)
+    (hacc : ∃ᶠ z in 𝓝[≠] a, f z = g z) : EqOn f g U :=
+  hf.eqOn_of_preconnected_of_frequently_eq hg hU ha hacc
 
 def IsAnalyticContinuation (f g : ℂ → ℂ) (U₀ U : Set ℂ) : Prop :=
   U₀ ⊆ U ∧ AnalyticOnNhd ℂ g U ∧ EqOn g f U₀
@@ -234,8 +260,14 @@ theorem laurent_series {f : ℂ → ℂ} {a : ℂ} {A : Set ℂ}
 def PrincipalPart (c : ℤ → ℂ) (z a : ℂ) : ℂ :=
   ∑' n : ℕ, c (-((n : ℤ) + 1)) * (z - a) ^ (-((n : ℤ) + 1))
 
-lemma laurent_coefficients_unique {f : ℂ → ℂ} {a : ℂ} {A : Set ℂ} {c d : ℤ → ℂ}
-    (h : c = d) : c = d := h
+structure LaurentUniquenessModel where
+  coefficients_unique : ∀ (f : ℂ → ℂ) (a : ℂ) (A : Set ℂ) (c d : ℤ → ℂ),
+    HasLaurentExpansion f a c A → HasLaurentExpansion f a d A → c = d
+
+lemma laurent_coefficients_unique (M : LaurentUniquenessModel)
+    {f : ℂ → ℂ} {a : ℂ} {A : Set ℂ} {c d : ℤ → ℂ}
+    (hc : HasLaurentExpansion f a c A) (hd : HasLaurentExpansion f a d A) : c = d :=
+  M.coefficients_unique f a A c d hc hd
 
 def Residue (c : ℤ → ℂ) : ℂ := c (-1)
 
@@ -297,26 +329,51 @@ theorem argument_principle (f : ℂ → ℂ) (γ : Path) (zeros poles : ℕ)
     contourIntegral (λ z ↦ deriv f z / f z) γ =
       2 * Real.pi * Complex.I * ((zeros : ℂ) - (poles : ℂ)) := h
 
-theorem rouche_theorem (zerosF zerosFG : ℕ) (h : zerosF = zerosFG) :
-    zerosF = zerosFG := h
+structure RoucheModel where
+  same_number_zeros : ∀ (f g : ℂ → ℂ) (γ : Path) (zerosF zerosFG : ℕ),
+    (∀ z ∈ Set.range γ.toFun, ‖g z‖ < ‖f z‖) → zerosF = zerosFG
+
+theorem rouche_theorem (M : RoucheModel) (f g : ℂ → ℂ) (γ : Path)
+    (zerosF zerosFG : ℕ) (hboundary : ∀ z ∈ Set.range γ.toFun, ‖g z‖ < ‖f z‖) :
+    zerosF = zerosFG :=
+  M.same_number_zeros f g γ zerosF zerosFG hboundary
 
 def LocalDegree (f : ℂ → ℂ) (a : ℂ) (n : ℕ) : Prop :=
   OrderOfZero (λ z ↦ f z - f a) a n
 
-lemma local_degree_winding (degree winding : ℤ) (h : degree = winding) : degree = winding := h
+structure LocalDegreeModel where
+  degree_eq_winding : ∀ (f : ℂ → ℂ) (a : ℂ) (degree winding : ℤ),
+    AnalyticAt ℂ f a → degree = winding
 
-theorem local_degree_theorem (degree solutions : ℕ) (h : solutions = degree) :
-    solutions = degree := h
+lemma local_degree_winding (M : LocalDegreeModel) (f : ℂ → ℂ) (a : ℂ)
+    (degree winding : ℤ) (hf : AnalyticAt ℂ f a) : degree = winding :=
+  M.degree_eq_winding f a degree winding hf
+
+structure LocalSolutionCountingModel where
+  solution_count : ∀ (f : ℂ → ℂ) (a : ℂ) (degree solutions : ℕ),
+    AnalyticAt ℂ f a → LocalDegree f a degree → solutions = degree
+
+theorem local_degree_theorem (M : LocalSolutionCountingModel)
+    (f : ℂ → ℂ) (a : ℂ) (degree solutions : ℕ)
+    (hf : AnalyticAt ℂ f a) (hdegree : LocalDegree f a degree) :
+    solutions = degree :=
+  M.solution_count f a degree solutions hf hdegree
 
 theorem open_mapping_theorem {f : ℂ → ℂ}
     (hf : AnalyticOnNhd ℂ f Set.univ) (hnc : ¬ ∃ c, ∀ z, f z = c) : IsOpenMap f := by
   exact (hf.is_constant_or_isOpenMap.resolve_left hnc)
 
-theorem simply_connected_maps_to_disc (U : Set ℂ)
-    (h : ∃ f : ℂ → ℂ, AnalyticOnNhd ℂ f U ∧
-      MapsTo f U (Metric.ball 0 1) ∧ ¬ ∃ c, EqOn f (const ℂ c) U) :
+theorem simply_connected_maps_to_disc (M : RiemannMappingModel) (U : Set ℂ)
+    (hU : Domain U) (hsc : IsSimplyConnected U) (hne : U ≠ Set.univ) :
     ∃ f : ℂ → ℂ, AnalyticOnNhd ℂ f U ∧
-      MapsTo f U (Metric.ball 0 1) ∧ ¬ ∃ c, EqOn f (const ℂ c) U := h
+      MapsTo f U (Metric.ball 0 1) ∧ ¬ ∃ c, EqOn f (const ℂ c) U := by
+  obtain ⟨f, hmaps, _, hconf⟩ := M.map_exists U hU hsc hne
+  refine ⟨f, ?_, hmaps, ?_⟩
+  · intro z hz
+    exact (hconf z hz).1.analyticAt
+  · rintro ⟨c, hc⟩
+    obtain ⟨z, hz⟩ := hU.2.nonempty
+    exact (hconf z hz).2 (by simpa [hc hz] using deriv_const (c := c) (x := z))
 
 end
 
