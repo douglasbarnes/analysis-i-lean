@@ -14,8 +14,8 @@ open Set Function Topology Filter
 namespace Cambridge.LinearAnalysis
 
 /-- Course terminology: a nowhere-dense set. -/
-abbrev IsNowhereDense {X : Type*} [TopologicalSpace X] (s : Set X) : Prop :=
-  IsNowhereDense s
+abbrev NowhereDenseSet {X : Type*} [TopologicalSpace X] (s : Set X) : Prop :=
+  _root_.IsNowhereDense s
 
 /-- Course terminology: a meagre (first-category) set. -/
 abbrev IsMeagreSet {X : Type*} [TopologicalSpace X] (s : Set X) : Prop :=
@@ -64,14 +64,14 @@ noncomputable def continuousLinearMap_of_closedGraph {𝕜 E F : Type*}
     [NontriviallyNormedField 𝕜]
     [NormedAddCommGroup E] [NormedSpace 𝕜 E] [CompleteSpace E]
     [NormedAddCommGroup F] [NormedSpace 𝕜 F] [CompleteSpace F]
-    (T : E →ₗ[𝕜] F) (hT : IsClosed T.graph) : E →L[𝕜] F :=
+    (T : E →ₗ[𝕜] F) (hT : IsClosed (T.graph : Set (E × F))) : E →L[𝕜] F :=
   ContinuousLinearMap.ofIsClosedGraph hT
 
 @[simp] theorem continuousLinearMap_of_closedGraph_apply {𝕜 E F : Type*}
     [NontriviallyNormedField 𝕜]
     [NormedAddCommGroup E] [NormedSpace 𝕜 E] [CompleteSpace E]
     [NormedAddCommGroup F] [NormedSpace 𝕜 F] [CompleteSpace F]
-    (T : E →ₗ[𝕜] F) (hT : IsClosed T.graph) (x : E) :
+    (T : E →ₗ[𝕜] F) (hT : IsClosed (T.graph : Set (E × F))) (x : E) :
     continuousLinearMap_of_closedGraph T hT x = T x := rfl
 
 end Cambridge.LinearAnalysis
