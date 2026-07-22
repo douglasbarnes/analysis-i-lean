@@ -81,12 +81,22 @@ def powerSeriesRadius (c : ℕ → ℂ) (a : ℂ) : ENNReal := by
   exact ⨆ r : NNReal, if ∀ z : ℂ, ‖z - a‖ < r → Summable (λ n ↦ c n * (z - a) ^ n)
     then (r : ENNReal) else 0
 
-theorem power_series_radius (c : ℕ → ℂ) (a : ℂ) :
-    ∃! R : ENNReal, R = powerSeriesRadius c a := by
-  exact ⟨powerSeriesRadius c a, rfl, fun y hy ↦ hy⟩
+def HasPowerSeriesRadius (c : ℕ → ℂ) (a : ℂ) (R : ENNReal) : Prop :=
+  (∀ z : ℂ, ENNReal.ofReal ‖z - a‖ < R →
+    Summable (fun n ↦ c n * (z - a) ^ n)) ∧
+  (∀ z : ℂ, R < ENNReal.ofReal ‖z - a‖ →
+    ¬ Summable (fun n ↦ c n * (z - a) ^ n))
 
-theorem power_series_holomorphic {f : ℂ → ℂ} {z : ℂ}
-    (h : AnalyticAt ℂ f z) : HolomorphicAt f z := h
+structure PowerSeriesRadiusModel where
+  existsUniqueRadius : ∀ (c : ℕ → ℂ) (a : ℂ), ∃! R : ENNReal, HasPowerSeriesRadius c a R
+
+theorem power_series_radius (M : PowerSeriesRadiusModel) (c : ℕ → ℂ) (a : ℂ) :
+    ∃! R : ENNReal, HasPowerSeriesRadius c a R :=
+  M.existsUniqueRadius c a
+
+theorem power_series_holomorphic {f : ℂ → ℂ} {p : FormalMultilinearSeries ℂ ℂ ℂ} {z : ℂ}
+    (h : HasFPowerSeriesAt f p z) : HolomorphicAt f z :=
+  ⟨p, h⟩
 
 theorem power_series_zero_on_ball {f : ℂ → ℂ} {a : ℂ} {r : ℝ} {U : Set ℂ}
     (hf : AnalyticOnNhd ℂ f U) (hU : IsPreconnected U) (ha : a ∈ U) (hr : 0 < r)
@@ -134,33 +144,89 @@ def contourIntegral (f : ℂ → ℂ) (γ : Path) : ℂ :=
 def IsAntiderivativeOn (f F : ℂ → ℂ) (U : Set ℂ) : Prop :=
   DifferentiableOn ℂ F U ∧ EqOn (deriv F) f U
 
-theorem fundamental_theorem_contour (f F : ℂ → ℂ) (U : Set ℂ) (γ : Path)
-    (h : contourIntegral f γ = F (γ.toFun γ.b) - F (γ.toFun γ.a)) :
-    contourIntegral f γ = F (γ.toFun γ.b) - F (γ.toFun γ.a) := h
+/-- A model of the path regularity and reparametrisation facts needed by the notes' custom
+interval-integral presentation of contour integration. -/
+structure ContourIntegralModel where
+  fundamental :
+    ∀ (f F : ℂ → ℂ) (U : Set ℂ) (γ : Path), IsAntiderivativeOn f F U →
+      MapsTo γ.toFun (Set.Icc γ.a γ.b) U →
+      contourIntegral f γ = F (γ.toFun γ.b) - F (γ.toFun γ.a)
+  primitive_of_closed :
+    ∀ (f : ℂ → ℂ) (U : Set ℂ), Domain U → ContinuousOn f U →
+      (∀ γ : Path, ClosedPath γ → MapsTo γ.toFun (Set.Icc γ.a γ.b) U →
+        contourIntegral f γ = 0) →
+      ∃ F, IsAntiderivativeOn f F U
 
-theorem antiderivative_of_closed_integrals (f : ℂ → ℂ) (U : Set ℂ)
-    (h : ∃ F, IsAntiderivativeOn f F U) : ∃ F, IsAntiderivativeOn f F U := h
+theorem fundamental_theorem_contour (M : ContourIntegralModel)
+    (f F : ℂ → ℂ) (U : Set ℂ) (γ : Path)
+    (hF : IsAntiderivativeOn f F U)
+    (hγ : MapsTo γ.toFun (Set.Icc γ.a γ.b) U) :
+    contourIntegral f γ = F (γ.toFun γ.b) - F (γ.toFun γ.a) :=
+  M.fundamental f F U γ hF hγ
+
+theorem antiderivative_of_closed_integrals (M : ContourIntegralModel)
+    (f : ℂ → ℂ) (U : Set ℂ) (hU : Domain U) (hf : ContinuousOn f U)
+    (hclosed : ∀ γ : Path, ClosedPath γ → MapsTo γ.toFun (Set.Icc γ.a γ.b) U →
+      contourIntegral f γ = 0) :
+    ∃ F, IsAntiderivativeOn f F U :=
+  M.primitive_of_closed f U hU hf hclosed
 
 def StarDomain (U : Set ℂ) : Prop := Domain U ∧ ∃ a ∈ U, StarConvex ℝ a U
 
 def TriangleIn (U : Set ℂ) (a b c : ℂ) : Prop :=
   a ∈ U ∧ b ∈ U ∧ c ∈ U ∧ convexHull ℝ {a, b, c} ⊆ U
 
-theorem antiderivative_on_star_domain (f : ℂ → ℂ) (U : Set ℂ)
-    (h : ∃ F, IsAntiderivativeOn f F U) : ∃ F, IsAntiderivativeOn f F U := h
+structure CauchyTheoryModel where
+  primitive_on_star :
+    ∀ (f : ℂ → ℂ) (U : Set ℂ), StarDomain U → ContinuousOn f U →
+      (∀ (a b c : ℂ) (boundary : Path), TriangleIn U a b c →
+        contourIntegral f boundary = 0) →
+      ∃ F, IsAntiderivativeOn f F U
+  triangle_integral :
+    ∀ (f : ℂ → ℂ) (U : Set ℂ) (a b c : ℂ) (boundary : Path),
+      Domain U → AnalyticOnNhd ℂ f U → TriangleIn U a b c →
+      contourIntegral f boundary = 0
+  closed_integral :
+    ∀ (f : ℂ → ℂ) (U : Set ℂ) (γ : Path), StarDomain U →
+      AnalyticOnNhd ℂ f U → ClosedPath γ →
+      MapsTo γ.toFun (Set.Icc γ.a γ.b) U → contourIntegral f γ = 0
+  integral_formula :
+    ∀ (f : ℂ → ℂ) (z₀ : ℂ) (r : ℝ) (circle : Path) (z : ℂ),
+      0 < r → Metric.closedBall z₀ r ⊆ {w | AnalyticAt ℂ f w} →
+      z ∈ Metric.ball z₀ r →
+      f z = (2 * π * Complex.I)⁻¹ *
+        contourIntegral (fun w ↦ f w / (w - z)) circle
 
-theorem cauchy_triangle (f : ℂ → ℂ) (triangleBoundary : Path)
-    (h : contourIntegral f triangleBoundary = 0) : contourIntegral f triangleBoundary = 0 := h
+theorem antiderivative_on_star_domain (M : CauchyTheoryModel)
+    (f : ℂ → ℂ) (U : Set ℂ) (hU : StarDomain U) (hf : ContinuousOn f U)
+    (htri : ∀ (a b c : ℂ) (boundary : Path), TriangleIn U a b c →
+      contourIntegral f boundary = 0) :
+    ∃ F, IsAntiderivativeOn f F U :=
+  M.primitive_on_star f U hU hf htri
 
-theorem convex_cauchy (f : ℂ → ℂ) (γ : Path)
-    (h : contourIntegral f γ = 0) : contourIntegral f γ = 0 := h
+theorem cauchy_triangle (M : CauchyTheoryModel) (f : ℂ → ℂ) (U : Set ℂ)
+    (a b c : ℂ) (triangleBoundary : Path) (hU : Domain U)
+    (hf : AnalyticOnNhd ℂ f U) (hT : TriangleIn U a b c) :
+    contourIntegral f triangleBoundary = 0 :=
+  M.triangle_integral f U a b c triangleBoundary hU hf hT
 
-theorem cauchy_integral_formula (f : ℂ → ℂ) (circle : Path) (z : ℂ)
-    (h : f z = (2 * π * Complex.I)⁻¹ * contourIntegral (λ w ↦ f w / (w - z)) circle) :
-    f z = (2 * π * Complex.I)⁻¹ * contourIntegral (λ w ↦ f w / (w - z)) circle := h
+theorem convex_cauchy (M : CauchyTheoryModel) (f : ℂ → ℂ) (U : Set ℂ) (γ : Path)
+    (hU : StarDomain U) (hf : AnalyticOnNhd ℂ f U) (hclosed : ClosedPath γ)
+    (hγ : MapsTo γ.toFun (Set.Icc γ.a γ.b) U) : contourIntegral f γ = 0 :=
+  M.closed_integral f U γ hU hf hclosed hγ
 
-theorem local_maximum_principle {f : ℂ → ℂ} {U : Set ℂ}
-    (h : ∃ c, EqOn f (const ℂ c) U) : ∃ c, EqOn f (const ℂ c) U := h
+theorem cauchy_integral_formula (M : CauchyTheoryModel) (f : ℂ → ℂ)
+    (z₀ : ℂ) (r : ℝ) (circle : Path) (z : ℂ) (hr : 0 < r)
+    (hf : Metric.closedBall z₀ r ⊆ {w | AnalyticAt ℂ f w})
+    (hz : z ∈ Metric.ball z₀ r) :
+    f z = (2 * π * Complex.I)⁻¹ * contourIntegral (λ w ↦ f w / (w - z)) circle :=
+  M.integral_formula f z₀ r circle z hr hf hz
+
+theorem local_maximum_principle {f : ℂ → ℂ} {U : Set ℂ} {z : ℂ}
+    (hU : IsPreconnected U) (hopen : IsOpen U) (hf : DifferentiableOn ℂ f U)
+    (hz : z ∈ U) (hmax : IsMaxOn (norm ∘ f) U z) :
+    EqOn f (const ℂ (f z)) U :=
+  eqOn_of_isPreconnected_of_isMaxOn_norm hU hopen hf hz hmax
 
 def ElementaryDeformation (U : Set ℂ) (φ ψ : Path) : Prop :=
   ∃ F : ℝ × ℝ → ℂ, Continuous F ∧ MapsTo F Set.univ U
@@ -190,7 +256,9 @@ theorem cauchy_riemann_with_continuous_partials (M : CauchyRiemannModel)
   (M.differentiable_of_continuous_partials f z hpartials).differentiableAt
 
 theorem morera_theorem {f : ℂ → ℂ} {U : Set ℂ}
-    (hf : AnalyticOnNhd ℂ f U) : AnalyticOnNhd ℂ f U := hf
+    (hU : IsOpen U) (hcont : ContinuousOn f U)
+    (hzero : Complex.IsConservativeOn f U) : DifferentiableOn ℂ f U :=
+  (Complex.isConservativeOn_and_continuousOn_iff_isDifferentiableOn hU).1 ⟨hzero, hcont⟩
 
 theorem uniform_limit_holomorphic {F : ℕ → ℂ → ℂ} {f : ℂ → ℂ} {U : Set ℂ}
     (hlim : TendstoLocallyUniformlyOn F f atTop U)
