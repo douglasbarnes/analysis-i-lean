@@ -101,7 +101,7 @@ theorem interpolationErrorIdentity (M : InterpolationErrorModel) :
     M.f M.xbar - M.p M.xbar = M.next M.xbar - M.p M.xbar := by rw [M.next_interpolates]
     _ = _ := M.newton_increment M.xbar
 
-structure SmoothInterpolationErrorModel (n : ℕ) extends InterpolationErrorModel where
+structure SmoothInterpolationErrorModel (n : ℕ) : Type extends InterpolationErrorModel where
   a : ℝ
   b : ℝ
   derivative : ℝ → ℝ
@@ -506,7 +506,7 @@ theorem positiveDefiniteLeadingMinors {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
   have hp : (leadingPrincipalSubmatrix A k hk).PosDef := hA.submatrix (Fin.castLE_injective hk)
   exact ne_of_gt hp.det_pos
 
-structure PositiveLDLModel {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) extends LDLModel A where
+structure PositiveLDLModel {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : Type extends LDLModel A where
   positiveDiagonal_of_posDef : IsPositiveDefinite A → ∀ i, 0 < construct.D i i
   posDef_of_positiveDiagonal : (∀ i, 0 < construct.D i i) → IsPositiveDefinite A
 
@@ -584,7 +584,8 @@ theorem householderTriangularization {m n : ℕ} {A : Matrix (Fin m) (Fin n) ℝ
   simpa [hij] using M.entryFormula i j
 
 structure EqualNormReflectionModel {m : ℕ} (a b : Fin m → ℝ) where
-  u : Fin m → ℝ := a - b
+  u : Fin m → ℝ
+  u_eq : u = a - b
   a_ne_b : a ≠ b
   equal_norm_sq : dotProduct a a = dotProduct b b
   reflection_formula : householderReflection u *ᵥ a = a - (2 * dotProduct u a / dotProduct u u) • u
@@ -593,11 +594,12 @@ structure EqualNormReflectionModel {m : ℕ} (a b : Fin m → ℝ) where
 theorem householderMapsEqualNormVectors {m : ℕ} {a b : Fin m → ℝ}
     (M : EqualNormReflectionModel a b) : householderReflection M.u *ᵥ a = b := by
   rw [M.reflection_formula, M.polarization]
-  have huvec : M.u ≠ 0 := by simpa [M.u] using sub_ne_zero.mpr M.a_ne_b
+  have huvec : M.u ≠ 0 := by rw [M.u_eq]; exact sub_ne_zero.mpr M.a_ne_b
   have hu : dotProduct M.u M.u ≠ 0 := by
     exact fun h ↦ huvec (dotProduct_self_eq_zero.mp h)
   rw [div_self hu, one_smul]
-  simp [M.u]
+  rw [M.u_eq]
+  abel
 
 structure InitialComponentsModel {m : ℕ} (u x : Fin m → ℝ) (k : ℕ) where
   formula : householderReflection u *ᵥ x = x - (2 * dotProduct u x / dotProduct u u) • u
