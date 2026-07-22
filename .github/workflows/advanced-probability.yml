@@ -7,6 +7,7 @@ on:
       - 'AdvancedProbability/**'
       - 'lakefile.toml'
       - 'lean-toolchain'
+      - 'lake-manifest.json'
       - '.github/workflows/advanced-probability.yml'
   push:
     branches:
@@ -16,6 +17,7 @@ on:
       - 'AdvancedProbability/**'
       - 'lakefile.toml'
       - 'lean-toolchain'
+      - 'lake-manifest.json'
       - '.github/workflows/advanced-probability.yml'
   workflow_dispatch:
 
@@ -26,7 +28,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - name: Install Elan and Lean
@@ -38,9 +40,6 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
           "$HOME/.elan/bin/elan" default "$(cat lean-toolchain)"
-      - name: Resolve dependencies
-        shell: bash
-        run: lake update
       - name: Download Mathlib cache
         shell: bash
         run: timeout 10m lake exe cache get
