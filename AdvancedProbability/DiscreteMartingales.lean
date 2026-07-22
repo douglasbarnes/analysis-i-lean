@@ -95,11 +95,11 @@ structure AlmostSureMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω)
   limit : Ω → ℝ
   converges : ∀ ω, Tendsto (fun n ↦ X n ω) atTop (𝓝 (limit ω))
 
-/-- Source 36: number of completed upcrossings before time `N`. -/
-def upcrossingsBefore (a b : ℝ) (x : ℕ → ℝ) (N : ℕ) : ℕ :=
-  Nat.findGreatest (fun k ↦ ∃ s t : Fin k → ℕ,
+/-- Source 36: admissible numbers of completed upcrossings before time `N`. -/
+def upcrossingsBefore (a b : ℝ) (x : ℕ → ℝ) (N : ℕ) : Set ℕ :=
+  {k | ∃ s t : Fin k → ℕ,
     (∀ i, s i < t i) ∧ (∀ i, t i ≤ N) ∧
-    (∀ i, x (s i) ≤ a ∧ b ≤ x (t i))) N
+    (∀ i, x (s i) ≤ a ∧ b ≤ x (t i))}
 
 /-- Source 37: numerical convergence from bounded liminf and finite rational upcrossings. -/
 structure SequenceConvergenceCertificate (x : ℕ → ℝ) where
