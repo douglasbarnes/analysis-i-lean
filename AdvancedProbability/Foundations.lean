@@ -95,29 +95,30 @@ structure FubiniTonelliCertificate (E₁ : Type u) (E₂ : Type v)
 abbrev Expectation (Ω : Type u) := (Ω → ℝ) → ℝ
 
 /-- Indicator-weighted expectation over an event. -/
-def eventExpectation {Ω : Type u} (𝔼 : Expectation Ω) (X : Ω → ℝ) (A : Set Ω) : ℝ :=
-  𝔼 (Set.indicator A X)
+def eventExpectation {Ω : Type u} (expectation : Expectation Ω) (X : Ω → ℝ)
+    (A : Set Ω) : ℝ := expectation (Set.indicator A X)
 
 /-- A real random variable observable with respect to a sigma-field. -/
 def Observable {Ω : Type u} (𝒢 : SigmaField Ω) (X : Ω → ℝ) : Prop :=
   ∀ B : Set ℝ, MeasurableSet B → X ⁻¹' B ∈ 𝒢.sets
 
 /-- Integrability relative to an abstract expectation. -/
-def IntegrableFor {Ω : Type u} (𝔼 : Expectation Ω) (X : Ω → ℝ) : Prop :=
-  ∃ C : ℝ, 𝔼 (fun ω ↦ |X ω|) ≤ C
+def IntegrableFor {Ω : Type u} (expectation : Expectation Ω) (X : Ω → ℝ) : Prop :=
+  ∃ C : ℝ, expectation (fun ω ↦ |X ω|) ≤ C
 
 /-- Source 17: the defining measurable/integral characterization of conditional expectation. -/
-def IsConditionalExpectation {Ω : Type u} (𝔼 : Expectation Ω) (𝒢 : SigmaField Ω)
+def IsConditionalExpectation {Ω : Type u} (expectation : Expectation Ω) (𝒢 : SigmaField Ω)
     (X Y : Ω → ℝ) : Prop :=
-  Observable 𝒢 Y ∧ IntegrableFor 𝔼 Y ∧
-    ∀ A : Set Ω, A ∈ 𝒢.sets → eventExpectation 𝔼 X A = eventExpectation 𝔼 Y A
+  Observable 𝒢 Y ∧ IntegrableFor expectation Y ∧
+    ∀ A : Set Ω, A ∈ 𝒢.sets →
+      eventExpectation expectation X A = eventExpectation expectation Y A
 
 /-- Source 18: existence and almost-sure uniqueness of conditional expectation. -/
 structure ConditionalExpectationExistenceCertificate {Ω : Type u}
-    (𝔼 : Expectation Ω) (𝒢 : SigmaField Ω) (X : Ω → ℝ) where
+    (expectation : Expectation Ω) (𝒢 : SigmaField Ω) (X : Ω → ℝ) where
   value : Ω → ℝ
-  specification : IsConditionalExpectation 𝔼 𝒢 X value
-  unique : ∀ Y : Ω → ℝ, IsConditionalExpectation 𝔼 𝒢 X Y → Y = value
+  specification : IsConditionalExpectation expectation 𝒢 X value
+  unique : ∀ Y : Ω → ℝ, IsConditionalExpectation expectation 𝒢 X Y → Y = value
 
 /-- Source 19: the Doob--Dynkin factorization of a `σ(Z)`-observable variable. -/
 structure DoobDynkinCertificate {Ω : Type u} (Y Z : Ω → ℝ) where
@@ -127,10 +128,10 @@ structure DoobDynkinCertificate {Ω : Type u} (Y Z : Ω → ℝ) where
 
 /-- Source 20: the thirteen standard conditional-expectation identities grouped as one interface. -/
 structure ConditionalExpectationLaws {Ω : Type u}
-    (𝔼 : Expectation Ω)
+    (expectation : Expectation Ω)
     (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ) where
   measurable_fixed : ∀ 𝒢 X, Observable 𝒢 X → CE 𝒢 X = X
-  preserves_expectation : ∀ 𝒢 X, 𝔼 (CE 𝒢 X) = 𝔼 X
+  preserves_expectation : ∀ 𝒢 X, expectation (CE 𝒢 X) = expectation X
   nonnegative : ∀ 𝒢 X, (∀ ω, 0 ≤ X ω) → ∀ ω, 0 ≤ CE 𝒢 X ω
   linear : ∀ 𝒢 a b X Y, CE 𝒢 (fun ω ↦ a * X ω + b * Y ω) =
     fun ω ↦ a * CE 𝒢 X ω + b * CE 𝒢 Y ω
@@ -140,10 +141,11 @@ structure ConditionalExpectationLaws {Ω : Type u}
 
 /-- Source 21: uniform integrability of all conditional expectations of one integrable variable. -/
 structure ConditionalExpectationsUniformlyIntegrable {Ω : Type u}
-    (𝔼 : Expectation Ω) (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ) (X : Ω → ℝ) where
+    (expectation : Expectation Ω) (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ)
+    (X : Ω → ℝ) where
   cutoff : ℝ → ℝ
   uniformTail : ∀ ε : ℝ, 0 < ε → ∃ λ : ℝ, 0 < λ ∧
     ∀ 𝒢 : SigmaField Ω,
-      𝔼 (fun ω ↦ if λ ≤ |CE 𝒢 X ω| then |CE 𝒢 X ω| else 0) < ε
+      expectation (fun ω ↦ if λ ≤ |CE 𝒢 X ω| then |CE 𝒢 X ω| else 0) < ε
 
 end AdvancedProbability
