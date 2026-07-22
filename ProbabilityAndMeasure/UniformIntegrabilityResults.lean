@@ -4,8 +4,8 @@ import Mathlib.MeasureTheory.Function.UniformIntegrable
 /-!
 # Probability and Measure: uniform integrability
 
-Source-numbered declarations for tail control, finite uniformly integrable families, and Vitali
-convergence.
+Source-numbered declarations for closure, tail control, finite uniformly integrable families, and
+Vitali convergence.
 -/
 
 noncomputable section
@@ -14,6 +14,39 @@ open scoped BigOperators ENNReal NNReal Topology
 open Set Filter MeasureTheory
 
 namespace ProbabilityAndMeasure
+
+/-- Source 117, binary union step: the disjoint-index union of two uniformly integrable
+families is uniformly integrable.  Iterating this result gives closure under finite unions. -/
+theorem source117_uniformIntegrable_sum
+    {α ι κ E : Type*} [MeasurableSpace α]
+    [NormedAddCommGroup E] {μ : Measure α} {p : ℝ≥0∞}
+    {f : ι → α → E} {g : κ → α → E}
+    (hf : UniformIntegrable f p μ) (hg : UniformIntegrable g p μ) :
+    UniformIntegrable (Sum.elim f g) p μ := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro z
+    cases z with
+    | inl i => exact hf.1 i
+    | inr j => exact hg.1 j
+  · intro ε hε
+    obtain ⟨δf, hδf, hfδ⟩ := hf.2.1 hε
+    obtain ⟨δg, hδg, hgδ⟩ := hg.2.1 hε
+    refine ⟨min δf δg, lt_min hδf hδg, ?_⟩
+    intro z A hA hμA
+    cases z with
+    | inl i =>
+        exact hfδ i A hA
+          (hμA.trans_le (ENNReal.ofReal_le_ofReal (min_le_left _ _)))
+    | inr j =>
+        exact hgδ j A hA
+          (hμA.trans_le (ENNReal.ofReal_le_ofReal (min_le_right _ _)))
+  · obtain ⟨Cf, hCf⟩ := hf.2.2
+    obtain ⟨Cg, hCg⟩ := hg.2.2
+    refine ⟨max Cf Cg, ?_⟩
+    intro z
+    cases z with
+    | inl i => exact (hCf i).trans (ENNReal.coe_le_coe.2 (le_max_left _ _))
+    | inr j => exact (hCg j).trans (ENNReal.coe_le_coe.2 (le_max_right _ _))
 
 /-- Source 119, lines 3123--3129: uniform integrability is equivalent to uniform decay of
 the `L¹` mass above a common truncation level.  This is Mathlib's exact probability-theory
