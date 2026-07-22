@@ -1,3 +1,0 @@
-import VariationalPrinciplesCourse.Core
-import VariationalPrinciplesCourse.SourceAudit
-import VariationalPrinciplesCourse.DeclarationAudit

@@ -1,3 +1,0 @@
-import ElectromagnetismCourse.Core
-import ElectromagnetismCourse.SourceAudit
-import ElectromagnetismCourse.DeclarationAudit
