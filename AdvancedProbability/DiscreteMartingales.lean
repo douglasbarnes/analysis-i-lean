@@ -87,7 +87,11 @@ theorem OptionalStoppingDiscrete {Ω : Type u} [m₀ : MeasurableSpace Ω]
     ∫ ω, MeasureTheory.stoppedValue X T ω ∂μ ≤
       ∫ ω, MeasureTheory.stoppedValue X S ω ∂μ := by
   have hneg := hX.neg.expected_stoppedValue_mono hS hT hST hTbdd
-  simpa [MeasureTheory.stoppedValue] using hneg
+  have hneg' :
+      -(∫ ω, MeasureTheory.stoppedValue X S ω ∂μ) ≤
+        -(∫ ω, MeasureTheory.stoppedValue X T ω ∂μ) := by
+    simpa only [MeasureTheory.stoppedValue, Pi.neg_apply, integral_neg] using hneg
+  exact neg_le_neg_iff.mp hneg'
 
 /-- Source 34: the optional-stopping characterization of submartingales. -/
 theorem SupermartingaleCharacterization {Ω : Type u} [m₀ : MeasurableSpace Ω]
@@ -176,7 +180,7 @@ structure BackwardMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω) w
 /-- Source 46: Kolmogorov's zero-one law. -/
 theorem KolmogorovZeroOne {Ω : Type u} [m₀ : MeasurableSpace Ω]
     (μ : Measure Ω) [IsFiniteMeasure μ] (s : ℕ → MeasurableSpace Ω)
-    (hle : ∀ n, s n ≤ m₀) (hindep : iIndep s μ) {A : Set Ω}
+    (hle : ∀ n, s n ≤ m₀) (hindep : ProbabilityTheory.iIndep s μ) {A : Set Ω}
     (hA : MeasurableSet[limsup s atTop] A) : μ A = 0 ∨ μ A = 1 :=
   ProbabilityTheory.measure_zero_or_one_of_measurableSet_limsup_atTop hle hindep hA
 
@@ -185,7 +189,7 @@ integrable real random variables. -/
 theorem StrongLaw {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω)
     (X : ℕ → Ω → ℝ) (hX : Integrable (X 0) μ)
     (hindep : Pairwise ((· ⟂ᵢ[μ] ·) on X))
-    (hident : ∀ n, IdentDistrib (X n) (X 0) μ μ) :
+    (hident : ∀ n, ProbabilityTheory.IdentDistrib (X n) (X 0) μ μ) :
     ∀ᵐ ω ∂μ,
       Tendsto (fun n : ℕ ↦ (n : ℝ)⁻¹ • (∑ i ∈ Finset.range n, X i ω))
         atTop (𝓝 μ[X 0]) :=
