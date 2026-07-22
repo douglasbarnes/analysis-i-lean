@@ -42,10 +42,10 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.upcrossingsBefore
 #check AdvancedProbability.SequenceConvergenceCertificate
 #check AdvancedProbability.DoobUpcrossing
-#check AdvancedProbability.DiscreteMaximalInequality
+#check AdvancedProbability.DiscreteMaximalInequalityTheorem
 #check AdvancedProbability.DiscreteDoobLpInequality
 #check AdvancedProbability.DiscreteLpMartingaleConvergence
-#check AdvancedProbability.DiscreteL1MartingaleConvergence
+#check AdvancedProbability.DiscreteL1MartingaleConvergenceTheorem
 #check AdvancedProbability.DiscreteUIOptionalStopping
 #check AdvancedProbability.BackwardFiltration
 #check AdvancedProbability.BackwardMartingaleConvergence
