@@ -13,22 +13,22 @@ universe u v
 
 /-- Source 22: an increasing sequence of sigma-fields. -/
 structure DiscreteFiltration (Ω : Type u) where
-  at : ℕ → SigmaField Ω
-  mono : ∀ m n : ℕ, m ≤ n → (at m).Subfield (at n)
+  sigma : ℕ → SigmaField Ω
+  mono : ∀ m n : ℕ, m ≤ n → (sigma m).Subfield (sigma n)
 
 /-- Source 23: a real stochastic process in discrete time. -/
 abbrev DiscreteProcess (Ω : Type u) := ℕ → Ω → ℝ
 
 /-- Source 24: the natural filtration, characterized by observability and minimality. -/
 structure NaturalFiltration {Ω : Type u} (X : DiscreteProcess Ω) extends DiscreteFiltration Ω where
-  observes : ∀ n k : ℕ, k ≤ n → Observable (at n) (X k)
+  observes : ∀ n k : ℕ, k ≤ n → Observable (sigma n) (X k)
   minimal : ∀ ℱ : DiscreteFiltration Ω,
-    (∀ n k : ℕ, k ≤ n → Observable (ℱ.at n) (X k)) →
-      ∀ n, (at n).Subfield (ℱ.at n)
+    (∀ n k : ℕ, k ≤ n → Observable (ℱ.sigma n) (X k)) →
+      ∀ n, (sigma n).Subfield (ℱ.sigma n)
 
 /-- Source 25: adaptation to a discrete filtration. -/
 def IsAdapted {Ω : Type u} (ℱ : DiscreteFiltration Ω) (X : DiscreteProcess Ω) : Prop :=
-  ∀ n, Observable (ℱ.at n) (X n)
+  ∀ n, Observable (ℱ.sigma n) (X n)
 
 /-- Source 26: pointwise integrability of a process. -/
 def IsIntegrableProcess {Ω : Type u} (expectation : Expectation Ω)
@@ -46,13 +46,13 @@ def IsDiscreteMartingale {Ω : Type u} (kind : MartingaleType)
   IsIntegrableProcess expectation X ∧ IsAdapted ℱ X ∧
     ∀ m n : ℕ, m ≤ n →
       match kind with
-      | .martingale => CE (ℱ.at m) (X n) = X m
-      | .submartingale => ∀ ω, X m ω ≤ CE (ℱ.at m) (X n) ω
-      | .supermartingale => ∀ ω, CE (ℱ.at m) (X n) ω ≤ X m ω
+      | .martingale => CE (ℱ.sigma m) (X n) = X m
+      | .submartingale => ∀ ω, X m ω ≤ CE (ℱ.sigma m) (X n) ω
+      | .supermartingale => ∀ ω, CE (ℱ.sigma m) (X n) ω ≤ X m ω
 
 /-- Source 28: a discrete stopping time. -/
 def IsDiscreteStoppingTime {Ω : Type u} (ℱ : DiscreteFiltration Ω) (T : Ω → ℕ) : Prop :=
-  ∀ n : ℕ, {ω | T ω ≤ n} ∈ (ℱ.at n).sets
+  ∀ n : ℕ, {ω | T ω ≤ n} ∈ (ℱ.sigma n).sets
 
 /-- Source 29: the random variable obtained by stopping a process. -/
 def stoppedValue {Ω : Type u} (X : DiscreteProcess Ω) (T : Ω → ℕ) : Ω → ℝ :=
@@ -64,7 +64,7 @@ def stoppedProcess {Ω : Type u} (X : DiscreteProcess Ω) (T : Ω → ℕ) : Dis
 
 /-- Source 31: the event family observable at a stopping time. -/
 def stoppingSigmaField {Ω : Type u} (ℱ : DiscreteFiltration Ω) (T : Ω → ℕ) : Set (Set Ω) :=
-  {A | ∀ n : ℕ, A ∩ {ω | T ω ≤ n} ∈ (ℱ.at n).sets}
+  {A | ∀ n : ℕ, A ∩ {ω | T ω ≤ n} ∈ (ℱ.sigma n).sets}
 
 /-- Source 32: closure, monotonicity, measurability, adaptation, and integrability at stopping times. -/
 structure DiscreteStoppingCalculus {Ω : Type u} (expectation : Expectation Ω)
@@ -141,8 +141,8 @@ structure DiscreteUIOptionalStopping (conditionalIdentity expectationIdentity : 
 
 /-- Source 44: a decreasing sequence of sigma-fields. -/
 structure BackwardFiltration (Ω : Type u) where
-  at : ℕ → SigmaField Ω
-  anti : ∀ m n : ℕ, m ≤ n → (at n).Subfield (at m)
+  sigma : ℕ → SigmaField Ω
+  anti : ∀ m n : ℕ, m ≤ n → (sigma n).Subfield (sigma m)
 
 /-- Source 45: convergence of conditional expectations along a backwards filtration. -/
 structure BackwardMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω) where
@@ -160,9 +160,11 @@ structure StrongLaw {Ω : Type u} (X : DiscreteProcess Ω) (mean : ℝ) where
 
 /-- Source 48: a Radon--Nikodym derivative certificate. -/
 structure RadonNikodymCertificate (Ω : Type u) [MeasurableSpace Ω] where
-  P Q : Measure Ω
+  referenceMeasure : Measure Ω
+  targetMeasure : Measure Ω
   density : Ω → ℝ≥0∞
-  integralFormula : ∀ A : Set Ω, MeasurableSet A → Q A = ∫⁻ ω in A, density ω ∂P
+  integralFormula : ∀ A : Set Ω, MeasurableSet A →
+    targetMeasure A = ∫⁻ ω in A, density ω ∂referenceMeasure
 
 /-- Source 49: a row-stochastic transition matrix. -/
 def TransitionMatrix (E : Type u) [Fintype E] (P : E → E → ℝ) : Prop :=
