@@ -1,5 +1,6 @@
 import ProbabilityAndMeasure.MeasurabilityConvergenceResults
 import ProbabilityAndMeasure.DistributionTailResults
+import ProbabilityAndMeasure.IntegralUniquenessResults
 import ProbabilityAndMeasure.MeasureResults
 import ProbabilityAndMeasure.ProbabilityResults
 import ProbabilityAndMeasure.ProductAndFubiniResults
@@ -39,6 +40,9 @@ namespace ProbabilityAndMeasure.CorrectnessAudit
 #check ProbabilityAndMeasure.source062_tail_measurable_ae_constant
 #check ProbabilityAndMeasure.source064_simple_function_iff
 #check ProbabilityAndMeasure.monotone_convergence_source
+#check ProbabilityAndMeasure.source069_lintegral_properties
+#check ProbabilityAndMeasure.source070_integral_properties
+#check ProbabilityAndMeasure.source071_ae_eq_zero_of_piSystem_setIntegral_zero
 #check ProbabilityAndMeasure.source072_lintegral_tsum
 #check ProbabilityAndMeasure.source073_fatou
 #check ProbabilityAndMeasure.dominated_convergence_source
