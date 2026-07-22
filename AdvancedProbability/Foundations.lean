@@ -2,7 +2,7 @@ import Mathlib
 
 noncomputable section
 
-open scoped BigOperators ENNReal NNReal Topology
+open scoped BigOperators ENNReal NNReal Topology MeasureTheory
 open Set Filter MeasureTheory
 
 namespace AdvancedProbability
@@ -55,43 +55,47 @@ abbrev SimpleFunction (E : Type u) [MeasurableSpace E] := MeasureTheory.SimpleFu
 def AlmostEverywhereEqual {E : Type u} [MeasurableSpace E] (μ : Measure E)
     (f g : E → ℝ) : Prop := f =ᵐ[μ] g
 
-/-- Source 11: Fatou's inequality, exposed as the exact comparison certificate used downstream. -/
-theorem fatouLemma {a b : ℝ≥0∞} (h : a ≤ b) : a ≤ b := h
+/-- Source 11: Fatou's lemma for non-negative measurable functions. -/
+theorem fatouLemma {E : Type u} [MeasurableSpace E] (μ : Measure E)
+    (f : ℕ → E → ℝ≥0∞) (hf : ∀ n, Measurable (f n)) :
+    ∫⁻ x, liminf (fun n ↦ f n x) atTop ∂μ ≤
+      liminf (fun n ↦ ∫⁻ x, f n x ∂μ) atTop :=
+  lintegral_liminf_le hf
 
 /-- Source 12: Bochner integrability in Mathlib. -/
 def IsIntegrable {E : Type u} [MeasurableSpace E] (μ : Measure E) (f : E → ℝ) : Prop :=
   Integrable f μ
 
-/-- Source 13: the dominated-convergence conclusion from its convergence certificate. -/
-theorem dominatedConvergence {a : ℕ → ℝ} {b : ℝ}
-    (h : Tendsto a atTop (𝓝 b)) : Tendsto a atTop (𝓝 b) := h
+/-- Source 13: the Bochner dominated convergence theorem. -/
+theorem dominatedConvergence {E : Type u} {G : Type v} [MeasurableSpace E]
+    [NormedAddCommGroup G] [NormedSpace ℝ G] (μ : Measure E)
+    {F : ℕ → E → G} {f : E → G} (bound : E → ℝ)
+    (hF : ∀ n, AEStronglyMeasurable (F n) μ) (hboundInt : Integrable bound μ)
+    (hbound : ∀ n, ∀ᵐ x ∂μ, ‖F n x‖ ≤ bound x)
+    (hlim : ∀ᵐ x ∂μ, Tendsto (fun n ↦ F n x) atTop (𝓝 (f x))) :
+    Tendsto (fun n ↦ ∫ x, F n x ∂μ) atTop (𝓝 (∫ x, f x ∂μ)) :=
+  tendsto_integral_of_dominated_convergence bound hF hboundInt hbound hlim
 
 /-- Source 14: the product measurable space supplied by Mathlib. -/
 abbrev productSigmaField (E₁ : Type u) (E₂ : Type v)
     [MeasurableSpace E₁] [MeasurableSpace E₂] : MeasurableSpace (E₁ × E₂) := inferInstance
 
-/-- Source 15: data certifying the defining rectangle formula for a product measure. -/
-structure ProductMeasureCertificate (E₁ : Type u) (E₂ : Type v)
-    [MeasurableSpace E₁] [MeasurableSpace E₂] where
-  μ₁ : Measure E₁
-  μ₂ : Measure E₂
-  product : Measure (E₁ × E₂)
-  rectangle : ∀ A : Set E₁, ∀ B : Set E₂,
-    product (A ×ˢ B) = μ₁ A * μ₂ B
+/-- Source 15: existence of the product measure and its defining rectangle formula. -/
+theorem ProductMeasureCertificate {E₁ : Type u} {E₂ : Type v}
+    [MeasurableSpace E₁] [MeasurableSpace E₂] (μ₁ : Measure E₁) (μ₂ : Measure E₂)
+    [SFinite μ₂] (A : Set E₁) (B : Set E₂) :
+    (μ₁.prod μ₂) (A ×ˢ B) = μ₁ A * μ₂ B :=
+  Measure.prod_prod A B
 
-/-- Source 16: a Fubini--Tonelli certificate for an iterated integral. -/
-structure FubiniTonelliCertificate (E₁ : Type u) (E₂ : Type v)
-    [MeasurableSpace E₁] [MeasurableSpace E₂] where
-  μ₁ : Measure E₁
-  μ₂ : Measure E₂
-  f : E₁ × E₂ → ℝ
-  joint : ℝ
-  firstOrder : ℝ
-  secondOrder : ℝ
-  first_eq : joint = firstOrder
-  second_eq : joint = secondOrder
+/-- Source 16: Fubini's theorem for an integrable real-valued function. -/
+theorem FubiniTonelliCertificate {E₁ : Type u} {E₂ : Type v}
+    [MeasurableSpace E₁] [MeasurableSpace E₂] (μ₁ : Measure E₁) (μ₂ : Measure E₂)
+    [SFinite μ₁] [SFinite μ₂] (f : E₁ × E₂ → ℝ)
+    (hf : Integrable f (μ₁.prod μ₂)) :
+    ∫ z, f z ∂μ₁.prod μ₂ = ∫ x, ∫ y, f (x, y) ∂μ₂ ∂μ₁ :=
+  integral_prod f hf
 
-/-- An abstract expectation functional, used to state the course's conditional-expectation laws. -/
+/-- An abstract expectation functional, retained for the course-facing elementary examples. -/
 abbrev Expectation (Ω : Type u) := (Ω → ℝ) → ℝ
 
 /-- Indicator-weighted expectation over an event. -/
@@ -113,12 +117,26 @@ def IsConditionalExpectation {Ω : Type u} (expectation : Expectation Ω) (𝒢 
     ∀ A : Set Ω, A ∈ 𝒢.sets →
       eventExpectation expectation X A = eventExpectation expectation Y A
 
-/-- Source 18: existence and almost-sure uniqueness of conditional expectation. -/
-structure ConditionalExpectationExistenceCertificate {Ω : Type u}
-    (expectation : Expectation Ω) (𝒢 : SigmaField Ω) (X : Ω → ℝ) where
-  value : Ω → ℝ
-  specification : IsConditionalExpectation expectation 𝒢 X value
-  unique : ∀ Y : Ω → ℝ, IsConditionalExpectation expectation 𝒢 X Y → Y = value
+/-- Source 18: existence and almost-sure uniqueness of conditional expectation.
+
+The witness is Mathlib's `condExp`; the last clause is its uniqueness characterization. -/
+theorem ConditionalExpectationExistenceCertificate {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    (m : MeasurableSpace Ω) (μ : Measure Ω) (hm : m ≤ m₀)
+    [SigmaFinite (μ.trim hm)] {X : Ω → ℝ} (hX : Integrable X μ) :
+    Integrable (μ[X | m]) μ ∧
+      StronglyMeasurable[m] (μ[X | m]) ∧
+      (∀ A : Set Ω, MeasurableSet[m] A →
+        ∫ x in A, μ[X | m] x ∂μ = ∫ x in A, X x ∂μ) ∧
+      (∀ Y : Ω → ℝ, AEStronglyMeasurable[m] Y μ →
+        (∀ A : Set Ω, MeasurableSet[m] A → μ A < ∞ → IntegrableOn Y A μ) →
+        (∀ A : Set Ω, MeasurableSet[m] A → μ A < ∞ →
+          ∫ x in A, Y x ∂μ = ∫ x in A, X x ∂μ) →
+        Y =ᵐ[μ] μ[X | m]) := by
+  refine ⟨integrable_condExp, stronglyMeasurable_condExp, ?_, ?_⟩
+  · intro A hA
+    exact setIntegral_condExp hm hX hA
+  · intro Y hYm hYint hYeq
+    exact ae_eq_condExp_of_forall_setIntegral_eq hm hX hYint hYeq hYm
 
 /-- Source 19: the Doob--Dynkin factorization of a `σ(Z)`-observable variable. -/
 structure DoobDynkinCertificate {Ω : Type u} (Y Z : Ω → ℝ) where
@@ -139,13 +157,12 @@ structure ConditionalExpectationLaws {Ω : Type u}
   pull_out : ∀ 𝒢 X Z, Observable 𝒢 Z →
     CE 𝒢 (fun ω ↦ Z ω * X ω) = fun ω ↦ Z ω * CE 𝒢 X ω
 
-/-- Source 21: uniform integrability of all conditional expectations of one integrable variable. -/
-structure ConditionalExpectationsUniformlyIntegrable {Ω : Type u}
-    (expectation : Expectation Ω) (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ)
-    (X : Ω → ℝ) where
-  cutoff : ℝ → ℝ
-  uniformTail : ∀ ε : ℝ, 0 < ε → ∃ threshold : ℝ, 0 < threshold ∧
-    ∀ 𝒢 : SigmaField Ω,
-      expectation (fun ω ↦ if threshold ≤ |CE 𝒢 X ω| then |CE 𝒢 X ω| else 0) < ε
+/-- Source 21: all conditional expectations of one integrable real variable form a uniformly
+integrable family. -/
+theorem ConditionalExpectationsUniformlyIntegrable {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    (μ : Measure Ω) [IsFiniteMeasure μ] {ι : Type*} {X : Ω → ℝ}
+    (hX : Integrable X μ) (m : ι → MeasurableSpace Ω) (hm : ∀ i, m i ≤ m₀) :
+    UniformIntegrable (fun i ↦ μ[X | m i]) 1 μ :=
+  hX.uniformIntegrable_condExp hm
 
 end AdvancedProbability
