@@ -138,11 +138,12 @@ theorem ConditionalExpectationExistenceCertificate {Ω : Type u} [m₀ : Measura
   · intro Y hYm hYint hYeq
     exact ae_eq_condExp_of_forall_setIntegral_eq hm hX hYint hYeq hYm
 
-/-- Source 19: the Doob--Dynkin factorization of a `σ(Z)`-observable variable. -/
-structure DoobDynkinCertificate {Ω : Type u} (Y Z : Ω → ℝ) where
-  factor : ℝ → ℝ
-  measurableFactor : Measurable factor
-  factorization : Y = factor ∘ Z
+/-- Source 19: Doob--Dynkin factorization. A random variable measurable for the pullback sigma-field
+of `Z` is a measurable function of `Z`. -/
+theorem DoobDynkinCertificate {Ω : Type u} (Y Z : Ω → ℝ)
+    (hY : Measurable[(inferInstance : MeasurableSpace ℝ).comap Z] Y) :
+    ∃ factor : ℝ → ℝ, Measurable factor ∧ Y = factor ∘ Z :=
+  hY.exists_eq_measurable_comp
 
 /-- Source 20: the thirteen standard conditional-expectation identities grouped as one interface. -/
 structure ConditionalExpectationLaws {Ω : Type u}
