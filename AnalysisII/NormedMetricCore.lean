@@ -65,8 +65,10 @@ theorem source019_equivalent_norms_convergence
   · intro hu ε hε
     obtain ⟨N, hN⟩ := hu (h.lower * ε) (mul_pos h.lower_pos hε)
     refine ⟨N, fun n hn => ?_⟩
-    exact (lt_of_le_of_lt (h.lower_le _) (hN n hn) |>.imp_lt).resolve_left
-      (not_lt_of_ge (hp _))
+    have hlo := h.lower_le (u n - x)
+    have hq' := hN n hn
+    have hp' := hp (u n - x)
+    nlinarith [h.lower_pos]
 
 /-- Analysis II source 20(i): limits in a normed space are unique. -/
 theorem source020_limit_unique
