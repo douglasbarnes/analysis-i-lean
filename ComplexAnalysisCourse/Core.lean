@@ -33,7 +33,7 @@ theorem cauchy_riemann_characterization {f : ℂ → ℂ} {z f' : ℂ} :
   hasDerivAt_iff_hasFDerivAt
 
 def ConformalAt (f : ℂ → ℂ) (w : ℂ) : Prop :=
-  DifferentiableAt ℂ f w ∧ deriv f w ≠ 0
+  AnalyticAt ℂ f w ∧ deriv f w ≠ 0
 
 def ConformalEquiv (U V : Set ℂ) (f : ℂ → ℂ) : Prop :=
   MapsTo f U V ∧ BijOn f U V ∧ (∀ z ∈ U, ConformalAt f z)
@@ -226,7 +226,7 @@ theorem local_maximum_principle {f : ℂ → ℂ} {U : Set ℂ} {z : ℂ}
     (hU : IsPreconnected U) (hopen : IsOpen U) (hf : DifferentiableOn ℂ f U)
     (hz : z ∈ U) (hmax : IsMaxOn (norm ∘ f) U z) :
     EqOn f (const ℂ (f z)) U :=
-  eqOn_of_isPreconnected_of_isMaxOn_norm hU hopen hf hz hmax
+  Complex.eqOn_of_isPreconnected_of_isMaxOn_norm hU hopen hf hz hmax
 
 def ElementaryDeformation (U : Set ℂ) (φ ψ : Path) : Prop :=
   ∃ F : ℝ × ℝ → ℂ, Continuous F ∧ MapsTo F Set.univ U
@@ -287,7 +287,7 @@ theorem removal_of_singularities {f : ℂ → ℂ} {U : Set ℂ} {z₀ : ℂ}
     (hU : U ∈ 𝓝 z₀) (hf : DifferentiableOn ℂ f (U \ {z₀}))
     (hb : BddAbove (norm ∘ f '' (U \ {z₀}))) :
     DifferentiableOn ℂ (Function.update f z₀ (limUnder (𝓝[≠] z₀) f)) U :=
-  differentiableOn_update_limUnder_of_bddAbove hU hf hb
+  Complex.differentiableOn_update_limUnder_of_bddAbove hU hf hb
 
 structure PoleFactorizationModel where
   factor :
@@ -300,10 +300,10 @@ structure PoleFactorizationModel where
 theorem pole_factorization (M : PoleFactorizationModel)
     {f : ℂ → ℂ} {U : Set ℂ} {z₀ : ℂ}
     (hz : z₀ ∈ U) (hf : AnalyticOnNhd ℂ f (U \ {z₀}))
-    (h∞ : Tendsto (fun z ↦ ‖f z‖) (𝓝[≠] z₀) atTop) :
+    (hinfty : Tendsto (fun z ↦ ‖f z‖) (𝓝[≠] z₀) atTop) :
     ∃! kg : ℕ × (ℂ → ℂ), 0 < kg.1 ∧ AnalyticOnNhd ℂ kg.2 U ∧ kg.2 z₀ ≠ 0 ∧
       ∀ z ∈ U \ {z₀}, f z = kg.2 z / (z - z₀) ^ kg.1 :=
-  M.factor f U z₀ hz hf h∞
+  M.factor f U z₀ hz hf hinfty
 
 def IsolatedSingularity (f : ℂ → ℂ) (U : Set ℂ) (z₀ : ℂ) : Prop :=
   z₀ ∈ U ∧ AnalyticOnNhd ℂ f (U \ {z₀})
@@ -374,8 +374,8 @@ def Residue (c : ℤ → ℂ) : ℂ := c (-1)
 
 structure PolarLiftModel where
   lift :
-    ∀ (γ : ℝ → ℂ) (a b : ℝ) (w : ℂ), ContinuousOn γ (Set.Icc a b) →
-      ClosedPath ⟨a, b, γ, by assumption⟩ → w ∉ γ '' Set.Icc a b →
+    ∀ (γ : ℝ → ℂ) (a b : ℝ) (w : ℂ) (hγ : ContinuousOn γ (Set.Icc a b)),
+      ClosedPath ⟨a, b, γ, hγ⟩ → w ∉ γ '' Set.Icc a b →
       ∃ r θ : ℝ → ℝ, ContinuousOn r (Set.Icc a b) ∧ ContinuousOn θ (Set.Icc a b) ∧
         (∀ t ∈ Set.Icc a b, 0 < r t ∧
           γ t = w + (r t : ℂ) * Complex.exp (Complex.I * θ t))
@@ -543,14 +543,15 @@ theorem simply_connected_maps_to_disc (M : RiemannMappingModel) (U : Set ℂ)
   obtain ⟨f, hmaps, _, hconf⟩ := M.map_exists U hU hsc hne
   refine ⟨f, ?_, hmaps, ?_⟩
   · intro z hz
-    exact (hconf z hz).1.analyticAt
+    exact (hconf z hz).1
   · rintro ⟨c, hc⟩
     obtain ⟨z, hz⟩ := hU.2.nonempty
     have heq : f =ᶠ[𝓝 z] const ℂ c := by
       filter_upwards [hU.1.mem_nhds hz] with w hw
       exact hc hw
     have hderiv : deriv f z = deriv (const ℂ c) z := heq.deriv_eq
-    exact (hconf z hz).2 (by simpa using hderiv)
+    rw [deriv_const] at hderiv
+    exact (hconf z hz).2 hderiv
 
 end
 
