@@ -128,7 +128,8 @@ theorem interpolationErrorBound (n : ℕ) (M : SmoothInterpolationErrorModel n)
   have hd : M.dividedDifference = M.derivative M.witness / (n + 1).factorial := by
     apply (eq_div_iff hn).2
     simpa [mul_comm] using M.divided_derivative_identity
-  rw [interpolationErrorIdentity M.toInterpolationErrorModel, hd, abs_mul, abs_div, abs_natCast]
+  rw [interpolationErrorIdentity M.toInterpolationErrorModel, hd, abs_mul, abs_div]
+  rw [abs_of_pos (by positivity : 0 < (((n + 1).factorial : ℕ) : ℝ))]
   exact mul_le_mul_of_nonneg_right (div_le_div_of_nonneg_right hderivative (by positivity)) (abs_nonneg _)
 
 /-- Mathlib's polynomial `T`; its real evaluation is `cos (n arccos x)` on `[-1,1]`. -/
@@ -210,8 +211,12 @@ theorem orthogonalPolynomialThreeTerm (M : OrthogonalRecurrenceModel) (k : ℕ) 
     M.p (k + 1) =
       (Polynomial.X - Polynomial.C (M.α k)) * M.p k -
         Polynomial.C (M.β k) * M.p (k - 1) := by
-  have h := M.xMulDecomposition k
-  linear_combination h
+  calc
+    M.p (k + 1) = Polynomial.X * M.p k - Polynomial.C (M.α k) * M.p k -
+        Polynomial.C (M.β k) * M.p (k - 1) := by
+      rw [M.xMulDecomposition k]
+      ring
+    _ = _ := by ring
 
 structure OrthogonalProjectionModel where
   projectionError : ℝ
@@ -254,8 +259,11 @@ structure OrdinaryQuadratureModel where
 
 theorem ordinaryQuadrature (M : OrdinaryQuadratureModel) (p : Polynomial ℝ)
     (hp : p.natDegree < M.ν) : M.integral p = M.quadrature p := by
-  rw [M.representation p hp]
-  exact M.linearized p
+  calc
+    M.integral p = M.integral
+        (∑ k : Fin M.ν, Polynomial.C (p.eval (k : ℝ)) * M.cardinal k) := by
+      rw [M.representation p hp]
+    _ = M.quadrature p := M.linearized p
 
 structure OrthogonalRootModel where
   ν : ℕ
@@ -323,7 +331,7 @@ structure EulerErrorModel where
   c : ℝ
   lipschitzConstant : ℝ
   T : ℝ
-  h_nonnegative : 0 ≤ h
+  h_positive : 0 < h
   c_nonnegative : 0 ≤ c
   gronwallFactor_nonnegative :
     0 ≤ (Real.exp (lipschitzConstant * T) - 1) / lipschitzConstant
@@ -333,12 +341,8 @@ structure EulerErrorModel where
 theorem eulerMethodConverges (M : EulerErrorModel) (n : ℕ) :
     |M.error n| ≤ M.c * M.h *
       ((Real.exp (M.lipschitzConstant * M.T) - 1) / M.lipschitzConstant) := by
-  by_cases hh : M.h = 0
-  · have := M.normalizedEstimate n
-    simp [hh] at this ⊢
-  · have hhpos : 0 < M.h := lt_of_le_of_ne M.h_nonnegative (Ne.symm hh)
-    have := (div_le_iff₀ hhpos).mp (M.normalizedEstimate n)
-    nlinarith [M.c_nonnegative, M.gronwallFactor_nonnegative]
+  have := (div_le_iff₀ M.h_positive).mp (M.normalizedEstimate n)
+  nlinarith [M.c_nonnegative, M.gronwallFactor_nonnegative]
 
 def localTruncationError (exactNext methodNext : ℝ) : ℝ := exactNext - methodNext
 
@@ -457,8 +461,8 @@ theorem luExistenceUniqueness {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}
       IsLUFactorization A lu.1 lu.2 := by
   refine ⟨M.eliminate h, M.sound h, ?_⟩
   intro lu hlu
-  rcases M.factors_injective lu.1 lu.2 (M.eliminate h).1 (M.eliminate h).2 hlu (M.sound h) with ⟨rfl, rfl⟩
-  exact Prod.ext rfl rfl
+  rcases M.factors_injective lu.1 lu.2 (M.eliminate h).1 (M.eliminate h).2 hlu (M.sound h) with ⟨hL, hU⟩
+  exact Prod.ext hL hU
 
 structure LDUFactorization {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) where
   L : Matrix (Fin n) (Fin n) ℝ
@@ -572,7 +576,7 @@ def householderReflection {m : ℕ} (u : Fin m → ℝ) : Matrix (Fin m) (Fin m)
 structure HouseholderTriangularizationModel {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) where
   reflections : Fin n → Matrix (Fin m) (Fin m) ℝ
   product : Matrix (Fin m) (Fin m) ℝ
-  product_is_composition : product = ∏ k, reflections k
+  product_is_composition : product = (List.ofFn reflections).prod
   entryFormula : ∀ i j, (product * A) i j = if j.val < i.val then 0 else (product * A) i j
   preserves_previous_zeros : ∀ k i j, j.val < i.val → j.val < k.val →
     (reflections k * A) i j = 0
@@ -588,11 +592,12 @@ structure EqualNormReflectionModel {m : ℕ} (a b : Fin m → ℝ) where
   u_eq : u = a - b
   a_ne_b : a ≠ b
   equal_norm_sq : dotProduct a a = dotProduct b b
-  reflection_formula : householderReflection u *ᵥ a = a - (2 * dotProduct u a / dotProduct u u) • u
+  reflection_formula : Matrix.mulVec (householderReflection u) a =
+    a - (2 * dotProduct u a / dotProduct u u) • u
   polarization : 2 * dotProduct u a = dotProduct u u
 
 theorem householderMapsEqualNormVectors {m : ℕ} {a b : Fin m → ℝ}
-    (M : EqualNormReflectionModel a b) : householderReflection M.u *ᵥ a = b := by
+    (M : EqualNormReflectionModel a b) : Matrix.mulVec (householderReflection M.u) a = b := by
   rw [M.reflection_formula, M.polarization]
   have huvec : M.u ≠ 0 := by rw [M.u_eq]; exact sub_ne_zero.mpr M.a_ne_b
   have hu : dotProduct M.u M.u ≠ 0 := by
@@ -602,25 +607,26 @@ theorem householderMapsEqualNormVectors {m : ℕ} {a b : Fin m → ℝ}
   abel
 
 structure InitialComponentsModel {m : ℕ} (u x : Fin m → ℝ) (k : ℕ) where
-  formula : householderReflection u *ᵥ x = x - (2 * dotProduct u x / dotProduct u u) • u
+  formula : Matrix.mulVec (householderReflection u) x =
+    x - (2 * dotProduct u x / dotProduct u u) • u
   initial_zero : ∀ i, i.val < k - 1 → u i = 0
 
 theorem householderPreservesInitialComponents {m : ℕ} {u x : Fin m → ℝ} {k : ℕ}
     (M : InitialComponentsModel u x k) (i : Fin m) (hi : i.val < k - 1) :
-    (householderReflection u *ᵥ x) i = x i := by
+    Matrix.mulVec (householderReflection u) x i = x i := by
   rw [M.formula]
   simp [M.initial_zero i hi]
 
 structure TailMappingModel {m : ℕ} (a b u : Fin m → ℝ) (k : ℕ) where
   u_formula : ∀ i, u i = if i.val < k - 1 then 0 else a i - b i
   tail_diff_nonzero : u ≠ 0
-  reflection_formula : householderReflection u *ᵥ a =
+  reflection_formula : Matrix.mulVec (householderReflection u) a =
     a - (2 * dotProduct u a / dotProduct u u) • u
   polarization : 2 * dotProduct u a = dotProduct u u
 
 theorem householderTailMapping {m : ℕ} {a b u : Fin m → ℝ} {k : ℕ}
     (M : TailMappingModel a b u k) :
-    householderReflection u *ᵥ a = fun i ↦ if i.val < k - 1 then a i else b i := by
+    Matrix.mulVec (householderReflection u) a = fun i ↦ if i.val < k - 1 then a i else b i := by
   rw [M.reflection_formula, M.polarization]
   have hu : dotProduct u u ≠ 0 := fun h ↦ M.tail_diff_nonzero (dotProduct_self_eq_zero.mp h)
   rw [div_self hu, one_smul]
