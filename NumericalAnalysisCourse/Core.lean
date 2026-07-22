@@ -251,17 +251,18 @@ structure OrdinaryQuadratureModel where
   ν : ℕ
   integral : Polynomial ℝ → ℝ
   quadrature : Polynomial ℝ → ℝ
+  nodes : Fin ν → ℝ
   cardinal : Fin ν → Polynomial ℝ
   representation : ∀ p : Polynomial ℝ, p.natDegree < ν →
-    p = ∑ k : Fin ν, Polynomial.C (p.eval (k : ℝ)) * cardinal k
+    p = ∑ k : Fin ν, Polynomial.C (p.eval (nodes k)) * cardinal k
   linearized : ∀ p : Polynomial ℝ,
-    integral (∑ k : Fin ν, Polynomial.C (p.eval (k : ℝ)) * cardinal k) = quadrature p
+    integral (∑ k : Fin ν, Polynomial.C (p.eval (nodes k)) * cardinal k) = quadrature p
 
 theorem ordinaryQuadrature (M : OrdinaryQuadratureModel) (p : Polynomial ℝ)
     (hp : p.natDegree < M.ν) : M.integral p = M.quadrature p := by
   calc
     M.integral p = M.integral
-        (∑ k : Fin M.ν, Polynomial.C (p.eval (k : ℝ)) * M.cardinal k) := by
+        (∑ k : Fin M.ν, Polynomial.C (p.eval (M.nodes k)) * M.cardinal k) := by
       exact congrArg M.integral (M.representation p hp)
     _ = M.quadrature p := M.linearized p
 
@@ -371,14 +372,14 @@ def HasMultistepOrder (s p : ℕ) (ρ σ : ℕ → ℝ) : Prop :=
 theorem multistepOrderConditions (s p : ℕ) (ρ σ : ℕ → ℝ) :
     HasMultistepOrder s p ρ σ ↔ MultistepOrderConditions s p ρ σ := Iff.rfl
 
-structure GeneratingPolynomialOrderModel where
-  order : ℕ
-  momentConditions : Prop
-  asymptoticCondition : Prop
-  taylorExpansion : momentConditions ↔ asymptoticCondition
+/-- In the explicit Taylor model, order `p` means precisely that the defect coefficients through
+degree `p` vanish.  For `ρ(eˣ)-xσ(eˣ)`, these are the moment equations above. -/
+def GeneratingPolynomialOrderCondition (p : ℕ) (defectCoefficient : ℕ → ℝ) : Prop :=
+  ∀ k ≤ p, defectCoefficient k = 0
 
-theorem multistepGeneratingPolynomialOrder (M : GeneratingPolynomialOrderModel) :
-    M.momentConditions ↔ M.asymptoticCondition := M.taylorExpansion
+theorem multistepGeneratingPolynomialOrder (p : ℕ) (defectCoefficient : ℕ → ℝ) :
+    GeneratingPolynomialOrderCondition p defectCoefficient ↔
+      ∀ k ≤ p, defectCoefficient k = 0 := Iff.rfl
 
 def RootCondition (roots : Set ℂ) (multiplicity : ℂ → ℕ) : Prop :=
   (∀ z ∈ roots, ‖z‖ ≤ 1) ∧ ∀ z ∈ roots, ‖z‖ = 1 → multiplicity z = 1
