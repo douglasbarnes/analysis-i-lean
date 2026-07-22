@@ -129,7 +129,7 @@ def CanonicalCommutation (ℏ : ℝ) (x p : Operator State) : Prop :=
 
 /- 15. Wavepacket: a spatially localized wavefunction. -/
 def IsWavepacket (ψ : ℝ → ℂ) : Prop :=
-  ∃ x₀ : ℝ, Tendsto (fun r : ℝ => ψ (x₀ + r)) (cocompact ℝ) (𝓝 0)
+  ∃ x₀ : ℝ, Tendsto (fun r : ℝ => ψ (x₀ + r)) (cocompact ℝ) (nhds 0)
 
 /- 16. Gaussian wavepacket. -/
 def IsGaussianWavepacket (α : ℝ) (γ : ℝ → ℂ) (Ψ : ℝ → ℝ → ℂ) : Prop :=
