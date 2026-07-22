@@ -106,11 +106,18 @@ theorem ConditionalExpectationTower {Ω : Type u} [m₀ : MeasurableSpace Ω]
     μ[μ[X | m₂] | m₁] =ᵐ[μ] μ[X | m₁] :=
   condExp_condExp_of_le hm₁₂ hm₂
 
-/-- Source 20(11), the `p = 1` case: conditional expectation is an `L¹` contraction. -/
+/-- Source 20(11): conditional expectation is an `Lᵖ` contraction for every `p ≥ 1`. -/
+theorem ConditionalExpectationLpContraction {Ω : Type u} [MeasurableSpace Ω]
+    {m : MeasurableSpace Ω} {μ : Measure Ω} (X : Ω → ℝ)
+    {p : ℝ≥0∞} (hp : 1 ≤ p) :
+    eLpNorm (μ[X | m]) p μ ≤ eLpNorm X p μ :=
+  eLpNorm_condExp_le_eLpNorm X hp
+
+/-- The `p = 1` specialization of `ConditionalExpectationLpContraction`. -/
 theorem ConditionalExpectationL1Contraction {Ω : Type u} [MeasurableSpace Ω]
     {m : MeasurableSpace Ω} {μ : Measure Ω} (X : Ω → ℝ) :
     eLpNorm (μ[X | m]) 1 μ ≤ eLpNorm X 1 μ :=
-  eLpNorm_one_condExp_le_eLpNorm X
+  ConditionalExpectationLpContraction X le_rfl
 
 /-- Source 20(12): a measurable factor can be pulled out of conditional expectation. -/
 theorem ConditionalExpectationPullOut {Ω : Type u} [MeasurableSpace Ω]
