@@ -2,7 +2,7 @@ import AdvancedProbability.Foundations
 
 noncomputable section
 
-open scoped BigOperators ENNReal NNReal Topology
+open scoped BigOperators ENNReal NNReal Topology MeasureTheory ProbabilityTheory Function
 open Set Filter MeasureTheory
 
 namespace AdvancedProbability
@@ -79,21 +79,40 @@ structure DiscreteStoppingCalculus {Ω : Type u} (expectation : Expectation Ω)
     IsIntegrableProcess expectation (stoppedProcess X T)
 
 /-- Source 33: optional stopping for bounded discrete supermartingales. -/
-structure OptionalStoppingDiscrete {Ω : Type u} (expectation : Expectation Ω)
-    (X : DiscreteProcess Ω) (S T : Ω → ℕ) where
-  order : ∀ ω, S ω ≤ T ω
-  conclusion : expectation (stoppedValue X T) ≤ expectation (stoppedValue X S)
+theorem OptionalStoppingDiscrete {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    {μ : Measure Ω} {ℱ : Filtration ℕ m₀} {X : ℕ → Ω → ℝ}
+    {S T : Ω → ℕ∞} [SigmaFiniteFiltration μ ℱ]
+    (hX : Supermartingale X ℱ μ) (hS : IsStoppingTime ℱ S)
+    (hT : IsStoppingTime ℱ T) (hST : S ≤ T) {N : ℕ} (hTbdd : ∀ ω, T ω ≤ N) :
+    ∫ ω, MeasureTheory.stoppedValue X T ω ∂μ ≤
+      ∫ ω, MeasureTheory.stoppedValue X S ω ∂μ := by
+  have hneg := hX.neg.expected_stoppedValue_mono hS hT hST hTbdd
+  simpa [MeasureTheory.stoppedValue] using hneg
 
-/-- Source 34: the four equivalent supermartingale/optional-stopping formulations. -/
-structure SupermartingaleCharacterization (p₁ p₂ p₃ p₄ : Prop) where
-  one_iff_two : p₁ ↔ p₂
-  two_iff_three : p₂ ↔ p₃
-  three_iff_four : p₃ ↔ p₄
+/-- Source 34: the optional-stopping characterization of submartingales. -/
+theorem SupermartingaleCharacterization {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    {μ : Measure Ω} {ℱ : Filtration ℕ m₀} {X : ℕ → Ω → ℝ}
+    [SigmaFiniteFiltration μ ℱ] (hadapted : StronglyAdapted ℱ X)
+    (hintegrable : ∀ n, Integrable (X n) μ) :
+    Submartingale X ℱ μ ↔
+      ∀ S T : Ω → ℕ∞, IsStoppingTime ℱ S → IsStoppingTime ℱ T → S ≤ T →
+        (∃ N : ℕ, ∀ ω, T ω ≤ N) →
+        ∫ ω, MeasureTheory.stoppedValue X S ω ∂μ ≤
+          ∫ ω, MeasureTheory.stoppedValue X T ω ∂μ :=
+  submartingale_iff_expected_stoppedValue_mono hadapted hintegrable
 
 /-- Source 35: almost-sure convergence of an `L¹`-bounded supermartingale. -/
-structure AlmostSureMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω) where
-  limit : Ω → ℝ
-  converges : ∀ ω, Tendsto (fun n ↦ X n ω) atTop (𝓝 (limit ω))
+theorem AlmostSureMartingaleConvergence {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    {μ : Measure Ω} [IsFiniteMeasure μ] {ℱ : Filtration ℕ m₀}
+    {X : ℕ → Ω → ℝ} {R : ℝ≥0} (hX : Supermartingale X ℱ μ)
+    (hbdd : ∀ n, eLpNorm (X n) 1 μ ≤ R) :
+    ∀ᵐ ω ∂μ, ∃ c : ℝ, Tendsto (fun n ↦ X n ω) atTop (𝓝 c) := by
+  have hbddNeg : ∀ n, eLpNorm ((-X) n) 1 μ ≤ R := by
+    intro n
+    simpa using hbdd n
+  filter_upwards [hX.neg.exists_ae_tendsto_of_bdd hbddNeg] with ω hω
+  obtain ⟨c, hc⟩ := hω
+  exact ⟨-c, by simpa using hc.neg⟩
 
 /-- Source 36: admissible numbers of completed upcrossings before time `N`. -/
 def upcrossingsBefore (a b : ℝ) (x : ℕ → ℝ) (N : ℕ) : Set ℕ :=
@@ -101,10 +120,15 @@ def upcrossingsBefore (a b : ℝ) (x : ℕ → ℝ) (N : ℕ) : Set ℕ :=
     (∀ i, s i < t i) ∧ (∀ i, t i ≤ N) ∧
     (∀ i, x (s i) ≤ a ∧ b ≤ x (t i))}
 
-/-- Source 37: numerical convergence from bounded liminf and finite rational upcrossings. -/
-structure SequenceConvergenceCertificate (x : ℕ → ℝ) where
-  limit : ℝ
-  tendsTo : Tendsto x atTop (𝓝 limit)
+/-- Source 37: numerical convergence from bounded lower limit and finite rational upcrossings. -/
+theorem SequenceConvergenceCertificate (x : ℕ → ℝ)
+    (hliminf : liminf (fun n ↦ (‖x n‖₊ : ℝ≥0∞)) atTop < ∞)
+    (hup : ∀ a b : ℚ, a < b →
+      MeasureTheory.upcrossings a b (fun n (_ : Unit) ↦ x n) () < ∞) :
+    ∃ c : ℝ, Tendsto x atTop (𝓝 c) := by
+  simpa using
+    (MeasureTheory.tendsto_of_uncrossing_lt_top
+      (f := fun n (_ : Unit) ↦ x n) (ω := ()) hliminf hup)
 
 /-- Source 38: Doob's upcrossing estimate. -/
 structure DoobUpcrossing (a b : ℝ) where
@@ -149,22 +173,33 @@ structure BackwardMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω) w
   limit : Ω → ℝ
   converges : ∀ ω, Tendsto (fun n ↦ X n ω) atTop (𝓝 (limit ω))
 
-/-- Source 46: Kolmogorov's zero-one law for a tail event. -/
-structure KolmogorovZeroOne (probability : ℝ) where
-  dichotomy : probability = 0 ∨ probability = 1
+/-- Source 46: Kolmogorov's zero-one law. -/
+theorem KolmogorovZeroOne {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    (μ : Measure Ω) [IsFiniteMeasure μ] (s : ℕ → MeasurableSpace Ω)
+    (hle : ∀ n, s n ≤ m₀) (hindep : iIndep s μ) {A : Set Ω}
+    (hA : MeasurableSet[limsup s atTop] A) : μ A = 0 ∨ μ A = 1 :=
+  ProbabilityTheory.measure_zero_or_one_of_measurableSet_limsup_atTop hle hindep hA
 
-/-- Source 47: the strong law of large numbers. -/
-structure StrongLaw {Ω : Type u} (X : DiscreteProcess Ω) (mean : ℝ) where
-  sampleAverage : ℕ → Ω → ℝ
-  converges : ∀ ω, Tendsto (fun n ↦ sampleAverage n ω) atTop (𝓝 mean)
+/-- Source 47: the strong law of large numbers for pairwise-independent identically distributed
+integrable real random variables. -/
+theorem StrongLaw {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω)
+    (X : ℕ → Ω → ℝ) (hX : Integrable (X 0) μ)
+    (hindep : Pairwise ((· ⟂ᵢ[μ] ·) on X))
+    (hident : ∀ n, IdentDistrib (X n) (X 0) μ μ) :
+    ∀ᵐ ω ∂μ,
+      Tendsto (fun n : ℕ ↦ (n : ℝ)⁻¹ • (∑ i ∈ Finset.range n, X i ω))
+        atTop (𝓝 μ[X 0]) :=
+  ProbabilityTheory.strong_law_ae X hX hindep hident
 
-/-- Source 48: a Radon--Nikodym derivative certificate. -/
-structure RadonNikodymCertificate (Ω : Type u) [MeasurableSpace Ω] where
-  referenceMeasure : Measure Ω
-  targetMeasure : Measure Ω
-  density : Ω → ℝ≥0∞
-  integralFormula : ∀ A : Set Ω, MeasurableSet A →
-    targetMeasure A = ∫⁻ ω in A, density ω ∂referenceMeasure
+/-- Source 48: the Radon--Nikodym theorem for sigma-finite measures. -/
+theorem RadonNikodymCertificate {Ω : Type u} [MeasurableSpace Ω]
+    (target reference : Measure Ω) [SigmaFinite target] [SigmaFinite reference]
+    (habs : target ≪ reference) :
+    ∃ density : Ω → ℝ≥0∞, Measurable density ∧
+      ∀ A : Set Ω, target A = ∫⁻ ω in A, density ω ∂reference := by
+  refine ⟨target.rnDeriv reference, Measure.measurable_rnDeriv _ _, ?_⟩
+  intro A
+  exact (Measure.setLIntegral_rnDeriv habs A).symm
 
 /-- Source 49: a row-stochastic transition matrix. -/
 def TransitionMatrix (E : Type u) [Fintype E] (P : E → E → ℝ) : Prop :=
