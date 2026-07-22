@@ -34,9 +34,14 @@ theorem source005_linear_combination
     TendstoUniformly
       (fun n x => a * F n x + b * G n x)
       (fun x => a * f x + b * g x) atTop := by
-  have ha := Real.uniformContinuous_const_mul.comp_tendstoUniformly hF
-  have hb := Real.uniformContinuous_const_mul.comp_tendstoUniformly hG
-  simpa [Function.comp_def] using Real.uniformContinuous_add.comp_tendstoUniformly (ha.prodMk hb)
+  have ha : TendstoUniformly (fun n x => a * F n x) (fun x => a * f x) atTop := by
+    simpa [Function.comp_def] using
+      (Real.uniformContinuous_const_mul (x := a)).comp_tendstoUniformly hF
+  have hb : TendstoUniformly (fun n x => b * G n x) (fun x => b * g x) atTop := by
+    simpa [Function.comp_def] using
+      (Real.uniformContinuous_const_mul (x := b)).comp_tendstoUniformly hG
+  simpa [Function.comp_def] using
+    Real.uniformContinuous_add.comp_tendstoUniformly (ha.prodMk hb)
 
 /-- Analysis II source 5(ii): multiplication by a bounded real function preserves
 uniform convergence.  Boundedness is supplied by an explicit positive bound. -/
@@ -49,13 +54,13 @@ theorem source005_bounded_multiplier
   intro ε hε
   filter_upwards [hF (ε / C) (div_pos hε hC)] with n hn
   intro x
-  rw [Real.dist_eq, Real.dist_eq] at hn ⊢
+  simp only [Real.dist_eq] at hn ⊢
   rw [← mul_sub, abs_mul]
   calc
-    |g x| * |F n x - f x| ≤ C * |F n x - f x| :=
+    |g x| * |f x - F n x| ≤ C * |f x - F n x| :=
       mul_le_mul_of_nonneg_right (hg x) (abs_nonneg _)
     _ < C * (ε / C) := mul_lt_mul_of_pos_left (hn x) hC
-    _ = ε := by field_simp
+    _ = ε := by field_simp [ne_of_gt hC]
 
 /-- Analysis II source 7: Weierstrass' M-test, in a normed additive group. -/
 theorem source007_weierstrass_m_test
