@@ -89,7 +89,7 @@ theorem parseval {ι 𝕜 V : Type*} [Fintype ι] [RCLike 𝕜]
     ∑ i, ‖⟪b i, x⟫_𝕜‖ ^ 2 = ‖x‖ ^ 2 := b.sum_sq_norm_inner_right x -- 157
 def gramSchmidt {ι 𝕜 V : Type*} [LinearOrder ι] [WellFoundedLT ι] [RCLike 𝕜]
     [NormedAddCommGroup V] [InnerProductSpace 𝕜 V] (v : ι → V) : ι → V :=
-  _root_.gramSchmidt 𝕜 v -- 158
+  InnerProductSpace.gramSchmidt 𝕜 v -- 158
 theorem orthonormal_extend {𝕜 V : Type*} [RCLike 𝕜]
     [NormedAddCommGroup V] [InnerProductSpace 𝕜 V] [FiniteDimensional 𝕜 V]
     (v : Set V) (hv : Orthonormal 𝕜 (fun x : v => (x : V))) :
@@ -135,11 +135,11 @@ theorem orthogonal_inverse_eq_adjoint {n : Type*} [Fintype n] [DecidableEq n]
 theorem orthogonal_iff_matrix {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℝ) :
     A ∈ Matrix.orthogonalGroup n ℝ ↔ A.transpose * A = 1 :=
-  Matrix.mem_orthogonalGroup_iff' -- 170
+  Matrix.mem_orthogonalGroup_iff' n ℝ -- 170
 abbrev OrthogonalGroup (n : Type*) [Fintype n] [DecidableEq n] := Matrix.orthogonalGroup n ℝ -- 171
 theorem orthogonal_group_maps_standard_basis {n : Type*} [Fintype n] [DecidableEq n]
     (Q : Matrix.orthogonalGroup n ℝ) : Q.1.transpose * Q.1 = 1 := by
-  exact Matrix.mem_orthogonalGroup_iff'.mp Q.property -- 172
+  exact (Matrix.mem_orthogonalGroup_iff' n ℝ).mp Q.property -- 172
 def IsUnitaryEndomorphism {V : Type*} [NormedAddCommGroup V]
     [InnerProductSpace ℂ V] (f : V →ₗ[ℂ] V) : Prop := ∀ x y, ⟪f x, f y⟫_ℂ = ⟪x, y⟫_ℂ -- 173
 theorem unitary_inverse_eq_adjoint {n : Type*} [Fintype n] [DecidableEq n]
@@ -165,19 +165,19 @@ theorem self_adjoint_eigenvectors_orthogonal {V : Type*} [NormedAddCommGroup V]
   exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr hμν) -- 178
 theorem spectral_theorem_matrix {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.IsHermitian) :
-    A = conjStarAlgAut ℂ _ hA.eigenvectorUnitary
+    A = Unitary.conjStarAlgAut ℂ _ hA.eigenvectorUnitary
       (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues)) := hA.spectral_theorem -- 179
 theorem spectral_eigenspace_decomposition {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.IsHermitian) :
-    A = conjStarAlgAut ℂ _ hA.eigenvectorUnitary
+    A = Unitary.conjStarAlgAut ℂ _ hA.eigenvectorUnitary
       (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues)) := hA.spectral_theorem -- 180
 theorem real_symmetric_spectral_theorem {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℝ) (hA : A.IsHermitian) :
-    A = conjStarAlgAut ℝ _ hA.eigenvectorUnitary
+    A = Unitary.conjStarAlgAut ℝ _ hA.eigenvectorUnitary
       (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues)) := hA.spectral_theorem -- 181
 theorem symmetric_form_orthogonal_diagonalization {n : Type*} [Fintype n]
     [DecidableEq n] (A : Matrix n n ℝ) (hA : A.IsHermitian) :
-    A = conjStarAlgAut ℝ _ hA.eigenvectorUnitary
+    A = Unitary.conjStarAlgAut ℝ _ hA.eigenvectorUnitary
       (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues)) := hA.spectral_theorem -- 182
 theorem simultaneous_diagonalization_rank_one (a b : Matrix (Fin 1) (Fin 1) ℝ) :
     Matrix.IsDiag a ∧ Matrix.IsDiag b := by
@@ -189,7 +189,7 @@ theorem symmetric_positive_pair_rank_one (a b : Matrix (Fin 1) (Fin 1) ℝ) :
   simpa using simultaneous_diagonalization_rank_one a b -- 184
 theorem hermitian_spectral_consequences {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.IsHermitian) :
-    A = conjStarAlgAut ℂ _ hA.eigenvectorUnitary
+    A = Unitary.conjStarAlgAut ℂ _ hA.eigenvectorUnitary
       (Matrix.diagonal (RCLike.ofReal ∘ hA.eigenvalues)) := hA.spectral_theorem -- 185
 theorem unitary_spectral_theorem {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix.unitaryGroup n ℂ) : star A.1 * A.1 = A.1 * star A.1 := by
