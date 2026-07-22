@@ -121,7 +121,7 @@ def IsConditionalExpectation {Ω : Type u} (expectation : Expectation Ω) (𝒢 
 
 The witness is Mathlib's `condExp`; the last clause is its uniqueness characterization. -/
 theorem ConditionalExpectationExistenceCertificate {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    (m : MeasurableSpace Ω) (μ : Measure Ω) (hm : m ≤ m₀)
+    (m : MeasurableSpace Ω) (μ : @Measure Ω m₀) (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] {X : Ω → ℝ} (hX : Integrable X μ) :
     Integrable (μ[X | m]) μ ∧
       StronglyMeasurable[m] (μ[X | m]) ∧
