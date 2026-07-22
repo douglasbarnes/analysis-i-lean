@@ -93,15 +93,15 @@ structure OpenSetHittingTime (open cadlag stopping : Prop) where
   conclusion : stopping
 
 /-- Source 69: a continuous-time martingale. -/
-def IsContinuousTimeMartingale {Ω : Type u} (𝔼 : Expectation Ω)
+def IsContinuousTimeMartingale {Ω : Type u} (expectation : Expectation Ω)
     (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ) (ℱ : ContinuousFiltration Ω)
     (X : ContinuousProcess Ω) : Prop :=
   (∀ t, Observable (ℱ.at t) (X t)) ∧
-    (∀ t, IntegrableFor 𝔼 (X t)) ∧
+    (∀ t, IntegrableFor expectation (X t)) ∧
     ∀ s t, s ≤ t → CE (ℱ.at s) (X t) = X s
 
 /-- Source 70: bounded continuous-time optional stopping. -/
-structure ContinuousOptionalStoppingBounded {Ω : Type u} (𝔼 : Expectation Ω)
+structure ContinuousOptionalStoppingBounded {Ω : Type u} (expectation : Expectation Ω)
     (X : ContinuousProcess Ω) (S T : Ω → ℝ≥0) where
   order : ∀ ω, S ω ≤ T ω
   conclusion : Prop
@@ -112,9 +112,9 @@ structure ContinuousSupermartingaleConvergence {Ω : Type u} (X : ContinuousProc
   convergence : ∀ ω, Tendsto (fun n : ℕ ↦ X (n : ℝ≥0) ω) atTop (𝓝 (limit ω))
 
 /-- Source 72: continuous-time maximal inequality. -/
-structure ContinuousMaximalInequality (threshold probability expectation : ℝ) where
+structure ContinuousMaximalInequality (threshold probability expectationValue : ℝ) where
   threshold_pos : 0 < threshold
-  estimate : threshold * probability ≤ expectation
+  estimate : threshold * probability ≤ expectationValue
 
 /-- Source 73: continuous-time Doob `Lᵖ` inequality. -/
 structure ContinuousDoobLpInequality (p maxNorm terminalNorm : ℝ) where
