@@ -31,8 +31,8 @@ def IsAdapted {Ω : Type u} (ℱ : DiscreteFiltration Ω) (X : DiscreteProcess �
   ∀ n, Observable (ℱ.at n) (X n)
 
 /-- Source 26: pointwise integrability of a process. -/
-def IsIntegrableProcess {Ω : Type u} (𝔼 : Expectation Ω) (X : DiscreteProcess Ω) : Prop :=
-  ∀ n, IntegrableFor 𝔼 (X n)
+def IsIntegrableProcess {Ω : Type u} (expectation : Expectation Ω)
+    (X : DiscreteProcess Ω) : Prop := ∀ n, IntegrableFor expectation (X n)
 
 /-- The three comparison modes for martingales, submartingales, and supermartingales. -/
 inductive MartingaleType where
@@ -40,10 +40,10 @@ inductive MartingaleType where
   deriving DecidableEq, Repr
 
 /-- Source 27: discrete martingale/submartingale/supermartingale. -/
-def IsDiscreteMartingale {Ω : Type u} (kind : MartingaleType) (𝔼 : Expectation Ω)
-    (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ) (ℱ : DiscreteFiltration Ω)
-    (X : DiscreteProcess Ω) : Prop :=
-  IsIntegrableProcess 𝔼 X ∧ IsAdapted ℱ X ∧
+def IsDiscreteMartingale {Ω : Type u} (kind : MartingaleType)
+    (expectation : Expectation Ω) (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ)
+    (ℱ : DiscreteFiltration Ω) (X : DiscreteProcess Ω) : Prop :=
+  IsIntegrableProcess expectation X ∧ IsAdapted ℱ X ∧
     ∀ m n : ℕ, m ≤ n →
       match kind with
       | .martingale => CE (ℱ.at m) (X n) = X m
@@ -67,7 +67,7 @@ def stoppingSigmaField {Ω : Type u} (ℱ : DiscreteFiltration Ω) (T : Ω → �
   {A | ∀ n : ℕ, A ∩ {ω | T ω ≤ n} ∈ (ℱ.at n).sets}
 
 /-- Source 32: closure, monotonicity, measurability, adaptation, and integrability at stopping times. -/
-structure DiscreteStoppingCalculus {Ω : Type u} (𝔼 : Expectation Ω)
+structure DiscreteStoppingCalculus {Ω : Type u} (expectation : Expectation Ω)
     (ℱ : DiscreteFiltration Ω) (X : DiscreteProcess Ω) where
   maxStopping : ∀ S T, IsDiscreteStoppingTime ℱ S → IsDiscreteStoppingTime ℱ T →
     IsDiscreteStoppingTime ℱ (fun ω ↦ max (S ω) (T ω))
@@ -75,14 +75,14 @@ structure DiscreteStoppingCalculus {Ω : Type u} (𝔼 : Expectation Ω)
     IsDiscreteStoppingTime ℱ (fun ω ↦ min (S ω) (T ω))
   stoppedAdapted : ∀ T, IsDiscreteStoppingTime ℱ T → IsAdapted ℱ X →
     IsAdapted ℱ (stoppedProcess X T)
-  stoppedIntegrable : ∀ T, IsDiscreteStoppingTime ℱ T → IsIntegrableProcess 𝔼 X →
-    IsIntegrableProcess 𝔼 (stoppedProcess X T)
+  stoppedIntegrable : ∀ T, IsDiscreteStoppingTime ℱ T → IsIntegrableProcess expectation X →
+    IsIntegrableProcess expectation (stoppedProcess X T)
 
 /-- Source 33: optional stopping for bounded discrete supermartingales. -/
-structure OptionalStoppingDiscrete {Ω : Type u} (𝔼 : Expectation Ω)
+structure OptionalStoppingDiscrete {Ω : Type u} (expectation : Expectation Ω)
     (X : DiscreteProcess Ω) (S T : Ω → ℕ) where
   order : ∀ ω, S ω ≤ T ω
-  conclusion : 𝔼 (stoppedValue X T) ≤ 𝔼 (stoppedValue X S)
+  conclusion : expectation (stoppedValue X T) ≤ expectation (stoppedValue X S)
 
 /-- Source 34: the four equivalent supermartingale/optional-stopping formulations. -/
 structure SupermartingaleCharacterization (p₁ p₂ p₃ p₄ : Prop) where
@@ -114,9 +114,9 @@ structure DoobUpcrossing (a b : ℝ) where
   estimate : expectedUpcrossings ≤ upperBound
 
 /-- Source 39: discrete maximal inequality. -/
-structure DiscreteMaximalInequality (threshold probability expectation : ℝ) where
+structure DiscreteMaximalInequality (threshold probability expectationValue : ℝ) where
   threshold_pos : 0 < threshold
-  estimate : threshold * probability ≤ expectation
+  estimate : threshold * probability ≤ expectationValue
 
 /-- Source 40: discrete Doob `Lᵖ` inequality. -/
 structure DiscreteDoobLpInequality (p maxNorm terminalNorm : ℝ) where
