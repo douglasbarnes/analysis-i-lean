@@ -111,11 +111,11 @@ abbrev canonicalEmbedding (𝕜 E : Type*) [NontriviallyNormedField 𝕜]
     (x : E) (f : StrongDual 𝕜 E) :
     canonicalEmbedding 𝕜 E x f = f x := rfl
 
-/-- The canonical bidual embedding has operator norm at most one. -/
+/-- Pointwise boundedness of the canonical bidual embedding. -/
 theorem canonicalEmbedding_norm_le {𝕜 E : Type*} [NontriviallyNormedField 𝕜]
-    [CompleteSpace 𝕜] [NormedAddCommGroup E] [NormedSpace 𝕜 E] :
-    ‖canonicalEmbedding 𝕜 E‖ ≤ 1 :=
-  NormedSpace.inclusionInDoubleDual_norm_le 𝕜 E
+    [CompleteSpace 𝕜] [SeminormedAddCommGroup E] [NormedSpace 𝕜 E] (x : E) :
+    ‖canonicalEmbedding 𝕜 E x‖ ≤ ‖x‖ :=
+  NormedSpace.double_dual_bound 𝕜 E x
 
 /-- Hahn--Banach: a continuous functional on a subspace extends without increasing its norm. -/
 theorem hahnBanach_extension {𝕜 E : Type*} [RCLike 𝕜]
@@ -126,10 +126,10 @@ theorem hahnBanach_extension {𝕜 E : Type*} [RCLike 𝕜]
 
 /-- Hahn--Banach supplies a norming functional at every nonzero vector. -/
 theorem exists_norming_functional {𝕜 E : Type*} [RCLike 𝕜]
-    [SeminormedAddCommGroup E] [NormedSpace 𝕜 E]
+    [NormedAddCommGroup E] [NormedSpace 𝕜 E]
     (x : E) (hx : x ≠ 0) :
     ∃ f : StrongDual 𝕜 E, ‖f‖ = 1 ∧ f x = ‖x‖ :=
-  exists_dual_vector 𝕜 x (by simpa only [norm_ne_zero_iff] using hx)
+  exists_dual_vector 𝕜 x (norm_ne_zero_iff.mpr hx)
 
 /-- Continuous functionals separate points. -/
 theorem dual_separates_points {𝕜 E : Type*} [RCLike 𝕜]
