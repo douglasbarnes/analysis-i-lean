@@ -1,4 +1,5 @@
 import AdvancedProbability.Foundations
+import AdvancedProbability.ConditionalExpectationResults
 import AdvancedProbability.DiscreteMartingales
 import AdvancedProbability.DiscreteResults
 import AdvancedProbability.MarkovResults
