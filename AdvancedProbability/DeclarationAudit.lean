@@ -23,7 +23,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.IsConditionalExpectation
 #check AdvancedProbability.ConditionalExpectationExistenceCertificate
 #check AdvancedProbability.DoobDynkinCertificate
-#check AdvancedProbability.ConditionalExpectationLaws
+#check AdvancedProbability.ConditionalExpectationLawsTheorem
 #check AdvancedProbability.ConditionalExpectationsUniformlyIntegrable
 #check AdvancedProbability.DiscreteFiltration
 #check AdvancedProbability.DiscreteProcess
