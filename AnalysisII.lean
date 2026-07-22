@@ -6,3 +6,4 @@ import AnalysisII.UniformConvergence
 import AnalysisII.NormedMetricCore
 import AnalysisII.CalculusCore
 import AnalysisII.CompactnessAndContractions
+import AnalysisII.SequentialTopology
