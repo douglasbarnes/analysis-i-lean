@@ -97,8 +97,12 @@ def sphericalDistance (P Q : Vec3) : ℝ := Real.arccos (dot P Q)
 
 structure SphericalGeometryModel where
   Triangle : Type*
-  sideA sideB sideC : Triangle → ℝ
-  angleA angleB angleC : Triangle → ℝ
+  sideA : Triangle → ℝ
+  sideB : Triangle → ℝ
+  sideC : Triangle → ℝ
+  angleA : Triangle → ℝ
+  angleB : Triangle → ℝ
+  angleC : Triangle → ℝ
   area : Triangle → ℝ
   cosine_rule : ∀ Δ, Real.sin (sideA Δ) * Real.sin (sideB Δ) *
     Real.cos (angleC Δ) = Real.cos (sideC Δ) - Real.cos (sideA Δ) * Real.cos (sideB Δ)
@@ -113,22 +117,28 @@ structure SphericalGeometryModel where
   triangle_equality_iff : ∀ P Q R, sphericalDistance P R =
       sphericalDistance P Q + sphericalDistance Q R ↔ between P Q R
   Curve : Type*
-  curveStart curveEnd : Curve → SpherePoint
+  curveStart : Curve → SpherePoint
+  curveEnd : Curve → SpherePoint
   curveLength : Curve → ℝ
   curveImageIsShortestSegment : Curve → Prop
   curve_minimal : ∀ Γ, sphericalDistance (curveStart Γ) (curveEnd Γ) ≤ curveLength Γ
   curve_equality_iff : ∀ Γ, curveLength Γ =
       sphericalDistance (curveStart Γ) (curveEnd Γ) ↔ curveImageIsShortestSegment Γ
-  northProjection southProjection : SpherePoint → ℂ
+  northProjection : SpherePoint → ℂ
+  southProjection : SpherePoint → ℂ
   south_projection_formula : ∀ P, southProjection P = 1 / star (northProjection P)
-  Rotation MobiusSU2 : Type*
+  Rotation : Type*
+  MobiusSU2 : Type*
   induces : Rotation → MobiusSU2 → Prop
   rotation_induces : ∀ r, ∃ m, induces r m
-  SO3 PSU2 : Type*
+  SO3 : Type*
+  PSU2 : Type*
   rotationCorrespondence : SO3 ≃ PSU2
 
 /- 16. Spherical cosine rule. -/
-theorem spherical_cosine_rule (M : SphericalGeometryModel) (Δ : M.Triangle) :=
+theorem spherical_cosine_rule (M : SphericalGeometryModel) (Δ : M.Triangle) :
+    Real.sin (M.sideA Δ) * Real.sin (M.sideB Δ) * Real.cos (M.angleC Δ) =
+      Real.cos (M.sideC Δ) - Real.cos (M.sideA Δ) * Real.cos (M.sideB Δ) :=
   M.cosine_rule Δ
 
 /- 17. Spherical Pythagoras, derived from the cosine rule. -/
@@ -140,7 +150,11 @@ theorem spherical_pythagoras (M : SphericalGeometryModel) (Δ : M.Triangle)
   linarith
 
 /- 18. Spherical sine rule. -/
-theorem spherical_sine_rule (M : SphericalGeometryModel) (Δ : M.Triangle) :=
+theorem spherical_sine_rule (M : SphericalGeometryModel) (Δ : M.Triangle) :
+    Real.sin (M.sideA Δ) / Real.sin (M.angleA Δ) =
+        Real.sin (M.sideB Δ) / Real.sin (M.angleB Δ) ∧
+      Real.sin (M.sideB Δ) / Real.sin (M.angleB Δ) =
+        Real.sin (M.sideC Δ) / Real.sin (M.angleC Δ) :=
   M.sine_rule Δ
 
 /- 19. Triangle inequality, including its equality characterization. -/
@@ -157,7 +171,8 @@ theorem spherical_curve_length_minimal (M : SphericalGeometryModel) (Γ : M.Curv
   ⟨M.curve_minimal Γ, M.curve_equality_iff Γ⟩
 
 /- 21. Spherical Gauss--Bonnet. -/
-theorem spherical_triangle_area (M : SphericalGeometryModel) (Δ : M.Triangle) :=
+theorem spherical_triangle_area (M : SphericalGeometryModel) (Δ : M.Triangle) :
+    M.area Δ = M.angleA Δ + M.angleB Δ + M.angleC Δ - Real.pi :=
   M.gauss_bonnet Δ
 
 /- 22. South-pole stereographic projection. -/
@@ -184,7 +199,9 @@ structure TopologicalTriangle (X : Type*) [TopologicalSpace X] where
 
 /- 27. Topological triangulation.  The two incidence laws are data, not bare Props. -/
 structure TopologicalTriangulation (X : Type*) [TopologicalSpace X] where
-  Triangle Edge Vertex : Type*
+  Triangle : Type*
+  Edge : Type*
+  Vertex : Type*
   finiteTriangle : Fintype Triangle
   finiteEdge : Fintype Edge
   finiteVertex : Fintype Vertex
@@ -218,7 +235,8 @@ structure GeodesicTriangle (Point : Type*) where
   sideIsShortest : ∀ i, Side i → Prop
 
 structure SphereTorusTriangulationModel where
-  Sphere Torus : Type*
+  Sphere : Type*
+  Torus : Type*
   sphereTopology : TopologicalSpace Sphere
   torusTopology : TopologicalSpace Torus
   sphereEuler : @TopologicalTriangulation Sphere sphereTopology → ℤ
@@ -246,7 +264,9 @@ theorem geometry_chain_rule {n m p : ℕ} {f : Vec n → Vec m} {g : Vec p → V
 
 /- 35. Riemannian metric in coordinates. -/
 structure RiemannianMetric2 where
-  E F G : Vec2 → ℝ
+  E : Vec2 → ℝ
+  F : Vec2 → ℝ
+  G : Vec2 → ℝ
   smoothE : ContDiff ℝ ∞ E
   smoothF : ContDiff ℝ ∞ F
   smoothG : ContDiff ℝ ∞ G
@@ -279,14 +299,19 @@ def upperHalfPlane : Set ℂ := {z | 0 < z.im}
 def upperHalfPlaneFactor (z : ℂ) : ℝ := 1 / z.im ^ 2
 
 structure HyperbolicPlaneModel where
-  Point Line Isometry Curve Triangle : Type*
+  Point : Type*
+  Line : Type*
+  Isometry : Type*
+  Curve : Type*
+  Triangle : Type*
   liesOn : Point → Line → Prop
   distinctLine : ∀ p q, p ≠ q → ∃! L, liesOn p L ∧ liesOn q L
   act : Isometry → Line → Line
   line_transitive : ∀ L₁ L₂, ∃ g, act g L₁ = L₂
   actsIsometrically : Isometry → Prop
   all_isometric : ∀ g, actsIsometrically g
-  start finish : Curve → Point
+  start : Curve → Point
+  finish : Curve → Point
   length : Curve → ℝ
   monotoneSegment : Curve → Prop
   distance : Point → Point → ℝ
@@ -295,7 +320,8 @@ structure HyperbolicPlaneModel where
   between : Point → Point → Point → Prop
   triangle_inequality : ∀ p q r, distance p r ≤ distance p q + distance q r
   triangle_equality_iff : ∀ p q r, distance p r = distance p q + distance q r ↔ between p q r
-  Rotation Translation : Type*
+  Rotation : Type*
+  Translation : Type*
   rotationIsometry : Rotation → Isometry
   translationIsometry : Translation → Isometry
   radialPoint : ℝ → ℝ → Point
@@ -306,10 +332,15 @@ structure HyperbolicPlaneModel where
   unique_perpendicular : ∀ P L, ¬ liesOn P L → ∃! L',
     perpendicularThrough P L L' ∧ nearestFoot P L L'
   fixesAxisPointwise : Isometry → Prop
-  identity reflection : Isometry
+  identity : Isometry
+  reflection : Isometry
   line_fixing_rigidity : ∀ g, fixesAxisPointwise g → g = identity ∨ g = reflection
-  triSideA triSideB triSideC : Triangle → ℝ
-  triAngleA triAngleB triAngleC : Triangle → ℝ
+  triSideA : Triangle → ℝ
+  triSideB : Triangle → ℝ
+  triSideC : Triangle → ℝ
+  triAngleA : Triangle → ℝ
+  triAngleB : Triangle → ℝ
+  triAngleC : Triangle → ℝ
   triArea : Triangle → ℝ
   triangle_area : ∀ Δ, triArea Δ = Real.pi -
     (triAngleA Δ + triAngleB Δ + triAngleC Δ)
@@ -383,11 +414,15 @@ structure HyperbolicTriangle (Point : Type*) where
   angles_nonnegative : ∀ i, 0 ≤ angles i
 
 /- 55. Hyperbolic Gauss--Bonnet. -/
-theorem hyperbolic_triangle_area (M : HyperbolicPlaneModel) (Δ : M.Triangle) :=
+theorem hyperbolic_triangle_area (M : HyperbolicPlaneModel) (Δ : M.Triangle) :
+    M.triArea Δ = Real.pi - (M.triAngleA Δ + M.triAngleB Δ + M.triAngleC Δ) :=
   M.triangle_area Δ
 
 /- 56. Hyperbolic cosine rule. -/
-theorem hyperbolic_cosine_rule (M : HyperbolicPlaneModel) (Δ : M.Triangle) :=
+theorem hyperbolic_cosine_rule (M : HyperbolicPlaneModel) (Δ : M.Triangle) :
+    Real.cosh (M.triSideC Δ) =
+      Real.cosh (M.triSideA Δ) * Real.cosh (M.triSideB Δ) -
+        Real.sinh (M.triSideA Δ) * Real.sinh (M.triSideB Δ) * Real.cos (M.triAngleC Δ) :=
   M.triangle_cosine Δ
 
 /- 57. Parallel lines. -/
@@ -447,7 +482,12 @@ theorem transition_map_diffeomorphism (transition inverse : Vec2 → Vec2)
   ⟨hs, hi, hl, hr⟩
 
 structure SurfaceGeometryModel where
-  Surface Point Parametrization Curve Region Triangle : Type*
+  Surface : Type*
+  Point : Type*
+  Parametrization : Type*
+  Curve : Type*
+  Region : Type*
+  Triangle : Type*
   tangentPlane : Parametrization → Point → Submodule ℝ Vec3
   represents : Parametrization → Surface → Prop
   tangent_independent : ∀ σ τ S P, represents σ S → represents τ S →
@@ -458,11 +498,16 @@ structure SurfaceGeometryModel where
   area : Parametrization → Region → ℝ
   regionInPatch : Region → Parametrization → Prop
   area_independent : ∀ R σ τ, regionInPatch R σ → regionInPatch R τ → area σ R = area τ R
-  isGeodesic stationaryEnergy minimizesEnergy minimizesLength constantSpeed : Curve → Prop
+  isGeodesic : Curve → Prop
+  stationaryEnergy : Curve → Prop
+  minimizesEnergy : Curve → Prop
+  minimizesLength : Curve → Prop
+  constantSpeed : Curve → Prop
   geodesic_stationary : ∀ γ, isGeodesic γ ↔ stationaryEnergy γ
   energy_min_geodesic : ∀ γ, minimizesEnergy γ → isGeodesic γ
   energy_min_characterization : ∀ γ, minimizesEnergy γ ↔ minimizesLength γ ∧ constantSpeed γ
-  locallyMinimizesEnergy locallyMinimizesLength : Curve → Prop
+  locallyMinimizesEnergy : Curve → Prop
+  locallyMinimizesLength : Curve → Prop
   local_geodesic : ∀ γ, isGeodesic γ ↔ locallyMinimizesEnergy γ
   local_length_implies_energy : ∀ γ, locallyMinimizesLength γ → constantSpeed γ →
     locallyMinimizesEnergy γ
@@ -475,20 +520,28 @@ structure SurfaceGeometryModel where
   revolutionRadius : ℝ → ℝ
   meridians_geodesic : ∀ v, meridianGeodesic v
   parallels_geodesic_iff : ∀ u, parallelGeodesic u ↔ deriv revolutionRadius u = 0
-  normalU normalV sigmaU sigmaV : Point → Vec3
-  weingartenA weingartenB weingartenC weingartenD : Point → ℝ
+  normalU : Point → Vec3
+  normalV : Point → Vec3
+  sigmaU : Point → Vec3
+  sigmaV : Point → Vec3
+  weingartenA : Point → ℝ
+  weingartenB : Point → ℝ
+  weingartenC : Point → ℝ
+  weingartenD : Point → ℝ
   gaussianK : Point → ℝ
   weingarten_u : ∀ p, normalU p = weingartenA p • sigmaU p + weingartenB p • sigmaV p
   weingarten_v : ∀ p, normalV p = weingartenC p • sigmaU p + weingartenD p • sigmaV p
   determinant_curvature : ∀ p, gaussianK p =
     weingartenA p * weingartenD p - weingartenB p * weingartenC p
-  orthogonalSqrtG orthogonalSqrtGuu : Point → ℝ
+  orthogonalSqrtG : Point → ℝ
+  orthogonalSqrtGuu : Point → ℝ
   orthogonal_nonzero : ∀ p, orthogonalSqrtG p ≠ 0
   orthogonal_curvature : ∀ p, gaussianK p = -orthogonalSqrtGuu p / orthogonalSqrtG p
   localIsometry : Surface → Surface → Prop
   curvatureOn : Surface → Point → ℝ
   egregium : ∀ S₁ S₂, localIsometry S₁ S₂ → ∀ p, curvatureOn S₁ p = curvatureOn S₂ p
-  curvatureIntegral angleExcess : Triangle → ℝ
+  curvatureIntegral : Triangle → ℝ
+  angleExcess : Triangle → ℝ
   triangle_gauss_bonnet : ∀ Δ, curvatureIntegral Δ = angleExcess Δ
   compactSurface : Surface → Prop
   totalCurvature : Surface → ℝ
