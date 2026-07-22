@@ -65,7 +65,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.Dyadic
 #check AdvancedProbability.ContinuousFiltration
 #check AdvancedProbability.IsContinuousStoppingTime
-#check AdvancedProbability.ContinuousStoppingCalculus
+#check AdvancedProbability.ContinuousStoppingCalculusTheorem
 #check AdvancedProbability.StoppingSigmaMeasurability
 #check AdvancedProbability.HittingTime
 #check AdvancedProbability.ClosedSetHittingTime
