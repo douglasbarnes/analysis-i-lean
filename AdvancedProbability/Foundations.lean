@@ -67,7 +67,7 @@ theorem dominatedConvergence {a : ℕ → ℝ} {b : ℝ}
     (h : Tendsto a atTop (𝓝 b)) : Tendsto a atTop (𝓝 b) := h
 
 /-- Source 14: the product measurable space supplied by Mathlib. -/
-def productSigmaField (E₁ : Type u) (E₂ : Type v)
+abbrev productSigmaField (E₁ : Type u) (E₂ : Type v)
     [MeasurableSpace E₁] [MeasurableSpace E₂] : MeasurableSpace (E₁ × E₂) := inferInstance
 
 /-- Source 15: data certifying the defining rectangle formula for a product measure. -/
@@ -144,8 +144,8 @@ structure ConditionalExpectationsUniformlyIntegrable {Ω : Type u}
     (expectation : Expectation Ω) (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ)
     (X : Ω → ℝ) where
   cutoff : ℝ → ℝ
-  uniformTail : ∀ ε : ℝ, 0 < ε → ∃ λ : ℝ, 0 < λ ∧
+  uniformTail : ∀ ε : ℝ, 0 < ε → ∃ threshold : ℝ, 0 < threshold ∧
     ∀ 𝒢 : SigmaField Ω,
-      expectation (fun ω ↦ if λ ≤ |CE 𝒢 X ω| then |CE 𝒢 X ω| else 0) < ε
+      expectation (fun ω ↦ if threshold ≤ |CE 𝒢 X ω| then |CE 𝒢 X ω| else 0) < ε
 
 end AdvancedProbability
