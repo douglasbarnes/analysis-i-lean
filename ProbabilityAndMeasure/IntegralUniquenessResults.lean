@@ -45,8 +45,12 @@ theorem source070_integral_properties {α : Type*} [MeasurableSpace α]
     (f =ᵐ[μ] 0 → (∫ x, f x ∂μ) = 0) := by
   refine ⟨?_, ?_, ?_⟩
   · intro a b
-    simpa only [Pi.smul_apply, smul_eq_mul] using
-      integral_add (hf.smul a) (hg.smul b)
+    calc
+      (∫ x, a * f x + b * g x ∂μ) =
+          (∫ x, a * f x ∂μ) + ∫ x, b * g x ∂μ :=
+        integral_add (hf.smul a) (hg.smul b)
+      _ = a * (∫ x, f x ∂μ) + b * (∫ x, g x ∂μ) := by
+        rw [integral_const_mul, integral_const_mul]
   · intro hfg
     exact integral_mono_ae hf hg (ae_of_all μ hfg)
   · intro hzero
