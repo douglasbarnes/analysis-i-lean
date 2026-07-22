@@ -137,7 +137,9 @@ theorem DiscreteStoppingCalculusTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω
     have hStopped : Measurable[hT.measurableSpace] (MeasureTheory.stoppedValue X T) :=
       hX_adapted.isStronglyProgressive_of_discrete.measurable_stoppedValue hT
     have hFinite : MeasurableSet[hT.measurableSpace] {ω | T ω ≠ ⊤} := by
-      simpa only [Set.setOf_not_eq] using hT.measurableSet_eq_top.compl
+      convert hT.measurableSet_eq_top.compl using 1
+      ext ω
+      simp
     exact hStopped.indicator hFinite
   · intro T hT
     exact hX_adapted.stoppedProcess_of_discrete hT
