@@ -1,6 +1,8 @@
 import NumericalAnalysisCourse.Core
 
-/-! Exactly one declaration check per source environment, in source order. -/
+/-! Exactly one declaration check per source environment, in source order.  The fidelity repair
+preserves this 73-entry witness list verbatim; only the checked declaration types and proofs in
+`Core` were strengthened. -/
 
 #check NumericalAnalysisCourse.PolynomialSpace
 #check NumericalAnalysisCourse.lagrangeCardinal
