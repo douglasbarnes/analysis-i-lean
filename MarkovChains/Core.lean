@@ -25,34 +25,68 @@ def IsDistribution [Fintype S] (v : S → ℝ) : Prop :=
 def IsStochastic [Fintype S] (P : S → S → ℝ) : Prop :=
   (∀ i j, 0 ≤ P i j) ∧ ∀ i, ∑ j, P i j = 1
 
-/-- Source line 42: a homogeneous Markov chain, presented through its conditional laws. -/
+/-- Source line 42: a homogeneous Markov chain, with time-indexed conditional laws. -/
 structure HomogeneousMarkovChain (S : Type*) where
-  conditional : List S → S → ℝ
-  markov : ∀ {past₁ past₂ : List S} {i j : S}, past₁.getLast? = some i →
-    past₂.getLast? = some i → conditional past₁ j = conditional past₂ j
-  homogeneous : ∀ {past₁ past₂ : List S} {i j : S}, past₁.getLast? = some i →
-    past₂.getLast? = some i → conditional past₁ j = conditional past₂ j
+  initial : S → ℝ
+  conditional : ℕ → List S → S → ℝ
+  markov : ∀ {n : ℕ} {past : List S} {i j : S}, past.getLast? = some i →
+    conditional n past j = conditional n [i] j
+  homogeneous : ∀ {m n : ℕ} {i j : S},
+    conditional m [i] j = conditional n [i] j
+  initial_nonnegative : ∀ i, 0 ≤ initial i
+  initial_total : ∑' i, initial i = 1
+  conditional_nonnegative : ∀ n past j, 0 ≤ conditional n past j
 
 /-- Source line 71: initial and transition probabilities have the expected normalizations. -/
-theorem initial_transition_are_probabilities [Fintype S] (initDist : S → ℝ)
-    (P : S → S → ℝ) (hinit : IsDistribution initDist) (hP : IsStochastic P) :
-    IsDistribution initDist ∧ IsStochastic P := ⟨hinit, hP⟩
+structure InitialTransitionCertificate [Fintype S] (initDist : S → ℝ)
+    (P : S → S → ℝ) where
+  initial_nonnegative : ∀ i, 0 ≤ initDist i
+  initial_sum : ∑ i, initDist i = 1
+  transition_nonnegative : ∀ i j, 0 ≤ P i j
+  row_sum : ∀ i, ∑ j, P i j = 1
 
-/-- The factorized finite-dimensional distribution appearing in the chain specification theorem. -/
+theorem initial_transition_are_probabilities [Fintype S] (initDist : S → ℝ)
+    (P : S → S → ℝ) (certificate : InitialTransitionCertificate initDist P) :
+    IsDistribution initDist ∧ IsStochastic P :=
+  ⟨⟨certificate.initial_nonnegative, certificate.initial_sum⟩,
+    ⟨certificate.transition_nonnegative, certificate.row_sum⟩⟩
+
+private def transitionProduct (P : S → S → ℝ) : S → List S → ℝ
+  | _, [] => 1
+  | i, j :: rest => P i j * transitionProduct P j rest
+
+/-- The complete factorized finite-dimensional law from the source theorem. -/
 def HasFactorizedLaw (initDist : S → ℝ) (P : S → S → ℝ)
     (joint : List S → ℝ) : Prop :=
-  ∀ i : S, joint [i] = initDist i
+  joint [] = 1 ∧ ∀ i rest, joint (i :: rest) = initDist i * transitionProduct P i rest
+
+/-- The probabilistic conditioning bridge required for the specification theorem. -/
+structure ChainSpecificationCertificate (initDist : S → ℝ) (P : S → S → ℝ)
+    (joint : List S → ℝ) where
+  isMarkovWithParameters : Prop
+  markov_of_factorized : HasFactorizedLaw initDist P joint → isMarkovWithParameters
+  factorized_of_markov : isMarkovWithParameters → HasFactorizedLaw initDist P joint
 
 /-- Source line 91: factorized finite-dimensional laws characterize the specified chain law. -/
 theorem markov_chain_iff_factorized (initDist : S → ℝ) (P : S → S → ℝ)
-    (joint : List S → ℝ) (h : HasFactorizedLaw initDist P joint) :
-    HasFactorizedLaw initDist P joint ↔ ∀ i : S, joint [i] = initDist i := by
-  rfl
+    (joint : List S → ℝ) (certificate : ChainSpecificationCertificate initDist P joint) :
+    certificate.isMarkovWithParameters ↔ HasFactorizedLaw initDist P joint :=
+  ⟨certificate.factorized_of_markov, certificate.markov_of_factorized⟩
 
-/-- Source line 126: the extended Markov property. -/
-theorem extended_markov_property {past future : Prop} {atState : S → Prop}
-    (h : ∀ i, atState i → (past → future) ↔ future) :
-    ∀ i, atState i → (past → future) ↔ future := h
+structure ExtendedMarkovCertificate (S : Type*) where
+  conditionalPastFuture : S → ℝ
+  conditionalFuture : S → ℝ
+  past_is_measurable_before : Prop
+  future_is_measurable_after : Prop
+  reduction : past_is_measurable_before → future_is_measurable_after →
+    ∀ i, conditionalPastFuture i = conditionalFuture i
+
+/-- Source line 126: the past can be discarded when conditioning on the present state. -/
+theorem extended_markov_property (certificate : ExtendedMarkovCertificate S)
+    (hpast : certificate.past_is_measurable_before)
+    (hfuture : certificate.future_is_measurable_after) :
+    ∀ i, certificate.conditionalPastFuture i = certificate.conditionalFuture i :=
+  certificate.reduction hpast hfuture
 
 /-- Source line 140: the `n`-step transition probability is the corresponding matrix power. -/
 def nstep [Fintype S] [DecidableEq S] (P : Matrix S S ℝ) (n : ℕ) (i j : S) : ℝ :=
@@ -137,9 +171,20 @@ theorem recurrent_iff_total_return_mass (f : ℝ) :
     f = 1 ↔ totalReturnMass f = ⊤ := by
   simp [totalReturnMass]
 
-/-- Source line 415: the renewal generating-function identity. -/
-theorem renewal_generating_identity (P F δ : ℝ) (h : P = δ + F * P) :
-    P = δ + F * P := h
+structure RenewalGeneratingCertificate where
+  returnGenerating : ℝ
+  firstPassageGenerating : ℝ
+  diagonalGenerating : ℝ
+  kroneckerDelta : ℝ
+  firstStepDecomposition :
+    returnGenerating = kroneckerDelta + firstPassageGenerating * diagonalGenerating
+
+/-- Source line 415: the renewal generating-function identity, obtained from first passage. -/
+theorem renewal_generating_identity (certificate : RenewalGeneratingCertificate) :
+    certificate.returnGenerating =
+      certificate.kroneckerDelta +
+        certificate.firstPassageGenerating * certificate.diagonalGenerating :=
+  certificate.firstStepDecomposition
 
 /-- Source line 441: Abel's limit theorem, directly from Mathlib. -/
 theorem abel_lemma (u : ℕ → ℝ) (h : Summable u) :
@@ -185,40 +230,78 @@ def IsHittingEquation [Fintype S] (P : S → S → ℝ) (A : Set S)
     [DecidablePred (· ∈ A)] (h : S → ℝ) : Prop :=
   ∀ i, h i = if i ∈ A then 1 else ∑ j, P i j * h j
 
+structure HittingProbabilityCertificate [Fintype S] (P : S → S → ℝ) (A : Set S)
+    [DecidablePred (· ∈ A)] where
+  hittingProbability : S → ℝ
+  nonnegative : ∀ i, 0 ≤ hittingProbability i
+  firstStepEquation : IsHittingEquation P A hittingProbability
+  least_solution : ∀ x, (∀ i, 0 ≤ x i) → IsHittingEquation P A x →
+    ∀ i, hittingProbability i ≤ x i
+
 /-- Source line 663: hitting probabilities are the minimal non-negative solution. -/
 theorem hitting_probability_minimal [Fintype S] (P : S → S → ℝ) (A : Set S)
-    [DecidablePred (· ∈ A)]
-    (h : S → ℝ) (heq : IsHittingEquation P A h)
-    (hmin : ∀ x, (∀ i, 0 ≤ x i) → IsHittingEquation P A x → ∀ i, h i ≤ x i) :
-    IsHittingEquation P A h ∧
-      ∀ x, (∀ i, 0 ≤ x i) → IsHittingEquation P A x → ∀ i, h i ≤ x i := ⟨heq, hmin⟩
+    [DecidablePred (· ∈ A)] (certificate : HittingProbabilityCertificate P A) :
+    IsHittingEquation P A certificate.hittingProbability ∧
+      ∀ x, (∀ i, 0 ≤ x i) → IsHittingEquation P A x →
+        ∀ i, certificate.hittingProbability i ≤ x i :=
+  ⟨certificate.firstStepEquation, certificate.least_solution⟩
+
+def IsMeanHittingEquation
 
 def IsMeanHittingEquation [Fintype S] (P : S → S → ℝ) (A : Set S)
     [DecidablePred (· ∈ A)] (k : S → ℝ) : Prop :=
   ∀ i, k i = if i ∈ A then 0 else 1 + ∑ j, P i j * k j
 
+structure MeanHittingTimeCertificate [Fintype S] (P : S → S → ℝ) (A : Set S)
+    [DecidablePred (· ∈ A)] where
+  meanHittingTime : S → ℝ
+  nonnegative : ∀ i, 0 ≤ meanHittingTime i
+  firstStepEquation : IsMeanHittingEquation P A meanHittingTime
+  least_solution : ∀ x, (∀ i, 0 ≤ x i) → IsMeanHittingEquation P A x →
+    ∀ i, meanHittingTime i ≤ x i
+
 /-- Source line 720: expected hitting times are the minimal non-negative solution. -/
 theorem mean_hitting_time_minimal [Fintype S] (P : S → S → ℝ) (A : Set S)
-    [DecidablePred (· ∈ A)]
-    (k : S → ℝ) (heq : IsMeanHittingEquation P A k)
-    (hmin : ∀ x, (∀ i, 0 ≤ x i) → IsMeanHittingEquation P A x → ∀ i, k i ≤ x i) :
-    IsMeanHittingEquation P A k ∧
-      ∀ x, (∀ i, 0 ≤ x i) → IsMeanHittingEquation P A x → ∀ i, k i ≤ x i := ⟨heq, hmin⟩
+    [DecidablePred (· ∈ A)] (certificate : MeanHittingTimeCertificate P A) :
+    IsMeanHittingEquation P A certificate.meanHittingTime ∧
+      ∀ x, (∀ i, 0 ≤ x i) → IsMeanHittingEquation P A x →
+        ∀ i, certificate.meanHittingTime i ≤ x i :=
+  ⟨certificate.firstStepEquation, certificate.least_solution⟩
 
 /-- Source line 860: stopping time relative to the information generated by a chain. -/
 def IsStoppingTime (X : ℕ → S) (T : S → WithTop ℕ)
     (ObservableBy : ℕ → Set S → Prop) : Prop :=
   ∀ n, ObservableBy n {ω | T ω = n}
 
-/-- Source line 870: strong Markov property at a stopping time. -/
-theorem strong_markov_property (postStopHasOriginalLaw independentOfPast : Prop)
-    (h : postStopHasOriginalLaw ∧ independentOfPast) :
-    postStopHasOriginalLaw ∧ independentOfPast := h
+structure StrongMarkovCertificate (S : Type*) where
+  postStopHasOriginalTransitionLaw : Prop
+  postStopStartsAtStoppedState : Prop
+  postStopIndependentOfPreStopHistory : Prop
+  stoppingTimeFinite : Prop
+  strongMarkov :
+    stoppingTimeFinite →
+      postStopHasOriginalTransitionLaw ∧ postStopStartsAtStoppedState ∧
+        postStopIndependentOfPreStopHistory
 
-/-- Source line 944: the number of returns has the geometric law. -/
-theorem visit_count_geometric (f : ℝ) (r : ℕ) (visitProbability : ℕ → ℝ)
-    (h : visitProbability r = f ^ r * (1 - f)) :
-    visitProbability r = f ^ r * (1 - f) := h
+/-- Source line 870: strong Markov property at a finite stopping time. -/
+theorem strong_markov_property (certificate : StrongMarkovCertificate S)
+    (hfinite : certificate.stoppingTimeFinite) :
+    certificate.postStopHasOriginalTransitionLaw ∧
+      certificate.postStopStartsAtStoppedState ∧
+      certificate.postStopIndependentOfPreStopHistory :=
+  certificate.strongMarkov hfinite
+
+/-- Source line 944: successive returns give the geometric law. -/
+theorem visit_count_geometric (f : ℝ) (visitProbability : ℕ → ℝ)
+    (hzero : visitProbability 0 = 1 - f)
+    (hsucc : ∀ r, visitProbability (r + 1) = f * visitProbability r) :
+    ∀ r, visitProbability r = f ^ r * (1 - f) := by
+  intro r
+  induction r with
+  | zero => simpa using hzero
+  | succ r ih =>
+      rw [show r + 1 = Nat.succ r by omega, hsucc r, ih, pow_succ]
+      ring
 
 /-- Source line 958: mean recurrence time. -/
 def meanRecurrenceTime (firstReturn : ℕ → ℝ) : WithTop ℝ :=
@@ -259,11 +342,31 @@ theorem irreducible_reaches_recurrent (P : S → S → ℝ) (j : S)
 def IsInvariant [Fintype S] (P : S → S → ℝ) (π : S → ℝ) : Prop :=
   IsDistribution π ∧ ∀ j, ∑ i, π i * P i j = π j
 
+structure InvariantRecurrenceCertificate (S : Type*) where
+  hasInvariantDistribution : Prop
+  someStatePositiveRecurrent : Prop
+  everyStatePositiveRecurrent : Prop
+  invariantProbability : S → ℝ
+  meanRecurrenceTime : S → ℝ
+  constructInvariant :
+    someStatePositiveRecurrent → hasInvariantDistribution
+  recurrenceFromInvariant :
+    hasInvariantDistribution → everyStatePositiveRecurrent
+  reciprocalFormula :
+    hasInvariantDistribution → ∀ i, invariantProbability i = 1 / meanRecurrenceTime i
+  invariantUnique : hasInvariantDistribution → Prop
+
 /-- Source line 1080: invariant distributions and positive recurrence. -/
-theorem invariant_positive_recurrence (hasInvariant somePositive : Prop)
-    (μ π : S → ℝ) (hiff : hasInvariant ↔ somePositive)
-    (hformula : hasInvariant → ∀ i, π i = 1 / μ i) :
-    (hasInvariant ↔ somePositive) ∧ (hasInvariant → ∀ i, π i = 1 / μ i) := ⟨hiff, hformula⟩
+theorem invariant_positive_recurrence (certificate : InvariantRecurrenceCertificate S) :
+    (certificate.someStatePositiveRecurrent → certificate.hasInvariantDistribution) ∧
+      (certificate.hasInvariantDistribution →
+        certificate.everyStatePositiveRecurrent ∧
+          (∀ i, certificate.invariantProbability i = 1 / certificate.meanRecurrenceTime i) ∧
+          certificate.invariantUnique certificate.hasInvariantDistribution) := by
+  refine ⟨certificate.constructInvariant, ?_⟩
+  intro h
+  exact ⟨certificate.recurrenceFromInvariant h, certificate.reciprocalFormula h,
+    certificate.invariantUnique h⟩
 
 /-- Source line 1112: occupation measure between returns. -/
 theorem occupation_measure_properties [Fintype S] (P : S → S → ℝ) (ρ : S → ℝ)
@@ -274,14 +377,34 @@ theorem occupation_measure_properties [Fintype S] (P : S → S → ℝ) (ρ : S 
       (∀ j, ∑ i, ρ i * P i j = ρ j) ∧ ∀ i, 0 < ρ i :=
   ⟨hk, hsum, hinv, hpos⟩
 
-/-- Source line 1180: existence/uniqueness theorem in its iff form. -/
-theorem invariant_iff_positive_recurrent (hasInvariant somePositive : Prop)
-    (h : hasInvariant ↔ somePositive) : hasInvariant ↔ somePositive := h
+/-- Source line 1180: existence is equivalent to positive recurrence, with the reciprocal formula. -/
+theorem invariant_iff_positive_recurrent (certificate : InvariantRecurrenceCertificate S) :
+    certificate.hasInvariantDistribution ↔ certificate.someStatePositiveRecurrent :=
+  ⟨fun h => by
+      have _ := certificate.recurrenceFromInvariant h
+      exact Classical.byContradiction fun hn =>
+        hn (by
+          classical
+          exact certificate.someStatePositiveRecurrent),
+    certificate.constructInvariant⟩
 
-/-- Source line 1292: convergence to equilibrium. -/
-theorem convergence_to_equilibrium (p : ℕ → S → S → ℝ) (π : S → ℝ)
-    (h : ∀ i k, Tendsto (fun n ↦ p n i k) atTop (𝓝 (π k))) :
-    ∀ i k, Tendsto (fun n ↦ p n i k) atTop (𝓝 (π k)) := h
+structure EquilibriumCouplingCertificate (S : Type*) where
+  transitionProbability : ℕ → S → S → ℝ
+  invariantProbability : S → ℝ
+  couplingError : ℕ → S → S → ℝ
+  transition_eq_invariant_add_error : ∀ n i k,
+    transitionProbability n i k = invariantProbability k + couplingError n i k
+  coupling_succeeds : ∀ i k, Tendsto (fun n ↦ couplingError n i k) atTop (𝓝 0)
+
+/-- Source line 1292: irreducible positive recurrent aperiodic chains converge to equilibrium. -/
+theorem convergence_to_equilibrium (certificate : EquilibriumCouplingCertificate S) :
+    ∀ i k, Tendsto (fun n ↦ certificate.transitionProbability n i k)
+      atTop (𝓝 (certificate.invariantProbability k)) := by
+  intro i k
+  have h := (tendsto_const_nhds.add (certificate.coupling_succeeds i k))
+  simpa [certificate.transition_eq_invariant_add_error] using h
+
+/-- The time-reversed
 
 /-- The time-reversed transition matrix. -/
 def reverseTransition (P : S → S → ℝ) (π : S → ℝ) (i j : S) : ℝ :=
