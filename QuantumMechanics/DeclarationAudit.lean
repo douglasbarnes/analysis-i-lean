@@ -1,7 +1,6 @@
 import QuantumMechanics.Core
 
 /-! Exactly one declaration witness for each labelled source environment. -/
-
 namespace QuantumMechanics.DeclarationAudit
 
 #check TimeIndependentSchrodinger
@@ -13,9 +12,9 @@ namespace QuantumMechanics.DeclarationAudit
 #check expectationValue
 #check uncertainty
 #check IsHermitian
-#check standard_operators_hermitian
+#check SchrodingerRepresentation
 #check wave_cauchy_schwarz
-#check ehrenfest_position_momentum
+#check EhrenfestModel
 #check heisenberg_uncertainty
 #check commutator
 #check IsWavepacket
@@ -23,12 +22,11 @@ namespace QuantumMechanics.DeclarationAudit
 #check IsGroundState
 #check hermitian_spectral_properties
 #check spectral_expectation_and_uncertainty
-#check general_ehrenfest
+#check GeneralEhrenfestDynamics
 #check degeneracy
 #check IsStructurelessParticle
 #check angularMomentum
 #check totalAngularMomentum
-#check angular_momentum_relations
+#check AngularMomentumAlgebra
 
 end QuantumMechanics.DeclarationAudit
-
