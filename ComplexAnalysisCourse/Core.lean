@@ -550,8 +550,7 @@ theorem simply_connected_maps_to_disc (M : RiemannMappingModel) (U : Set ℂ)
       filter_upwards [hU.1.mem_nhds hz] with w hw
       exact hc hw
     have hderiv : deriv f z = deriv (const ℂ c) z := heq.deriv_eq
-    rw [deriv_const] at hderiv
-    exact (hconf z hz).2 hderiv
+    exact (hconf z hz).2 (by simpa [Function.const] using hderiv)
 
 end
 
