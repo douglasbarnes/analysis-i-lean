@@ -1,6 +1,7 @@
 import AdvancedProbability.Foundations
 import AdvancedProbability.FoundationsResults
 import AdvancedProbability.ConditionalExpectationResults
+import AdvancedProbability.ConditionalExpectationKernelResults
 import AdvancedProbability.DiscreteMartingales
 import AdvancedProbability.DiscreteResults
 import AdvancedProbability.StoppingResults
