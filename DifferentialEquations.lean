@@ -1,3 +1,0 @@
-import DifferentialEquations.SourceAudit
-import DifferentialEquations.Core
-import DifferentialEquations.LibraryCoverage
