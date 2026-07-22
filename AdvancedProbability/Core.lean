@@ -2,6 +2,7 @@ import AdvancedProbability.Foundations
 import AdvancedProbability.ConditionalExpectationResults
 import AdvancedProbability.DiscreteMartingales
 import AdvancedProbability.DiscreteResults
+import AdvancedProbability.StoppingResults
 import AdvancedProbability.MarkovResults
 import AdvancedProbability.ContinuousTime
 import AdvancedProbability.ContinuousResults
