@@ -31,7 +31,7 @@ jobs:
           {
             lake update
             lake exe cache get
-            lake build
+            lake build LinearAnalysis
             python3 scripts/check_audit.py
           } 2>&1 | tee lean-build.log
       - name: Upload build log
