@@ -1,6 +1,6 @@
 name = "analysis-formalization"
 version = "0.2.0"
-defaultTargets = ["AnalysisI", "DifferentialEquations", "DynamicsRelativity", "Groups", "NumbersAndSets", "Probability", "VectorCalculus", "VectorsMatrices", "AnalysisII", "LinearAlgebraCourse", "MarkovChains", "MethodsCourse", "QuantumMechanics", "ComplexAnalysisCourse", "ComplexMethods", "ElectromagnetismCourse", "FluidDynamicsCourse", "Geometry", "GroupsRingsModules", "NumericalAnalysisCourse", "StatisticsCourse", "MetricTopologicalSpaces", "OptimisationCourse", "VariationalPrinciplesCourse"]
+defaultTargets = ["AnalysisI", "DifferentialEquations", "DynamicsRelativity", "Groups", "NumbersAndSets", "Probability", "VectorCalculus", "VectorsMatrices", "AnalysisII", "LinearAlgebraCourse", "MarkovChains", "MethodsCourse", "QuantumMechanics", "ComplexAnalysisCourse", "ComplexMethods", "ElectromagnetismCourse", "FluidDynamicsCourse", "Geometry", "GroupsRingsModules", "NumericalAnalysisCourse", "StatisticsCourse", "MetricTopologicalSpaces", "OptimisationCourse", "VariationalPrinciplesCourse", "AdvancedProbability"]
 
 [[require]]
 name = "mathlib"
@@ -78,3 +78,6 @@ name = "OptimisationCourse"
 
 [[lean_lib]]
 name = "VariationalPrinciplesCourse"
+
+[[lean_lib]]
+name = "AdvancedProbability"
