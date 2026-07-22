@@ -26,6 +26,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - name: Install Elan and Lean
@@ -37,16 +38,20 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
           "$HOME/.elan/bin/elan" default "$(cat lean-toolchain)"
-      - name: Build Advanced Probability
+      - name: Resolve dependencies
+        shell: bash
+        run: lake update
+      - name: Download Mathlib cache
+        shell: bash
+        run: timeout 10m lake exe cache get
+      - name: Compile Advanced Probability
         shell: bash
         run: |
           set -o pipefail
-          {
-            lake update
-            lake exe cache get
-            lake build AdvancedProbability
-            python3 scripts/check_audit.py
-          } 2>&1 | tee advanced-probability-build.log
+          lake build AdvancedProbability 2>&1 | tee advanced-probability-build.log
+      - name: Run repository audit
+        shell: bash
+        run: python3 scripts/check_audit.py
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
