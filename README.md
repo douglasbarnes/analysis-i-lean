@@ -26,7 +26,11 @@ The current material is based on Cambridge lecture notes published at https://de
 - Metric and Topological Spaces
 - Optimisation
 
-There are currently **14 course libraries**. Each course is exposed as a separate Lake target, so individual libraries can be built independently while `lake build` checks the complete collection.
+### Part II
+
+- Linear Analysis
+
+There are currently **15 course libraries**. Each course is exposed as a separate Lake target, so individual libraries can be built independently while `lake build` checks the complete collection.
 
 ## Formalisation and audit structure
 
@@ -49,4 +53,4 @@ lake build
 python3 scripts/check_audit.py
 ```
 
-GitHub Actions runs the same build and audit process for pull requests.
+GitHub Actions runs the same build and audit process for pull requests. The Linear Analysis library includes an ordered 128-item source audit and declaration audit.
