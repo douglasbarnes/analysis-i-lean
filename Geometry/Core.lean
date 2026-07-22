@@ -112,9 +112,9 @@ structure SphericalGeometryModel where
       Real.sin (sideC Δ) / Real.sin (angleC Δ)
   gauss_bonnet : ∀ Δ, area Δ = angleA Δ + angleB Δ + angleC Δ - Real.pi
   between : SpherePoint → SpherePoint → SpherePoint → Prop
-  triangle_inequality : ∀ P Q R, sphericalDistance P R ≤
+  triangle_inequality : ∀ (P Q R : SpherePoint), sphericalDistance P R ≤
     sphericalDistance P Q + sphericalDistance Q R
-  triangle_equality_iff : ∀ P Q R, sphericalDistance P R =
+  triangle_equality_iff : ∀ (P Q R : SpherePoint), sphericalDistance P R =
       sphericalDistance P Q + sphericalDistance Q R ↔ between P Q R
   Curve : Type*
   curveStart : Curve → SpherePoint
@@ -199,9 +199,9 @@ structure TopologicalTriangle (X : Type*) [TopologicalSpace X] where
 
 /- 27. Topological triangulation.  The two incidence laws are data, not bare Props. -/
 structure TopologicalTriangulation (X : Type*) [TopologicalSpace X] where
-  Triangle : Type*
-  Edge : Type*
-  Vertex : Type*
+  Triangle : Type
+  Edge : Type
+  Vertex : Type
   finiteTriangle : Fintype Triangle
   finiteEdge : Fintype Edge
   finiteVertex : Fintype Vertex
