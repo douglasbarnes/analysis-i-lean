@@ -63,7 +63,7 @@ theorem operatorSpectrum_isClosed {E : Type*} [NormedAddCommGroup E]
 
 /-- Spectral values lie in the closed disk of radius `‖T‖`. -/
 theorem operatorSpectrum_subset_closedBall {E : Type*} [NormedAddCommGroup E]
-    [NormedSpace ℂ E] [CompleteSpace E] (T : E →L[ℂ] E) :
+    [NormedSpace ℂ E] [CompleteSpace E] [Nontrivial E] (T : E →L[ℂ] E) :
     operatorSpectrum T ⊆ Metric.closedBall 0 ‖T‖ :=
   spectrum.subset_closedBall_norm T
 
@@ -75,7 +75,8 @@ theorem compact_iff_compact_closure_image_ball {𝕜 E F : Type*}
     (T : E →L[𝕜] F) :
     IsCompactOperator T ↔
       IsCompact (closure (T '' Metric.ball (0 : E) 1)) := by
-  simpa using isCompactOperator_iff_isCompact_closure_image_ball T (show (0 : ℝ) < 1 by norm_num)
+  simpa using isCompactOperator_iff_isCompact_closure_image_ball T.toLinearMap
+    (show (0 : ℝ) < 1 by norm_num)
 
 /-- Precomposition by a bounded operator preserves compactness. -/
 theorem compact_comp_right {𝕜 E F G : Type*} [NontriviallyNormedField 𝕜]
