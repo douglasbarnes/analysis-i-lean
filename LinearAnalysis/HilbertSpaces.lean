@@ -38,6 +38,7 @@ theorem cauchySchwarz {𝕜 E : Type*} [RCLike 𝕜]
 theorem parallelogram {𝕜 E : Type*} [RCLike 𝕜]
     [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] (x y : E) :
     ‖x + y‖ ^ 2 + ‖x - y‖ ^ 2 = 2 * (‖x‖ ^ 2 + ‖y‖ ^ 2) := by
+  letI : InnerProductSpaceable E := InnerProductSpace.toInnerProductSpaceable 𝕜
   simpa [pow_two] using (InnerProductSpaceable.parallelogram_identity x y)
 
 /-- Pythagoras for orthogonal vectors. -/
