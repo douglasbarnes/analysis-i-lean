@@ -51,6 +51,44 @@ theorem ConditionalExpectationLinear {Ω : Type u} [MeasurableSpace Ω]
   exact (condExp_add (hX.smul a) (hY.smul b) m).trans
     ((condExp_smul a X m).add (condExp_smul b Y m))
 
+/-- Source 20(6): conditional expectations preserve an increasing integrable limit.
+
+The order and convergence parts of the notation `Xₙ ↑ X` are made explicit. The convergence is
+stated in Mathlib's canonical `L¹` space, while monotonicity is an almost-everywhere statement for
+the chosen representatives. -/
+theorem ConditionalExpectationMonotoneConvergence {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    {m : MeasurableSpace Ω} {μ : Measure Ω} (hm : m ≤ m₀)
+    [SigmaFinite (μ.trim hm)] {Xn : ℕ → Ω → ℝ} {X : Ω → ℝ}
+    (hXn_int : ∀ n, Integrable (Xn n) μ)
+    (hXn_meas : ∀ n, AEStronglyMeasurable (Xn n) μ)
+    (hmono : ∀ n, Xn n ≤ᵐ[μ] Xn (n + 1))
+    (hnonneg : ∀ n, 0 ≤ᵐ[μ] Xn n)
+    (hle : ∀ n, Xn n ≤ᵐ[μ] X)
+    (hX_int : Integrable X μ)
+    (hlim : ∀ᵐ ω ∂μ, Tendsto (fun n ↦ Xn n ω) atTop (𝓝 (X ω))) :
+    (∀ n, μ[Xn n | m] ≤ᵐ[μ] μ[Xn (n + 1) | m]) ∧
+      Tendsto (fun n ↦ condExpL1 hm μ (Xn n)) atTop (𝓝 (condExpL1 hm μ X)) := by
+  constructor
+  · intro n
+    exact condExp_mono (hXn_int n) (hXn_int (n + 1)) (hmono n)
+  · apply tendsto_condExpL1_of_dominated_convergence hm X hXn_meas hX_int
+    · intro n
+      filter_upwards [hnonneg n, hle n] with ω h0 hleω
+      simpa [Real.norm_eq_abs, abs_of_nonneg h0] using hleω
+    · exact hlim
+
+/-- Source 20(8): dominated convergence for conditional expectations, expressed in `L¹`. -/
+theorem ConditionalExpectationDominatedConvergence {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    {m : MeasurableSpace Ω} {μ : Measure Ω} (hm : m ≤ m₀)
+    [SigmaFinite (μ.trim hm)] {Xn : ℕ → Ω → ℝ} {X : Ω → ℝ}
+    (bound : Ω → ℝ)
+    (hXn_meas : ∀ n, AEStronglyMeasurable (Xn n) μ)
+    (hbound_int : Integrable bound μ)
+    (hbound : ∀ n, ∀ᵐ ω ∂μ, ‖Xn n ω‖ ≤ bound ω)
+    (hlim : ∀ᵐ ω ∂μ, Tendsto (fun n ↦ Xn n ω) atTop (𝓝 (X ω))) :
+    Tendsto (fun n ↦ condExpL1 hm μ (Xn n)) atTop (𝓝 (condExpL1 hm μ X)) :=
+  tendsto_condExpL1_of_dominated_convergence hm bound hXn_meas hbound_int hbound hlim
+
 /-- Source 20(9): conditional Jensen inequality for a lower-semicontinuous convex function. -/
 theorem ConditionalExpectationJensen {Ω : Type u} [m₀ : MeasurableSpace Ω]
     {m : MeasurableSpace Ω} {μ : Measure Ω} (hm : m ≤ m₀)
