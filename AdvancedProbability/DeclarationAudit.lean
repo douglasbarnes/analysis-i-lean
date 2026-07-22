@@ -35,7 +35,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.stoppedValue
 #check AdvancedProbability.stoppedProcess
 #check AdvancedProbability.stoppingSigmaField
-#check AdvancedProbability.DiscreteStoppingCalculus
+#check AdvancedProbability.DiscreteStoppingCalculusTheorem
 #check AdvancedProbability.OptionalStoppingDiscrete
 #check AdvancedProbability.SupermartingaleCharacterization
 #check AdvancedProbability.AlmostSureMartingaleConvergence
