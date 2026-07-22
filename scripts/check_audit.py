@@ -36,4 +36,8 @@ for path in sorted(ROOT.rglob("*.lean")):
 if violations:
     raise SystemExit("\n".join(violations))
 
-print("OK: Analysis I has 101 entries; Analysis II has 68 entries; no proof placeholders")
+print(
+    "OK: source inventories contain Analysis I IDs 1..101 and Analysis II "
+    "IDs 1..68; no proof placeholders. Inventory size is not a correctness "
+    "certificate; run check_analysis_ii_correctness.py --strict for Analysis II."
+)
