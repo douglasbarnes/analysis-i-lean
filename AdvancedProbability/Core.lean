@@ -1,6 +1,7 @@
 import AdvancedProbability.Foundations
 import AdvancedProbability.DiscreteMartingales
 import AdvancedProbability.DiscreteResults
+import AdvancedProbability.MarkovResults
 import AdvancedProbability.ContinuousTime
 import AdvancedProbability.ContinuousResults
 import AdvancedProbability.WeakConvergence
