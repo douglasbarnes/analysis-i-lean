@@ -4,7 +4,6 @@ from __future__ import annotations
 import bisect
 import json
 import re
-import sys
 import urllib.request
 from collections import Counter
 from pathlib import Path
@@ -14,7 +13,15 @@ SOURCE_URL = (
     "II_M/probability_and_measure.tex"
 )
 OUTPUT = Path("probability-measure-envs.json")
-EXPECTED_ENVIRONMENTS = 136
+EXPECTED_ENVIRONMENTS = 167
+EXPECTED_COUNTS = {
+    "defi": 73,
+    "prop": 40,
+    "thm": 36,
+    "lemma": 16,
+    "cor": 1,
+    "notation": 1,
+}
 
 
 def line_starts(text: str) -> list[int]:
@@ -77,16 +84,16 @@ def main() -> None:
     with urllib.request.urlopen(SOURCE_URL) as response:
         text = response.read().decode("utf-8")
     entries = extract(text)
-    OUTPUT.write_text(json.dumps(entries, indent=2, ensure_ascii=False), encoding="utf-8")
     counts = Counter(entry["kind"] for entry in entries)
+    if len(entries) != EXPECTED_ENVIRONMENTS:
+        raise RuntimeError(
+            f"expected {EXPECTED_ENVIRONMENTS} labelled environments, found {len(entries)}"
+        )
+    if dict(counts) != EXPECTED_COUNTS:
+        raise RuntimeError(f"unexpected environment counts: {dict(counts)}")
+    OUTPUT.write_text(json.dumps(entries, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"extracted {len(entries)} labelled environments")
     print(counts)
-    if len(entries) != EXPECTED_ENVIRONMENTS:
-        print(
-            f"warning: expected {EXPECTED_ENVIRONMENTS} labelled environments, "
-            f"found {len(entries)}; inventory retained for audit",
-            file=sys.stderr,
-        )
 
 
 if __name__ == "__main__":
