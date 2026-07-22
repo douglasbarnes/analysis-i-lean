@@ -9,5 +9,6 @@ import AdvancedProbability.MarkovResults
 import AdvancedProbability.ContinuousTime
 import AdvancedProbability.ContinuousResults
 import AdvancedProbability.WeakConvergence
+import AdvancedProbability.WeakConvergenceResults
 import AdvancedProbability.BrownianMotion
 import AdvancedProbability.LargeDeviations
