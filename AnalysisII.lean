@@ -7,3 +7,4 @@ import AnalysisII.NormedMetricCore
 import AnalysisII.CalculusCore
 import AnalysisII.CompactnessAndContractions
 import AnalysisII.SequentialTopology
+import AnalysisII.MeanValueAndConstancy
