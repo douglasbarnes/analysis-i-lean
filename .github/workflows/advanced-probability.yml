@@ -40,7 +40,14 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
           "$HOME/.elan/bin/elan" default "$(cat lean-toolchain)"
+      - name: Restore Lean package cache
+        id: lean-package-cache
+        uses: actions/cache@v4
+        with:
+          path: .lake/packages
+          key: lean-packages-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
       - name: Download Mathlib cache
+        if: steps.lean-package-cache.outputs.cache-hit != 'true'
         shell: bash
         run: timeout 10m lake exe cache get
       - name: Compile Advanced Probability
