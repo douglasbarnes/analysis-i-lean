@@ -8,6 +8,15 @@ on:
       - 'lakefile.toml'
       - 'lean-toolchain'
       - '.github/workflows/advanced-probability.yml'
+  push:
+    branches:
+      - 'agent/advanced-probability'
+    paths:
+      - 'AdvancedProbability.lean'
+      - 'AdvancedProbability/**'
+      - 'lakefile.toml'
+      - 'lean-toolchain'
+      - '.github/workflows/advanced-probability.yml'
   workflow_dispatch:
 
 concurrency:
