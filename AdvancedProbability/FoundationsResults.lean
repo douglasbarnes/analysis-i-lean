@@ -9,31 +9,38 @@ namespace AdvancedProbability
 
 universe u
 
-/-- The thirteen conditional-expectation laws used throughout the course.  Unlike the earlier
-course-facing interface, every field below is a concrete Mathlib proposition. -/
+/-- A concrete package of the conditional-expectation laws currently available in the pinned
+Mathlib revision. -/
 structure ConditionalExpectationLawPackage {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    (m : MeasurableSpace Ω) (μ : Measure Ω) (X Y : Ω → ℝ) where
-  measurable : StronglyMeasurable[m] (μ[X | m])
-  integrable : Integrable (μ[X | m]) μ
-  fixed_of_measurable : StronglyMeasurable[m] X → μ[X | m] = X
-  preserves_integral : ∫ ω, μ[X | m] ω ∂μ = ∫ ω, X ω ∂μ
-  nonnegative : 0 ≤ᵐ[μ] X → 0 ≤ᵐ[μ] μ[X | m]
-  monotone : X ≤ᵐ[μ] Y → μ[X | m] ≤ᵐ[μ] μ[Y | m]
-  additive : μ[X + Y | m] =ᵐ[μ] μ[X | m] + μ[Y | m]
-  homogeneous : ∀ a : ℝ, μ[a • X | m] =ᵐ[μ] a • μ[X | m]
-  tower : ∀ m₁ : MeasurableSpace Ω, m₁ ≤ m → μ[μ[X | m] | m₁] =ᵐ[μ] μ[X | m₁]
+    (m : MeasurableSpace Ω) (μ : @Measure Ω m₀) (X Y : Ω → ℝ) where
+  measurable : StronglyMeasurable[m] (MeasureTheory.condExp m μ X)
+  integrable : Integrable (MeasureTheory.condExp m μ X) μ
+  fixed_of_measurable : StronglyMeasurable[m] X → MeasureTheory.condExp m μ X = X
+  preserves_integral :
+    ∫ ω, MeasureTheory.condExp m μ X ω ∂μ = ∫ ω, X ω ∂μ
+  nonnegative : 0 ≤ᵐ[μ] X → 0 ≤ᵐ[μ] MeasureTheory.condExp m μ X
+  monotone : X ≤ᵐ[μ] Y →
+    MeasureTheory.condExp m μ X ≤ᵐ[μ] MeasureTheory.condExp m μ Y
+  additive : MeasureTheory.condExp m μ (X + Y) =ᵐ[μ]
+    MeasureTheory.condExp m μ X + MeasureTheory.condExp m μ Y
+  homogeneous : ∀ a : ℝ, MeasureTheory.condExp m μ (a • X) =ᵐ[μ]
+    a • MeasureTheory.condExp m μ X
+  tower : ∀ m₁ : MeasurableSpace Ω, m₁ ≤ m →
+    MeasureTheory.condExp m₁ μ (MeasureTheory.condExp m μ X) =ᵐ[μ]
+      MeasureTheory.condExp m₁ μ X
   pull_out : ∀ Z : Ω → ℝ, AEStronglyMeasurable[m] Z μ → Integrable (Z * X) μ →
-    μ[Z * X | m] =ᵐ[μ] Z * μ[X | m]
-  independent_information : ∀ m₁ : MeasurableSpace Ω, m₁ ≤ m₀ →
+    MeasureTheory.condExp m μ (Z * X) =ᵐ[μ]
+      Z * MeasureTheory.condExp m μ X
+  independent : ∀ m₁ : MeasurableSpace Ω, m₁ ≤ m₀ →
     StronglyMeasurable[m₁] X → Indep m₁ m μ →
-      μ[X | m] =ᵐ[μ] fun _ ↦ ∫ ω, X ω ∂μ
-  abs_le : |μ[X | m]| ≤ᵐ[μ] μ[|X| | m]
-  l1_contraction : eLpNorm (μ[X | m]) 1 μ ≤ eLpNorm X 1 μ
+      MeasureTheory.condExp m μ X =ᵐ[μ] (fun _ ↦ ∫ ω, X ω ∂μ)
+  abs_le : (fun ω ↦ |MeasureTheory.condExp m μ X ω|) ≤ᵐ[μ]
+    MeasureTheory.condExp m μ (fun ω ↦ |X ω|)
+  l1_contraction : eLpNorm (MeasureTheory.condExp m μ X) 1 μ ≤ eLpNorm X 1 μ
 
-/-- Source 20: the thirteen standard conditional-expectation identities, proved for Mathlib's
-conditional expectation. -/
+/-- A proved package of the standard elementary conditional-expectation laws. -/
 theorem ConditionalExpectationLawsTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    (m : MeasurableSpace Ω) (μ : Measure Ω) (hm : m ≤ m₀)
+    (m : MeasurableSpace Ω) (μ : @Measure Ω m₀) (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] [IsFiniteMeasure μ]
     {X Y : Ω → ℝ} (hX : Integrable X μ) (hY : Integrable Y μ) :
     ConditionalExpectationLawPackage m μ X Y := by
@@ -48,9 +55,9 @@ theorem ConditionalExpectationLawsTheorem {Ω : Type u} [m₀ : MeasurableSpace 
       homogeneous := fun a ↦ condExp_smul a X m
       tower := ?_
       pull_out := ?_
-      independent_information := ?_
+      independent := ?_
       abs_le := abs_condExp_ae_le_condExp_abs X
-      l1_contraction := eLpNorm_condExp_le_eLpNorm X le_rfl }
+      l1_contraction := eLpNorm_one_condExp_le_eLpNorm X }
   · intro m₁ hm₁
     exact condExp_condExp_of_le hm₁ hm
   · intro Z hZm hZX
