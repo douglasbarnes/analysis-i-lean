@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Extract Probability and Measure source inventory
+        shell: bash
+        run: python3 scripts/extract_probability_measure_source.py
       - name: Install Elan and Lean
         shell: bash
         run: |
@@ -34,10 +37,12 @@ jobs:
             lake build
             python3 scripts/check_audit.py
           } 2>&1 | tee lean-build.log
-      - name: Upload build log
+      - name: Upload build log and source inventory
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lean-build-log
-          path: lean-build.log
+          path: |
+            lean-build.log
+            probability-measure-envs.json
           if-no-files-found: warn
