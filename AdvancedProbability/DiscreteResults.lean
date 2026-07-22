@@ -54,11 +54,13 @@ theorem DiscreteL1MartingaleConvergenceTheorem {Ω : Type u} [m₀ : MeasurableS
   · constructor
     · rintro ⟨Z, hZ, hrep⟩
       let Zlim : Ω → ℝ := μ[Z | ⨆ n, ℱ n]
-      refine ⟨Zlim, ?_, ?_⟩
-      · exact (integrable_condExp (μ := μ) (m := ⨆ n, ℱ n) (f := Z))
-      · have ht := MeasureTheory.tendsto_eLpNorm_condExp (ℱ := ℱ) Z
-        refine ht.congr' (Filter.Eventually.of_forall fun n ↦ ?_)
-        exact eLpNorm_congr_ae ((hrep n).sub (EventuallyEq.rfl))
+      have hZlim : Integrable Zlim μ := by
+        change Integrable (μ[Z | ⨆ n, ℱ n]) μ
+        exact integrable_condExp
+      refine ⟨Zlim, hZlim, ?_⟩
+      have ht := MeasureTheory.tendsto_eLpNorm_condExp (ℱ := ℱ) Z
+      refine ht.congr' (Filter.Eventually.of_forall fun n ↦ ?_)
+      exact eLpNorm_congr_ae ((hrep n).sub (EventuallyEq.rfl))
     · rintro ⟨Z, hZ, ht⟩
       exact ⟨Z, hZ, fun n ↦ hX.eq_condExp_of_tendsto_eLpNorm hZ ht n⟩
 
