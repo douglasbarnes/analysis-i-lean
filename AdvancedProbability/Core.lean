@@ -1,5 +1,6 @@
 import AdvancedProbability.Foundations
 import AdvancedProbability.DiscreteMartingales
+import AdvancedProbability.DiscreteResults
 import AdvancedProbability.ContinuousTime
 import AdvancedProbability.WeakConvergence
 import AdvancedProbability.BrownianMotion
