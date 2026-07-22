@@ -5,25 +5,26 @@
 This audit compares the Lean library against every theorem-like environment (`thm`, `prop`, `lemma`, and `cor`) in:
 
 - source: `dalcde/cam-notes/IB_M/analysis_ii.tex`;
-- pinned source blob: `1202516f75cf75afd8cb0cb2f33912a65fb4fcd0`;
-- source theorem-like environments: **68**.
+- pinned source commit: `0c1046b9244d84f65df513b14f22d26c51fd78b5`;
+- verified Git blob: `1202516f75cf75afd8cb0cb2f33912a65fb4fcd0`;
+- independently scanned theorem-like environments: **68**.
 
-Pinning the source blob prevents a later edit of the lecture notes from silently changing what the audit claims to cover.
+The audit downloads the file from the pinned commit and recomputes its Git blob hash. A changed or substituted source therefore fails before any Lean coverage claim is evaluated.
 
 ## Tests performed
 
 The audit uses four independent layers.
 
-### 1. Source-inventory integrity
+### 1. Independent source-inventory verification
 
-`scripts/check_analysis_ii_correctness.py` parses `AnalysisII/SourceAudit.lean` and checks that:
+`scripts/check_analysis_ii_correctness.py` downloads the pinned TeX file, verifies its Git blob SHA, and independently scans every theorem, proposition, lemma, and corollary environment. It then parses `AnalysisII/SourceAudit.lean` and checks that:
 
-- exactly 68 entries exist;
+- both independent scans contain exactly 68 entries;
 - IDs are exactly `1..68` in source order;
-- source line ranges are ordered and non-overlapping;
-- every entry has a theorem-like environment kind.
+- every environment kind and exact source line range agrees with the pinned TeX;
+- source line ranges are ordered and non-overlapping.
 
-This tests the internal consistency of the inventory. It does **not**, by itself, prove that the original TeX scan found every environment.
+This prevents a missing source environment from being concealed merely by omitting it from the Lean inventory.
 
 ### 2. Compiled declaration surface
 
@@ -109,7 +110,7 @@ Run the current-state diagnostic:
 python3 scripts/check_analysis_ii_correctness.py --baseline
 ```
 
-This succeeds only when it reproduces the reviewed result `7 full / 7 partial / 54 unmapped` and the current source-linked declaration-ID set.
+This downloads and verifies the source, checks the exact 68-entry inventory, and succeeds only when it reproduces the reviewed result `7 full / 7 partial / 54 unmapped` and the current source-linked declaration-ID set.
 
 Run the actual acceptance test:
 
@@ -119,11 +120,17 @@ python3 scripts/check_analysis_ii_correctness.py --strict
 
 This currently exits non-zero. It will pass only when all 68 source results are classified as fully formalised and the reviewed map is updated accordingly.
 
+A local source copy can be supplied without weakening the hash check:
+
+```bash
+python3 scripts/check_analysis_ii_correctness.py --baseline --source-file analysis_ii.tex
+```
+
 ## Required closure standard
 
 For each of the 68 source entries, closure requires:
 
-1. a stable source ID and pinned source line range;
+1. a stable source ID and exact pinned source line range;
 2. a named Lean theorem, or an explicit exact alias to a Mathlib theorem;
 3. a compiled witness imported by the `AnalysisII` Lake target;
 4. a statement-fidelity review covering every clause and both directions of equivalences;
