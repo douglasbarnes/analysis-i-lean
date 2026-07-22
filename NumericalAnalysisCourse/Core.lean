@@ -70,7 +70,8 @@ theorem iteratedRolleZeroCount (m ℓ : ℕ) (zeroCount : ℕ → ℕ)
 /-- Data extracted from the source's repeated-Rolle proof of the divided-difference mean value
 formula.  The multiplication identity is the equality of the `n`th derivatives. -/
 structure DividedDifferenceMeanValueModel (n : ℕ) where
-  a b : ℝ
+  a : ℝ
+  b : ℝ
   difference : ℝ
   nthDerivative : ℝ → ℝ
   witness : ℝ
@@ -85,7 +86,9 @@ theorem dividedDifferenceMeanValue (n : ℕ) (M : DividedDifferenceMeanValueMode
   simpa [mul_comm] using M.derivative_identity
 
 structure InterpolationErrorModel where
-  f p next : ℝ → ℝ
+  f : ℝ → ℝ
+  p : ℝ → ℝ
+  next : ℝ → ℝ
   dividedDifference : ℝ
   nodalPolynomial : ℝ → ℝ
   xbar : ℝ
@@ -99,7 +102,8 @@ theorem interpolationErrorIdentity (M : InterpolationErrorModel) :
     _ = _ := M.newton_increment M.xbar
 
 structure SmoothInterpolationErrorModel (n : ℕ) extends InterpolationErrorModel where
-  a b : ℝ
+  a : ℝ
+  b : ℝ
   derivative : ℝ → ℝ
   witness : ℝ
   witness_mem : witness ∈ Set.Ioo a b
@@ -164,7 +168,7 @@ theorem chebyshevInterpolationBound (n : ℕ) (error derivativeNorm nodalNorm : 
     |error| ≤ derivativeNorm / (n + 1).factorial * nodalNorm := herror
     _ ≤ derivativeNorm / (n + 1).factorial * ((2 : ℝ) ^ n)⁻¹ := by
       gcongr
-    _ = derivativeNorm / (2 ^ n * (n + 1).factorial) := by field_simp; ring
+    _ = derivativeNorm / (2 ^ n * (n + 1).factorial) := by field_simp
 
 def AreOrthogonal {V : Type*} [SeminormedAddCommGroup V] [InnerProductSpace ℝ V]
     (f g : V) : Prop := inner ℝ f g = 0
@@ -184,7 +188,7 @@ structure MonicOrthogonalConstruction where
     (fun p : PolynomialSpace n ↦ fun k : Fin (n + 1) ↦ p.1.coeff k)
   characterization : ∀ n (q : PolynomialSpace n),
     IsMonic q.1 → IsOrthogonalPolynomial innerProduct q.1 n →
-      (fun k : Fin (n + 1) ↦ q.1.coeff k) = fun k ↦ (polynomial n).coeff k
+      (fun k : Fin (n + 1) ↦ q.1.coeff k) = fun k : Fin (n + 1) ↦ (polynomial n).coeff k
 
 theorem uniqueMonicOrthogonalPolynomial (M : MonicOrthogonalConstruction) (n : ℕ)
     (hdegree : (M.polynomial n).natDegree ≤ n) :
@@ -197,7 +201,8 @@ theorem uniqueMonicOrthogonalPolynomial (M : MonicOrthogonalConstruction) (n : �
 
 structure OrthogonalRecurrenceModel where
   p : ℕ → Polynomial ℝ
-  α β : ℕ → ℝ
+  α : ℕ → ℝ
+  β : ℕ → ℝ
   xMulDecomposition : ∀ k,
     Polynomial.X * p k = p (k + 1) + Polynomial.C (α k) * p k + Polynomial.C (β k) * p (k - 1)
 
@@ -209,7 +214,9 @@ theorem orthogonalPolynomialThreeTerm (M : OrthogonalRecurrenceModel) (k : ℕ) 
   linear_combination h
 
 structure OrthogonalProjectionModel where
-  projectionError candidateError residualNormSq : ℝ
+  projectionError : ℝ
+  candidateError : ℝ
+  residualNormSq : ℝ
   pythagorean : candidateError = projectionError + residualNormSq
   residual_nonnegative : 0 ≤ residualNormSq
 
@@ -220,6 +227,7 @@ def IsLinearFunctional {V : Type*} [AddCommMonoid V] [Module ℝ V] (L : V → �
   ∃ linear : V →ₗ[ℝ] ℝ, ⇑linear = L
 
 structure QuadratureBarrierModel where
+  quadratureNodes : ℕ
   nodalSquare : Polynomial ℝ
   integral : Polynomial ℝ → ℝ
   quadrature : Polynomial ℝ → ℝ
@@ -240,9 +248,9 @@ structure OrdinaryQuadratureModel where
   quadrature : Polynomial ℝ → ℝ
   cardinal : Fin ν → Polynomial ℝ
   representation : ∀ p : Polynomial ℝ, p.natDegree < ν →
-    p = ∑ k, Polynomial.C (p.eval k) * cardinal k
+    p = ∑ k : Fin ν, Polynomial.C (p.eval (k : ℝ)) * cardinal k
   linearized : ∀ p : Polynomial ℝ,
-    integral (∑ k, Polynomial.C (p.eval k) * cardinal k) = quadrature p
+    integral (∑ k : Fin ν, Polynomial.C (p.eval (k : ℝ)) * cardinal k) = quadrature p
 
 theorem ordinaryQuadrature (M : OrdinaryQuadratureModel) (p : Polynomial ℝ)
     (hp : p.natDegree < M.ν) : M.integral p = M.quadrature p := by
@@ -256,12 +264,17 @@ structure OrthogonalRootModel where
   signFactorContradiction : ¬ realDistinctInteriorRoots < ν
 
 theorem orthogonalPolynomialRoots (M : OrthogonalRootModel) :
-    M.realDistinctInteriorRoots = M.ν := by omega
+    M.realDistinctInteriorRoots = M.ν :=
+  le_antisymm M.degree_upper (not_lt.mp M.signFactorContradiction)
 
 structure GaussianQuadratureModel where
   ν : ℕ
-  integral quadrature : Polynomial ℝ → ℝ
-  target quotient remainder orthogonal : Polynomial ℝ
+  integral : Polynomial ℝ → ℝ
+  quadrature : Polynomial ℝ → ℝ
+  target : Polynomial ℝ
+  quotient : Polynomial ℝ
+  remainder : Polynomial ℝ
+  orthogonal : Polynomial ℝ
   decomposition : target = quotient * orthogonal + remainder
   orthogonality : integral (quotient * orthogonal) = 0
   quadrature_roots : quadrature (quotient * orthogonal) = 0
@@ -281,7 +294,9 @@ def IsSharpErrorBound (c : ℝ) (attained : ℝ → Prop) : Prop :=
 
 structure PeanoKernelModel where
   factorial : ℝ
-  functionalValue taylorPolynomialValue kernelIntegral : ℝ
+  functionalValue : ℝ
+  taylorPolynomialValue : ℝ
+  kernelIntegral : ℝ
   annihilatesTaylorPolynomial : taylorPolynomialValue = 0
   taylorDecomposition : functionalValue = taylorPolynomialValue + kernelIntegral / factorial
 
@@ -304,14 +319,20 @@ def NumericalMethodConverges (error : ℝ → ℝ) : Prop :=
 
 structure EulerErrorModel where
   error : ℕ → ℝ
-  h c λ T : ℝ
+  h : ℝ
+  c : ℝ
+  lipschitzConstant : ℝ
+  T : ℝ
   h_nonnegative : 0 ≤ h
   c_nonnegative : 0 ≤ c
-  gronwallFactor_nonnegative : 0 ≤ (Real.exp (λ * T) - 1) / λ
-  normalizedEstimate : ∀ n, |error n| / h ≤ c * ((Real.exp (λ * T) - 1) / λ)
+  gronwallFactor_nonnegative :
+    0 ≤ (Real.exp (lipschitzConstant * T) - 1) / lipschitzConstant
+  normalizedEstimate : ∀ n, |error n| / h ≤
+    c * ((Real.exp (lipschitzConstant * T) - 1) / lipschitzConstant)
 
 theorem eulerMethodConverges (M : EulerErrorModel) (n : ℕ) :
-    |M.error n| ≤ M.c * M.h * ((Real.exp (M.λ * M.T) - 1) / M.λ) := by
+    |M.error n| ≤ M.c * M.h *
+      ((Real.exp (M.lipschitzConstant * M.T) - 1) / M.lipschitzConstant) := by
   by_cases hh : M.h = 0
   · have := M.normalizedEstimate n
     simp [hh] at this ⊢
@@ -359,7 +380,9 @@ def RootCondition (roots : Set ℂ) (multiplicity : ℂ → ℕ) : Prop :=
   (∀ z ∈ roots, ‖z‖ ≤ 1) ∧ ∀ z ∈ roots, ‖z‖ = 1 → multiplicity z = 1
 
 structure DahlquistModel where
-  convergent consistent rootCondition : Prop
+  convergent : Prop
+  consistent : Prop
+  rootCondition : Prop
   convergence_gives_consistency : convergent → consistent
   convergence_gives_rootCondition : convergent → rootCondition
   stable_consistent_converges : consistent → rootCondition → convergent
@@ -403,7 +426,7 @@ open set.  This is the exact maximum-modulus result on the connected component u
 theorem maximumPrinciple {Ω : Set ℂ} {g : ℂ → ℂ} (hc : IsPreconnected Ω) (hΩ : IsOpen Ω)
     (hg : DifferentiableOn ℂ g Ω) {z : ℂ} (hz : z ∈ Ω)
     (hmax : IsMaxOn (norm ∘ g) Ω z) : Set.EqOn g (Function.const ℂ (g z)) Ω :=
-  eqOn_of_isPreconnected_of_isMaxOn_norm hc hΩ hg hz hmax
+  Complex.eqOn_of_isPreconnected_of_isMaxOn_norm hc hΩ hg hz hmax
 
 def IsUpperTriangular {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : Prop :=
   ∀ i j, j < i → A i j = 0
@@ -435,10 +458,12 @@ theorem luExistenceUniqueness {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}
   refine ⟨M.eliminate h, M.sound h, ?_⟩
   intro lu hlu
   rcases M.factors_injective lu.1 lu.2 (M.eliminate h).1 (M.eliminate h).2 hlu (M.sound h) with ⟨rfl, rfl⟩
-  rfl
+  exact Prod.ext rfl rfl
 
 structure LDUFactorization {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) where
-  L D U : Matrix (Fin n) (Fin n) ℝ
+  L : Matrix (Fin n) (Fin n) ℝ
+  D : Matrix (Fin n) (Fin n) ℝ
+  U : Matrix (Fin n) (Fin n) ℝ
   factorizes : A = L * D * U
   lower : IsLowerTriangular L
   upper : IsUpperTriangular U
@@ -457,7 +482,8 @@ theorem lduFactorization {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ} (M : LDUMode
   ⟨M.construct, M.ext M.construct⟩
 
 structure LDLFactorization {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) where
-  L D : Matrix (Fin n) (Fin n) ℝ
+  L : Matrix (Fin n) (Fin n) ℝ
+  D : Matrix (Fin n) (Fin n) ℝ
   factorizes : A = L * D * L.transpose
   lower : IsLowerTriangular L
   unitLower : ∀ i, L i i = 1
@@ -512,7 +538,8 @@ theorem luPreservesBandwidth {n : ℕ} {A L U : Matrix (Fin n) (Fin n) ℝ} {r :
     · exact M.upper_elimination_locality i j h
 
 structure LeastSquaresModel where
-  minimizes normalEquation : Prop
+  minimizes : Prop
+  normalEquation : Prop
   variationIdentity : minimizes → normalEquation
   pythagoreanIdentity : normalEquation → minimizes
 
