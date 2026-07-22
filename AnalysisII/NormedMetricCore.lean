@@ -45,11 +45,8 @@ theorem source019_equivalent_norms_bounded
     exact mul_lt_mul_of_pos_left (hR x hx) h.upper_pos
   · rintro ⟨R, hR⟩
     refine ⟨R / h.lower, fun x hx => ?_⟩
-    have hlo := h.lower_le x
-    have hqr := hR x hx
-    have := hp x
-    have := hq x
-    nlinarith [h.lower_pos]
+    apply (lt_div_iff₀ h.lower_pos).2
+    exact lt_of_le_of_lt (h.lower_le x) (hR x hx)
 
 /-- Analysis II source 19(ii): Lipschitz-equivalent norms define the same convergence. -/
 theorem source019_equivalent_norms_convergence
@@ -59,16 +56,17 @@ theorem source019_equivalent_norms_convergence
   constructor
   · intro hu ε hε
     obtain ⟨N, hN⟩ := hu (ε / h.upper) (div_pos hε h.upper_pos)
-    refine ⟨N, fun n hn => lt_of_le_of_lt (h.le_upper _) ?_⟩
-    exact mul_lt_mul_of_pos_left (hN n hn) h.upper_pos
+    refine ⟨N, fun n hn => ?_⟩
+    calc
+      q (u n - x) ≤ h.upper * p (u n - x) := h.le_upper _
+      _ < h.upper * (ε / h.upper) :=
+        mul_lt_mul_of_pos_left (hN n hn) h.upper_pos
+      _ = ε := by field_simp [ne_of_gt h.upper_pos]
   · intro hu ε hε
     obtain ⟨N, hN⟩ := hu (h.lower * ε) (mul_pos h.lower_pos hε)
     refine ⟨N, fun n hn => ?_⟩
-    have hlo := h.lower_le (u n - x)
-    have hq' := hN n hn
-    have := hp (u n - x)
-    have := hq (u n - x)
-    nlinarith [h.lower_pos]
+    exact (lt_of_le_of_lt (h.lower_le _) (hN n hn) |>.imp_lt).resolve_left
+      (not_lt_of_ge (hp _))
 
 /-- Analysis II source 20(i): limits in a normed space are unique. -/
 theorem source020_limit_unique
@@ -96,8 +94,8 @@ coordinatewise convergence. -/
 theorem source021_euclidean_coordinatewise
     {n : ℕ} {u : ℕ → (Fin n → ℝ)} {x : Fin n → ℝ} :
     Tendsto u atTop (𝓝 x) ↔
-      ∀ i, Tendsto (fun k => u k i) atTop (𝓝 (x i)) := by
-  simpa only [tendsto_pi_nhds]
+      ∀ i, Tendsto (fun k => u k i) atTop (𝓝 (x i)) :=
+  tendsto_pi_nhds
 
 /-- Analysis II source 23: every convergent sequence is Cauchy. -/
 theorem source023_convergent_is_cauchy
@@ -111,10 +109,12 @@ theorem source024_cauchy_bounded
     ∃ R : ℝ, ∀ n, ‖u n‖ < R := by
   obtain ⟨R, hR, hdist⟩ := cauchySeq_bdd hu
   refine ⟨R + ‖u 0‖, fun n => ?_⟩
+  have hd : ‖u n - u 0‖ < R := by
+    simpa [dist_eq_norm] using hdist n 0
   calc
     ‖u n‖ = ‖(u n - u 0) + u 0‖ := by rw [sub_add_cancel]
     _ ≤ ‖u n - u 0‖ + ‖u 0‖ := norm_add_le _ _
-    _ < R + ‖u 0‖ := add_lt_add_right (by simpa [dist_eq_norm] using hdist n 0) _
+    _ < R + ‖u 0‖ := by linarith
 
 /-- Analysis II source 25: a Cauchy sequence with a convergent subsequence converges. -/
 theorem source025_cauchy_subsequence_limit
@@ -131,15 +131,18 @@ theorem source026_equivalent_norms_cauchy
   constructor
   · intro hu ε hε
     obtain ⟨N, hN⟩ := hu (ε / h.upper) (div_pos hε h.upper_pos)
-    refine ⟨N, fun m hm n hn => lt_of_le_of_lt (h.le_upper _) ?_⟩
-    exact mul_lt_mul_of_pos_left (hN m hm n hn) h.upper_pos
+    refine ⟨N, fun m hm n hn => ?_⟩
+    calc
+      q (u m - u n) ≤ h.upper * p (u m - u n) := h.le_upper _
+      _ < h.upper * (ε / h.upper) :=
+        mul_lt_mul_of_pos_left (hN m hm n hn) h.upper_pos
+      _ = ε := by field_simp [ne_of_gt h.upper_pos]
   · intro hu ε hε
     obtain ⟨N, hN⟩ := hu (h.lower * ε) (mul_pos h.lower_pos hε)
     refine ⟨N, fun m hm n hn => ?_⟩
     have hlo := h.lower_le (u m - u n)
     have hq' := hN m hm n hn
-    have := hp (u m - u n)
-    have := hq (u m - u n)
+    have hp' := hp (u m - u n)
     nlinarith [h.lower_pos]
 
 /-- Analysis II source 26(ii): equivalent norms define the same completeness. -/
@@ -167,7 +170,7 @@ openness of the complement. -/
 theorem source029_closed_iff_complement_open
     {X : Type*} [TopologicalSpace X] (s : Set X) :
     IsClosed s ↔ IsOpen sᶜ :=
-  Iff.rfl
+  isOpen_compl_iff.symm
 
 /-- Analysis II source 31 duplicates source 29. -/
 theorem source031_closed_iff_complement_open
