@@ -53,4 +53,4 @@ lake build
 python3 scripts/check_audit.py
 ```
 
-GitHub Actions runs the same build and audit process for pull requests.
+GitHub Actions runs the same build and audit process for pull requests. The Linear Analysis library includes an ordered 128-item source audit and declaration audit.
