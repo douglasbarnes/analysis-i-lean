@@ -1,15 +1,7 @@
 name: Lean
 
 on:
-  pull_request:
-  push:
-    branches:
-      - agent/probability-and-measure
   workflow_dispatch:
-
-concurrency:
-  group: lean-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
 
 jobs:
   build:
