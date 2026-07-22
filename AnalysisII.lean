@@ -4,3 +4,4 @@ import AnalysisII.CoreTheorems
 import AnalysisII.CorrectnessAudit
 import AnalysisII.TargetProbe
 import AnalysisII.UniformConvergence
+import AnalysisII.NormedMetricCore
