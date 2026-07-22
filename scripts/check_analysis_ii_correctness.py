@@ -24,6 +24,7 @@ SOURCE_URL = (
     f"{SOURCE_COMMIT_SHA}/{SOURCE_PATH}"
 )
 SOURCE_COUNT = 68
+ALL_SOURCE_IDS = set(range(1, SOURCE_COUNT + 1))
 
 # A source result is FULL only if the current Lean theorem proves every clause
 # of the source statement, or a genuine generalisation directly implies it.
@@ -57,6 +58,26 @@ PARTIAL: dict[int, str] = {
 ALIASES: dict[int, str] = {49: "source010_heineCantor"}
 EXPECTED_DECLARATION_IDS = {
     1, 2, 10, 28, 39, 41, 43, 44, 52, 54, 55, 57, 59
+}
+EXPECTED_DECLARATION_NAMES = {
+    "source001_uniformCauchySeqOn_of_tendstoUniformly",
+    "source001_tendstoUniformly_of_uniformCauchySeqOn",
+    "source002_uniform_limit_continuous",
+    "source010_heineCantor",
+    "source028_metric_ball_open",
+    "source039_limit_unique",
+    "source041_iUnion_open",
+    "source041_inter_open",
+    "source043_iInter_closed",
+    "source043_union_closed",
+    "source044_finite_closed",
+    "source052_contraction_unique_fixedPoint",
+    "source052_fixedPoint_of_contracting_iterate",
+    "source054_fderiv_unique",
+    "source055_fderiv_continuous",
+    "source055_continuousLinearMap_derivative",
+    "source057_apply_le_opNorm",
+    "source059_chain_rule",
 }
 
 ENTRY_RE = re.compile(
@@ -250,6 +271,12 @@ def main() -> int:
             f"found {sorted(declaration_ids)}, "
             f"expected {sorted(EXPECTED_DECLARATION_IDS)}"
         )
+    if declaration_names != EXPECTED_DECLARATION_NAMES:
+        fail(
+            "source-linked declaration names changed without review: "
+            f"found {sorted(declaration_names)}, "
+            f"expected {sorted(EXPECTED_DECLARATION_NAMES)}"
+        )
     for source_id, target in ALIASES.items():
         if target not in declaration_names:
             fail(f"source {source_id} alias target {target} does not exist")
@@ -257,7 +284,9 @@ def main() -> int:
     if set(FULL) & set(PARTIAL):
         fail("an ID is classified both full and partial")
     reviewed = set(FULL) | set(PARTIAL)
-    unmapped = set(range(1, SOURCE_COUNT + 1)) - reviewed
+    if reviewed - ALL_SOURCE_IDS:
+        fail(f"review contains out-of-range source IDs: {sorted(reviewed - ALL_SOURCE_IDS)}")
+    unmapped = ALL_SOURCE_IDS - reviewed
 
     library_coverage = (COURSE / "LibraryCoverage.lean").read_text(encoding="utf-8")
     api_checks = len(
@@ -285,9 +314,9 @@ def main() -> int:
         print("BASELINE RESULT: reproduced current incompleteness exactly")
         return 0
 
-    if len(FULL) != SOURCE_COUNT:
+    if set(FULL) != ALL_SOURCE_IDS or PARTIAL:
         print("STRICT RESULT: FAIL")
-        print("All 68 results must be FULL before this test can pass.")
+        print("All and only source IDs 1..68 must be FULL before this test can pass.")
         return 1
 
     print("STRICT RESULT: PASS")
