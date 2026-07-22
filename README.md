@@ -1,32 +1,44 @@
-# Cambridge Part IA and Part IB in Lean
+# Mathematics Lecture Courses in Lean
 
-A declaration-level Lean formalisation of every labelled definition, notation, law, lemma,
-proposition, theorem, and corollary in the Part IA and Part IB TeX lecture notes published at
-https://dec41.user.srcf.net/notes/.
+A growing Lean 4 formalisation of university mathematics lecture courses. The repository is organised as a collection of independent course libraries rather than around a single analysis sequence.
 
-## Coverage
+The current material is based on Cambridge lecture notes published at https://dec41.user.srcf.net/notes/ and uses Mathlib wherever an existing theorem matches the source statement. Course-specific results are proved locally or represented using explicit hypotheses that preserve the mathematical content of the source.
 
-| Part | Courses | Labelled source environments |
-|---|---:|---:|
-| IA | 8 | 913 |
-| IB | 16 | 1,111 |
-| **Total** | **24** | **2,024** |
+## Included courses
 
-Each course has an ordered, source-line-aware inventory and a declaration audit with one compiled
-witness per source environment. Standard Mathlib results are reused where they match exactly;
-course-specific statements are proved locally or represented with explicit hypotheses matching the
-mathematical certificates required by the source.
+### Part IA
 
-## Courses
+- Analysis I
+- Groups
+- Numbers and Sets
+- Probability
 
-Part IA: Analysis I; Differential Equations; Dynamics and Relativity; Groups; Numbers and Sets;
-Probability; Vector Calculus; Vectors and Matrices.
+### Part IB
 
-Part IB: Analysis II; Linear Algebra; Markov Chains; Methods; Quantum Mechanics; Complex Analysis;
-Complex Methods; Electromagnetism; Fluid Dynamics; Geometry; Groups, Rings and Modules; Numerical
-Analysis; Statistics; Metric and Topological Spaces; Optimisation; Variational Principles.
+- Analysis II
+- Linear Algebra
+- Markov Chains
+- Complex Analysis
+- Complex Methods
+- Geometry
+- Groups, Rings and Modules
+- Statistics
+- Metric and Topological Spaces
+- Optimisation
 
-## Toolchain and verification
+There are currently **14 course libraries**. Each course is exposed as a separate Lake target, so individual libraries can be built independently while `lake build` checks the complete collection.
+
+## Formalisation and audit structure
+
+Course directories contain the Lean implementation and, where available, source-order inventories and declaration audits. Standard Mathlib declarations are reused rather than duplicated. Source statements that require additional hypotheses are formalised with those hypotheses made explicit instead of being silently strengthened or weakened.
+
+The repository audit rejects:
+
+- `sorry` and `admit` proof placeholders;
+- newly declared axioms;
+- `opaque` declarations used to hide proofs.
+
+## Toolchain
 
 - Lean `v4.30.0`
 - Mathlib `v4.30.0`
@@ -37,7 +49,4 @@ lake build
 python3 scripts/check_audit.py
 ```
 
-The CI workflow builds all 24 libraries and rejects proof placeholders, new axioms, and proof-hiding
-opaque declarations. A source result is treated as closed only when it is an exact compiled Mathlib
-target, has a complete local proof, or is recorded as a duplicate of an already checked result.
-Malformed source statements are documented and are never silently strengthened or weakened.
+GitHub Actions runs the same build and audit process for pull requests.
