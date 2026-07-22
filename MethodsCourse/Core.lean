@@ -89,18 +89,22 @@ theorem distinct_eigenfunctions_orthogonal
     (hv : v ∈ Module.End.eigenspace T ν) : inner ℂ u v = 0 := by
   exact hT.orthogonalFamily_eigenspaces hμν ⟨u, hu⟩ ⟨v, hv⟩
 
--- Source line 547: countable, discrete eigenvalue sequence.
-structure DiscreteSpectrum (T : Type*) where
-  eigenvalue : ℕ → T
-  discrete : Function.Injective eigenvalue
-
-theorem compact_sturm_liouville_discrete {T : Type*} (s : DiscreteSpectrum T) :
-    Set.Countable (Set.range s.eigenvalue) ∧
-      ∀ i j, s.eigenvalue i = s.eigenvalue j ↔ i = j := by
+-- Source line 547: compact self-adjoint spectral theorem.  Mathlib's
+-- compact-operator theorem gives completeness of the eigenspaces and finite
+-- multiplicity of every nonzero eigenvalue, the precise functional-analytic
+-- content behind the notes' phrase “countable and discrete”.
+theorem compact_sturm_liouville_discrete
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [CompleteSpace E]
+    {T : E →L[ℂ] E} (hcompact : IsCompactOperator T)
+    (hsymmetric : (T : E →ₗ[ℂ] E).IsSymmetric) :
+    (⨆ μ : ℂ, Module.End.eigenspace (T : E →ₗ[ℂ] E) μ)ᗮ = ⊥ ∧
+      ∀ μ : ℂ, μ ≠ 0 →
+        FiniteDimensional ℂ (Module.End.eigenspace (T : E →ₗ[ℂ] E) μ) := by
   constructor
-  · exact Set.countable_range _
-  · intro i j
-    exact ⟨(fun h => s.discrete h), (fun h => congrArg s.eigenvalue h)⟩
+  · exact ContinuousLinearMap.orthogonalComplement_iSup_eigenspaces_eq_bot
+      hcompact hsymmetric
+  · intro μ hμ
+    exact ContinuousLinearMap.finite_dimensional_eigenspace hcompact μ hμ
 
 -- Source line 555: completeness/eigenfunction expansion.
 theorem eigenfunction_completeness
