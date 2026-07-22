@@ -1,28 +1,10 @@
 name: Advanced Probability
 
 on:
-  pull_request:
-    paths:
-      - 'AdvancedProbability.lean'
-      - 'AdvancedProbability/**'
-      - 'lakefile.toml'
-      - 'lean-toolchain'
-      - 'lake-manifest.json'
-      - '.github/workflows/advanced-probability.yml'
-  push:
-    branches:
-      - 'agent/advanced-probability'
-    paths:
-      - 'AdvancedProbability.lean'
-      - 'AdvancedProbability/**'
-      - 'lakefile.toml'
-      - 'lean-toolchain'
-      - 'lake-manifest.json'
-      - '.github/workflows/advanced-probability.yml'
   workflow_dispatch:
 
 concurrency:
-  group: advanced-probability-${{ github.event.pull_request.number || github.ref }}
+  group: advanced-probability-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
