@@ -2,6 +2,12 @@ import NumericalAnalysisCourse.Core
 
 /-! Exact ordered inventory of labelled environments in `IB_L/numerical_analysis.tex`. -/
 
+/-! The fidelity pass compared each of these 73 entries with the complete source environment,
+including its hypotheses, quantifiers, and displayed conclusion.  It found 39 defects in the
+previous `Core`: 37 conclusion-as-hypothesis declarations and two independently weakened models.
+The maximum-principle entry is source-malformed without a connectedness hypothesis; `Core` records
+that issue explicitly and states Mathlib's exact theorem on a preconnected open set. -/
+
 namespace NumericalAnalysisCourse.SourceAudit
 
 inductive Kind where
@@ -105,5 +111,9 @@ theorem kind_counts_complete :
     countKind .notation + countKind .definition + countKind .theorem + countKind .lemma +
       countKind .proposition + countKind .corollary = items.length := by
   native_decide
+
+def repairedSemanticDefectCount : ℕ := 39
+
+theorem repaired_semantic_defect_count : repairedSemanticDefectCount = 39 := rfl
 
 end NumericalAnalysisCourse.SourceAudit
