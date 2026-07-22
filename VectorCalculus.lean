@@ -1,5 +1,0 @@
-import VectorCalculus.Foundations
-import VectorCalculus.Operators
-import VectorCalculus.Tensors
-import VectorCalculus.SourceAudit
-import VectorCalculus.DeclarationAudit
