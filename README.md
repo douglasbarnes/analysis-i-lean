@@ -26,11 +26,17 @@ The current material is based on Cambridge lecture notes published at https://de
 - Metric and Topological Spaces
 - Optimisation
 
-There are currently **14 course libraries**. Each course is exposed as a separate Lake target, so individual libraries can be built independently while `lake build` checks the complete collection.
+### Part II
+
+- Probability and Measure
+
+There are currently **15 course libraries**. Each course is exposed as a separate Lake target, so individual libraries can be built independently while `lake build` checks the complete collection.
 
 ## Formalisation and audit structure
 
 Course directories contain the Lean implementation and, where available, source-order inventories and declaration audits. Standard Mathlib declarations are reused rather than duplicated. Source statements that require additional hypotheses are formalised with those hypotheses made explicit instead of being silently strengthened or weakened.
+
+The `ProbabilityAndMeasure` library is based on `II_M/probability_and_measure.tex`. Its CI inventory checks all 136 labelled definitions, theorems, propositions, lemmas, corollaries, and notation environments against the source file.
 
 The repository audit rejects:
 
