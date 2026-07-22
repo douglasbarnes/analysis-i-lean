@@ -96,7 +96,7 @@ abbrev Expectation (Ω : Type u) := (Ω → ℝ) → ℝ
 
 /-- Indicator-weighted expectation over an event. -/
 def eventExpectation {Ω : Type u} (𝔼 : Expectation Ω) (X : Ω → ℝ) (A : Set Ω) : ℝ :=
-  𝔼 (fun ω ↦ if ω ∈ A then X ω else 0)
+  𝔼 (Set.indicator A X)
 
 /-- A real random variable observable with respect to a sigma-field. -/
 def Observable {Ω : Type u} (𝒢 : SigmaField Ω) (X : Ω → ℝ) : Prop :=
