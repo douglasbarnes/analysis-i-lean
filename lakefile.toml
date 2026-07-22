@@ -1,6 +1,6 @@
-name = "analysis-formalization"
-version = "0.2.0"
-defaultTargets = ["AnalysisI", "DifferentialEquations", "DynamicsRelativity", "Groups", "NumbersAndSets", "Probability", "VectorCalculus", "VectorsMatrices", "AnalysisII", "LinearAlgebraCourse", "MarkovChains", "MethodsCourse", "QuantumMechanics", "ComplexAnalysisCourse", "ComplexMethods", "ElectromagnetismCourse", "FluidDynamicsCourse", "Geometry", "GroupsRingsModules", "NumericalAnalysisCourse", "StatisticsCourse", "MetricTopologicalSpaces", "OptimisationCourse", "VariationalPrinciplesCourse"]
+name = "maths-lecture-formalisations"
+version = "0.3.0"
+defaultTargets = ["AnalysisI", "Groups", "NumbersAndSets", "Probability", "AnalysisII", "LinearAlgebraCourse", "MarkovChains", "ComplexAnalysisCourse", "ComplexMethods", "Geometry", "GroupsRingsModules", "StatisticsCourse", "MetricTopologicalSpaces", "OptimisationCourse"]
 
 [[require]]
 name = "mathlib"
@@ -9,12 +9,6 @@ rev = "v4.30.0"
 
 [[lean_lib]]
 name = "AnalysisI"
-
-[[lean_lib]]
-name = "DifferentialEquations"
-
-[[lean_lib]]
-name = "DynamicsRelativity"
 
 [[lean_lib]]
 name = "Groups"
@@ -26,12 +20,6 @@ name = "NumbersAndSets"
 name = "Probability"
 
 [[lean_lib]]
-name = "VectorCalculus"
-
-[[lean_lib]]
-name = "VectorsMatrices"
-
-[[lean_lib]]
 name = "AnalysisII"
 
 [[lean_lib]]
@@ -41,31 +29,16 @@ name = "LinearAlgebraCourse"
 name = "MarkovChains"
 
 [[lean_lib]]
-name = "MethodsCourse"
-
-[[lean_lib]]
-name = "QuantumMechanics"
-
-[[lean_lib]]
 name = "ComplexAnalysisCourse"
 
 [[lean_lib]]
 name = "ComplexMethods"
 
 [[lean_lib]]
-name = "ElectromagnetismCourse"
-
-[[lean_lib]]
-name = "FluidDynamicsCourse"
-
-[[lean_lib]]
 name = "Geometry"
 
 [[lean_lib]]
 name = "GroupsRingsModules"
-
-[[lean_lib]]
-name = "NumericalAnalysisCourse"
 
 [[lean_lib]]
 name = "StatisticsCourse"
@@ -75,6 +48,3 @@ name = "MetricTopologicalSpaces"
 
 [[lean_lib]]
 name = "OptimisationCourse"
-
-[[lean_lib]]
-name = "VariationalPrinciplesCourse"
