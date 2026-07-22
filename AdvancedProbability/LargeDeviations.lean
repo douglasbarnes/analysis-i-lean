@@ -22,8 +22,8 @@ structure FeketeCertificate (b : ℕ → ℝ) where
   convergence : Tendsto (fun n : ℕ ↦ b (n + 1) / (n + 1)) atTop (𝓝 limit)
 
 /-- Log moment-generating function. -/
-def logMGF {Ω : Type u} (𝔼 : Expectation Ω) (X : Ω → ℝ) (θ : ℝ) : ℝ :=
-  Real.log (𝔼 (fun ω ↦ Real.exp (θ * X ω)))
+def logMGF {Ω : Type u} (expectation : Expectation Ω) (X : Ω → ℝ) (θ : ℝ) : ℝ :=
+  Real.log (expectation (fun ω ↦ Real.exp (θ * X ω)))
 
 /-- Convex conjugate used as the Cramér rate function. -/
 def cramerRate (ψ : ℝ → ℝ) (a : ℝ) : ℝ := sSup (Set.range fun θ : ℝ ↦ θ * a - ψ θ)
