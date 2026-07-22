@@ -42,14 +42,14 @@ theorem urysohn {X : Type*} [TopologicalSpace X] [NormalSpace X]
 /-- Tietze extension for a real-valued continuous function on a closed subspace. -/
 theorem tietze_extension {X : Type*} [TopologicalSpace X] [NormalSpace X]
     {s : Set X} (hs : IsClosed s) (f : C(s, ℝ)) :
-    ∃ g : C(X, ℝ), ContinuousMap.restrict s g = f := by
-  simpa using ContinuousMap.exists_restrict_eq_of_isClosed hs f
+    ∃ g : C(X, ℝ), ContinuousMap.restrict s g = f :=
+  ContinuousMap.exists_restrict_eq hs f
 
 /-- A totally bounded subset of a complete metric space has compact closure. -/
 theorem compact_closure_of_totallyBounded {X : Type*} [PseudoMetricSpace X]
     [CompleteSpace X] {E : Set X} (hE : TotallyBounded E) :
     IsCompact (closure E) :=
-  hE.isCompact_closure
+  hE.closure.isCompact_of_isClosed isClosed_closure
 
 /-- Conversely, compact closure implies total boundedness. -/
 theorem totallyBounded_of_compact_closure {X : Type*} [PseudoMetricSpace X]
@@ -72,7 +72,7 @@ theorem stoneWeierstrass_approximation {X : Type*} [TopologicalSpace X] [Compact
 /-- Classical Weierstrass approximation on a compact real interval, as supplied by Mathlib's
 polynomial approximation theorem. -/
 theorem weierstrass_on_Icc (a b : ℝ) (f : C(Set.Icc a b, ℝ)) :
-    f ∈ (ContinuousMap.polynomialFunctions (Set.Icc a b)).topologicalClosure :=
-  ContinuousMap.continuousMap_mem_polynomialFunctions_closure a b f
+    f ∈ (polynomialFunctions (Set.Icc a b)).topologicalClosure :=
+  continuousMap_mem_polynomialFunctions_closure a b f
 
 end Cambridge.LinearAnalysis
