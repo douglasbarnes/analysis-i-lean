@@ -36,7 +36,7 @@ def GaugeComplete {V : Type*} [Sub V] (p : V → ℝ) : Prop :=
 
 /-- Analysis II source 19(i): Lipschitz-equivalent norms define the same bounded sets. -/
 theorem source019_equivalent_norms_bounded
-    {V : Type*} {p q : V → ℝ} (hp : ∀ x, 0 ≤ p x) (hq : ∀ x, 0 ≤ q x)
+    {V : Type*} {p q : V → ℝ} (hp : ∀ x, 0 ≤ p x) (_hq : ∀ x, 0 ≤ q x)
     (h : EquivalentGauges p q) (s : Set V) :
     GaugeBounded p s ↔ GaugeBounded q s := by
   constructor
@@ -46,11 +46,11 @@ theorem source019_equivalent_norms_bounded
   · rintro ⟨R, hR⟩
     refine ⟨R / h.lower, fun x hx => ?_⟩
     apply (lt_div_iff₀ h.lower_pos).2
-    exact lt_of_le_of_lt (h.lower_le x) (hR x hx)
+    simpa [mul_comm] using lt_of_le_of_lt (h.lower_le x) (hR x hx)
 
 /-- Analysis II source 19(ii): Lipschitz-equivalent norms define the same convergence. -/
 theorem source019_equivalent_norms_convergence
-    {V : Type*} [Sub V] {p q : V → ℝ} (hp : ∀ x, 0 ≤ p x) (hq : ∀ x, 0 ≤ q x)
+    {V : Type*} [Sub V] {p q : V → ℝ} (hp : ∀ x, 0 ≤ p x) (_hq : ∀ x, 0 ≤ q x)
     (h : EquivalentGauges p q) (u : ℕ → V) (x : V) :
     GaugeConverges p u x ↔ GaugeConverges q u x := by
   constructor
@@ -127,7 +127,7 @@ theorem source025_cauchy_subsequence_limit
 
 /-- Analysis II source 26(i): equivalent norms define the same Cauchy sequences. -/
 theorem source026_equivalent_norms_cauchy
-    {V : Type*} [Sub V] {p q : V → ℝ} (hp : ∀ x, 0 ≤ p x) (hq : ∀ x, 0 ≤ q x)
+    {V : Type*} [Sub V] {p q : V → ℝ} (hp : ∀ x, 0 ≤ p x) (_hq : ∀ x, 0 ≤ q x)
     (h : EquivalentGauges p q) (u : ℕ → V) :
     GaugeCauchy p u ↔ GaugeCauchy q u := by
   constructor
