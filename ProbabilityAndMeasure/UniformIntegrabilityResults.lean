@@ -36,10 +36,10 @@ theorem source117_uniformIntegrable_sum
     cases z with
     | inl i =>
         exact hfδ i A hA
-          (hμA.trans_le (ENNReal.ofReal_le_ofReal (min_le_left _ _)))
+          (hμA.trans (ENNReal.ofReal_le_ofReal (min_le_left _ _)))
     | inr j =>
         exact hgδ j A hA
-          (hμA.trans_le (ENNReal.ofReal_le_ofReal (min_le_right _ _)))
+          (hμA.trans (ENNReal.ofReal_le_ofReal (min_le_right _ _)))
   · obtain ⟨Cf, hCf⟩ := hf.2.2
     obtain ⟨Cg, hCg⟩ := hg.2.2
     refine ⟨max Cf Cg, ?_⟩
