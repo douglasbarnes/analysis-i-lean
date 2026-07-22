@@ -48,16 +48,17 @@ theorem DiscreteL1MartingaleConvergenceTheorem {Ω : Type u} [m₀ : MeasurableS
     · intro hUI
       obtain ⟨R, hR⟩ := hUI.2.2
       refine ⟨ℱ.limitProcess X μ, ?_, fun n ↦ hX.ae_eq_condExp_limitProcess hUI n⟩
-      exact (memLp_limitProcess_of_eLpNorm_bdd hUI.1 hR).integrable le_rfl
+      exact (hX.submartingale.memLp_limitProcess hR).integrable le_rfl
     · rintro ⟨Z, hZ, hrep⟩
       exact hZ.uniformIntegrable_condExp_filtration.ae_eq fun n ↦ (hrep n).symm
   · constructor
     · rintro ⟨Z, hZ, hrep⟩
-      let Z∞ : Ω → ℝ := μ[Z | ⨆ n, ℱ n]
-      refine ⟨Z∞, integrable_condExp, ?_⟩
-      have ht := MeasureTheory.tendsto_eLpNorm_condExp (ℱ := ℱ) Z
-      refine ht.congr' (Filter.Eventually.of_forall fun n ↦ ?_)
-      exact eLpNorm_congr_ae ((hrep n).sub (EventuallyEq.rfl))
+      let Zlim : Ω → ℝ := μ[Z | ⨆ n, ℱ n]
+      refine ⟨Zlim, ?_, ?_⟩
+      · exact integrable_condExp
+      · have ht := MeasureTheory.tendsto_eLpNorm_condExp (ℱ := ℱ) Z
+        refine ht.congr' (Filter.Eventually.of_forall fun n ↦ ?_)
+        exact eLpNorm_congr_ae ((hrep n).sub (EventuallyEq.rfl))
     · rintro ⟨Z, hZ, ht⟩
       exact ⟨Z, hZ, fun n ↦ hX.eq_condExp_of_tendsto_eLpNorm hZ ht n⟩
 
