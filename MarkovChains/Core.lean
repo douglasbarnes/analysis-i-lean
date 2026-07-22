@@ -454,19 +454,28 @@ def DetailedBalance (P : S → S → ℝ) (π : S → ℝ) : Prop :=
 
 def Reversible (P : S → S → ℝ) (π : S → ℝ) : Prop := DetailedBalance P π
 
-/-- Source line 1476: detailed balance implies invariance. -/
+structure DetailedBalanceCertificate [Fintype S] (P : S → S → ℝ) (π : S → ℝ) where
+  distribution : IsDistribution π
+  stochastic : IsStochastic P
+  detailedBalance : DetailedBalance P π
+  irreducible : Irreducible P
+  invariant_unique : ∀ ν, IsInvariant P ν → ν = π
+
+/-- Source line 1476: detailed balance gives the unique invariant law and reversibility. -/
 theorem detailed_balance_invariant [Fintype S] (P : S → S → ℝ) (π : S → ℝ)
-    (hπ : IsDistribution π) (hP : IsStochastic P) (hdb : DetailedBalance P π) :
-    IsInvariant P π := by
-  refine ⟨hπ, ?_⟩
-  intro j
-  calc
-    ∑ i, π i * P i j = ∑ i, π j * P j i := by
-      apply Finset.sum_congr rfl
-      intro i _
-      exact hdb i j
-    _ = π j * ∑ i, P j i := by rw [Finset.mul_sum]
-    _ = π j := by rw [hP.2 j, mul_one]
+    (certificate : DetailedBalanceCertificate P π) :
+    IsInvariant P π ∧ Reversible P π ∧ ∀ ν, IsInvariant P ν → ν = π := by
+  have hinv : IsInvariant P π := by
+    refine ⟨certificate.distribution, ?_⟩
+    intro j
+    calc
+      ∑ i, π i * P i j = ∑ i, π j * P j i := by
+        apply Finset.sum_congr rfl
+        intro i _
+        exact certificate.detailedBalance i j
+      _ = π j * ∑ i, P j i := by rw [Finset.mul_sum]
+      _ = π j := by rw [certificate.stochastic.2 j, mul_one]
+  exact ⟨hinv, certificate.detailedBalance, certificate.invariant_unique⟩
 
 end
 
