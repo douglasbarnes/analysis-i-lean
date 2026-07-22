@@ -37,15 +37,15 @@ theorem cauchySchwarz {𝕜 E : Type*} [RCLike 𝕜]
 /-- The parallelogram law. -/
 theorem parallelogram {𝕜 E : Type*} [RCLike 𝕜]
     [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] (x y : E) :
-    ‖x + y‖ ^ 2 + ‖x - y‖ ^ 2 = 2 * ‖x‖ ^ 2 + 2 * ‖y‖ ^ 2 := by
-  simpa [two_mul] using parallelogram_law x y
+    ‖x + y‖ ^ 2 + ‖x - y‖ ^ 2 = 2 * (‖x‖ ^ 2 + ‖y‖ ^ 2) := by
+  simpa [pow_two] using (InnerProductSpaceable.parallelogram_identity x y)
 
 /-- Pythagoras for orthogonal vectors. -/
 theorem pythagoras {𝕜 E : Type*} [RCLike 𝕜]
     [NormedAddCommGroup E] [InnerProductSpace 𝕜 E]
     {x y : E} (hxy : ⟪x, y⟫_𝕜 = 0) :
-    ‖x + y‖ ^ 2 = ‖x‖ ^ 2 + ‖y‖ ^ 2 :=
-  norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero x y hxy
+    ‖x + y‖ ^ 2 = ‖x‖ ^ 2 + ‖y‖ ^ 2 := by
+  simpa [pow_two] using norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero x y hxy
 
 /-- The inner product is jointly continuous. -/
 theorem inner_continuous {𝕜 E : Type*} [RCLike 𝕜]
@@ -68,7 +68,7 @@ abbrev rieszEquiv (𝕜 E : Type*) [RCLike 𝕜]
 @[simp] theorem rieszEquiv_apply {𝕜 E : Type*} [RCLike 𝕜]
     [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] [CompleteSpace E]
     (x y : E) : rieszEquiv 𝕜 E x y = ⟪x, y⟫_𝕜 :=
-  InnerProductSpace.toDual_apply_apply 𝕜 x y
+  rfl
 
 /-- Every continuous functional is represented by a unique vector. -/
 theorem riesz_representation {𝕜 E : Type*} [RCLike 𝕜]
@@ -76,11 +76,13 @@ theorem riesz_representation {𝕜 E : Type*} [RCLike 𝕜]
     (f : StrongDual 𝕜 E) : ∃! x : E, ∀ y, ⟪x, y⟫_𝕜 = f y := by
   refine ⟨(rieszEquiv 𝕜 E).symm f, ?_, ?_⟩
   · intro y
-    simpa using congrFun (congrArg DFunLike.coe ((rieszEquiv 𝕜 E).apply_symm_apply f)) y
+    have h := congrArg (fun g : StrongDual 𝕜 E ↦ g y)
+      ((rieszEquiv 𝕜 E).apply_symm_apply f)
+    simpa using h.symm
   · intro x hx
     apply (rieszEquiv 𝕜 E).injective
     ext y
-    simpa [hx y] using (InnerProductSpace.toDual_apply_apply 𝕜 x y)
+    simpa [hx y]
 
 /-- An orthonormal system. -/
 abbrev OrthonormalSystem {ι 𝕜 E : Type*} [RCLike 𝕜]
@@ -108,11 +110,13 @@ theorem parseval_finite {ι 𝕜 E : Type*} [Fintype ι] [RCLike 𝕜]
     ∑ i, ‖⟪b i, x⟫_𝕜‖ ^ 2 = ‖x‖ ^ 2 :=
   b.sum_sq_norm_inner_right x
 
-/-- A maximal orthonormal family exists. -/
+/-- Every inner-product space admits a maximal orthonormal set. -/
 theorem exists_maximal_orthonormal_system {𝕜 E : Type*} [RCLike 𝕜]
     [NormedAddCommGroup E] [InnerProductSpace 𝕜 E] :
-    ∃ (ι : Type) (v : ι → E), Orthonormal 𝕜 v ∧
-      ∀ x, (∀ i, ⟪v i, x⟫_𝕜 = 0) → x = 0 := by
-  simpa only [orthogonalFamily_iff] using exists_maximal_orthonormal 𝕜 E
+    ∃ w : Set E, Orthonormal 𝕜 ((↑) : w → E) ∧
+      ∀ u : Set E, w ⊆ u → Orthonormal 𝕜 ((↑) : u → E) → u = w := by
+  have hempty : Orthonormal 𝕜 ((↑) : (∅ : Set E) → E) := by simp
+  obtain ⟨w, -, hw, hmax⟩ := exists_maximal_orthonormal hempty
+  exact ⟨w, hw, hmax⟩
 
 end Cambridge.LinearAnalysis
