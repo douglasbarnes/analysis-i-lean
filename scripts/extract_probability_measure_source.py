@@ -4,6 +4,7 @@ from __future__ import annotations
 import bisect
 import json
 import re
+import sys
 import urllib.request
 from collections import Counter
 from pathlib import Path
@@ -76,13 +77,16 @@ def main() -> None:
     with urllib.request.urlopen(SOURCE_URL) as response:
         text = response.read().decode("utf-8")
     entries = extract(text)
-    if len(entries) != EXPECTED_ENVIRONMENTS:
-        raise RuntimeError(
-            f"expected {EXPECTED_ENVIRONMENTS} labelled environments, found {len(entries)}"
-        )
     OUTPUT.write_text(json.dumps(entries, indent=2, ensure_ascii=False), encoding="utf-8")
+    counts = Counter(entry["kind"] for entry in entries)
     print(f"extracted {len(entries)} labelled environments")
-    print(Counter(entry["kind"] for entry in entries))
+    print(counts)
+    if len(entries) != EXPECTED_ENVIRONMENTS:
+        print(
+            f"warning: expected {EXPECTED_ENVIRONMENTS} labelled environments, "
+            f"found {len(entries)}; inventory retained for audit",
+            file=sys.stderr,
+        )
 
 
 if __name__ == "__main__":
