@@ -66,6 +66,7 @@ namespace ProbabilityAndMeasure.CorrectnessAudit
 #check ProbabilityAndMeasure.l2_complete_source
 #check ProbabilityAndMeasure.pythagoras_source
 #check ProbabilityAndMeasure.parallelogram_source
+#check ProbabilityAndMeasure.source117_uniformIntegrable_sum
 #check ProbabilityAndMeasure.source119_uniformIntegrable_iff_tail
 #check ProbabilityAndMeasure.source120_finite_uniformIntegrable
 #check ProbabilityAndMeasure.source121_vitali_with_integrable_limit
