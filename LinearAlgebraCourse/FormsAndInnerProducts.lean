@@ -87,7 +87,8 @@ def IsOrthonormalBasis {ι 𝕜 V : Type*} [RCLike 𝕜] [NormedAddCommGroup V]
 theorem parseval {ι 𝕜 V : Type*} [Fintype ι] [RCLike 𝕜]
     [NormedAddCommGroup V] [InnerProductSpace 𝕜 V] (b : OrthonormalBasis ι 𝕜 V) (x : V) :
     ∑ i, ‖⟪b i, x⟫_𝕜‖ ^ 2 = ‖x‖ ^ 2 := b.sum_sq_norm_inner_right x -- 157
-def gramSchmidt {ι 𝕜 V : Type*} [LinearOrder ι] [WellFoundedLT ι] [RCLike 𝕜]
+def gramSchmidt {ι 𝕜 V : Type*} [LinearOrder ι] [LocallyFiniteOrderBot ι]
+    [WellFoundedLT ι] [RCLike 𝕜]
     [NormedAddCommGroup V] [InnerProductSpace 𝕜 V] (v : ι → V) : ι → V :=
   InnerProductSpace.gramSchmidt 𝕜 v -- 158
 theorem orthonormal_extend {𝕜 V : Type*} [RCLike 𝕜]
