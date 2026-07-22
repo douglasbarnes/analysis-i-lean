@@ -135,11 +135,12 @@ theorem SequenceConvergenceCertificate (x : ℕ → ℝ)
       (f := fun n (_ : Unit) ↦ x n) (ω := ()) hliminf hup)
 
 /-- Source 38: Doob's upcrossing estimate. -/
-structure DoobUpcrossing (a b : ℝ) where
-  strict : a < b
-  expectedUpcrossings : ℝ
-  upperBound : ℝ
-  estimate : expectedUpcrossings ≤ upperBound
+theorem DoobUpcrossing {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    {μ : Measure Ω} [IsFiniteMeasure μ] {ℱ : Filtration ℕ m₀}
+    {X : ℕ → Ω → ℝ} (hX : Submartingale X ℱ μ) (a b : ℝ) (N : ℕ) :
+    (b - a) * μ[MeasureTheory.upcrossingsBefore a b X N] ≤
+      μ[fun ω ↦ (X N ω - a)⁺] := by
+  simpa using hX.mul_integral_upcrossingsBefore_le_integral_pos_part a b N
 
 /-- Source 39: discrete maximal inequality. -/
 structure DiscreteMaximalInequality (threshold probability expectationValue : ℝ) where
