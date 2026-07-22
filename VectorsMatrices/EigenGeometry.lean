@@ -129,7 +129,7 @@ theorem hermitian_eigenvalue_real {n} [Fintype n] [DecidableEq n]
 theorem hermitian_distinct_eigenvectors_orthogonal {n} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : H.IsHermitian) {a b : ℂ} {x y : n → ℂ}
     (hx : H.mulVec x = a • x) (hy : H.mulVec y = b • y) (hab : a ≠ b) :
-    star x ⬝ᵥ y = 0 := by
+    y ⬝ᵥ star x = 0 := by
   have hs := Matrix.isSymmetric_toEuclideanLin_iff.mpr hH
   let u : EuclideanSpace ℂ n := WithLp.toLp 2 x
   let v : EuclideanSpace ℂ n := WithLp.toLp 2 y
@@ -142,7 +142,7 @@ theorem hermitian_distinct_eigenvectors_orthogonal {n} [Fintype n] [DecidableEq 
   have ho := hs.orthogonalFamily_eigenspaces hab
     ⟨u, by simpa [Module.End.mem_eigenspace_iff] using hu⟩
     ⟨v, by simpa [Module.End.mem_eigenspace_iff] using hv⟩
-  simpa [u, v, EuclideanSpace.inner_toLp_toLp, Matrix.dotProduct_comm] using ho
+  simpa [u, v, EuclideanSpace.inner_toLp_toLp] using ho
 
 def HasOrthogonalEigenbasis {n} [Fintype n] [DecidableEq n] (H : Matrix n n ℂ) : Prop :=
   ∃ b : OrthonormalBasis n ℂ (EuclideanSpace ℂ n),
@@ -191,7 +191,7 @@ theorem orthogonal_equivalences {n} [Fintype n] [DecidableEq n]
       simpa [← Matrix.vecMul_transpose, ← Matrix.mulVec_mulVec, hP.1]
     have hs : ‖WithLp.toLp 2 (P.mulVec x)‖ ^ 2 = ‖WithLp.toLp 2 x‖ ^ 2 := by
       rw [EuclideanSpace.real_norm_sq_eq, EuclideanSpace.real_norm_sq_eq]
-      simpa [dotProduct] using hd
+      simpa [dotProduct, pow_two] using hd
     nlinarith [norm_nonneg (WithLp.toLp 2 (P.mulVec x)),
       norm_nonneg (WithLp.toLp 2 x)]
   · rw [Matrix.dotProduct_mulVec]
