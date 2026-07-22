@@ -78,12 +78,12 @@ theorem source062_tail_measurable_ae_constant {Ω : Type*} [m0 : MeasurableSpace
   rcases ProbabilityTheory.measure_zero_or_one_of_measurableSet_limsup_atTop
       h_le h_indep hpre_tail with h0 | h1
   · refine Or.inr ?_
-    apply ae_iff.2
-    change P (X ⁻¹' U) = 0
-    exact h0
+    rw [ae_iff]
+    simpa only [not_not] using h0
   · refine Or.inl ?_
-    apply ae_iff.2
-    change P (X ⁻¹' U)ᶜ = 0
-    rw [MeasureTheory.prob_compl_eq_one_sub hpre, h1, tsub_self]
+    rw [ae_iff]
+    have hc : P (X ⁻¹' U)ᶜ = 0 := by
+      rw [MeasureTheory.prob_compl_eq_one_sub hpre, h1, tsub_self]
+    simpa only [Set.mem_preimage] using hc
 
 end ProbabilityAndMeasure
