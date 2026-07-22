@@ -22,14 +22,14 @@ def HasGaussianLaw {Ω : Type u} (expectation : Expectation Ω) (X : Ω → ℝ)
 
 /-- Source 89: standard one-dimensional Brownian motion. -/
 structure BrownianMotion (Ω : Type u) (expectation : Expectation Ω)
-    (Independent : (Ω → ℝ) → (Ω → ℝ) → Prop) where
+    (independentRelation : (Ω → ℝ) → (Ω → ℝ) → Prop) where
   path : ContinuousProcess Ω
   startsAtZero : ∀ ω, path 0 ω = 0
   continuousPaths : IsContinuousProcess path
   gaussianIncrements : ∀ s t : ℝ≥0, s ≤ t →
     HasGaussianLaw expectation (fun ω ↦ path t ω - path s ω) 0 ((t - s : ℝ≥0) : ℝ)
   independentIncrements : ∀ r s t : ℝ≥0, r ≤ s → s ≤ t →
-    Independent (fun ω ↦ path s ω - path r ω) (fun ω ↦ path t ω - path s ω)
+    independentRelation (fun ω ↦ path s ω - path r ω) (fun ω ↦ path t ω - path s ω)
 
 /-- Source 90: an existence certificate for Brownian motion. -/
 structure WienerExistence where
