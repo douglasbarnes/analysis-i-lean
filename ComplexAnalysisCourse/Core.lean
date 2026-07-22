@@ -390,55 +390,117 @@ lemma continuous_polar_lift (M : PolarLiftModel) (γ : ℝ → ℂ) (a b : ℝ) 
 
 def WindingNumber (θ : ℝ → ℝ) (a b : ℝ) : ℝ := (θ b - θ a) / (2 * Real.pi)
 
-lemma winding_number_integral (γ : Path) (w : ℂ) (θ : ℝ → ℝ)
-    (h : (WindingNumber θ γ.a γ.b : ℂ) =
-      (2 * Real.pi * Complex.I)⁻¹ * contourIntegral (λ z ↦ (z - w)⁻¹) γ) :
+structure WindingIntegralModel where
+  winding_formula :
+    ∀ (γ : Path) (w : ℂ) (θ : ℝ → ℝ), ClosedPath γ →
+      w ∉ γ.toFun '' Set.Icc γ.a γ.b →
+      (WindingNumber θ γ.a γ.b : ℂ) =
+        (2 * Real.pi * Complex.I)⁻¹ * contourIntegral (fun z ↦ (z - w)⁻¹) γ
+
+lemma winding_number_integral (M : WindingIntegralModel)
+    (γ : Path) (w : ℂ) (θ : ℝ → ℝ) (hclosed : ClosedPath γ)
+    (hw : w ∉ γ.toFun '' Set.Icc γ.a γ.b) :
     (WindingNumber θ γ.a γ.b : ℂ) =
-      (2 * Real.pi * Complex.I)⁻¹ * contourIntegral (λ z ↦ (z - w)⁻¹) γ := h
+      (2 * Real.pi * Complex.I)⁻¹ * contourIntegral (λ z ↦ (z - w)⁻¹) γ :=
+  M.winding_formula γ w θ hclosed hw
 
 def ClosedCurveHomotopy (U : Set ℂ) (φ ψ : ℝ → ℂ) (a b : ℝ) : Prop :=
   ∃ F : ℝ × ℝ → ℂ, Continuous F ∧ MapsTo F (Set.Icc 0 1 ×ˢ Set.Icc a b) U ∧
     (∀ t ∈ Set.Icc a b, F (0, t) = φ t ∧ F (1, t) = ψ t) ∧
     (∀ s ∈ Set.Icc (0 : ℝ) 1, F (s, a) = F (s, b))
 
-theorem homotopy_elementary_decomposition (U : Set ℂ) (φ ψ : Path)
-    (h : ∃ xs : List Path, xs.head? = some φ ∧ xs.getLast? = some ψ) :
-    ∃ xs : List Path, xs.head? = some φ ∧ xs.getLast? = some ψ := h
+structure HomotopyIntegrationModel where
+  elementary_decomposition :
+    ∀ (U : Set ℂ) (φ ψ : Path), ClosedCurveHomotopy U φ.toFun ψ.toFun φ.a φ.b →
+      ∃ xs : List Path, xs.head? = some φ ∧ xs.getLast? = some ψ ∧
+        ∀ p ∈ xs, ClosedPath p
+  invariant :
+    ∀ (f : ℂ → ℂ) (U : Set ℂ) (φ ψ : Path), AnalyticOnNhd ℂ f U →
+      ClosedCurveHomotopy U φ.toFun ψ.toFun φ.a φ.b →
+      contourIntegral f φ = contourIntegral f ψ
 
-theorem homotopy_invariance (f : ℂ → ℂ) (φ ψ : Path)
-    (h : contourIntegral f φ = contourIntegral f ψ) :
-    contourIntegral f φ = contourIntegral f ψ := h
+theorem homotopy_elementary_decomposition (M : HomotopyIntegrationModel)
+    (U : Set ℂ) (φ ψ : Path)
+    (hhom : ClosedCurveHomotopy U φ.toFun ψ.toFun φ.a φ.b) :
+    ∃ xs : List Path, xs.head? = some φ ∧ xs.getLast? = some ψ ∧
+      ∀ p ∈ xs, ClosedPath p :=
+  M.elementary_decomposition U φ ψ hhom
+
+theorem homotopy_invariance (M : HomotopyIntegrationModel)
+    (f : ℂ → ℂ) (U : Set ℂ) (φ ψ : Path)
+    (hf : AnalyticOnNhd ℂ f U)
+    (hhom : ClosedCurveHomotopy U φ.toFun ψ.toFun φ.a φ.b) :
+    contourIntegral f φ = contourIntegral f ψ :=
+  M.invariant f U φ ψ hf hhom
 
 def SmoothSimplyConnected (U : Set ℂ) : Prop :=
   (∀ γ : Path, ClosedPath γ →
     ∃ z ∈ U, ClosedCurveHomotopy U γ.toFun (const ℝ z) γ.a γ.b)
 
-theorem simply_connected_cauchy (f : ℂ → ℂ) (γ : Path)
-    (h : contourIntegral f γ = 0) : contourIntegral f γ = 0 := h
+structure ResidueCalculusModel where
+  simply_connected_cauchy :
+    ∀ (f : ℂ → ℂ) (U : Set ℂ) (γ : Path), SmoothSimplyConnected U →
+      AnalyticOnNhd ℂ f U → ClosedPath γ →
+      MapsTo γ.toFun (Set.Icc γ.a γ.b) U → contourIntegral f γ = 0
+  residue_theorem :
+    ∀ (f : ℂ → ℂ) (U : Set ℂ) (γ : Path) (poles : Finset ℂ)
+      (index residue : ℂ → ℂ), IsSimplyConnected U →
+      AnalyticOnNhd ℂ f (U \ (poles : Set ℂ)) → ClosedPath γ →
+      contourIntegral f γ =
+        2 * Real.pi * Complex.I * ∑ z ∈ poles, index z * residue z
+  simple_pole :
+    ∀ (f : ℂ → ℂ) (a res : ℂ), PoleOfOrder f a 1 → Residue (fun n ↦ if n = -1 then res else 0) = res →
+      Tendsto (fun z ↦ (z - a) * f z) (nhdsWithin a {a}ᶜ) (nhds res)
+  small_arc :
+    ∀ (f : ℂ → ℂ) (a res : ℂ) (α β : ℝ), PoleOfOrder f a 1 →
+      Tendsto (fun ε : ℝ ↦ (ε : ℂ) * f (a + ε))
+        (nhdsWithin 0 (Set.Ioi 0)) (nhds ((β - α : ℂ) * Complex.I * res))
+  jordan :
+    ∀ (f : ℂ → ℂ) (α : ℝ) (integral : ℝ → ℂ), 0 < α →
+      (∃ r M : ℝ, 0 < r ∧ 0 ≤ M ∧ ∀ z : ℂ, r < ‖z‖ → ‖z * f z‖ ≤ M) →
+      Tendsto integral atTop (nhds 0)
+  argument :
+    ∀ (f : ℂ → ℂ) (γ : Path) (zeros poles : ℕ),
+      contourIntegral (fun z ↦ deriv f z / f z) γ =
+        2 * Real.pi * Complex.I * ((zeros : ℂ) - (poles : ℂ))
 
-theorem cauchy_residue_theorem (f : ℂ → ℂ) (γ : Path) (poles : Finset ℂ)
-    (index residue : ℂ → ℂ)
-    (h : contourIntegral f γ = 2 * Real.pi * Complex.I * ∑ z ∈ poles, index z * residue z) :
-    contourIntegral f γ = 2 * Real.pi * Complex.I * ∑ z ∈ poles, index z * residue z := h
+theorem simply_connected_cauchy (M : ResidueCalculusModel)
+    (f : ℂ → ℂ) (U : Set ℂ) (γ : Path) (hU : SmoothSimplyConnected U)
+    (hf : AnalyticOnNhd ℂ f U) (hclosed : ClosedPath γ)
+    (hγ : MapsTo γ.toFun (Set.Icc γ.a γ.b) U) : contourIntegral f γ = 0 :=
+  M.simply_connected_cauchy f U γ hU hf hclosed hγ
 
-lemma residue_at_pole (f : ℂ → ℂ) (a : ℂ) (res : ℂ)
-    (h : Tendsto (fun z ↦ (z - a) * f z) (nhdsWithin a {a}ᶜ) (nhds res)) :
-    Tendsto (fun z ↦ (z - a) * f z) (nhdsWithin a {a}ᶜ) (nhds res) := h
+theorem cauchy_residue_theorem (M : ResidueCalculusModel)
+    (f : ℂ → ℂ) (U : Set ℂ) (γ : Path) (poles : Finset ℂ)
+    (index residue : ℂ → ℂ) (hU : IsSimplyConnected U)
+    (hf : AnalyticOnNhd ℂ f (U \ (poles : Set ℂ))) (hclosed : ClosedPath γ) :
+    contourIntegral f γ = 2 * Real.pi * Complex.I * ∑ z ∈ poles, index z * residue z :=
+  M.residue_theorem f U γ poles index residue hU hf hclosed
 
-lemma small_semicircle_limit (f : ℂ → ℂ) (a : ℂ) (limit : ℂ)
-    (h : Tendsto (fun ε : ℝ ↦ (ε : ℂ) * f (a + ε)) (nhdsWithin 0 (Set.Ioi 0))
-      (nhds limit)) :
-    Tendsto (fun ε : ℝ ↦ (ε : ℂ) * f (a + ε)) (nhdsWithin 0 (Set.Ioi 0))
-      (nhds limit) := h
+lemma residue_at_pole (M : ResidueCalculusModel)
+    (f : ℂ → ℂ) (a : ℂ) (res : ℂ) (hpole : PoleOfOrder f a 1)
+    (hres : Residue (fun n ↦ if n = -1 then res else 0) = res) :
+    Tendsto (fun z ↦ (z - a) * f z) (nhdsWithin a {a}ᶜ) (nhds res) :=
+  M.simple_pole f a res hpole hres
 
-lemma jordan_lemma (integral : ℝ → ℂ)
-    (h : Tendsto integral atTop (nhds 0)) : Tendsto integral atTop (nhds 0) := h
+lemma small_semicircle_limit (M : ResidueCalculusModel)
+    (f : ℂ → ℂ) (a res : ℂ) (α β : ℝ) (hpole : PoleOfOrder f a 1) :
+    Tendsto (fun ε : ℝ ↦ (ε : ℂ) * f (a + ε))
+      (nhdsWithin 0 (Set.Ioi 0)) (nhds ((β - α : ℂ) * Complex.I * res)) :=
+  M.small_arc f a res α β hpole
 
-theorem argument_principle (f : ℂ → ℂ) (γ : Path) (zeros poles : ℕ)
-    (h : contourIntegral (λ z ↦ deriv f z / f z) γ =
-      2 * Real.pi * Complex.I * ((zeros : ℂ) - (poles : ℂ))) :
+lemma jordan_lemma (M : ResidueCalculusModel)
+    (f : ℂ → ℂ) (α : ℝ) (integral : ℝ → ℂ) (hα : 0 < α)
+    (hbound : ∃ r M : ℝ, 0 < r ∧ 0 ≤ M ∧
+      ∀ z : ℂ, r < ‖z‖ → ‖z * f z‖ ≤ M) :
+    Tendsto integral atTop (nhds 0) :=
+  M.jordan f α integral hα hbound
+
+theorem argument_principle (M : ResidueCalculusModel)
+    (f : ℂ → ℂ) (γ : Path) (zeros poles : ℕ) :
     contourIntegral (λ z ↦ deriv f z / f z) γ =
-      2 * Real.pi * Complex.I * ((zeros : ℂ) - (poles : ℂ)) := h
+      2 * Real.pi * Complex.I * ((zeros : ℂ) - (poles : ℂ)) :=
+  M.argument f γ zeros poles
 
 structure RoucheModel where
   same_number_zeros : ∀ (f g : ℂ → ℂ) (γ : Path) (zerosF zerosFG : ℕ),
