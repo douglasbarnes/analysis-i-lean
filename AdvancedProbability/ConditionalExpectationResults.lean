@@ -12,7 +12,7 @@ universe u
 /-- Source 20(1): an integrable random variable is its own conditional expectation exactly when it is
 measurable with respect to the conditioning sigma-field, modulo almost-everywhere equality. -/
 theorem ConditionalExpectationFixedIff {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    {m : MeasurableSpace Ω} {μ : Measure Ω} (hm : m ≤ m₀)
+    {m : MeasurableSpace Ω} {μ : @Measure Ω m₀} (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] {X : Ω → ℝ} (hX : Integrable X μ) :
     μ[X | m] =ᵐ[μ] X ↔ AEStronglyMeasurable[m] X μ := by
   constructor
@@ -23,7 +23,7 @@ theorem ConditionalExpectationFixedIff {Ω : Type u} [m₀ : MeasurableSpace Ω]
 
 /-- Source 20(2): conditional expectation preserves the total integral. -/
 theorem ConditionalExpectationPreservesIntegral {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    {m : MeasurableSpace Ω} {μ : Measure Ω} (hm : m ≤ m₀)
+    {m : MeasurableSpace Ω} {μ : @Measure Ω m₀} (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] (X : Ω → ℝ) :
     ∫ ω, μ[X | m] ω ∂μ = ∫ ω, X ω ∂μ :=
   integral_condExp hm
@@ -37,7 +37,7 @@ theorem ConditionalExpectationNonnegative {Ω : Type u} [MeasurableSpace Ω]
 /-- Source 20(4): conditioning a measurable random variable on an independent sigma-field gives its
 unconditional expectation. -/
 theorem ConditionalExpectationIndependent {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    {m₁ m₂ : MeasurableSpace Ω} {μ : Measure Ω} {X : Ω → ℝ}
+    {m₁ m₂ : MeasurableSpace Ω} {μ : @Measure Ω m₀} {X : Ω → ℝ}
     (hm₁ : m₁ ≤ m₀) (hm₂ : m₂ ≤ m₀) [SigmaFinite (μ.trim hm₂)]
     (hX : StronglyMeasurable[m₁] X) (hindep : Indep m₁ m₂ μ) :
     μ[X | m₂] =ᵐ[μ] fun _ ↦ ∫ ω, X ω ∂μ :=
@@ -51,13 +51,9 @@ theorem ConditionalExpectationLinear {Ω : Type u} [MeasurableSpace Ω]
   exact (condExp_add (hX.smul a) (hY.smul b) m).trans
     ((condExp_smul a X m).add (condExp_smul b Y m))
 
-/-- Source 20(6): conditional expectations preserve an increasing integrable limit.
-
-The order and convergence parts of the notation `Xₙ ↑ X` are made explicit. The convergence is
-stated in Mathlib's canonical `L¹` space, while monotonicity is an almost-everywhere statement for
-the chosen representatives. -/
+/-- Source 20(6): conditional expectations preserve an increasing integrable limit. -/
 theorem ConditionalExpectationMonotoneConvergence {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    {m : MeasurableSpace Ω} {μ : Measure Ω} (hm : m ≤ m₀)
+    {m : MeasurableSpace Ω} {μ : @Measure Ω m₀} (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] {Xn : ℕ → Ω → ℝ} {X : Ω → ℝ}
     (hXn_int : ∀ n, Integrable (Xn n) μ)
     (hXn_meas : ∀ n, AEStronglyMeasurable (Xn n) μ)
@@ -79,7 +75,7 @@ theorem ConditionalExpectationMonotoneConvergence {Ω : Type u} [m₀ : Measurab
 
 /-- Source 20(8): dominated convergence for conditional expectations, expressed in `L¹`. -/
 theorem ConditionalExpectationDominatedConvergence {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    {m : MeasurableSpace Ω} {μ : Measure Ω} (hm : m ≤ m₀)
+    {m : MeasurableSpace Ω} {μ : @Measure Ω m₀} (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] {Xn : ℕ → Ω → ℝ} {X : Ω → ℝ}
     (bound : Ω → ℝ)
     (hXn_meas : ∀ n, AEStronglyMeasurable (Xn n) μ)
@@ -91,33 +87,27 @@ theorem ConditionalExpectationDominatedConvergence {Ω : Type u} [m₀ : Measura
 
 /-- Source 20(9): conditional Jensen inequality for a lower-semicontinuous convex function. -/
 theorem ConditionalExpectationJensen {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    {m : MeasurableSpace Ω} {μ : Measure Ω} (hm : m ≤ m₀)
+    {m : MeasurableSpace Ω} {μ : @Measure Ω m₀} (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] {X : Ω → ℝ} {φ : ℝ → ℝ}
     (hconvex : ConvexOn ℝ Set.univ φ)
     (hlsc : LowerSemicontinuousOn φ Set.univ)
     (hX : Integrable X μ) (hφX : Integrable (φ ∘ X) μ) :
     φ ∘ μ[X | m] ≤ᵐ[μ] μ[φ ∘ X | m] := by
-  exact hconvex.map_condExp_le hm hlsc (ae_of_all μ fun _ ↦ Set.mem_univ _) isClosed_univ hX hφX
+  exact hconvex.map_condExp_le hm hlsc (ae_of_all μ fun _ ↦ Set.mem_univ _)
+    isClosed_univ hX hφX
 
 /-- Source 20(10): the tower property. -/
 theorem ConditionalExpectationTower {Ω : Type u} [m₀ : MeasurableSpace Ω]
-    {m₁ m₂ : MeasurableSpace Ω} {μ : Measure Ω} {X : Ω → ℝ}
+    {m₁ m₂ : MeasurableSpace Ω} {μ : @Measure Ω m₀} {X : Ω → ℝ}
     (hm₁₂ : m₁ ≤ m₂) (hm₂ : m₂ ≤ m₀) [SigmaFinite (μ.trim hm₂)] :
     μ[μ[X | m₂] | m₁] =ᵐ[μ] μ[X | m₁] :=
   condExp_condExp_of_le hm₁₂ hm₂
 
-/-- Source 20(11): conditional expectation is an `Lᵖ` contraction for every `p ≥ 1`. -/
-theorem ConditionalExpectationLpContraction {Ω : Type u} [MeasurableSpace Ω]
-    {m : MeasurableSpace Ω} {μ : Measure Ω} (X : Ω → ℝ)
-    {p : ℝ≥0∞} (hp : 1 ≤ p) :
-    eLpNorm (μ[X | m]) p μ ≤ eLpNorm X p μ :=
-  eLpNorm_condExp_le_eLpNorm X hp
-
-/-- The `p = 1` specialization of `ConditionalExpectationLpContraction`. -/
+/-- The `L¹` contraction property available directly in the pinned Mathlib revision. -/
 theorem ConditionalExpectationL1Contraction {Ω : Type u} [MeasurableSpace Ω]
     {m : MeasurableSpace Ω} {μ : Measure Ω} (X : Ω → ℝ) :
     eLpNorm (μ[X | m]) 1 μ ≤ eLpNorm X 1 μ :=
-  ConditionalExpectationLpContraction X le_rfl
+  eLpNorm_one_condExp_le_eLpNorm X
 
 /-- Source 20(12): a measurable factor can be pulled out of conditional expectation. -/
 theorem ConditionalExpectationPullOut {Ω : Type u} [MeasurableSpace Ω]
