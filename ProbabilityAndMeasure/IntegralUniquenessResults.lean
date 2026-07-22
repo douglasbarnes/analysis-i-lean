@@ -71,9 +71,10 @@ theorem source071_ae_eq_zero_of_piSystem_setIntegral_zero
     · intro B hB
       exact hzero B hB
     · intro B hBm hBzero
-      simpa [hBzero, htotal] using integral_add_compl B hBm hf
+      simpa [hBzero, htotal] using integral_add_compl hBm hf
     · intro B hdis hBm hBzero
-      simpa [integral_iUnion hBm hdis hf.integrableOn, hBzero]
+      rw [integral_iUnion hBm hdis hf.integrableOn]
+      simp [hBzero]
   exact hf.ae_eq_zero_of_forall_setIntegral_eq_zero fun A hA _ ↦ hall A hA
 
 end ProbabilityAndMeasure
