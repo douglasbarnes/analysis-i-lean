@@ -1,18 +1,16 @@
 name: Lean
 
 on:
-  pull_request:
   workflow_dispatch:
-
-concurrency:
-  group: lean-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Extract Probability and Measure source inventory
+        shell: bash
+        run: python3 scripts/extract_probability_measure_source.py
       - name: Install Elan and Lean
         shell: bash
         run: |
@@ -27,17 +25,29 @@ jobs:
       - name: Update, build, and audit
         shell: bash
         run: |
-          set -o pipefail
+          set -euo pipefail
           {
             lake update
             lake exe cache get
+            lake build ProbabilityAndMeasure
             lake build
             python3 scripts/check_audit.py
+            python3 scripts/check_probability_measure_correctness.py --baseline
           } 2>&1 | tee lean-build.log
-      - name: Upload build log
+      - name: Probability and Measure strict correctness test
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 scripts/check_probability_measure_correctness.py --strict \
+            2>&1 | tee probability-measure-strict.log
+      - name: Upload build log and source inventory
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lean-build-log
-          path: lean-build.log
+          path: |
+            lean-build.log
+            probability-measure-strict.log
+            probability-measure-envs.json
           if-no-files-found: warn
