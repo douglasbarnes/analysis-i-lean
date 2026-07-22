@@ -55,7 +55,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.TransitionMatrix
 #check AdvancedProbability.MarkovChain
 #check AdvancedProbability.HarmonicFor
-#check AdvancedProbability.BoundedHarmonicMartingale
+#check AdvancedProbability.BoundedHarmonicMartingaleTheorem
 #check AdvancedProbability.ContinuousProcess
 #check AdvancedProbability.IsCadlag
 #check AdvancedProbability.IsContinuousProcess
