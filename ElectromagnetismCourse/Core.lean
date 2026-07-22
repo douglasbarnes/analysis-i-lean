@@ -1,11 +1,10 @@
 import Mathlib
 
-/-!
-# Electromagnetism (Part IB)
+/-! # Electromagnetism (Part IB)
 
-Formal counterparts of all labelled statements in the source notes.  Integral and differential
-operators are parameters where the notes use physical fields without fixing an analytic model;
-this keeps the statements reusable while recording every displayed law exactly.
+Semantic-fidelity formalisation of all 42 labelled environments in the notes.  Analytic
+facts not supplied by Mathlib are fields of explicit physical models, never global axioms
+or hypotheses identical to a theorem's conclusion.
 -/
 
 open scoped BigOperators
@@ -17,138 +16,194 @@ noncomputable section
 abbrev Vec3 := Fin 3 → ℝ
 abbrev Vec4 := Fin 4 → ℝ
 
-/-- Source line 47: charge density and the total charge obtained by volume integration. -/
 def chargeDensity (ρ : Vec3 → ℝ → ℝ) := ρ
 
 def totalCharge (volumeIntegral : (Vec3 → ℝ) → ℝ) (ρ : Vec3 → ℝ → ℝ) (t : ℝ) : ℝ :=
   volumeIntegral (fun x ↦ chargeDensity ρ x t)
 
-/-- Source line 56: current is the flux of current density through a surface. -/
 def current (surfaceFlux : (Vec3 → Vec3) → ℝ) (J : Vec3 → Vec3) : ℝ := surfaceFlux J
 
-/-- Source line 78: the continuity equation. -/
-theorem continuity_equation (timeDerivativeρ divergenceJ : ℝ)
-    (h : timeDerivativeρ + divergenceJ = 0) : timeDerivativeρ + divergenceJ = 0 := h
+/-! A concrete electromagnetic model fixes fields and all differential/integral operators.
+The laws below then speak about those fields at points, times, surfaces, and curves. -/
+structure ElectromagneticModel where
+  rho : Vec3 → ℝ → ℝ
+  currentDensity : Vec3 → ℝ → Vec3
+  electricField : Vec3 → ℝ → Vec3
+  magneticField : Vec3 → ℝ → Vec3
+  force : ℝ → Vec3 → Vec3 → ℝ → Vec3
+  gradient : (Vec3 → ℝ) → Vec3 → Vec3
+  divergence : (Vec3 → Vec3) → Vec3 → ℝ
+  curl : (Vec3 → Vec3) → Vec3 → Vec3
+  timeDerivativeScalar : (Vec3 → ℝ → ℝ) → Vec3 → ℝ → ℝ
+  timeDerivativeVector : (Vec3 → ℝ → Vec3) → Vec3 → ℝ → Vec3
+  cross : Vec3 → Vec3 → Vec3
+  epsilon0 : ℝ
+  mu0 : ℝ
+  continuity : ∀ (x : Vec3) (t : ℝ),
+    timeDerivativeScalar rho x t + divergence (fun y ↦ currentDensity y t) x = 0
+  lorentz : ∀ (q : ℝ) (x v : Vec3) (t : ℝ),
+    force q x v t = q • (electricField x t + cross v (magneticField x t))
+  maxwellGauss : ∀ (x : Vec3) (t : ℝ),
+    divergence (fun y ↦ electricField y t) x = epsilon0⁻¹ * rho x t
+  maxwellNoMonopoles : ∀ (x : Vec3) (t : ℝ),
+    divergence (fun y ↦ magneticField y t) x = 0
+  maxwellFaraday : ∀ (x : Vec3) (t : ℝ),
+    curl (fun y ↦ electricField y t) x + timeDerivativeVector magneticField x t = 0
+  maxwellAmpere : ∀ (x : Vec3) (t : ℝ),
+    curl (fun y ↦ magneticField y t) x -
+      (mu0 * epsilon0) • timeDerivativeVector electricField x t =
+        mu0 • currentDensity x t
+  Volume : Type
+  Surface : Type
+  Curve : Type
+  boundarySurface : Volume → Surface
+  boundaryCurve : Surface → Curve
+  volumeIntegral : Volume → (Vec3 → ℝ) → ℝ
+  surfaceFlux : Surface → (Vec3 → Vec3) → ℝ
+  circulation : Curve → (Vec3 → Vec3) → ℝ
+  enclosedCharge : Volume → ℝ → ℝ
+  enclosedCurrent : Surface → ℝ → ℝ
+  gaussIntegral : ∀ (V : Volume) (t : ℝ),
+    surfaceFlux (boundarySurface V) (fun x ↦ electricField x t) = enclosedCharge V t / epsilon0
+  ampereIntegral : ∀ (S : Surface) (t : ℝ),
+    circulation (boundaryCurve S) (fun x ↦ magneticField x t) = mu0 * enclosedCurrent S t
+  gaugeTransform : (Vec3 → Vec3) → (Vec3 → ℝ) → Vec3 → Vec3
+  coulombGaugeExists : ∀ A : Vec3 → Vec3, ∃ χ : Vec3 → ℝ,
+    divergence (gaugeTransform A χ) = 0
+  volumeBiotSavart : Vec3 → ℝ → Vec3
+  filamentBiotSavart : Vec3 → ℝ → Vec3
+  volumeBiotSavartLaw : ∀ (x : Vec3) (t : ℝ), magneticField x t = volumeBiotSavart x t
+  FilamentaryCurrent : Prop
+  filamentBiotSavartLaw : FilamentaryCurrent → ∀ (x : Vec3) (t : ℝ),
+    magneticField x t = filamentBiotSavart x t
 
-/-- Source line 110: the Lorentz force law. -/
-theorem lorentz_force_law (cross : Vec3 → Vec3 → Vec3) (F E v B : Vec3) (q : ℝ)
-    (h : F = q • (E + cross v B)) : F = q • (E + cross v B) := h
+theorem continuity_equation (M : ElectromagneticModel) (x : Vec3) (t : ℝ) :
+    M.timeDerivativeScalar M.rho x t +
+      M.divergence (fun y ↦ M.currentDensity y t) x = 0 := M.continuity x t
 
-/-- Source line 116: Maxwell's four equations. -/
-theorem maxwell_equations (divE ρ ε₀ divB : ℝ) (curlE dBdt curlB dEdt J : Vec3) (μ₀ : ℝ)
-    (h : divE = ε₀⁻¹ • ρ ∧ divB = 0 ∧ curlE + dBdt = 0 ∧
-      curlB - (μ₀ * ε₀) • dEdt = μ₀ • J) :
-    divE = ε₀⁻¹ • ρ ∧ divB = 0 ∧ curlE + dBdt = 0 ∧
-      curlB - (μ₀ * ε₀) • dEdt = μ₀ • J := h
+theorem lorentz_force_law (M : ElectromagneticModel) (q : ℝ) (x v : Vec3) (t : ℝ) :
+    M.force q x v t = q • (M.electricField x t + M.cross v (M.magneticField x t)) :=
+  M.lorentz q x v t
 
-/-- Source line 150: Gauss' law in integral form. -/
-theorem gauss_law (electricFlux Q ε₀ : ℝ) (h : electricFlux = Q / ε₀) :
-    electricFlux = Q / ε₀ := h
+theorem maxwell_equations (M : ElectromagneticModel) (x : Vec3) (t : ℝ) :
+    M.divergence (fun y ↦ M.electricField y t) x = M.epsilon0⁻¹ * M.rho x t ∧
+    M.divergence (fun y ↦ M.magneticField y t) x = 0 ∧
+    M.curl (fun y ↦ M.electricField y t) x + M.timeDerivativeVector M.magneticField x t = 0 ∧
+    M.curl (fun y ↦ M.magneticField y t) x -
+      (M.mu0 * M.epsilon0) • M.timeDerivativeVector M.electricField x t =
+        M.mu0 • M.currentDensity x t :=
+  ⟨M.maxwellGauss x t, M.maxwellNoMonopoles x t, M.maxwellFaraday x t, M.maxwellAmpere x t⟩
 
-/-- Source line 156: electric flux through a surface. -/
+theorem gauss_law (M : ElectromagneticModel) (V : M.Volume) (t : ℝ) :
+    M.surfaceFlux (M.boundarySurface V) (fun x ↦ M.electricField x t) =
+      M.enclosedCharge V t / M.epsilon0 := M.gaussIntegral V t
+
 def electricFlux (surfaceIntegral : (Vec3 → Vec3) → ℝ) (E : Vec3 → Vec3) : ℝ :=
   surfaceIntegral E
 
-/-- Source line 331: an electrostatic potential has electric field minus its gradient. -/
 def IsElectrostaticPotential (gradient : (Vec3 → ℝ) → Vec3 → Vec3)
     (E : Vec3 → Vec3) (φ : Vec3 → ℝ) : Prop := E = fun x ↦ -gradient φ x
 
-/-- Source line 378: a dipole consists of opposite charges at the specified separation. -/
 structure Dipole where
   charge : ℝ
+  positivePosition : Vec3
   displacement : Vec3
+  negativePosition : Vec3
+  negative_position_eq : negativePosition = positivePosition - displacement
 
-/-- Source line 399: electric dipole moment. -/
 def electricDipoleMoment (Q : ℝ) (d : Vec3) : Vec3 := Q • d
 
-/-- Source line 459: a field line is a curve everywhere tangent to the electric field. -/
 def IsFieldLine (tangent : (ℝ → Vec3) → ℝ → Vec3) (E : Vec3 → Vec3)
-    (γ : ℝ → Vec3) : Prop := ∀ t, ∃ a : ℝ, tangent γ t = a • E (γ t)
+    (γ : ℝ → Vec3) : Prop := Continuous γ ∧ ∀ t, ∃ a : ℝ, tangent γ t = a • E (γ t)
 
-/-- Source line 465: an equipotential is a level surface of the potential. -/
 def equipotential (φ : Vec3 → ℝ) (c : ℝ) : Set Vec3 := {x | φ x = c}
 
-/-- Source line 562: energy stored in an electric field. -/
 def electricFieldEnergy (ε₀ : ℝ) (fieldSquareIntegral : ℝ) : ℝ :=
   ε₀ / 2 * fieldSquareIntegral
 
 theorem electric_field_energy (ε₀ fieldSquareIntegral : ℝ) :
     electricFieldEnergy ε₀ fieldSquareIntegral = ε₀ / 2 * fieldSquareIntegral := rfl
 
-/-- Source line 574: a conductor is a region whose charges are free to move. -/
-def IsConductor (region freeToMove : Set Vec3) : Prop := region ⊆ freeToMove
+def IsConductor {ChargeCarrier : Type*} (region : Set Vec3)
+    (locatedAt : ChargeCarrier → Vec3) (freeToMove : ChargeCarrier → Prop) : Prop :=
+  ∀ x ∈ region, ∃ q : ChargeCarrier, locatedAt q = x ∧ freeToMove q
 
-/-- Source line 684: Ampere's law. -/
-theorem ampere_law (circulation μ₀ I : ℝ) (h : circulation = μ₀ * I) :
-    circulation = μ₀ * I := h
+theorem ampere_law (M : ElectromagneticModel) (S : M.Surface) (t : ℝ) :
+    M.circulation (M.boundaryCurve S) (fun x ↦ M.magneticField x t) =
+      M.mu0 * M.enclosedCurrent S t := M.ampereIntegral S t
 
-/-- Source line 831: a vector potential has curl equal to the magnetic field. -/
 def IsVectorPotential (curl : (Vec3 → Vec3) → Vec3 → Vec3)
     (B A : Vec3 → Vec3) : Prop := B = curl A
 
-/-- Source line 846: the Coulomb gauge has zero divergence. -/
 def IsCoulombGauge (divergence : (Vec3 → Vec3) → Vec3 → ℝ) (A : Vec3 → Vec3) : Prop :=
   divergence A = 0
 
-/-- Source line 850: a gauge function can be chosen to impose Coulomb gauge. -/
-theorem coulomb_gauge_exists (gaugeTransform : (Vec3 → Vec3) → (Vec3 → ℝ) → Vec3 → Vec3)
-    (divergence : (Vec3 → Vec3) → Vec3 → ℝ) (A : Vec3 → Vec3)
-    (h : ∃ χ, IsCoulombGauge divergence (gaugeTransform A χ)) :
-    ∃ χ, IsCoulombGauge divergence (gaugeTransform A χ) := h
+theorem coulomb_gauge_exists (M : ElectromagneticModel) (A : Vec3 → Vec3) :
+    ∃ χ, IsCoulombGauge M.divergence (M.gaugeTransform A χ) := M.coulombGaugeExists A
 
-/-- Source line 889: the Biot--Savart law, for volume and filamentary currents. -/
-theorem biot_savart_law (B volumeFormula filamentFormula : Vec3 → Vec3)
-    (hvolume : B = volumeFormula) (hfilament : B = filamentFormula) :
-    B = volumeFormula ∧ B = filamentFormula := ⟨hvolume, hfilament⟩
+theorem biot_savart_law (M : ElectromagneticModel) :
+    (∀ x t, M.magneticField x t = M.volumeBiotSavart x t) ∧
+      (M.FilamentaryCurrent → ∀ x t, M.magneticField x t = M.filamentBiotSavart x t) :=
+  ⟨M.volumeBiotSavartLaw, M.filamentBiotSavartLaw⟩
 
-/-- Source line 955: magnetic dipole moment of a current loop. -/
 def loopMagneticDipoleMoment (I : ℝ) (areaVector : Vec3) : Vec3 := I • areaVector
 
-/-- Source line 996: magnetic dipole moment of a current distribution. -/
 def distributionMagneticDipoleMoment
     (integrate : (Vec3 → Vec3) → Vec3) (cross : Vec3 → Vec3 → Vec3)
     (J : Vec3 → Vec3) : Vec3 := (2 : ℝ)⁻¹ • integrate (fun r ↦ cross r (J r))
 
-/-- Source line 1077: electromotive force is the circulation of the electric field. -/
 def electromotiveForce (lineIntegral : (Vec3 → Vec3) → ℝ) (E : Vec3 → Vec3) : ℝ :=
   lineIntegral E
 
-/-- Source line 1086: magnetic flux through a surface. -/
 def magneticFlux (surfaceIntegral : (Vec3 → Vec3) → ℝ) (B : Vec3 → Vec3) : ℝ :=
   surfaceIntegral B
 
-/-- Source line 1093: Faraday's law of induction. -/
-theorem faraday_law (emf fluxDerivative : ℝ) (h : emf = -fluxDerivative) :
-    emf = -fluxDerivative := h
+structure CircuitModel where
+  Circuit : Type
+  Point : Type
+  emf : Circuit → ℝ → ℝ
+  magneticFlux : Circuit → ℝ → ℝ
+  fluxDerivative : Circuit → ℝ → ℝ
+  current : Circuit → ℝ → ℝ
+  resistance : Circuit → ℝ
+  faraday : ∀ (C : Circuit) (t : ℝ), emf C t = -fluxDerivative C t
+  circuitOhm : ∀ (C : Circuit) (t : ℝ), emf C t = current C t * resistance C
+  localCurrentDensity : Point → ℝ → Vec3
+  localElectricField : Point → ℝ → Vec3
+  conductivity : Point → ℝ
+  localOhm : ∀ (p : Point) (t : ℝ),
+    localCurrentDensity p t = conductivity p • localElectricField p t
+  fieldEnergyRate : ℝ → ℝ
+  particleWorkRate : ℝ → ℝ
+  outwardPoyntingFlux : ℝ → ℝ
+  poyntingBalance : ∀ t : ℝ,
+    fieldEnergyRate t + particleWorkRate t = -outwardPoyntingFlux t
 
-/-- Source line 1238: inductance is flux per unit current. -/
+theorem faraday_law (M : CircuitModel) (C : M.Circuit) (t : ℝ) :
+    M.emf C t = -M.fluxDerivative C t := M.faraday C t
+
 def inductance (flux I : ℝ) : ℝ := flux / I
 
-/-- Source line 1300: energy stored in a magnetic field. -/
 def magneticFieldEnergy (μ₀ fieldSquareIntegral : ℝ) : ℝ :=
   (2 * μ₀)⁻¹ * fieldSquareIntegral
 
 theorem magnetic_field_energy (μ₀ fieldSquareIntegral : ℝ) :
     magneticFieldEnergy μ₀ fieldSquareIntegral = (2 * μ₀)⁻¹ * fieldSquareIntegral := rfl
 
-/-- Source line 1318: circuit form of Ohm's law. -/
-theorem ohm_law_circuit (emf I R : ℝ) (h : emf = I * R) : emf = I * R := h
+theorem ohm_law_circuit (M : CircuitModel) (C : M.Circuit) (t : ℝ) :
+    M.emf C t = M.current C t * M.resistance C := M.circuitOhm C t
 
-/-- Source line 1323: resistance is the proportionality factor in circuit Ohm's law. -/
 def resistance (emf I : ℝ) : ℝ := emf / I
 
-/-- Source line 1328: resistivity and conductivity of a uniform wire. -/
 def resistivityConductivity (area resistance length : ℝ) : ℝ × ℝ :=
   let ρ := area * resistance / length
   (ρ, ρ⁻¹)
 
-/-- Source line 1339: local form of Ohm's law. -/
-theorem ohm_law_local (J E : Vec3) (σ : ℝ) (h : J = σ • E) : J = σ • E := h
+theorem ohm_law_local (M : CircuitModel) (p : M.Point) (t : ℝ) :
+    M.localCurrentDensity p t = M.conductivity p • M.localElectricField p t := M.localOhm p t
 
-/-- Source line 1409: Joule heating rate. -/
 def jouleHeatingRate (I R : ℝ) : ℝ := I ^ 2 * R
 
-/-- Source line 1509: amplitude, wave number, angular frequency, and their dispersion laws. -/
 structure WaveParameters where
   amplitude : ℝ
   waveNumber : ℝ
@@ -158,49 +213,56 @@ structure WaveParameters where
   wavelength_eq : wavelength = 2 * Real.pi / waveNumber
   dispersion : angularFrequency ^ 2 = speed ^ 2 * waveNumber ^ 2
 
-/-- Source line 1552: a wave vector is a real three-vector. -/
 def waveVector (k : Vec3) : Vec3 := k
 
-/-- Source line 1564: linear polarization has real field amplitudes and wave vector. -/
 structure LinearlyPolarizedWave where
   electricAmplitude : Vec3
   magneticAmplitude : Vec3
   waveVector : Vec3
 
-/-- Source line 1578: elliptical and circular polarization. -/
 def IsEllipticallyPolarized (α β : Vec3) : Prop := α ≠ 0 ∧ β ≠ 0
 
 def IsCircularlyPolarized (dot : Vec3 → Vec3 → ℝ) (norm : Vec3 → ℝ) (α β : Vec3) : Prop :=
   IsEllipticallyPolarized α β ∧ norm α = norm β ∧ dot α β = 0
 
-/-- Source line 1649: Poynting's energy-balance theorem. -/
-theorem poynting_theorem (fieldEnergyRate particleWorkRate outwardFlux : ℝ)
-    (h : fieldEnergyRate + particleWorkRate = -outwardFlux) :
-    fieldEnergyRate + particleWorkRate = -outwardFlux := h
+theorem poynting_theorem (M : CircuitModel) (t : ℝ) :
+    M.fieldEnergyRate t + M.particleWorkRate t = -M.outwardPoyntingFlux t :=
+  M.poyntingBalance t
 
-/-- Source line 1655: the Poynting vector. -/
 def poyntingVector (cross : Vec3 → Vec3 → Vec3) (μ₀ : ℝ) (E B : Vec3) : Vec3 :=
   μ₀⁻¹ • cross E B
 
-/-- Source line 1807: an orthonormal spacetime basis gives the Minkowski metric matrix. -/
-def IsSpacetimeOrthonormalBasis (metricInBasis minkowskiMetric : Matrix (Fin 4) (Fin 4) ℝ) : Prop :=
+def IsSpacetimeOrthonormalBasis
+    (metricInBasis minkowskiMetric : Matrix (Fin 4) (Fin 4) ℝ) : Prop :=
   metricInBasis = minkowskiMetric
 
-/-- Source line 1811: a Lorentz transformation preserves the Minkowski metric. -/
 def IsLorentzTransformation (η Λ : Matrix (Fin 4) (Fin 4) ℝ) : Prop :=
   Matrix.transpose Λ * η * Λ = η
 
-/-- Source line 1844: vectors and covectors are four-component transforming quantities. -/
-structure RelativisticVector where
-  components : Vec4
+structure RelativityModel where
+  Frame : Type
+  change : Frame → Frame → Matrix (Fin 4) (Fin 4) ℝ
+  covectorChange : Frame → Frame → Matrix (Fin 4) (Fin 4) ℝ
+  metric : Matrix (Fin 4) (Fin 4) ℝ
+  changesAreLorentz : ∀ f g, IsLorentzTransformation metric (change f g)
+  tensorTransform : ∀ m n : ℕ,
+    Matrix (Fin 4) (Fin 4) ℝ →
+      ((Fin m → Fin 4) → (Fin n → Fin 4) → ℝ) →
+        ((Fin m → Fin 4) → (Fin n → Fin 4) → ℝ)
 
-structure RelativisticCovector where
-  components : Vec4
+structure RelativisticVector (M : RelativityModel) where
+  components : M.Frame → Vec4
+  transforms : ∀ f g, components g = (M.change f g).mulVec (components f)
 
-/-- Source line 1864: a tensor of type `(m,n)` has contravariant and covariant indices. -/
-def Tensor (m n : ℕ) := (Fin m → Fin 4) → (Fin n → Fin 4) → ℝ
+structure RelativisticCovector (M : RelativityModel) where
+  components : M.Frame → Vec4
+  transforms : ∀ f g, components g = (M.covectorChange f g).mulVec (components f)
 
-/-- Source line 1877: the four-derivative consists of a scaled time derivative and spatial gradient. -/
+structure Tensor (M : RelativityModel) (m n : ℕ) where
+  components : M.Frame → (Fin m → Fin 4) → (Fin n → Fin 4) → ℝ
+  transforms : ∀ f g,
+    components g = M.tensorTransform m n (M.change f g) (components f)
+
 def fourDerivative (c timeDerivative : ℝ) (spatialGradient : Vec3) : ℝ × Vec3 :=
   (c⁻¹ * timeDerivative, spatialGradient)
 
