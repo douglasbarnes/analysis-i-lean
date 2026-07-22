@@ -24,14 +24,14 @@ jobs:
           "$HOME/.elan/bin/elan" default "$(cat lean-toolchain)"
           "$HOME/.elan/bin/lean" --version
           "$HOME/.elan/bin/lake" --version
-      - name: Update, build, and placeholder audit
+      - name: Build Analysis II and audit placeholders
         shell: bash
         run: |
           set -euo pipefail
           {
             lake update
             lake exe cache get
-            lake build
+            lake build AnalysisII
             python3 scripts/check_audit.py
           } 2>&1 | tee lean-build.log
       - name: Upload build log
