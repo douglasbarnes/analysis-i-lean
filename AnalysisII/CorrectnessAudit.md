@@ -98,7 +98,7 @@ This includes major results such as uniform convergence and integration, the Wei
 
 ## Why the previous audit was insufficient
 
-`AnalysisII/SourceAudit.lean` records source locations and labels them `mathlib`, `reformulated`, or `duplicate`, but it does not store a declaration name or compile a proof witness for each entry. `AnalysisII/LibraryCoverage.lean` contains 19 unlabelled Mathlib `#check` commands. These checks prove that those APIs exist; they do not establish that each of the 68 source statements has been formalised.
+`AnalysisII/SourceAudit.lean` records source locations and labels them `mathlib`, `reformulated`, or `duplicate`, but it does not store a declaration name or compile a proof witness for each entry. `AnalysisII/LibraryCoverage.lean` contains 20 unlabelled Mathlib `#check` commands. These checks prove that those APIs exist; they do not establish that each of the 68 source statements has been formalised.
 
 Consequently, the previous global build and placeholder audit could pass while most Analysis II results had no inspectable theorem target.
 
