@@ -262,7 +262,7 @@ theorem ordinaryQuadrature (M : OrdinaryQuadratureModel) (p : Polynomial ℝ)
   calc
     M.integral p = M.integral
         (∑ k : Fin M.ν, Polynomial.C (p.eval (k : ℝ)) * M.cardinal k) := by
-      rw [M.representation p hp]
+      exact congrArg M.integral (M.representation p hp)
     _ = M.quadrature p := M.linearized p
 
 structure OrthogonalRootModel where
