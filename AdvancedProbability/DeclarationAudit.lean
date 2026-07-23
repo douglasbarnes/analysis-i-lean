@@ -90,7 +90,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.characteristicFunction
 #check AdvancedProbability.CharacteristicFunctionDeterminesLaw
 #check AdvancedProbability.LevyConvergence
-#check AdvancedProbability.LevyContinuity
+#check AdvancedProbability.LevyContinuityTheorem
 #check AdvancedProbability.CharacteristicTailBound
 #check AdvancedProbability.BrownianMotion
 #check AdvancedProbability.WienerExistence
