@@ -81,10 +81,10 @@ theorem isStoppingTime_liminf {Ω : Type u} [m₀ : MeasurableSpace Ω]
     rw [Filter.liminf_eq_iSup_iInf_of_nat]
     congr with n
     apply le_antisymm
-    · refine le_iInf fun i ↦ le_iInf fun hi ↦ ?_
-      exact iInf_le (fun i : {i : ℕ // n ≤ i} ↦ T i.1 ω) ⟨i, hi⟩
-    · refine le_iInf fun i ↦ ?_
+    · refine le_iInf fun i : {i : ℕ // n ≤ i} ↦ ?_
       exact iInf_le_of_le i.1 (iInf_le_of_le i.2 le_rfl)
+    · refine le_iInf fun i : ℕ ↦ le_iInf fun hi : n ≤ i ↦ ?_
+      exact iInf_le (fun j : {j : ℕ // n ≤ j} ↦ T j.1 ω) ⟨i, hi⟩
   have hRhs : IsStoppingTime ℱ
       (fun ω ↦ ⨆ n : ℕ, ⨅ i : {i : ℕ // n ≤ i}, T i.1 ω) := by
     apply isStoppingTime_iSup
@@ -139,10 +139,14 @@ theorem DiscreteStoppingCalculusTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω
     have hStopped : Measurable[hT.measurableSpace] (MeasureTheory.stoppedValue X T) :=
       MeasureTheory.measurable_stoppedValue
         hX_adapted.isStronglyProgressive_of_discrete hT
-    have hTop : MeasurableSet[hT.measurableSpace] {ω | T ω = ⊤} :=
-      (measurableSet_singleton (⊤ : ℕ∞)).preimage hT.measurable
+    have hFiniteEq : {ω | T ω ≠ ⊤} = ⋃ n : ℕ, {ω | T ω = (n : ℕ∞)} := by
+      ext ω
+      cases h : T ω with
+      | top => simp [h]
+      | coe n => simp [h]
     have hFinite : MeasurableSet[hT.measurableSpace] {ω | T ω ≠ ⊤} := by
-      simpa only [Set.compl_setOf] using hTop.compl
+      rw [hFiniteEq]
+      exact MeasurableSet.iUnion fun n ↦ hT.measurableSet_eq_of_countable' n
     exact hStopped.indicator hFinite
   · intro T hT
     exact hX_adapted.stoppedProcess_of_discrete hT
