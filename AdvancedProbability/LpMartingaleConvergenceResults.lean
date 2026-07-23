@@ -26,7 +26,9 @@ theorem uniformIntegrable_of_dominated_local
     obtain ⟨j, hj⟩ := hX i
     refine (eLpNorm_mono_ae ?_).trans (h j s hs hμs)
     filter_upwards [hj] with ω hω
-    by_cases hmem : ω ∈ s <;> simp [Set.indicator, hmem, hω]
+    by_cases hmem : ω ∈ s
+    · simpa [Set.indicator, hmem, Real.norm_eq_abs] using hω
+    · simp [Set.indicator, hmem]
   · obtain ⟨C, hC⟩ := hY.2.2
     refine ⟨C, fun i ↦ ?_⟩
     obtain ⟨j, hj⟩ := hX i
@@ -201,14 +203,15 @@ theorem Martingale.ae_tendsto_and_eLpNorm_tendsto_ofReal
       (1 / (1 : ℝ≥0∞).toReal - 1 / (ENNReal.ofReal p).toReal) with hc
     have hc_ne : c ≠ ∞ := by
       rw [hc]
-      exact (ENNReal.rpow_lt_top_of_nonneg (by
-        rw [ENNReal.toReal_ofReal hp_pos.le]
-        positivity) (measure_ne_top μ _)).ne
+      rw [ENNReal.toReal_one, ENNReal.toReal_ofReal hp_pos.le]
+      exact (ENNReal.rpow_lt_top_of_nonneg
+        (sub_nonneg.mpr ((div_le_iff₀ hp_pos).2 (by simpa using hp.le)))
+        (measure_ne_top μ _)).ne
     refine ⟨((R : ℝ≥0∞) * c).toNNReal, fun n ↦ ?_⟩
     have hcompare := eLpNorm_le_eLpNorm_mul_rpow_measure_univ
       (μ := μ) (p := 1) (q := ENNReal.ofReal p) hqone (hmeas n).aestronglyMeasurable
     rw [ENNReal.coe_toNNReal (ENNReal.mul_ne_top ENNReal.coe_ne_top hc_ne)]
-    exact hcompare.trans (mul_le_mul_right (hbdd n) c)
+    exact hcompare.trans (mul_le_mul_right' (hbdd n) c)
   obtain ⟨R₁, hR₁⟩ := hbdd1
   have hae := hX.submartingale.ae_tendsto_limitProcess hR₁
   have hlimit : MemLp (ℱ.limitProcess X μ) (ENNReal.ofReal p) μ :=
