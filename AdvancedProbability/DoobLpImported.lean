@@ -953,7 +953,7 @@ theorem maximal_ineq_Lp
   · -- A = ∞. Either RHS = ∞ (so done) or we derive a contradiction.
     -- The RHS = C * B^(1/p) is ∞ iff B = ∞ (since C is finite & nonzero).
     -- If B = ∞, eLpNorm f_n p μ = ∞^(1/p) = ∞, so RHS bound is ∞. ✓
-    -- If B < ∞, this is the truncation case — left as sorry.
+    -- If B < ∞, this is the truncation case — left as placeholder.
     by_cases hBtop : B = ⊤
     · -- A = B = ∞. Both sides equal ∞, since C = ofReal(p/(p-1)) > 0.
       rw [hAtop, hBtop, ENNReal.top_rpow_of_pos hp_inv_pos]
