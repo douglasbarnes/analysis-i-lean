@@ -75,4 +75,59 @@ theorem ContinuousStoppingCalculusTheorem {Ω : Type u} (ℱ : ContinuousFiltrat
     rw [hEq]
     exact hUnion
 
+/-- The sigma-field of events observable at a continuous stopping time. -/
+def continuousStoppingSigmaField {Ω : Type u} (ℱ : ContinuousFiltration Ω)
+    (T : Ω → ℝ≥0) (hT : IsContinuousStoppingTime ℱ T) : SigmaField Ω where
+  sets := {A | ∀ t, A ∩ {ω | T ω ≤ t} ∈ (ℱ.sigma t).sets}
+  empty_mem := by
+    intro t
+    simpa using (ℱ.sigma t).empty_mem
+  compl_mem := by
+    intro A hA t
+    have hComp : (A ∩ {ω | T ω ≤ t})ᶜ ∈ (ℱ.sigma t).sets :=
+      (ℱ.sigma t).compl_mem _ (hA t)
+    have hInter := (ℱ.sigma t).inter_mem hComp (hT t)
+    convert hInter using 1
+    ext ω
+    simp
+  iUnion_mem := by
+    intro A hA t
+    have hUnion := (ℱ.sigma t).iUnion_mem
+      (fun n ↦ A n ∩ {ω | T ω ≤ t}) (fun n ↦ hA n t)
+    simpa only [Set.iUnion_inter] using hUnion
+
+/-- Source 63: a real random variable is measurable at a stopping time iff each localization
+`Z 1_{T ≤ t}` is measurable at deterministic time `t`. -/
+theorem StoppingSigmaMeasurabilityTheorem {Ω : Type u} (ℱ : ContinuousFiltration Ω)
+    (T : Ω → ℝ≥0) (hT : IsContinuousStoppingTime ℱ T) (Z : Ω → ℝ) :
+    Observable (continuousStoppingSigmaField ℱ T hT) Z ↔
+      ∀ t, Observable (ℱ.sigma t) ({ω | T ω ≤ t}.indicator Z) := by
+  constructor
+  · intro hZ t B hB
+    let E : Set Ω := {ω | T ω ≤ t}
+    have hE : E ∈ (ℱ.sigma t).sets := hT t
+    have hZE : Z ⁻¹' B ∩ E ∈ (ℱ.sigma t).sets := by
+      exact hZ B hB t
+    by_cases h0 : (0 : ℝ) ∈ B
+    · have hUnion := (ℱ.sigma t).union_mem hZE ((ℱ.sigma t).compl_mem E hE)
+      have hEq : E.indicator Z ⁻¹' B = (Z ⁻¹' B ∩ E) ∪ Eᶜ := by
+        ext ω
+        by_cases hω : ω ∈ E <;> simp [Set.indicator, hω, h0]
+      rw [hEq]
+      exact hUnion
+    · have hEq : E.indicator Z ⁻¹' B = Z ⁻¹' B ∩ E := by
+        ext ω
+        by_cases hω : ω ∈ E <;> simp [Set.indicator, hω, h0]
+      rw [hEq]
+      exact hZE
+  · intro hLocal B hB t
+    let E : Set Ω := {ω | T ω ≤ t}
+    have hInd : E.indicator Z ⁻¹' B ∈ (ℱ.sigma t).sets := hLocal t B hB
+    have hInter := (ℱ.sigma t).inter_mem hInd (hT t)
+    have hEq : (E.indicator Z ⁻¹' B) ∩ E = Z ⁻¹' B ∩ E := by
+      ext ω
+      by_cases hω : ω ∈ E <;> simp [Set.indicator, hω]
+    rw [hEq] at hInter
+    exact hInter
+
 end AdvancedProbability
