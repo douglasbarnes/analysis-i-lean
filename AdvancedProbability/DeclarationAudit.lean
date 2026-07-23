@@ -43,7 +43,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.SequenceConvergenceCertificate
 #check AdvancedProbability.DoobUpcrossing
 #check AdvancedProbability.DiscreteMaximalInequalityTheorem
-#check AdvancedProbability.DiscreteDoobLpInequality
+#check AdvancedProbability.DiscreteDoobLpInequalityTheorem
 #check AdvancedProbability.DiscreteLpMartingaleConvergence
 #check AdvancedProbability.DiscreteL1MartingaleConvergenceTheorem
 #check AdvancedProbability.DiscreteUIOptionalStopping
