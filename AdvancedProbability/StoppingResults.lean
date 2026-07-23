@@ -15,6 +15,7 @@ theorem isStoppingTime_iSup {Ω ι : Type*} [Countable ι] [m₀ : MeasurableSpa
     (hT : ∀ i, IsStoppingTime ℱ (T i)) :
     IsStoppingTime ℱ (fun ω ↦ ⨆ i, T i ω) := by
   intro n
+  change MeasurableSet[ℱ n] {ω | (⨆ i, T i ω) ≤ n}
   have hEq : {ω | (⨆ i, T i ω) ≤ n} = ⋂ i, {ω | T i ω ≤ n} := by
     ext ω
     simp
@@ -27,6 +28,7 @@ theorem isStoppingTime_iInf {Ω ι : Type*} [Countable ι] [Nonempty ι]
     (hT : ∀ i, IsStoppingTime ℱ (T i)) :
     IsStoppingTime ℱ (fun ω ↦ ⨅ i, T i ω) := by
   intro n
+  change MeasurableSet[ℱ n] {ω | (⨅ i, T i ω) ≤ n}
   have hEq : {ω | (⨅ i, T i ω) ≤ n} = ⋃ i, {ω | T i ω ≤ n} := by
     ext ω
     constructor
@@ -58,12 +60,14 @@ theorem isStoppingTime_limsup {Ω : Type u} [m₀ : MeasurableSpace Ω]
         le_iSup_of_le (⟨i, hi⟩ : {i : ℕ // n ≤ i}) le_rfl
     · exact iSup_le fun i ↦
         le_iSup_of_le i.1 (le_iSup_of_le i.2 le_rfl)
-  rw [hEq]
-  apply isStoppingTime_iInf
-  intro n
-  apply isStoppingTime_iSup
-  intro i
-  exact hT i.1
+  have hRhs : IsStoppingTime ℱ
+      (fun ω ↦ ⨅ n : ℕ, ⨆ i : {i : ℕ // n ≤ i}, T i.1 ω) := by
+    apply isStoppingTime_iInf
+    intro n
+    apply isStoppingTime_iSup
+    intro i
+    exact hT i.1
+  exact hEq.symm ▸ hRhs
 
 /-- Pointwise liminfs of sequences of discrete stopping times are stopping times. -/
 theorem isStoppingTime_liminf {Ω : Type u} [m₀ : MeasurableSpace Ω]
@@ -77,23 +81,21 @@ theorem isStoppingTime_liminf {Ω : Type u} [m₀ : MeasurableSpace Ω]
     rw [Filter.liminf_eq_iSup_iInf_of_nat]
     congr with n
     apply le_antisymm
-    · exact iInf_least fun i ↦
-        iInf_le_of_le i.1 (iInf_le_of_le i.2 le_rfl)
-    · exact le_iInf fun i ↦ le_iInf fun hi ↦
-        iInf_le (fun i : {i : ℕ // n ≤ i} ↦ T i.1 ω) ⟨i, hi⟩
-  rw [hEq]
-  apply isStoppingTime_iSup
-  intro n
-  letI : Nonempty {i : ℕ // n ≤ i} := ⟨⟨n, le_rfl⟩⟩
-  apply isStoppingTime_iInf
-  intro i
-  exact hT i.1
+    · refine le_iInf fun i ↦ le_iInf fun hi ↦ ?_
+      exact iInf_le (fun i : {i : ℕ // n ≤ i} ↦ T i.1 ω) ⟨i, hi⟩
+    · refine le_iInf fun i ↦ ?_
+      exact iInf_le_of_le i.1 (iInf_le_of_le i.2 le_rfl)
+  have hRhs : IsStoppingTime ℱ
+      (fun ω ↦ ⨆ n : ℕ, ⨅ i : {i : ℕ // n ≤ i}, T i.1 ω) := by
+    apply isStoppingTime_iSup
+    intro n
+    letI : Nonempty {i : ℕ // n ≤ i} := ⟨⟨n, le_rfl⟩⟩
+    apply isStoppingTime_iInf
+    intro i
+    exact hT i.1
+  exact hEq.symm ▸ hRhs
 
-/-- Source 32: the complete discrete stopping-time calculus from the notes.
-
-This packages closure under lattice operations, the stopping-time sigma-field and its monotonicity,
-measurability of the stopped value on the finite-stopping event, and adaptation/integrability of the
-stopped process. -/
+/-- Source 32: the complete discrete stopping-time calculus from the notes. -/
 theorem DiscreteStoppingCalculusTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω]
     {μ : Measure Ω} {ℱ : Filtration ℕ m₀} {X : ℕ → Ω → ℝ}
     (hX_adapted : StronglyAdapted ℱ X) (hX_integrable : ∀ n, Integrable (X n) μ) :
@@ -132,14 +134,15 @@ theorem DiscreteStoppingCalculusTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω
   · intro T hT
     exact isStoppingTime_liminf hT
   · intro S T hS hT hST
-    exact measurableSpace_mono hS hT hST
+    exact hS.measurableSpace_mono hT hST
   · intro T hT
     have hStopped : Measurable[hT.measurableSpace] (MeasureTheory.stoppedValue X T) :=
-      hX_adapted.isStronglyProgressive_of_discrete.measurable_stoppedValue hT
+      MeasureTheory.measurable_stoppedValue
+        hX_adapted.isStronglyProgressive_of_discrete hT
+    have hTop : MeasurableSet[hT.measurableSpace] {ω | T ω = ⊤} :=
+      (measurableSet_singleton (⊤ : ℕ∞)).preimage hT.measurable
     have hFinite : MeasurableSet[hT.measurableSpace] {ω | T ω ≠ ⊤} := by
-      convert hT.measurableSet_eq_top.compl using 1
-      ext ω
-      simp
+      simpa only [Set.compl_setOf] using hTop.compl
     exact hStopped.indicator hFinite
   · intro T hT
     exact hX_adapted.stoppedProcess_of_discrete hT
