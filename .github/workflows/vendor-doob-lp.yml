@@ -6,6 +6,9 @@ on:
       - 'agent/vendor-doob-lp'
     paths:
       - '.github/workflows/vendor-doob-lp.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/vendor-doob-lp.yml'
   workflow_dispatch:
 
 permissions:
