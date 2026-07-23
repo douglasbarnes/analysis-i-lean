@@ -87,9 +87,20 @@ def continuousStoppingSigmaField {Ω : Type u} (ℱ : ContinuousFiltration Ω)
     have hComp : (A ∩ {ω | T ω ≤ t})ᶜ ∈ (ℱ.sigma t).sets :=
       (ℱ.sigma t).compl_mem _ (hA t)
     have hInter := (ℱ.sigma t).inter_mem hComp (hT t)
-    convert hInter using 1
-    ext ω
-    simp
+    have hEq : (A ∩ {ω | T ω ≤ t})ᶜ ∩ {ω | T ω ≤ t} =
+        Aᶜ ∩ {ω | T ω ≤ t} := by
+      ext ω
+      constructor
+      · rintro ⟨hNot, hLe⟩
+        refine ⟨?_, hLe⟩
+        intro hAω
+        exact hNot ⟨hAω, hLe⟩
+      · rintro ⟨hNotA, hLe⟩
+        refine ⟨?_, hLe⟩
+        rintro ⟨hAω, -⟩
+        exact hNotA hAω
+    rw [hEq] at hInter
+    exact hInter
   iUnion_mem := by
     intro A hA t
     have hUnion := (ℱ.sigma t).iUnion_mem
