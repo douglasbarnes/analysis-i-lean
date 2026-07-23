@@ -56,7 +56,7 @@ theorem ConditionalExpectationMonotoneConvergence {Ω : Type u} [m₀ : Measurab
     {m : MeasurableSpace Ω} {μ : @Measure Ω m₀} (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] {Xn : ℕ → Ω → ℝ} {X : Ω → ℝ}
     (hXn_int : ∀ n, Integrable (Xn n) μ)
-    (hXn_meas : ∀ n, AEStronglyMeasurable (Xn n) μ)
+    (hXn_meas : ∀ n, AEStronglyMeasurable[m₀] (Xn n) μ)
     (hmono : ∀ n, Xn n ≤ᵐ[μ] Xn (n + 1))
     (hnonneg : ∀ n, 0 ≤ᵐ[μ] Xn n)
     (hle : ∀ n, Xn n ≤ᵐ[μ] X)
@@ -78,7 +78,7 @@ theorem ConditionalExpectationDominatedConvergence {Ω : Type u} [m₀ : Measura
     {m : MeasurableSpace Ω} {μ : @Measure Ω m₀} (hm : m ≤ m₀)
     [SigmaFinite (μ.trim hm)] {Xn : ℕ → Ω → ℝ} {X : Ω → ℝ}
     (bound : Ω → ℝ)
-    (hXn_meas : ∀ n, AEStronglyMeasurable (Xn n) μ)
+    (hXn_meas : ∀ n, AEStronglyMeasurable[m₀] (Xn n) μ)
     (hbound_int : Integrable bound μ)
     (hbound : ∀ n, ∀ᵐ ω ∂μ, ‖Xn n ω‖ ≤ bound ω)
     (hlim : ∀ᵐ ω ∂μ, Tendsto (fun n ↦ Xn n ω) atTop (𝓝 (X ω))) :
