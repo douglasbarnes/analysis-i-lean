@@ -27,7 +27,7 @@ jobs:
         run: |
           set -euxo pipefail
           curl --proto '=https' --tlsv1.2 --fail --location \
-            'https://raw.githubusercontent.com/raphaelrrcoelho/formal-mathfin/0445ae8d6fa1d2dbb05c7274ae5f4a9fb2cfb12d/MathFin/Foundations/DoobLp.lean' \
+            'https://raw.githubusercontent.com/leanprover-community/mathlib4/4b63335c679c15aab74a00d37714d41aa99d701d/Mathlib/Probability/Martingale/Lp.lean' \
             --output AdvancedProbability/DoobLpImported.lean
           test "$(wc -l < AdvancedProbability/DoobLpImported.lean)" -gt 1000
       - name: Commit vendored proof
