@@ -60,7 +60,7 @@ theorem ConditionalExpectationLawsTheorem {Ω : Type u} [m₀ : MeasurableSpace 
         condExp_mul_of_aestronglyMeasurable_left hZm hZX hX
       independent := fun m₁ hm₁ hXm hindep ↦
         condExp_indep_eq hm₁ hm hXm hindep
-      abs_le := abs_condExp_ae_le_condExp_abs X
+      abs_le := MeasureTheory.abs_condExp_ae_le_condExp_abs (μ := μ) (m := m) X
       l1_contraction := eLpNorm_one_condExp_le_eLpNorm X }
 
 end AdvancedProbability
