@@ -6,6 +6,7 @@ import AdvancedProbability.DiscreteMartingales
 import AdvancedProbability.DoobLpImported
 import AdvancedProbability.LpConditionalResults
 import AdvancedProbability.DiscreteResults
+import AdvancedProbability.LpMartingaleResults
 import AdvancedProbability.ReverseMartingaleResults
 import AdvancedProbability.StoppingResults
 import AdvancedProbability.MarkovResults
