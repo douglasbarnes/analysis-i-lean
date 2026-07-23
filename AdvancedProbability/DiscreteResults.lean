@@ -50,10 +50,11 @@ theorem DiscreteL1MartingaleConvergenceTheorem {Ω : Type u} [m₀ : MeasurableS
       exact hZ.uniformIntegrable_condExp_filtration.ae_eq fun n ↦ (hrep n).symm
   · constructor
     · rintro ⟨Z, hZ, hrep⟩
-      let Zlim : Ω → ℝ := μ[Z | ⨆ n, ℱ n]
+      let mInf : MeasurableSpace Ω := ⨆ n, ℱ n
+      let Zlim : Ω → ℝ := MeasureTheory.condExp (m₀ := m₀) mInf μ Z
       have hZlim : Integrable Zlim μ := by
-        simpa only [Zlim] using
-          (integrable_condExp (μ := μ) (m := ⨆ n, ℱ n) (f := Z))
+        change Integrable (MeasureTheory.condExp (m₀ := m₀) mInf μ Z) μ
+        exact integrable_condExp
       refine ⟨Zlim, hZlim, ?_⟩
       have ht := MeasureTheory.tendsto_eLpNorm_condExp (ℱ := ℱ) Z
       refine ht.congr' (Filter.Eventually.of_forall fun n ↦ ?_)
