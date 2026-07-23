@@ -41,8 +41,7 @@ structure ConditionalExpectationLawPackage {Ω : Type u} [m₀ : MeasurableSpace
 /-- A proved package of the standard elementary conditional-expectation laws. -/
 theorem ConditionalExpectationLawsTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω]
     {m : MeasurableSpace Ω} (μ : @Measure Ω m₀) (hm : m ≤ m₀)
-    [SigmaFinite (μ.trim hm)] [IsFiniteMeasure μ]
-    {X Y : Ω → ℝ} (hX : Integrable X μ) (hY : Integrable Y μ) :
+    [IsFiniteMeasure μ] {X Y : Ω → ℝ} (hX : Integrable X μ) (hY : Integrable Y μ) :
     ConditionalExpectationLawPackage m μ X Y :=
   { measurable := stronglyMeasurable_condExp
     integrable := integrable_condExp
