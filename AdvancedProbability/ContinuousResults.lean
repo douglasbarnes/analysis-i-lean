@@ -107,6 +107,27 @@ def continuousStoppingSigmaField {Ω : Type u} (ℱ : ContinuousFiltration Ω)
       (fun n ↦ A n ∩ {ω | T ω ≤ t}) (fun n ↦ hA n t)
     simpa only [Set.iUnion_inter] using hUnion
 
+/-- Source 62(2): if `S ≤ T`, then every event observable at `S` is observable at `T`. -/
+theorem continuousStoppingSigmaField_mono {Ω : Type u} (ℱ : ContinuousFiltration Ω)
+    {S T : Ω → ℝ≥0} (hS : IsContinuousStoppingTime ℱ S)
+    (hT : IsContinuousStoppingTime ℱ T) (hST : S ≤ T) :
+    (continuousStoppingSigmaField ℱ S hS).Subfield
+      (continuousStoppingSigmaField ℱ T hT) := by
+  intro A hA t
+  have hAS : A ∩ {ω | S ω ≤ t} ∈ (ℱ.sigma t).sets := hA t
+  have hTt : {ω | T ω ≤ t} ∈ (ℱ.sigma t).sets := hT t
+  have hInter := (ℱ.sigma t).inter_mem hAS hTt
+  have hEq : (A ∩ {ω | S ω ≤ t}) ∩ {ω | T ω ≤ t} =
+      A ∩ {ω | T ω ≤ t} := by
+    ext ω
+    constructor
+    · rintro ⟨⟨hAω, -⟩, hTω⟩
+      exact ⟨hAω, hTω⟩
+    · rintro ⟨hAω, hTω⟩
+      exact ⟨⟨hAω, (hST ω).trans hTω⟩, hTω⟩
+  rw [hEq] at hInter
+  exact hInter
+
 /-- Source 63: a real random variable is measurable at a stopping time iff each localization
 `Z 1_{T ≤ t}` is measurable at deterministic time `t`. -/
 theorem StoppingSigmaMeasurabilityTheorem {Ω : Type u} (ℱ : ContinuousFiltration Ω)
