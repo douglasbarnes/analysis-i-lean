@@ -7,9 +7,7 @@ open Set Filter MeasureTheory
 
 namespace AdvancedProbability
 
-/-- Source 87: Lévy's continuity theorem.  If probability measures have characteristic functions
-converging pointwise to a function continuous at the origin, then that function is the
-characteristic function of a probability measure and the original measures converge weakly to it. -/
+/-- Source 87: Lévy's continuity theorem. -/
 theorem LevyContinuityTheorem (μ : ℕ → ProbabilityMeasure ℝ) {f : ℝ → ℂ}
     (hf : ContinuousAt f 0)
     (h : ∀ t : ℝ,
@@ -40,6 +38,8 @@ theorem LevyContinuityTheorem (μ : ℕ → ProbabilityMeasure ℝ) {f : ℝ →
   refine ⟨μ₀, h_char, ?_⟩
   apply ProbabilityMeasure.tendsto_of_tendsto_charFun
   intro t
-  simpa [characteristicFunction, h_char t] using h t
+  have ht := h t
+  rw [← h_char t] at ht
+  simpa [characteristicFunction] using ht
 
 end AdvancedProbability
