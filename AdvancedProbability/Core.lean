@@ -11,5 +11,4 @@ import AdvancedProbability.ContinuousResults
 import AdvancedProbability.WeakConvergence
 import AdvancedProbability.WeakConvergenceResults
 import AdvancedProbability.BrownianMotion
-import AdvancedProbability.BrownianResults
 import AdvancedProbability.LargeDeviations
