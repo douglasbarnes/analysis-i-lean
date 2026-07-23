@@ -41,24 +41,26 @@ structure ConditionalExpectationLawPackage {Ω : Type u} [m₀ : MeasurableSpace
 /-- A proved package of the standard elementary conditional-expectation laws. -/
 theorem ConditionalExpectationLawsTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω]
     (μ : @Measure Ω m₀) [IsFiniteMeasure μ]
-    {m : MeasurableSpace Ω} (hm : m ≤ m₀)
-    {X Y : Ω → ℝ} (hX : Integrable X μ) (hY : Integrable Y μ) :
-    ConditionalExpectationLawPackage m μ X Y :=
-  { measurable := stronglyMeasurable_condExp
-    integrable := integrable_condExp
-    fixed_of_measurable := fun hXm ↦
-      condExp_of_stronglyMeasurable (μ := μ) hm hXm hX
-    preserves_integral := integral_condExp (μ := μ) (m := m) (f := X) hm
-    nonnegative := fun hnonneg ↦ condExp_nonneg hnonneg
-    monotone := fun hXY ↦ condExp_mono hX hY hXY
-    additive := condExp_add hX hY m
-    homogeneous := fun a ↦ condExp_smul a X m
-    tower := fun m₁ hm₁ ↦ condExp_condExp_of_le hm₁ hm
-    pull_out := fun Z hZm hZX ↦
-      condExp_mul_of_aestronglyMeasurable_left hZm hZX hX
-    independent := fun m₁ hm₁ hXm hindep ↦
-      condExp_indep_eq hm₁ hm hXm hindep
-    abs_le := abs_condExp_ae_le_condExp_abs X
-    l1_contraction := eLpNorm_one_condExp_le_eLpNorm X }
+    {X Y : Ω → ℝ} (hX : Integrable X μ) (hY : Integrable Y μ)
+    (m : MeasurableSpace Ω) (hm : m ≤ m₀) :
+    @ConditionalExpectationLawPackage Ω m₀ m μ X Y := by
+  letI : MeasurableSpace Ω := m₀
+  exact
+    { measurable := stronglyMeasurable_condExp
+      integrable := integrable_condExp
+      fixed_of_measurable := fun hXm ↦
+        condExp_of_stronglyMeasurable (μ := μ) hm hXm hX
+      preserves_integral := integral_condExp (μ := μ) (m := m) (f := X) hm
+      nonnegative := fun hnonneg ↦ condExp_nonneg hnonneg
+      monotone := fun hXY ↦ condExp_mono hX hY hXY
+      additive := condExp_add hX hY m
+      homogeneous := fun a ↦ condExp_smul a X m
+      tower := fun m₁ hm₁ ↦ condExp_condExp_of_le hm₁ hm
+      pull_out := fun Z hZm hZX ↦
+        condExp_mul_of_aestronglyMeasurable_left hZm hZX hX
+      independent := fun m₁ hm₁ hXm hindep ↦
+        condExp_indep_eq hm₁ hm hXm hindep
+      abs_le := abs_condExp_ae_le_condExp_abs X
+      l1_contraction := eLpNorm_one_condExp_le_eLpNorm X }
 
 end AdvancedProbability
