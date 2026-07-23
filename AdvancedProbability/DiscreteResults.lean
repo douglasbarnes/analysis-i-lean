@@ -1,4 +1,5 @@
 import AdvancedProbability.DiscreteMartingales
+import AdvancedProbability.DoobLpImported
 
 noncomputable section
 
@@ -21,6 +22,16 @@ theorem DiscreteMaximalInequalityTheorem {Ω : Type u} [m₀ : MeasurableSpace �
           (Finset.range (N + 1)).sup' Finset.nonempty_range_add_one (fun k ↦ X k ω)},
           X N ω ∂μ) :=
   MeasureTheory.maximal_ineq hX hX_nonnegative N
+
+/-- Source 40: Doob's `Lᵖ` maximal inequality for a non-negative discrete submartingale. -/
+theorem DiscreteDoobLpInequalityTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    {μ : Measure Ω} [IsFiniteMeasure μ] {ℱ : Filtration ℕ m₀}
+    {X : ℕ → Ω → ℝ} (hX : Submartingale X ℱ μ)
+    (hX_nonnegative : ∀ n ω, 0 ≤ X n ω) {p : ℝ} (hp : 1 < p) (N : ℕ) :
+    eLpNorm (fun ω ↦ (Finset.range (N + 1)).sup' Finset.nonempty_range_add_one
+        (fun k ↦ X k ω)) (ENNReal.ofReal p) μ ≤
+      ENNReal.ofReal (p / (p - 1)) * eLpNorm (X N) (ENNReal.ofReal p) μ :=
+  MeasureTheory.maximal_ineq_Lp hX hX_nonnegative hp N
 
 /-- A martingale has a terminal representation when all its values are conditional expectations of
 one integrable terminal random variable. -/
