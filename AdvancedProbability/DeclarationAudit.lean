@@ -48,7 +48,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.DiscreteL1MartingaleConvergenceTheorem
 #check AdvancedProbability.DiscreteUIOptionalStopping
 #check AdvancedProbability.BackwardFiltration
-#check AdvancedProbability.BackwardMartingaleConvergence
+#check AdvancedProbability.BackwardMartingaleConvergenceTheorem
 #check AdvancedProbability.KolmogorovZeroOne
 #check AdvancedProbability.StrongLaw
 #check AdvancedProbability.RadonNikodymCertificate
