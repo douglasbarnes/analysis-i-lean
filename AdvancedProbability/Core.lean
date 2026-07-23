@@ -9,6 +9,7 @@ import AdvancedProbability.LpConditionalUniformResults
 import AdvancedProbability.LpLevyUpwardResults
 import AdvancedProbability.DiscreteResults
 import AdvancedProbability.LpMartingaleResults
+import AdvancedProbability.LpMartingaleConvergenceResults
 import AdvancedProbability.ReverseMartingaleResults
 import AdvancedProbability.StoppingResults
 import AdvancedProbability.MarkovResults
