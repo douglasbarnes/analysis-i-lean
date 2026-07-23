@@ -34,10 +34,7 @@ def ConvergesInL1 {Ω : Type u} [MeasurableSpace Ω]
   ∃ Z : Ω → ℝ, Integrable Z μ ∧
     Tendsto (fun n ↦ eLpNorm (X n - Z) 1 μ) atTop (𝓝 0)
 
-/-- Source 42: the three standard equivalent forms of the `L¹` martingale convergence theorem.
-
-A martingale is uniformly integrable iff it has an integrable terminal representation, and this is
-also equivalent to convergence in `L¹` to an integrable limit. -/
+/-- Source 42: the three standard equivalent forms of the `L¹` martingale convergence theorem. -/
 theorem DiscreteL1MartingaleConvergenceTheorem {Ω : Type u} [m₀ : MeasurableSpace Ω]
     {μ : Measure Ω} [IsFiniteMeasure μ] {ℱ : Filtration ℕ m₀}
     {X : ℕ → Ω → ℝ} (hX : Martingale X ℱ μ) :
@@ -55,8 +52,8 @@ theorem DiscreteL1MartingaleConvergenceTheorem {Ω : Type u} [m₀ : MeasurableS
     · rintro ⟨Z, hZ, hrep⟩
       let Zlim : Ω → ℝ := μ[Z | ⨆ n, ℱ n]
       have hZlim : Integrable Zlim μ := by
-        change Integrable (μ[Z | ⨆ n, ℱ n]) μ
-        exact integrable_condExp
+        simpa only [Zlim] using
+          (integrable_condExp (μ := μ) (m := ⨆ n, ℱ n) (f := Z))
       refine ⟨Zlim, hZlim, ?_⟩
       have ht := MeasureTheory.tendsto_eLpNorm_condExp (ℱ := ℱ) Z
       refine ht.congr' (Filter.Eventually.of_forall fun n ↦ ?_)
