@@ -4,6 +4,7 @@ import AdvancedProbability.ConditionalExpectationResults
 import AdvancedProbability.ConditionalExpectationKernelResults
 import AdvancedProbability.DiscreteMartingales
 import AdvancedProbability.DiscreteResults
+import AdvancedProbability.ReverseMartingaleResults
 import AdvancedProbability.StoppingResults
 import AdvancedProbability.MarkovResults
 import AdvancedProbability.ContinuousTime
