@@ -20,7 +20,8 @@ def nonnegativeConditionalExpectation {Ω : Type u} [m₀ : MeasurableSpace Ω]
 version of non-negative conditional expectation. -/
 theorem ConditionalExpectationFatou {Ω : Type u} [m₀ : MeasurableSpace Ω]
     [StandardBorelSpace Ω] (m : MeasurableSpace Ω) (μ : @Measure Ω m₀)
-    [IsFiniteMeasure μ] (X : ℕ → Ω → ℝ≥0∞) (hX : ∀ n, Measurable (X n)) :
+    [IsFiniteMeasure μ] (X : ℕ → Ω → ℝ≥0∞)
+    (hX : ∀ n, Measurable[m₀] (X n)) :
     nonnegativeConditionalExpectation (m₀ := m₀) m μ
         (fun ω ↦ liminf (fun n ↦ X n ω) atTop) ≤
       fun ω ↦ liminf
@@ -32,7 +33,7 @@ theorem ConditionalExpectationFatou {Ω : Type u} [m₀ : MeasurableSpace Ω]
 theorem ConditionalExpectationMonotoneConvergenceENNReal {Ω : Type u}
     [m₀ : MeasurableSpace Ω] [StandardBorelSpace Ω]
     (m : MeasurableSpace Ω) (μ : @Measure Ω m₀) [IsFiniteMeasure μ]
-    (X : ℕ → Ω → ℝ≥0∞) (hX : ∀ n, Measurable (X n))
+    (X : ℕ → Ω → ℝ≥0∞) (hX : ∀ n, Measurable[m₀] (X n))
     (hmono : Monotone X) :
     nonnegativeConditionalExpectation (m₀ := m₀) m μ (fun ω ↦ ⨆ n, X n ω) =
       fun ω ↦ ⨆ n, nonnegativeConditionalExpectation (m₀ := m₀) m μ (X n) ω := by
