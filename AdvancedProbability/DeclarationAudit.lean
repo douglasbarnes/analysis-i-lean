@@ -102,7 +102,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.BrownianStrongMarkov
 #check AdvancedProbability.ReflectionPrinciple
 #check AdvancedProbability.ReflectionHittingIdentityTheorem
-#check AdvancedProbability.RunningMaximumLaw
+#check AdvancedProbability.RunningMaximumLawTheorem
 #check AdvancedProbability.BrownianFirstPassage
 #check AdvancedProbability.Domain
 #check AdvancedProbability.IsHarmonic
