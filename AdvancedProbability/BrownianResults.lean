@@ -27,14 +27,14 @@ theorem BrownianGaussianProcessTheorem {Ω : Type u} [MeasurableSpace Ω]
 /-- Every one-time Brownian marginal is Gaussian. -/
 theorem BrownianHasGaussianLawEval {Ω : Type u} [MeasurableSpace Ω]
     {B : ℝ≥0 → Ω → ℝ} {P : Measure Ω} (hB : IsBrownianReal B P) (t : ℝ≥0) :
-    HasGaussianLaw (B t) P :=
+    ProbabilityTheory.HasGaussianLaw (B t) P :=
   hB.isGaussianProcess.hasGaussianLaw_eval t
 
 /-- Every Brownian increment is Gaussian. -/
 theorem BrownianIncrementHasGaussianLaw {Ω : Type u} [MeasurableSpace Ω]
     {B : ℝ≥0 → Ω → ℝ} {P : Measure Ω} (hB : IsBrownianReal B P)
     (s t : ℝ≥0) :
-    HasGaussianLaw (B s - B t) P :=
+    ProbabilityTheory.HasGaussianLaw (B s - B t) P :=
   hB.isGaussianProcess.hasGaussianLaw_sub
 
 /-- Brownian motion has independent increments. -/
