@@ -1,0 +1,15 @@
+import InfiniteDimensionalStatistics.Chapter01.NonparametricModels
+import InfiniteDimensionalStatistics.Chapter02.GaussianProcesses
+import InfiniteDimensionalStatistics.Chapter03.EmpiricalProcesses
+import InfiniteDimensionalStatistics.Chapter04.FunctionSpacesAndApproximation
+import InfiniteDimensionalStatistics.Chapter05.LinearNonparametricEstimators
+import InfiniteDimensionalStatistics.Chapter06.MinimaxParadigm
+import InfiniteDimensionalStatistics.Chapter07.LikelihoodProcedures
+import InfiniteDimensionalStatistics.Chapter08.AdaptiveInference
+
+/-!
+# Mathematical Foundations of Infinite-Dimensional Statistical Models
+
+Root module for the book formalisation. This baseline contains only an import hierarchy and
+project-governance material; it intentionally declares no book mathematics.
+-/
