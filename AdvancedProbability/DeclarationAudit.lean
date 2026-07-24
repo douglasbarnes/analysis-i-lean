@@ -11,7 +11,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.MeasureSpaceObject
 #check AdvancedProbability.IsMeasurableMap
 #check AdvancedProbability.MeasurableFunctionNotation
-#check AdvancedProbability.nonnegativeIntegral
+#check AdvancedProbability.NonnegativeIntegralExistenceUniqueness
 #check AdvancedProbability.SimpleFunction
 #check AdvancedProbability.AlmostEverywhereEqual
 #check AdvancedProbability.fatouLemma
