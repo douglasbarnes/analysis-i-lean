@@ -71,6 +71,7 @@ lemma IsPreBrownianReal.hasIndepIncrements (hB : IsPreBrownianReal B P) :
     have h3 : i.castSucc ≤ j.castSucc := Fin.le_castSucc_iff.mpr h1
     rw [min_eq_left (ht h1), min_eq_left (ht h), min_eq_left (ht h2), min_eq_left (ht h3)]
     simp
+  any_goals exact hB.isGaussianProcess.hasGaussianLaw_sub.memLp_two
   all_goals exact (hB.isGaussianProcess.hasGaussianLaw_eval _).memLp_two
 
 lemma IsPreBrownianReal.neg (hB : IsPreBrownianReal B P) : IsPreBrownianReal (-B) P where
