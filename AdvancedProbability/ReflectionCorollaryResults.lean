@@ -3,6 +3,7 @@ import Mathlib.Dynamics.Ergodic.MeasurePreserving
 
 noncomputable section
 
+open scoped NNReal
 open Set MeasureTheory
 
 namespace AdvancedProbability
@@ -23,7 +24,7 @@ def BrownianUpperTailEvent {Ω : Type u} (B : ℝ≥0 → Ω → ℝ)
 reflection principle.
 
 For the reflection map at the first hitting time of `b`, the source-97 reflection principle supplies
-`hR`.  Pathwise reflection supplies `hReflects`; under the usual hypotheses `0 < b` and `a ≤ b`, it
+`hR`. Pathwise reflection supplies `hReflects`; under the usual hypotheses `0 < b` and `a ≤ b`, it
 identifies the preimage of the terminal event `{B t ≥ 2b-a}` with
 `{sup_{s ≤ t} B s ≥ b, B t ≤ a}`. -/
 theorem ReflectionHittingIdentityTheorem
