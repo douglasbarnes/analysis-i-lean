@@ -1,5 +1,5 @@
 import AdvancedProbability.BrownianMotion
-import Mathlib.Probability.BrownianMotion.Basic
+import AdvancedProbability.BrownianBasicImported
 
 noncomputable section
 
