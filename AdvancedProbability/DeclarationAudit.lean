@@ -92,11 +92,11 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.LevyConvergence
 #check AdvancedProbability.LevyContinuityTheorem
 #check AdvancedProbability.CharacteristicTailBound
-#check AdvancedProbability.BrownianMotion
+#check AdvancedProbability.IsStandardBrownianReal
 #check AdvancedProbability.WienerExistence
-#check AdvancedProbability.BrownianGaussianProcess
-#check AdvancedProbability.BrownianInvariance
-#check AdvancedProbability.BrownianFutureIndependent
+#check AdvancedProbability.BrownianGaussianProcessTheorem
+#check AdvancedProbability.BrownianInvarianceTheorem
+#check AdvancedProbability.BrownianFutureIndependentNaturalPast
 #check AdvancedProbability.BlumenthalZeroOne
 #check AdvancedProbability.BrownianSamplePathProperties
 #check AdvancedProbability.BrownianStrongMarkov
