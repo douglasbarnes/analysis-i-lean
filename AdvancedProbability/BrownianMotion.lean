@@ -38,9 +38,10 @@ structure WienerExistence where
   independent : (Ω → ℝ) → (Ω → ℝ) → Prop
   brownian : BrownianMotion Ω expectation independent
 
-/-- Source 94: Blumenthal's zero-one law. -/
-structure BlumenthalZeroOne (probability : ℝ) where
-  dichotomy : probability = 0 ∨ probability = 1
+/-- Source 94: Blumenthal's zero-one property for a germ sigma-algebra. -/
+def BlumenthalZeroOne {Ω : Type u} [MeasurableSpace Ω]
+    (μ : Measure Ω) (germ : MeasurableSpace Ω) : Prop :=
+  ∀ A : Set Ω, MeasurableSet[germ] A → μ A = 0 ∨ μ A = 1
 
 /-- Source 95: immediate oscillation, small-time behavior, and unbounded extrema of Brownian paths. -/
 structure BrownianSamplePathProperties (immediatePositive immediateNegative smallTimeRatio
