@@ -145,19 +145,6 @@ theorem DoobDynkinCertificate {Ω : Type u} (Y Z : Ω → ℝ)
     ∃ factor : ℝ → ℝ, Measurable factor ∧ Y = factor ∘ Z :=
   hY.exists_eq_measurable_comp
 
-/-- Source 20: the thirteen standard conditional-expectation identities grouped as one interface. -/
-structure ConditionalExpectationLaws {Ω : Type u}
-    (expectation : Expectation Ω)
-    (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ) where
-  measurable_fixed : ∀ 𝒢 X, Observable 𝒢 X → CE 𝒢 X = X
-  preserves_expectation : ∀ 𝒢 X, expectation (CE 𝒢 X) = expectation X
-  nonnegative : ∀ 𝒢 X, (∀ ω, 0 ≤ X ω) → ∀ ω, 0 ≤ CE 𝒢 X ω
-  linear : ∀ 𝒢 a b X Y, CE 𝒢 (fun ω ↦ a * X ω + b * Y ω) =
-    fun ω ↦ a * CE 𝒢 X ω + b * CE 𝒢 Y ω
-  tower : ∀ 𝒢 ℋ X, ℋ.Subfield 𝒢 → CE ℋ (CE 𝒢 X) = CE ℋ X
-  pull_out : ∀ 𝒢 X Z, Observable 𝒢 Z →
-    CE 𝒢 (fun ω ↦ Z ω * X ω) = fun ω ↦ Z ω * CE 𝒢 X ω
-
 /-- Source 21: all conditional expectations of one integrable real variable form a uniformly
 integrable family. -/
 theorem ConditionalExpectationsUniformlyIntegrable {Ω : Type u} [m₀ : MeasurableSpace Ω]
