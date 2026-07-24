@@ -28,7 +28,7 @@ theorem ConditionalExpectationCharacterizationTheorem
     intro A hA
     calc
       ∫ x in A, Y x ∂μ = ∫ x in A, μ[X | m] x ∂μ :=
-        setIntegral_congr_ae (hm A hA) hY
+        setIntegral_congr_ae (hm A hA) (hY.mono fun _ hx _ ↦ hx)
       _ = ∫ x in A, X x ∂μ := setIntegral_condExp hm hX hA
   · rintro ⟨hYm, hYint, hset⟩
     exact ae_eq_condExp_of_forall_setIntegral_eq hm hX
