@@ -9,6 +9,26 @@ namespace AdvancedProbability
 
 universe u
 
+/-- Source 8: existence and uniqueness of the non-negative integral.
+
+The lower Lebesgue integral is the unique functional whose value on an arbitrary `ℝ≥0∞`-valued
+function is the supremum of the integrals of all measurable simple functions dominated by it. -/
+theorem NonnegativeIntegralExistenceUniqueness {E : Type u} [MeasurableSpace E]
+    (μ : Measure E) :
+    ∃! I : (E → ℝ≥0∞) → ℝ≥0∞,
+      ∀ f : E → ℝ≥0∞,
+        I f = ⨆ (g : MeasureTheory.SimpleFunc E ℝ≥0∞) (_ : ⇑g ≤ f), g.lintegral μ := by
+  refine ⟨fun f ↦ nonnegativeIntegral μ f, ?_, ?_⟩
+  · intro f
+    change (∫⁻ x, f x ∂μ) = _
+    rw [MeasureTheory.lintegral]
+  · intro I hI
+    funext f
+    rw [hI f]
+    change (⨆ (g : MeasureTheory.SimpleFunc E ℝ≥0∞) (_ : ⇑g ≤ f), g.lintegral μ) =
+      ∫⁻ x, f x ∂μ
+    rw [MeasureTheory.lintegral]
+
 /-- A concrete package of the conditional-expectation laws currently available in the pinned
 Mathlib revision. -/
 structure ConditionalExpectationLawPackage {Ω : Type u} [m₀ : MeasurableSpace Ω]
