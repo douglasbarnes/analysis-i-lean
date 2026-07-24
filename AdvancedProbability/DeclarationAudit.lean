@@ -20,7 +20,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.productSigmaField
 #check AdvancedProbability.ProductMeasureCertificate
 #check AdvancedProbability.FubiniTonelliCertificate
-#check AdvancedProbability.IsConditionalExpectation
+#check AdvancedProbability.ConditionalExpectationCharacterizationTheorem
 #check AdvancedProbability.ConditionalExpectationExistenceCertificate
 #check AdvancedProbability.DoobDynkinCertificate
 #check AdvancedProbability.ConditionalExpectationLawsTheorem
