@@ -118,7 +118,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.BrownianRecurrenceTransience
 #check AdvancedProbability.DonskerInvariance
 #check AdvancedProbability.SkorokhodEmbedding
-#check AdvancedProbability.TwoSidedHittingFormula
+#check AdvancedProbability.TwoSidedHittingFormulaTheorem
 #check AdvancedProbability.FeketeCertificate
 #check AdvancedProbability.CramerCertificate
 
