@@ -38,21 +38,6 @@ structure WienerExistence where
   independent : (Ω → ℝ) → (Ω → ℝ) → Prop
   brownian : BrownianMotion Ω expectation independent
 
-/-- Source 91: finite-dimensional Gaussianity of Brownian motion. -/
-structure BrownianGaussianProcess (allFiniteLinearCombinationsGaussian : Prop) where
-  conclusion : allFiniteLinearCombinationsGaussian
-
-/-- Source 92: scaling, time inversion, translation, and orthogonal invariance. -/
-structure BrownianInvariance (scaling timeInversion translation reflection : Prop) where
-  scalingLaw : scaling
-  timeInversionLaw : timeInversion
-  translationLaw : translation
-  reflectionLaw : reflection
-
-/-- Source 93: future Brownian increments are independent of the right-limit filtration. -/
-structure BrownianFutureIndependent (futureIndependent : Prop) where
-  conclusion : futureIndependent
-
 /-- Source 94: Blumenthal's zero-one law. -/
 structure BlumenthalZeroOne (probability : ℝ) where
   dichotomy : probability = 0 ∨ probability = 1
@@ -102,10 +87,6 @@ structure MeanValueCharacterization (harmonic meanValueProperty : Prop) where
 /-- Source 104: a harmonic function evaluated along Brownian motion is a martingale. -/
 structure HarmonicBrownianMartingale (harmonic martingale : Prop) where
   implication : harmonic → martingale
-
-/-- Source 105: conditioning a sum of independent random variables. -/
-structure ConditionalExpectationOfIndependentSum (independent conditionalFormula : Prop) where
-  implication : independent → conditionalFormula
 
 /-- Source 106: the second-order Taylor/Itô martingale for Brownian motion. -/
 structure ItoMartingale (twiceDifferentiable boundedDerivatives martingale : Prop) where
