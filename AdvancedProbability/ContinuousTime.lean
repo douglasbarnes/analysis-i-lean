@@ -52,17 +52,6 @@ structure ContinuousFiltration (Ω : Type u) where
 def IsContinuousStoppingTime {Ω : Type u} (ℱ : ContinuousFiltration Ω)
     (T : Ω → ℝ≥0) : Prop := ∀ t, {ω | T ω ≤ t} ∈ (ℱ.sigma t).sets
 
-/-- Source 62: maximum/minimum/stopping operations in continuous time. -/
-structure ContinuousStoppingCalculus {Ω : Type u} (ℱ : ContinuousFiltration Ω) where
-  maxStopping : ∀ S T, IsContinuousStoppingTime ℱ S → IsContinuousStoppingTime ℱ T →
-    IsContinuousStoppingTime ℱ (fun ω ↦ max (S ω) (T ω))
-  minStopping : ∀ S T, IsContinuousStoppingTime ℱ S → IsContinuousStoppingTime ℱ T →
-    IsContinuousStoppingTime ℱ (fun ω ↦ min (S ω) (T ω))
-
-/-- Source 63: the stopping-time measurability criterion. -/
-structure StoppingSigmaMeasurability (measurableAtStop localizedMeasurable : Prop) where
-  iff_statement : measurableAtStop ↔ localizedMeasurable
-
 /-- Source 64: an abstract first hitting time. -/
 def HittingTime {Ω : Type u} (X : ContinuousProcess Ω) (A : Set ℝ) (ω : Ω) : Set ℝ≥0 :=
   {t | X t ω ∈ A}
