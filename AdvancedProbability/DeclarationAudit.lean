@@ -108,10 +108,10 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.IsHarmonic
 #check AdvancedProbability.MeanValueCharacterization
 #check AdvancedProbability.HarmonicBrownianMartingale
-#check AdvancedProbability.ConditionalExpectationOfIndependentSum
+#check AdvancedProbability.ConditionalExpectationOfIndependentSumTheorem
 #check AdvancedProbability.ItoMartingale
 #check AdvancedProbability.MaximumPrinciple
-#check AdvancedProbability.DirichletUniqueness
+#check AdvancedProbability.DirichletUniquenessTheorem
 #check AdvancedProbability.PoincareConeCondition
 #check AdvancedProbability.ConeHittingEstimate
 #check AdvancedProbability.BrownianDirichletSolution
