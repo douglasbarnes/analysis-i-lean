@@ -10,6 +10,7 @@ import AdvancedProbability.LpLevyUpwardResults
 import AdvancedProbability.DiscreteResults
 import AdvancedProbability.LpMartingaleResults
 import AdvancedProbability.LpMartingaleConvergenceResults
+import AdvancedProbability.LpMartingaleEquivalenceResults
 import AdvancedProbability.ReverseMartingaleResults
 import AdvancedProbability.StoppingResults
 import AdvancedProbability.MarkovResults
@@ -18,4 +19,5 @@ import AdvancedProbability.ContinuousResults
 import AdvancedProbability.WeakConvergence
 import AdvancedProbability.WeakConvergenceResults
 import AdvancedProbability.BrownianMotion
+import AdvancedProbability.BrownianResults
 import AdvancedProbability.LargeDeviations
