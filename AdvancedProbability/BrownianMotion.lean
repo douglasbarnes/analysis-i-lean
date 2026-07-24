@@ -60,10 +60,6 @@ structure BrownianStrongMarkov (postStoppingBrownian independentOfStoppedPast : 
 structure ReflectionPrinciple (reflectedPathHasBrownianLaw : Prop) where
   conclusion : reflectedPathHasBrownianLaw
 
-/-- Source 98: first-passage reflection identity. -/
-structure ReflectionHittingCorollary (hittingProbability doubledTailProbability : ℝ) where
-  identity : hittingProbability = doubledTailProbability
-
 /-- Source 99: the running maximum has the same law as the absolute Brownian position. -/
 structure RunningMaximumLaw (sameLaw : Prop) where
   conclusion : sameLaw
