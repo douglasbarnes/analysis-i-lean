@@ -61,7 +61,7 @@ lemma IsPreBrownianReal.hasIndepIncrements (hB : IsPreBrownianReal B P) :
   have : IsProbabilityMeasure P := hB.isGaussianProcess.isProbabilityMeasure
   refine fun n t ht ↦ hB.isGaussianProcess.hasGaussianLaw_increments.iIndepFun_of_covariance_eq_zero
     fun i j hij ↦ ?_
-  rw [covariance_fun_sub_fun_sub]
+  rw [covariance_fun_sub_left, covariance_fun_sub_right, covariance_fun_sub_right]
   · simp_rw [hB.covariance_fun_eval]
     wlog h : i < j generalizing i j
     · simp_rw [← this j i hij.symm (by grind), min_comm]
