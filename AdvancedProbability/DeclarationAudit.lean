@@ -96,7 +96,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.WienerExistence
 #check AdvancedProbability.BrownianGaussianProcessTheorem
 #check AdvancedProbability.BrownianInvarianceTheorem
-#check AdvancedProbability.BrownianFutureIndependentNaturalPast
+#check AdvancedProbability.BrownianFutureIndependentNaturalPastSigma
 #check AdvancedProbability.BlumenthalZeroOneTheorem
 #check AdvancedProbability.BrownianSamplePathProperties
 #check AdvancedProbability.BrownianStrongMarkov
