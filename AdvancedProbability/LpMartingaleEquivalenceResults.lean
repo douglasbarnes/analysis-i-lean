@@ -67,12 +67,14 @@ theorem DiscreteLpMartingaleConvergenceTheorem
   have hboundedToConvergent :
       BoundedInLpOfReal μ X p → ConvergesInLpOfReal μ X p := by
     rintro ⟨R, hR⟩
-    have hconv := hX.ae_tendsto_and_eLpNorm_tendsto_ofReal hp hR
+    have hconv :=
+      AdvancedProbability.Martingale.ae_tendsto_and_eLpNorm_tendsto_ofReal hX hp hR
     exact ⟨ℱ.limitProcess X μ, hX.submartingale.memLp_limitProcess hR, hconv.1, hconv.2⟩
   have hconvergentToTerminal :
       ConvergesInLpOfReal μ X p → HasTerminalRepresentationLpOfReal μ ℱ X p := by
     rintro ⟨Z, hZ, -, hLp⟩
-    exact ⟨Z, hZ, fun n ↦ hX.eq_condExp_of_tendsto_eLpNorm_ofReal hp1 hZ hLp n⟩
+    exact ⟨Z, hZ, fun n ↦
+      AdvancedProbability.Martingale.eq_condExp_of_tendsto_eLpNorm_ofReal hX hp1 hZ hLp n⟩
   have hterminalToBounded :
       HasTerminalRepresentationLpOfReal μ ℱ X p → BoundedInLpOfReal μ X p := by
     rintro ⟨Z, hZ, hrep⟩
