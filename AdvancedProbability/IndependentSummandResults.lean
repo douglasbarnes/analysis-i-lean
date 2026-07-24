@@ -23,9 +23,9 @@ theorem ConditionalExpectationOfIndependentSumTheorem
   have hmX : mX ≤ mΩ := hX.comap_le
   have hmY : mY ≤ mΩ := hY.comap_le
   have hX_mX : StronglyMeasurable[mX] X :=
-    (show Measurable[mX] X from le_rfl).stronglyMeasurable
+    (Measurable.of_comap_le le_rfl).stronglyMeasurable
   have hY_mY : StronglyMeasurable[mY] Y :=
-    (show Measurable[mY] Y from le_rfl).stronglyMeasurable
+    (Measurable.of_comap_le le_rfl).stronglyMeasurable
   have hXfixed : μ[X | mX] =ᵐ[μ] X :=
     condExp_of_aestronglyMeasurable' hmX hX_mX.aestronglyMeasurable hXint
   have hindepSpaces : Indep mY mX μ :=
