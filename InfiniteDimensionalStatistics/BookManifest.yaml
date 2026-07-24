@@ -1,0 +1,85 @@
+schema_version: 1
+project: InfiniteDimensionalStatistics
+book:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  source_file: null
+  source_sha256: null
+  edition: uploaded edition; record bibliographic details before statement entry
+  page_numbering: use the printed page number, not the PDF viewer index
+
+status_values:
+  - unmapped
+  - statement_transcribed
+  - statement_audited
+  - mathlib_reuse
+  - proof_in_progress
+  - proved
+  - blocked
+  - not_formalised
+
+entry_schema:
+  required:
+    - chapter
+    - section
+    - book_label
+    - page
+    - kind
+    - exact_statement
+    - lean_name
+    - lean_file
+    - dependencies
+    - mathlib_matches
+    - status
+    - statement_audited
+    - proof_audited
+    - axioms
+    - notes
+  fields:
+    chapter: positive integer matching the book chapter
+    section: exact printed section identifier and title
+    book_label: printed theorem, proposition, lemma, corollary, definition, example or equation label; use null only when the source is genuinely unlabelled
+    page: printed page number or inclusive printed-page range
+    kind: one of definition, notation, lemma, proposition, theorem, corollary, example, equation, remark, assumption
+    exact_statement: source-faithful mathematical statement, including every quantifier, hypothesis, side condition and conclusion
+    lean_name: fully qualified Lean declaration name; null until allocated
+    lean_file: repository-relative Lean source path; null until allocated
+    dependencies: ordered list of manifest IDs or fully qualified Lean declarations used by the proof
+    mathlib_matches: exact Mathlib declaration names considered or selected for reuse
+    status: one of status_values
+    statement_audited: true only after independent comparison with the specified source page
+    proof_audited: true only after the final proof term and axiom report have been reviewed
+    axioms: exact output of the declaration's axiom audit, normalized as a list; use an empty list when none are reported
+    notes: statement-fidelity decisions, generalisations, edition issues, blockers and provenance details
+
+naming:
+  manifest_id_format: IDS-C{chapter:02d}-S{section_slug}-{ordinal:03d}
+  lean_namespace: InfiniteDimensionalStatistics
+  declaration_format: descriptive lowerCamelCase names; source identity belongs in the manifest, not a numeric theorem prefix
+
+chapters:
+  - chapter: 1
+    title: Nonparametric Statistical Models
+    lean_file: InfiniteDimensionalStatistics/Chapter01/NonparametricModels.lean
+  - chapter: 2
+    title: Gaussian Processes
+    lean_file: InfiniteDimensionalStatistics/Chapter02/GaussianProcesses.lean
+  - chapter: 3
+    title: Empirical Processes
+    lean_file: InfiniteDimensionalStatistics/Chapter03/EmpiricalProcesses.lean
+  - chapter: 4
+    title: Function Spaces and Approximation Theory
+    lean_file: InfiniteDimensionalStatistics/Chapter04/FunctionSpacesAndApproximation.lean
+  - chapter: 5
+    title: Linear Nonparametric Estimators
+    lean_file: InfiniteDimensionalStatistics/Chapter05/LinearNonparametricEstimators.lean
+  - chapter: 6
+    title: The Minimax Paradigm
+    lean_file: InfiniteDimensionalStatistics/Chapter06/MinimaxParadigm.lean
+  - chapter: 7
+    title: Likelihood-Based Procedures
+    lean_file: InfiniteDimensionalStatistics/Chapter07/LikelihoodProcedures.lean
+  - chapter: 8
+    title: Adaptive Inference
+    lean_file: InfiniteDimensionalStatistics/Chapter08/AdaptiveInference.lean
+
+entries: []
