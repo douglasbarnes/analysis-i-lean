@@ -66,18 +66,6 @@ def stoppedProcess {Ω : Type u} (X : DiscreteProcess Ω) (T : Ω → ℕ) : Dis
 def stoppingSigmaField {Ω : Type u} (ℱ : DiscreteFiltration Ω) (T : Ω → ℕ) : Set (Set Ω) :=
   {A | ∀ n : ℕ, A ∩ {ω | T ω ≤ n} ∈ (ℱ.sigma n).sets}
 
-/-- Source 32: closure, monotonicity, measurability, adaptation, and integrability at stopping times. -/
-structure DiscreteStoppingCalculus {Ω : Type u} (expectation : Expectation Ω)
-    (ℱ : DiscreteFiltration Ω) (X : DiscreteProcess Ω) where
-  maxStopping : ∀ S T, IsDiscreteStoppingTime ℱ S → IsDiscreteStoppingTime ℱ T →
-    IsDiscreteStoppingTime ℱ (fun ω ↦ max (S ω) (T ω))
-  minStopping : ∀ S T, IsDiscreteStoppingTime ℱ S → IsDiscreteStoppingTime ℱ T →
-    IsDiscreteStoppingTime ℱ (fun ω ↦ min (S ω) (T ω))
-  stoppedAdapted : ∀ T, IsDiscreteStoppingTime ℱ T → IsAdapted ℱ X →
-    IsAdapted ℱ (stoppedProcess X T)
-  stoppedIntegrable : ∀ T, IsDiscreteStoppingTime ℱ T → IsIntegrableProcess expectation X →
-    IsIntegrableProcess expectation (stoppedProcess X T)
-
 /-- Source 33: optional stopping for bounded discrete supermartingales. -/
 theorem OptionalStoppingDiscrete {Ω : Type u} [m₀ : MeasurableSpace Ω]
     {μ : Measure Ω} {ℱ : Filtration ℕ m₀} {X : ℕ → Ω → ℝ}
@@ -189,11 +177,5 @@ structure MarkovChain {Ω : Type u} (E : Type v) [Fintype E]
 /-- Source 51: a harmonic function for a transition matrix. -/
 def HarmonicFor (E : Type u) [Fintype E] (P : E → E → ℝ) (f : E → ℝ) : Prop :=
   ∀ x, ∑ y, P x y * f y = f x
-
-/-- Source 52: a bounded harmonic function evaluated along a Markov chain is a martingale. -/
-structure BoundedHarmonicMartingale (harmonic bounded martingale : Prop) where
-  harmonicHypothesis : harmonic
-  boundedHypothesis : bounded
-  conclusion : martingale
 
 end AdvancedProbability
