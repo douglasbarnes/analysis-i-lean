@@ -26,4 +26,5 @@ import AdvancedProbability.IndependentSummandResults
 import AdvancedProbability.HarmonicResults
 import AdvancedProbability.ReflectionCorollaryResults
 import AdvancedProbability.RunningMaximumResults
+import AdvancedProbability.TwoSidedHittingResults
 import AdvancedProbability.LargeDeviations
