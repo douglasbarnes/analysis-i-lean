@@ -9,6 +9,31 @@ namespace AdvancedProbability
 
 universe u
 
+/-- Source 17: the measurable/integral characterization of conditional expectation.
+
+For an integrable real random variable `X`, an integrable `Y` is a version of `E[X | m]` exactly when
+it is `m`-measurable and has the same integral as `X` over every `m`-measurable event. -/
+theorem ConditionalExpectationCharacterizationTheorem
+    {Ω : Type u} [m₀ : MeasurableSpace Ω] {m : MeasurableSpace Ω}
+    {μ : @Measure Ω m₀} (hm : m ≤ m₀) [SigmaFinite (μ.trim hm)]
+    {X Y : Ω → ℝ} (hX : Integrable X μ) :
+    Y =ᵐ[μ] μ[X | m] ↔
+      AEStronglyMeasurable[m] Y μ ∧ Integrable Y μ ∧
+        ∀ A : Set Ω, MeasurableSet[m] A →
+          ∫ x in A, Y x ∂μ = ∫ x in A, X x ∂μ := by
+  constructor
+  · intro hY
+    refine ⟨stronglyMeasurable_condExp.aestronglyMeasurable.congr hY.symm,
+      integrable_condExp.congr hY.symm, ?_⟩
+    intro A hA
+    calc
+      ∫ x in A, Y x ∂μ = ∫ x in A, μ[X | m] x ∂μ :=
+        setIntegral_congr_ae (hm A hA) hY
+      _ = ∫ x in A, X x ∂μ := setIntegral_condExp hm hX hA
+  · rintro ⟨hYm, hYint, hset⟩
+    exact ae_eq_condExp_of_forall_setIntegral_eq hm hX
+      (fun _ _ _ ↦ hYint.integrableOn) (fun A hA _ ↦ hset A hA) hYm
+
 /-- Source 20(1): an integrable random variable is its own conditional expectation exactly when it is
 measurable with respect to the conditioning sigma-field, modulo almost-everywhere equality. -/
 theorem ConditionalExpectationFixedIff {Ω : Type u} [m₀ : MeasurableSpace Ω]
