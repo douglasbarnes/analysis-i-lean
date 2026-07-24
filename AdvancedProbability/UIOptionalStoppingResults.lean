@@ -36,7 +36,6 @@ theorem stoppedValue_ae_eq_condExp_terminal_of_finite
   calc
     MeasureTheory.stoppedValue X T =ᵐ[μ.restrict {ω | T ω = (n : ℕ∞)}] X n := by
       filter_upwards [ae_restrict_mem (ℱ.le n _ (hT.measurableSet_eq n))] with ω hω
-      rw [Set.mem_setOf_eq] at hω
       simp [MeasureTheory.stoppedValue, hω]
     _ =ᵐ[μ.restrict {ω | T ω = (n : ℕ∞)}] μ[Z | ℱ n] :=
       ae_restrict_of_ae (hrep n)
