@@ -39,8 +39,12 @@ REQUIRED_MANIFEST_FIELDS = (
 FORBIDDEN = {
     "sorry": re.compile(r"\bsorry\b"),
     "admit": re.compile(r"\badmit\b"),
-    "axiom": re.compile(r"^[ \t]*axiom\b", re.MULTILINE),
-    "opaque": re.compile(r"^[ \t]*opaque\b", re.MULTILINE),
+    "axiom": re.compile(
+        r"^[ \t]*(?:(?:private|protected|public|noncomputable)\s+)*axiom\b", re.MULTILINE
+    ),
+    "opaque": re.compile(
+        r"^[ \t]*(?:(?:private|protected|public|noncomputable)\s+)*opaque\b", re.MULTILINE
+    ),
 }
 
 STRUCTURE_START = re.compile(
