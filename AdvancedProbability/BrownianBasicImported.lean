@@ -30,7 +30,7 @@ section IsPreBrownianReal
 structure IsPreBrownianReal (X : ℝ≥0 → Ω → ℝ) (P : Measure Ω := by volume_tac) : Prop where
   gaussian : IsGaussianProcess X P
   centered : ∀ t, P[X t] = 0
-  covariance : ∀ s t, cov[fun ω ↦ X s ω, fun ω ↦ X t ω; P] = min s t
+  covariance_of_le : ∀ s t, s ≤ t → cov[fun ω ↦ X s ω, fun ω ↦ X t ω; P] = s
 
 lemma IsPreBrownianReal.isGaussianProcess (hB : IsPreBrownianReal B P) :
     IsGaussianProcess B P := hB.gaussian
@@ -44,11 +44,14 @@ lemma IsPreBrownianReal.integral_eval (hB : IsPreBrownianReal B P) (t : ℝ≥0)
 lemma IsPreBrownianReal.integrable_eval (hB : IsPreBrownianReal B P) (t : ℝ≥0) :
     Integrable (B t) P := hB.gaussian.hasGaussianLaw_eval t |>.integrable
 
-lemma IsPreBrownianReal.covariance_eval (hB : IsPreBrownianReal B P) (s t : ℝ≥0) :
-    cov[B s, B t; P] = min s t := hB.covariance s t
-
 lemma IsPreBrownianReal.covariance_fun_eval (hB : IsPreBrownianReal B P) (s t : ℝ≥0) :
-    cov[fun ω ↦ B s ω, fun ω ↦ B t ω; P] = min s t := hB.covariance s t
+    cov[fun ω ↦ B s ω, fun ω ↦ B t ω; P] = min s t := by
+  wlog hst : s ≤ t generalizing s t
+  · rw [covariance_comm, this t s (le_of_not_ge hst), min_comm]
+  rw [hB.covariance_of_le s t hst, min_eq_left hst]
+
+lemma IsPreBrownianReal.covariance_eval (hB : IsPreBrownianReal B P) (s t : ℝ≥0) :
+    cov[B s, B t; P] = min s t := hB.covariance_fun_eval s t
 
 /-- A pre-Brownian motion has independent increments. -/
 lemma IsPreBrownianReal.hasIndepIncrements (hB : IsPreBrownianReal B P) :
@@ -75,11 +78,11 @@ lemma IsPreBrownianReal.neg (hB : IsPreBrownianReal B P) : IsPreBrownianReal (-B
     intro t
     change ∫ ω, -B t ω ∂P = 0
     rw [integral_neg, hB.integral_eval, neg_zero]
-  covariance := by
-    intro s t
-    change cov[fun ω ↦ -B s ω, fun ω ↦ -B t ω; P] = min s t
+  covariance_of_le := by
+    intro s t hst
+    change cov[fun ω ↦ -B s ω, fun ω ↦ -B t ω; P] = s
     simp only [covariance_fun_neg_left, covariance_fun_neg_right, neg_neg]
-    exact hB.covariance_fun_eval s t
+    exact hB.covariance_of_le s t hst
 
 /-- Brownian scaling for pre-Brownian motion. -/
 lemma IsPreBrownianReal.smul (hB : IsPreBrownianReal B P) {c : ℝ≥0} (hc : c ≠ 0) :
@@ -91,11 +94,11 @@ lemma IsPreBrownianReal.smul (hB : IsPreBrownianReal B P) {c : ℝ≥0} (hc : c 
   centered := by
     intro t
     rw [integral_const_mul, hB.integral_eval, mul_zero]
-  covariance := by
-    intro s t
-    rw [covariance_const_mul_left, covariance_const_mul_right, hB.covariance_eval, min_eq_left]
-    · simp [field]
-    · exact mul_le_mul_right hst c
+  covariance_of_le := by
+    intro s t hst
+    rw [covariance_const_mul_left, covariance_const_mul_right,
+      hB.covariance_of_le (c * s) (c * t) (mul_le_mul_right hst c)]
+    simp [field]
 
 /-- Deterministic time shifts preserve pre-Brownian motion. -/
 lemma IsPreBrownianReal.shift (hB : IsPreBrownianReal B P) (t₀ : ℝ≥0) :
@@ -105,8 +108,8 @@ lemma IsPreBrownianReal.shift (hB : IsPreBrownianReal B P) (t₀ : ℝ≥0) :
     intro t
     rw [integral_sub, hB.integral_eval, hB.integral_eval, sub_zero]
     all_goals exact (hB.isGaussianProcess.hasGaussianLaw_eval _).integrable
-  covariance := by
-    intro s t
+  covariance_of_le := by
+    intro s t hst
     have := hB.isGaussianProcess.isProbabilityMeasure
     rw [covariance_fun_sub_left, covariance_fun_sub_right, covariance_fun_sub_right,
       hB.covariance_eval, hB.covariance_eval, hB.covariance_eval, hB.covariance_eval, ← add_min,
@@ -146,8 +149,8 @@ lemma IsPreBrownianReal.inv (hB : IsPreBrownianReal B P) :
   centered := by
     intro t
     rw [integral_const_mul, hB.integral_eval, mul_zero]
-  covariance := by
-    intro s t
+  covariance_of_le := by
+    intro s t hst
     have := hB.isGaussianProcess.isProbabilityMeasure
     rw [covariance_const_mul_left, covariance_const_mul_right, hB.covariance_eval]
     obtain rfl | hs := eq_or_ne s 0
