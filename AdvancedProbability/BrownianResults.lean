@@ -12,8 +12,8 @@ universe u
 
 open ProbabilityTheory
 
-/-- Source 89, in the native Mathlib formulation: a standard real Brownian motion is a process with
-the canonical Brownian finite-dimensional laws and almost-surely continuous paths. -/
+/-- Source 89, in the native Gaussian-covariance formulation: a standard real Brownian motion is a
+centred Gaussian process with covariance `min s t` and almost-surely continuous paths. -/
 abbrev IsStandardBrownianReal {Ω : Type u} [MeasurableSpace Ω]
     (B : ℝ≥0 → Ω → ℝ) (P : Measure Ω) : Prop :=
   IsBrownianReal B P
@@ -24,18 +24,18 @@ theorem BrownianGaussianProcessTheorem {Ω : Type u} [MeasurableSpace Ω]
     IsGaussianProcess B P :=
   hB.isGaussianProcess
 
-/-- The one-time Brownian marginal is the centered Gaussian law of variance `t`. -/
-theorem BrownianHasLawEval {Ω : Type u} [MeasurableSpace Ω]
+/-- Every one-time Brownian marginal is Gaussian. -/
+theorem BrownianHasGaussianLawEval {Ω : Type u} [MeasurableSpace Ω]
     {B : ℝ≥0 → Ω → ℝ} {P : Measure Ω} (hB : IsBrownianReal B P) (t : ℝ≥0) :
-    HasLaw (B t) (gaussianReal 0 t) P :=
-  hB.hasLaw_eval t
+    HasGaussianLaw (B t) P :=
+  hB.isGaussianProcess.hasGaussianLaw_eval t
 
-/-- Brownian increments are centered Gaussian with variance equal to the elapsed time. -/
-theorem BrownianHasLawIncrement {Ω : Type u} [MeasurableSpace Ω]
+/-- Every Brownian increment is Gaussian. -/
+theorem BrownianIncrementHasGaussianLaw {Ω : Type u} [MeasurableSpace Ω]
     {B : ℝ≥0 → Ω → ℝ} {P : Measure Ω} (hB : IsBrownianReal B P)
     (s t : ℝ≥0) :
-    HasLaw (B s - B t) (gaussianReal 0 (nndist s.1 t.1)) P :=
-  hB.hasLaw_sub s t
+    HasGaussianLaw (B s - B t) P :=
+  hB.isGaussianProcess.hasGaussianLaw_sub
 
 /-- Brownian motion has independent increments. -/
 theorem BrownianHasIndependentIncrements {Ω : Type u} [MeasurableSpace Ω]
@@ -63,9 +63,7 @@ theorem BrownianTranslationInvariance {Ω : Type u} [MeasurableSpace Ω]
     IsBrownianReal (fun t ω ↦ B (t₀ + t) ω - B t₀ ω) P :=
   hB.shift t₀
 
-/-- Source 92(d), law-level time inversion: `t ↦ t B_{1/t}` has the Brownian
-finite-dimensional distributions.  Continuity at zero is the only additional pathwise assertion
-needed to upgrade this to `IsBrownianReal`. -/
+/-- Source 92(d): time inversion preserves the pre-Brownian Gaussian covariance data. -/
 theorem BrownianTimeInversionFiniteDimensional {Ω : Type u} [MeasurableSpace Ω]
     {B : ℝ≥0 → Ω → ℝ} {P : Measure Ω} (hB : IsBrownianReal B P) :
     IsPreBrownianReal (fun t ω ↦ t * B (1 / t) ω) P :=
