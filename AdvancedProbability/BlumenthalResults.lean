@@ -20,6 +20,6 @@ theorem BlumenthalZeroOneTheorem
     (germ : MeasurableSpace Ω) (hself : Indep germ germ μ) :
     ∀ A : Set Ω, MeasurableSet[germ] A → μ A = 0 ∨ μ A = 1 := by
   intro A hA
-  exact measure_eq_zero_or_one_of_indep_self hself hA
+  exact ProbabilityTheory.measure_eq_zero_or_one_of_indep_self hself hA
 
 end AdvancedProbability
