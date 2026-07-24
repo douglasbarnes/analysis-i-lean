@@ -142,41 +142,10 @@ theorem DoobUpcrossing {Ω : Type u} [m₀ : MeasurableSpace Ω]
       μ[fun ω ↦ (X N ω - a)⁺] := by
   simpa using hX.mul_integral_upcrossingsBefore_le_integral_pos_part a b N
 
-/-- Source 39: discrete maximal inequality. -/
-structure DiscreteMaximalInequality (threshold probability expectationValue : ℝ) where
-  threshold_pos : 0 < threshold
-  estimate : threshold * probability ≤ expectationValue
-
-/-- Source 40: discrete Doob `Lᵖ` inequality. -/
-structure DiscreteDoobLpInequality (p maxNorm terminalNorm : ℝ) where
-  p_gt_one : 1 < p
-  estimate : maxNorm ≤ p / (p - 1) * terminalNorm
-
-/-- Source 41: `Lᵖ` martingale convergence. -/
-structure DiscreteLpMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω) where
-  limit : Ω → ℝ
-  pointwise : ∀ ω, Tendsto (fun n ↦ X n ω) atTop (𝓝 (limit ω))
-  normConvergence : Prop
-
-/-- Source 42: equivalent characterizations of `L¹` convergence of a martingale. -/
-structure DiscreteL1MartingaleConvergence (uniformIntegrable hasTerminalRepresentation convergesL1 : Prop) where
-  ui_iff_terminal : uniformIntegrable ↔ hasTerminalRepresentation
-  terminal_iff_converges : hasTerminalRepresentation ↔ convergesL1
-
-/-- Source 43: optional stopping for uniformly integrable martingales and arbitrary stopping times. -/
-structure DiscreteUIOptionalStopping (conditionalIdentity expectationIdentity : Prop) where
-  conditional : conditionalIdentity
-  expectation : expectationIdentity
-
 /-- Source 44: a decreasing sequence of sigma-fields. -/
 structure BackwardFiltration (Ω : Type u) where
   sigma : ℕ → SigmaField Ω
   anti : ∀ m n : ℕ, m ≤ n → (sigma n).Subfield (sigma m)
-
-/-- Source 45: convergence of conditional expectations along a backwards filtration. -/
-structure BackwardMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω) where
-  limit : Ω → ℝ
-  converges : ∀ ω, Tendsto (fun n ↦ X n ω) atTop (𝓝 (limit ω))
 
 /-- Source 46: Kolmogorov's zero-one law. -/
 theorem KolmogorovZeroOne {Ω : Type u} [m₀ : MeasurableSpace Ω]
