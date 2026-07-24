@@ -111,8 +111,27 @@ structure BrownianDirichletSolution (boundaryContinuous harmonic continuousExten
   harmonicConclusion : harmonic
   continuityConclusion : continuousExtension
 
-/-- Source 112: recurrence in dimensions one and two and transience in dimensions at least three. -/
-def BrownianRecurrenceTransience (d : ℕ) : Prop := (d ≤ 2) ∨ (3 ≤ d)
+/-- A `d`-dimensional real process indexed by non-negative time. -/
+abbrev EuclideanBrownianProcess (d : ℕ) (Ω : Type u) := ℝ≥0 → Ω → (Fin d → ℝ)
+
+/-- A multidimensional path is recurrent at the origin when it returns to every neighbourhood of the
+origin at arbitrarily large times, almost surely. -/
+def BrownianRecurrent {Ω : Type u} [MeasurableSpace Ω] {d : ℕ}
+    (P : Measure Ω) (B : EuclideanBrownianProcess d Ω) : Prop :=
+  ∀ᵐ ω ∂P, ∀ ε : ℝ, 0 < ε → ∀ T : ℝ≥0,
+    ∃ t : ℝ≥0, T ≤ t ∧ ‖B t ω‖ < ε
+
+/-- A multidimensional path is transient when its distance from the origin tends to infinity, almost
+surely. -/
+def BrownianTransient {Ω : Type u} [MeasurableSpace Ω] {d : ℕ}
+    (P : Measure Ω) (B : EuclideanBrownianProcess d Ω) : Prop :=
+  ∀ᵐ ω ∂P, Tendsto (fun t ↦ ‖B t ω‖) atTop atTop
+
+/-- Source 112: Brownian motion is recurrent in dimensions one and two and transient in dimensions at
+least three. This is the actual probabilistic statement, rather than the former arithmetic tautology. -/
+def BrownianRecurrenceTransience {Ω : Type u} [MeasurableSpace Ω]
+    (d : ℕ) (P : Measure Ω) (B : EuclideanBrownianProcess d Ω) : Prop :=
+  (d ≤ 2 → BrownianRecurrent P B) ∧ (3 ≤ d → BrownianTransient P B)
 
 /-- Source 113: Donsker's invariance principle. -/
 structure DonskerInvariance (centered unitVariance weakConvergenceToBrownian : Prop) where
