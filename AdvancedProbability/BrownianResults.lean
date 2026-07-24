@@ -69,6 +69,21 @@ theorem BrownianTimeInversionFiniteDimensional {Ω : Type u} [MeasurableSpace Ω
     IsPreBrownianReal (fun t ω ↦ t * B (1 / t) ω) P :=
   hB.inv
 
+/-- Source 92: reflection, scaling, deterministic translation, and time inversion. -/
+theorem BrownianInvarianceTheorem {Ω : Type u} [MeasurableSpace Ω]
+    {B : ℝ≥0 → Ω → ℝ} {P : Measure Ω} (hB : IsBrownianReal B P) :
+    IsBrownianReal (-B) P ∧
+      (∀ c : ℝ≥0, c ≠ 0 →
+        IsBrownianReal (fun t ω ↦ (√c)⁻¹ * B (c * t) ω) P) ∧
+      (∀ t₀ : ℝ≥0,
+        IsBrownianReal (fun t ω ↦ B (t₀ + t) ω - B t₀ ω) P) ∧
+      IsPreBrownianReal (fun t ω ↦ t * B (1 / t) ω) P := by
+  refine ⟨hB.neg, ?_, ?_, hB.inv⟩
+  · intro c hc
+    exact hB.smul hc
+  · intro t₀
+    exact hB.shift t₀
+
 /-- Source 93 at deterministic time for the natural past: future increments form a pre-Brownian
 motion independent of all Brownian coordinates up to the shift time. -/
 theorem BrownianFutureIndependentNaturalPast {Ω : Type u} [MeasurableSpace Ω]
