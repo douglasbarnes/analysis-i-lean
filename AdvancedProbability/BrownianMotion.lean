@@ -113,15 +113,13 @@ structure ItoMartingale (twiceDifferentiable boundedDerivatives martingale : Pro
   bounded : boundedDerivatives
   conclusion : martingale
 
-/-- Source 107: the maximum principle for harmonic functions. -/
-structure MaximumPrinciple (harmonic continuous maximumOnBoundary : Prop) where
-  harmonicHypothesis : harmonic
-  continuousHypothesis : continuous
-  conclusion : maximumOnBoundary
-
-/-- Source 108: uniqueness for the Dirichlet problem. -/
-structure DirichletUniqueness (sameBoundaryData sameSolution : Prop) where
-  implication : sameBoundaryData → sameSolution
+/-- Source 107: the weak maximum-principle property for a domain and a supplied Laplacian.
+Every harmonic function continuous on the closure and bounded above by `c` on the frontier is
+bounded above by `c` throughout the domain. -/
+def MaximumPrinciple {E : Type u} [TopologicalSpace E]
+    (laplacian : (E → ℝ) → E → ℝ) (D : Set E) : Prop :=
+  ∀ (u : E → ℝ), IsHarmonic laplacian D u → ContinuousOn u (closure D) →
+    ∀ c : ℝ, (∀ x, x ∈ frontier D → u x ≤ c) → ∀ x, x ∈ D → u x ≤ c
 
 /-- Source 109: the Poincaré exterior-cone condition. -/
 def PoincareConeCondition {E : Type u} [TopologicalSpace E]
