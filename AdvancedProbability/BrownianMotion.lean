@@ -126,11 +126,4 @@ structure SkorokhodEmbedding (centered finiteVariance embeddedRandomWalk : Prop)
   varianceHypothesis : finiteVariance
   conclusion : embeddedRandomWalk
 
-/-- Source 115: two-sided Brownian exit probability and mean exit time. -/
-structure TwoSidedHittingFormula (x y probability expectedTime : ℝ) where
-  x_pos : 0 < x
-  y_pos : 0 < y
-  probabilityFormula : probability = y / (x + y)
-  expectationFormula : expectedTime = x * y
-
 end AdvancedProbability
