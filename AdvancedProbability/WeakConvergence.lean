@@ -74,12 +74,6 @@ theorem LevyConvergence (μs : ℕ → ProbabilityMeasure ℝ) (μ : Probability
   simpa [characteristicFunction] using
     (ProbabilityMeasure.tendsto_iff_tendsto_charFun (μ := μs) (μ₀ := μ))
 
-/-- Source 87: Lévy's continuity theorem. -/
-structure LevyContinuity (pointwiseLimit continuousAtZero convergesInDistribution : Prop) where
-  limitHypothesis : pointwiseLimit
-  continuityHypothesis : continuousAtZero
-  conclusion : convergesInDistribution
-
 /-- Source 88: the standard characteristic-function tail bound. -/
 theorem CharacteristicTailBound (μ : Measure ℝ) [IsProbabilityMeasure μ]
     {r : ℝ} (hr : 0 < r) :
