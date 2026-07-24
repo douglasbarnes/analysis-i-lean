@@ -101,7 +101,7 @@ namespace AdvancedProbability.DeclarationAudit
 #check AdvancedProbability.BrownianSamplePathProperties
 #check AdvancedProbability.BrownianStrongMarkov
 #check AdvancedProbability.ReflectionPrinciple
-#check AdvancedProbability.ReflectionHittingCorollary
+#check AdvancedProbability.ReflectionHittingIdentityTheorem
 #check AdvancedProbability.RunningMaximumLaw
 #check AdvancedProbability.BrownianFirstPassage
 #check AdvancedProbability.Domain
