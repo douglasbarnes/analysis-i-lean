@@ -11,6 +11,7 @@ import AdvancedProbability.DiscreteResults
 import AdvancedProbability.LpMartingaleResults
 import AdvancedProbability.LpMartingaleConvergenceResults
 import AdvancedProbability.LpMartingaleEquivalenceResults
+import AdvancedProbability.UIOptionalStoppingResults
 import AdvancedProbability.ReverseMartingaleResults
 import AdvancedProbability.StoppingResults
 import AdvancedProbability.MarkovResults
