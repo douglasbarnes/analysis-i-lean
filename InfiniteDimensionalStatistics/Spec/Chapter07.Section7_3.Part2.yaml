@@ -1,0 +1,276 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: '7.3'
+fragment_part: 2
+inventory:
+- id: ex7.3.1
+  kind: exercise
+  book:
+    number: 7.3.1
+    pages:
+    - 602
+    - 603
+    section: '7.3'
+    equations: []
+  title: Conditional-distribution derivation of Bayes' formula
+  statement: 'In the dominated joint model (7.76), prove the conditional-law identities
+
+    (7.77)–(7.79): X|f has density p_f dμ, and f|X=x has posterior density
+
+    proportional to p_f(x) with respect to Π. Derive the i.i.d. posterior
+
+    formulas (7.80)–(7.81).'
+  hypotheses:
+    explicit:
+    - The jointly measurable dominated Bayesian model (7.76).
+    implicit:
+    - Existence of the stated regular conditional distributions requires the measurable-space
+      hypotheses used by the book.
+  quantifier_order:
+  - For marginal-almost every observation x and every measurable parameter set B.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.bayesianJointModel
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Disintegration/conditional kernel calculation using the posterior kernel
+      already available in mathlib.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - type: source_verification
+    page: 603
+    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
+      text layer does not expose the final §7.3 exercise block cleanly; visually verify
+      exact wording and page before implementation.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.def.iidPosterior
+  - ch7.prop.posteriorConditionalFormulas
+- id: ex7.3.2
+  kind: exercise
+  book:
+    number: 7.3.2
+    pages:
+    - 602
+    - 603
+    section: '7.3'
+    equations: []
+  title: Proof of the Gaussian white-noise contraction theorem
+  statement: 'Prove Theorem 7.3.5 by adapting the proof of Theorem 7.3.1 to the
+
+    white-noise likelihood (7.85), replacing Lemma 7.3.2 by Lemma 7.3.4 and
+
+    using the white-noise tests assumed in the theorem.'
+  hypotheses:
+    explicit:
+    - All hypotheses of Theorem 7.3.5.
+    implicit:
+    - The denominator event and posterior numerator are measurable under the chosen
+      white-noise sample-space realisation.
+  quantifier_order:
+  - For every sufficiently large fixed M, establish contraction as n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.1
+    - ch7.lemma.7.3.4
+    - ch7.def.whiteNoisePosterior
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Port the abstract posterior-contraction proof from product likelihoods
+      to Cameron–Martin likelihood ratios.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - type: source_verification
+    page: 603
+    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
+      text layer does not expose the final §7.3 exercise block cleanly; visually verify
+      exact wording and page before implementation.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  used_by:
+  - ch7.thm.7.3.5
+- id: ex7.3.3
+  kind: exercise
+  book:
+    number: 7.3.3
+    pages:
+    - 602
+    - 603
+    section: '7.3'
+    equations: []
+  title: Distances and information bounds for normalised exponential densities
+  statement: 'Prove all parts of Lemma 7.3.8 for p_v=e^v/∫e^v and p_w=e^w/∫e^w:
+
+    control Hellinger distance, Kullback–Leibler divergence, and the second
+
+    log-likelihood moment by explicit functions of ||v-w||∞.'
+  hypotheses:
+    explicit:
+    - v,w are measurable and the normalising integrals are finite and positive.
+    implicit:
+    - The exact constants and exponents are those displayed in Lemma 7.3.8 and require
+      visual confirmation.
+  quantifier_order:
+  - For every admissible pair v,w.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.normalisedExponentialDensity
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Bounds on log normalisers and exponential ratios, followed by pointwise
+      Hellinger/KL estimates and integration.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review:
+  - type: source_verification
+    page: 603
+    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
+      text layer does not expose the final §7.3 exercise block cleanly; visually verify
+      exact wording and page before implementation.
+  - type: constant_verification
+    page: 581
+    detail: Verify exact constants and the final power/exponential factor in all three
+      parts of Lemma 7.3.8 against the page image.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.lemma.7.3.8
+  - ch7.thm.7.3.9
+- id: ex7.3.4
+  kind: exercise
+  book:
+    number: 7.3.4
+    pages:
+    - 602
+    - 603
+    section: '7.3'
+    equations: []
+  title: Gaussian conjugate posterior calculation
+  statement: 'Derive the coordinatewise Gaussian posterior formula (7.115) and the
+
+    random-series representation (7.116) from the Gaussian product prior
+
+    (7.114) and sequence observation model (7.109), by completing the square
+
+    independently in each coordinate.'
+  hypotheses:
+    explicit:
+    - Independent Gaussian prior coefficients.
+    - Independent Gaussian observation noise.
+    - The coefficient variances are positive.
+    implicit:
+    - The infinite product posterior defines a Borel probability law on the intended
+      function/sequence space.
+  quantifier_order:
+  - For every coordinate; then identify the infinite product law.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.gaussianConjugatePrior
+    - ch7.def.whiteNoiseSequenceModel
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: One-dimensional normal-normal conjugacy plus construction/equality of
+      countable product probability measures.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review:
+  - type: source_verification
+    page: 603
+    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
+      text layer does not expose the final §7.3 exercise block cleanly; visually verify
+      exact wording and page before implementation.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.prop.gaussianPosteriorFormula
+  - ch7.thm.7.3.16
