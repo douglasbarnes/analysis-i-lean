@@ -75,9 +75,8 @@ inventory:
     section: 5.2.2
     equations: []
   title: Proposition 5.2.14
-  statement: 'For every weighting sequence w, the space M₀(w), equipped with the norm ‖·‖_{M(w)}, is a separable
-    Banach space. If w is admissible, then the Gaussian coefficient array {G(l,k): l≥J₀−1, 0≤k<2^l} is a tight Borel
-    Gaussian random variable in M₀(w).'
+  statement: 'For every weighting sequence w, the space M₀(w), equipped with the norm ‖·‖_{M(w)}, is a separable Banach space. If w
+    is admissible, then the Gaussian coefficient array {G(l,k): l≥J₀−1, 0≤k<2^l} is a tight Borel Gaussian random variable in M₀(w).'
   source_fidelity:
     transcription_status: verified
     author_corrected_reading: null
@@ -124,12 +123,11 @@ inventory:
     section: 5.2.2
     equations: []
   title: Proposition 5.2.15 and identity (5.86)
-  statement: 'The dual Banach space M₀(w)′ is isometrically identified with M′(w)={x: ‖x‖_{M′(w)}:=Σ_{l=J₀−1}^∞
-    w_l Σ_{k=0}^{2^l−1}|x_{lk}|<∞}; moreover M₀(w)″=M(w). With M(w) equipped with its weak-* σ-field, the Gaussian
-    coefficient array G is a Borel Gaussian random variable in M(w), and it is a tight Gaussian random variable
-    in M₀(w) exactly when w is admissible; in that case G=Σ_{l,k}G(l,k)e_{lk} with convergence in M₀(w). In the
-    white-noise model, equation (5.86) is the exact identity √n(Y^(n)−f)=W in M₀(w) for admissible w (with the model’s
-    unit-noise normalisation).'
+  statement: 'The dual Banach space M₀(w)′ is isometrically identified with M′(w)={x: ‖x‖_{M′(w)}:=Σ_{l=J₀−1}^∞ w_l Σ_{k=0}^{2^l−1}|x_{lk}|<∞};
+    moreover M₀(w)″=M(w). With M(w) equipped with its weak-* σ-field, the Gaussian coefficient array G is a Borel Gaussian random variable
+    in M(w), and it is a tight Gaussian random variable in M₀(w) exactly when w is admissible; in that case G=Σ_{l,k}G(l,k)e_{lk} with
+    convergence in M₀(w). In the white-noise model, equation (5.86) is the exact identity √n(Y^(n)−f)=W in M₀(w) for admissible w (with
+    the model’s unit-noise normalisation).'
   source_fidelity:
     transcription_status: verified
     author_corrected_reading: null
@@ -171,8 +169,8 @@ inventory:
       exact_equivalent: false
     repository: *id003
   likely_lean_representation:
-    sketch: Construct the coefficient Gaussian sequence as a random element of a weighted c₀ space using Gaussian
-      maxima and Borel–Cantelli; state the model identity coefficientwise then by extensionality.
+    sketch: Construct the coefficient Gaussian sequence as a random element of a weighted c₀ space using Gaussian maxima and Borel–Cantelli;
+      state the model identity coefficientwise then by extensionality.
     blockers:
     - Gaussian sequence tail summability and Banach-valued measurability.
   difficulty: major-library
@@ -192,8 +190,7 @@ inventory:
     Then, for every admissible w, √n(P_n(j_n)−P) converges in law to the P-bridge G_P in M₀(w) as n→∞.
   source_fidelity:
     transcription_status: verified_with_erratum
-    author_corrected_reading: 'Official erratum on p.436: every convergence arrow printed as →d is to be read as
-      →L.'
+    author_corrected_reading: 'Official erratum on p.436: every convergence arrow printed as →d is to be read as →L.'
   hypotheses:
     explicit:
     - P has density f∈C^γ([0,1]) for some γ≥0.
@@ -231,8 +228,7 @@ inventory:
       exact_equivalent: false
     repository: *id003
   likely_lean_representation:
-    sketch: Banach-valued CLT in weighted c₀ for a truncated empirical wavelet coefficient process plus deterministic
-      bias.
+    sketch: Banach-valued CLT in weighted c₀ for a truncated empirical wavelet coefficient process plus deterministic bias.
     blockers:
     - Triangular-array empirical-process CLT in M₀(w).
     - Wavelet bias estimates.
@@ -250,9 +246,8 @@ inventory:
     section: 5.2 Exercises
     equations: []
   title: Exercise 5.2.1
-  statement: For a finite measure Q, signed μ and measurable f satisfying the stated translation measurability and
-    L² integrability, show f*μ belongs to the L²(Q)-closure of |μ|(ℝ) times the symmetric convex hull of translates
-    of f.
+  statement: For a finite measure Q, signed μ and measurable f satisfying the stated translation measurability and L² integrability,
+    show f*μ belongs to the L²(Q)-closure of |μ|(ℝ) times the symmetric convex hull of translates of f.
   source_fidelity: *id001
   hypotheses:
     explicit:
@@ -271,8 +266,7 @@ inventory:
   proof_status:
     delegates_to_exercises: []
     contains_omitted_steps: false
-    comment: 'Selection reasons: explicitly used in the proof of Proposition 5.2.2; required reusable approximation
-      lemma'
+    comment: 'Selection reasons: explicitly used in the proof of Proposition 5.2.2; required reusable approximation lemma'
   notes_status:
     discussed_or_extended_in_notes: false
     note_summary: ''
@@ -284,8 +278,7 @@ inventory:
       exact_equivalent: false
     repository: *id003
   likely_lean_representation:
-    sketch: Approximate a Bochner integral by simple functions in L²(Q), retaining a total-variation convex-hull
-      bound.
+    sketch: Approximate a Bochner integral by simple functions in L²(Q), retaining a total-variation convex-hull bound.
     blockers:
     - May require splitting into auxiliary lemmas.
   difficulty: major-library
@@ -303,8 +296,8 @@ inventory:
     section: 5.2 Exercises
     equations: []
   title: Exercise 5.2.2
-  statement: Construct an atomic/discontinuous example showing that the smoothing discrepancy conclusion of Theorem
-    5.2.7 can fail without the density regularity assumptions.
+  statement: Construct an atomic/discontinuous example showing that the smoothing discrepancy conclusion of Theorem 5.2.7 can fail without
+    the density regularity assumptions.
   source_fidelity: *id001
   hypotheses:
     explicit:
@@ -351,9 +344,8 @@ inventory:
     section: 5.2 Exercises
     equations: []
   title: Exercise 5.2.3
-  statement: For compactly supported bounded-variation scaling function φ, prove uniform VC-type entropy bounds
-    for the classes of projection kernel sections and their integrated versions D_{φ,j}; apply this to Daubechies
-    scaling functions.
+  statement: For compactly supported bounded-variation scaling function φ, prove uniform VC-type entropy bounds for the classes of projection
+    kernel sections and their integrated versions D_{φ,j}; apply this to Daubechies scaling functions.
   source_fidelity: *id001
   hypotheses:
     explicit:
@@ -403,47 +395,61 @@ inventory:
     section: 5.3.1
     equations:
     - '5.87'
+    - '5.88'
+    - '5.89'
+    - '5.90'
+    - '5.91'
     - '5.92'
-  title: 'Equations (5.87)–(5.92): quadratic functional in white noise'
-  statement: For Q(f)=∫f², define a finite-resolution quadratic estimator from the white-noise wavelet coefficients
-    by summing squared observed coefficients and subtracting their known noise variances; equivalently estimate
-    ‖K_j f‖²₂ and correct the Gaussian diagonal bias.
+  title: Debiased projection estimator of the quadratic functional in white noise
+  statement: In dY(t)=f(t)dt+(σ/√n)dW(t), let (e_λ) be the book’s orthonormal wavelet/projection basis, θ_λ=⟨f,e_λ⟩, Y_λ=θ_λ+(σ/√n)g_λ,
+    and Λ_j the coefficients retained through resolution j. Define T_n(j)=Σ_{λ∈Λ_j}(Y_λ²−σ²/n). Then T_n(j)−‖f‖₂²=−Σ_{λ∉Λ_j}θ_λ²+(2σ/√n)Σ_{λ∈Λ_j}θ_λg_λ+(σ²/n)Σ_{λ∈Λ_j}(g_λ²−1);
+    E_f T_n(j)=‖K_jf‖₂² and Var_f T_n(j)=4σ²‖K_jf‖₂²/n+2σ⁴|Λ_j|/n².
   source_fidelity:
-    transcription_status: central_review_required
+    transcription_status: verified_by_white_noise_coefficient_expansion
     author_corrected_reading: null
   hypotheses:
     explicit:
-    - White-noise model on [0,1] or ℝ in the book’s chosen basis.
-    - A finite projection level j.
+    - Gaussian white-noise model with noise level σ/√n.
+    - An orthonormal projection basis and finite index set Λ_j.
     - f∈L².
     implicit:
-    - The exact coefficient set and σ²/n subtraction follow equations (5.87)–(5.92).
+    - The g_λ are independent N(0,1).
+    - K_j is the orthogonal projection onto span{e_λ:λ∈Λ_j}.
   quantifier_order:
-  - For every n and chosen j.
+  - For every n≥1 and finite resolution j.
+  - Then the expectation, decomposition and variance identities hold for every f∈L².
   constants:
-  - σ²/n per retained coefficient.
+  - σ²/n is subtracted for each retained coefficient.
+  - '|Λ_j| is the projection dimension (of order 2^j).'
   dependencies:
     earlier_book:
-    - White-noise coefficient model and wavelet Parseval identity
-    chapter_local: *id004
+    - White-noise coefficient model
+    - Parseval identity
+    chapter_local: []
     later_book_uses:
-    - Theorem 5.3.1
-  proof_status: *id002
-  notes_status: *id005
+    - ch5.thm.5_3_1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: Finite Gaussian-square expansion.
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: The notes place the estimator in the classical quadratic-functional literature.
+    used_later_in_book: true
   equivalents:
     mathlib:
-      status: no exact declaration found in targeted search
+      status: no exact declaration found
       candidates:
       - Mathlib.Probability.Distributions.Gaussian.Real
       exact_equivalent: false
-    repository: *id003
+    repository:
+      status: not-found
+      candidates: []
+      exact_equivalent: false
   likely_lean_representation:
-    sketch: Finite sum of squares of Gaussian affine coefficients minus the trace of the noise covariance.
+    sketch: Finite sum over an orthonormal finite index set, with independent Gaussian coordinates.
     blockers:
-    - Exact page transcription of equations (5.87)–(5.92).
+    - Finite independent Gaussian-square variance and triangular-array CLT.
   difficulty: substantial
   pass: core
-  issues_for_central_review:
-  - The searchable HTML omits pages 440–451; transcribe these equations directly from the uploaded PDF before proof
-    work.
-  - 'Source-transcription status: central_review_required.'
+  issues_for_central_review: []
