@@ -1,0 +1,464 @@
+inventory:
+- id: 6.1.1
+  kind: proposition
+  book:
+    number: Proposition 6.1.1
+    pages:
+    - 470
+    section: 6.1.1
+    equations: []
+  title: Gaussian White Noise rn Deriv zero
+  statement: 'Let \(f\in L^2([0,1])\), \(\sigma>0\), and \(n\in\mathbb N\). Let
+
+    \(P^Y_{f,n,\sigma}\) be the law on \(C([0,1])\) of
+
+    \(Y_t=\int_0^t f(s)\,ds+(\sigma/\sqrt n)W_t\). Then
+
+    \(P^Y_{f,n,\sigma}\ll P^Y_{0,n,\sigma}\), and for \(Y\sim P^Y_{0,n,\sigma}\),
+
+    \[
+
+    \frac{dP^Y_{f,n,\sigma}}{dP^Y_{0,n,\sigma}}(Y)
+
+    =\exp\left\{\frac n{\sigma^2}Y^{(n)}_0(f)
+
+    -\frac n{2\sigma^2}\|f\|_2^2\right\}.
+
+    \]'
+  hypotheses:
+    explicit:
+    - f is a real L²-equivalence class on [0,1].
+    - σ is strictly positive and n is a positive sample-size index.
+    - The path-space Borel σ-field and the Paley-Wiener/isonormal functional Y₀⁽ⁿ⁾(f) are those fixed earlier.
+    implicit: []
+  quantifier_order:
+  - ∀ f∈L²([0,1]), ∀ σ>0, ∀ n∈ℕ, absolute continuity holds and the displayed density identity holds P₀-a.s.
+  constants:
+  - ∀ f∈L²([0,1]), ∀ σ>0, ∀ n∈ℕ, absolute continuity holds and the displayed density identity holds P₀-a.s.
+  dependencies:
+    earlier_book:
+    - Example 2.6.7 (Brownian-motion RKHS)
+    - Theorem 2.6.13 (Cameron-Martin)
+    chapter_local: []
+    later_book_uses:
+    - Used in the lower-bound proofs of Theorems 6.2.7, 6.2.9 and 6.2.11.
+    - Provides the Gaussian likelihood formula used throughout Chapters 7 and 8.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Define the path-law as a translated scaled Wiener measure on C([0,1]); state absolute continuity and
+      identify `Measure.rnDeriv` almost everywhere. The stochastic linear functional should be an isometry from
+      L² into Gaussian random variables.
+    blockers: &id001 []
+    reusable_primitives:
+    - Measure.absolutelyContinuous
+    - Measure.rnDeriv
+    - Gaussian measure translation
+    - Brownian-motion RKHS
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.1.2
+  kind: operative_remark
+  book:
+    number: Remark 6.1.2
+    pages:
+    - 470
+    section: 6.1.1
+    equations: []
+  title: Gaussian White Noise likelihood stochastic Integral
+  statement: 'The likelihood in Proposition 6.1.1 can equivalently be written
+
+    \[
+
+    \exp\left\{\frac{\sqrt n}{\sigma}\int_0^1 f(t)\,dW_t
+
+    -\frac n{2\sigma^2}\|f\|_2^2\right\}.
+
+    \]'
+  hypotheses:
+    explicit:
+    - The stochastic integral is the isonormal integral of f against the driving Brownian motion under the null
+      law.
+    implicit: []
+  quantifier_order:
+  - Under the hypotheses of Proposition 6.1.1, the two displayed random variables agree P₀-a.s.
+  constants:
+  - Under the hypotheses of Proposition 6.1.1, the two displayed random variables agree P₀-a.s.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.1.1
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: An a.e. rewriting lemma using the identification of Y₀⁽ⁿ⁾(f) with (σ/√n)∫f dW.
+    blockers: &id002 []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.1.3
+  kind: operative_remark
+  book:
+    number: Remark 6.1.3
+    pages:
+    - 470
+    - 471
+    section: 6.1.1
+    equations: []
+  title: Gaussian White Noise rn Deriv
+  statement: 'For \(f,g\in L^2([0,1])\), the chain rule for Radon-Nikodym derivatives gives
+
+    the likelihood of \(P^Y_{f,n,\sigma}\) relative to \(P^Y_{g,n,\sigma}\); it is the
+
+    formula of Proposition 6.1.1 applied to the shift \(f-g\), with the centred
+
+    observation under \(g\). Equivalently,
+
+    \[
+
+    \log\frac{dP_f}{dP_g}(Y)
+
+    =\frac n{\sigma^2}Y_g^{(n)}(f-g)-\frac n{2\sigma^2}\|f-g\|_2^2.
+
+    \]'
+  hypotheses:
+    explicit:
+    - f,g∈L²([0,1]); σ>0; n∈ℕ.
+    - A common version of the Radon-Nikodym derivatives is chosen.
+    implicit: []
+  quantifier_order:
+  - ∀ f,g,σ,n, the identity holds P_g-a.s.
+  constants:
+  - ∀ f,g,σ,n, the identity holds P_g-a.s.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.1.1
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A translated version of 6.1.1 plus the Radon-Nikodym chain rule.
+    blockers: &id003 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.1.4
+  kind: proposition
+  book:
+    number: Proposition 6.1.4
+    pages:
+    - 471
+    section: 6.1.1
+    equations: []
+  title: Gaussian Sequence rn Deriv cylindrical
+  statement: 'Let \(f=(f_k)_{k\in\mathbb Z}\in\ell^2(\mathbb Z)\) and
+
+    \(Y_k=f_k+\sigma g_k/\sqrt n\), where \(g_k\) are i.i.d. \(N(0,1)\).
+
+    On \((\mathbb R^{\mathbb Z},\mathcal C)\), the product law
+
+    \(P^Y_{f,n,\sigma}\) is absolutely continuous with respect to
+
+    \(P^Y_{0,n,\sigma}\), and
+
+    \[
+
+    \frac{dP^Y_{f,n,\sigma}}{dP^Y_{0,n,\sigma}}(Y)
+
+    =\exp\left\{\frac n{\sigma^2}\sum_{k\in\mathbb Z}f_kY_k
+
+    -\frac n{2\sigma^2}\|f\|_{\ell^2}^2\right\}
+
+    \]
+
+    for \(Y\sim P^Y_{0,n,\sigma}\).'
+  hypotheses:
+    explicit:
+    - f∈ℓ²(Z), σ>0, n∈ℕ.
+    - The infinite sum is the L²(P₀)-limit/isonormal pairing; it is not asserted to converge absolutely pointwise.
+    - The ambient σ-field is the cylindrical/product σ-field.
+    implicit: []
+  quantifier_order:
+  - ∀ f∈ℓ², ∀σ>0, ∀n, the absolute-continuity and P₀-a.s. density identity hold.
+  constants:
+  - ∀ f∈ℓ², ∀σ>0, ∀n, the absolute-continuity and P₀-a.s. density identity hold.
+  dependencies:
+    earlier_book:
+    - Proposition 2.6.16 (Kakutani theorem for Gaussian products)
+    chapter_local:
+    - 6.1.1
+    later_book_uses:
+    - Used as the coordinate likelihood in Gaussian sequence lower bounds.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A countable product-measure theorem with an L²-convergent log-likelihood series.
+    blockers: &id004 []
+    reusable_primitives:
+    - countable product measures
+    - Gaussian product equivalence
+    - ℓ² summability
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.1.5
+  kind: proposition
+  book:
+    number: Proposition 6.1.5
+    pages:
+    - 472
+    section: 6.1.1
+    equations: []
+  title: Gaussian Sequence rn Deriv weighted L2
+  statement: 'Let \(f=(f_k)\in\ell^2(\mathbb Z)\), and let \(w\) be a positive,
+
+    monotone decreasing sequence with \(w\in\ell^2\). Regard
+
+    \(Y_k=f_k+\sigma g_k/\sqrt n\) as an \(\ell^2(w)\)-valued Gaussian random
+
+    variable. Its Borel law \(P^Y_{f,n,\sigma}\) is absolutely continuous with
+
+    respect to \(P^Y_{0,n,\sigma}\), with the same likelihood formula as in
+
+    Proposition 6.1.4.'
+  hypotheses:
+    explicit:
+    - f∈ℓ²(Z); σ>0; n∈ℕ.
+    - w_k>0, w is monotone decreasing in the book's indexing convention, and w∈ℓ².
+    - The weighted Hilbert-space construction is the one from Example 2.6.14.
+    implicit: []
+  quantifier_order:
+  - ∀ admissible w, ∀f,σ,n, the Borel Gaussian laws satisfy the stated absolute continuity and density identity.
+  constants:
+  - ∀ admissible w, ∀f,σ,n, the Borel Gaussian laws satisfy the stated absolute continuity and density identity.
+  dependencies:
+    earlier_book:
+    - Example 2.6.14 (Gaussian sequence in weighted ℓ²)
+    - Theorem 2.6.13 (Cameron-Martin)
+    chapter_local:
+    - 6.1.4
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A Cameron-Martin theorem for the Gaussian Borel measure on a weighted ℓ² Hilbert space.
+    blockers: &id005 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005
+- id: 6.1.sample_split
+  kind: operative_example
+  book:
+    number: Sample-splitting construction around (6.10)
+    pages:
+    - 473
+    section: 6.1.1
+    equations: []
+  title: Gaussian Experiment sample Split
+  statement: 'Given the Gaussian sequence observation \(Y_k=f_k+\sigma g_k/\sqrt n\),
+
+    introduce an independent i.i.d. standard-normal sequence \(\tilde g_k\) and set
+
+    \[
+
+    Y''''_k=Y_k+\frac{\sigma}{\sqrt n}\tilde g_k,\qquad
+
+    Y''''''''_k=Y_k-\frac{\sigma}{\sqrt n}\tilde g_k.
+
+    \]
+
+    Then \(Y''''\) and \(Y''''''''\) are independent Gaussian sequence observations with
+
+    common mean f and coordinate variance \(2\sigma^2/n\). The same construction
+
+    produces two independent white-noise experiments.'
+  hypotheses:
+    explicit:
+    - The auxiliary Gaussian sequence is independent of the original observation.
+    - Joint Gaussianity is used to infer independence from zero covariance.
+    implicit: []
+  quantifier_order:
+  - For every f,σ,n, after adjoining independent noise, the two transformed observations are independent and have
+    the stated laws.
+  constants:
+  - For every f,σ,n, after adjoining independent noise, the two transformed observations are independent and have
+    the stated laws.
+  dependencies:
+    earlier_book:
+    - Gaussian linear transformations and independence
+    chapter_local:
+    - 6.1.4
+    - 6.1.5
+    later_book_uses:
+    - Used in Theorem 6.4.8 and Chapter 8 adaptive confidence-set constructions.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Construct a product probability space and prove the laws and independence of two linear Gaussian transforms.
+    blockers: &id006
+    - type: wording
+      detail: The prose says that σ is increased by a factor of 2, whereas the construction doubles the variance
+        and multiplies the noise standard deviation by √2.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
+- id: 6.1.6
+  kind: definition
+  book:
+    number: Definition 6.1.6
+    pages:
+    - 474
+    section: 6.1.2
+    equations: []
+  title: Kullback Leibler
+  statement: 'For probability measures P,Q on a measurable space,
+
+    \[
+
+    K(P,Q)=
+
+    \begin{cases}
+
+    \int \log(dP/dQ)\,dP,&P\ll Q,\\
+
+    +\infty,&\text{otherwise},
+
+    \end{cases}
+
+    \]
+
+    is the Kullback-Leibler distance/divergence.'
+  hypotheses:
+    explicit:
+    - P and Q are probability measures on the same measurable space.
+    - The integral is an extended-real integral; its well-definedness uses the standard entropy convention.
+    implicit: []
+  quantifier_order:
+  - ∀ probability measures P,Q, define K(P,Q) by the displayed case distinction.
+  constants:
+  - ∀ probability measures P,Q, define K(P,Q) by the displayed case distinction.
+  dependencies:
+    earlier_book:
+    - Definition 2.5.1 (entropy)
+    chapter_local: []
+    later_book_uses:
+    - Used throughout Sections 6.2 and 6.3 and in Chapter 7.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: An `EReal`-valued definition using `Measure.rnDeriv`; special care is needed for the logarithm at zero
+      and for positive/negative-part integrability.
+    blockers: &id007
+    - type: typographical
+      detail: The cross-reference is printed as “Definifion 2.5.1”.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id007
