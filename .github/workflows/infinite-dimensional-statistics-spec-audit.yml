@@ -17,6 +17,10 @@ on:
       - '.github/workflows/infinite-dimensional-statistics-spec-audit.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   chapter-package-audit:
     runs-on: ubuntu-latest
@@ -40,15 +44,40 @@ jobs:
           cp InfiniteDimensionalStatistics/BookManifest.yaml "$root/InfiniteDimensionalStatistics/"
           cp InfiniteDimensionalStatistics/Spec/Chapter${{ matrix.chapter }}* "$root/InfiniteDimensionalStatistics/Spec/"
       - name: Run canonical migration audit
+        id: audit
+        continue-on-error: true
         shell: bash
         run: |
-          set -euo pipefail
+          set +e
           root="$RUNNER_TEMP/ids-chapter-${{ matrix.chapter }}"
           cd "$root"
           python scripts/validate_ids_specs.py \
             --allow-missing \
             --allow-source-blockers \
-            --allow-incomplete-coverage
+            --allow-incomplete-coverage > audit.log 2>&1
+          status=$?
+          cat audit.log
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+      - name: Post diagnostic to pull request
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          root="$RUNNER_TEMP/ids-chapter-${{ matrix.chapter }}"
+          {
+            echo "### Chapter ${{ matrix.chapter }} package audit"
+            echo
+            echo "Exit status: \`${{ steps.audit.outputs.status }}\`"
+            echo
+            echo '```text'
+            cat "$root/audit.log"
+            echo '```'
+          } > "$root/comment.md"
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file "$root/comment.md"
+      - name: Enforce audit result
+        if: steps.audit.outputs.status != '0'
+        run: exit 1
 
   strict-gate-status:
     runs-on: ubuntu-latest
