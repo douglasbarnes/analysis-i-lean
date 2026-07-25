@@ -1,7 +1,7 @@
 schema_version: '1.0'
 project:
   name: InfiniteDimensionalStatistics
-  phase: P0_recovery
+  phase: P0_governance_complete_build_pending
   p2_blocked: true
   source_fidelity_policy: >-
     Preserve the printed mathematical statement. Record official corrigenda and
@@ -41,56 +41,54 @@ chapters:
     printed_pages: {start: 1, end: 14}
     specification: InfiniteDimensionalStatistics/Spec/Chapter01.yaml
     audit_step: P1.1
-    status: missing_on_main
+    status: artifact_available_not_ingested
   - number: 2
     title: Gaussian Processes
     printed_pages: {start: 15, end: 108}
     specification: InfiniteDimensionalStatistics/Spec/Chapter02.yaml
     audit_step: P1.2
-    status: needs_revision
-    blockers:
-      - Restore source-based core/starred semantics.
-      - Add declaration-specific equivalence audit fields.
-      - Transcribe unresolved event-based process-separability statement.
-      - Convert to the canonical readable schema.
+    status: repaired_pending_full_eight_chapter_validation
+    repair_record:
+      - Source-based pass semantics restored; Chapter 2 has zero starred entries.
+      - Definition 2.1.2 transcribed as the countable-separant closure condition.
+      - Declaration-specific mathlib and repository equivalence audits added.
+      - Compact arrays converted to a readable section-sharded package.
   - number: 3
     title: Empirical Processes
     printed_pages: {start: 109, end: 290}
     specification: InfiniteDimensionalStatistics/Spec/Chapter03.yaml
     audit_step: P1.3
-    status: missing_on_main
+    status: artifact_available_not_ingested
   - number: 4
     title: Function Spaces and Approximation Theory
     printed_pages: {start: 291, end: 388}
     specification: InfiniteDimensionalStatistics/Spec/Chapter04.yaml
     audit_step: P1.4
-    status: pass_with_packaging_caveat
-    blockers:
-      - Normalise the package to the canonical schema or retain it through the documented package loader.
+    status: pass_with_documented_package_loader
   - number: 5
     title: Linear Nonparametric Estimators
     printed_pages: {start: 389, end: 466}
     specification: InfiniteDimensionalStatistics/Spec/Chapter05.yaml
     audit_step: P1.5
-    status: missing_on_main
+    status: artifact_available_not_ingested
   - number: 6
     title: The Minimax Paradigm
     printed_pages: {start: 467, end: 540}
     specification: InfiniteDimensionalStatistics/Spec/Chapter06.yaml
     audit_step: P1.6
-    status: missing_on_main
+    status: artifact_available_not_ingested
   - number: 7
     title: Likelihood-Based Procedures
     printed_pages: {start: 541, end: 606}
     specification: InfiniteDimensionalStatistics/Spec/Chapter07.yaml
     audit_step: P1.7
-    status: missing_on_main
+    status: artifact_available_requires_pass_normalisation_and_ingestion
   - number: 8
     title: Adaptive Inference
     printed_pages: {start: 607, end: 666}
     specification: InfiniteDimensionalStatistics/Spec/Chapter08.yaml
     audit_step: P1.8
-    status: missing_on_main
+    status: artifact_available_requires_pass_normalisation_and_ingestion
 phase_gates:
   P0:
     required_files:
@@ -99,12 +97,16 @@ phase_gates:
       - InfiniteDimensionalStatistics/DependencyGraph.md
       - InfiniteDimensionalStatistics/NotationPolicy.md
       - InfiniteDimensionalStatistics.lean
+    governance_files_present: true
+    lake_target_present: true
     clean_local_build_required: true
-    status: in_progress
+    clean_local_build_certified: false
+    build_report: InfiniteDimensionalStatistics/BuildReports/P0.md
+    status: governance_complete_build_pending
   P1:
     all_eight_specifications_required: true
     validator_must_pass: true
-    status: blocked
+    status: blocked_on_six_uningested_chapters
   P2:
     status: blocked
-    unblock_condition: P0 complete and every P1 chapter specification accepted.
+    unblock_condition: P0 clean build certified and every P1 chapter specification accepted by the common validator.
