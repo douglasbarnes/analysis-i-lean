@@ -1,0 +1,508 @@
+chapter_local_dependency_dag:
+  nodes:
+  - 6.1.1
+  - 6.1.2
+  - 6.1.3
+  - 6.1.4
+  - 6.1.5
+  - 6.1.sample_split
+  - 6.1.6
+  - 6.1.7
+  - 6.1.tv_density
+  - 6.1.tensor_kl
+  - 6.1.gwn_kl
+  - 6.1.sequence_kl
+  - 6.2.1
+  - 6.2.mixtures_lower_bound
+  - 6.2.ks_simple
+  - 6.2.2
+  - 6.2.3
+  - 6.2.4
+  - 6.2.5
+  - 6.2.6
+  - 6.2.spiky_lipschitz
+  - 6.2.7
+  - 6.2.8
+  - 6.2.9
+  - 6.2.10
+  - 6.2.11
+  - 6.2.12
+  - 6.2.composite_ks
+  - 6.2.13
+  - 6.2.infimum_chisq
+  - 6.2.14
+  - 6.2.15
+  - 6.2.entropy_condition
+  - 6.2.16
+  - 6.2.infimum_ustat
+  - 6.2.17
+  - 6.2.18
+  - 6.2.19
+  - 6.2.20
+  - 6.3.1
+  - 6.3.reduction
+  - 6.3.2
+  - 6.3.3
+  - 6.3.4
+  - 6.3.5
+  - 6.3.6
+  - 6.3.7
+  - 6.3.8
+  - 6.3.9
+  - 6.3.10
+  - 6.4.1
+  - 6.4.diameter
+  - 6.4.generic_ball
+  - 6.4.2
+  - 6.4.ks_band
+  - 6.4.haar_projection
+  - 6.4.3
+  - 6.4.multivariate_cdf_tube
+  - 6.4.rademacher_radius
+  - 6.4.4
+  - 6.4.5
+  - 6.4.sample_split_risk
+  - 6.4.6
+  - 6.4.7
+  - 6.4.gwn_risk_stat
+  - 6.4.8
+  - 6.4.multiscale_universal
+  - 6.4.9
+  - 6.4.sampling_multiscale
+  - ex.6.1.1
+  - ex.6.1.2
+  - ex.6.2.1
+  - ex.6.2.2
+  - ex.6.2.3
+  - ex.6.2.4
+  - ex.6.2.5
+  - ex.6.2.6
+  - ex.6.3.1
+  - ex.6.3.2
+  - ex.6.3.3
+  - ex.6.4.1
+  - ex.6.4.2
+  - 6.5.unified_Lp_detection_rate
+  edges:
+  - from: 6.1.1
+    to: 6.1.2
+    type: chapter-local prerequisite
+  - from: 6.1.1
+    to: 6.1.3
+    type: chapter-local prerequisite
+  - from: 6.1.1
+    to: 6.1.4
+    type: chapter-local prerequisite
+  - from: 6.1.4
+    to: 6.1.5
+    type: chapter-local prerequisite
+  - from: 6.1.4
+    to: 6.1.sample_split
+    type: chapter-local prerequisite
+  - from: 6.1.5
+    to: 6.1.sample_split
+    type: chapter-local prerequisite
+  - from: 6.1.6
+    to: 6.1.7
+    type: chapter-local prerequisite
+  - from: 6.1.6
+    to: 6.1.tv_density
+    type: chapter-local prerequisite
+  - from: 6.1.7
+    to: 6.1.tensor_kl
+    type: chapter-local prerequisite
+  - from: 6.1.1
+    to: 6.1.gwn_kl
+    type: chapter-local prerequisite
+  - from: 6.1.3
+    to: 6.1.gwn_kl
+    type: chapter-local prerequisite
+  - from: 6.1.6
+    to: 6.1.gwn_kl
+    type: chapter-local prerequisite
+  - from: 6.1.4
+    to: 6.1.sequence_kl
+    type: chapter-local prerequisite
+  - from: 6.1.6
+    to: 6.1.sequence_kl
+    type: chapter-local prerequisite
+  - from: 6.1.tv_density
+    to: 6.2.mixtures_lower_bound
+    type: chapter-local prerequisite
+  - from: 6.2.1
+    to: 6.2.2
+    type: chapter-local prerequisite
+  - from: 6.2.1
+    to: 6.2.3
+    type: chapter-local prerequisite
+  - from: 6.2.3
+    to: 6.2.4
+    type: chapter-local prerequisite
+  - from: 6.2.1
+    to: 6.2.5
+    type: chapter-local prerequisite
+  - from: 6.2.1
+    to: 6.2.6
+    type: chapter-local prerequisite
+  - from: 6.2.ks_simple
+    to: 6.2.6
+    type: chapter-local prerequisite
+  - from: 6.2.2
+    to: 6.2.6
+    type: chapter-local prerequisite
+  - from: 6.2.mixtures_lower_bound
+    to: 6.2.6
+    type: chapter-local prerequisite
+  - from: 6.2.6
+    to: 6.2.spiky_lipschitz
+    type: chapter-local prerequisite
+  - from: 6.2.1
+    to: 6.2.7
+    type: chapter-local prerequisite
+  - from: 6.2.2
+    to: 6.2.7
+    type: chapter-local prerequisite
+  - from: 6.2.mixtures_lower_bound
+    to: 6.2.7
+    type: chapter-local prerequisite
+  - from: 6.1.tensor_kl
+    to: 6.2.7
+    type: chapter-local prerequisite
+  - from: 6.2.7
+    to: 6.2.8
+    type: chapter-local prerequisite
+  - from: 6.2.mixtures_lower_bound
+    to: 6.2.8
+    type: chapter-local prerequisite
+  - from: 6.2.1
+    to: 6.2.9
+    type: chapter-local prerequisite
+  - from: 6.2.5
+    to: 6.2.9
+    type: chapter-local prerequisite
+  - from: 6.2.mixtures_lower_bound
+    to: 6.2.9
+    type: chapter-local prerequisite
+  - from: 6.1.tensor_kl
+    to: 6.2.9
+    type: chapter-local prerequisite
+  - from: 6.2.9
+    to: 6.2.10
+    type: chapter-local prerequisite
+  - from: 6.2.1
+    to: 6.2.11
+    type: chapter-local prerequisite
+  - from: 6.2.3
+    to: 6.2.11
+    type: chapter-local prerequisite
+  - from: 6.2.6
+    to: 6.2.11
+    type: chapter-local prerequisite
+  - from: 6.2.7
+    to: 6.2.11
+    type: chapter-local prerequisite
+  - from: 6.2.9
+    to: 6.2.11
+    type: chapter-local prerequisite
+  - from: 6.1.1
+    to: 6.2.11
+    type: chapter-local prerequisite
+  - from: 6.1.gwn_kl
+    to: 6.2.11
+    type: chapter-local prerequisite
+  - from: 6.2.11
+    to: 6.2.12
+    type: chapter-local prerequisite
+  - from: 6.2.ks_simple
+    to: 6.2.composite_ks
+    type: chapter-local prerequisite
+  - from: 6.2.13
+    to: 6.2.composite_ks
+    type: chapter-local prerequisite
+  - from: 6.2.2
+    to: 6.2.13
+    type: chapter-local prerequisite
+  - from: 6.2.3
+    to: 6.2.infimum_chisq
+    type: chapter-local prerequisite
+  - from: 6.2.13
+    to: 6.2.infimum_chisq
+    type: chapter-local prerequisite
+  - from: 6.2.infimum_chisq
+    to: 6.2.14
+    type: chapter-local prerequisite
+  - from: 6.2.3
+    to: 6.2.14
+    type: chapter-local prerequisite
+  - from: 6.2.14
+    to: 6.2.15
+    type: chapter-local prerequisite
+  - from: 6.2.14
+    to: 6.2.entropy_condition
+    type: chapter-local prerequisite
+  - from: 6.2.14
+    to: 6.2.16
+    type: chapter-local prerequisite
+  - from: 6.2.entropy_condition
+    to: 6.2.16
+    type: chapter-local prerequisite
+  - from: 6.2.5
+    to: 6.2.infimum_ustat
+    type: chapter-local prerequisite
+  - from: 6.2.13
+    to: 6.2.infimum_ustat
+    type: chapter-local prerequisite
+  - from: 6.2.infimum_ustat
+    to: 6.2.17
+    type: chapter-local prerequisite
+  - from: 6.2.5
+    to: 6.2.17
+    type: chapter-local prerequisite
+  - from: 6.2.13
+    to: 6.2.17
+    type: chapter-local prerequisite
+  - from: 6.2.16
+    to: 6.2.18
+    type: chapter-local prerequisite
+  - from: 6.2.11
+    to: 6.2.18
+    type: chapter-local prerequisite
+  - from: 6.2.entropy_condition
+    to: 6.2.18
+    type: chapter-local prerequisite
+  - from: 6.2.18
+    to: 6.2.19
+    type: chapter-local prerequisite
+  - from: 6.2.11
+    to: 6.2.20
+    type: chapter-local prerequisite
+  - from: 6.2.mixtures_lower_bound
+    to: 6.2.20
+    type: chapter-local prerequisite
+  - from: 6.2.1
+    to: 6.3.1
+    type: chapter-local prerequisite
+  - from: 6.3.1
+    to: 6.3.reduction
+    type: chapter-local prerequisite
+  - from: 6.3.reduction
+    to: 6.3.2
+    type: chapter-local prerequisite
+  - from: 6.1.6
+    to: 6.3.2
+    type: chapter-local prerequisite
+  - from: 6.1.7
+    to: 6.3.2
+    type: chapter-local prerequisite
+  - from: 6.3.2
+    to: 6.3.3
+    type: chapter-local prerequisite
+  - from: 6.2.2
+    to: 6.3.4
+    type: chapter-local prerequisite
+  - from: 6.2.6
+    to: 6.3.4
+    type: chapter-local prerequisite
+  - from: 6.3.1
+    to: 6.3.4
+    type: chapter-local prerequisite
+  - from: 6.3.2
+    to: 6.3.5
+    type: chapter-local prerequisite
+  - from: 6.1.gwn_kl
+    to: 6.3.5
+    type: chapter-local prerequisite
+  - from: 6.3.5
+    to: 6.3.6
+    type: chapter-local prerequisite
+  - from: 6.3.2
+    to: 6.3.7
+    type: chapter-local prerequisite
+  - from: 6.1.tensor_kl
+    to: 6.3.7
+    type: chapter-local prerequisite
+  - from: 6.3.6
+    to: 6.3.7
+    type: chapter-local prerequisite
+  - from: 6.3.2
+    to: 6.3.8
+    type: chapter-local prerequisite
+  - from: 6.1.gwn_kl
+    to: 6.3.8
+    type: chapter-local prerequisite
+  - from: 6.3.2
+    to: 6.3.9
+    type: chapter-local prerequisite
+  - from: 6.3.8
+    to: 6.3.9
+    type: chapter-local prerequisite
+  - from: 6.1.tensor_kl
+    to: 6.3.9
+    type: chapter-local prerequisite
+  - from: 6.3.2
+    to: 6.3.10
+    type: chapter-local prerequisite
+  - from: 6.3.7
+    to: 6.3.10
+    type: chapter-local prerequisite
+  - from: 6.3.9
+    to: 6.3.10
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.diameter
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.generic_ball
+    type: chapter-local prerequisite
+  - from: 6.4.diameter
+    to: 6.4.generic_ball
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.2
+    type: chapter-local prerequisite
+  - from: 6.4.diameter
+    to: 6.4.2
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.ks_band
+    type: chapter-local prerequisite
+  - from: 6.4.2
+    to: 6.4.ks_band
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.3
+    type: chapter-local prerequisite
+  - from: 6.4.haar_projection
+    to: 6.4.3
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.multivariate_cdf_tube
+    type: chapter-local prerequisite
+  - from: 6.4.diameter
+    to: 6.4.multivariate_cdf_tube
+    type: chapter-local prerequisite
+  - from: 6.4.rademacher_radius
+    to: 6.4.4
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.5
+    type: chapter-local prerequisite
+  - from: 6.4.rademacher_radius
+    to: 6.4.5
+    type: chapter-local prerequisite
+  - from: 6.4.4
+    to: 6.4.5
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.6
+    type: chapter-local prerequisite
+  - from: 6.4.sample_split_risk
+    to: 6.4.6
+    type: chapter-local prerequisite
+  - from: 6.4.2
+    to: 6.4.7
+    type: chapter-local prerequisite
+  - from: 6.4.6
+    to: 6.4.7
+    type: chapter-local prerequisite
+  - from: 6.1.sample_split
+    to: 6.4.gwn_risk_stat
+    type: chapter-local prerequisite
+  - from: 6.4.1
+    to: 6.4.8
+    type: chapter-local prerequisite
+  - from: 6.4.gwn_risk_stat
+    to: 6.4.8
+    type: chapter-local prerequisite
+  - from: 6.4.multiscale_universal
+    to: 6.4.9
+    type: chapter-local prerequisite
+  - from: 6.4.9
+    to: 6.4.sampling_multiscale
+    type: chapter-local prerequisite
+  - from: 6.1.6
+    to: ex.6.1.1
+    type: exercise prerequisite
+  - from: 6.1.tv_density
+    to: ex.6.1.1
+    type: exercise prerequisite
+  - from: 6.1.6
+    to: ex.6.1.2
+    type: exercise prerequisite
+  - from: 6.1.7
+    to: ex.6.1.2
+    type: exercise prerequisite
+  - from: 6.2.ks_simple
+    to: ex.6.2.1
+    type: exercise prerequisite
+  - from: 6.2.14
+    to: ex.6.2.2
+    type: exercise prerequisite
+  - from: 6.2.17
+    to: ex.6.2.2
+    type: exercise prerequisite
+  - from: 6.2.5
+    to: ex.6.2.3
+    type: exercise prerequisite
+  - from: 6.2.17
+    to: ex.6.2.3
+    type: exercise prerequisite
+  - from: 6.2.20
+    to: ex.6.2.4
+    type: exercise prerequisite
+  - from: 6.2.9
+    to: ex.6.2.5
+    type: exercise prerequisite
+  - from: 6.2.3
+    to: ex.6.2.6
+    type: exercise prerequisite
+  - from: 6.2.4
+    to: ex.6.2.6
+    type: exercise prerequisite
+  - from: 6.3.4
+    to: ex.6.3.1
+    type: exercise prerequisite
+  - from: 6.3.2
+    to: ex.6.3.2
+    type: exercise prerequisite
+  - from: 6.3.5
+    to: ex.6.3.2
+    type: exercise prerequisite
+  - from: 6.3.8
+    to: ex.6.3.2
+    type: exercise prerequisite
+  - from: 6.3.9
+    to: ex.6.3.2
+    type: exercise prerequisite
+  - from: 6.3.10
+    to: ex.6.3.2
+    type: exercise prerequisite
+  - from: 6.3.8
+    to: ex.6.3.3
+    type: exercise prerequisite
+  - from: 6.3.9
+    to: ex.6.3.3
+    type: exercise prerequisite
+  - from: 6.4.7
+    to: ex.6.4.1
+    type: exercise prerequisite
+  - from: 6.4.gwn_risk_stat
+    to: ex.6.4.1
+    type: exercise prerequisite
+  - from: 6.4.multiscale_universal
+    to: ex.6.4.2
+    type: exercise prerequisite
+  - from: 6.4.9
+    to: ex.6.4.2
+    type: exercise prerequisite
+  - from: 6.2.7
+    to: 6.5.unified_Lp_detection_rate
+    type: chapter-local prerequisite
+  - from: 6.2.9
+    to: 6.5.unified_Lp_detection_rate
+    type: chapter-local prerequisite
+  - from: 6.2.11
+    to: 6.5.unified_Lp_detection_rate
+    type: chapter-local prerequisite
+  acyclic: true
+  edge_direction: prerequisite_to_dependent

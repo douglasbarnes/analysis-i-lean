@@ -1,0 +1,566 @@
+inventory:
+- id: 6.2.2
+  kind: proposition
+  book:
+    number: Proposition 6.2.2
+    pages:
+    - 480
+    section: 6.2.1
+    equations: []
+  title: Test From Estimator simple Null
+  statement: 'Suppose an estimator \(\hat f_n\) satisfies
+
+    \(\sup_{f\in\mathcal F}E_fd(\hat f_n,f)\le r_n\).
+
+    Fix \(f_0\in\mathcal F\), \(\alpha>0\), and
+
+    \(H_1\subseteq\mathcal F\cap\{f:d(f,f_0)\ge c r_n\}\) with \(c\ge4/\alpha\).
+
+    Then the test
+
+    \[
+
+    \phi_n=1\{d(\hat f_n,f_0)>2r_n/\alpha\}
+
+    \]
+
+    satisfies, for every n,
+
+    \[
+
+    E_{f_0}\phi_n+\sup_{f\in H_1}E_f(1-\phi_n)\le\alpha.
+
+    \]'
+  hypotheses:
+    explicit:
+    - (S,d) is a metric or semimetric space and F⊂S.
+    - The estimator and displayed events are measurable.
+    - rₙ≥0; f₀∈F; c≥4/α.
+    implicit: []
+  quantifier_order:
+  - ∀α>0, ∀c≥4/α, ∀n, the specified test has error sum ≤α for every admissible H₁.
+  constants:
+  - ∀α>0, ∀c≥4/α, ∀n, the specified test has error sum ≤α for every admissible H₁.
+  dependencies:
+    earlier_book:
+    - Markov inequality
+    - triangle inequality
+    chapter_local:
+    - 6.2.1
+    later_book_uses:
+    - Used to convert minimax estimators into testing upper bounds; contributes to Proposition 6.2.6 and Chapter
+      8.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A generic theorem for a measurable estimator in a pseudo-metric space.
+    blockers: &id001 []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.2.3
+  kind: proposition
+  book:
+    number: Proposition 6.2.3
+    pages:
+    - 481
+    - 483
+    section: 6.2.1
+    equations: []
+  title: White Noise L2 Test simple Null
+  statement: 'In Gaussian white noise, test \(H_0:f=f_0\) against
+
+    \(H_1\subseteq\{f:\|f-f_0\|_2\ge\rho_n\}\). Assume \(B(j)\) is nonincreasing and
+
+    \[
+
+    \sup_{f\in H_1}\|K_j(f-f_0)-(f-f_0)\|_2^2\le B(j).
+
+    \]
+
+    For
+
+    \[
+
+    T_n(f_0)=\|\hat f_n(j)-K_jf_0\|_2^2-\sigma^2 2^j/n,\quad
+
+    \phi_n=1\{|T_n(f_0)|\ge \sigma^2L2^{j/2}/n\},
+
+    \]
+
+    if
+
+    \[
+
+    \rho_n^2=c\max\{\sigma^2L2^{j_n/2}/n,B(j_n)\},
+
+    \]
+
+    then for every \(\alpha>0\) there are sufficiently large \(L=L(\alpha)\) and
+
+    \(c=c(\alpha,\sigma)\) such that, for every n, the sum of errors is at most α.'
+  hypotheses:
+    explicit:
+    - Gaussian white-noise model with known σ>0.
+    - K_j is the wavelet projection and the number of retained coefficients is 2^j.
+    - The bias bound holds uniformly over H₁.
+    - j_n is an integer resolution sequence.
+    implicit: []
+  quantifier_order:
+  - ∀α>0 ∃L,c such that ∀n, under the displayed choice of ρₙ, the uniform error sum is ≤α.
+  constants:
+  - ∀α>0 ∃L,c such that ∀n, under the displayed choice of ρₙ, the uniform error sum is ≤α.
+  dependencies:
+    earlier_book:
+    - Gaussian sequence moments
+    - wavelet projection Parseval identity
+    chapter_local:
+    - 6.2.1
+    later_book_uses:
+    - Abstract prototype for Theorem 6.2.11(c) and composite tests.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A finite-dimensional chi-square statistic over wavelet coefficients with explicit expectation/variance
+      bounds.
+    blockers: &id002 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.2.4
+  kind: operative_remark
+  book:
+    number: Remark 6.2.4
+    pages:
+    - 483
+    section: 6.2.1
+    equations: []
+  title: Haar L2 Test bias Reduction
+  statement: 'The Haar basis makes the statistic in Proposition 6.2.3 computationally
+
+    simple. The apparent smoothness restriction associated with Haar projection can
+
+    be removed by the projection lower bound in Exercise 6.2.6.'
+  hypotheses:
+    explicit:
+    - The hypotheses of Proposition 6.2.3 and the Besov hypotheses of Exercise 6.2.6.
+    implicit: []
+  quantifier_order:
+  - The remark asserts an alternative verification route for the signal part of the test.
+  constants:
+  - The remark asserts an alternative verification route for the signal part of the test.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.3
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.6
+    contains_omitted_steps: true
+    comment: Exercise 6.2.6 proves the reusable Haar projection inequality.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A corollary of the Haar projection lower-bound lemma.
+    blockers: &id003
+    - type: cross-reference
+      detail: Exercise 6.2.6 says that condition (6.32) can be omitted; the exact intended condition should be checked
+        against the typeset page.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.2.5
+  kind: proposition
+  book:
+    number: Proposition 6.2.5
+    pages:
+    - 484
+    - 485
+    section: 6.2.1
+    equations: []
+  title: Density L2 Test simple Null
+  statement: 'Let \(X_1,\dots,X_n\) be i.i.d. on [0,1] from density f. Let \(f_0\) be
+
+    bounded and let
+
+    \(H_1\subseteq\{f:\|f-f_0\|_2\ge\rho_n,\ \|f\|_\infty\le U\}\).
+
+    Assume
+
+    \[
+
+    \sup_{f\in H_1}\|K_j(f-f_0)-(f-f_0)\|_2^2\le B(j).
+
+    \]
+
+    Define the order-two U-statistic
+
+    \[
+
+    U_n(f_0)=\frac{2}{n(n-1)}
+
+    \sum_{i<i''}\sum_{l\le j-1,k}
+
+    (\psi_{lk}(X_i)-\langle f_0,\psi_{lk}\rangle)
+
+    (\psi_{lk}(X_{i''})-\langle f_0,\psi_{lk}\rangle).
+
+    \]
+
+    Reject when \(|U_n(f_0)|\ge L2^{j/2}/n\). If
+
+    \[
+
+    \rho_n^2=c\max\{L2^{j_n/2}/n,B(j_n)\},
+
+    \]
+
+    then, for every α>0, sufficiently large \(L=L(\alpha,U)\) and \(c=c(U,\alpha)\)
+
+    give error sum at most α for all n.'
+  hypotheses:
+    explicit:
+    - f₀ is a bounded density on [0,1].
+    - Every alternative f is a density bounded by U.
+    - The wavelet basis/projection satisfies the standard bounded-kernel estimates.
+    - n≥2 for the U-statistic formula.
+    implicit: []
+  quantifier_order:
+  - ∀α>0 ∃L,c ∀n≥2, the error sum is ≤α under the displayed separation and bias hypotheses.
+  constants:
+  - ∀α>0 ∃L,c ∀n≥2, the error sum is ≤α under the displayed separation and bias hypotheses.
+  dependencies:
+    earlier_book:
+    - Canonical U-statistic moment bounds from Chapter 3
+    - wavelet projection identities
+    chapter_local:
+    - 6.2.1
+    later_book_uses:
+    - Used for the upper bound in Theorem 6.2.9 and as the simple-null precursor of Theorem 6.2.17.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A degenerate order-two U-statistic theorem with conditional expectation and variance/tail bounds.
+    blockers: &id004 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.2.6
+  kind: proposition
+  book:
+    number: Proposition 6.2.6
+    pages:
+    - 486
+    - 487
+    section: 6.2.2
+    equations: []
+  title: Uniformity cdf minimax Separation
+  statement: 'For i.i.d. observations from an arbitrary distribution function F on
+
+    [0,1], testing \(H_0:F(t)=t\) against
+
+    \(\|F-\mathrm{id}\|_\infty\ge r_n\) has minimax separation rate
+
+    \[
+
+    \rho_n=C/\sqrt n,
+
+    \]
+
+    where C depends only on the desired total-error level α.'
+  hypotheses:
+    explicit:
+    - The model consists of all distribution functions on [0,1].
+    - Distance is the uniform norm on distribution functions.
+    - The null is the uniform distribution.
+    implicit: []
+  quantifier_order:
+  - ∀α>0 ∃C(α)>0 such that C/√n satisfies both clauses of Definition 6.2.1.
+  constants:
+  - ∀α>0 ∃C(α)>0 such that C/√n satisfies both clauses of Definition 6.2.1.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.1
+    - 6.2.ks_simple
+    - 6.2.2
+    - 6.2.mixtures_lower_bound
+    later_book_uses:
+    - Supports Proposition 6.3.4 by the testing-to-estimation reduction.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Combine a KS upper bound with a two-point/mixture lower bound.
+    blockers: &id005 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005
+- id: 6.2.spiky_lipschitz
+  kind: operative_example
+  book:
+    number: Spiky Lipschitz alternatives
+    pages:
+    - 487
+    section: 6.2.2
+    equations: []
+  title: Spiky Lipschitz Alternative scaling
+  statement: 'Let ψ be a compactly supported zig-zag function on [0,1] with zero
+
+    integral, and put
+
+    \(\psi_n(x)=\varepsilon n^{-1/4}\psi(n^{1/4}x)\), \(f_n=1+\psi_n\).
+
+    Then \(f_n\) is a density for small ε, has Lipschitz constant of order ε, and
+
+    \[
+
+    \|F_n-\mathrm{id}\|_\infty\lesssim\varepsilon n^{-1/2},\quad
+
+    \|f_n-1\|_\infty=\varepsilon n^{-1/4}\|\psi\|_\infty,\quad
+
+    \|f_n-1\|_2=\varepsilon n^{-3/8}\|\psi\|_2.
+
+    \]
+
+    Thus CDF separation can be parametrically small while density L∞ or L²
+
+    separation is much larger.'
+  hypotheses:
+    explicit:
+    - ψ has zero integral and compact support arranged so that 1+ψₙ≥0.
+    - Scaling is interpreted on the portion of [0,1] on which the rescaled support lies.
+    implicit: []
+  quantifier_order:
+  - For every admissible ψ and sufficiently small ε, the displayed identities/bounds hold for each n.
+  constants:
+  - For every admissible ψ and sufficiently small ε, the displayed identities/bounds hold for each n.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.6
+    later_book_uses:
+    - Motivates Theorems 6.2.7 and 6.3.5.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A deterministic scaling lemma for Lp norms, primitives, support, positivity and Lipschitz constants.
+    blockers: &id006
+    - type: implicit-domain
+      detail: The exact placement of the rescaled support within [0,1] is implicit in the prose.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
+- id: 6.2.7
+  kind: theorem
+  book:
+    number: Theorem 6.2.7
+    pages:
+    - 488
+    - 489
+    section: 6.2.2
+    equations: []
+  title: Density uniformity besov Linfty minimax Separation
+  statement: 'Let r>0 and B>1. In the i.i.d. density model on [0,1], test the
+
+    uniform density 1 against
+
+    \[
+
+    H_1(r_n)=\{f:\|f\|_{B^r_{\infty\infty}}\le B,\ \|f-1\|_\infty\ge r_n\}.
+
+    \]
+
+    The minimax separation rate is
+
+    \[
+
+    \rho_n=C\left(\frac{\log n}{n}\right)^{r/(2r+1)},
+
+    \]
+
+    where C depends on r,B and the desired error level α.'
+  hypotheses:
+    explicit:
+    - r>0, B>1.
+    - Alternatives are probability densities on [0,1].
+    - The Besov norm is the boundary/periodic convention fixed in Chapter 4.
+    implicit: []
+  quantifier_order:
+  - ∀α>0 ∃C=C(r,B,α)>0 such that ρₙ satisfies Definition 6.2.1.
+  constants:
+  - ∀α>0 ∃C=C(r,B,α)>0 such that ρₙ satisfies Definition 6.2.1.
+  dependencies:
+    earlier_book:
+    - Wavelet Besov characterisation
+    - Proposition 5.1.7 (L∞ estimator rate)
+    chapter_local:
+    - 6.2.1
+    - 6.2.2
+    - 6.2.mixtures_lower_bound
+    - 6.1.tensor_kl
+    later_book_uses:
+    - The lower-bound construction is reused in Theorems 6.3.5 and 6.3.7.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A paired upper/lower minimax theorem over a Besov-ball density subtype.
+    blockers: &id007 []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id007
+- id: 6.2.8
+  kind: operative_remark
+  book:
+    number: Remark 6.2.8
+    pages:
+    - 489
+    section: 6.2.2
+    equations: []
+  title: Density uniformity Linfty subrate indistinguishable
+  statement: 'The lower-bound proof of Theorem 6.2.7 gives more than a positive
+
+    liminf: if \(r_n=o(\rho_n)\), the null and the constructed mixture of
+
+    alternatives are asymptotically indistinguishable, so every test has total
+
+    error tending to one along that subproblem.'
+  hypotheses:
+    explicit:
+    - The sub-rate sequence satisfies rₙ/ρₙ→0.
+    - The same finite mixture as in the proof of Theorem 6.2.7 is used.
+    implicit: []
+  quantifier_order:
+  - ∀rₙ=o(ρₙ), the mixture lower bound tends to its no-information value.
+  constants:
+  - ∀rₙ=o(ρₙ), the mixture lower bound tends to its no-information value.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.7
+    - 6.2.mixtures_lower_bound
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A strengthened asymptotic consequence of the second-moment mixture calculation.
+    blockers: &id008 []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id008
