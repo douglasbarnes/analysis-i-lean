@@ -1,0 +1,415 @@
+schema_version: '1.0'
+document_type: declaration_level_chapter_specification
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 3
+  chapter_title: Empirical Processes
+  book_pages:
+    start: 109
+    end: 290
+policy:
+  no_lean_proofs: true
+  source_fidelity: No suspected error or OCR gap is silently repaired.
+  pass_values:
+  - core
+  - starred
+  - exercise
+  pass_semantics:
+    core: Every unstarred main-text declaration, irrespective of proof difficulty.
+    starred: Only material explicitly starred in the book.
+    exercise: Selected exercises satisfying the project criteria.
+  difficulty_values:
+  - routine
+  - substantial
+  - major-library
+  - research-level
+audit:
+  uploaded_file: FULLPDF.pdf
+  bibliographic_reference: Evarist Giné and Richard Nickl, Mathematical Foundations of Infinite-Dimensional Statistical
+    Models, Cambridge University Press, 2016.
+  audit_date: '2026-07-24'
+  scope: Chapter 3 in full, including the chapter introduction, Sections 3.1–3.8, all mathematically operative examples,
+    and all exercises selected by the reuse/dependency criteria.
+  correction_policy: The uploaded hardback is primary. Official author/publisher corrigenda are recorded explicitly
+    and never applied silently.
+summary:
+  inventory_entries: 230
+  main_text_entries: 180
+  selected_exercises: 50
+  dag_edges: 271
+  acyclic: true
+  acceptance_status: needs_revision
+  blocking_reason: Source-sensitive entries remain marked for direct page-image transcription and apparent numbering
+    gaps require a full coverage audit.
+completeness_check:
+  found_numbered_labels:
+  - 3.1.1
+  - 3.1.2
+  - 3.1.3
+  - 3.1.4
+  - 3.1.5
+  - 3.1.6
+  - 3.1.7
+  - 3.1.8
+  - 3.1.9
+  - 3.1.10
+  - 3.1.11
+  - 3.1.12
+  - 3.1.13
+  - 3.1.14
+  - 3.1.15
+  - 3.1.16
+  - 3.1.17
+  - 3.1.18
+  - 3.1.19
+  - 3.1.20
+  - 3.1.21
+  - 3.1.22
+  - 3.1.23
+  - 3.1.24
+  - 3.1.25
+  - 3.1.26
+  - 3.2.1
+  - 3.2.2
+  - 3.2.3
+  - 3.2.4
+  - 3.2.5
+  - 3.2.6
+  - 3.2.7
+  - 3.2.8
+  - 3.2.9
+  - 3.2.10
+  - 3.2.11
+  - 3.3.1
+  - 3.3.2
+  - 3.3.3
+  - 3.3.4
+  - 3.3.5
+  - 3.3.6
+  - 3.3.7
+  - 3.3.8
+  - 3.3.9
+  - 3.3.10
+  - 3.3.11
+  - 3.3.13
+  - 3.3.14
+  - 3.3.15
+  - 3.3.16
+  - 3.3.17
+  - 3.3.18
+  - 3.3.19
+  - 3.4.1
+  - 3.4.2
+  - 3.4.3
+  - 3.4.4
+  - 3.4.5
+  - 3.4.6
+  - 3.4.7
+  - 3.4.8
+  - 3.5.1
+  - 3.5.2
+  - 3.5.3
+  - 3.5.4
+  - 3.5.5
+  - 3.5.6
+  - 3.5.7
+  - 3.5.8
+  - 3.5.9
+  - 3.5.10
+  - 3.5.11
+  - 3.5.12
+  - 3.5.13
+  - 3.5.15
+  - 3.5.21
+  - 3.6.1
+  - 3.6.2
+  - 3.6.3
+  - 3.6.4
+  - 3.6.5
+  - 3.6.6
+  - 3.6.7
+  - 3.6.8
+  - 3.6.9
+  - 3.6.10
+  - 3.6.11
+  - 3.6.12
+  - 3.6.13
+  - 3.6.14
+  - 3.6.15
+  - 3.6.16
+  - 3.6.17
+  - 3.7.1
+  - 3.7.2
+  - 3.7.3
+  - 3.7.4
+  - 3.7.5
+  - 3.7.6
+  - 3.7.7
+  - 3.7.8
+  - 3.7.9
+  - 3.7.10
+  - 3.7.11
+  - 3.7.12
+  - 3.7.13
+  - 3.7.14
+  - 3.7.15
+  - 3.7.16
+  - 3.7.17
+  - 3.7.18
+  - 3.7.19
+  - 3.7.20
+  - 3.7.21
+  - 3.7.22
+  - 3.7.23
+  - 3.7.24
+  - 3.7.25
+  - 3.7.26
+  - 3.7.27
+  - 3.7.28
+  - 3.7.29
+  - 3.7.30
+  - 3.7.31
+  - 3.7.32
+  - 3.7.33
+  - 3.7.34
+  - 3.7.35
+  - 3.7.36
+  - 3.7.37
+  - 3.7.38
+  - 3.7.39
+  - 3.7.40
+  - 3.7.41
+  - 3.7.42
+  - 3.7.43
+  - 3.7.44
+  - 3.7.45
+  - 3.7.46
+  - 3.7.47
+  - 3.7.48
+  - 3.7.49
+  - 3.7.50
+  - 3.7.51
+  - 3.7.52
+  - 3.7.53
+  - 3.7.54
+  - 3.7.55
+  - 3.7.56
+  - 3.7.57
+  apparent_numbering_gaps_requiring_source_check: &id001
+  - 3.3.12
+  - 3.5.14
+  - 3.5.16
+  - 3.5.17
+  - 3.5.18
+  - 3.5.19
+  - 3.5.20
+  missing_numbered_labels: *id001
+  duplicate_ids: []
+  all_entries_have_required_fields: true
+  central_review_issue_count: 24
+central_review_flags:
+- page: 118
+  affected:
+  - Theorem 3.1.7
+  issue: Printed 1/n requires parenthesisation in the indicated display.
+  required_action: Use the official corrected `(1/n)` display.
+  severity: blocking-before-proof
+- page: 119
+  affected:
+  - Proposition 3.1.8
+  issue: Proof index k is a typo for i.
+  required_action: Correct indices only; statement unchanged.
+  severity: blocking-before-proof
+- page: 128
+  affected:
+  - Corollary 3.1.20
+  issue: Multi-index endpoint a_{i_n} is a typo.
+  required_action: Use a_{i_k}.
+  severity: blocking-before-proof
+- page: 130
+  affected:
+  - Theorem 3.1.22
+  - Eq. (3.48)
+  issue: Norm nesting is malformed in print.
+  required_action: Recover exact norm structure from the corrected page image.
+  severity: blocking-before-proof
+- page: 157–158
+  affected:
+  - Theorems 3.3.9–3.3.10
+  issue: Hardback has inconsistent v/v_n and U-scaling.
+  required_action: Use corrected homogeneous Bousquet statement and the U=1 Klein statement; retain discrepancy
+    in metadata.
+  severity: blocking-before-proof
+- page: 188
+  affected:
+  - Theorem 3.5.4 proof
+  issue: Missing division by ‖F‖₂ in a proof term.
+  required_action: Apply the official quotient correction.
+  severity: blocking-before-proof
+- page: 189
+  affected:
+  - Theorem 3.5.6 discussion
+  issue: Sentence invoking Exercise 3.6.17 is deleted by corrigendum.
+  required_action: Do not encode it as a dependency.
+  severity: blocking-before-proof
+- page: 190
+  affected:
+  - Corollary 3.5.8
+  - Eq. (3.184)
+  issue: Two envelope norms incorrectly use Q.
+  required_action: Use L²(P) in both places.
+  severity: blocking-before-proof
+- page: 193
+  affected:
+  - Theorem 3.5.11 proof
+  issue: First quantity in final display is Q[(f²−g²)²].
+  required_action: Use the corrected integrand.
+  severity: blocking-before-proof
+- page: 195
+  affected:
+  - Bracketing definitions
+  issue: L^p(R) is a typo.
+  required_action: Use L^p(P).
+  severity: blocking-before-proof
+- page: 202
+  affected:
+  - Proposition 3.5.15
+  issue: Localisation ≤δ is a typo.
+  required_action: Use ≤δ².
+  severity: blocking-before-proof
+- page: 213–214
+  affected:
+  - Proposition 3.6.3 / surrounding text
+  issue: Official sentence and bibliography corrections apply.
+  required_action: Consult corrected edition before proof transcription.
+  severity: nonblocking-metadata
+- page: 226
+  affected:
+  - Exercise 3.6.5
+  issue: Hint is replaced.
+  required_action: Record the cross-chapter dependency on Proposition 4.3.34.
+  severity: blocking-before-proof
+- page: 227
+  affected:
+  - Exercise 3.6.7
+  - Corollary 3.7.50
+  issue: Exercise omitted domain/range/variation restrictions.
+  required_action: Use functions on [0,1], values in [0,1], variation≤1.
+  severity: blocking-before-proof
+- page: 241
+  affected:
+  - Corollary 3.7.21
+  issue: Bochner-integration qualification omitted.
+  required_action: Represent EX as the Bochner integral and require strong measurability/integrability.
+  severity: blocking-before-proof
+- page: 245
+  affected:
+  - Proposition 3.7.24
+  - Eq. (3.253)
+  issue: Six occurrences of f are H.
+  required_action: Use H throughout.
+  severity: blocking-before-proof
+- page: 273
+  affected:
+  - Theorem 3.7.52 proof
+  issue: Printed dependency on Proposition 3.1.23/exercises is wrong.
+  required_action: Use Theorem 3.7.31(c), then (b).
+  severity: blocking-before-proof
+- page: 280
+  affected:
+  - Example 3.7.57
+  issue: Exercise 3.7.17 is the wrong citation.
+  required_action: Use Exercise 3.6.17.
+  severity: blocking-before-proof
+- page: 283
+  affected:
+  - Exercise 3.7.14
+  issue: Neighbourhood/topology definition is wrong in hardback.
+  required_action: Use the official corrected neighbourhood definition.
+  severity: blocking-before-proof
+- page: 272–273
+  affected:
+  - Proposition 3.7.49
+  - Corollary 3.7.50
+  - Item 3.7.51
+  issue: One or more headings/statements are absent from searchable text.
+  required_action: Perform direct visual transcription from the uploaded PDF before assigning Lean names.
+  severity: blocking-before-proof
+- page: 206–211
+  affected:
+  - Theorem 3.5.21
+  issue: Full theorem display is not reliably recoverable from extraction.
+  required_action: Transcribe every hypothesis, constant and truncation condition from the PDF page images.
+  severity: blocking-before-proof
+- page: 119–121
+  affected:
+  - Theorem 3.1.9
+  issue: Quadratic-form constants/formulas are extraction-sensitive.
+  required_action: Direct page-image check.
+  severity: blocking-before-proof
+- page: 144–148
+  affected:
+  - Theorem 3.2.9
+  - Lemmas 3.2.10–3.2.11
+  issue: Modified Sudakov constants and small-coordinate assumptions are sensitive.
+  required_action: Direct page-image check.
+  severity: blocking-before-proof
+- page: 279
+  affected:
+  - Theorem 3.7.55
+  issue: Title claims necessary and sufficient; displayed theorem gives only sufficiency.
+  required_action: Formalise only the displayed implication; retain the converse as an unproved note.
+  severity: blocking-before-proof
+section_3_8_notes_inventory:
+- topic: Bounded-sum concentration and maximal inequalities
+  results:
+  - Lemma 3.1.1
+  - Theorems 3.1.2, 3.1.5, 3.1.7
+  - Lévy/Ottaviani/Hoffmann–Jørgensen
+  - symmetrisation and contraction
+  later_use: Finite-sample basis for Sections 3.2–3.7 and Chapter 5.
+- topic: Talagrand concentration and entropy method
+  results:
+  - Theorem 3.2.4
+  - Theorems 3.3.9–3.3.10
+  - McDiarmid and self-bounding inequalities
+  later_use: Moment and estimator concentration in Sections 3.4–3.5 and Chapter 5.
+- topic: Metric entropy and bracketing
+  results:
+  - Theorems 3.5.1, 3.5.4, 3.5.6, 3.5.11, 3.5.13, 3.5.21
+  later_use: VC, Glivenko–Cantelli, Donsker and estimator bounds.
+- topic: VC theory
+  results:
+  - Sauer–Shelah
+  - Dudley–Pollard VC entropy
+  - convex-hull entropy
+  later_use: Corollary 3.7.17, Theorem 3.7.37 and Chapters 4–5.
+- topic: Weak convergence and Donsker theory
+  results:
+  - Theorems 3.7.23, 3.7.31, 3.7.36–3.7.40, 3.7.47, 3.7.52–3.7.55
+  later_use: Functional central limit theorems in Chapters 4–5; notes provide provenance rather than proof steps.
+package:
+  declaration_inventory:
+    files:
+    - Chapter03.Inventory.3_1a.yaml
+    - Chapter03.Inventory.3_1b.yaml
+    - Chapter03.Inventory.3_2.yaml
+    - Chapter03.Inventory.3_3a.yaml
+    - Chapter03.Inventory.3_3b.yaml
+    - Chapter03.Inventory.3_4.yaml
+    - Chapter03.Inventory.3_5.yaml
+    - Chapter03.Inventory.3_6a.yaml
+    - Chapter03.Inventory.3_6b.yaml
+    - Chapter03.Inventory.3_7a.yaml
+    - Chapter03.Inventory.3_7b.yaml
+    - Chapter03.Inventory.3_7c.yaml
+    - Chapter03.Inventory.3_7d.yaml
+    key: inventory
+  chapter_local_dependency_dag:
+    file: Chapter03.DependencyDAG.yaml
+    key: chapter_local_dependency_dag
