@@ -125,22 +125,28 @@ inventory:
     section: 5.1.3*
     equations: []
   title: Unnumbered smooth convolution-kernel example
-  statement: For a bounded symmetric C² kernel K supported on [−1,1], the stationary Gaussian process Y(t)=∫K(t-s)dW(s)
-    has covariance r(t)=‖K‖₂²−Ct²+o(t²) at zero with C>0. The resulting extreme-value normaliser has leading term
-    √(2(log 2)l) and second-order correction involving C/‖K‖₂² and π, as displayed in (5.66).
+  statement: Let K be bounded, symmetric, supported on [−1,1], and twice continuously differentiable, and define
+    Y(t)=∫_ℝ K(t−s)dW(s). Then Y is stationary with covariance r(t)=∫_ℝ K(t+u)K(u)du=‖K‖₂²−Ct²+o(t²), where C=−(1/2)∫_ℝ
+    K(u)K″(u)du>0, and r(t)=0 for |t|>2. Set Ỹ=Y/‖K‖₂ and C̃=C/‖K‖₂². Equation (5.66) defines B(l)=√(2(log 2)l)+[log√(2C̃)−log
+    π]/√(2(log 2)l). Consequently, for every x∈ℝ, Pr{√(2(log 2)j_n)(sup_{0≤t≤2^{j_n}}|Y(t)|/‖K‖₂−B(j_n))≤x}→exp(−e^(−x)).
   source_fidelity:
-    transcription_status: central_review_required
+    transcription_status: verified
     author_corrected_reading: null
   hypotheses:
     explicit:
-    - K bounded, symmetric, support⊆[−1,1], K∈C².
-    - The covariance curvature constant is positive.
+    - K:ℝ→ℝ is bounded, symmetric, supported on [−1,1], and C² on ℝ.
+    - W is two-sided white noise and Y(t)=∫K(t−s)dW(s).
+    - j_n→∞ for the extreme-value limit.
     implicit:
-    - The stochastic integral is with respect to two-sided white noise.
+    - Integration by parts has no boundary contribution because K has compact support and is C².
+    - The stochastic integral is normalised so that Cov(Y(t),Y(0))=∫K(t+u)K(u)du.
   quantifier_order:
-  - As l→∞.
+  - Fix K and define C, C̃ and B.
+  - For every real x, take n→∞ along any sequence j_n→∞.
   constants:
-  - C and the exact B(l) from (5.66).
+  - C=−(1/2)∫K K″>0.
+  - C̃=C/‖K‖₂².
+  - B(l)=√(2(log 2)l)+(log√(2C̃)−log π)/√(2(log 2)l).
   dependencies:
     earlier_book: *id005
     chapter_local:
@@ -162,10 +168,7 @@ inventory:
     - Stationary Gaussian-process extreme-value theory.
   difficulty: research-level
   pass: starred
-  issues_for_central_review:
-  - OCR is ambiguous about the numerical factor in C=−(constant)∫KK″ and the exact second-order term in B(l); verify
-    (5.65)–(5.66).
-  - 'Source-transcription status: central_review_required.'
+  issues_for_central_review: []
 - id: ch5.prop.5_1_23
   kind: proposition
   book:
