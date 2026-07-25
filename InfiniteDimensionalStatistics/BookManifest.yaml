@@ -1,7 +1,7 @@
 schema_version: '1.0'
 project:
   name: InfiniteDimensionalStatistics
-  phase: P0_governance_complete_build_pending
+  phase: P1_recovery
   p2_blocked: true
   source_fidelity_policy: >-
     Preserve the printed mathematical statement. Record official corrigenda and
@@ -124,10 +124,18 @@ phase_gates:
       - InfiniteDimensionalStatistics.lean
     governance_files_present: true
     lake_target_present: true
-    clean_local_build_required: true
+    clean_build_required: true
+    clean_hosted_build_certified: true
     clean_local_build_certified: false
+    certification_environment: GitHub-hosted Ubuntu 24.04 clean checkout
+    certification_workflow_run: 30158298996
+    certification_merge_commit: 0ebdfdfc73a56acf754f3a5c44d8030e17107bf3
+    certification_artifact_id: 8619566501
+    certification_artifact_digest: sha256:1389ec5f1b16483ca23fa8343ba30594a3e81b61c988c61dc12e0931c11f90e5
+    post_build_main_changes: specification_yaml_only
+    local_replication_caveat: The assistant container could not resolve external hosts, so a separate workstation-local clone was unavailable.
     build_report: InfiniteDimensionalStatistics/BuildReports/P0.md
-    status: governance_complete_build_pending
+    status: complete_with_environment_caveat
   P1:
     all_eight_specifications_required: true
     validator_must_pass: true
