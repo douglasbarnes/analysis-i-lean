@@ -1,0 +1,275 @@
+schema_version: '1.0'
+inventory:
+- id: ch5.rem.5_1_16
+  kind: operative_example
+  book:
+    number: Remark 5.1.16
+    pages: [409]
+    section: 5.1.2
+    equations: []
+  title: Concentration bounds for empirical wavelet coefficients
+  statement: Combining Theorems 5.1.13 and 5.1.15 with the coefficient inequalities (5.23) and (5.24) yields exponential and higher-moment bounds for empirical wavelet coefficients, in direct analogy with Proposition 5.1.8.
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - The wavelet-estimator hypotheses of Theorems 5.1.13 and 5.1.15.
+    - The boundedness assumptions required by the selected concentration theorem.
+    implicit:
+    - Coefficient functionals are bounded by the projection-estimator supremum norm through (5.23) and (5.24).
+  quantifier_order:
+  - For every admissible resolution level and wavelet coefficient index.
+  constants:
+  - The constants inherited from Theorems 5.1.13 and 5.1.15.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch5.prop.5_1_8
+    - ch5.thm.5_1_13
+    - ch5.thm.5_1_15
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Apply bounded linear coefficient maps to the random projection estimator and inherit the concentration inequalities.
+    blockers:
+    - Wavelet coefficient API.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch5.prop.5_1_17
+  kind: proposition
+  book:
+    number: Proposition 5.1.17
+    pages: [409]
+    section: 5.1.2
+    equations: []
+  title: Fluctuations of the L1 estimation error
+  statement: For any density f, ‖f_n−f‖₁−E‖f_n−f‖₁=O_P(n^(−1/2)); if √n E‖f_n−f‖₁→∞, then ‖f_n−f‖₁/E‖f_n−f‖₁→1 in probability. Moreover, limsup_n √(n/log n)|‖f_n−f‖₁−E‖f_n−f‖₁|≤2‖Φ‖₁ almost surely; if √(n/log n)E‖f_n−f‖₁→∞, then the same ratio tends to one almost surely.
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - A sample-based kernel or projection estimator covered by Remark 5.1.14.
+    - For the displayed constant, the real-line envelope Φ is used.
+    implicit:
+    - The two divergence assumptions are separate sufficient conditions for the probability and almost-sure ratio conclusions.
+  quantifier_order:
+  - Let n tend to infinity along the estimator sequence.
+  constants:
+  - The almost-sure fluctuation constant is 2‖Φ‖₁.
+  dependencies:
+    earlier_book:
+    - Borel–Cantelli lemma
+    chapter_local:
+    - ch5.rem.5_1_14
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Derive stochastic and almost-sure fluctuations from bounded-difference tails and Borel–Cantelli.
+    blockers:
+    - Probability asymptotic notation and almost-sure limsup infrastructure.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch5.prop.5_1_18
+  kind: proposition
+  book:
+    number: Proposition 5.1.18
+    pages: [409, 410]
+    section: 5.1.2
+    equations: []
+  title: Almost-sure Lp limsup for centred estimators
+  statement: Under Theorem 5.1.5, if n2^(−j_n)→∞ and j_n/log log n→∞, then for every 1≤p<∞ there exists a deterministic C_p≤L_p such that limsup_n √(n/2^(j_n))‖f_n−Ef_n‖_p=C_p almost surely.
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - The hypotheses of Theorem 5.1.5.
+    - The integer-valued resolution sequence satisfies n2^(−j_n)→∞.
+    - j_n/log log n→∞.
+    - 1≤p<∞.
+    implicit:
+    - The density need not be bounded.
+  quantifier_order:
+  - For each p there exists C_p.
+  - The limsup equality holds almost surely as n→∞.
+  constants:
+  - C_p≤L_p.
+  dependencies:
+    earlier_book:
+    - Strong laws for Banach-valued empirical processes
+    chapter_local:
+    - ch5.thm.5_1_5
+    - ch5.thm.5_1_13
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Almost-sure limsup theorem using concentration, subsequences and interpolation between blocks.
+    blockers:
+    - Advanced empirical-process strong laws.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch5.eq.5_41
+  kind: definition
+  book:
+    number: Condition (5.41)
+    pages: [410]
+    section: 5.1.2
+    equations: ['5.41']
+  title: Resolution-sequence condition (5.41)
+  statement: The resolution sequence satisfies n/(j_n2^(j_n))→∞ and j_n/log log n→∞, and there exist τ≥1 and n₀ such that sup_{n≥n₀}(j_{2n}−j_n)≤τ.
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - j_n is integer-valued.
+    implicit:
+    - log log n is considered only for sufficiently large n.
+  quantifier_order:
+  - Both limits are taken as n→∞.
+  - There exist τ≥1 and n₀ for the increment condition.
+  constants:
+  - τ≥1.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - ch5.prop.5_1_19
+    - ch5.thm.5_4_1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A predicate on an integer-valued sequence using filters and an eventual bounded-increment condition.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: ch5.prop.5_1_19
+  kind: proposition
+  book:
+    number: Proposition 5.1.19
+    pages: [410, 411]
+    section: 5.1.2
+    equations: []
+  title: Almost-sure sup-norm limsup
+  statement: Assume any case of Condition 5.1.1, a bounded density f and a resolution sequence satisfying (5.41). Then limsup_n √(n/(j_n2^(j_n)))‖f_n−Ef_n‖_∞=C almost surely, where C is deterministic and C²≤M²2^τ‖f‖_∞ for a kernel-dependent M.
+  source_fidelity:
+    transcription_status: verified_with_generality_flag
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - One of Conditions 5.1.1(a)–(d).
+    - f is bounded.
+    - j_n satisfies (5.41).
+    implicit:
+    - The estimator is (5.1) or (5.3) on the matching domain.
+  quantifier_order:
+  - There exists C≥0.
+  - The limsup equality holds almost surely as n→∞.
+  constants:
+  - M and τ.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch5.cond.5_1_1
+    - ch5.eq.5_41
+    - ch5.thm.5_1_13
+    later_book_uses:
+    - ch5.thm.5_4_1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A law-of-the-iterated-logarithm type limsup for sup-norm empirical kernel processes.
+    blockers:
+    - Sharp lower-bound or strong-approximation machinery.
+    - Domain-dependent measurable suprema.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The printed statement says “bounded density on ℝ” while Conditions 5.1.1(c) and (d) are interval kernels; central review should split the domain statement rather than silently generalise it.
