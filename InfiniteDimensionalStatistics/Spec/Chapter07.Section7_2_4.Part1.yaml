@@ -1,0 +1,275 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.2.4
+fragment_part: 1
+inventory:
+- id: ch7.def.monotoneDensityMLE
+  kind: definition
+  book:
+    number: (7.70)
+    pages:
+    - 563
+    section: 7.2.4
+    equations:
+    - (7.70)
+  title: Monotone density model and Grenander MLE
+  statement: 'Let P^mon be the left-continuous nonincreasing probability densities
+    on [0,1].
+
+    Define p̂ₙ as a maximiser of ℓₙ over P^mon.'
+  hypotheses:
+    explicit:
+    - Densities are nonnegative, integrate to one, nonincreasing and left-continuous.
+    implicit:
+    - A canonical representative is selected by left-continuity.
+  quantifier_order:
+  - For each sample, maximise over P^mon.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.npmle
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A subtype of monotone functions with unit integral and a canonical left-continuous
+      representative.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.example.grenanderCharacterisation
+  kind: operative_example
+  book:
+    number: unnumbered
+    pages:
+    - 563
+    section: 7.2.4
+    equations: []
+  title: Least-concave-majorant characterisation
+  statement: 'The MLE is the left derivative of the least concave majorant F̂ₙ of
+    the empirical
+
+    cdf Fₙ. Consequently it is unique, left-continuous, piecewise constant, has jumps
+
+    only at order statistics, and is zero on (X_(n),1].'
+  hypotheses:
+    explicit:
+    - No tied observations in the displayed order-statistic description; ties require
+      the natural grouped version.
+    implicit:
+    - The least concave majorant exists and has a left derivative in the stated sense.
+  quantifier_order:
+  - For each sample (with the usual almost-sure no-tie condition under a density).
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.monotoneDensityMLE
+    - ch7.prop.klIdentifiability
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.2.7
+    contains_omitted_steps: true
+    comment: entire proof and uniqueness
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Develop least concave majorants of finite empirical cdfs and their left
+      derivatives; a substantial convex-analysis/real-analysis component.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.lemma.7.2.16
+  kind: lemma
+  book:
+    number: Lemma 7.2.16
+    pages:
+    - 563
+    - 564
+    - 565
+    section: 7.2.4
+    equations: []
+  title: Stochastic endpoint bounds for the monotone MLE
+  statement: "(a) If inf_{[0,1]}p₀>0, then for every ε>0 there exist ξ>0 and N such\
+    \ that\n    for n≥N, P₀^n(p̂ₙ(X_(n))<ξ)<ε.\n(b) If p₀≤K, then for every ε>0 there\
+    \ exists k<∞ such that for every n,\n    P₀^n(p̂ₙ(0)>k)<ε."
+  hypotheses:
+    explicit:
+    - p₀ is a monotone density.
+    - 'Part (a): positive lower bound.'
+    - 'Part (b): finite upper bound.'
+    implicit:
+    - Order statistics are well-defined; endpoint values use the canonical representative.
+  quantifier_order:
+  - (a) ∀ε∃ξ,N∀n≥N. (b) ∀ε∃k∀n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.example.grenanderCharacterisation
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.2.8
+    - ex7.2.9
+    contains_omitted_steps: true
+    comment: reusable order-statistic ingredients cited in proof
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Probability bounds derived from order statistics and the LCM characterisation.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.thm.7.2.17
+  kind: theorem
+  book:
+    number: Theorem 7.2.17
+    pages:
+    - 565
+    - 566
+    section: 7.2.4
+    equations: []
+  title: Cube-root rates for the monotone MLE
+  statement: "If p₀ is a bounded nonincreasing density on [0,1], then\n  h(p̂ₙ,p₀)=O_{P₀}(n^{-1/3}),\n\
+    \  ||p̂ₙ-p₀||₂=O_{P₀}(n^{-1/3})."
+  hypotheses:
+    explicit:
+    - p₀ is bounded and nonincreasing.
+    implicit:
+    - The random sup-norm truncation from Lemma 7.2.16(b) permits a fixed entropy
+      class on high-probability events.
+  quantifier_order:
+  - As n→∞.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Proposition 3.5.17 (bracketing entropy of monotone functions)
+    chapter_local:
+    - ch7.thm.7.2.1
+    - ch7.lemma.7.2.16
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
+      `OP` and `oP` predicates over the sequence of experiments.
+
+      Requires monotone-function bracketing entropy and conversion from Hellinger
+      to L² under boundedness.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.def.monotonePerturbation
+  kind: mathematically_operative_condition
+  book:
+    number: (7.72)
+    pages:
+    - 566
+    section: 7.2.4
+    equations:
+    - (7.72)
+  title: Admissible local perturbations of a strictly decreasing density
+  statement: 'If p₀≥ζ>0, p₀'' is bounded and p₀''≤-ξ<0, and h,h''∈L∞ with ∫h=0, then
+
+    p₀+ηh remains a nonincreasing probability density for all sufficiently small η>0.'
+  hypotheses:
+    explicit:
+    - ζ,ξ>0.
+    - p₀ is differentiable with bounded derivative.
+    - h and h' are bounded.
+    - ∫h=0.
+    implicit:
+    - The text sometimes writes |p₀'|≥ξ together with monotonicity; the operative
+      sign is p₀'≤-ξ.
+  quantifier_order:
+  - ∀ admissible h, ∃η₀>0, ∀η∈[0,η₀], feasibility.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.monotoneDensityMLE
+    - ch7.def.tangentSpace
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A deterministic calculus lemma on absolutely continuous/C¹ functions;
+      distributional derivatives are needed for Exercise 7.2.10.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
