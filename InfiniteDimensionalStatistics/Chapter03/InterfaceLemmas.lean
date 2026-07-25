@@ -189,6 +189,15 @@ theorem Shatters.mono_finset {𝓒 : Set (Set α)} {A B : Finset α}
         exact this.1
       exact ⟨hxC, hUB hxU⟩
 
+/-- VC dimension is monotone under enlargement of the set class. -/
+theorem vcDimension_mono {𝓒 𝓓 : Set (Set α)}
+    (h𝓒𝓓 : 𝓒 ⊆ 𝓓) : vcDimension 𝓒 ≤ vcDimension 𝓓 := by
+  unfold vcDimension
+  refine sSup_le ?_
+  intro k hk
+  rcases hk with ⟨A, hA, rfl⟩
+  exact le_sSup ⟨A, hA.mono_class h𝓒𝓓, rfl⟩
+
 end Shattering
 
 section FunctionClasses
