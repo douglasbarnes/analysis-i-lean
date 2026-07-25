@@ -1,0 +1,232 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.3.4
+fragment_part: 3
+inventory:
+- id: ch7.prop.7.3.21
+  kind: proposition
+  book:
+    number: Proposition 7.3.21
+    pages:
+    - 599
+    - 600
+    section: 7.3.4
+    equations: []
+  title: Uniform convergence over classes with uniformly regular boundaries
+  statement: "Let μₙ⇒μ on a separable metric space (S,d). For a measurable set B define\n  ∂_εB={x:d(x,B)<ε and d(x,B^c)<ε}.\nIf a class B satisfies\n  lim_{ε↓0} sup_{B∈B} μ(∂_εB)=0,\nthen\n  sup_{B∈B}|μₙ(B)-μ(B)|→0."
+  hypotheses:
+    explicit:
+    - S separable metric.
+    - μₙ,μ probability measures.
+    - All B in the class are measurable.
+    - Uniform boundary condition.
+    implicit:
+    - The displayed `d(x,B)` convention handles empty sets in the standard way.
+  quantifier_order:
+  - If μₙ⇒μ and boundary condition, then uniform convergence.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.boundaryThickening
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.7
+    contains_omitted_steps: true
+    comment: entire proof/hints
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial_equivalent
+      candidates:
+      - MeasureTheory.Measure.Portmanteau
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A uniform-class strengthening of Portmanteau; likely new, proved using
+      closed/open ε-enlargements.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.cor.7.3.22
+  kind: corollary
+  book:
+    number: Corollary 7.3.22
+    pages:
+    - 600
+    section: 7.3.4
+    equations: []
+  title: Uniform posterior BvM probabilities
+  statement: "Under Theorem 7.3.19 or 7.3.20, let B be a class of measurable subsets of H(δ)\nor M₀(w), respectively, satisfying\n  lim_{ε↓0}sup_{B∈B}N(∂_εB)=0.\nThen\n  sup_{B∈B}|Π(·|Y)∘τ_Y^{-1}(B)-N(B)|→0\nin P^Y_{f₀}-probability."
+  hypotheses:
+    explicit:
+    - One of the two weak BvM theorems.
+    - N-uniform boundary class.
+    implicit: []
+  quantifier_order:
+  - As n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.prop.7.3.21
+    - ch7.thm.7.3.19
+    - ch7.thm.7.3.20
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Apply Proposition 7.3.21 pathwise on subsequences of random measures converging
+      in bounded-Lipschitz metric.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.prop.posteriorContinuousMapping
+  kind: mathematically_operative_proposition
+  book:
+    number: (7.136)
+    pages:
+    - 600
+    - 601
+    section: 7.3.4
+    equations:
+    - (7.136)
+  title: Continuous mapping for shifted posteriors
+  statement: "If F is continuous from H(δ) or M₀(w) to a metric space S, then under the\ncorresponding BvM theorem,\n  β_S((Π(·|Y)∘τ_Y^{-1})∘F^{-1}, N∘F^{-1})→0\nin P^Y_{f₀}-probability."
+  hypotheses:
+    explicit:
+    - F continuous.
+    - Corresponding BvM hypotheses.
+    - δ>1/2 in the H(δ) case.
+    implicit:
+    - Pushforwards are Borel probability measures.
+  quantifier_order:
+  - For every continuous F.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.19
+    - ch7.thm.7.3.20
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial_equivalent
+      candidates:
+      - TendstoInDistribution.continuous_comp
+      - ProbabilityMeasure.map continuous mapping
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Continuity of pushforward on the weak topology, lifted to convergence
+      in probability of random measures.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 601
+    detail: The probability law in (7.136) is P^Y_{f₀}.
+- id: ch7.thm.7.3.23
+  kind: theorem
+  book:
+    number: Theorem 7.3.23 (officially corrected)
+    pages:
+    - 601
+    - 602
+    section: 7.3.4
+    equations: []
+  title: Frequentist coverage of Bayesian credible balls
+  statement: "Let S=H(δ) with δ>1/2, or S=M(w) with admissible w. Assume the corresponding\nBvM theorem. For 0<α<1 choose Rₙ so that\n  Cₙ={f:||f-Tₙ||_S≤Rₙ/√n},  Π(Cₙ|Y)=1-α,\nwhere Tₙ=Y or the posterior mean f̄ₙ. Then\n  P^Y_{f₀}(f₀∈Cₙ)→1-α,\n  Rₙ→Φ^{-1}(1-α) in P^Y_{f₀}-probability,\nwhere Φ(t)=N({z:||z||_S≤t})."
+  hypotheses:
+    explicit:
+    - 0<α<1.
+    - δ>1/2 in the Sobolev case.
+    - w admissible in the multiscale case.
+    - Rₙ is a measurable posterior quantile.
+    - Tₙ is one of the two stated centres.
+    implicit:
+    - The Gaussian norm distribution Φ is continuous and strictly increasing.
+    - For posterior-mean centring, Exercise 7.3.8's `o_P(n^{-1/2})` result is used.
+  quantifier_order:
+  - For either space/centre, as n→∞.
+  constants:
+  - Limit radius is the (1-α)-quantile of the Gaussian norm.
+  dependencies:
+    earlier_book:
+    - Exercise 2.4.4
+    - Theorem 2.4.5
+    - Corollary 2.6.18
+    chapter_local:
+    - ch7.cor.7.3.22
+    - ch7.thm.7.3.19
+    - ch7.thm.7.3.20
+    - ch7.def.weightedSobolevBvMSpace
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.8
+    contains_omitted_steps: true
+    comment: posterior-mean centring
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Random closed balls and measurable quantiles in separable Banach spaces;
+      prove Gaussian norm cdf continuity/strict increase, then coverage by uniform
+      BvM.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 595
+    detail: H(δ) requires δ>1/2.
+  - type: official_erratum
+    page: 601
+    detail: Coverage probability is under P^Y_{f₀}.
