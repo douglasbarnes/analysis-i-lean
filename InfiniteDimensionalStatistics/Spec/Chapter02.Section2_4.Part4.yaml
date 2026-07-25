@@ -1,0 +1,423 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.4'
+fragment_part: 4
+inventory:
+- id: exercise-2-4-6
+  kind: exercise
+  book:
+    number: Exercise 2.4.6
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Conditional monotonicity for a Gaussian coordinate
+  statement: For centred jointly Gaussian (g₀,g₁,…,g_n), Y=(g₁,…,g_n), convex symmetric measurable C⊆ℝ^n and x≥0, prove Pr(Y∈C
+    | g₀=x)≥Pr(Y∈C | |g₀|≤x).
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-4-5
+    chapter_local_dependents:
+    - corollary-2-4-6
+    later_book_uses:
+    - corollary-2-4-6
+    - Proof of Corollary 2.4.6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof; cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Write Y=ag₀+Z with Z independent and integrate the monotone translate probability.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Proof of Corollary 2.4.6
+- id: exercise-2-4-7
+  kind: exercise
+  book:
+    number: Exercise 2.4.7
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Differentiation in the Gaussian density identity
+  statement: Complete the proof of identity (2.54) by justifying differentiation under the integral sign in the Fourier inversion
+    formula for the multivariate normal density.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - exercise-2-4-8
+    - theorem-2-4-7
+    later_book_uses:
+    - exercise-2-4-8
+    - theorem-2-4-7
+    - Theorem 2.4.7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Dominated differentiation using Gaussian Fourier decay.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  used_by:
+  - Theorem 2.4.7
+- id: exercise-2-4-8
+  kind: exercise
+  book:
+    number: Exercise 2.4.8
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Differentiation of the rectangle probability interpolation
+  statement: Justify differentiation under the integral defining F in equation (2.57), completing the analytic step in the
+    proof of Theorem 2.4.7.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-4-7
+    chapter_local_dependents:
+    - theorem-2-4-7
+    later_book_uses:
+    - theorem-2-4-7
+    - Theorem 2.4.7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Dominated differentiation for the covariance interpolation and rectangle integral.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  used_by:
+  - Theorem 2.4.7
+- id: exercise-2-4-9
+  kind: exercise
+  book:
+    number: Exercise 2.4.9
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Transfer of sample continuity under metric domination
+  statement: If centred Gaussian processes X,Y satisfy d_X(s,t)≥d_Y(s,t) for all s,t and X is sample continuous, prove Y is
+    sample continuous.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-3-10
+    - theorem-2-4-12
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Use the local modulus inequality plus Sudakov entropy control.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-4-10
+  kind: exercise
+  book:
+    number: Exercise 2.4.10
+    pages:
+    - 60
+    section: '2.4'
+    equations: []
+  title: Process version of increment comparison
+  statement: For separable centred Gaussian processes X,Y on T with E(Y(t)−Y(s))²≤E(X(t)−X(s))² for all s,t, prove E sup_t
+    Y(t)≤2E sup_t X(t), including finiteness transfer.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-4-10
+    chapter_local_dependents:
+    - exercise-2-4-11
+    later_book_uses:
+    - exercise-2-4-11
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Approximate by finite index sets and use monotone convergence/separability.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-4-11
+  kind: exercise
+  book:
+    number: Exercise 2.4.11
+    pages:
+    - 60
+    section: '2.4'
+    equations: []
+  title: Absolute process comparison
+  statement: Under Exercise 2.4.10, assume each sample path of X and Y attains the value 0 somewhere. Prove E sup_t|Y(t)|≤4E
+    sup_t|X(t)|.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-4-10
+    chapter_local_dependents:
+    - exercise-2-4-12
+    later_book_uses:
+    - exercise-2-4-12
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Apply the one-sided comparison to positive and negative parts.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-4-12
+  kind: exercise
+  book:
+    number: Exercise 2.4.12
+    pages:
+    - 60
+    section: '2.4'
+    equations: []
+  title: Comparison of Gaussian moduli of continuity
+  statement: Under Exercise 2.4.11, prove that a universal K exists such that for every δ>0, E sup_{d_X(s,t)≤δ}|Y(t)−Y(s)|
+    ≤ K[sup_t E sup_{d_X(s,t)≤δ}|X(t)−X(s)| + δ√log N(T,d_X,δ)].
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-3-10
+    - exercise-2-4-11
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Localise increments at each base point, compare by Slepian, and add the entropy net term.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
