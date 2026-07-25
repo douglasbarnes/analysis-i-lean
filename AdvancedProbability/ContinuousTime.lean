@@ -165,14 +165,35 @@ structure ContinuousDoobLpInequality (p maxNorm terminalNorm : ℝ) where
   p_gt_one : 1 < p
   estimate : maxNorm ≤ p / (p - 1) * terminalNorm
 
-/-- Source 74: equality of one-time marginals (a version of a process). -/
-def IsVersion {Ω : Type u} (X Y : ContinuousProcess Ω) : Prop := ∀ t, X t = Y t
+/-- Source 74: a process `Y` is a version of `X` when they agree almost surely at every deterministic
+time. -/
+def IsVersion {Ω : Type u} [MeasurableSpace Ω] (P : Measure Ω)
+    (X Y : ContinuousProcess Ω) : Prop :=
+  ∀ t : ℝ≥0, X t =ᵐ[P] Y t
 
-/-- Source 75: right-limit regularization of martingales. -/
-structure MartingaleRegularization {Ω : Type u} (X : ContinuousProcess Ω) where
+namespace IsVersion
+
+protected theorem refl {Ω : Type u} [MeasurableSpace Ω] (P : Measure Ω)
+    (X : ContinuousProcess Ω) : IsVersion P X X :=
+  fun _ ↦ EventuallyEq.rfl
+
+protected theorem symm {Ω : Type u} [MeasurableSpace Ω] {P : Measure Ω}
+    {X Y : ContinuousProcess Ω} (h : IsVersion P X Y) : IsVersion P Y X :=
+  fun t ↦ (h t).symm
+
+protected theorem trans {Ω : Type u} [MeasurableSpace Ω] {P : Measure Ω}
+    {X Y Z : ContinuousProcess Ω} (hXY : IsVersion P X Y) (hYZ : IsVersion P Y Z) :
+    IsVersion P X Z :=
+  fun t ↦ (hXY t).trans (hYZ t)
+
+end IsVersion
+
+/-- Source 75: a right-limit regularisation is a version with càdlàg paths almost surely. -/
+structure MartingaleRegularization {Ω : Type u} [MeasurableSpace Ω]
+    (P : Measure Ω) (X : ContinuousProcess Ω) where
   regularized : ContinuousProcess Ω
-  version : IsVersion X regularized
-  cadlag : ∀ ω, IsCadlag (fun t ↦ regularized t ω)
+  version : IsVersion P X regularized
+  cadlag : ∀ᵐ ω ∂P, IsCadlag (fun t ↦ regularized t ω)
 
 /-- Source 76: continuous-time `Lᵖ` martingale convergence. -/
 structure ContinuousLpMartingaleConvergence {Ω : Type u} (X : ContinuousProcess Ω) where
