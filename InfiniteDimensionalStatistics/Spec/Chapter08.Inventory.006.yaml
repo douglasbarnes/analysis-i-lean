@@ -1,0 +1,527 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 6
+chunk_count: 16
+inventory:
+- id: ch8.linfty_resolution_grid_8_23
+  kind: definition
+  book:
+    number: (8.23)
+    pages:
+    - 620
+    section: 8.2.2
+    equations:
+    - '8.23'
+  title: L∞ Lepski resolution grid
+  statement: Choose j_max with 2^{j_max}≍n/log n and set J={1,…,j_max}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - n≥2
+    implicit:
+    - Integer rounding is suppressed.
+  quantifier_order:
+  - Choose j_max
+  - define finite grid J
+  constants:
+  - Comparison constants are fixed.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - ch8.linfty_oracle_8_24
+    - ch8.linfty_lepski_8_25
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.Integral
+      - Filter.liminf
+      - Metric.diam
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite interval with dyadic/logarithmic comparison.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - CR-029
+  - CR-030
+- id: ch8.linfty_oracle_8_24
+  kind: definition
+  book:
+    number: (8.24)
+    pages:
+    - 621
+    section: 8.2.2
+    equations:
+    - '8.24'
+  title: Oracle L∞ resolution
+  statement: j_n^*(f)=min{j∈J:B(j,f)≤c₀√(2^j j/n)}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - finite grid J
+    - bias proxy B(j,f)
+    - noise constant c₀
+    implicit:
+    - Nonemptiness at j_max or an explicit fallback is required.
+  quantifier_order:
+  - Fix f,n
+  - form balancing set
+  - take minimum
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.linfty_bias_8_21
+    - ch8.linfty_noise_mean_8_22
+    - ch8.linfty_resolution_grid_8_23
+    later_book_uses:
+    - ch8.lemma_8_2_6
+    - ch8.lemma_8_3_13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite minimum with balancing lemmas.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-005
+  - CR-030
+- id: ch8.linfty_lepski_8_25
+  kind: definition
+  book:
+    number: (8.25)
+    pages:
+    - 621
+    section: 8.2.2
+    equations:
+    - '8.25'
+  title: L∞ Lepski selector
+  statement: j̄_n=min{j∈J:‖f_n(j)−f_n(l)‖∞≤τ√(2^l l/n) for every l>j in J}; if the set is empty, put j̄_n=j_max.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - τ>0
+    - finite grid J
+    implicit:
+    - Measurability of sup norms and finite comparisons.
+  quantifier_order:
+  - Fix data,n,τ
+  - finite-search admissible indices
+  - minimum or fallback
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.linfty_resolution_grid_8_23
+    later_book_uses:
+    - ch8.lemma_8_2_6
+    - ch8.theorem_8_2_5
+    - ch8.lemma_8_3_13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Measurable finite-search selector.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-005
+- id: ch8.theorem_8_2_5
+  kind: theorem
+  book:
+    number: Theorem 8.2.5
+    pages:
+    - 621
+    section: 8.2.2
+    equations:
+    - '8.2'
+  title: Adaptive L∞ estimation by Lepski’s method
+  statement: For τ sufficiently large, f̂_n=f_n(j̄_n) satisfies, for every s,B>0 and n≥2, sup_{‖f‖_{B^s_{∞,∞}}≤B}E_f‖f̂_n−f‖∞≤D·max(1,B)^{1/(2s+1)}(n/log
+    n)^{-s/(2s+1)}, with D depending only on s,σ,τ.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - white-noise model
+    - τ sufficiently large
+    - s,B>0
+    implicit:
+    - Basis regularity exceeds s.
+  quantifier_order:
+  - Fix s,σ,τ
+  - There exists D
+  - For every B,n uniform bound
+  constants:
+  - D independent of B,n,f.
+  dependencies:
+    earlier_book:
+    - Theorem 5.1.2
+    - Proposition 5.1.12
+    chapter_local:
+    - ch8.linfty_bias_8_21
+    - ch8.linfty_lepski_8_25
+    - ch8.lemma_8_2_6
+    later_book_uses:
+    - ch8.theorem_8_3_15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Adaptive sup-norm risk theorem; requires a Gaussian wavelet maximum concentration library.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-029
+- id: ch8.lemma_8_2_6
+  kind: lemma
+  book:
+    number: Lemma 8.2.6
+    pages:
+    - 621
+    section: 8.2.2
+    equations:
+    - '8.2'
+  title: Upper-tail control for the L∞ Lepski selector
+  statement: For f∈B^s_{∞,∞}, j>j_n^*, and τ sufficiently large, there is C>0 depending only on σ such that P_f(j̄_n=j)≤C^{-1}e^{-Cτj}
+    and P_f(j̄_n>j_n^*)≤C^{-1}e^{-Cτj_n^*}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - j>j_n^*
+    - τ sufficiently large
+    implicit:
+    - Basis constants are fixed globally.
+  quantifier_order:
+  - There exists C(σ)>0
+  - For all admissible n,f,s,j,τ the bounds hold
+  constants:
+  - Uniformity as stated.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.12
+    chapter_local:
+    - ch8.linfty_oracle_8_24
+    - ch8.linfty_lepski_8_25
+    later_book_uses:
+    - ch8.theorem_8_2_5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id002
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Gaussian sup-norm concentration and finite union bound.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-001
+  - CR-003
+- id: ch8.hard_threshold_estimator_8_27
+  kind: definition
+  book:
+    number: (8.27)
+    pages:
+    - 622
+    section: 8.2.2
+    equations:
+    - '8.27'
+  title: Hard wavelet-threshold estimator in white noise
+  statement: Choose 2^{j_max}≍n and τ_n=τ√(log n/n). Define f_n^T=∑_{ℓ≤j_max−1}∑_k Y_{ℓk}1{|Y_{ℓk}|>τ_n}ψ_{ℓk}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - periodised Meyer wavelet basis
+    - n≥2
+    - τ>0
+    implicit:
+    - The thresholded coefficient map is measurable.
+  quantifier_order:
+  - Choose j_max and τ_n
+  - threshold every retained coefficient
+  - form finite wavelet sum
+  constants:
+  - τ is chosen sufficiently large in the theorem.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.gaussian_wavelet_sequence_8_6
+    later_book_uses:
+    - ch8.theorem_8_2_7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id003
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite coefficientwise hard-threshold map followed by wavelet synthesis.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-030
+- id: ch8.theorem_8_2_7
+  kind: theorem
+  book:
+    number: Theorem 8.2.7
+    pages:
+    - 623
+    section: 8.2.2
+    equations:
+    - '8.2'
+  title: Adaptive L∞ estimation by hard thresholding
+  statement: For τ sufficiently large, every fixed s,B>0 and n≥2, the estimator (8.27) satisfies sup_{‖f‖_{B^s_{∞,∞}}≤B}E_f‖f_n^T−f‖∞≤D·max(1,B)^{1/(2s+1)}(log
+    n/n)^{s/(2s+1)}, with D depending only on s,σ,τ.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - white-noise model
+    - s,B>0
+    - τ sufficiently large
+    implicit:
+    - Wavelet regularity is sufficient for all stated s.
+  quantifier_order:
+  - Fix s,σ,τ
+  - There exists D
+  - For every B,n the uniform risk bound holds
+  constants:
+  - D independent of B,n,f.
+  dependencies:
+    earlier_book:
+    - Gaussian coefficient tail bounds
+    - wavelet overlap inequalities
+    chapter_local:
+    - ch8.linfty_minimax_benchmark_8_20
+    - ch8.hard_threshold_estimator_8_27
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Coefficient classification into large/small signal/noise cases; major dependence on a wavelet synthesis
+      library.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-001
+  - CR-003
+  - CR-004
+  - CR-029
+- id: ch8.iid_hard_threshold_estimator_8_31
+  kind: definition
+  book:
+    number: (8.31)
+    pages:
+    - 625
+    section: 8.2.2
+    equations:
+    - '8.31'
+  title: Hard threshold density estimator on ℝ
+  statement: For empirical coefficients Y_{ℓk}=n^{-1}∑_{i=1}^nψ_{ℓk}(X_i), choose 2^{J_max}≍n/log n and threshold
+    τ_n=τ√U√(log n/n); synthesize the retained wavelet coefficients up to J_max−1.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - X_i i.i.d. with density f on ℝ
+    - ‖f‖∞≤U
+    - S-regular compactly supported wavelet basis
+    implicit:
+    - Scaling coefficients and low levels follow the chapter’s fixed convention.
+  quantifier_order:
+  - Fix n,U,τ
+  - compute empirical coefficients
+  - threshold and synthesize
+  constants: []
+  dependencies:
+    earlier_book:
+    - Chapter 5 empirical wavelet estimators
+    chapter_local: []
+    later_book_uses:
+    - ch8.theorem_8_2_8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id003
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Measurable empirical coefficients plus finite threshold synthesis on a locally finite wavelet index.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-026
+  - CR-030
