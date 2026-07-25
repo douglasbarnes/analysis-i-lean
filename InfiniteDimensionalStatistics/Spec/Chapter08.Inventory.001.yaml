@@ -212,7 +212,7 @@ inventory:
 - id: ch8.adaptive_l2_testing_rate
   kind: definition
   book:
-    number: Theorem 8.1.1 rate
+    number: unnumbered rate preceding Theorem 8.1.1
     pages:
     - 609
     section: 8.1.1
