@@ -28,12 +28,21 @@ def logMomentGeneratingFunction {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) (X : Ω → ℝ) (λ : ℝ) : ℝ :=
   Real.log (∫ ω, Real.exp (λ * X ω) ∂P)
 
-/-- A real-valued random variable with the symmetric Rademacher law. -/
+/--
+A measurable real random variable with the symmetric Rademacher law.
+
+The almost-sure support and zero-integral fields are recorded explicitly.  They
+are consequences of the two half-mass identities under a probability measure,
+but retaining them here prevents every later concentration proof from having
+to reconstruct the same measure-theoretic argument.
+-/
 def IsRademacher {Ω : Type*} [MeasurableSpace Ω]
     (P : Measure Ω) (ε : Ω → ℝ) : Prop :=
   Measurable ε ∧
+    (∀ᵐ ω ∂P, ε ω = -1 ∨ ε ω = 1) ∧
     P {ω | ε ω = 1} = (2 : ℝ≥0∞)⁻¹ ∧
-    P {ω | ε ω = -1} = (2 : ℝ≥0∞)⁻¹
+    P {ω | ε ω = -1} = (2 : ℝ≥0∞)⁻¹ ∧
+    (∫ ω, ε ω ∂P) = 0
 
 /-- A mutually independent finite family of Rademacher variables. -/
 def IsRademacherFamily {Ω : Type*} [MeasurableSpace Ω] {n : ℕ}
