@@ -1,0 +1,479 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: '7.1'
+inventory:
+- id: ch7.def.hellinger
+  kind: definition
+  book:
+    number: (7.1)
+    label: (7.1)
+    pages:
+    - 542
+    section: '7.1'
+    equations:
+    - (7.1)
+    section_title: Nonparametric Testing in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Hellinger distance
+  statement: "For μ-densities p and q, define\n  h(p,q)^2 = ∫_X (√p - √q)^2 dμ.\nThe value is independent of the common dominating measure and satisfies 0 ≤ h(p,q)^2 ≤ 2."
+  hypotheses:
+    explicit:
+    - (X,A) is a measurable space.
+    - μ is a σ-finite measure.
+    - p and q are μ-densities of probability measures.
+    implicit:
+    - Square roots are pointwise nonnegative roots.
+    - Equalities and the metric are insensitive to μ-a.e. modification of densities.
+  quantifier_order:
+  - ∀ measurable spaces (X,A), ∀ σ-finite μ, ∀ probability densities p,q.
+  constants: []
+  dependencies:
+    earlier_book:
+    - §6.1.2 Basic Information Theory.
+    chapter_local: []
+    later_book_uses:
+    - ch7.def.averageDensityClass
+    - ch7.def.hellingerAffinity
+    - ch7.lemma.7.2.2
+    - ch7.lemma.7.3.8
+    - ch7.prop.7.1.1
+    - ch7.thm.7.1.2
+    - ex7.2.1
+    - ex7.2.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - MeasureTheory.Measure.rnDeriv
+      - L2 geometry and integrals
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A bundled nonnegative measurable function `p : α → ℝ` with `∫ p ∂μ = 1`, or preferably the induced probability measure `μ.withDensity (ENNReal.ofReal ∘ p)` plus a chosen density representative.
+
+      Define the squared distance in `ℝ≥0∞` or `ℝ`; quotient by a.e. equality or prove representative independence.'
+    blockers:
+    - Radon–Nikodym derivatives
+    - Bochner/Lebesgue integration
+    - L2 norm
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_hellinger
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/HellingerTesting.lean
+- id: ch7.def.hellingerAffinity
+  kind: definition
+  book:
+    number: (7.2)–(7.3)
+    label: (7.2)–(7.3)
+    pages:
+    - 542
+    section: '7.1'
+    equations:
+    - (7.2)
+    - (7.3)
+    section_title: Nonparametric Testing in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Hellinger affinity
+  statement: "Define the Hellinger affinity\n  ρ(p,q) = ∫ √(pq) dμ = 1 - h(p,q)^2/2.\nIf P has density p and Q has density q, then\n  ρ(p,q) = E_P[√(q/p)(X)]\nwith the ratio interpreted on {p>0}; moreover log ρ(p,q) ≤ -h(p,q)^2/2."
+  hypotheses:
+    explicit:
+    - Hypotheses of the Hellinger-distance definition.
+    implicit:
+    - The likelihood ratio is defined P-a.s.; values on {p=0} are irrelevant.
+    - If ρ=0, log ρ=-∞.
+  quantifier_order:
+  - ∀ p,q as probability densities.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Jensen's inequality; log(1-x)≤-x.
+    chapter_local:
+    - ch7.def.hellinger
+    later_book_uses:
+    - ch7.def.simpleLikelihoodRatioTest
+    - ch7.prop.7.1.1
+    - ch7.thm.7.1.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - MeasureTheory.rnDeriv
+      - Real.log inequalities
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Define affinity as `∫ x, Real.sqrt (p x * q x) ∂μ`; prove the expectation identity under absolute-continuity conventions and the logarithmic bound.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_hellingerAffinity
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/HellingerTesting.lean
+- id: ch7.def.simpleLikelihoodRatioTest
+  kind: definition
+  book:
+    number: (7.4)
+    label: (7.4)
+    pages:
+    - 542
+    section: '7.1'
+    equations:
+    - (7.4)
+    section_title: Nonparametric Testing in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Simple Hellinger likelihood-ratio test
+  statement: "For i.i.d. observations X₁,…,Xₙ, define\n  φₙ = 1{ ∏_{i=1}^n √(q/p)(Xᵢ) > 1 }."
+  hypotheses:
+    explicit:
+    - n∈ℕ, n≥1.
+    - The data are sampled from either P^n or Q^n.
+    implicit:
+    - The product likelihood ratio is defined using a P- or Q-a.s. version; the event is measurable.
+  quantifier_order:
+  - ∀ n≥1, define φₙ on X^n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.hellingerAffinity
+    later_book_uses:
+    - ch7.prop.7.1.1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A measurable indicator `φ : (Fin n → X) → ℝ` (or `Bool`/`Prop`) built from finite products of a measurable square-root Radon–Nikodym ratio.'
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_simpleLikelihoodRatioTest
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/HellingerTesting.lean
+- id: ch7.prop.7.1.1
+  kind: proposition
+  book:
+    number: Proposition 7.1.1
+    label: Proposition 7.1.1
+    pages:
+    - 542
+    - 543
+    section: '7.1'
+    equations: []
+    section_title: Nonparametric Testing in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Exponential testing errors for two simple hypotheses
+  statement: "For the test φₙ of (7.4), for every n∈ℕ,\n  E_P φₙ ≤ exp(-n h(p,q)^2/2),\n  E_Q (1-φₙ) ≤ exp(-n h(p,q)^2/2)."
+  hypotheses:
+    explicit:
+    - p,q are μ-densities.
+    - Observations are i.i.d. under P or Q.
+    - n≥1.
+    implicit:
+    - Expectations are with respect to product measures P^n and Q^n.
+  quantifier_order:
+  - ∀ p,q, ∀ n≥1, both inequalities hold.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Markov's inequality
+    - independence/product expectation
+    chapter_local:
+    - ch7.def.hellinger
+    - ch7.def.hellingerAffinity
+    - ch7.def.simpleLikelihoodRatioTest
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A pair of finite-product expectation bounds on `Measure.pi`/product probability measures.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_7_1_1
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/HellingerTesting.lean
+- id: ch7.thm.7.1.2
+  kind: theorem
+  book:
+    number: Theorem 7.1.2
+    label: Theorem 7.1.2
+    pages:
+    - 543
+    - 544
+    section: '7.1'
+    equations: []
+    section_title: Nonparametric Testing in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Robust one-observation test between Hellinger balls
+  statement: "Let h(p,q)=d>0 and B(p)={r:h(r,p)≤d/4}, B(q)={r:h(r,q)≤d/4}.\nThere exists a measurable nonnegative function φ:X→[0,∞) such that, writing dR=r dμ,\n  sup_{r∈B(p)} E_R φ ≤ 1 - d^2/12,\n  sup_{r∈B(q)} E_R (1/φ) ≤ 1 - d^2/12."
+  hypotheses:
+    explicit:
+    - p,q are probability densities with common dominating measure μ.
+    - d=h(p,q)>0.
+    implicit:
+    - The constructed φ is strictly positive where its reciprocal matters, up to every R in B(q).
+    - Balls range over all μ-densities.
+  quantifier_order:
+  - ∀ p,q with d>0, ∃ measurable φ≥0, ∀ r∈B(p), first bound, and ∀ r∈B(q), second bound.
+  constants:
+  - Ball radius exactly d/4.
+  - Loss constant exactly 1/12.
+  dependencies:
+    earlier_book:
+    - Hilbert-space geometry of root densities
+    - elementary trigonometric inequalities
+    chapter_local:
+    - ch7.def.hellinger
+    - ch7.def.hellingerAffinity
+    later_book_uses:
+    - ch7.cor.7.1.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Construct a measurable test factor from the two-dimensional plane generated by root densities in `L2(μ)`; formalisation needs measurable representatives and reciprocal integrability.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_1_2
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/HellingerTesting.lean
+- id: ch7.cor.7.1.3
+  kind: corollary
+  book:
+    number: Corollary 7.1.3
+    label: Corollary 7.1.3
+    pages:
+    - 545
+    section: '7.1'
+    equations: []
+    section_title: Nonparametric Testing in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Product test between Hellinger balls
+  statement: "For φ from Theorem 7.1.2 define\n  φₙ = 1{∏_{i=1}^n φ(Xᵢ)>1}.\nThen for every n≥1,\n  sup_{r∈B(p)} E_R φₙ ≤ exp(-n h(p,q)^2/12),\n  sup_{r∈B(q)} E_R(1-φₙ) ≤ exp(-n h(p,q)^2/12)."
+  hypotheses:
+    explicit:
+    - The hypotheses and balls of Theorem 7.1.2.
+    - i.i.d. observations.
+    implicit: []
+  quantifier_order:
+  - ∀ n≥1, both uniform error bounds.
+  constants:
+  - Exponent constant 1/12.
+  dependencies:
+    earlier_book:
+    - Markov's inequality
+    - independence
+    chapter_local:
+    - ch7.thm.7.1.2
+    later_book_uses:
+    - ch7.thm.7.1.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Lift the one-observation factor to a finite product and apply product-measure expectation factorisation.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_cor_7_1_3
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/HellingerTesting.lean
+- id: ch7.thm.7.1.4
+  kind: theorem
+  book:
+    number: Theorem 7.1.4 (officially corrected)
+    label: Theorem 7.1.4 (officially corrected)
+    pages:
+    - 545
+    - 546
+    section: '7.1'
+    equations: []
+    section_title: Nonparametric Testing in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Tests for Hellinger-separated composite alternatives
+  statement: "Let P be a class of μ-densities and p₀ a fixed density. Suppose there are ε₀>0 and a\nnonincreasing N:(0,∞)→(0,∞) such that for every ε>ε₀,\n  N({p∈P: ε<h(p,p₀)≤2ε}, h, ε/4) ≤ N(ε).\nCorrected statement: for every c₀>0 there is K=K(c₀)>0 such that, for every ε>ε₀\nand every n with n ε²≥c₀, there exists a test φₙ of p=p₀ versus\n{p∈P:h(p,p₀)>ε} satisfying\n  E_{P₀} φₙ ≤ (N(ε)/K) exp(-K n ε²),\n  sup_{p∈P:h(p,p₀)>ε} E_P(1-φₙ) ≤ exp(-K n ε²)."
+  hypotheses:
+    explicit:
+    - P is Hellinger-totally-bounded on each shell through the displayed covering condition.
+    - N is nonincreasing.
+    - ε>ε₀.
+    - nε²≥c₀.
+    implicit:
+    - Covering numbers are finite.
+    - Tests and shell covers can be chosen measurably; countable shell union.
+  quantifier_order:
+  - ∀ c₀>0, ∃ K(c₀)>0, ∀ ε>ε₀, ∀ n with nε²≥c₀, ∃ test φₙ, both bounds.
+  constants:
+  - K depends on c₀ only; it is not universal uniformly over arbitrarily small nε².
+  - Cover radius ε/4.
+  dependencies:
+    earlier_book:
+    - Metric covering numbers
+    - geometric shell decomposition
+    chapter_local:
+    - ch7.cor.7.1.3
+    later_book_uses:
+    - ch7.thm.7.3.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A finite/countable union of ball tests indexed by chosen covers. Requires a definition of covering number with witnesses, measurable finite maxima, and extended-real exponential bounds.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 545: original=universal K and every n corrected=for nε²≥c₀ with K=K(c₀)'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_1_4
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/HellingerTesting.lean
