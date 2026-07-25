@@ -149,13 +149,15 @@ chapters:
     duplicate_identifiers: []
     duplicate_numbered_book_labels: []
     chapter_local_strict_schema: pass
-    central_review_issue_count: 5
+    central_review_issue_count: 4
   source_review_caveats:
   - Exercises 7.3.1–7.3.8 have been verified against the printed exercise block on pp. 602–603.
   - Lemmas 7.3.4 and 7.3.8 have been verified against the printed pages, including their exact constants and normalisations.
-  - Eight representation or measurability review items were resolved by explicit constructions or source-faithful conventions.
-  - The remaining reviews concern equation (7.22), the generality of Lemma 7.2.6, and the three recorded Corollary 7.3.24
-    erratum/notation items.
+  - Equation (7.22) has been verified: the printed hypothesis P≪P₀ gives the required Jensen normalisation and is not directionally
+    inconsistent.
+  - Nine representation, measurability or source-orientation review items were resolved by explicit constructions or source-faithful
+    conventions.
+  - The remaining reviews concern the generality of Lemma 7.2.6 and the three recorded Corollary 7.3.24 erratum/notation items.
 - number: 8
   title: Adaptive Inference
   printed_pages:
