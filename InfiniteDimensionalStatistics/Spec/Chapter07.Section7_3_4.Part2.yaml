@@ -13,7 +13,8 @@ inventory:
     section: 7.3.4
     equations: []
   title: Negative weighted Sobolev space H(δ)
-  statement: "Define H_2^{s,δ} by the coefficient norm\n  ||f||_{s,2,δ}²=∑_{l,k} a_l^{2s}(log a_l)^{-2δ}|f_{lk}|²,\nand set H(δ)=H_2^{-1/2,δ}. White noise is a tight Borel Gaussian random element of\nH(δ) only for δ>1/2 (official correction)."
+  statement: "Define H_2^{s,δ} by the coefficient norm\n  ||f||_{s,2,δ}²=∑_{l,k} a_l^{2s}(log a_l)^{-2δ}|f_{lk}|²,\nand set\
+    \ H(δ)=H_2^{-1/2,δ}. White noise is a tight Borel Gaussian random element of\nH(δ) only for δ>1/2 (official correction)."
   hypotheses:
     explicit:
     - An S-regular basis and scales a_l.
@@ -48,16 +49,14 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A weighted Hilbert `ℓ²` space and a Gaussian series random element; prove
-      separability, completeness and support.
+    sketch: A weighted Hilbert `ℓ²` space and a Gaussian series random element; prove separability, completeness and support.
     blockers: []
   difficulty: major-library
   pass: core
   issues_for_central_review:
   - type: official_erratum
     page: 595
-    detail: Require δ>1/2, not δ>0; the same correction applies to Theorems 7.3.19
-      and 7.3.23.
+    detail: Require δ>1/2, not δ>0; the same correction applies to Theorems 7.3.19 and 7.3.23.
 - id: ch7.thm.7.3.19
   kind: theorem
   book:
@@ -69,7 +68,10 @@ inventory:
     section: 7.3.4
     equations: []
   title: Weak Bernstein–von Mises theorem in H(δ)
-  statement: "Assume Condition 7.3.11 and that φ is continuous at every normalised true\ncoefficient f_{0,lk}/σ_l as required in the coordinate argument. Let δ>1/2.\nFor τ_Y(f)=√n(f-Y),\n  β_{H(δ)}( Π(·|Y)∘τ_Y^{-1}, N )→0\nin P^Y_{f₀}-probability, where N is the white-noise Gaussian law on H(δ).\nMoreover the proof yields\n  ||f̄ₙ-Y||_{H(δ)}=o_{P^Y_{f₀}}(n^{-1/2})\nafter the moment argument delegated to Exercise 7.3.8."
+  statement: "Assume Condition 7.3.11 and that φ is continuous at every normalised true\ncoefficient f_{0,lk}/σ_l as required\
+    \ in the coordinate argument. Let δ>1/2.\nFor τ_Y(f)=√n(f-Y),\n  β_{H(δ)}( Π(·|Y)∘τ_Y^{-1}, N )→0\nin P^Y_{f₀}-probability,\
+    \ where N is the white-noise Gaussian law on H(δ).\nMoreover the proof yields\n  ||f̄ₙ-Y||_{H(δ)}=o_{P^Y_{f₀}}(n^{-1/2})\n\
+    after the moment argument delegated to Exercise 7.3.8."
   hypotheses:
     explicit:
     - Condition 7.3.11.
@@ -112,8 +114,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Weak convergence in probability of random probability measures on a separable
-      Hilbert space, assembled from finite-dimensional TV convergence and tightness.
+    sketch: Weak convergence in probability of random probability measures on a separable Hilbert space, assembled from finite-dimensional
+      TV convergence and tightness.
     blockers: []
   difficulty: research-level
   pass: core
@@ -132,7 +134,9 @@ inventory:
     section: 7.3.4
     equations: []
   title: Weak Bernstein–von Mises theorem in multiscale space
-  statement: "In the wavelet case let σ_l=2^{-l(α+1/2)}, α>0. Assume φ is continuous,\nsatisfies Condition 7.3.11 and a sub-Gaussian tail bound. For every admissible\nweight sequence w, the shifted posterior τ_Y(f)=√n(f-Y) satisfies\n  β_{M₀(w)}(Π(·|Y)∘τ_Y^{-1},N)→0\nin P^Y_{f₀}-probability. The posterior mean also obeys\n  ||f̄ₙ-Y||_{M₀(w)}=o_P(n^{-1/2})\nvia Exercise 7.3.8."
+  statement: "In the wavelet case let σ_l=2^{-l(α+1/2)}, α>0. Assume φ is continuous,\nsatisfies Condition 7.3.11 and a sub-Gaussian\
+    \ tail bound. For every admissible\nweight sequence w, the shifted posterior τ_Y(f)=√n(f-Y) satisfies\n  β_{M₀(w)}(Π(·|Y)∘τ_Y^{-1},N)→0\n\
+    in P^Y_{f₀}-probability. The posterior mean also obeys\n  ||f̄ₙ-Y||_{M₀(w)}=o_P(n^{-1/2})\nvia Exercise 7.3.8."
   hypotheses:
     explicit:
     - Wavelet basis.
@@ -173,8 +177,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Random-measure weak convergence in a custom separable weighted `c₀`-type
-      multiscale Banach space.
+    sketch: Random-measure weak convergence in a custom separable weighted `c₀`-type multiscale Banach space.
     blockers: []
   difficulty: research-level
   pass: core
@@ -188,16 +191,19 @@ inventory:
     section: 7.3.4
     equations: []
   title: ε-boundary thickening
-  statement: "For a measurable set B in a metric space (S,d) and ε>0, define\n  ∂_ε B = {x∈S : d(x,B)<ε and d(x,Bᶜ)<ε}.\nThis is the set of points within ε of both B and its complement."
+  statement: "For a subset B of a metric space (S,d) and ε>0, define\n  ∂_ε B = {x∈S : d(x,B)<ε and d(x,Bᶜ)<ε}.\nEquivalently,\
+    \ ∂_εB is the intersection of the open ε-neighbourhoods of B and Bᶜ. With the standard empty-neighbourhood convention,\
+    \ ∂_ε∅=∂_εS=∅. Hence ∂_εB is open, and therefore Borel, for every B⊆S."
   hypotheses:
     explicit:
     - (S,d) is a metric space.
-    - B⊆S is measurable.
+    - B⊆S.
     - ε>0.
     implicit:
-    - Distance to a set is the infimum distance; empty-set conventions must be fixed.
+    - The sets B used in Proposition 7.3.21 are measurable because μₙ(B) and μ(B) are evaluated; measurability of B is not
+      needed to make ∂_εB Borel.
   quantifier_order:
-  - For every measurable B and every ε>0.
+  - For every subset B⊆S and every ε>0.
   constants:
   - ε>0.
   dependencies:
@@ -225,17 +231,10 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: 'The intersection of the open ε-neighbourhoods of B and Bᶜ, expressed
-      using
-
-      `Metric.infDist`; prove measurability under the separable-metric/Borel
-
-      hypotheses actually required downstream.'
+    sketch: Define `∂_ε B` as `Metric.thickening ε B ∩ Metric.thickening ε Bᶜ` (or the corresponding open-neighbourhood sets).
+      Openness and Borel measurability are immediate; the empty and full cases follow from thickening conventions.
     blockers: []
   difficulty: routine
   pass: core
-  issues_for_central_review:
-  - type: measurability
-    page: 599
-    detail: For arbitrary subsets the distance functions are continuous, but the specification
-      should state the Borel/measurability assumptions needed for evaluating μ(∂_εB).
+  issues_for_central_review: []
+  verification_status: definition_verified_and_borel_measurability_resolved
