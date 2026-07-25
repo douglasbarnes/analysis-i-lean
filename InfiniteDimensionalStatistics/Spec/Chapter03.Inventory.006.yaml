@@ -437,7 +437,7 @@ inventory:
       integrals as Lebesgue integrals of extended-real functions.
     blockers: []
   difficulty: major-library
-  pass: starred
+  pass: core
   issues_for_central_review: []
 - id: lemma_3_3_18
   kind: lemma
@@ -472,7 +472,7 @@ inventory:
     blockers: &id014
     - Exact λ-function and coefficient require transcription.
   difficulty: major-library
-  pass: starred
+  pass: core
   issues_for_central_review: *id014
 - id: lemma_3_3_19
   kind: lemma
@@ -508,7 +508,7 @@ inventory:
     blockers: &id015
     - Copy (3.134) exactly.
   difficulty: major-library
-  pass: starred
+  pass: core
   issues_for_central_review: *id015
 - id: theorem_3_4_1
   kind: theorem
