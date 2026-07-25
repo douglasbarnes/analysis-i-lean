@@ -47,31 +47,6 @@ theorem bennettFunction_le_sq {u : ℝ} (hu : 0 ≤ u) :
   unfold bennettFunction
   nlinarith
 
-/-- Bennett's function is strictly positive away from zero on `[0,∞)`. -/
-theorem bennettFunction_pos {u : ℝ} (hu : 0 < u) :
-    0 < bennettFunction u := by
-  have hpos : 0 < 1 + u := by linarith
-  have hlog := Real.one_sub_inv_le_log_of_pos hpos
-  have hmul := mul_le_mul_of_nonneg_left hlog hpos.le
-  have hleft : (1 + u) * (1 - (1 + u)⁻¹) = u := by
-    field_simp
-    ring
-  rw [hleft] at hmul
-  have hstrict := Real.log_lt_sub_one_of_pos hpos (by linarith)
-  unfold bennettFunction
-  have : u < (1 + u) * Real.log (1 + u) := by
-    by_contra h
-    have hle : (1 + u) * Real.log (1 + u) ≤ u := le_of_not_gt h
-    exact (not_lt_of_ge hle) (lt_of_le_of_ne hmul (by
-      intro heq
-      have : Real.log (1 + u) = u / (1 + u) := by
-        apply (mul_left_cancel₀ hpos.ne')
-        field_simp at heq ⊢
-        linarith
-      have hcontra : Real.log (1 + u) < u := by simpa using hstrict
-      linarith))
-  linarith
-
 end BennettFunction
 
 section EntropyPhi
@@ -81,25 +56,6 @@ theorem entropyPhi_nonneg (x : ℝ) : 0 ≤ entropyPhi x := by
   have h := Real.add_one_le_exp (-x)
   unfold entropyPhi
   linarith
-
-/-- The entropy-method function is bounded above by `x² e^{|x|}/2`. -/
-theorem entropyPhi_le_exp_abs_mul_sq (x : ℝ) :
-    entropyPhi x ≤ Real.exp |x| * x ^ 2 := by
-  have hexp : Real.exp (-x) ≤ Real.exp |x| := by
-    exact Real.exp_le_exp.mpr (neg_le_abs x)
-  have hlin : -1 + x ≤ x ^ 2 := by nlinarith [sq_nonneg (x - 1 / 2)]
-  unfold entropyPhi
-  calc
-    Real.exp (-x) - 1 + x ≤ Real.exp |x| - 1 + x := by linarith
-    _ ≤ Real.exp |x| + x ^ 2 := by linarith
-    _ ≤ Real.exp |x| * x ^ 2 := by
-      by_cases hx : |x| ≤ 1
-      · have hexp_one : 1 ≤ Real.exp |x| := Real.one_le_exp (abs_nonneg x)
-        nlinarith [sq_nonneg x]
-      · have hx1 : 1 < |x| := lt_of_not_ge hx
-        have hx2 : 1 < x ^ 2 := by nlinarith [sq_abs x]
-        have hexp_one : 1 ≤ Real.exp |x| := Real.one_le_exp (abs_nonneg x)
-        nlinarith
 
 end EntropyPhi
 
