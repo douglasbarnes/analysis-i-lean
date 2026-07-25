@@ -2,7 +2,7 @@ import AdvancedProbability.ContinuousTime
 
 noncomputable section
 
-open scoped MeasureTheory
+open scoped MeasureTheory NNReal
 open Filter MeasureTheory
 
 namespace AdvancedProbability
