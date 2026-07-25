@@ -1,11 +1,10 @@
 name: Lean
 
 on:
-  pull_request:
   workflow_dispatch:
 
 concurrency:
-  group: lean-${{ github.event.pull_request.number || github.ref }}
+  group: lean-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
