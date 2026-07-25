@@ -12,11 +12,10 @@ inventory:
     section: 7.3.1
     equations: []
   title: Posterior contraction rate
-  statement: "Let d be a metric or semimetric on the parameter space and let εₙ→0.\n\
-    The posterior contracts about the true parameter f₀ at rate εₙ in d if,\nfor a\
-    \ sufficiently large fixed constant M (or for every sufficiently large\nfixed\
-    \ M, according to the theorem being applied),\n  Π({f : d(f,f₀)>M εₙ} | X^{(n)})\
-    \ → 0\nin probability under the sampling law at f₀."
+  statement: "Let d be a metric or semimetric on the parameter space and let εₙ→0. The posterior contracts about the true\
+    \ parameter f₀ at rate εₙ in d if there exists a fixed constant M<∞ such that\n  Π({f : d(f,f₀)>M εₙ} | X^{(n)}) → 0\n\
+    in probability under the sampling law at f₀. Individual theorems may establish the stronger conclusion for every fixed\
+    \ M above a threshold."
   hypotheses:
     explicit:
     - A sequence of experiments/observations indexed by n.
@@ -29,9 +28,9 @@ inventory:
     - Convergence is with respect to the true sampling distribution.
     - The multiplier M is fixed in n.
   quantifier_order:
-  - Fix f₀ and d; choose εₙ→0; then for sufficiently large fixed M, take n→∞.
+  - Fix f₀,d and εₙ→0; then ∃ a constant M<∞ independent of n such that the posterior-mass convergence holds as n→∞.
   constants:
-  - M is a fixed sufficiently large contraction multiplier.
+  - M is fixed independently of n.
   dependencies:
     earlier_book: []
     chapter_local:
@@ -65,12 +64,8 @@ inventory:
     blockers: []
   difficulty: substantial
   pass: core
-  issues_for_central_review:
-  - type: quantifier_convention
-    page: 573
-    detail: The prose definition and individual contraction theorems vary between
-      'some sufficiently large fixed M' and 'every sufficiently large fixed M'; preserve
-      each theorem's own quantifier.
+  issues_for_central_review: []
+  verification_status: verified_against_printed_page_573
 - id: ch7.thm.7.3.1
   kind: theorem
   book:
@@ -82,12 +77,10 @@ inventory:
     section: 7.3.1
     equations: []
   title: General posterior contraction theorem for i.i.d. models
-  statement: "Let Π=Πₙ be priors on a density model P, let X₁,…,Xₙ∼p₀, and let d be\
-    \ a metric\nor semimetric. Let εₙ→0 and √n εₙ→∞. For fixed C,L, assume:\n(i) Π{p:\
-    \ -P₀log(p/p₀)≤εₙ², P₀(log(p/p₀))²≤εₙ²} ≥ e^{-Cnεₙ²};\n(ii) Π(P\\Pₙ)≤L e^{-(C+4)nεₙ²};\n\
-    (iii) for every sufficiently large fixed M there are tests φₙ with\n      E_{P₀}φₙ→0\
-    \ and\n      sup_{p∈Pₙ:d(p,p₀)≥Mεₙ}E_P(1-φₙ)≤L e^{-(C+4)nεₙ²}.\nThen, for M sufficiently\
-    \ large,\n  Π(p:d(p,p₀)>Mεₙ | X₁,…,Xₙ)→0\nin P₀^n-probability."
+  statement: "Let Π=Πₙ be priors on a density model P, let X₁,…,Xₙ∼p₀, and let d be a metric\nor semimetric. Let εₙ→0 and\
+    \ √n εₙ→∞. For fixed C,L, assume:\n(i) Π{p: -P₀log(p/p₀)≤εₙ², P₀(log(p/p₀))²≤εₙ²} ≥ e^{-Cnεₙ²};\n(ii) Π(P\\Pₙ)≤L e^{-(C+4)nεₙ²};\n\
+    (iii) for every sufficiently large fixed M there are tests φₙ with\n      E_{P₀}φₙ→0 and\n      sup_{p∈Pₙ:d(p,p₀)≥Mεₙ}E_P(1-φₙ)≤L\
+    \ e^{-(C+4)nεₙ²}.\nThen, for M sufficiently large,\n  Π(p:d(p,p₀)>Mεₙ | X₁,…,Xₙ)→0\nin P₀^n-probability."
   hypotheses:
     explicit:
     - Officially corrected joint measurability `(x,p)↦p(x)`.
@@ -98,8 +91,7 @@ inventory:
     - d-balls are measurable.
     - The second moment condition is on the log likelihood ratio under P₀.
   quantifier_order:
-  - Fix C,L. For every sequence satisfying assumptions, ∃M₀, ∀M≥M₀, posterior contraction
-    in probability.
+  - Fix C,L. For every sequence satisfying assumptions, ∃M₀, ∀M≥M₀, posterior contraction in probability.
   constants:
   - The exponent buffer is C+4 exactly in the stated theorem.
   dependencies:
@@ -128,12 +120,11 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: 'A Markov kernel from data to parameters, using `ProbabilityTheory.posterior`
-      where Standard Borel hypotheses apply; density formulas require `rnDeriv`, `withDensity`,
-      and almost-everywhere equality.
+    sketch: 'A Markov kernel from data to parameters, using `ProbabilityTheory.posterior` where Standard Borel hypotheses
+      apply; density formulas require `rnDeriv`, `withDensity`, and almost-everywhere equality.
 
-      The conclusion is convergence in probability of a random posterior mass; formalisation
-      needs measurable random kernels and exponential denominator bounds.'
+      The conclusion is convergence in probability of a random posterior mass; formalisation needs measurable random kernels
+      and exponential denominator bounds.'
     blockers: []
   difficulty: research-level
   pass: core
@@ -151,17 +142,15 @@ inventory:
     section: 7.3.1
     equations: []
   title: Lower bound for an integrated likelihood denominator
-  statement: "Let ν be a probability measure supported on\n  B={p:-P₀log(p/p₀)≤ε²,\
-    \ P₀(log(p/p₀))²≤ε²}.\nFor every c>0,\n  P₀^n( ∫_B ∏_{i=1}^n [p(X_i)/p₀(X_i)]\
-    \ dν(p)\n          ≤ exp(-(1+c)nε²) )\n  ≤ 1/(c² n ε²)."
+  statement: "Let ν be a probability measure supported on\n  B={p:-P₀log(p/p₀)≤ε², P₀(log(p/p₀))²≤ε²}.\nFor every c>0,\n \
+    \ P₀^n( ∫_B ∏_{i=1}^n [p(X_i)/p₀(X_i)] dν(p)\n          ≤ exp(-(1+c)nε²) )\n  ≤ 1/(c² n ε²)."
   hypotheses:
     explicit:
     - ν(B)=1.
     - n≥1, ε>0, c>0.
     - Joint measurability of the integrand.
     implicit:
-    - The exact exponent is obtained by Jensen and Chebyshev; integrability of the
-      mixed log-likelihood.
+    - The exact exponent is obtained by Jensen and Chebyshev; integrability of the mixed log-likelihood.
   quantifier_order:
   - ∀ν supported on B, ∀c>0, ∀n.
   constants: []
@@ -191,8 +180,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A finite-sample probability inequality for a prior-mixture likelihood
-      ratio.
+    sketch: A finite-sample probability inequality for a prior-mixture likelihood ratio.
     blockers: []
   difficulty: major-library
   pass: core
@@ -206,16 +194,14 @@ inventory:
     section: 7.3.1
     equations: []
   title: Hellinger posterior contraction from entropy
-  statement: "In the setting of Theorem 7.3.1 assume the KL/variance prior-mass condition\
-    \ (7.91),\nthe sieve prior-tail condition (7.92), and\n  log N(Pₙ,h,εₙ)≤nεₙ².\n\
-    Then for M sufficiently large,\n  Π(p:h(p,p₀)>Mεₙ | X₁,…,Xₙ)→0\nin P₀^n-probability."
+  statement: "In the setting of Theorem 7.3.1 assume the KL/variance prior-mass condition (7.91),\nthe sieve prior-tail condition\
+    \ (7.92), and\n  log N(Pₙ,h,εₙ)≤nεₙ².\nThen for M sufficiently large,\n  Π(p:h(p,p₀)>Mεₙ | X₁,…,Xₙ)→0\nin P₀^n-probability."
   hypotheses:
     explicit:
     - Hypotheses of Theorem 7.3.1 with d=h.
     - Global sieve covering bound at εₙ.
     implicit:
-    - Use Theorem 7.1.4 with ε₀=mεₙ where fixed constants satisfy m<M; this is the
-      corrected proof.
+    - Use Theorem 7.1.4 with ε₀=mεₙ where fixed constants satisfy m<M; this is the corrected proof.
   quantifier_order:
   - ∃M₀, ∀M≥M₀, contraction.
   constants: []
@@ -244,8 +230,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: An application theorem assembling entropy-generated tests with the generic
-      contraction theorem.
+    sketch: An application theorem assembling entropy-generated tests with the generic contraction theorem.
     blockers: []
   difficulty: research-level
   pass: core
