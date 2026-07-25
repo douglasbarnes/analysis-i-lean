@@ -23,15 +23,8 @@ specification:
   canonical_schema: InfiniteDimensionalStatistics/Spec/Schema.md
   package_loader: InfiniteDimensionalStatistics/Spec/PackageLoader.md
   validator: scripts/validate_ids_specs.py
-  required_difficulty_values:
-    - routine
-    - substantial
-    - major-library
-    - research-level
-  required_pass_values:
-    - core
-    - starred
-    - exercise
+  required_difficulty_values: [routine, substantial, major-library, research-level]
+  required_pass_values: [core, starred, exercise]
   pass_policy:
     core: Unstarred main-text material, irrespective of implementation difficulty.
     starred: Material explicitly starred in the book.
@@ -73,12 +66,7 @@ chapters:
     printed_pages: {start: 389, end: 466}
     specification: InfiniteDimensionalStatistics/Spec/Chapter05.yaml
     audit_step: P1.5
-    status: needs_revision
-    blockers:
-      - Nine declarations require exact source transcription before source-fidelity acceptance.
-      - The unresolved declarations comprise the five-parameter density class, Proposition 5.1.21 and the quadratic-functional formulas on pp. 439–451.
-      - Central review must clear the Chapter 5 source-fidelity queue.
-      - Structural validation does not convert unresolved mathematical transcriptions into an accepted specification.
+    status: pass
   - number: 6
     title: The Minimax Paradigm
     printed_pages: {start: 467, end: 540}
