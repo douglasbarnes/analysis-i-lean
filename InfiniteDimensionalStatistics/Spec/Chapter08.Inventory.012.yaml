@@ -1,0 +1,529 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 12
+chunk_count: 16
+inventory:
+- id: ch8.theorem_8_3_15
+  kind: theorem
+  book:
+    number: Theorem 8.3.15
+    pages:
+    - 646
+    section: 8.3.3
+    equations:
+    - '8.3'
+  title: Adaptive honest L∞ confidence bands for self-similar functions
+  statement: Split the white-noise sample. Estimate smoothness from one half, undershoot it by v_n/log₂N, and use
+    the other half to construct the multiscale band of (6.142). For u_n,v_n→∞ with v_n=o(log₂n), coverage is uniformly
+    asymptotically exact 1−α over ⋃_{s∈[s_min,s_max]}Σ̃(s,ε), and for f in the s-class the diameter is O_{P_f}(ν_n
+    B^{1/(2s+1)}(log n/n)^{s/(2s+1)}), where ν_n=max(u_n,2^{O(v_n)}) can diverge arbitrarily slowly.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - fixed 0<s_min≤s_max
+    - B,ε,J₀ fixed
+    - u_n,v_n→∞
+    - v_n=o(log₂n)
+    - sample split into independent halves
+    implicit:
+    - The band uses a measurable multiscale norm and a lower smoothness estimate.
+  quantifier_order:
+  - Fix α and tuning sequences
+  - construct ŝ_n and s̃_n
+  - construct C_n
+  - take uniform coverage limit
+  - for each s assert diameter order
+  constants:
+  - Hidden constants depend on the smoothness window, ε,J₀,σ and basis.
+  dependencies:
+    earlier_book:
+    - Theorem 6.4.9
+    - equation (6.142)
+    - Theorem 2.7.1 for the alternative exercise construction
+    chapter_local:
+    - ch8.self_similar_holder_class_8_86
+    - ch8.smoothness_estimator_8_83_85
+    - ch8.lemma_8_3_13
+    later_book_uses:
+    - ch8.exercise_8_3_1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Sample-split product experiment; measurable lower smoothness estimator; selected multiscale confidence
+      band. Major prerequisites include multiscale Gaussian limits.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-014
+  - CR-016
+  - CR-019
+  - CR-025
+  - CR-029
+- id: ch8.gaussian_sequence_model_8_89
+  kind: definition
+  book:
+    number: (8.89)
+    pages:
+    - 647
+    section: 8.3.3
+    equations:
+    - '8.89'
+  title: Gaussian sequence model for L2 confidence balls
+  statement: Observe y_k=f_k+n^{-1/2}g_k, k∈ℕ, with independent g_k∼N(0,1) and f∈ℓ².
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - n∈ℕ
+    - f∈ℓ²
+    implicit:
+    - The observation is realised in a larger product sequence space, not ℓ² almost surely.
+  quantifier_order:
+  - Fix n,f
+  - define product Gaussian law on coordinates
+  constants: []
+  dependencies:
+    earlier_book:
+    - Chapter 1 Gaussian sequence model
+    chapter_local: []
+    later_book_uses:
+    - ch8.sobolev_ellipsoid
+    - ch8.sample_split_projection_8_93
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - Measure.map
+      - Measure.dirac
+      - ProbabilityTheory.HasLaw
+      - ProbabilityTheory.IdentDistrib
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib supplies measurable spaces, probability measures, kernels, Gaussian
+        variables, finite products, and filters for asymptotics, but not the chapter’s statistical-experiment or
+        minimax-testing declarations.
+      audit_profile: statistical_experiment
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean after searches for Lepski, Besov, Gaussian
+        white noise, self-similar, and adaptive confidence.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Countable product Gaussian measure with coordinate maps; finite projections suffice operationally.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+- id: ch8.sobolev_ellipsoid
+  kind: definition
+  book:
+    number: paragraph after (8.89)
+    pages:
+    - 647
+    section: 8.3.3
+    equations:
+    - '8.89'
+  title: Sobolev sequence ellipsoid
+  statement: S^s(B)={f∈ℓ²:‖f‖_{s,2}²:=∑_{k≥1}f_k²k^{2s}≤B²}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - B>0
+    implicit:
+    - Real powers of natural indices are used.
+  quantifier_order:
+  - Fix s,B
+  - define weighted norm and closed ball
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.gaussian_sequence_model_8_89
+    later_book_uses:
+    - ch8.self_similar_sequence_class_8_90
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - lp
+      - ContinuousLinearMap
+      - Metric.diam
+      - Finset.sum
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Weighted ℓ² norm/ellipsoid on sequences; likely use an `lp` subtype with a diagonal weight.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch8.self_similar_sequence_class_8_90
+  kind: definition
+  book:
+    number: (8.90)
+    pages:
+    - 648
+    section: 8.3.3
+    equations:
+    - '8.90'
+  title: Self-similar Sobolev sequence class
+  statement: For s∈[s_min,s_max], 0<b<B, ε(s)∈(0,1], J₀∈ℕ and c(s)=16·2^{2s+1}, define S^s_{ε(s)}(b,B,J₀) by b≤‖f‖_{s,2}≤B
+    and, for every J≥J₀, ∑_{k=⌈2^{J(1−ε(s))}⌉}^{2^J}f_k²≥c(s)‖f‖_{s,2}²2^{-2Js}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s in fixed compact interval
+    - 0<b<B
+    - 0<ε(s)≤1
+    - J₀∈ℕ
+    implicit:
+    - The dyadic upper endpoint and ceiling convention are exact data.
+  quantifier_order:
+  - Fix parameters
+  - define norm annulus
+  - for all J≥J₀ impose packet lower bound
+  constants:
+  - c(s)=16·2^{2s+1}.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.sobolev_ellipsoid
+    later_book_uses:
+    - ch8.self_similar_union_8_91
+    - ch8.lemma_8_3_17
+    - ch8.theorem_8_3_16
+    - ch8.theorem_8_3_18
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Predicate on weighted ℓ² sequences with finite interval sums indexed by rounded dyadic endpoints.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-017
+  - CR-030
+- id: ch8.self_similar_union_8_91
+  kind: definition
+  book:
+    number: (8.91)
+    pages:
+    - 648
+    section: 8.3.3
+    equations:
+    - '8.91'
+  title: Union of self-similar Sobolev classes
+  statement: S(ε,b,B,J₀)=⋃_{s∈[s_min,s_max]}S^s_{ε(s)}(b,B,J₀).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - fixed adaptation window and parameters
+    implicit: []
+  quantifier_order:
+  - Take an uncountable union over s
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.self_similar_sequence_class_8_90
+    later_book_uses:
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id002
+      - lp
+      - ContinuousLinearMap
+      - Metric.diam
+      - Finset.sum
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Set union quantified over real smoothness in a closed interval.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch8.epsilon_condition_8_92
+  kind: definition
+  book:
+    number: (8.92)
+    pages:
+    - 649
+    section: 8.3.3
+    equations:
+    - '8.92'
+  title: Upper bound on self-similarity window width
+  statement: Assume sup_{s∈[s_min,s_max]} ε(s)(2s+1/2)/s ≤ m<1, where m is known.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s_min>0
+    - ε(s)>0
+    - m∈(0,1)
+    implicit:
+    - The supremum is finite and the function ε is given on the interval.
+  quantifier_order:
+  - Fix ε and m
+  - assert the uniform inequality
+  constants:
+  - m is used in the undersmoothing parameter constraints.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.self_similar_union_8_91
+    later_book_uses:
+    - ch8.kappa_conditions_8_95
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Uniform boundedness predicate for a real function on an interval.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch8.sample_split_projection_8_93
+  kind: definition
+  book:
+    number: (8.93)
+    pages:
+    - 649
+    section: 8.3.3
+    equations:
+    - '8.93'
+  title: Sample-split truncated sequence estimator
+  statement: Split the observation into two independent copies with coordinate noise N(0,2). From the first half
+    define f_n(j)=(y_k)_{1≤k≤2^j}, with expectation K_jf=(f_k)_{1≤k≤2^j}. Use a grid j_min≤j≤j_max, with j_min≈σ₀log₂n
+    and j_max≈log₂n.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - Gaussian sequence observation
+    - fixed s′>s_max for the concrete lower-grid choice
+    implicit:
+    - Floor/ceiling and the symbol σ₀ must not be confused with noise σ.
+  quantifier_order:
+  - Split sample
+  - choose integer grid endpoints
+  - define coordinate truncation
+  constants:
+  - Each split has noise variance 2/n.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.gaussian_sequence_model_8_89
+    later_book_uses:
+    - ch8.sequence_lepski_8_94
+    - ch8.risk_estimator_8_97
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - Measure.map
+      - Measure.dirac
+      - ProbabilityTheory.HasLaw
+      - ProbabilityTheory.IdentDistrib
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib supplies measurable spaces, probability measures, kernels, Gaussian
+        variables, finite products, and filters for asymptotics, but not the chapter’s statistical-experiment or
+        minimax-testing declarations.
+      audit_profile: statistical_experiment
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean after searches for Lepski, Besov, Gaussian
+        white noise, self-similar, and adaptive confidence.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Construct two independent Gaussian sequence observations by adding/subtracting auxiliary noise; define
+      finite-support truncations.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-016
+  - CR-030
+- id: ch8.sequence_lepski_8_94
+  kind: definition
+  book:
+    number: (8.94)
+    pages:
+    - 649
+    section: 8.3.3
+    equations:
+    - '8.94'
+  title: Sequence-space Lepski selector
+  statement: j̄_n=min{j∈J:‖f_n(j)−f_n(l)‖₂²≤4·2^{l+1}/n for every l>j in J}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - finite grid J
+    - sample-split estimator (8.93)
+    implicit:
+    - Empty-set convention is not repeated and should be inherited or made explicit.
+  quantifier_order:
+  - Fix data,n
+  - finite search over j
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.sample_split_projection_8_93
+    later_book_uses:
+    - ch8.undersmoothed_resolution_8_96
+    - ch8.lemma_8_3_17
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite measurable selector on coordinate truncations.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-005
+  - CR-016
