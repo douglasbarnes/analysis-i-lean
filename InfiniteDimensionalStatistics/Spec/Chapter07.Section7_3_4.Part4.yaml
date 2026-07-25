@@ -11,20 +11,29 @@ inventory:
     - 602
     section: 7.3.4
     equations: []
-  title: Credible sets with Hölder regularity and L∞ diameter
-  statement: "In the multiscale wavelet setting, intersect/regularise the credible ball from\nTheorem 7.3.23 with a growing C^γ constraint controlled by a sequence uₙ→∞.\nThe resulting credible set retains asymptotic frequentist coverage 1-α and its\nL∞-diameter satisfies the officially corrected rate\n  |Cₙ|_∞ = O_{P^Y_{f₀}}((n/log n)^{-γ/(2γ+1)} uₙ)."
+  title: Hölder-restricted credible set with corrected L∞ diameter
+  statement: "Let C̄_n=C_n∩B_n, where C_n is the 1-α credible set from Theorem 7.3.23 in M₀(w) for the posterior\
+    \ Π_{γ,B}(·|Y) based on the uniform wavelet prior, and\n  B_n={f : ||f||_{C^γ}≤B}.\nIf Y∼P^Y_{f₀} for a fixed\
+    \ f₀ satisfying the printed condition ||f₀||_{C^α([0,1])}<B, then\n  P^Y_{f₀}(f₀∈C̄_n)→1-α.\nMoreover, for any\
+    \ sequence u_n→∞ as slowly as desired, the displayed credible-set diameter satisfies the officially corrected\
+    \ bound\n  |C̄_n|_∞=O_{P^Y_{f₀}}((n/log n)^{-γ/(2γ+1)}u_n)."
   hypotheses:
     explicit:
-    - The hypotheses and construction immediately preceding the corollary on p.602.
-    - f₀ has the stated C^γ regularity.
-    - uₙ→∞ at the allowed rate.
-    - Multiscale BvM/credible-ball hypotheses.
+    - C_n is the credible set from Theorem 7.3.23 in M₀(w).
+    - The posterior Π_{γ,B}(·|Y) is based on the uniform wavelet prior of Proposition 7.3.15.
+    - B_n={f:||f||_{C^γ}≤B}.
+    - The printed truth condition is ||f₀||_{C^α([0,1])}<B.
+    - u_n→∞ as slowly as desired.
     implicit:
-    - The exact set notation and any additional lower-growth condition on uₙ must
-      be visually verified from the uploaded page before implementation.
+    - The credible level is 1-α; the reuse of α in the printed Hölder regularity condition is retained and flagged.
+    - The official erratum changes the diameter exponent to -γ/(2γ+1).
   quantifier_order:
-  - For the allowed sequence uₙ, coverage and diameter conclusions as n→∞.
-  constants: []
+  - Fix the credible level α, prior parameters γ,B and truth f₀; for every admissibly slow sequence u_n→∞, prove
+    coverage and the stochastic diameter bound as n→∞.
+  constants:
+  - Credible level 1-α.
+  - Hölder radius B.
+  - Corrected exponent -γ/(2γ+1).
   dependencies:
     earlier_book: []
     chapter_local:
@@ -50,16 +59,22 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Intersect a weak-topology credible ball with a deterministic/random Hölder
-      ball, then use the multiscale-to-supremum interpolation inequality.
-    blockers: []
+    sketch: Intersect the M₀(w)-credible ball with the deterministic Hölder ball, inherit coverage from Theorem
+      7.3.23, and apply the multiscale-to-supremum interpolation bound used in Proposition 6.4.9.
+    blockers:
+    - Central review of the printed α/γ regularity index.
+    - Central review of the C_n versus C̄_n diameter label.
   difficulty: research-level
   pass: core
   issues_for_central_review:
   - type: official_erratum
     page: 602
-    detail: The exponent in the final diameter display is negative.
-  - type: source_legibility
+    detail: The exponent in the final L∞-diameter display is -γ/(2γ+1).
+  - type: notation_or_generality
     page: 602
-    detail: Exact construction and auxiliary conditions are hidden in a collapsed
-      text layer; verify visually against the uploaded PDF before formalisation.
+    detail: The printed truth condition uses C^α although α also denotes the credibility level and the prior/constraint
+      use γ; preserve C^α and verify whether C^γ was intended.
+  - type: set_label_mismatch
+    page: 602
+    detail: The surrounding prose refers to the diameter of C_n, while the displayed formula is for C̄_n=C_n∩B_n;
+      the specification follows the displayed set.
