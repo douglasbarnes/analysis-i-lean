@@ -1,0 +1,276 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.3.3
+fragment_part: 2
+inventory:
+- id: ch7.cor.7.3.13
+  kind: corollary
+  book:
+    number: Corollary 7.3.13
+    pages:
+    - 586
+    - 587
+    section: 7.3.3
+    equations: []
+  title: L² posterior contraction and posterior-mean risk for product priors
+  statement: "Choose σ_l=|l|^{-1/2-γ} in basis type (a), or σ_l=2^{-l(γ+1/2)} in type\
+    \ (b).\nUnder Theorem 7.3.12,\n  E^Y_{f₀}∫||f-f₀||₂² dΠ(f|Y)=O(n^{-2γ/(2γ+1)}),\n\
+    and for the posterior mean f̄ₙ,\n  E^Y_{f₀}||f̄ₙ-f₀||₂²=O(n^{-2γ/(2γ+1)})."
+  hypotheses:
+    explicit:
+    - γ>0.
+    - The corresponding basis type and scale sequence.
+    - Condition 7.3.11.
+    implicit:
+    - Parseval and coordinate cardinalities determine the sum.
+  quantifier_order:
+  - As n→∞.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Parseval's identity
+    chapter_local:
+    - ch7.thm.7.3.12
+    - ch7.def.posteriorContractionRate
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Sum coordinate bounds in `ℓ²`; posterior mean is a Bochner integral and
+      needs integrability.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum_reference
+    page: 588
+    detail: In the nearby proof citation replace Lemma 2.3.2 by Lemma 2.3.4.
+- id: ch7.prop.7.3.14
+  kind: proposition
+  book:
+    number: Proposition 7.3.14
+    pages:
+    - 587
+    - 588
+    section: 7.3.3
+    equations: []
+  title: Sub-Gaussian posterior coordinate bounds
+  statement: "Under Theorem 7.3.12, if √n σ_l≥S₀>0, then for every t∈ℝ and coordinate\
+    \ k,\n  E^Y_{f₀} E_Π[exp(t√n(f_{lk}-Y_{lk}))|Y] ≤ C exp(t²/2).\nConsequently,\n\
+    \  E^Y_{f₀} E_Π[max_{k∈Z_l}|f_{lk}-f_{0,lk}| |Y]\n     ≤ C' √(log(1+|Z_l|)/n)."
+  hypotheses:
+    explicit:
+    - Fixed S₀>0.
+    - Frequency l satisfies √nσ_l≥S₀.
+    - Condition 7.3.11.
+    implicit:
+    - Constants C,C' are uniform in l,k,n and t except through fixed model constants.
+    - The second bound also includes the Gaussian observation noise.
+  quantifier_order:
+  - ∃C,C', ∀ admissible n,l,k, ∀t∈ℝ.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Sub-Gaussian maxima, Lemma 2.3.4
+    chapter_local:
+    - ch7.thm.7.3.12
+    - ch7.condition.7.3.11
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Uniform Laplace-transform estimates for one-dimensional posterior marginals
+      and a finite-maximum bound.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.def.uniformWaveletPrior
+  kind: definition
+  book:
+    number: (7.113)
+    pages:
+    - 588
+    section: 7.3.3
+    equations:
+    - (7.113)
+  title: Uniform Hölder-ball wavelet prior
+  statement: "In a wavelet basis let ξ_{lk} iid U[-B,B] and\n  f_{lk}=2^{-l(γ+1/2)}ξ_{lk},\
+    \  γ>0.\nThe induced prior Π_{γ,B} is supported in the corresponding wavelet-defined\
+    \ C^γ ball."
+  hypotheses:
+    explicit:
+    - γ>0, B>0.
+    - S-regular wavelet basis with S>γ.
+    implicit:
+    - The book notes a slight abuse of C^γ notation; it is the wavelet coefficient
+      norm.
+  quantifier_order:
+  - Independently for all wavelet coordinates.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.productPrior
+    - ch7.def.7.3.10
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A product of compactly supported coefficient laws pushed to a Hölder/Besov
+      coefficient space.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.prop.7.3.15
+  kind: proposition
+  book:
+    number: Proposition 7.3.15
+    pages:
+    - 588
+    - 589
+    section: 7.3.3
+    equations: []
+  title: Supremum-norm contraction for the uniform wavelet prior
+  statement: "If ||f₀||_{C^γ}<B and Π_{γ,B} is the uniform wavelet prior, then for\
+    \ some M<∞,\n  E^Y_{f₀} E_{Π_{γ,B}}[||f-f₀||∞ |Y]\n     ≤ M (log n/n)^{γ/(2γ+1)}."
+  hypotheses:
+    explicit:
+    - γ>0, B>0.
+    - Truth lies strictly inside the coefficient Hölder ball.
+    - Wavelet basis regular enough.
+    implicit:
+    - The result is an expected posterior loss bound, hence implies contraction by
+      Markov.
+  quantifier_order:
+  - ∃M independent of n, ∀n sufficiently large (printed display can be read all n
+    after adjustment).
+  constants: []
+  dependencies:
+    earlier_book:
+    - Wavelet reconstruction sup-norm inequality
+    chapter_local:
+    - ch7.prop.7.3.14
+    - ch7.def.uniformWaveletPrior
+    - ch7.def.posteriorContractionRate
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Split low/high frequencies at `2^{j_n}≈(n/log n)^{1/(2γ+1)}` and combine
+      coordinate maxima with deterministic tails.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.def.gaussianConjugatePrior
+  kind: definition
+  book:
+    number: (7.114)
+    pages:
+    - 589
+    section: 7.3.3
+    equations:
+    - (7.114)
+  title: Gaussian product prior
+  statement: "Draw independent g_{lk}∼N(0,1) and set\n  f=∑_{l,k} σ_l g_{lk} ψ_{lk},\n\
+    with ∑_{l,k}σ_l²<∞."
+  hypotheses:
+    explicit:
+    - Positive scales with multiplicity-weighted square sum finite.
+    - Wavelet basis as in Definition 7.3.10(b).
+    implicit:
+    - The series converges in L² almost surely and defines a Gaussian measure.
+  quantifier_order:
+  - Independent over all coordinates.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.7.3.10
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A centred Gaussian measure on a separable Hilbert space with diagonal
+      covariance, or a convergent Gaussian series.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
