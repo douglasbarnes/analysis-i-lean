@@ -21,6 +21,7 @@ book:
 specification:
   directory: InfiniteDimensionalStatistics/Spec
   canonical_schema: InfiniteDimensionalStatistics/Spec/Schema.md
+  package_loader: InfiniteDimensionalStatistics/Spec/PackageLoader.md
   validator: scripts/validate_ids_specs.py
   required_difficulty_values:
     - routine
@@ -72,7 +73,11 @@ chapters:
     printed_pages: {start: 389, end: 466}
     specification: InfiniteDimensionalStatistics/Spec/Chapter05.yaml
     audit_step: P1.5
-    status: missing_on_main
+    status: needs_revision
+    blockers:
+      - Seventeen declarations require exact page-image transcription before source-fidelity acceptance.
+      - Central review must clear the Chapter 5 source-fidelity queue.
+      - Structural validation does not convert unresolved mathematical transcriptions into an accepted specification.
   - number: 6
     title: The Minimax Paradigm
     printed_pages: {start: 467, end: 540}
