@@ -1,0 +1,378 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.3.1
+fragment_part: 1
+inventory:
+- id: ch7.def.posteriorContractionRate
+  kind: definition
+  book:
+    number: unnumbered
+    label: Unnumbered definition before Theorem 7.3.1
+    pages:
+    - 573
+    section: 7.3.1
+    equations: []
+    section_title: General Contraction Results for Posterior Distributions
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Posterior contraction rate
+  statement: "Let d be a metric or semimetric on the parameter space and let εₙ→0.\nThe posterior contracts about the true parameter f₀ at rate εₙ in d if,\nfor a sufficiently large fixed constant M (or for every sufficiently large\nfixed M, according to the theorem being applied),\n  Π({f : d(f,f₀)>M εₙ} | X^{(n)}) → 0\nin probability under the sampling law at f₀."
+  hypotheses:
+    explicit:
+    - A sequence of experiments/observations indexed by n.
+    - A true parameter f₀.
+    - A posterior probability kernel.
+    - A metric or semimetric d.
+    - A deterministic rate sequence εₙ→0.
+    implicit:
+    - The posterior event is measurable.
+    - Convergence is with respect to the true sampling distribution.
+    - The multiplier M is fixed in n.
+  quantifier_order:
+  - Fix f₀ and d; choose εₙ→0; then for sufficiently large fixed M, take n→∞.
+  constants:
+  - M is a fixed sufficiently large contraction multiplier.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.iidPosterior
+    - ch7.def.whiteNoisePosterior
+    later_book_uses:
+    - ch7.cor.7.3.13
+    - ch7.prop.7.3.15
+    - ch7.thm.7.3.1
+    - ch7.thm.7.3.16
+    - ch7.thm.7.3.3
+    - ch7.thm.7.3.5
+    - ch7.thm.7.3.6
+    - ch7.thm.7.3.7
+    - ch7.thm.7.3.9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - Probability kernels and convergence in probability
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A predicate on a sequence of random posterior measures:
+
+      convergence in probability of the posterior mass of the complement of
+
+      closed d-balls of radius M·εₙ.'
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - '[quantifier_convention] p. 573: The prose definition and individual contraction theorems vary between ''some sufficiently large fixed M'' and ''every sufficiently large fixed M''; preserve each theorem''s own quantifier.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_posteriorContractionRate
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/PosteriorContraction.lean
+- id: ch7.thm.7.3.1
+  kind: theorem
+  book:
+    number: Theorem 7.3.1
+    label: Theorem 7.3.1
+    pages:
+    - 573
+    - 574
+    - 575
+    section: 7.3.1
+    equations: []
+    section_title: General Contraction Results for Posterior Distributions
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: General posterior contraction theorem for i.i.d. models
+  statement: "Let Π=Πₙ be priors on a density model P, let X₁,…,Xₙ∼p₀, and let d be a metric\nor semimetric. Let εₙ→0 and √n εₙ→∞. For fixed C,L, assume:\n(i) Π{p: -P₀log(p/p₀)≤εₙ², P₀(log(p/p₀))²≤εₙ²} ≥ e^{-Cnεₙ²};\n(ii) Π(P\\Pₙ)≤L e^{-(C+4)nεₙ²};\n(iii) for every sufficiently large fixed M there are tests φₙ with\n      E_{P₀}φₙ→0 and\n      sup_{p∈Pₙ:d(p,p₀)≥Mεₙ}E_P(1-φₙ)≤L e^{-(C+4)nεₙ²}.\nThen, for M sufficiently large,\n  Π(p:d(p,p₀)>Mεₙ | X₁,…,Xₙ)→0\nin P₀^n-probability."
+  hypotheses:
+    explicit:
+    - Officially corrected joint measurability `(x,p)↦p(x)`.
+    - All three prior/sieve/testing conditions.
+    - εₙ positive, tends to zero, and √n εₙ→∞.
+    implicit:
+    - Posterior is defined and measurable.
+    - d-balls are measurable.
+    - The second moment condition is on the log likelihood ratio under P₀.
+  quantifier_order:
+  - Fix C,L. For every sequence satisfying assumptions, ∃M₀, ∀M≥M₀, posterior contraction in probability.
+  constants:
+  - The exponent buffer is C+4 exactly in the stated theorem.
+  dependencies:
+    earlier_book:
+    - Testing theory of Chapter 6/§7.1
+    chapter_local:
+    - ch7.def.iidPosterior
+    - ch7.lemma.7.3.2
+    - ch7.def.posteriorContractionRate
+    later_book_uses:
+    - ch7.thm.7.3.3
+    - ex7.3.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A Markov kernel from data to parameters, using `ProbabilityTheory.posterior` where Standard Borel hypotheses apply; density formulas require `rnDeriv`, `withDensity`, and almost-everywhere equality.
+
+      The conclusion is convergence in probability of a random posterior mass; formalisation needs measurable random kernels and exponential denominator bounds.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 573: Require joint measurability `(x,p)↦p(x)`.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_3_1
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/PosteriorContraction.lean
+- id: ch7.lemma.7.3.2
+  kind: lemma
+  book:
+    number: Lemma 7.3.2
+    label: Lemma 7.3.2
+    pages:
+    - 575
+    - 576
+    section: 7.3.1
+    equations: []
+    section_title: General Contraction Results for Posterior Distributions
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Lower bound for an integrated likelihood denominator
+  statement: "Let ν be a probability measure supported on\n  B={p:-P₀log(p/p₀)≤ε², P₀(log(p/p₀))²≤ε²}.\nFor every c>0,\n  P₀^n( ∫_B ∏_{i=1}^n [p(X_i)/p₀(X_i)] dν(p)\n          ≤ exp(-(1+c)nε²) )\n  ≤ 1/(c² n ε²)."
+  hypotheses:
+    explicit:
+    - ν(B)=1.
+    - n≥1, ε>0, c>0.
+    - Joint measurability of the integrand.
+    implicit:
+    - The exact exponent is obtained by Jensen and Chebyshev; integrability of the mixed log-likelihood.
+  quantifier_order:
+  - ∀ν supported on B, ∀c>0, ∀n.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Jensen's inequality
+    - Chebyshev's inequality
+    - Fubini/Tonelli
+    chapter_local:
+    - ch7.def.iidPosterior
+    later_book_uses:
+    - ch7.thm.7.3.1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A finite-sample probability inequality for a prior-mixture likelihood ratio.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_lemma_7_3_2
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/PosteriorContraction.lean
+- id: ch7.thm.7.3.3
+  kind: theorem
+  book:
+    number: Theorem 7.3.3
+    label: Theorem 7.3.3
+    pages:
+    - 576
+    section: 7.3.1
+    equations: []
+    section_title: General Contraction Results for Posterior Distributions
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Hellinger posterior contraction from entropy
+  statement: "In the setting of Theorem 7.3.1 assume the KL/variance prior-mass condition (7.91),\nthe sieve prior-tail condition (7.92), and\n  log N(Pₙ,h,εₙ)≤nεₙ².\nThen for M sufficiently large,\n  Π(p:h(p,p₀)>Mεₙ | X₁,…,Xₙ)→0\nin P₀^n-probability."
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 7.3.1 with d=h.
+    - Global sieve covering bound at εₙ.
+    implicit:
+    - Use Theorem 7.1.4 with ε₀=mεₙ where fixed constants satisfy m<M; this is the corrected proof.
+  quantifier_order:
+  - ∃M₀, ∀M≥M₀, contraction.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.1
+    - ch7.thm.7.1.4
+    - ch7.def.posteriorContractionRate
+    later_book_uses:
+    - ch7.thm.7.3.9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: An application theorem assembling entropy-generated tests with the generic contraction theorem.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 576: In the proof use ε₀=mεₙ with fixed large m<M, not ε₀=Mεₙ.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_3_3
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/PosteriorContraction.lean
+- id: ch7.lemma.7.3.4
+  kind: lemma
+  book:
+    number: Lemma 7.3.4
+    label: Lemma 7.3.4
+    pages:
+    - 576
+    - 577
+    section: 7.3.1
+    equations: []
+    section_title: General Contraction Results for Posterior Distributions
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: White-noise integrated-likelihood denominator bound
+  statement: 'Let ν be supported on B={f:||f-f₀||₂²≤ε²/σ²}. For every c>0, the probability
+
+    that the prior-averaged centred white-noise likelihood is at most
+
+    exp(-(1+c)nε²/2) is bounded by a constant of order 1/(c²nε²); in the book''s
+
+    normalisation the displayed bound is 1/(c²nε²).'
+  hypotheses:
+    explicit:
+    - ν is a probability measure supported on the stated L² ball.
+    - c,ε,σ>0.
+    implicit:
+    - Stochastic integrals are jointly measurable in f and W.
+    - Exact half-factors follow the book's likelihood normalisation.
+  quantifier_order:
+  - ∀ν,c,n.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Gaussian isometry
+    - Chebyshev's inequality
+    chapter_local:
+    - ch7.def.whiteNoisePosterior
+    later_book_uses:
+    - ch7.thm.7.3.5
+    - ex7.3.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A Gaussian-process variance calculation for a prior mixture of Cameron–Martin likelihoods.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[normalisation_review] p. 577: Retain the book''s exact constants when the white-noise likelihood normalisation is fixed in Lean.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_lemma_7_3_4
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/PosteriorContraction.lean
