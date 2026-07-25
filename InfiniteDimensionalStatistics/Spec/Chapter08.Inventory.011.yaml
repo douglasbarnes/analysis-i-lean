@@ -1,0 +1,523 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 11
+chunk_count: 16
+inventory:
+- id: ch8.theorem_8_3_11
+  kind: theorem
+  book:
+    number: Theorem 8.3.11
+    pages:
+    - 641
+    section: 8.3.2
+    equations:
+    - '8.3'
+  title: No pointwise confidence sets without qualitative radius constraints
+  statement: For 0<α<1/2, no random subset C_n of L2 can simultaneously have liminf_nP_f(f∈C_n)≥1−α for every f∈B^r_{2,∞}
+    and |C_n|₂=o_{P_f}(r_n) at any sequence r_n=o(n^{-r/(2r+1/2)}).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - white-noise model
+    - r>0
+    - 0<α<1/2
+    implicit:
+    - The precise pointwise quantification of o_P over f is suppressed in the compact statement.
+  quantifier_order:
+  - Fix α,r and sub-rate r_n
+  - Assume coverage for every f and pointwise diameter
+  - derive contradiction
+  constants: []
+  dependencies:
+    earlier_book:
+    - Wavelet mixture lower-bound method
+    - Theorem 6.2.9 style likelihood calculation
+    chapter_local:
+    - ch8.theorem_8_3_5
+    - ch8.corollary_8_3_10
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Diagonal construction of a limiting rough function using nested perturbations and likelihood-ratio testing
+      lower bounds.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-011
+  - CR-019
+  - CR-025
+- id: ch8.holder_exponent
+  kind: definition
+  book:
+    number: paragraph before (8.78)
+    pages:
+    - 644
+    section: 8.3.3
+    equations:
+    - '8.78'
+  title: Hölder exponent of a function
+  statement: s(f)=sup{s>0:f∈B^s_{∞,∞}}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f belongs to at least one Hölder–Besov space in the range of interest
+    implicit:
+    - The value may be +∞ unless the codomain is extended.
+  quantifier_order:
+  - For fixed f take the supremum of admissible s
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - ch8.linfty_self_similarity_8_78
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Supremum in `ENNReal` or `WithTop ℝ`; restrict to a fixed compact adaptation interval in theorems.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.linfty_self_similarity_8_78
+  kind: definition
+  book:
+    number: (8.78)
+    pages:
+    - 644
+    section: 8.3.3
+    equations:
+    - '8.78'
+  title: L∞ self-similarity
+  statement: A function f of Hölder smoothness s is self-similar if there exist ε>0 and J₀∈ℕ such that for every
+    j≥J₀, ‖K_jf−f‖∞≥ε‖f‖_{B^s_{∞,∞}}2^{-js}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s=s(f) in the motivating definition
+    - fixed projection family K_j
+    implicit:
+    - The norm is nonzero for nontrivial lower bounds; zero function is excluded unless conventionally handled.
+  quantifier_order:
+  - There exist ε,J₀
+  - For every j≥J₀ assert lower bias bound
+  constants:
+  - ε and J₀ are model parameters in uniform theorems.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.holder_exponent
+    - ch8.linfty_bias_8_21
+    later_book_uses:
+    - ch8.lemma_8_3_13
+    - ch8.self_similar_holder_class_8_86
+    - ch8.theorem_8_3_15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Predicate on a function, smoothness and projection family with existential constants and an eventual
+      lower bound.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-029
+- id: ch8.cusp_example_8_79
+  kind: operative example
+  book:
+    number: (8.79)
+    pages:
+    - 644
+    section: 8.3.3
+    equations:
+    - '8.79'
+  title: Cusp functions are self-similar
+  statement: For the boxcar convolution projection K_j and a function smooth except near x₀ where f(x)=1+γ|x−x₀|
+    with γ>0, one has s(f)=1 and ‖K_jf−f‖∞≥c2^{-j}; hence the function satisfies (8.78).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - γ>0
+    - local cusp form near x₀
+    - sufficient regularity away from x₀
+    implicit:
+    - The malformed smoother-class nonmembership sentence must be checked.
+  quantifier_order:
+  - Fix f,x₀,γ
+  - compute boxcar averaging error
+  - derive lower bound for every large j
+  constants:
+  - c>0 depends on γ and local geometry.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.linfty_self_similarity_8_78
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - lp
+      - ContinuousLinearMap
+      - Metric.diam
+      - Finset.sum
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Concrete convolution calculation for a piecewise smooth absolute-value cusp.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-012
+- id: ch8.lemma_8_3_13
+  kind: lemma
+  book:
+    number: Lemma 8.3.13
+    pages:
+    - 645
+    section: 8.3.3
+    equations:
+    - '8.3'
+  title: Lower-tail control for the L∞ Lepski selector under self-similarity
+  statement: Let f∈B^s_{∞,∞} satisfy the self-similarity condition (8.78), let j_n^* and j̄_n be defined by (8.24)
+    and (8.25), and let J=[j_min,j_max]∩ℕ with J₀≤j_min<j_max. There exists m depending only on ε,τ,s and a constant
+    c′>0 such that, for every j<j_n^*−m, P_f(j̄_n=j)≤(c′)^{-1} exp(−c′ ε² 2^{2ms} j), and P_f(j̄_n<j_n^*−m)≤(c′)^{-1}
+    exp(−c′ ε² 2^{2ms} j_min).
+  source_fidelity: exact-transcription-with-page-image-flag
+  hypotheses:
+    explicit:
+    - f∈B^s_{∞,∞}
+    - f satisfies (8.78) with ε>0 and J₀
+    - j_n^* and j̄_n are those of (8.24) and (8.25)
+    - J=[j_min,j_max]∩ℕ and J₀≤j_min<j_max
+    - τ is in the range required by the selector
+    implicit:
+    - c′ is positive and uniform in n,f,j once the displayed parameters are fixed.
+  quantifier_order:
+  - Fix ε,τ,s
+  - Choose m=m(ε,τ,s)
+  - Choose c′>0
+  - For every admissible n and j<j_n^*−m assert the point bound
+  - Then assert the lower-tail union bound
+  constants:
+  - m depends only on ε,τ,s.
+  - c′ is independent of n,f,j.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.12 Gaussian concentration
+    chapter_local:
+    - ch8.linfty_self_similarity_8_78
+    - ch8.linfty_oracle_8_24
+    - ch8.linfty_lepski_8_25
+    later_book_uses:
+    - ch8.smoothness_estimator_8_83_85
+    - ch8.theorem_8_3_15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id002
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Use the self-similar lower bias to force failed Lepski comparisons, then apply Gaussian sup-norm concentration.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-013
+- id: ch8.low_resolution_modification
+  kind: operative example
+  book:
+    number: Remark 8.3.14
+    pages:
+    - 646
+    section: 8.3.3
+    equations:
+    - '8.3'
+  title: Modification when j_min does not diverge
+  statement: To allow j_min=1, replace the squared Lepski threshold 2^l l/n by 2^l max(l,log n)/n; the lower-tail
+    bounds then contain log n in place of j_min.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - same self-similar setting as Lemma 8.3.13
+    implicit:
+    - This is a procedural variant rather than a numbered theorem.
+  quantifier_order:
+  - Modify thresholds
+  - repeat concentration proof
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.lemma_8_3_13
+    later_book_uses:
+    - ch8.theorem_8_3_15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Alternative finite-search selector parameterised by a modified threshold function.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch8.smoothness_estimator_8_83_85
+  kind: definition
+  book:
+    number: (8.83)–(8.85)
+    pages:
+    - 646
+    section: 8.3.3
+    equations:
+    - '8.83'
+    - '8.85'
+  title: Smoothness estimator from the selected resolution
+  statement: With N=n/log n, define ŝ_n=(log₂N)/(2j̄_n)−1/2. Under self-similarity and the oracle sandwich, |ŝ_n−s(f)|=O_P(1/log
+    n).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - n sufficiently large
+    - j̄_n>0
+    - self-similarity hypotheses
+    implicit:
+    - Integer rounding and log bases are fixed as displayed.
+  quantifier_order:
+  - Define N
+  - define ŝ_n
+  - derive stochastic accuracy
+  constants:
+  - The O_P constant depends on ε,τ and the smoothness window.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.lemma_8_3_13
+    later_book_uses:
+    - ch8.theorem_8_3_15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Measurable real-valued transform of the finite selector, plus a uniform probability-rate theorem.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-030
+- id: ch8.self_similar_holder_class_8_86
+  kind: definition
+  book:
+    number: (8.86)
+    pages:
+    - 646
+    section: 8.3.3
+    equations:
+    - '8.86'
+  title: Uniform self-similar Hölder class
+  statement: For fixed ε>0,J₀ and s∈[s_min,s_max], define Σ̃(s,ε)=Σ_∞(s,B)∩{f:(8.78) holds with ε,J₀}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - 0<s_min≤s≤s_max
+    - B>0
+    - ε>0
+    - J₀∈ℕ
+    implicit:
+    - The projection family and norm are fixed globally.
+  quantifier_order:
+  - Fix B,ε,J₀,s
+  - intersect Hölder ball with self-similarity predicate
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.linfty_self_similarity_8_78
+    later_book_uses:
+    - ch8.theorem_8_3_15
+    - ch8.theorem_8_3_20
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Subtype/set intersection with fixed uniform constants.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-003
