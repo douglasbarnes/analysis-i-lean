@@ -1,0 +1,494 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 14
+chunk_count: 16
+inventory:
+- id: ch8.corollary_8_3_19
+  kind: corollary
+  book:
+    number: Corollary 8.3.19
+    pages:
+    - 657
+    section: 8.3.3
+    equations:
+    - '8.3'
+  title: No full rate adaptation for ε>1/2 across a wide smoothness window
+  statement: If s_max>2s_min and the self-similarity width ε is constant with ε>1/2, then no confidence sets can
+    have uniform coverage over the union of self-similar classes and simultaneously have L2 diameter bounded at
+    the minimax estimation rate K n^{-s/(1+2s)} for every s in the window.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - ε>1/2
+    - s_max>2s_min
+    - fixed b,B,J₀ and error tolerance as in the statement
+    implicit:
+    - The exact quantifier order for K and δ follows the theorem text and should be retained.
+  quantifier_order:
+  - Assume a fully adaptive family
+  - choose r′,r,s satisfying Theorem 8.3.18
+  - derive contradiction
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.theorem_8_3_18
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Parameter-selection corollary from Theorem 8.3.18.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-021
+  - CR-025
+- id: ch8.theorem_8_3_20
+  kind: theorem
+  book:
+    number: Theorem 8.3.20
+    pages:
+    - 658
+    section: 8.3.4
+    equations:
+    - '8.3'
+  title: Self-similar classes retain the full minimax estimation rates
+  statement: 'For every r>0 and ε>0, the minimax estimation rates over the self-similar Hölder class (8.86) and
+    the self-similar Sobolev class (8.90) equal the rates over the corresponding full classes: (log n/n)^{r/(2r+1)}
+    in L∞ and n^{-r/(2r+1)} in L2.'
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - fixed nonempty self-similar classes
+    - all suppressed b,B,J₀ parameters fixed
+    implicit:
+    - The statement is informal about class parameters and exact ε admissibility.
+  quantifier_order:
+  - Fix r,ε and class parameters
+  - prove standard upper bound by restriction
+  - prove matching lower bound within the self-similar class
+  constants: []
+  dependencies:
+    earlier_book:
+    - Theorems 6.3.5, 6.3.7, 6.3.8, 6.3.9
+    chapter_local:
+    - ch8.self_similar_holder_class_8_86
+    - ch8.self_similar_sequence_class_8_90
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 8.3.3 proves the L∞ lower-bound case.
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Two minimax lower bounds via finite hypercubes contained in self-similar classes; upper bounds inherit
+      from full classes.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-022
+  - CR-025
+- id: ch8.nonselfsimilar_holder_set
+  kind: definition
+  book:
+    number: before Proposition 8.3.21
+    pages:
+    - 660
+    section: 8.3.4
+    equations:
+    - '8.3'
+  title: Non-self-similar Hölder set
+  statement: 'N_s={f∈B^s_{∞,∞}: there do not exist ε>0 and J₀ such that ‖K_jf−f‖∞≥ε2^{-js} for every j≥J₀}.'
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - fixed wavelet projection family
+    implicit:
+    - The norm factor ‖f‖_{B^s} is absorbed into ε compared with (8.78).
+  quantifier_order:
+  - Fix s
+  - negate the existential-eventual self-similarity predicate
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.linfty_self_similarity_8_78
+    later_book_uses:
+    - ch8.proposition_8_3_21
+    - ch8.proposition_8_3_23
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id002
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Complement of the union of eventual lower-bias predicates.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.proposition_8_3_21
+  kind: proposition
+  book:
+    number: Proposition 8.3.21
+    pages:
+    - 660
+    section: 8.3.4
+    equations:
+    - '8.3'
+  title: Self-similar Hölder functions are topologically generic
+  statement: The set N_s of non-self-similar functions is nowhere dense in the norm topology of B^s_{∞,∞}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - fixed wavelet basis/projections
+    implicit:
+    - B^s_{∞,∞} is treated as a Banach space under the selected norm.
+  quantifier_order:
+  - Construct an open dense subset of self-similar functions
+  - conclude the complement is nowhere dense
+  constants: []
+  dependencies:
+    earlier_book:
+    - Baire-category topology
+    - wavelet coefficient norm
+    chapter_local:
+    - ch8.nonselfsimilar_holder_set
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Topological proof using open coefficient lower-bound sets and explicit dense perturbations.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.l2_wavelet_self_similarity_8_126
+  kind: definition
+  book:
+    number: (8.126)
+    pages:
+    - 661
+    section: 8.3.4
+    equations:
+    - '8.126'
+  title: Wavelet-block L2 self-similarity
+  statement: For some ε>0,J₀ and every J≥J₀, ∑_{ℓ=⌈J(1−ε)⌉}^{J}∑_k f_{ℓk}²≥c(s)2^{-2Js}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f∈B^s_{2,∞}
+    - s>0
+    implicit:
+    - The constant can absorb a norm lower bound in this topological formulation.
+  quantifier_order:
+  - There exist ε,J₀,c(s)>0
+  - for every J assert the block-energy lower bound
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.self_similar_sequence_class_8_90
+    later_book_uses:
+    - ch8.proposition_8_3_22
+    - ch8.proposition_8_3_24
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id003
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite double sums over a level window in a wavelet coefficient structure.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-030
+- id: ch8.nonselfsimilar_l2_set
+  kind: definition
+  book:
+    number: before Proposition 8.3.22
+    pages:
+    - 661
+    section: 8.3.4
+    equations:
+    - '8.3'
+  title: Non-self-similar L2 Besov set
+  statement: 'M_s={f∈B^s_{2,∞}: no ε>0 and J₀ satisfy (8.126)}.'
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    implicit: []
+  quantifier_order:
+  - Fix s
+  - take complement of the existential self-similarity condition
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.l2_wavelet_self_similarity_8_126
+    later_book_uses:
+    - ch8.proposition_8_3_22
+    - ch8.proposition_8_3_24
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id003
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Set complement in the Besov coefficient space.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch8.proposition_8_3_22
+  kind: proposition
+  book:
+    number: Proposition 8.3.22
+    pages:
+    - 661
+    section: 8.3.4
+    equations:
+    - '8.3'
+  title: Self-similar L2 Besov functions are topologically generic
+  statement: The set M_s is nowhere dense in the norm topology of B^s_{2,∞}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - fixed wavelet basis
+    implicit: []
+  quantifier_order:
+  - Construct open dense self-similar subset
+  - take complement
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.nonselfsimilar_l2_set
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id003
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Baire-category argument with block-energy perturbations.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.uniform_wavelet_prior_8_127
+  kind: definition
+  book:
+    number: (8.127)
+    pages:
+    - 662
+    section: 8.3.4
+    equations:
+    - '8.127'
+  title: Uniform product wavelet prior
+  statement: Let u_{ℓk} be i.i.d. Uniform[−B,B] and define U_s=∑_{ℓ,k}2^{-ℓ(s+1/2)}u_{ℓk}ψ_{ℓk}; then ‖U_s‖_{B^s_{∞,∞}}≤B
+    almost surely.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - B>0
+    - periodised wavelet basis
+    implicit:
+    - The random series is realised coefficientwise; sample-path convergence/measurability in the function space
+      must be proved.
+  quantifier_order:
+  - Construct product probability space
+  - define coefficients and series
+  - prove almost-sure Besov bound
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - ch8.proposition_8_3_23
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id003
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Countable product uniform law and measurable coefficient-to-Besov embedding.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
