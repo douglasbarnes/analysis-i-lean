@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from collections import defaultdict, deque
+import hashlib
 from pathlib import Path
 import re
 from typing import Any
@@ -31,14 +32,114 @@ BLOCKING = re.compile(
 )
 
 
-def load(path: Path) -> dict[str, Any]:
+def parse_yaml(text: str, where: str) -> dict[str, Any]:
     try:
-        value = yaml.safe_load(path.read_text(encoding="utf-8"))
+        value = yaml.safe_load(text)
     except yaml.YAMLError as exc:
-        raise ValueError(f"invalid YAML: {exc}") from exc
+        raise ValueError(f"invalid YAML in {where}: {exc}") from exc
     if not isinstance(value, dict):
-        raise ValueError("top level must be a mapping")
+        raise ValueError(f"{where}: top level must be a mapping")
     return value
+
+
+def load(path: Path) -> dict[str, Any]:
+    return parse_yaml(path.read_text(encoding="utf-8"), path.name)
+
+
+def git_blob_sha(data: bytes) -> str:
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
+
+
+def repaired_raw_inventory(doc: dict[str, Any], base: Path) -> dict[str, Any] | None:
+    """Resolve an explicitly documented, byte-preserving raw inventory repair.
+
+    This mechanism is only for a legacy assembled inventory whose original blob is
+    retained as ``.txt``. Every changed line is declared in a valid YAML wrapper,
+    checked against the original text, and applied before parsing. It must not be
+    used to alter mathematical content or bypass source-fidelity checks.
+    """
+
+    repair = doc.get("raw_text_inventory")
+    if repair is None:
+        return None
+    if not isinstance(repair, dict):
+        raise ValueError("raw_text_inventory must be a mapping")
+
+    filename = repair.get("file")
+    if not isinstance(filename, str) or not filename:
+        raise ValueError("raw_text_inventory.file must be a nonempty path")
+    raw_path = base / filename
+    if not raw_path.is_file():
+        raise ValueError(f"missing raw inventory source {raw_path.name}")
+
+    data = raw_path.read_bytes()
+    expected_sha = repair.get("source_blob_sha")
+    if expected_sha is not None:
+        if not isinstance(expected_sha, str) or not expected_sha:
+            raise ValueError("raw_text_inventory.source_blob_sha must be a nonempty string")
+        actual_sha = git_blob_sha(data)
+        if actual_sha != expected_sha:
+            raise ValueError(
+                f"raw inventory blob mismatch for {raw_path.name}: "
+                f"expected {expected_sha}, found {actual_sha}"
+            )
+
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise ValueError(f"raw inventory source {raw_path.name} is not UTF-8") from exc
+
+    replacements = repair.get("line_replacements")
+    if not isinstance(replacements, list) or not replacements:
+        raise ValueError("raw_text_inventory.line_replacements must be a nonempty list")
+
+    lines = text.splitlines()
+    parsed_replacements: list[tuple[int, str, list[str]]] = []
+    seen_lines: set[int] = set()
+    for index, item in enumerate(replacements):
+        if not isinstance(item, dict):
+            raise ValueError(f"raw repair[{index}] must be a mapping")
+        line_number = item.get("line")
+        expected = item.get("expected")
+        replacement = item.get("replacement")
+        if not isinstance(line_number, int) or line_number < 1:
+            raise ValueError(f"raw repair[{index}].line must be a positive integer")
+        if line_number in seen_lines:
+            raise ValueError(f"duplicate raw repair line {line_number}")
+        seen_lines.add(line_number)
+        if not isinstance(expected, str):
+            raise ValueError(f"raw repair[{index}].expected must be a string")
+        if (
+            not isinstance(replacement, list)
+            or not replacement
+            or not all(isinstance(value, str) for value in replacement)
+        ):
+            raise ValueError(
+                f"raw repair[{index}].replacement must be a nonempty list of strings"
+            )
+        parsed_replacements.append((line_number, expected, replacement))
+
+    # Descending order keeps the declared line numbers relative to the original blob.
+    for line_number, expected, replacement in sorted(
+        parsed_replacements, reverse=True
+    ):
+        offset = line_number - 1
+        if offset >= len(lines):
+            raise ValueError(
+                f"raw repair line {line_number} exceeds {raw_path.name} length {len(lines)}"
+            )
+        if lines[offset] != expected:
+            raise ValueError(
+                f"raw repair line {line_number} mismatch in {raw_path.name}: "
+                f"expected {expected!r}, found {lines[offset]!r}"
+            )
+        lines[offset : offset + 1] = replacement
+
+    repaired_text = "\n".join(lines)
+    if text.endswith("\n"):
+        repaired_text += "\n"
+    return parse_yaml(repaired_text, f"{raw_path.name} after declared transport repair")
 
 
 def chapter_number(doc: dict[str, Any], path: Path) -> int:
@@ -64,6 +165,10 @@ def component_names(meta: dict[str, Any], where: str) -> list[str]:
 
 
 def inventory_from_doc(doc: dict[str, Any], base: Path) -> list[dict[str, Any]]:
+    repaired = repaired_raw_inventory(doc, base)
+    if repaired is not None:
+        return inventory_from_doc(repaired, base)
+
     fragments = doc.get("inventory_files")
     if fragments is not None:
         if not isinstance(fragments, list) or not all(isinstance(x, str) for x in fragments):
