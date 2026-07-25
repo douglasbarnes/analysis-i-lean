@@ -2,3 +2,11 @@ import AnalysisII.SourceAudit
 import AnalysisII.LibraryCoverage
 import AnalysisII.CoreTheorems
 import AnalysisII.CorrectnessAudit
+import AnalysisII.UniformConvergence
+import AnalysisII.NormedMetricCore
+import AnalysisII.CalculusCore
+import AnalysisII.CompactnessAndContractions
+import AnalysisII.SequentialTopology
+import AnalysisII.MeanValueAndConstancy
+import AnalysisII.PicardLindelof
+import AnalysisII.HigherDerivatives

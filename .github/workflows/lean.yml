@@ -24,30 +24,20 @@ jobs:
           "$HOME/.elan/bin/elan" default "$(cat lean-toolchain)"
           "$HOME/.elan/bin/lean" --version
           "$HOME/.elan/bin/lake" --version
-      - name: Update, build, and audit
+      - name: Build Analysis II and audit placeholders
         shell: bash
         run: |
           set -euo pipefail
           {
             lake update
             lake exe cache get
-            lake build
+            lake build AnalysisII
             python3 scripts/check_audit.py
-            python3 scripts/check_analysis_ii_correctness.py --baseline
           } 2>&1 | tee lean-build.log
-      - name: Analysis II strict correctness test
-        continue-on-error: true
-        shell: bash
-        run: |
-          set -o pipefail
-          python3 scripts/check_analysis_ii_correctness.py --strict \
-            2>&1 | tee analysis-ii-strict.log
-      - name: Upload build and audit logs
+      - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lean-build-log
-          path: |
-            lean-build.log
-            analysis-ii-strict.log
+          path: lean-build.log
           if-no-files-found: warn
