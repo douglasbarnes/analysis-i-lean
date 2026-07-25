@@ -1,0 +1,499 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.6'
+fragment_part: 1
+inventory:
+- id: definition-2-6-1
+  kind: definition
+  book:
+    number: 2.6.1
+    pages:
+    - 67
+    section: '2.6'
+    equations: []
+  title: RKHS of a centred Gaussian process
+  statement: Let F be the closed linear span in L²(Pr) of {X(t):t∈T}. The RKHS H is {h:T→ℝ | h(t)=E[kX(t)] for some k∈F};
+    the map k↦h is an isometry and ⟨h₁,h₂⟩_H=E[k₁k₂].
+  hypotheses:
+    explicit:
+    - X centred Gaussian process.
+    - Coordinates in L².
+    implicit:
+    - The representing k is unique in the closed span F.
+  quantifier_order:
+  - ∀t, h(t)=E[kX(t)].
+  constants:
+  - ∀t, h(t)=E[kX(t)].
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example-2-1-11
+    chapter_local_dependents:
+    - example-2-6-2
+    - example-2-6-7
+    - lemma-2-6-23
+    later_book_uses:
+    - example-2-6-2
+    - example-2-6-7
+    - lemma-2-6-23
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: 'Define a linear isometry from the closed subspace `F : Submodule ℝ (Lp ℝ 2 P)` to a function space `T → ℝ`; define
+      H as its range with transported Hilbert structure.'
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: example-2-6-2
+  kind: example
+  book:
+    number: 2.6.2
+    pages:
+    - 67
+    section: '2.6'
+    equations: []
+  title: RKHS of the orthogaussian sequence
+  statement: For the coordinate process X_n=g_n on ℝ^ℕ with iid standard normals, the RKHS is ℓ² embedded in ℝ^ℕ, with its
+    usual inner product.
+  hypotheses:
+    explicit:
+    - Countably many iid standard normals.
+    implicit: []
+  quantifier_order:
+  - H={h:∑h_n²<∞}; ‖h‖_H²=∑h_n².
+  constants:
+  - H={h:∑h_n²<∞}; ‖h‖_H²=∑h_n².
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-6-1
+    chapter_local_dependents:
+    - proposition-2-6-16
+    later_book_uses:
+    - proposition-2-6-16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Identify the Gaussian closed span with `ℓ²` and the covariance map with the coordinate embedding.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-6-3
+  kind: lemma
+  book:
+    number: 2.6.3
+    pages:
+    - 68
+    section: '2.6'
+    equations: []
+  title: Bochner integrability criterion for Gaussian Banach variables
+  statement: For a centred Gaussian random variable X in a separable Banach space, X is Bochner integrable iff E‖X‖<∞; in
+    that case it is Pettis integrable and the Bochner and Pettis integrals agree.
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - X strongly/Borel measurable Gaussian.
+    implicit: []
+  quantifier_order:
+  - Equivalence with first moment finiteness.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-20
+    chapter_local_dependents:
+    - definition-2-6-4
+    later_book_uses:
+    - definition-2-6-4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: supporting functional-analysis infrastructure only
+      candidates:
+      - ContinuousLinearMap
+      - StrongDual
+      - HilbertSpace
+      - MeasureTheory.BochnerIntegral
+      - MeasureTheory.Integrable
+      - Metric.IsCompact
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: functional_analysis
+  likely_lean_representation:
+    sketch: Use mathlib's `Integrable` iff norm integrable for strongly measurable functions; connect Bochner and Pettis integral
+      evaluations by continuous linear maps.
+    blockers:
+    - No exact declaration matching the book statement was located.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-6-4
+  kind: definition
+  book:
+    number: 2.6.4
+    pages:
+    - 68
+    section: '2.6'
+    equations: []
+  title: RKHS of a centred Gaussian Banach-valued variable
+  statement: Let F be the closed span in L² of {f(X):f∈B*}. Define H={E[kX]:k∈F}⊆B with inner product transported from F by
+    the isometry φ(k)=E[kX].
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - X centred Gaussian B-valued.
+    - Bochner integrability of kX for k∈F.
+    implicit:
+    - E[kX] is a Bochner integral; the map is injective on F.
+  quantifier_order:
+  - ‖E[kX]‖_H=‖k‖₂.
+  constants:
+  - ‖E[kX]‖_H=‖k‖₂.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example-2-1-16
+    - lemma-2-6-3
+    chapter_local_dependents:
+    - example-2-6-15
+    - exercise-2-6-4
+    - exercise-2-6-5
+    - lemma-2-6-6
+    - proposition-2-6-8
+    later_book_uses:
+    - lemma-2-6-6
+    - proposition-2-6-8
+    - example-2-6-15
+    - exercise-2-6-4
+    - exercise-2-6-5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: A Hilbert subspace/range of the covariance map `Lp → B`, with a transported norm and continuous inclusion.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-6-covariance
+  kind: definition
+  book:
+    number: unnumbered-2.6-covariance
+    pages:
+    - 68
+    section: '2.6'
+    equations: []
+  title: Covariance bilinear form
+  statement: C_X(f,g):=E[f(X)g(X)] for f,g∈B*.
+  hypotheses:
+    explicit:
+    - X centred Gaussian Banach-valued.
+    - f,g continuous linear functionals.
+    implicit: []
+  quantifier_order:
+  - Bilinear symmetric positive-semidefinite form.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: A continuous/nonnegative bilinear form on `StrongDual ℝ B`, after proving integrability.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-6-6
+  kind: lemma
+  book:
+    number: 2.6.6
+    pages:
+    - 69
+    section: '2.6'
+    equations: []
+  title: Weak-* sequential continuity of the covariance map
+  statement: The map ϕ:B*→H, ϕ(f)=E[f(X)X], is weak-* sequentially continuous.
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - X centred Gaussian B-valued.
+    - f_n→f weak-*.
+    implicit: []
+  quantifier_order:
+  - f_n→w* f implies ‖ϕ(f_n)−ϕ(f)‖_H→0.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-6-4
+    - exercise-2-1-4
+    chapter_local_dependents:
+    - example-2-6-7
+    - proposition-2-6-9
+    later_book_uses:
+    - example-2-6-7
+    - proposition-2-6-9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Show `f_n(X)→f(X)` in probability and, for Gaussian differences, in L²; identify the H norm with L².
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: example-2-6-7
+  kind: example
+  book:
+    number: 2.6.7
+    pages:
+    - 69
+    section: '2.6'
+    equations: []
+  title: RKHS of Brownian motion
+  statement: For Brownian motion W on [0,1], H={h:h(0)=0, h absolutely continuous, h′∈L²[0,1]}, with ⟨h,k⟩_H=∫h′k′ and ‖h‖_H²=∫(h′)².
+  hypotheses:
+    explicit:
+    - W standard Brownian motion as a C[0,1]-valued Gaussian variable/process.
+    implicit: []
+  quantifier_order:
+  - Boundary condition h(0)=0.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-6-1
+    - exercise-2-3-2
+    - exercise-2-6-3
+    - lemma-2-6-6
+    chapter_local_dependents:
+    - exercise-2-6-16
+    - exercise-2-6-9
+    - lemma-2-6-22
+    later_book_uses:
+    - lemma-2-6-22
+    - exercise-2-6-9
+    - exercise-2-6-16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Identify the covariance span of evaluation measures with primitives of L² functions; use absolutely continuous/Sobolev
+      representation.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-6-8
+  kind: proposition
+  book:
+    number: 2.6.8
+    pages:
+    - 70
+    section: '2.6'
+    equations: []
+  title: Dual characterisation of the RKHS
+  statement: H={x∈B:sup_{f∈B*} f(x)²/C_X(f,f)<∞}, with the convention for zero denominators, and ‖x‖_H² equal to that supremum.
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - X centred Gaussian.
+    - C_X covariance form.
+    implicit:
+    - If C_X(f,f)=0, finiteness forces f(x)=0; quotient convention must be explicit.
+  quantifier_order:
+  - Supremum over all continuous linear f.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-6-4
+    - exercise-2-6-4
+    chapter_local_dependents:
+    - proposition-2-6-9
+    later_book_uses:
+    - proposition-2-6-9
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-6-4
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: A Riesz-representation theorem on the closed Gaussian span, with an extended-real Rayleigh quotient.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
