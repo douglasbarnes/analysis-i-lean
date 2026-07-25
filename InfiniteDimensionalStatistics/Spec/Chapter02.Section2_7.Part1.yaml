@@ -1,0 +1,475 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.7'
+fragment_part: 1
+inventory:
+- id: theorem-2-7-1
+  kind: theorem
+  book:
+    number: 2.7.1
+    pages:
+    - 89
+    section: '2.7'
+    equations: []
+  title: Gumbel limit for iid absolute Gaussian maxima
+  statement: For iid g_i∼N(0,1), n≥e², a_n=√(2log n), b_n=a_n−(log log n+log π)/(2a_n). For every x∈ℝ, Pr(a_n(max_{i≤n}|g_i|−b_n)≤x)→exp(−e^{-x}).
+  hypotheses:
+    explicit:
+    - iid standard normal sequence.
+    - n→∞.
+    - x fixed real.
+    implicit: []
+  quantifier_order:
+  - Exact a_n and b_n; Gumbel CDF exp(−e^{-x}).
+  constants:
+  - Exact a_n and b_n; Gumbel CDF exp(−e^{-x}).
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-7-4
+    later_book_uses:
+    - theorem-2-7-4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Asymptotic expansion of Gaussian tails, powers of the distribution function, and real-limit algebra.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-7-2
+  kind: definition
+  book:
+    number: 2.7.2
+    pages:
+    - 89
+    section: '2.7'
+    equations: []
+  title: Stationary sequence
+  statement: A sequence ξ_n is stationary when for every finite n₁,…,n_m and shift k≥0, the joint law of (ξ_{n₁+k},…,ξ_{n_m+k})
+    is independent of k. For a centred Gaussian sequence this is equivalent to Eξ_mξ_{m+n} being independent of m; r(n) denotes
+    that covariance.
+  hypotheses:
+    explicit:
+    - Sequence of real random variables.
+    - Finite-dimensional law equality for all shifts.
+    implicit: []
+  quantifier_order:
+  - ∀m≥1 ∀indices n_i ∀k≥0.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Predicate on equality of pushforward measures for all finite index tuples; Gaussian covariance characterisation
+      as a theorem.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-7-3
+  kind: lemma
+  book:
+    number: 2.7.3
+    pages:
+    - 90
+    section: '2.7'
+    equations: []
+  title: Covariance-sum estimate for Gaussian sequence extremes
+  statement: Let sup_n|r_n|<1, r_n log n→0, and positive u_n satisfy sup_n n(1−Ψ(u_n))<∞, where Ψ is the CDF of |N(0,1)|.
+    Then ∑_{j=1}^n n|r_j| exp(−u_n²/(1+|r_j|))→0.
+  hypotheses:
+    explicit:
+    - A real sequence r_j.
+    - Uniform strict correlation bound.
+    - Berman decay r_n log n→0.
+    - Positive thresholds u_n with bounded expected exceedance count.
+    implicit: []
+  quantifier_order:
+  - The exact prefactor n and denominator 1+|r_j|.
+  constants:
+  - The exact prefactor n and denominator 1+|r_j|.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - lemma-2-7-7
+    - theorem-2-7-4
+    later_book_uses:
+    - theorem-2-7-4
+    - lemma-2-7-7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Split the sum at n^α, use Gaussian-tail asymptotics and the covariance decay condition.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-7-4
+  kind: theorem
+  book:
+    number: 2.7.4
+    pages:
+    - 90
+    section: '2.7'
+    equations: []
+  title: Gumbel limit for stationary Gaussian sequences
+  statement: Let (ξ_n) be stationary standard normal with covariance r_n satisfying r_n log n→0. With a_n,b_n from Theorem
+    2.7.1, for every x∈ℝ, Pr(a_n(max_{i≤n}|ξ_i|−b_n)≤x)→exp(−e^{-x}).
+  hypotheses:
+    explicit:
+    - Stationary jointly Gaussian sequence.
+    - Every coordinate standard normal.
+    - Covariance decay r_n log n→0.
+    implicit:
+    - The comparison theorem also needs correlations away from ±1; stationarity/nondegeneracy supplies or must separately
+      assume the needed bound.
+  quantifier_order:
+  - Same normalisation as iid case.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-7-3
+    - theorem-2-4-7
+    - theorem-2-7-1
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Apply Berman's symmetric-rectangle comparison between the dependent vector and iid normals, then use Lemma 2.7.3.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The printed theorem states only r_n log n→0; verify how the proof handles any finite lag with |r_j|=1 and whether nondegeneracy
+    is implicit.
+- id: definition-unnumbered-2-7-stationary-process
+  kind: definition
+  book:
+    number: unnumbered-2.7-stationary-process
+    pages:
+    - 91
+    section: '2.7'
+    equations: []
+  title: Stationary Gaussian process on [0,∞)
+  statement: A process ξ(t) is stationary when every finite-dimensional law is invariant under common shifts preserving nonnegative
+    times. For centred Gaussian ξ this is equivalent to covariance depending only on lag; r(t)=Eξ(0)ξ(t).
+  hypotheses:
+    explicit:
+    - Process indexed by [0,∞).
+    implicit: []
+  quantifier_order:
+  - ∀ finite t_i and shifts s≥0.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Shift-invariance of finite-dimensional distributions; for Gaussian processes, reduce to equality of covariance
+      kernels.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-7-normalised-process
+  kind: definition
+  book:
+    number: unnumbered-2.7-normalised-process
+    pages:
+    - 91
+    section: '2.7'
+    equations: []
+  title: Normalised stationary Gaussian process
+  statement: A stationary centred Gaussian process is normalised when ξ(0), and hence every ξ(t), is standard normal.
+  hypotheses:
+    explicit:
+    - Stationary centred Gaussian process.
+    implicit: []
+  quantifier_order:
+  - Eξ(t)²=1 for all t.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Stationarity plus `∀t, variance (ξ t)=1`, reducible to the t=0 condition.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-7-pickands-process
+  kind: definition
+  book:
+    number: unnumbered-2.7-pickands-process
+    pages:
+    - 92
+    section: '2.7'
+    equations: []
+  title: Pickands tangent process and constant
+  statement: For α∈(0,2], ζ_α has mean −|t|^α and covariance s^α+t^α−|t−s|^α. With η independent Exp(1), H_α:=lim_{a↓0} a^{-1}Pr(sup_{k∈ℕ}(ζ_α(ak)+η)≤0),
+    whose existence, finiteness and positivity are established in Theorem 2.7.5; H_2=1/√π.
+  hypotheses:
+    explicit:
+    - α∈(0,2].
+    - η independent exponential with mean 1.
+    implicit: []
+  quantifier_order:
+  - Scale 1/a; covariance exactly as displayed.
+  constants:
+  - Scale 1/a; covariance exactly as displayed.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - exercise-2-7-3
+    - theorem-2-7-5
+    later_book_uses:
+    - theorem-2-7-5
+    - exercise-2-7-3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Construct a Gaussian process from the covariance kernel, product with an exponential variable, define a one-sided
+      limit in `ℝ≥0∞`, then prove it is finite positive.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-7-5
+  kind: theorem
+  book:
+    number: 2.7.5
+    pages:
+    - 92
+    section: '2.7'
+    equations: []
+  title: Pickands fixed-interval high-excursion asymptotic
+  statement: Let ξ be normalised centred stationary Gaussian with continuous paths and r(t)<1 for t>0, r(t)=1−C|t|^α+o(|t|^α)
+    as t→0, α∈(0,2], C>0. For h>0, Pr(sup_{t∈[0,h]}ξ(t)>u)/(u^{2/α}h·barΦ(u))→C^{1/α}H_α, where barΦ is the standard normal
+    upper tail.
+  hypotheses:
+    explicit:
+    - Continuous sample paths.
+    - Local covariance condition (2.97).
+    - h>0.
+    - u→∞.
+    implicit: []
+  quantifier_order:
+  - C^{1/α}H_α; q(u)=u^{-2/α} in proof.
+  constants:
+  - C^{1/α}H_α; q(u)=u^{-2/α} in proof.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-unnumbered-2-7-pickands-process
+    - theorem-2-3-7
+    chapter_local_dependents:
+    - corollary-2-7-6
+    - exercise-2-7-2
+    later_book_uses:
+    - corollary-2-7-6
+    - exercise-2-7-2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: A four-claim discretisation/double-sum proof, finite-dimensional conditional convergence to the tangent process,
+      and control of discretisation errors.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []

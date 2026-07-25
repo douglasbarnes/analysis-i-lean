@@ -1,0 +1,482 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.6'
+fragment_part: 4
+inventory:
+- id: lemma-2-6-23
+  kind: lemma
+  book:
+    number: 2.6.23
+    pages:
+    - 80
+    section: '2.6'
+    equations: []
+  title: RKHS of the release polynomial
+  statement: For Z_k(t)=∑_{j=0}^k t^jg_j/j!, the RKHS is the space of polynomials of degree at most k, with ⟨P,Q⟩=∑_{j=0}^kP^{(j)}(0)Q^{(j)}(0).
+  hypotheses:
+    explicit:
+    - g_0,…,g_k independent standard normal.
+    implicit: []
+  quantifier_order:
+  - Derivative values at zero; no factorial remains in the norm because of the chosen basis.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-6-1
+    chapter_local_dependents:
+    - proposition-2-6-24
+    later_book_uses:
+    - proposition-2-6-24
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Finite-dimensional Gaussian coefficient map and transported Euclidean inner product.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-6-24
+  kind: proposition
+  book:
+    number: 2.6.24
+    pages:
+    - 80
+    section: '2.6'
+    equations: []
+  title: RKHS of released integrated Brownian motion
+  statement: The RKHS H_{W,k} of W_k is the Sobolev-type space of functions whose kth derivative is absolutely continuous
+    and whose (k+1)st derivative is in L², with inner product ∑_{j=0}^k f^{(j)}(0)g^{(j)}(0)+∫f^{(k+1)}g^{(k+1)}.
+  hypotheses:
+    explicit:
+    - k∈ℕ∪{0}.
+    - Independent sum of integrated Brownian and release polynomial.
+    implicit: []
+  quantifier_order:
+  - Boundary derivative sum j=0,…,k plus L² derivative term.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-6-22
+    - lemma-2-6-23
+    chapter_local_dependents:
+    - corollary-2-6-30
+    - corollary-2-83
+    later_book_uses:
+    - corollary-2-83
+    - corollary-2-6-30
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: RKHS of an independent Gaussian sum as the Hilbert direct-sum/range sum, then identify the unique decomposition
+      by Taylor boundary data.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-83
+  kind: corollary
+  book:
+    number: '2.83'
+    pages:
+    - 81
+    section: '2.6'
+    equations: []
+  title: Entropy of the released integrated-Brownian RKHS ball
+  statement: For the unit ball of H_{W,k} in the supremum norm, log N(H_{W,k,1},‖·‖∞,ε)≤C_k ε^{-1/(k+1)} for small ε.
+  hypotheses:
+    explicit:
+    - k fixed.
+    - ε in the small-radius range.
+    implicit: []
+  quantifier_order:
+  - Exponent 1/(k+1); constant C_k.
+  constants:
+  - Exponent 1/(k+1); constant C_k.
+  dependencies:
+    earlier_book:
+    - 'chapter4-corollary-4-3-38: Explicit forward reference in Chapter 2; requires a stub or delayed implementation.'
+    chapter_local:
+    - proposition-2-6-24
+    chapter_local_dependents:
+    - corollary-2-6-30
+    later_book_uses:
+    - corollary-2-6-30
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: This estimate is imported from later Corollary 4.3.38; it is an explicit forward dependency and must not
+      be proved circularly inside Chapter 2.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Reference a later Sobolev-ball metric-entropy theorem; in staging, declare a dependency node rather than an axiom
+      hidden in the Chapter 2 file.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-6-smallball-zero
+  kind: definition
+  book:
+    number: unnumbered-2.6-smallball-zero
+    pages:
+    - 82
+    section: '2.6'
+    equations: []
+  title: Centred small-ball concentration
+  statement: φ₀^X(ε):=−log Pr(‖X‖<ε).
+  hypotheses:
+    explicit:
+    - ε>0.
+    - The small-ball probability is positive for centred Gaussian X in its support.
+    implicit: []
+  quantifier_order:
+  - Natural logarithm.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: A real/extended-real function of ε using `Measure` of an open norm ball.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-6-26
+  kind: theorem
+  book:
+    number: 2.6.26
+    pages:
+    - 82
+    section: '2.6'
+    equations: []
+  title: Supremum-norm small balls for Brownian motion
+  statement: There exists C∈(0,∞) such that for 0<ε≤1, −Cε^{-2}≤log Pr(‖W‖∞<ε)≤−C^{-1}ε^{-2}.
+  hypotheses:
+    explicit:
+    - W standard Brownian motion on [0,1].
+    - 0<ε≤1.
+    implicit: []
+  quantifier_order:
+  - Two-sided exponent 2; one finite positive C.
+  constants:
+  - Two-sided exponent 2; one finite positive C.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-3-2
+    - exercise-2-6-9
+    chapter_local_dependents:
+    - corollary-2-6-27
+    - exercise-2-6-12
+    - exercise-2-6-13
+    later_book_uses:
+    - corollary-2-6-27
+    - exercise-2-6-12
+    - exercise-2-6-13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Use a Schauder/Haar series representation and independent Gaussian coefficient estimates for the lower bound;
+      discretisation/increments for the upper bound.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-6-27
+  kind: corollary
+  book:
+    number: 2.6.27
+    pages:
+    - 84
+    section: '2.6'
+    equations: []
+  title: Small balls for released Brownian and its integrals
+  statement: The released Brownian W₀=g+W has the same ε^{-2} two-sided logarithmic small-ball order; for every k, a rough
+    lower bound log Pr(‖W_k‖∞<ε)≥−C_kε^{-2} holds for small ε.
+  hypotheses:
+    explicit:
+    - g independent standard normal.
+    - k∈ℕ∪{0}.
+    - ε sufficiently small.
+    implicit: []
+  quantifier_order:
+  - Exponent 2; constants depend on k.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-6-26
+    chapter_local_dependents:
+    - corollary-2-6-30
+    later_book_uses:
+    - corollary-2-6-30
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Product/independence lower bounds and norm bounds for integration plus release coefficients.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-6-28
+  kind: lemma
+  book:
+    number: 2.6.28
+    pages:
+    - 84
+    section: '2.6'
+    equations: []
+  title: Kuelbs–Li entropy/small-ball inequality
+  statement: 'For centred Gaussian X with RKHS unit ball H₁ and φ₀(ε)=−log Pr(‖X‖<ε), for every λ,ε>0: φ₀(2ε)≤log N(H₁,ε/λ)−log
+    Φ(λ+Φ⁻¹(e^{-φ₀(ε)})).'
+  hypotheses:
+    explicit:
+    - X centred Gaussian in separable Banach B.
+    - λ>0, ε>0.
+    implicit: []
+  quantifier_order:
+  - Radii 2ε and ε/λ; exact normal-quantile term.
+  constants:
+  - Radii 2ε and ε/λ; exact normal-quantile term.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-5
+    - theorem-2-6-12
+    chapter_local_dependents:
+    - theorem-2-6-29
+    later_book_uses:
+    - theorem-2-6-29
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Notes attribute the result to Kuelbs–Li.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Cover λH₁ by ε-balls, compare translated balls by Anderson, and apply Gaussian isoperimetry.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-6-29
+  kind: theorem
+  book:
+    number: 2.6.29
+    pages:
+    - 85
+    section: '2.6'
+    equations: []
+  title: Entropy-to-small-ball exponent transfer
+  statement: If φ₀(ε)≤C₁ε^{-γ} and log N(H₁,ε)≤C₂ε^{-α} for small ε, with 0<α<2, then φ₀(ε)≤C₃ε^{-2α/(2−α)} for small ε.
+  hypotheses:
+    explicit:
+    - C₁,C₂,γ>0.
+    - 0<α<2.
+    - Both hypotheses hold below some radius.
+    implicit: []
+  quantifier_order:
+  - Conclusion exponent 2α/(2−α); C₃ depends on the input constants.
+  constants:
+  - Conclusion exponent 2α/(2−α); C₃ depends on the input constants.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-6-28
+    chapter_local_dependents:
+    - corollary-2-6-30
+    later_book_uses:
+    - corollary-2-6-30
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Notes say a stronger result appears in Li–Linde.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Iterate the nonlinear inequality from Lemma 2.6.28 after choosing λ≈√φ₀(ε); formalise a discrete recursion and
+      exponent algebra.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []

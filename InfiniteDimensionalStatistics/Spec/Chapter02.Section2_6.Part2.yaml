@@ -1,0 +1,466 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.6'
+fragment_part: 2
+inventory:
+- id: proposition-2-6-9
+  kind: proposition
+  book:
+    number: 2.6.9
+    pages:
+    - 70
+    section: '2.6'
+    equations: []
+  title: Topological properties of the RKHS
+  statement: For a centred Gaussian variable in a separable Banach space, H is a separable Hilbert space and a Borel/measurable
+    subset of B; the inclusion H→B is continuous and the closed H-unit ball is compact in B.
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - X centred Gaussian B-valued.
+    implicit: []
+  quantifier_order:
+  - Compactness of O_H={h:‖h‖_H≤1} in the B norm.
+  constants:
+  - Compactness of O_H={h:‖h‖_H≤1} in the B norm.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-6-2
+    - exercise-2-6-7
+    - lemma-2-6-6
+    - proposition-2-6-8
+    chapter_local_dependents:
+    - corollary-2-6-11
+    - exercise-2-6-6
+    - lemma-2-6-20
+    - theorem-2-6-10
+    - theorem-2-6-12
+    later_book_uses:
+    - theorem-2-6-10
+    - corollary-2-6-11
+    - theorem-2-6-12
+    - lemma-2-6-20
+    - exercise-2-6-6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Construct a countable ONB, prove compactness via covariance-tail approximations and a countable norming set; package
+      inclusion as a compact linear map.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-6-10
+  kind: theorem
+  book:
+    number: 2.6.10
+    pages:
+    - 71
+    section: '2.6'
+    equations: []
+  title: Karhunen–Loève expansion in a Banach space
+  statement: Let (k_j) be a complete orthonormal system of the Gaussian closed span F. Then ∑_j E[k_jX]·k_j converges almost
+    surely in B to X. Equivalently, for an ONB (h_j) of H, X=∑_j φ⁻¹(h_j)h_j almost surely in B.
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - X centred Gaussian B-valued.
+    - (k_j) ONB of F.
+    implicit:
+    - Products are scalar random coefficients times deterministic B-vectors.
+    - Series convergence is in the B norm.
+  quantifier_order:
+  - Almost-sure convergence of the full sequence of partial sums.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-6-8
+    - proposition-2-6-9
+    chapter_local_dependents:
+    - corollary-2-6-11
+    - exercise-2-6-6
+    - exercise-2-6-9
+    - lemma-2-6-21
+    - theorem-2-6-12
+    - theorem-2-6-13
+    later_book_uses:
+    - corollary-2-6-11
+    - theorem-2-6-12
+    - theorem-2-6-13
+    - lemma-2-6-21
+    - exercise-2-6-6
+    - exercise-2-6-9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Orthogonal expansion in L² plus Lévy maximal inequality and a countable norming set to upgrade scalar convergence
+      to B-valued a.s. convergence.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-6-11
+  kind: corollary
+  book:
+    number: 2.6.11
+    pages:
+    - 72
+    section: '2.6'
+    equations: []
+  title: Gaussian measure of its RKHS
+  statement: Pr(X∈closure_B H)=1. If H is finite-dimensional, Pr(X∈H)=1; if H is infinite-dimensional, Pr(X∈H)=0.
+  hypotheses:
+    explicit:
+    - X and H as above.
+    implicit: []
+  quantifier_order:
+  - Dichotomy by finite/infinite Hilbert dimension.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-6-9
+    - theorem-2-6-10
+    chapter_local_dependents:
+    - corollary-2-6-17
+    later_book_uses:
+    - corollary-2-6-17
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Use a.s. series convergence for support; in infinite dimension, the H norm of Gaussian partial sums diverges almost
+      surely.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-6-12
+  kind: theorem
+  book:
+    number: 2.6.12
+    pages:
+    - 73
+    section: '2.6'
+    equations: []
+  title: Gaussian isoperimetry in a Banach space
+  statement: Let O_H be the RKHS unit ball and μ the law of centred Gaussian X in separable Banach B. For Borel A⊆B and ε>0,
+    μ(A+εO_H)≥Φ(Φ⁻¹(μ(A))+ε).
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - X centred Gaussian.
+    - A Borel.
+    - ε>0.
+    implicit:
+    - A+εO_H may require completion/analytic measurability.
+  quantifier_order:
+  - No dimension factor; RKHS-radius ε.
+  constants:
+  - No dimension factor; RKHS-radius ε.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-6-9
+    - theorem-2-2-4
+    - theorem-2-6-10
+    chapter_local_dependents:
+    - lemma-2-6-28
+    later_book_uses:
+    - lemma-2-6-28
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Pull A back along Gaussian coordinates in the KL expansion and apply product Gaussian isoperimetry.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The statement writes μ(A+εO_H) for a set not automatically Borel. Use completed measure/outer measure or prove analytic
+    measurability.
+- id: theorem-2-6-13
+  kind: theorem
+  book:
+    number: 2.6.13
+    pages:
+    - 73
+    section: '2.6'
+    equations: []
+  title: Cameron–Martin theorem
+  statement: 'For centred Gaussian μ on separable Banach B with RKHS H: if h∈H, the translate τ_hμ is equivalent to μ and
+    d(τ_hμ)/dμ(x)=exp(φ⁻¹(h)(x)−‖h‖_H²/2) μ-a.e.; if h∉H, τ_hμ and μ are mutually singular.'
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - μ centred Gaussian.
+    - h∈B.
+    - φ:F→H the RKHS isometry.
+    implicit:
+    - φ⁻¹(h) is an L²(μ) equivalence class, not generally a pointwise continuous linear functional.
+    - Translation sign convention τ_hμ(A)=μ(A−h) must be fixed.
+  quantifier_order:
+  - Exponent −‖h‖²/2 and coefficient 1.
+  constants:
+  - Exponent −‖h‖²/2 and coefficient 1.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-6-10
+    - theorem-2-6-10
+    chapter_local_dependents:
+    - corollary-2-6-17
+    - corollary-2-6-18
+    - proposition-2-6-16
+    later_book_uses:
+    - proposition-2-6-16
+    - corollary-2-6-17
+    - corollary-2-6-18
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Radon–Nikodym derivative for translated measures, represented by an `Lp` Gaussian linear functional; singularity
+      via finite-dimensional coordinate likelihood ratios.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - Do not model `φ⁻¹(h)(x)` as an everywhere-defined continuous linear functional on B; it is only a measurable linear functional/L²
+    class μ-a.e.
+  - Fix and document the translation convention, since it determines the sign in the exponent.
+- id: example-2-6-15
+  kind: example
+  book:
+    number: 2.6.15
+    pages:
+    - 75
+    section: '2.6'
+    equations: []
+  title: Gaussian variables in a Hilbert space
+  statement: If B has ONB e_i and X=∑λ_i g_i e_i with ∑λ_i²<∞, then H={h=∑h_i e_i:∑h_i²/λ_i²<∞}, with inner product ∑h_i k_i/λ_i²,
+    omitting/handling zero λ_i coordinates appropriately.
+  hypotheses:
+    explicit:
+    - B separable Hilbert.
+    - g_i iid standard normal.
+    - (λ_i) square summable.
+    implicit:
+    - If λ_i=0, H requires h_i=0 and the quotient is not formed naively.
+  quantifier_order:
+  - Weighted ℓ² norm.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-6-4
+    - exercise-2-6-14
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: A diagonal covariance operator and weighted `ℓ²` subspace; represent zero eigenvalues by support restrictions.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-6-16
+  kind: proposition
+  book:
+    number: 2.6.16
+    pages:
+    - 75
+    section: '2.6'
+    equations: []
+  title: Equivalence or singularity for translated product Gaussians
+  statement: For μ=⊗_iN(0,σ_i²) on ℝ^ℕ, translation by h is equivalent to μ iff ∑h_i²/σ_i²<∞, in which case the density is
+    exp(∑h_ix_i/σ_i²−½∑h_i²/σ_i²); otherwise the measures are singular.
+  hypotheses:
+    explicit:
+    - σ_i>0 unless zero-variance coordinates are separately treated.
+    - Product/cylindrical σ-algebra.
+    - h∈ℝ^ℕ.
+    implicit: []
+  quantifier_order:
+  - Exact weighted ℓ² criterion and exponent.
+  constants:
+  - Exact weighted ℓ² criterion and exponent.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example-2-6-2
+    - exercise-2-6-15
+    - theorem-2-6-13
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Finite-product RN derivatives, martingale/L² convergence of likelihood ratios, and Kakutani-type singularity criterion.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []

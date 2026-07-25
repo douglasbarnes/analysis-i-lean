@@ -1,0 +1,79 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.7'
+fragment_part: 3
+inventory:
+- id: exercise-2-7-3
+  kind: exercise
+  book:
+    number: Exercise 2.7.3
+    pages:
+    - 102
+    section: '2.7'
+    equations: []
+  title: Evaluation of Pickands' constant at α=2
+  statement: For H_α defined in (2.98), prove H_2=1/√π.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-unnumbered-2-7-pickands-process
+    chapter_local_dependents:
+    - theorem-2-7-9
+    later_book_uses:
+    - theorem-2-7-9
+    - Theorem 2.7.9 normalisation
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Identify the α=2 tangent process and evaluate its expected exponential supremum asymptotic.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - The exercise OCR reads `H1/2 = 1/π` before clarifying `where H2 ... α=2`; the intended printed identity is H₂=1/√π, consistent
+    with Theorem 2.7.9. Verify the typeset page.
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Theorem 2.7.9 normalisation

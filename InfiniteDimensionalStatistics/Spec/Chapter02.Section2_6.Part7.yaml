@@ -1,0 +1,142 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.6'
+fragment_part: 7
+inventory:
+- id: exercise-2-6-15
+  kind: exercise
+  book:
+    number: Exercise 2.6.15
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Kakutani dichotomy for product measures
+  statement: For product measures μ=⊗μ_i and μ'=⊗μ_i' with equivalent coordinate laws and f_i=dμ_i'/dμ_i, prove μ and μ' are
+    either equivalent or mutually singular according as ∏_i∫√f_i dμ_i is positive or zero; in the equivalent case dμ'/dμ=∏_i
+    f_i a.s.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - definition-unnumbered-2-2-product-gaussian
+    - proposition-2-6-16
+    later_book_uses:
+    - proposition-2-6-16
+    - definition-unnumbered-2-2-product-gaussian
+    - Proposition 2.6.16 and Chapter 6 product Gaussian likelihoods
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Martingale convergence of finite product densities and Hellinger affinities.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Proposition 2.6.16 and Chapter 6 product Gaussian likelihoods
+- id: exercise-2-6-16
+  kind: exercise
+  book:
+    number: Exercise 2.6.16
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: RKHS of the Brownian bridge
+  statement: For B(t)=W(t)−tW(1), prove H_B={f:f(0)=f(1)=0, f absolutely continuous, f'∈L²[0,1]} with ||f||_{H_B}²=∫₀¹(f')².
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example-2-6-7
+    - exercise-2-6-5
+    chapter_local_dependents: []
+    later_book_uses:
+    - Brownian-bridge process applications
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Compute the covariance map or apply the continuous-linear-map RKHS theorem to W↦W−tW(1).
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Brownian-bridge process applications

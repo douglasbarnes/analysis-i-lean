@@ -1,0 +1,487 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.7'
+fragment_part: 2
+inventory:
+- id: corollary-2-7-6
+  kind: corollary
+  book:
+    number: 2.7.6
+    pages:
+    - 97
+    section: '2.7'
+    equations: []
+  title: Fixed-interval asymptotic for the absolute supremum
+  statement: Under Theorem 2.7.5, Pr(sup_{[0,h]}|ξ(t)|>u)/(u^{2/α}h·barΦ(u))→2C^{1/α}H_α. For each a>0 the corresponding grid
+    maximum has the displayed limit involving a^{-1}Pr(sup_k(ζ(C^{1/α}ak)+η)≤0).
+  hypotheses:
+    explicit:
+    - All hypotheses of Theorem 2.7.5.
+    - a>0 for the discretised statement.
+    implicit: []
+  quantifier_order:
+  - Factor 2 in the continuous absolute-value result.
+  constants:
+  - Factor 2 in the continuous absolute-value result.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-20
+    - theorem-2-2-7
+    - theorem-2-7-5
+    chapter_local_dependents:
+    - proposition-2-7-8
+    later_book_uses:
+    - proposition-2-7-8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Inclusion–exclusion for positive/negative excursions plus BST control of simultaneous large opposite excursions.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-110-2-111
+  kind: definition
+  book:
+    number: 2.110-2.111
+    pages:
+    - 98
+    section: '2.7'
+    equations: []
+  title: Extreme-value scaling relation
+  statement: Set μ̄(u)=2C^{1/α}H_α u^{2/α}barΦ(u), and choose T=T(u) so Tμ̄(u)→τ∈(0,∞). This is equivalent to the asymptotic
+    expansion (2.111) for u² in terms of log T, log log T, τ,C,H_α.
+  hypotheses:
+    explicit:
+    - τ>0.
+    - u,T→∞ linked by the relation.
+    implicit: []
+  quantifier_order:
+  - The explicit logarithmic constants are those in (2.111).
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - exercise-2-7-1
+    - lemma-2-7-7
+    later_book_uses:
+    - lemma-2-7-7
+    - exercise-2-7-1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: A lemma equating two asymptotic formulations using Mills ratio and logarithmic expansions.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - The exact constant term in (2.111) must be transcribed visually; OCR line breaks obscure powers of 2.
+- id: lemma-2-7-7
+  kind: lemma
+  book:
+    number: 2.7.7
+    pages:
+    - 98
+    section: '2.7'
+    equations: []
+  title: Continuous covariance-sum estimate
+  statement: Assume α∈(0,2), r(0)=1, |r(t)|<1 for t>0, r(t)=1−C|t|^α+o(|t|^α), r(t)log t→0, T and u satisfy (2.111), q=u^{-2/α},
+    and a>0. Then for every ε>0, (T/q)∑_{ε≤aqk≤T}|r(aqk)|exp(−u²/(1+|r(aqk)|))→0.
+  hypotheses:
+    explicit:
+    - All displayed local and long-range covariance assumptions.
+    - α strictly less than 2 in the printed lemma.
+    - ε,a>0.
+    implicit: []
+  quantifier_order:
+  - Prefactor T/q and grid spacing aq.
+  constants:
+  - Prefactor T/q and grid spacing aq.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-110-2-111
+    - exercise-2-7-1
+    - lemma-2-7-3
+    chapter_local_dependents:
+    - proposition-2-7-8
+    later_book_uses:
+    - proposition-2-7-8
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-7-1
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Split the sum at T^β and use the decay envelope δ(t)=sup_{s≥t}|r(s)log s|.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The proof is entirely omitted to Exercise 2.7.1.
+  - The lemma excludes α=2 while Proposition 2.7.8 allows α=2; verify whether the α=2 case is immediate or requires a separate
+    version.
+- id: proposition-2-7-8
+  kind: proposition
+  book:
+    number: 2.7.8
+    pages:
+    - 99
+    section: '2.7'
+    equations: []
+  title: Poisson limit for the absolute supremum over increasing intervals
+  statement: Let ξ satisfy the normalised stationary continuous-path hypotheses, local covariance (2.97), and r(t)log t→0.
+    If Tμ̄(u_T)→τ>0, then Pr(sup_{0≤t≤T}|ξ(t)|≤u_T)→e^{-τ}.
+  hypotheses:
+    explicit:
+    - α∈(0,2] in local condition.
+    - Long-range covariance decay.
+    - Threshold sequence u_T linked to T.
+    implicit: []
+  quantifier_order:
+  - Limit e^{-τ}.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-7-6
+    - exercise-2-7-1
+    - lemma-2-7-7
+    - theorem-2-4-7
+    chapter_local_dependents:
+    - exercise-2-7-2
+    - theorem-2-7-9
+    later_book_uses:
+    - theorem-2-7-9
+    - exercise-2-7-2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Block decomposition with gaps, discretisation, Berman comparison to independent blocks, and fixed-block tail asymptotics.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-120
+  kind: definition
+  book:
+    number: '2.120'
+    pages:
+    - 101
+    section: '2.7'
+    equations: []
+  title: Normalising constants for continuous-time extremes
+  statement: a_T=√(2log T) and b_T=a_T+[((2−α)/α)log log T+2log((2π)^{-1/2}2^{(2+α)/α}C^{1/α}H_α)]/(2a_T), exactly as in (2.120).
+  hypotheses:
+    explicit:
+    - T>1.
+    - α∈(0,2], C>0.
+    implicit: []
+  quantifier_order:
+  - All powers of 2 and π exactly as in the display.
+  constants:
+  - All powers of 2 and π exactly as in the display.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-7-9
+    later_book_uses:
+    - theorem-2-7-9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Real-valued definitions plus eventual positivity/nonzero lemmas.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - The OCR exponent of 2 in the logarithmic constant must be checked visually against the PDF before code generation.
+- id: theorem-2-7-9
+  kind: theorem
+  book:
+    number: 2.7.9
+    pages:
+    - 101
+    section: '2.7'
+    equations: []
+  title: Gumbel limit for stationary Gaussian-process suprema
+  statement: 'Under the normalised centred stationary continuous-path assumptions, r(t)<1 for t>0, r(t)=1−C|t|^α+o(|t|^α)
+    at zero, and r(t)log t→0 at infinity, for every x∈ℝ: Pr(a_T(sup_{t∈[0,T]}|ξ(t)|−b_T)≤x)→exp(−e^{-x}).'
+  hypotheses:
+    explicit:
+    - α∈(0,2], C>0.
+    - All covariance and continuity conditions.
+    - x fixed.
+    implicit: []
+  quantifier_order:
+  - a_T,b_T from (2.120).
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-120
+    - exercise-2-7-3
+    - proposition-2-7-8
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Set u_T=b_T+x/a_T, verify the scaling relation with τ=e^{-x}, then apply Proposition 2.7.8.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: exercise-2-7-1
+  kind: exercise
+  book:
+    number: Exercise 2.7.1
+    pages:
+    - 101
+    - 102
+    section: '2.7'
+    equations: []
+  title: Proof of the continuous covariance-sum lemma
+  statement: Prove Lemma 2.7.7 by splitting the sum in (2.113) at T^β, with β∈(0,(1−δ)/(1+δ)), δ=sup_{t≥ε}|r(t)|, and using
+    δ(T^β):=sup_{s≥T^β}|r(s)log s| for the long-lag part.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-110-2-111
+    chapter_local_dependents:
+    - lemma-2-7-7
+    - proposition-2-7-8
+    later_book_uses:
+    - lemma-2-7-7
+    - proposition-2-7-8
+    - Lemma 2.7.7
+    - Proposition 2.7.8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Asymptotic split-sum estimates with covariance decay.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  used_by:
+  - Lemma 2.7.7
+  - Proposition 2.7.8
+- id: exercise-2-7-2
+  kind: exercise
+  book:
+    number: Exercise 2.7.2
+    pages:
+    - 102
+    section: '2.7'
+    equations: []
+  title: One-sided stationary-process extreme-value limit
+  statement: Under Theorem 2.7.9, prove Pr(a_T(sup_{0≤t≤T}ξ(t)−b'_T)≤x)→exp(−e^{-x}), where b'_T=b_T−(log 2)/a_T.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - b'_T=b_T−log(2)/a_T.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-7-8
+    - theorem-2-7-5
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: Use the one-sided fixed-interval exceedance asymptotic instead of the absolute-value corollary.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
