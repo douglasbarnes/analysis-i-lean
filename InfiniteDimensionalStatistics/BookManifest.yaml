@@ -75,8 +75,8 @@ chapters:
     audit_step: P1.5
     status: needs_revision
     blockers:
-      - Ten declarations require exact source transcription before source-fidelity acceptance.
-      - The unresolved declarations comprise Conditions (K1)–(K5), the class D, Proposition 5.1.21 and the quadratic-functional formulas on pp. 439–451.
+      - Nine declarations require exact source transcription before source-fidelity acceptance.
+      - The unresolved declarations comprise the five-parameter density class, Proposition 5.1.21 and the quadratic-functional formulas on pp. 439–451.
       - Central review must clear the Chapter 5 source-fidelity queue.
       - Structural validation does not convert unresolved mathematical transcriptions into an accepted specification.
   - number: 6
