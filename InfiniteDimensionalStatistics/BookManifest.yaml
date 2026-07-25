@@ -1,17 +1,15 @@
 schema_version: '1.0'
 project:
   name: InfiniteDimensionalStatistics
-  phase: P0_recovery
+  phase: P1_recovery
   p2_blocked: true
-  source_fidelity_policy: >-
-    Preserve the printed mathematical statement. Record official corrigenda and
-    suspected typographical, measurability or generality issues explicitly; do
-    not silently repair them.
+  source_fidelity_policy: Preserve the printed mathematical statement. Record official corrigenda and suspected typographical,
+    measurability or generality issues explicitly; do not silently repair them.
 book:
   title: Mathematical Foundations of Infinite-Dimensional Statistical Models
   authors:
-    - Evarist Giné
-    - Richard Nickl
+  - Evarist Giné
+  - Richard Nickl
   publisher: Cambridge University Press
   year: 2016
   edition: First edition
@@ -21,78 +19,182 @@ book:
 specification:
   directory: InfiniteDimensionalStatistics/Spec
   canonical_schema: InfiniteDimensionalStatistics/Spec/Schema.md
-  package_loader: InfiniteDimensionalStatistics/Spec/PackageLoader.md
   validator: scripts/validate_ids_specs.py
-  required_difficulty_values: [routine, substantial, major-library, research-level]
-  required_pass_values: [core, starred, exercise]
+  validator_modes:
+    strict: P1 acceptance gate; all eight chapters, complete source transcription and complete numbered-label coverage are
+      required.
+    migration_audit: Use explicit --allow-* flags; this mode must never be reported as acceptance.
+  required_difficulty_values:
+  - routine
+  - substantial
+  - major-library
+  - research-level
+  required_pass_values:
+  - core
+  - starred
+  - exercise
   pass_policy:
     core: Unstarred main-text material, irrespective of implementation difficulty.
     starred: Material explicitly starred in the book.
     exercise: Extracted exercises satisfying the project selection criteria.
 chapters:
-  - number: 1
-    title: Nonparametric Statistical Models
-    printed_pages: {start: 1, end: 14}
-    specification: InfiniteDimensionalStatistics/Spec/Chapter01.yaml
-    audit_step: P1.1
-    status: missing_on_main
-  - number: 2
-    title: Gaussian Processes
-    printed_pages: {start: 15, end: 108}
-    specification: InfiniteDimensionalStatistics/Spec/Chapter02.yaml
-    audit_step: P1.2
-    status: needs_revision
-    blockers:
-      - Restore source-based core/starred semantics.
-      - Add declaration-specific equivalence audit fields.
-      - Transcribe unresolved event-based process-separability statement.
-      - Convert to the canonical readable schema.
-  - number: 3
-    title: Empirical Processes
-    printed_pages: {start: 109, end: 290}
-    specification: InfiniteDimensionalStatistics/Spec/Chapter03.yaml
-    audit_step: P1.3
-    status: missing_on_main
-  - number: 4
-    title: Function Spaces and Approximation Theory
-    printed_pages: {start: 291, end: 388}
-    specification: InfiniteDimensionalStatistics/Spec/Chapter04.yaml
-    audit_step: P1.4
-    status: pass_with_packaging_caveat
-    blockers:
-      - Normalise the package to the canonical schema or retain it through the documented package loader.
-  - number: 5
-    title: Linear Nonparametric Estimators
-    printed_pages: {start: 389, end: 466}
-    specification: InfiniteDimensionalStatistics/Spec/Chapter05.yaml
-    audit_step: P1.5
-    status: pass
-  - number: 6
-    title: The Minimax Paradigm
-    printed_pages: {start: 467, end: 540}
-    specification: InfiniteDimensionalStatistics/Spec/Chapter06.yaml
-    audit_step: P1.6
-    status: missing_on_main
-  - number: 7
-    title: Likelihood-Based Procedures
-    printed_pages: {start: 541, end: 606}
-    specification: InfiniteDimensionalStatistics/Spec/Chapter07.yaml
-    audit_step: P1.7
-    status: missing_on_main
-  - number: 8
-    title: Adaptive Inference
-    printed_pages: {start: 607, end: 666}
-    specification: InfiniteDimensionalStatistics/Spec/Chapter08.yaml
-    audit_step: P1.8
-    status: missing_on_main
+- number: 1
+  title: Nonparametric Statistical Models
+  printed_pages:
+    start: 1
+    end: 14
+  specification: InfiniteDimensionalStatistics/Spec/Chapter01.yaml
+  audit_step: P1.1
+  status: pass_with_central_review_flags
+  package_record:
+    inventory_entries: 72
+    selected_exercises: 1
+    dependency_edges: 156
+    dag_nodes: 72
+    dag_acyclic: true
+    source_starred_entries: 0
+    pass_semantics_normalised: true
+    missing_numbered_labels: []
+    duplicate_identifiers: []
+    chapter_local_strict_schema: pass
+    central_review_issue_count: 23
+- number: 2
+  title: Gaussian Processes
+  printed_pages:
+    start: 15
+    end: 108
+  specification: InfiniteDimensionalStatistics/Spec/Chapter02.yaml
+  audit_step: P1.2
+  status: pass_with_central_review_flags
+  package_record:
+    inventory_entries: 188
+    declarations: 126
+    selected_exercises: 62
+    dependency_edges: 257
+    dag_nodes: 188
+    dag_acyclic: true
+    source_starred_entries: 0
+    pass_semantics_normalised: true
+    missing_numbered_labels: []
+    duplicate_identifiers: []
+    unresolved_local_dependency_references: []
+    chapter_local_strict_schema: pass
+    central_review_entry_count: 29
+    central_review_issue_count: 34
+  repair_record:
+  - Source-based pass semantics restored; Chapter 2 has zero starred entries.
+  - Definition 2.1.2 transcribed as the countable-separant closure condition.
+  - Declaration-specific mathlib and repository equivalence audits added.
+  - Compact arrays converted to a readable section-sharded package.
+- number: 3
+  title: Empirical Processes
+  printed_pages:
+    start: 109
+    end: 290
+  specification: InfiniteDimensionalStatistics/Spec/Chapter03.yaml
+  audit_step: P1.3
+  status: repository_package_present_needs_source_revision
+  package_record:
+    inventory_entries: 230
+    selected_exercises: 50
+    dependency_edges: 271
+    dag_acyclic: true
+    pass_semantics_repaired: true
+  blockers:
+  - Source-sensitive statements and constants still require direct page-image transcription.
+  - Apparent numbered-label gaps 3.3.12, 3.5.14 and 3.5.16–3.5.20 require source verification.
+- number: 4
+  title: Function Spaces and Approximation Theory
+  printed_pages:
+    start: 291
+    end: 388
+  specification: InfiniteDimensionalStatistics/Spec/Chapter04.yaml
+  audit_step: P1.4
+  status: pass_with_documented_package_loader
+- number: 5
+  title: Linear Nonparametric Estimators
+  printed_pages:
+    start: 389
+    end: 466
+  specification: InfiniteDimensionalStatistics/Spec/Chapter05.yaml
+  audit_step: P1.5
+  status: pass
+  package_record:
+    inventory_entries: 104
+    selected_exercises: 21
+    dependency_edges: 141
+    dag_nodes: 104
+    dag_acyclic: true
+    source_starred_entries: 7
+    pass_semantics_normalised: true
+    missing_numbered_labels: []
+    duplicate_identifiers: []
+    chapter_local_strict_schema: pass
+    blocking_source_transcriptions: 0
+- number: 6
+  title: The Minimax Paradigm
+  printed_pages:
+    start: 467
+    end: 540
+  specification: InfiniteDimensionalStatistics/Spec/Chapter06.yaml
+  audit_step: P1.6
+  status: canonical_package_manifest_available_not_ingested
+- number: 7
+  title: Likelihood-Based Procedures
+  printed_pages:
+    start: 541
+    end: 606
+  specification: InfiniteDimensionalStatistics/Spec/Chapter07.yaml
+  audit_step: P1.7
+  status: pass_with_central_review_flags
+  package_record:
+    inventory_entries: 106
+    declarations: 88
+    selected_exercises: 18
+    dependency_edges: 207
+    dag_nodes: 106
+    dag_acyclic: true
+    unique_dependency_edges: true
+    source_starred_entries: 0
+    pass_semantics_normalised: true
+    missing_numbered_labels: []
+    duplicate_identifiers: []
+    duplicate_numbered_book_labels: []
+    chapter_local_strict_schema: pass
+    central_review_issue_count: 13
+  source_review_caveats:
+  - Exercises 7.3.1–7.3.8 have been verified against the printed exercise block on pp. 602–603.
+  - Lemma 7.3.8 has been verified against p. 581, including exact constants, exponents, integration orientation and the printed p,p₀ aliases in part (c).
+  - Corollary 7.3.24 preserves the printed C^α truth condition and flags the C_n/C̄_n diameter-label mismatch.
+- number: 8
+  title: Adaptive Inference
+  printed_pages:
+    start: 607
+    end: 666
+  specification: InfiniteDimensionalStatistics/Spec/Chapter08.yaml
+  audit_step: P1.8
+  status: pass_with_central_review_flags
+  package_record:
+    inventory_entries: 115
+    selected_exercises: 9
+    dependency_edges: 160
+    dag_nodes: 115
+    dag_acyclic: true
+    source_starred_entries: 0
+    pass_semantics_normalised: true
+    missing_numbered_labels: []
+    duplicate_identifiers: []
+    duplicate_numbered_book_labels: []
+    chapter_local_strict_schema: pass
+    central_review_issue_count: 29
 phase_gates:
   P0:
     required_files:
-      - InfiniteDimensionalStatistics/README.md
-      - InfiniteDimensionalStatistics/BookManifest.yaml
-      - InfiniteDimensionalStatistics/DependencyGraph.md
-      - InfiniteDimensionalStatistics/NotationPolicy.md
-      - InfiniteDimensionalStatistics.lean
+    - InfiniteDimensionalStatistics/README.md
+    - InfiniteDimensionalStatistics/BookManifest.yaml
+    - InfiniteDimensionalStatistics/DependencyGraph.md
+    - InfiniteDimensionalStatistics/NotationPolicy.md
+    - InfiniteDimensionalStatistics.lean
     clean_local_build_required: true
     status: in_progress
   P1:
