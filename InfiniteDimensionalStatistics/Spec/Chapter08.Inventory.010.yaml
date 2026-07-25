@@ -1,0 +1,537 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 10
+chunk_count: 16
+inventory:
+- id: ch8.abstract_confidence_criteria_8_58_60
+  kind: definition
+  book:
+    number: (8.58)–(8.60)
+    pages:
+    - 636
+    section: 8.3.1
+    equations:
+    - '8.58'
+    - '8.60'
+  title: Abstract honesty and adaptive diameter criteria
+  statement: 'For 0<α,α′<β′/3 and K<∞ require: liminf_n inf_{f∈P(ρ_n)}P_f(f∈C_n)≥1−α; limsup_n sup_{f∈Θ₀}P_f(|C_n|≥K
+    r_n(Θ₀))≤α′; and limsup_n sup_{f∈Θ̃(ρ_n)}P_f(|C_n|≥K r_n(Θ))≤α′.'
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - minimax rates and β′ as above
+    - random confidence sets C_n
+    implicit:
+    - Membership and diameter events are measurable.
+  quantifier_order:
+  - Fix α,α′
+  - There exists K and C_n
+  - state three asymptotic inequalities
+  constants:
+  - K may depend on α,α′ and fixed problem data.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.abstract_model_P
+    - ch8.minimax_estimation_rates_8_53
+    later_book_uses:
+    - ch8.proposition_8_3_6
+    - ch8.proposition_8_3_7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id002
+      - MeasureTheory.Measure
+      - MeasureTheory.Integral
+      - Filter.liminf
+      - Metric.diam
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Abstract predicates for an n-indexed measurable random-set family.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-019
+  - CR-025
+  - CR-029
+- id: ch8.proposition_8_3_6
+  kind: proposition
+  book:
+    number: Proposition 8.3.6
+    pages:
+    - 637
+    section: 8.3.1
+    equations:
+    - '8.3'
+  title: Testing lower bound for adaptive confidence sets
+  statement: If r_n(Θ₀)=o(ρ_n^*), then no confidence set can satisfy (8.58)–(8.60) at a separation ρ_n=o(ρ_n^*)
+    for error levels with 0<2α+α′<β′.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - ρ_n^* satisfies both minimax testing properties
+    - r_n(Θ₀)=o(ρ_n^*)
+    implicit:
+    - Random-set criteria and testing risks are measurable.
+  quantifier_order:
+  - Fix α,α′ with 2α+α′<β′
+  - Assume ρ_n=o(ρ_n^*)
+  - derive contradiction for every C_n
+  constants: []
+  dependencies:
+    earlier_book:
+    - Standard confidence-set-to-test reduction
+    chapter_local:
+    - ch8.minimax_testing_rate_8_56_57
+    - ch8.abstract_confidence_criteria_8_58_60
+    later_book_uses:
+    - ch8.theorem_8_3_8
+    - ch8.notes_converse_prop_8_3_6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Define a test from whether C_n intersects the alternative; bound errors by coverage and diameter.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-019
+  - CR-025
+  - CR-028
+- id: ch8.proposition_8_3_7
+  kind: proposition
+  book:
+    number: Proposition 8.3.7
+    pages:
+    - 637
+    section: 8.3.1
+    equations:
+    - '8.3'
+  title: Test-plus-estimator construction of adaptive confidence sets
+  statement: Assume an estimator simultaneously attains r_n(Θ₀) on Θ₀ and r_n(Θ) on Θ, and tests attain the upper
+    minimax testing bound at ρ_n^*. Then, for prescribed error levels, a confidence set satisfying (8.58)–(8.60)
+    exists at ρ_n=Lρ_n^* for L sufficiently large.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - uniformly adaptive estimator
+    - upper testing property for every β
+    implicit:
+    - The estimator and test are measurable; confidence sets are metric balls whose radius depends on the test.
+  quantifier_order:
+  - Fix α and α′ as required
+  - choose testing level and constants
+  - choose L
+  - construct C_n
+  constants:
+  - L and radius constants depend on α,α′; exact statement dependency requires verification.
+  dependencies:
+    earlier_book:
+    - Triangle inequality
+    chapter_local:
+    - ch8.minimax_estimation_rates_8_53
+    - ch8.minimax_testing_rate_8_56_57
+    - ch8.abstract_confidence_criteria_8_58_60
+    later_book_uses:
+    - ch8.theorem_8_3_8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Piecewise measurable metric ball centred at the adaptive estimator, with radius selected by the test.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-019
+  - CR-027
+  - CR-029
+- id: ch8.canonical_smoothness_grid_8_62
+  kind: definition
+  book:
+    number: (8.62) and preceding display
+    pages:
+    - 639
+    section: 8.3.2
+    equations:
+    - '8.62'
+  title: Canonical dyadic smoothness discretisation
+  statement: Let 0<r<R and choose N so that s_i=2^i r for i=0,…,N and s_{N-1}≤R<s_N. Put ℛ={r,2r,…,2^{N−1}r}={s_i}_{i=0}^{N−1}
+    and ρ_n(t)=n^{-t/(2t+1/2)}.
+  source_fidelity: exact-transcription
+  hypotheses:
+    explicit:
+    - 0<r<R<∞
+    implicit:
+    - N is the least positive integer with 2^N r>R.
+  quantifier_order:
+  - Choose minimal N with 2^N r>R
+  - define grid
+  - define rate for each grid t
+  constants:
+  - N is fixed independently of n.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - ch8.model_Fn_8_63
+    - ch8.theorem_8_3_8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite geometric list of real smoothness levels and a rate function.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - CR-030
+- id: ch8.model_Fn_8_63
+  kind: definition
+  book:
+    number: (8.63)
+    pages:
+    - 639
+    section: 8.3.2
+    equations:
+    - '8.63'
+  title: Maximal separated model for continuous L2 adaptation
+  statement: 'With ℛ={s_i}_{i=0}^{N−1}, s_N=2^N r>R and ρ_n(t)=n^{-t/(2t+1/2)}, define F_n = S(s_N,B₀) ∪ ⋃_{s∈ℛ}{f∈S(s,B₀)
+    : ‖f−S(t,B₀)‖₂ ≥ Lρ_n(s) for every t∈ℛ with t>s}. Here ‖f−S(t,B₀)‖₂ denotes the L²-distance from f to the smoother
+    ball.'
+  source_fidelity: exact-transcription
+  hypotheses:
+    explicit:
+    - B₀>0
+    - L>0
+    - the dyadic grid and terminal point from (8.62)
+    implicit:
+    - The distance to a nonempty function class is the infimum of L² distances.
+  quantifier_order:
+  - Fix n and L
+  - For each s∈ℛ impose separation from every t∈ℛ with t>s
+  - Take the finite union and adjoin S(s_N,B₀)
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.canonical_smoothness_grid_8_62
+    - ch8.sobolev_besov_ball_8_45
+    later_book_uses:
+    - ch8.theorem_8_3_8
+    - ch8.corollary_8_3_10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite union of nested Besov-ball strata with metric separation predicates.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.theorem_8_3_8
+  kind: theorem
+  book:
+    number: Theorem 8.3.8
+    pages:
+    - 639
+    section: 8.3.2
+    equations:
+    - '8.3'
+  title: Honest continuously adaptive L2 confidence sets on F_n
+  statement: For white noise and 0<r<R, for every α,α′>0 there is L large enough and C_n=C(α,α′,B₀,r,R,dY) honest
+    over F_n, and there is L′>0 such that for every s∈[r,R] and B∈[1,B₀], limsup_n sup_{f∈S(s,B)∩F_n}P_f(|C_n|₂≥L′B^{1/(2s+1)}n^{-s/(2s+1)})≤α′.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - B₀≥1
+    - 0<r<R<∞
+    - white-noise observation
+    implicit:
+    - The model F_n and confidence set are measurable.
+  quantifier_order:
+  - Fix α,α′
+  - Choose L and construct C_n
+  - There exists L′
+  - For all s,B assert uniform limsup
+  constants:
+  - L,L′ depend on α,α′,r,R,B₀ and fixed basis data.
+  dependencies:
+    earlier_book:
+    - Theorem 6.2.20
+    - Corollary 6.2.16 optionally
+    - Theorem 4.3.36
+    chapter_local:
+    - ch8.model_Fn_8_63
+    - ch8.theorem_8_3_5
+    - ch8.proposition_8_3_7
+    later_book_uses:
+    - ch8.corollary_8_3_10
+    - ch8.theorem_8_3_11
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id003
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite model-selection tests over the canonical grid, followed by a selected two-class confidence-ball
+      construction.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-010
+  - CR-019
+  - CR-025
+  - CR-029
+- id: ch8.classification_bound_8_66
+  kind: lemma
+  book:
+    number: (8.66)
+    pages:
+    - 640
+    section: 8.3.2
+    equations:
+    - '8.66'
+  title: Smoothness-grid classification bound
+  statement: For the sequential composite-test classifier ŝ_n and the stratum label s(f), sup_{f∈F_n} P_f(ŝ_n≠s(f))
+    ≤ α/2 for all sufficiently large n. The extracted display omits the inequality sign “≠”; the proof and required
+    conclusion determine the misclassification event, which remains flagged for page-image confirmation.
+  source_fidelity: logical-transcription-with-typography-flag
+  hypotheses:
+    explicit:
+    - tests at level α/N
+    - f∈F_n
+    implicit:
+    - s(f) is uniquely defined by the separated strata.
+  quantifier_order:
+  - Choose L from testing guarantees
+  - Eventually sup_{f∈F_n}P_f(ŝ_n≠s(f))≤α/2
+  constants:
+  - Uniform testing constants depend on α/N.
+  dependencies:
+    earlier_book:
+    - Theorem 6.2.20
+    chapter_local:
+    - ch8.model_Fn_8_63
+    later_book_uses:
+    - ch8.theorem_8_3_8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id003
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite sequential classifier with union-bound error estimate.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-010
+- id: ch8.corollary_8_3_10
+  kind: corollary
+  book:
+    number: Corollary 8.3.10
+    pages:
+    - 640
+    section: 8.3.2
+    equations:
+    - '8.3'
+  title: Pointwise adaptive confidence sets on the full fixed ball
+  statement: For every α,α′ there are confidence sets C_n such that liminf_nP_f(f∈C_n)≥1−α for every fixed f∈S(r,B₀),
+    and |C_n|₂=O_{P_f}(n^{-s/(2s+1)}) for every fixed f∈S(s,B₀), s∈[r,R].
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - 0<r<R
+    - B₀ fixed
+    implicit:
+    - Coverage is pointwise, not uniform; the index after which it holds may depend on f.
+  quantifier_order:
+  - Fix α,α′
+  - Construct C_n
+  - For each fixed f separately assert coverage and rate
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.theorem_8_3_8
+    later_book_uses:
+    - ch8.theorem_8_3_11
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id003
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Pointwise asymptotic corollary from eventual membership f∈F_n.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-025
