@@ -1,0 +1,288 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: Cambridge University Press, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+section: 7.2.2
+inventory:
+- id: ch7.prop.7.2.4
+  kind: proposition
+  book:
+    number: Proposition 7.2.4
+    pages:
+    - 552
+    - 553
+    section: 7.2.2
+    equations: []
+  title: Fréchet derivatives of sample and population log-likelihoods
+  statement: "For U(x₁,…,xₙ)={f∈L∞:min_i f(xᵢ)>0} and U={f∈L∞:inf_x f(x)>0},\nboth\
+    \ sets are open. For α∈ℕ, α≥1, and directions f₁,…,f_α∈L∞,\n  D^αℓₙ(f)[f₁,…,f_α]\n\
+    \    = (-1)^{α-1}(α-1)! Pₙ(f^{-α}∏_{j=1}^α f_j),\nand, for the population functional,\n\
+    \  D^αℓ(f)[f₁,…,f_α]\n    = (-1)^{α-1}(α-1)! P₀(f^{-α}∏_{j=1}^α f_j)."
+  hypotheses:
+    explicit:
+    - Finite sample x₁,…,xₙ.
+    - For the population formula f is bounded away from zero.
+    - Directions are bounded.
+    implicit:
+    - Point evaluations on L∞ equivalence classes are not well-defined without selecting
+      actual bounded functions; Lean should not use quotient `L∞` for U(x₁,…,xₙ).
+    - Differentiation under the integral requires Exercise 7.2.4 hypotheses.
+  quantifier_order:
+  - ∀ α≥1, ∀ f in the relevant open set, ∀ directions f₁,…,f_α.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Banach-space Fréchet calculus
+    chapter_local:
+    - ch7.def.logLikelihood
+    - ch7.def.populationLogLikelihood
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.2.4
+    contains_omitted_steps: true
+    comment: population differentiation-under-the-integral justification
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Use the Banach space of bounded functions `BoundedContinuousFunction`
+      or `α →ᵇ ℝ` rather than quotient `L∞` when evaluations are required; formulate
+      the population functional separately on `L∞` if desired.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - type: lean_representation
+    page: 552
+    detail: Book writes L∞ but evaluates representatives at sample points; quotient
+      Lp is unsuitable.
+- id: ch7.def.tangentSpace
+  kind: definition
+  book:
+    number: (7.42)
+    pages:
+    - 553
+    section: 7.2.2
+    equations:
+    - (7.42)
+  title: Density tangent hyperplane
+  statement: Define H={h∈L∞:∫h dμ=0}; these are first-order directions preserving
+    total mass.
+  hypotheses:
+    explicit:
+    - μ is the dominating measure.
+    implicit:
+    - Positivity constraints still restrict which line segments are admissible.
+  quantifier_order:
+  - ∀ h, membership iff integral zero.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.prop.7.2.4
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A closed linear subspace/kernel of the continuous integration functional
+      on a suitable bounded-function space.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: ch7.lemma.7.2.5
+  kind: lemma
+  book:
+    number: Lemma 7.2.5
+    pages:
+    - 553
+    - 554
+    section: 7.2.2
+    equations: []
+  title: Directional derivative bound at a constrained MLE
+  statement: "Let ḡ∈H and η>0. If both line segments from p̂ₙ to p₀+ηḡ and to p₀-ηḡ\n\
+    lie in P∩U(X₁,…,Xₙ), then\n  |Dℓₙ(p̂ₙ)[ḡ]| ≤ η^{-1}|Dℓₙ(p̂ₙ)[p̂ₙ-p₀]|."
+  hypotheses:
+    explicit:
+    - p̂ₙ is an MLE.
+    - ḡ has zero integral.
+    - Both specified line segments remain in the feasible positive set.
+    implicit:
+    - One-sided derivative optimality is applicable along each segment.
+  quantifier_order:
+  - ∀ admissible ḡ,η satisfying segment conditions.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.prop.7.2.4
+    - ch7.def.tangentSpace
+    - ch7.def.npmle
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A convex-analysis lemma using directional derivatives and `IsMaxOn`; no
+      probability is needed once the sample is fixed.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch7.def.scoreProjection
+  kind: definition
+  book:
+    number: (7.49)
+    pages:
+    - 554
+    section: 7.2.2
+    equations:
+    - (7.49)
+  title: Projection to a density tangent direction
+  statement: For a bounded test function g define π₀(g)=(g-P₀g)p₀.
+  hypotheses:
+    explicit:
+    - g is P₀-integrable; in applications g∈L∞.
+    - p₀ is a density.
+    implicit:
+    - π₀(g) integrates to zero with respect to μ.
+  quantifier_order:
+  - ∀ bounded g.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.tangentSpace
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A centred function multiplied by the density representative; prove its
+      integral is zero.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: ch7.lemma.7.2.6
+  kind: lemma
+  book:
+    number: Lemma 7.2.6
+    pages:
+    - 554
+    section: 7.2.2
+    equations: []
+  title: Likelihood identity for the plug-in measure
+  statement: "Assume p₀>0 and let p̂ₙ be an MLE. For bounded g, writing P̂ₙ for the\
+    \ measure\nwith density p̂ₙ,\n  |(P̂ₙ-Pₙ)(g)|\n   = |Dℓₙ(p₀)[π₀(g)] + D²ℓ(p₀)[p̂ₙ-p₀,π₀(g)]|."
+  hypotheses:
+    explicit:
+    - p₀ is strictly positive.
+    - g∈L∞.
+    - The derivatives in Proposition 7.2.4 exist.
+    implicit:
+    - Strict positivity should be made quantitative (bounded away from zero) when
+      using population Fréchet derivatives on U; the printed statement says p₀>0 and
+      this generality should be reviewed.
+  quantifier_order:
+  - ∀ bounded g.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.prop.7.2.4
+    - ch7.def.scoreProjection
+    - ch7.def.npmle
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Algebraic identity after expanding the first and second derivatives; formal
+      statement should distinguish pointwise positivity from `essInf p₀>0`.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - type: generality
+    page: 554
+    detail: Population Fréchet differentiability was stated on densities bounded away
+      from zero, while this lemma prints only p₀>0.
