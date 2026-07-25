@@ -131,26 +131,37 @@ inventory:
     section: 5.3.2
     equations: []
   title: Proposition 5.3.8
-  statement: Let f∈A_{α,s}(L) and suppose |F[ϕ](t)|≥b(1+t²)^{-w/2}e^{-β|t|^r}, with β=0 or r=s. For the Meyer wavelet
-    deconvolution estimator, E‖fₙ(·,j)−f‖∞ is bounded by c′√L e^{-α(a′)^s2^{js}}2^{j(1-s)/2} plus [c(‖g‖∞∨1)/δ_j]√(2^j
-    j/n). The displayed logarithmic choice of 2^{jₙ} yields the polynomial-in-n rate with logarithmic factor stated
-    in the proposition.
+  statement: Let s,α,L,b>0 and β,w≥0. Let f∈A_{α,s}(L), and assume |F[ϕ](t)|≥b(1+t²)^{−w/2}e^{−β|t|^r} for every
+    t∈ℝ and some r>0, with β=0 or r=s. Let φ,ψ be the band-limited wavelets of Theorem 4.2.9, with supp F[φ]⊆[−a,a]
+    and supp F[ψ]∩[−a′,a′]=∅, and let f_n(·,j) be the deconvolution wavelet density estimator. There exist c′>0
+    depending on φ,ψ,α,s and c>0 depending on φ,ψ such that, whenever 2^j j<n, E‖f_n(·,j)−f‖_∞ ≤ c′√L e^{−α(a′)^s2^{js}}2^{j(1−s)/2}
+    + [c(‖g‖_∞∨1)/δ_j]√(2^j j/n). Consequently, for 2^{j_n}=[(log n)/(2α(a′)^s+2βa^s)]^{1/s} and n≥e^e, E‖f_n(·,j_n)−f‖_∞
+    ≤ C (log n)^{(w+1/2)/s}(log log n)^{1/2} n^{−α(a′)^s/(2α(a′)^s+2βa^s)}, where C depends on φ,ψ,α,β,s,w,b and
+    ‖g‖_∞.
   source_fidelity:
-    transcription_status: central_review_required
+    transcription_status: verified
     author_corrected_reading: null
   hypotheses:
     explicit:
+    - s>0, α>0, L>0, b>0, β≥0 and w≥0.
     - f∈A_{α,s}(L).
-    - Error Fourier lower bound with b,w,β,r.
+    - '|F[ϕ](t)|≥b(1+t²)^{−w/2}e^{−β|t|^r} for all t and some r>0.'
     - β=0 or r=s.
-    - Meyer wavelet estimator.
+    - φ and ψ satisfy Theorem 4.2.9, with Fourier support constants a,a′ as stated.
+    - f_n(·,j) is the corresponding deconvolution wavelet density estimator.
+    - 2^j j<n for the nonasymptotic bound.
     implicit:
-    - a′ is the inner Fourier support radius for the Meyer scaling projection.
-    - The precise floor/integer choice of jₙ is immaterial analytically but must be formalised.
+    - δ_j is the lower Fourier-modulus constant defined before Lemma 5.3.5.
+    - g is the density of the contaminated observation.
+    - The displayed j_n is interpreted through an admissible integer rounding without changing the asymptotic rate.
   quantifier_order:
-  - For every j and then for the displayed choice j=jₙ.
+  - Fix all model, smoothness and wavelet parameters.
+  - For every n,j with 2^j j<n, apply the first bound.
+  - Then choose j=j_n as displayed and take n≥e^e.
   constants:
-  - α,s,L,b,w,β,r,a,a′,c,c′.
+  - c′ depends on φ,ψ,α,s; c depends on φ,ψ.
+  - C depends on φ,ψ,α,β,s,w,b and ‖g‖∞.
+  - 2^{j_n}=[(log n)/(2α(a′)^s+2βa^s)]^{1/s}.
   dependencies:
     earlier_book: *id005
     chapter_local:
@@ -175,10 +186,7 @@ inventory:
     - Meyer support geometry and exponential-weight estimates.
   difficulty: research-level
   pass: core
-  issues_for_central_review:
-  - Verify the exact denominator in the chosen 2^{jₙ} and every logarithmic exponent; OCR is unreliable in this
-    display.
-  - 'Source-transcription status: central_review_required.'
+  issues_for_central_review: []
 - id: ch5.thm.5_3_9
   kind: theorem
   book:
