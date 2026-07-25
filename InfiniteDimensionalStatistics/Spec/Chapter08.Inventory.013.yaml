@@ -1,0 +1,562 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 13
+chunk_count: 16
+inventory:
+- id: ch8.kappa_conditions_8_95
+  kind: definition
+  book:
+    number: (8.95)
+    pages:
+    - 649
+    section: 8.3.3
+    equations:
+    - '8.95'
+  title: Undersmoothing parameter constraints
+  statement: Choose 0<κ₁,κ₂<1 so that m < (2s_min+1/2)/(s_min+(s_min+1/2)/κ₁) < 1 and 0 < (1+κ₁)/(2κ₂) < 1.
+  source_fidelity: explicit-transcription-with-page-image-flag
+  hypotheses:
+    explicit:
+    - s_min>0
+    - m satisfies (8.92)
+    - 0<κ₁<1
+    - 0<κ₂<1
+    implicit:
+    - The first rational expression and its parentheses remain subject to direct page-image confirmation.
+  quantifier_order:
+  - Fix s_min and m
+  - Choose κ₁∈(0,1) satisfying the first strict double inequality
+  - Choose κ₂∈((1+κ₁)/2,1)
+  constants:
+  - The text notes that m,κ₁,κ₂ can be chosen arbitrarily close to 1 in the stated sense.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.epsilon_condition_8_92
+    later_book_uses:
+    - ch8.undersmoothed_resolution_8_96
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - lp
+      - ContinuousLinearMap
+      - Metric.diam
+      - Finset.sum
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A structure containing κ₁,κ₂ and proofs of the two strict rational inequalities; the second condition
+      may be stored equivalently as (1+κ₁)/2<κ₂<1.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-018
+- id: ch8.undersmoothed_resolution_8_96
+  kind: definition
+  book:
+    number: (8.96)
+    pages:
+    - 650
+    section: 8.3.3
+    equations:
+    - '8.96'
+  title: Undersmoothed resolution derived from j̄_n
+  statement: Define Ĵ_n=⌈J_n⌉, where 1/J_n = (1/(2κ₂))(1/j̄_n) − ((1−κ₂)/(2κ₂))(1/log₂ n).
+  source_fidelity: exact-transcription
+  hypotheses:
+    explicit:
+    - j̄_n>0
+    - 0<κ₂<1
+    - n>1
+    - the right-hand side is positive in the theorem regime
+    implicit:
+    - The ceiling is taken after evaluating J_n as a positive real number.
+  quantifier_order:
+  - For each admissible n compute 1/J_n by the displayed formula
+  - Invert to obtain J_n>0
+  - Set Ĵ_n=⌈J_n⌉
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.sequence_lepski_8_94
+    - ch8.kappa_conditions_8_95
+    later_book_uses:
+    - ch8.risk_estimator_8_97
+    - ch8.confidence_ball_8_98
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A measurable arithmetic transform of the positive integer selector j̄_n, followed by the natural-number
+      ceiling; prove positivity before inversion.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-018
+  - CR-030
+- id: ch8.risk_estimator_8_97
+  kind: definition
+  book:
+    number: (8.97)
+    pages:
+    - 650
+    section: 8.3.3
+    equations:
+    - '8.97'
+  title: Unbiased truncated risk estimator
+  statement: Using the independent second sample, define U_n(f̂_n)=∑_{k≤2^{Ĵ_n}}(y_k′−f̂_{n,k})²−2^{Ĵ_n+1}/n.
+    Conditionally on the first sample its expectation is ‖K_{Ĵ_n}(f−f̂_n)‖₂².
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f̂_n is first-sample measurable
+    - second split has coordinate noise variance 2/n
+    implicit:
+    - Random upper summation limit is first-sample measurable.
+  quantifier_order:
+  - Condition on first sample
+  - sum squared residuals
+  - subtract total noise variance
+  constants:
+  - Bias correction is exactly 2·2^{Ĵ_n}/n.
+  dependencies:
+    earlier_book:
+    - Unbiased risk estimation from Section 6.4
+    chapter_local:
+    - ch8.sample_split_projection_8_93
+    - ch8.undersmoothed_resolution_8_96
+    later_book_uses:
+    - ch8.confidence_ball_8_98
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite random sum over a first-sample-measurable index; prove conditional expectation using product
+      independence.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-016
+- id: ch8.confidence_ball_8_98
+  kind: definition
+  book:
+    number: (8.98)
+    pages:
+    - 650
+    section: 8.3.3
+    equations:
+    - '8.98'
+  title: Adaptive sequence-space confidence ball
+  statement: Let γ_α be the relevant standard-normal quantile. Define C_n={f∈ℓ²:‖f−f̂_n‖₂²≤U_n(f̂_n)+√8·γ_α·2^{Ĵ_n/2}/n}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - 0<α<1
+    - risk estimator and selected resolution defined
+    implicit:
+    - The random right-hand side may require a nonnegative-part convention if negative; the book does not add one.
+  quantifier_order:
+  - Fix α
+  - define γ_α
+  - define centre/radius inequality
+  constants:
+  - √8 and variance scaling come from the split sample.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.risk_estimator_8_97
+    later_book_uses:
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Measurable closed ball encoded by centre and squared radius; investigate possible negative radius event.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-016
+  - CR-019
+  - CR-020
+- id: ch8.oracle_sequence_8_99_102
+  kind: definition
+  book:
+    number: (8.99)–(8.102)
+    pages:
+    - 650
+    section: 8.3.3
+    equations:
+    - '8.99'
+    - '8.102'
+  title: Sequence bias, variance and oracle resolution
+  statement: For f∈S^s(B), B(j,f)=‖f‖_{s,2}²2^{-2js}, E₁‖f_n(j)−E₁f_n(j)‖₂²=2^{j+1}/n, and j_n^*=min{j∈J:B(j,f)≤2^{j+1}/n};
+    the usual monotone balancing inequalities hold above and below j_n^*.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - sample-split sequence model
+    - f∈S^s(B)
+    implicit:
+    - The grid contains a balancing index for n sufficiently large.
+  quantifier_order:
+  - Define bias proxy
+  - compute variance
+  - take finite minimum
+  - derive monotonicity
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.sample_split_projection_8_93
+    - ch8.sobolev_ellipsoid
+    later_book_uses:
+    - ch8.lemma_8_3_17
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - lp
+      - ContinuousLinearMap
+      - Metric.diam
+      - Finset.sum
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Weighted ℓ² tail estimate, finite Gaussian variance computation and finite oracle minimum.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-005
+  - CR-016
+  - CR-030
+- id: ch8.lemma_8_3_17
+  kind: lemma
+  book:
+    number: Lemma 8.3.17
+    pages:
+    - 651
+    section: 8.3.3
+    equations:
+    - '8.3'
+  title: Two-sided localisation of the sequence Lepski selector
+  statement: (a) For f∈S^s(B), uniformly over s∈[s_min,s_max], P₁(j̄_n≥j_n^*)≤C exp(−2^{j_n^*}/8). (b) If f also
+    satisfies (8.90) and j_n^*≥J₀, then P₁(j̄_n<j_n^*(1−ε(s)))≤j_n^*exp(−(9/8)2^{j_n^*}).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f∈S^s(B)
+    - s in adaptation interval
+    - for (b) self-similarity and j_n^*≥J₀
+    implicit:
+    - Integer comparison with j_n^*(1−ε) is interpreted literally; rounding may be needed.
+  quantifier_order:
+  - There exists universal C
+  - For all n and admissible f,s assert (a)
+  - Under extra hypotheses assert (b)
+  constants:
+  - C is universal.
+  dependencies:
+    earlier_book:
+    - Chi-square concentration / Theorem 3.1.9
+    chapter_local:
+    - ch8.sequence_lepski_8_94
+    - ch8.oracle_sequence_8_99_102
+    - ch8.self_similar_sequence_class_8_90
+    later_book_uses:
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises:
+    - Part (a) is left to the reader as effectively identical to Lemma 8.2.1.
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id002
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Two exponential tail bounds for finite chi-square blocks; part (b) uses the self-similar packet lower
+      bound.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-016
+  - CR-017
+  - CR-030
+- id: ch8.theorem_8_3_16
+  kind: theorem
+  book:
+    number: Theorem 8.3.16
+    pages:
+    - 650
+    section: 8.3.3
+    equations:
+    - '8.3'
+  title: Exact adaptive L2 confidence balls for self-similar sequences
+  statement: For every 0<b<B, J₀ and ε satisfying (8.92), the ball (8.98) has uniformly exact asymptotic coverage
+    1−α over S(ε,b,B,J₀). Moreover, for each s in the window, B>b and δ>0 there is C(s,δ)>0 such that limsup_n sup_{f∈S^s_{ε(s)}(b,B,J₀)}P_f(|C_n|₂≥C(s,δ)B^{1/(2s+1)}n^{-s/(2s+1)})≤δ.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - fixed adaptation window
+    - parameter conditions (8.92),(8.95)
+    - sample splitting
+    - adaptive estimator f̂_n
+    implicit:
+    - The theorem says “any standard adaptive estimator”; the proof takes f_n(j̄_n).
+  quantifier_order:
+  - Fix α and all class parameters
+  - construct C_n
+  - take uniform absolute coverage error limit
+  - for each s,B,δ choose C and assert diameter limsup
+  constants:
+  - Constant dependence beyond s,δ is suppressed because other parameters are fixed.
+  dependencies:
+    earlier_book:
+    - Theorem 8.2.2 analogue
+    - Berry–Esseen Exercise 8.3.5
+    - Markov inequality
+    chapter_local:
+    - ch8.self_similar_union_8_91
+    - ch8.epsilon_condition_8_92
+    - ch8.kappa_conditions_8_95
+    - ch8.confidence_ball_8_98
+    - ch8.lemma_8_3_17
+    later_book_uses:
+    - ch8.theorem_8_3_18
+    - ch8.corollary_8_3_19
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Sample-split adaptive ball with a conditional quadratic-form CLT and uniform bias control. Requires
+      substantial probability and asymptotic uniformity infrastructure.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-016
+  - CR-017
+  - CR-018
+  - CR-019
+  - CR-020
+  - CR-025
+  - CR-029
+- id: ch8.theorem_8_3_18
+  kind: theorem
+  book:
+    number: Theorem 8.3.18
+    pages:
+    - 656
+    section: 8.3.3
+    equations:
+    - '8.3'
+  title: Lower bound for weak L2 self-similarity
+  statement: Fix α∈(0,1/2), a constant self-similarity width ε∈(0,1), and 0<r′<r<r′/(1−ε). For every s∈(r,r′/(1−ε)),
+    no sequence of confidence sets C_n⊆ℓ² can have, for every 0<b<B and J₀∈ℕ, both liminf_{n→∞} inf_{f∈S_ε^{r′}(b,B,J₀)∪S_ε^s(b,B,J₀)}
+    P_f(f∈C_n) ≥ 1−α and sup_{f∈S_ε^s(b,B,J₀)} P_f(|C_n|₂>r_n)→0 for every positive sequence r_n=o(n^{-r/(2r+1/2)}).
+  source_fidelity: exact-transcription
+  hypotheses:
+    explicit:
+    - α∈(0,1/2)
+    - ε∈(0,1) is constant
+    - 0<r′<r<r′/(1−ε)
+    - s∈(r,r′/(1−ε))
+    - Gaussian sequence model
+    - 0<b<B
+    - J₀∈ℕ
+    implicit:
+    - C_n and the coverage/diameter events are measurable.
+    - '|C_n|₂ denotes L²/ℓ² diameter.'
+  quantifier_order:
+  - Fix α,ε,r′,r
+  - For every s in the displayed interval
+  - There is no sequence C_n such that
+  - for every 0<b<B and J₀
+  - the coverage property holds and
+  - for every positive sub-rate r_n
+  - the s-class diameter probability tends to zero
+  constants: []
+  dependencies:
+    earlier_book:
+    - Likelihood-ratio diagonal construction as in Theorem 8.3.11
+    chapter_local:
+    - ch8.self_similar_sequence_class_8_90
+    later_book_uses:
+    - ch8.corollary_8_3_19
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 8.3.2 completes the proof.
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Research-level diagonal lower bound preserving self-similarity in two smoothness classes.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-017
+  - CR-019
+  - CR-021
+  - CR-025
