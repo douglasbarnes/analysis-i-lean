@@ -1,0 +1,434 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 1
+inventory:
+- id: empirical_measure
+  kind: definition
+  book:
+    number: Eq. (3.1)
+    pages:
+    - 109
+    section: '3.1'
+    equations:
+    - '3.1'
+  title: Empirical measure
+  statement: For observations X₁,…,Xₙ in (S,𝒮), define Pₙ:=n⁻¹∑_{i=1}^n δ_{Xᵢ}; consequently Pₙf=n⁻¹∑_{i=1}^n f(Xᵢ)
+    whenever the evaluations are defined.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - n∈ℕ, n≥1
+    - Xᵢ are S-valued observations
+    implicit:
+    - A measurable space (S,𝒮) is fixed.
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Used throughout Chapters 3 and 5–8.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial-infrastructure-only
+      candidates:
+      - Mathlib supplies underlying measure/integral/probability/independence/Bochner/Gaussian infrastructure, but
+        no exact chapter theorem was located.
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: '`n⁻¹ • ∑ i in Finset.range n, Measure.dirac (X i)` together with its evaluation identity.'
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: Qf_notation
+  kind: definition
+  book:
+    number: Unnumbered notation, p. 110
+    pages:
+    - 110
+    section: '3.1'
+    equations: []
+  title: Integration notation Qf
+  statement: For a finite signed or positive measure Q and a Q-integrable measurable f, write Qf:=∫f dQ.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - f is Q-integrable when a finite value is asserted
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema;
+      explicit countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: uncentred_empirical_process
+  kind: definition
+  book:
+    number: Eq. (3.2)
+    pages:
+    - 110
+    section: '3.1'
+    equations:
+    - '3.2'
+  title: Uncentred empirical process
+  statement: For a class 𝓕 of measurable functions, the uncentred empirical process is the random map f↦Pₙf indexed
+    by f∈𝓕.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕 is a class of measurable real functions
+    implicit:
+    - Measurability as an ℓ∞(𝓕)-valued map is not automatic.
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - empirical_measure
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema;
+      explicit countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: centred_empirical_process
+  kind: definition
+  book:
+    number: Eq. (3.3)
+    pages:
+    - 110
+    section: '3.1'
+    equations:
+    - '3.3'
+  title: Centred normalised empirical process
+  statement: For i.i.d. Xᵢ∼P and f∈𝓕, define νₙ(f):=√n(Pₙf−Pf)=n⁻¹ᐟ²∑_{i=1}^n(f(Xᵢ)−Pf).
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - X₁,…,Xₙ are i.i.d. P
+    - Pf exists for every f∈𝓕
+    implicit:
+    - The process may be nonmeasurable as an ℓ∞(𝓕)-valued map.
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - Qf_notation
+    - empirical_measure
+    later_book_uses:
+    - Central object in Chapters 3, 5, 7 and 8.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema;
+      explicit countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: uniform_deviation
+  kind: definition
+  book:
+    number: Unnumbered definition, p. 110
+    pages:
+    - 110
+    section: '3.1'
+    equations: []
+  title: Uniform empirical deviation seminorm
+  statement: For a signed set function Q and class 𝓕, set ‖Q‖𝓕:=sup_{f∈𝓕}|Qf|; in particular ‖Pₙ−P‖𝓕=sup_{f∈𝓕}|Pₙf−Pf|.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit:
+    - The raw supremum may fail to be measurable for uncountable 𝓕.
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema;
+      explicit countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: kde_example
+  kind: example
+  book:
+    number: Eq. (3.4)
+    pages:
+    - 110
+    - 111
+    section: '3.1'
+    equations:
+    - '3.4'
+  title: Kernel density estimator as empirical process
+  statement: For a measurable kernel K and h>0, fₙ(x):=(nh)⁻¹∑_{i=1}^nK((x−Xᵢ)/h)=Pₙ[K_h(x−·)], K_h(u):=h⁻¹K(u);
+    uniform stochastic error is an empirical-process supremum over its translate class.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - Xᵢ real-valued
+    - K measurable
+    - h>0
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Section 5.1 kernel estimators.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite-sum estimator parameterised by a measurable kernel and positive bandwidth; empirical-integral
+      equality as a separate lemma.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: sample_bounded
+  kind: definition
+  book:
+    number: Eq. (3.5)
+    pages:
+    - 111
+    section: '3.1'
+    equations:
+    - '3.5'
+  title: Sample-bounded process
+  statement: A process X={X(t):t∈T} is sample bounded when ‖X‖_T:=sup_{t∈T}|X(t)|<∞ almost surely, subject to the
+    chapter’s separate measurability convention.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit:
+    - The supremum may be nonmeasurable.
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Lévy, Hoffmann–Jørgensen and weak-convergence results.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema;
+      explicit countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: coordinate_expectation
+  kind: definition
+  book:
+    number: Unnumbered notation, pp. 111–112
+    pages:
+    - 111
+    - 112
+    section: '3.1'
+    equations: []
+  title: Coordinate and conditional expectation notation
+  statement: On a product probability space, E_k denotes integration in coordinate k with all other coordinates
+    fixed; the complementary-coordinate notation denotes integration in all coordinates except k.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - A finite product probability space is fixed
+    implicit:
+    - Fubini/Tonelli hypotheses are required.
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Section 3.3 entropy method.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema;
+      explicit countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
