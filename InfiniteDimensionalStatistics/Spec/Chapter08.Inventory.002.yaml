@@ -1,0 +1,295 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 2
+chunk_count: 29
+inventory:
+- id: ch8.test_statistic_8_1_1
+  kind: definition
+  book:
+    number: proof of Theorem 8.1.1
+    pages:
+    - 609
+    section: 8.1.1
+    equations:
+    - '8.1'
+  title: Maximum quadratic projection test
+  statement: Let J={1,…,j_max} with 2^{j_max}≍n². For projection estimators f_n(j), define T_n=max_{j∈J}2^{-j/2}|‖f_n(j)‖₂²−2^j/n|
+    and reject H₀ when T_n≥L√(log log n)/n.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - n sufficiently large
+    - finite dyadic grid J
+    - σ² normalised to 1 in the proof
+    implicit:
+    - The projection estimator and its norm are measurable.
+  quantifier_order:
+  - Choose j_max
+  - Choose L>0
+  - Define T_n
+  - Define φ_n=1{T_n≥threshold}
+  constants:
+  - L depends on the desired error α; rescaling is needed for general σ.
+  dependencies:
+    earlier_book:
+    - Projection estimator (6.28)
+    - Exercise 3.1.11 or Theorem 3.1.9
+    chapter_local:
+    - ch8.white_noise_model_8_1
+    later_book_uses:
+    - ch8.theorem_8_1_1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - Measure.map
+      - Measure.dirac
+      - ProbabilityTheory.HasLaw
+      - ProbabilityTheory.IdentDistrib
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib supplies measurable spaces, probability measures, kernels, Gaussian
+        variables, finite products, and filters for asymptotics, but not the chapter’s statistical-experiment or
+        minimax-testing declarations.
+      audit_profile: statistical_experiment
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean after searches for Lepski, Besov, Gaussian
+        white noise, self-similar, and adaptive confidence.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite maximum over a `Finset ℕ`; the test is the indicator of a measurable finite-sum inequality.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-001
+  - CR-004
+  - CR-030
+- id: ch8.theorem_8_1_1
+  kind: theorem
+  book:
+    number: Theorem 8.1.1
+    pages:
+    - 609
+    section: 8.1.1
+    equations:
+    - '8.1'
+  title: Adaptive minimax signal detection in white noise
+  statement: (a) For every α>0 there is a measurable test φ_n such that, for all n and C sufficiently large, E₀φ_n+sup_{f
+    in the adaptive alternative at ρ_n^*}E_f(1−φ_n)≤α. (b) If ρ_n(r,B)=o(ρ_n^*(r,B)) for every r,B, then liminf_n
+    inf_{measurable φ_n}[E₀φ_n+sup_{f in the corresponding adaptive alternative}E_f(1−φ_n)]>0.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - Fixed arbitrary R>0
+    - Rate and alternative as recorded above
+    implicit:
+    - The supremum over an empty alternative is not intended; alternatives are nonempty for relevant n.
+  quantifier_order:
+  - Fix R
+  - 'Upper: for every α choose C₀ and tests; for every C≥C₀ and n bound risk'
+  - 'Lower: for every sub-rate family take liminf then infimum over tests'
+  constants:
+  - Upper constants depend on α,R,σ and the fixed basis; lower positive constant is not quantified numerically.
+  dependencies:
+    earlier_book:
+    - Definition 6.2.1
+    - Proposition 6.2.3
+    - Theorem 6.2.11(c)
+    - Exercise 3.1.11 or Theorem 3.1.9
+    chapter_local:
+    - ch8.white_noise_model_8_1
+    - ch8.l2_adaptive_alternative
+    - ch8.adaptive_l2_testing_rate
+    - ch8.test_statistic_8_1_1
+    later_book_uses:
+    - ch8.theorem_8_1_2
+    - ch8.theorem_8_3_5
+    - ch8.proposition_8_3_6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A pair of asymptotic minimax theorems over measurable Boolean tests, best stated in an abstract experiment
+      layer after constructing the finite-dimensional Gaussian sequence version.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-028
+  - CR-029
+- id: ch8.iid_uniformity_alternative
+  kind: definition
+  book:
+    number: before Theorem 8.1.2
+    pages:
+    - 611
+    section: 8.1.1
+    equations:
+    - '8.1'
+  title: Adaptive alternatives for testing uniformity
+  statement: For a density f on [0,1], define alternatives by max(‖f‖∞,‖f‖_{B^r_{2,∞}})≤B and ‖f−1‖₂≥ρ_n(r,B), and
+    take the union over B>0 and 0<r≤R.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f≥0 a.e.
+    - ∫f=1
+    - R>0
+    - 0<r≤R
+    - B>0
+    implicit:
+    - The density is represented modulo a.e. equality and the constant density 1 is admissible.
+  quantifier_order:
+  - Fix R
+  - For each n,r,B form the class
+  - Take the union
+  constants: []
+  dependencies:
+    earlier_book:
+    - Section 6.2.2 testing uniformity
+    chapter_local:
+    - ch8.adaptive_l2_testing_rate
+    later_book_uses:
+    - ch8.theorem_8_1_2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Predicate on probability densities in L2/L∞ with a Besov coefficient bound.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-026
+- id: ch8.theorem_8_1_2
+  kind: theorem
+  book:
+    number: Theorem 8.1.2
+    pages:
+    - 611
+    section: 8.1.1
+    equations:
+    - '8.1'
+  title: Adaptive minimax testing of uniformity
+  statement: The upper and lower adaptive minimax conclusions of Theorem 8.1.1 hold for i.i.d. observations with
+    null density 1 and the density alternatives above, at the same separation rate ρ_n^*(r,B).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - Fixed R>0
+    - i.i.d. sample X₁,…,X_n on [0,1]
+    - alternative densities satisfy the envelope and Besov constraints
+    implicit:
+    - All tests are measurable functions [0,1]^n→{0,1}.
+  quantifier_order:
+  - Fix R
+  - 'Upper: every α choose a test and sufficiently large rate constant'
+  - 'Lower: every pointwise sub-rate family yields positive minimax liminf'
+  constants:
+  - Constants may depend on R and fixed wavelet/kernel data.
+  dependencies:
+    earlier_book:
+    - Proposition 6.2.5
+    - Theorem 3.4.8
+    - Theorem 6.2.17
+    - Theorem 6.2.9
+    chapter_local:
+    - ch8.iid_uniformity_alternative
+    - ch8.adaptive_l2_testing_rate
+    - ch8.theorem_8_1_1
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: An i.i.d. product-measure analogue using a maximum of canonical U-statistics; requires a substantial
+      U-statistic concentration library.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-026
+  - CR-028
