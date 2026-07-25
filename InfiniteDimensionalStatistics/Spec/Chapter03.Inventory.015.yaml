@@ -1,0 +1,536 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 15
+inventory:
+- id: ch3.ex.3_2_1
+  kind: exercise
+  book:
+    number: Exercise 3.2.1
+    pages:
+    - 148
+    section: '3.2'
+    equations: []
+  title: Exercise 3.2.1
+  statement: Complete the convex-analytic/calculus step omitted in the proof of Talagrand’s convex-distance inequality.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: &id002 []
+  constants: &id003 []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma_3_2_3
+    later_book_uses: &id001
+    - Theorem 3.2.4
+  proof_status: &id004
+    delegates_to_exercises: []
+    contains_omitted_steps: true
+    comment: Selected because it completes an omitted proof, is cited later, or establishes reusable infrastructure.
+  notes_status: &id005
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: &id006
+    mathlib:
+      status: not-audited-exercise
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: not-found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation: &id007
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: true
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id001
+- id: ch3.ex.3_2_2
+  kind: exercise
+  book:
+    number: Exercise 3.2.2
+    pages:
+    - 148
+    section: '3.2'
+    equations: []
+  title: Exercise 3.2.2
+  statement: Derive the median concentration bound for Rademacher-process suprema.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_2_6
+    later_book_uses: &id008
+    - Theorem 3.2.7
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: true
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id008
+- id: ch3.ex.3_2_3
+  kind: exercise
+  book:
+    number: Exercise 3.2.3
+    pages:
+    - 148
+    section: '3.2'
+    equations: []
+  title: Exercise 3.2.3
+  statement: Convert the median concentration from Exercise 3.2.2 to concentration about the expectation.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_2_2
+    later_book_uses: &id009
+    - Theorem 3.2.7
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: true
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id009
+- id: ch3.ex.3_2_4
+  kind: exercise
+  book:
+    number: Exercise 3.2.4
+    pages:
+    - 148
+    section: '3.2'
+    equations: []
+  title: Exercise 3.2.4
+  statement: Prove the stated equivalence/comparison of L^p topologies or norms for Rademacher processes.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id010
+    - Rademacher-process API
+  proof_status: &id011
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: Selected because it completes an omitted proof, is cited later, or establishes reusable infrastructure.
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id010
+- id: ch3.ex.3_3_2
+  kind: exercise
+  book:
+    number: Exercise 3.3.2
+    pages:
+    - 169
+    - 170
+    section: '3.3'
+    equations: []
+  title: Exercise 3.3.2
+  statement: Apply Talagrand’s inequality to ‖P_n−P‖𝓕 and derive the displayed concentration bounds.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_3_10
+    - theorem_3_3_9
+    later_book_uses: &id012
+    - Empirical-supremum concentration
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id012
+- id: ch3.ex.3_3_3
+  kind: exercise
+  book:
+    number: Exercise 3.3.3
+    pages:
+    - 170
+    section: '3.3'
+    equations: []
+  title: Exercise 3.3.3
+  statement: Derive the stated Dvoretzky–Kiefer–Wolfowitz-type inequality.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_1_7
+    - theorem_3_3_9
+    later_book_uses: &id013
+    - Distribution-function concentration
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id013
+- id: ch3.ex.3_3_4
+  kind: exercise
+  book:
+    number: Exercise 3.3.4
+    pages:
+    - 170
+    section: '3.3'
+    equations: []
+  title: Exercise 3.3.4
+  statement: Integrate the Talagrand tails to prove the stated moment bounds.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_3_9
+    later_book_uses: &id014
+    - Theorem 3.4.1
+    - Remark 3.4.2
+    - Chapter 5
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id014
+- id: ch3.ex.3_3_5
+  kind: exercise
+  book:
+    number: Exercise 3.3.5
+    pages:
+    - 170
+    section: '3.3'
+    equations: []
+  title: Exercise 3.3.5
+  statement: Prove the i.i.d. moment refinement following Exercise 3.3.4.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_3_4
+    later_book_uses: &id015
+    - Remark 3.4.2
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id015
+- id: ch3.ex.3_3_6
+  kind: exercise
+  book:
+    number: Exercise 3.3.6
+    pages:
+    - 170
+    section: '3.3'
+    equations: []
+  title: Exercise 3.3.6
+  statement: Prove the non-identically-distributed moment refinement.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_3_4
+    later_book_uses: &id016
+    - Remark 3.4.2
+    - Theorem 3.3.16
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id016
+- id: ch3.ex.3_3_7
+  kind: exercise
+  book:
+    number: Exercise 3.3.7
+    pages:
+    - 170
+    section: '3.3'
+    equations: []
+  title: Exercise 3.3.7
+  statement: Establish the maximal version of the Talagrand/moment inequality.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id017
+    - Maximal empirical processes
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id017
+- id: ch3.ex.3_3_9
+  kind: exercise
+  book:
+    number: Exercise 3.3.9
+    pages:
+    - 170
+    section: '3.3'
+    equations: []
+  title: Exercise 3.3.9
+  statement: Transfer the scalar empirical-process concentration inequalities to Banach-valued sums by duality.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id018
+    - Banach-valued concentration
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id018
+- id: ch3.ex.3_4_1
+  kind: exercise
+  book:
+    number: Exercise 3.4.1
+    pages:
+    - 183
+    section: '3.4'
+    equations: []
+  title: Exercise 3.4.1
+  statement: Prove the duality identity used in the data-driven concentration argument.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id019
+    - Section 3.4 proofs
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: true
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id019
+- id: ch3.ex.3_4_2
+  kind: exercise
+  book:
+    number: Exercise 3.4.2
+    pages:
+    - 183
+    section: '3.4'
+    equations: []
+  title: Exercise 3.4.2
+  statement: Derive the non-identically-distributed variants of the Section 3.4 inequalities.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id020
+    - Non-i.i.d. applications
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id020
+- id: ch3.ex.3_4_4
+  kind: exercise
+  book:
+    number: Exercise 3.4.4
+    pages:
+    - 183
+    section: '3.4'
+    equations: []
+  title: Exercise 3.4.4
+  statement: Invert Theorem 3.4.8 to the alternative tail/quantile form stated in the exercise.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_4_8
+    later_book_uses: &id021
+    - Canonical U-statistic applications
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id021
+- id: ch3.ex.3_5_4
+  kind: exercise
+  book:
+    number: Exercise 3.5.4
+    pages:
+    - 210
+    - 211
+    section: '3.5'
+    equations: []
+  title: Exercise 3.5.4
+  statement: Prove equivalence, up to constants, of the measurable-partition and order-bracket definitions of bracketing number.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - bracketing_number
+    later_book_uses: &id022
+    - Bracketing API
+  proof_status: *id011
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id022
