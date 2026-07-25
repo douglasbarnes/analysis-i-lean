@@ -40,11 +40,50 @@ structure KolmogorovContinuityCriterion {Ω : Type u} (X : ContinuousProcess Ω)
   isVersion : ∀ t, X t = version t
   continuousPaths : IsContinuousProcess version
 
-/-- Source 59: non-negative dyadic rational numbers. -/
-structure Dyadic where
-  numerator : ℕ
-  exponent : ℕ
-  value : ℚ := numerator / (2 ^ exponent : ℚ)
+/-- The level-`n` dyadic grid `Dₙ = {k / 2ⁿ : 0 ≤ k ≤ 2ⁿ}` in `[0,1]`. -/
+def DyadicLevel (n : ℕ) : Set ℝ :=
+  {x | ∃ k : ℕ, k ≤ 2 ^ n ∧ x = (k : ℝ) / (2 ^ n : ℝ)}
+
+/-- Source 59: the dyadic numbers in `[0,1]`, namely `D = ⋃ n, Dₙ`. -/
+def Dyadic : Set ℝ := ⋃ n : ℕ, DyadicLevel n
+
+@[simp] theorem zero_mem_dyadicLevel (n : ℕ) : (0 : ℝ) ∈ DyadicLevel n := by
+  refine ⟨0, Nat.zero_le _, ?_⟩
+  simp
+
+@[simp] theorem one_mem_dyadicLevel (n : ℕ) : (1 : ℝ) ∈ DyadicLevel n := by
+  refine ⟨2 ^ n, le_rfl, ?_⟩
+  simp
+
+/-- Every level of the dyadic grid lies in the unit interval. -/
+theorem dyadicLevel_subset_Icc (n : ℕ) : DyadicLevel n ⊆ Set.Icc (0 : ℝ) 1 := by
+  rintro x ⟨k, hk, rfl⟩
+  constructor
+  · positivity
+  · have hden : (0 : ℝ) < (2 ^ n : ℝ) := by positivity
+    apply (div_le_iff₀ hden).2
+    exact_mod_cast hk
+
+/-- Each fixed dyadic level is countable. -/
+theorem dyadicLevel_countable (n : ℕ) : (DyadicLevel n).Countable := by
+  refine Set.Countable.mono Set.countable_range ?_
+  rintro x ⟨k, -, rfl⟩
+  exact ⟨k, rfl⟩
+
+/-- Every fixed level is contained in the complete dyadic set. -/
+theorem dyadicLevel_subset_dyadic (n : ℕ) : DyadicLevel n ⊆ Dyadic := by
+  intro x hx
+  exact Set.mem_iUnion.2 ⟨n, hx⟩
+
+/-- The complete set of dyadic times is countable. -/
+theorem dyadic_countable : Dyadic.Countable := by
+  exact Set.countable_iUnion dyadicLevel_countable
+
+/-- All dyadic times lie in the unit interval. -/
+theorem dyadic_subset_Icc : Dyadic ⊆ Set.Icc (0 : ℝ) 1 := by
+  intro x hx
+  obtain ⟨n, hn⟩ := Set.mem_iUnion.1 hx
+  exact dyadicLevel_subset_Icc n hn
 
 /-- Source 60: a filtration indexed by non-negative real time. -/
 structure ContinuousFiltration (Ω : Type u) where
