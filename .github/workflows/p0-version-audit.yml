@@ -1,0 +1,56 @@
+name: P0 Version Audit
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/p0-version-audit.yml'
+      - 'lean-toolchain'
+      - 'lakefile.toml'
+      - 'lake-manifest.json'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
+          "$HOME/.elan/bin/elan" default "$(cat lean-toolchain)"
+      - name: Resolve revisions and post report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake update >/tmp/lake-update.log 2>&1
+          {
+            echo '### P0 toolchain and dependency versions'
+            echo
+            echo '```text'
+            echo "lean-toolchain: $(cat lean-toolchain)"
+            lean --version
+            lake --version
+            python3 - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('lake-manifest.json').read_text())
+          packages = manifest.get('packages', [])
+          mathlib = next(pkg for pkg in packages if pkg.get('name') == 'mathlib')
+          print('mathlib requested revision: v4.30.0')
+          print('mathlib resolved revision:', mathlib.get('rev'))
+          print('mathlib repository:', mathlib.get('url'))
+          PY
+            echo '```'
+          } > /tmp/version-comment.md
+          cat /tmp/version-comment.md
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/version-comment.md
