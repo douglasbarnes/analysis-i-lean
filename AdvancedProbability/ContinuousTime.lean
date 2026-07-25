@@ -1,5 +1,6 @@
 import AdvancedProbability.DiscreteMartingales
 import Mathlib.Probability.Process.Filtration
+import Mathlib.Probability.Process.HittingTime
 import Mathlib.MeasureTheory.Measure.NullMeasurable
 
 noncomputable section
@@ -79,13 +80,39 @@ def toMathlib {Ω : Type u} (ℱ : ContinuousFiltration Ω) :
 
 end ContinuousFiltration
 
-/-- Source 61: a continuous-time stopping time. -/
+/-- Source 61: a continuous-time stopping time takes values in `[0,∞]` and is a Mathlib stopping time
+for the converted continuous filtration. -/
 def IsContinuousStoppingTime {Ω : Type u} (ℱ : ContinuousFiltration Ω)
-    (T : Ω → ℝ≥0) : Prop := ∀ t, {ω | T ω ≤ t} ∈ (ℱ.sigma t).sets
+    (T : Ω → WithTop ℝ≥0) : Prop :=
+  MeasureTheory.IsStoppingTime ℱ.toMathlib T
 
-/-- Source 64: an abstract first hitting time. -/
-def HittingTime {Ω : Type u} (X : ContinuousProcess Ω) (A : Set ℝ) (ω : Ω) : Set ℝ≥0 :=
-  {t | X t ω ∈ A}
+/-- The source-61 event characterization. -/
+theorem isContinuousStoppingTime_iff {Ω : Type u} (ℱ : ContinuousFiltration Ω)
+    (T : Ω → WithTop ℝ≥0) :
+    IsContinuousStoppingTime ℱ T ↔ ∀ t : ℝ≥0, {ω | T ω ≤ t} ∈ (ℱ.sigma t).sets :=
+  Iff.rfl
+
+/-- Source 64: the first time at which a process enters `A`, with value `∞` if it never enters. -/
+noncomputable def HittingTime {Ω : Type u} (X : ContinuousProcess Ω) (A : Set ℝ) :
+    Ω → WithTop ℝ≥0 :=
+  MeasureTheory.hittingAfter X A 0
+
+@[simp] theorem hittingTime_empty {Ω : Type u} (X : ContinuousProcess Ω) :
+    HittingTime X ∅ = fun _ ↦ ⊤ := by
+  simp [HittingTime]
+
+/-- The hitting time is infinite exactly when the path never enters the target set. -/
+theorem hittingTime_eq_top_iff {Ω : Type u} (X : ContinuousProcess Ω) (A : Set ℝ)
+    (ω : Ω) : HittingTime X A ω = ⊤ ↔ ∀ t : ℝ≥0, X t ω ∉ A := by
+  simpa [HittingTime] using
+    (MeasureTheory.hittingAfter_eq_top_iff
+      (u := X) (s := A) (n := (0 : ℝ≥0)) (ω := ω))
+
+/-- Enlarging the target set can only decrease its hitting time. -/
+theorem hittingTime_anti {Ω : Type u} (X : ContinuousProcess Ω) :
+    Antitone (HittingTime X) := by
+  intro A B hAB
+  exact MeasureTheory.hittingAfter_anti X 0 hAB
 
 /-- Source 65: closed-set hitting times of continuous paths are stopping times. -/
 structure ClosedSetHittingTime (isClosed continuousPaths stopping : Prop) where
