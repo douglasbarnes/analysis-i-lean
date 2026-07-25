@@ -1,0 +1,576 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 13
+inventory:
+- id: rademacher_empirical_process
+  kind: definition
+  book:
+    number: Eq. (3.272)
+    pages:
+    - 261
+    - 262
+    section: '3.7'
+    equations:
+    - '3.272'
+  title: Rademacher-randomised empirical process
+  statement: Define ν_{n,rad}(f):=n⁻¹ᐟ²∑_{i=1}^nε_i f(X_i), where ε_i are independent Rademacher and independent of the sample.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - independent sample and Rademacher sequence
+    implicit: []
+  quantifier_order: &id001
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants: &id002
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_1_19
+    later_book_uses:
+    - Theorem 3.7.40
+    - Theorems 3.7.52–3.7.54
+  proof_status: &id003
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status: &id004
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: &id005
+    mathlib:
+      status: partial-infrastructure-only
+      candidates:
+      - Mathlib supplies underlying measure/integral/probability/independence/Bochner/Gaussian infrastructure, but no exact
+        chapter theorem was located.
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: &id006
+    sketch: Independent Rademacher coordinates on a product probability space, finite sums, and measurable/countable suprema.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: gaussian_empirical_process
+  kind: definition
+  book:
+    number: Eq. (3.273)
+    pages:
+    - 261
+    - 262
+    section: '3.7'
+    equations:
+    - '3.273'
+  title: Gaussian-randomised empirical process
+  statement: Define ν_{n,g}(f):=n⁻¹ᐟ²∑_{i=1}^n g_i f(X_i), where g_i are independent standard normals independent of the sample.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - independent sample and standard normal multipliers
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Theorem 3.7.40 and exercises.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: P_motion
+  kind: definition
+  book:
+    number: Eq. (3.274)
+    pages:
+    - 262
+    section: '3.7'
+    equations:
+    - '3.274'
+  title: P-Brownian motion (P-motion)
+  statement: Z_P is the centred Gaussian process with covariance P(fg) and metric e_P(f,g):=√P(f−g)²; it may be represented
+    as Z_P(f)=G_P(f)+gPf with g∼N(0,1) independent of G_P.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - f,g∈L²(P)
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - P_bridge
+    later_book_uses:
+    - Theorem 3.7.40
+    - UPG definitions
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: &id007
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: &id008
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_40
+  kind: theorem
+  book:
+    number: Theorem 3.7.40
+    pages:
+    - 262
+    - 263
+    section: '3.7'
+    equations: []
+  title: Randomisation characterisation of P-Donsker classes
+  statement: Assume 𝓕 and each local difference class 𝓕′_δ are measurable and 𝓕 satisfies (3.257). Then 𝓕 is P-Donsker iff
+    Z_P has a bounded e_P-uniformly continuous version and ν_{n,rad}⇒Z_P in ℓ∞(𝓕).
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - measurability of 𝓕 and all local difference classes
+    - condition (3.257)
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - P_motion
+    - example_3_7_4
+    - rademacher_empirical_process
+    - theorem_3_7_31
+    later_book_uses:
+    - Theorem 3.7.47
+    - Theorem 3.7.52
+  proof_status:
+    delegates_to_exercises:
+    - Exercises 3.7.15–3.7.16
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: &id010
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents: *id007
+  likely_lean_representation: *id008
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: definition_3_7_41
+  kind: definition
+  book:
+    number: Definition 3.7.41
+    pages:
+    - 263
+    section: '3.7'
+    equations: []
+  title: UPG_f and UPG classes
+  statement: A uniformly bounded 𝓕 is UPG_f if its P-motions are uniformly bounded and uniformly e_P-equicontinuous in expectation
+    over all finitely supported P; it is UPG if the analogous property holds over all probability measures P.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - uniformly bounded measurable class
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - P_motion
+    later_book_uses:
+    - Examples 3.7.42–3.7.43
+    - Theorem 3.7.47
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id007
+  likely_lean_representation: &id009
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: example_3_7_42
+  kind: example
+  book:
+    number: Example 3.7.42
+    pages:
+    - 263
+    section: '3.7'
+    equations: []
+  title: Uniformly bounded VC classes are UPG
+  statement: A uniformly bounded VC-subgraph, VC-type or VC-hull class is UPG by its uniform entropy bounds and the Gaussian
+    entropy integral.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - uniform boundedness
+    - VC-subgraph/VC-type/VC-hull
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book:
+    - Theorem 2.3.7
+    chapter_local:
+    - definition_3_7_41
+    - theorem_3_6_17
+    - theorem_3_6_9
+    later_book_uses:
+    - Theorem 3.7.47.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id007
+  likely_lean_representation:
+    sketch: Finite traces of set systems, shattering predicates, an `WithTop ℕ` VC index, and finite-cardinality combinatorics.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: example_3_7_43
+  kind: example
+  book:
+    number: Example 3.7.43
+    pages:
+    - 264
+    - 265
+    section: '3.7'
+    equations: []
+  title: A countable shrinking class is UPG_f
+  statement: If 𝓕={f_k}_{k≥2} and ‖f_k‖∞=o((log k)^{-1/2}), then 𝓕 is UPG_f.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - countable class
+    - stated sup-norm decay
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book:
+    - Exercise 2.3.8
+    chapter_local:
+    - definition_3_7_41
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: &id012
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents: *id007
+  likely_lean_representation: *id009
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition_3_7_44
+  kind: definition
+  book:
+    number: Definition 3.7.44
+    pages:
+    - 265
+    section: '3.7'
+    equations: []
+  title: Uniform Donsker class
+  statement: A uniformly bounded class 𝓕 is uniform Donsker when sup_P d_{BL(𝓕)}(Law_P(ν_n^P),Law(G_P))→0 over all probability
+    measures P, with suitable Gaussian versions and the text’s measurability convention.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - uniformly bounded class
+    - measurability for every P
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - bounded_Lipschitz_distance
+    - definition_3_7_29
+    later_book_uses:
+    - Theorem 3.7.47.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id007
+  likely_lean_representation: *id008
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: lemma_3_7_45
+  kind: lemma
+  book:
+    number: Lemma 3.7.45
+    pages:
+    - 265
+    - 266
+    section: '3.7'
+    equations: []
+  title: Uniform finite-dimensional central limit theorem
+  statement: For centred laws supported in a fixed bounded subset of ℝ^d, the bounded-Lipschitz distance between normalised
+    sums and the matching Gaussian laws tends to zero uniformly over the laws.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - fixed d
+    - uniform support bound
+    - centred laws
+    implicit:
+    - Covariance may be singular.
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Theorem 3.7.47.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id007
+  likely_lean_representation: *id009
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: lemma_3_7_46
+  kind: lemma
+  book:
+    number: Lemma 3.7.46
+    pages:
+    - 266
+    - 267
+    section: '3.7'
+    equations: []
+  title: Gaussian covariance perturbation bound
+  statement: For centred Gaussian laws on ℝ^d with covariance matrices Σ and Γ, d_BL≤c(d)‖Σ−Γ‖_∞^{1/3}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - Σ,Γ symmetric positive semidefinite
+    - d fixed
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - bounded_Lipschitz_distance
+    later_book_uses:
+    - Theorem 3.7.47.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id009
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_47
+  kind: theorem
+  book:
+    number: Theorem 3.7.47
+    pages:
+    - 267
+    - 271
+    section: '3.7'
+    equations: []
+  title: Equivalences for uniform Donsker classes
+  statement: For a uniformly bounded pointwise-countably-approximable class, UPG_f, uniform total boundedness plus uniform
+    asymptotic equicontinuity of ν_n^P, the corresponding uniform Gaussian condition, and uniform Donsker are equivalent.
+    Moreover P↦Law(G_P) is uniformly continuous from the FF-seminorm on probability measures to d_BL.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - uniformly bounded class
+    - pointwise countable approximation
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_41
+    - definition_3_7_44
+    - lemma_3_7_45
+    - lemma_3_7_46
+    - theorem_3_7_23
+    later_book_uses:
+    - Corollary 3.7.48.
+  proof_status: *id003
+  notes_status: *id010
+  equivalents: *id007
+  likely_lean_representation: *id008
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_7_48
+  kind: corollary
+  book:
+    number: Corollary 3.7.48
+    pages:
+    - 271
+    - 272
+    section: '3.7'
+    equations: []
+  title: Bootstrap convergence under FF convergence
+  statement: If 𝓕 is UPG_f with pointwise countable approximation and random probability measures Q_n satisfy ‖Q_n−P‖_{FF}→0
+    almost surely, respectively in probability, then d_{BL(𝓕)}(Law(ν_n^{Q_n}|Q_n),Law(G_P))→0 in the corresponding outer mode.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕 UPG_f
+    - pointwise countable approximation
+    - Q_n random probability measures
+    - measurable FF distance
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_7_47
+    later_book_uses:
+    - Bootstrap applications.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id007
+  likely_lean_representation: *id009
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_7_49
+  kind: proposition
+  book:
+    number: Proposition 3.7.49
+    pages:
+    - 272
+    section: '3.7'
+    equations: []
+  title: Uniform pre-Gaussian/Donsker property for monotone classes
+  statement: The proposition establishes the UPG_f/uniform-Donsker property stated on p.272 for the uniformly bounded monotone
+    class, using the preceding entropy estimate.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - uniformly bounded monotone functions on the printed interval
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_41
+    - theorem_3_7_47
+    later_book_uses:
+    - Corollary 3.7.50.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id011
+    - The searchable layer loses the full heading and formula. Recover the interval, range bound and exact conclusion from
+      the PDF image.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id011
+- id: corollary_3_7_50
+  kind: corollary
+  book:
+    number: Corollary 3.7.50
+    pages:
+    - 272
+    section: '3.7'
+    equations: []
+  title: Bounded-variation classes are universal/uniform Donsker
+  statement: The class of real functions on [0,1], taking values in [0,1] and having total variation at most one, has the
+    Donsker property stated in the corollary, by Jordan decomposition into monotone functions.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - domain [0,1]
+    - range [0,1]
+    - total variation≤1
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_6_7
+    - example_3_6_14
+    - proposition_3_7_49
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_6_7
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id012
+  equivalents: *id007
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id013
+    - Official correction to Exercise 3.6.7 supplies the restrictions; verify whether the conclusion is universal Donsker,
+      uniform Donsker, or both under the chapter’s definitions.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id013
+- id: item_3_7_51
+  kind: operative_item
+  book:
+    number: Item 3.7.51
+    pages:
+    - 272
+    - 273
+    section: '3.7'
+    equations: []
+  title: Intervening numbered declaration
+  statement: A numbered item 3.7.51 occurs between Corollary 3.7.50 and Theorem 3.7.52, but its heading and statement are
+    not recoverable from the accessible text extraction.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - Must be recovered directly from the uploaded PDF page image.
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id012
+  equivalents: *id007
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id014
+    - 'Blocking: do not assign a Lean declaration or mathematical content until pp.272–273 are visually transcribed.'
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id014
