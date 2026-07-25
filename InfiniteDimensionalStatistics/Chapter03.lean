@@ -18,6 +18,7 @@ import InfiniteDimensionalStatistics.Chapter03.Variation
 import InfiniteDimensionalStatistics.Chapter03.OuterMeasure
 import InfiniteDimensionalStatistics.Chapter03.LimitClasses
 import InfiniteDimensionalStatistics.Chapter03.GaussianBridge
+import InfiniteDimensionalStatistics.Chapter03.LocalClasses
 
 /-!
 # Chapter 3: Empirical Processes
@@ -26,8 +27,8 @@ Source-order implementation root for Chapter 3.  The current implementation
 contains the reusable definition layer and proved concentration results through
 the finite maximal mgf inequality, together with the product-geometry,
 entropy-method, empirical-entropy, canonical U-statistic, entropy-growth,
-outer-measure, Glivenko–Cantelli, Gaussian-bridge, and Donsker interfaces used
-through Section 3.7.  Deep entropy, VC and Donsker theorem proofs are added only
-when they have genuine Lean proofs; no assumption or placeholder is used to
-simulate completion.
+outer-measure, Glivenko–Cantelli, Gaussian-bridge, Donsker, and local-class
+interfaces used through Section 3.7.  Deep entropy, VC and Donsker theorem proofs
+are added only when they have genuine Lean proofs; no assumption or placeholder
+is used to simulate completion.
 -/
