@@ -1,0 +1,255 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.3.1
+fragment_part: 1
+inventory:
+- id: ch7.def.posteriorContractionRate
+  kind: definition
+  book:
+    number: unnumbered
+    pages:
+    - 573
+    section: 7.3.1
+    equations: []
+  title: Posterior contraction rate
+  statement: "Let d be a metric or semimetric on the parameter space and let εₙ→0.\n\
+    The posterior contracts about the true parameter f₀ at rate εₙ in d if,\nfor a\
+    \ sufficiently large fixed constant M (or for every sufficiently large\nfixed\
+    \ M, according to the theorem being applied),\n  Π({f : d(f,f₀)>M εₙ} | X^{(n)})\
+    \ → 0\nin probability under the sampling law at f₀."
+  hypotheses:
+    explicit:
+    - A sequence of experiments/observations indexed by n.
+    - A true parameter f₀.
+    - A posterior probability kernel.
+    - A metric or semimetric d.
+    - A deterministic rate sequence εₙ→0.
+    implicit:
+    - The posterior event is measurable.
+    - Convergence is with respect to the true sampling distribution.
+    - The multiplier M is fixed in n.
+  quantifier_order:
+  - Fix f₀ and d; choose εₙ→0; then for sufficiently large fixed M, take n→∞.
+  constants:
+  - M is a fixed sufficiently large contraction multiplier.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.iidPosterior
+    - ch7.def.whiteNoisePosterior
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - Probability kernels and convergence in probability
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A predicate on a sequence of random posterior measures:
+
+      convergence in probability of the posterior mass of the complement of
+
+      closed d-balls of radius M·εₙ.'
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - type: quantifier_convention
+    page: 573
+    detail: The prose definition and individual contraction theorems vary between
+      'some sufficiently large fixed M' and 'every sufficiently large fixed M'; preserve
+      each theorem's own quantifier.
+- id: ch7.thm.7.3.1
+  kind: theorem
+  book:
+    number: Theorem 7.3.1
+    pages:
+    - 573
+    - 574
+    - 575
+    section: 7.3.1
+    equations: []
+  title: General posterior contraction theorem for i.i.d. models
+  statement: "Let Π=Πₙ be priors on a density model P, let X₁,…,Xₙ∼p₀, and let d be\
+    \ a metric\nor semimetric. Let εₙ→0 and √n εₙ→∞. For fixed C,L, assume:\n(i) Π{p:\
+    \ -P₀log(p/p₀)≤εₙ², P₀(log(p/p₀))²≤εₙ²} ≥ e^{-Cnεₙ²};\n(ii) Π(P\\Pₙ)≤L e^{-(C+4)nεₙ²};\n\
+    (iii) for every sufficiently large fixed M there are tests φₙ with\n      E_{P₀}φₙ→0\
+    \ and\n      sup_{p∈Pₙ:d(p,p₀)≥Mεₙ}E_P(1-φₙ)≤L e^{-(C+4)nεₙ²}.\nThen, for M sufficiently\
+    \ large,\n  Π(p:d(p,p₀)>Mεₙ | X₁,…,Xₙ)→0\nin P₀^n-probability."
+  hypotheses:
+    explicit:
+    - Officially corrected joint measurability `(x,p)↦p(x)`.
+    - All three prior/sieve/testing conditions.
+    - εₙ positive, tends to zero, and √n εₙ→∞.
+    implicit:
+    - Posterior is defined and measurable.
+    - d-balls are measurable.
+    - The second moment condition is on the log likelihood ratio under P₀.
+  quantifier_order:
+  - Fix C,L. For every sequence satisfying assumptions, ∃M₀, ∀M≥M₀, posterior contraction
+    in probability.
+  constants:
+  - The exponent buffer is C+4 exactly in the stated theorem.
+  dependencies:
+    earlier_book:
+    - Testing theory of Chapter 6/§7.1
+    chapter_local:
+    - ch7.def.iidPosterior
+    - ch7.lemma.7.3.2
+    - ch7.def.posteriorContractionRate
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A Markov kernel from data to parameters, using `ProbabilityTheory.posterior`
+      where Standard Borel hypotheses apply; density formulas require `rnDeriv`, `withDensity`,
+      and almost-everywhere equality.
+
+      The conclusion is convergence in probability of a random posterior mass; formalisation
+      needs measurable random kernels and exponential denominator bounds.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 573
+    detail: Require joint measurability `(x,p)↦p(x)`.
+- id: ch7.lemma.7.3.2
+  kind: lemma
+  book:
+    number: Lemma 7.3.2
+    pages:
+    - 575
+    - 576
+    section: 7.3.1
+    equations: []
+  title: Lower bound for an integrated likelihood denominator
+  statement: "Let ν be a probability measure supported on\n  B={p:-P₀log(p/p₀)≤ε²,\
+    \ P₀(log(p/p₀))²≤ε²}.\nFor every c>0,\n  P₀^n( ∫_B ∏_{i=1}^n [p(X_i)/p₀(X_i)]\
+    \ dν(p)\n          ≤ exp(-(1+c)nε²) )\n  ≤ 1/(c² n ε²)."
+  hypotheses:
+    explicit:
+    - ν(B)=1.
+    - n≥1, ε>0, c>0.
+    - Joint measurability of the integrand.
+    implicit:
+    - The exact exponent is obtained by Jensen and Chebyshev; integrability of the
+      mixed log-likelihood.
+  quantifier_order:
+  - ∀ν supported on B, ∀c>0, ∀n.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Jensen's inequality
+    - Chebyshev's inequality
+    - Fubini/Tonelli
+    chapter_local:
+    - ch7.def.iidPosterior
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A finite-sample probability inequality for a prior-mixture likelihood
+      ratio.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.thm.7.3.3
+  kind: theorem
+  book:
+    number: Theorem 7.3.3
+    pages:
+    - 576
+    section: 7.3.1
+    equations: []
+  title: Hellinger posterior contraction from entropy
+  statement: "In the setting of Theorem 7.3.1 assume the KL/variance prior-mass condition\
+    \ (7.91),\nthe sieve prior-tail condition (7.92), and\n  log N(Pₙ,h,εₙ)≤nεₙ².\n\
+    Then for M sufficiently large,\n  Π(p:h(p,p₀)>Mεₙ | X₁,…,Xₙ)→0\nin P₀^n-probability."
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 7.3.1 with d=h.
+    - Global sieve covering bound at εₙ.
+    implicit:
+    - Use Theorem 7.1.4 with ε₀=mεₙ where fixed constants satisfy m<M; this is the
+      corrected proof.
+  quantifier_order:
+  - ∃M₀, ∀M≥M₀, contraction.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.1
+    - ch7.thm.7.1.4
+    - ch7.def.posteriorContractionRate
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: An application theorem assembling entropy-generated tests with the generic
+      contraction theorem.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 576
+    detail: In the proof use ε₀=mεₙ with fixed large m<M, not ε₀=Mεₙ.
