@@ -1,0 +1,447 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id003
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id002
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id005
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id001
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.def.5_2_13
+  kind: definition
+  book:
+    number: Definition 5.2.13
+    pages:
+    - 435
+    section: 5.2.2
+    equations: []
+  title: Definition 5.2.13
+  statement: A nondecreasing weight sequence w is admissible if w_l/√l→∞.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - w_l≥1 and nondecreasing.
+    implicit:
+    - The limit is along integer levels l→∞.
+  quantifier_order:
+  - As l→∞.
+  constants:
+  - w.
+  dependencies:
+    earlier_book: &id004 []
+    chapter_local:
+    - ch5.def.multiscale_spaces
+    later_book_uses:
+    - Proposition 5.2.15, Theorem 5.2.16
+    - Chapter 6 confidence sets
+    - Chapter 7 Bernstein–von Mises results
+  proof_status: *id002
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Predicate Tendsto (fun l => w l / sqrt l) atTop atTop.
+    blockers: *id004
+  difficulty: routine
+  pass: core
+  issues_for_central_review: &id006 []
+- id: ch5.prop.5_2_14
+  kind: proposition
+  book:
+    number: Proposition 5.2.14
+    pages:
+    - 435
+    section: 5.2.2
+    equations: []
+  title: Proposition 5.2.14
+  statement: M₀(w), equipped with ‖·‖_{M(w)}, is a separable Banach space; finitely supported wavelet coefficient
+    arrays form a dense subspace. The ambient M(w) is the corresponding weighted ℓ∞ space.
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - w_l≥1.
+    implicit:
+    - Completeness and separability use the c₀ representation after levelwise rescaling.
+  quantifier_order:
+  - For every admissible indexing/weight sequence.
+  constants: *id004
+  dependencies:
+    earlier_book: *id004
+    chapter_local:
+    - ch5.def.multiscale_spaces
+    later_book_uses:
+    - Proposition 5.2.15
+    - Theorem 5.2.16
+  proof_status: *id002
+  notes_status: *id005
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Isometric equivalence of M₀(w) with c₀ over a countable index after rescaling.
+    blockers:
+    - Confirm exact numbering and whether the dual/bidual assertion is included in this proposition.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - The parsed source compresses Propositions 5.2.14 and 5.2.15; verify the exact split and any statement about
+    M(w)=M₀(w)^{**}.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.prop.5_2_15
+  kind: proposition
+  book:
+    number: Proposition 5.2.15 and identity (5.86)
+    pages:
+    - 435
+    - 436
+    section: 5.2.2
+    equations: []
+  title: Proposition 5.2.15 and identity (5.86)
+  statement: For admissible w, the white-noise wavelet coefficient array W=(W(ψ_{lk})) defines a tight Borel centred
+    Gaussian random variable in M₀(w). In the white-noise model, the observation satisfies the exact identity √n(Y^{(n)}−f)=W
+    in M₀(w) (with σ absorbed or retained according to the model normalisation).
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - w admissible.
+    - Wavelet basis on [0,1].
+    - White-noise model and coefficient representation.
+    implicit:
+    - The scaling coefficients are finite-dimensional and do not affect tightness.
+    - Check whether σ=1 is fixed in this subsection.
+  quantifier_order:
+  - Almost surely the coefficient array belongs to M₀(w).
+  - The identity holds as equality of M₀(w)-valued random elements.
+  constants:
+  - Weight w; noise σ if not normalised.
+  dependencies:
+    earlier_book: *id004
+    chapter_local:
+    - ch5.def.5_2_13
+    - ch5.prop.5_2_14
+    - ch5.eq.5_5
+    later_book_uses:
+    - Chapter 6, equation (6.141)
+    - Chapter 7 multiscale BvM
+  proof_status: *id002
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Construct the coefficient Gaussian sequence as a random element of a weighted c₀ space using Gaussian
+      maxima and Borel–Cantelli; state the model identity coefficientwise then by extensionality.
+    blockers:
+    - Gaussian sequence tail summability and Banach-valued measurability.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - Verify exact proposition number, σ normalisation and whether the iff direction on admissibility is stated.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.thm.5_2_16
+  kind: theorem
+  book:
+    number: Theorem 5.2.16
+    pages:
+    - 436
+    - 437
+    section: 5.2.2
+    equations: []
+  title: Theorem 5.2.16
+  statement: Suppose P has density f∈C^γ([0,1]), γ≥0. For projection resolution jₙ satisfying the printed stochastic-size
+    condition (equivalent in context to 2^{jₙ}jₙ/n=O(1)) and w_{jₙ}^{-1}2^{-jₙ(γ+1/2)}=o(n^{-1/2}), √n(Pₙ(jₙ)−P)
+    converges in law to the P-bridge G_P in M₀(w), for every admissible w.
+  source_fidelity:
+    transcription_status: central_review_required_with_erratum
+    author_corrected_reading: 'Official erratum on p.436: every convergence arrow printed as →d is to be read as
+      →L.'
+  hypotheses:
+    explicit:
+    - f∈C^γ([0,1]).
+    - w admissible.
+    - Resolution conditions as displayed in the theorem.
+    - Wavelet projection empirical measure Pₙ(jₙ).
+    implicit:
+    - The P-bridge coefficient array is a tight Borel random element of M₀(w).
+  quantifier_order:
+  - For every admissible w satisfying the bias condition.
+  - As n→∞.
+  constants:
+  - γ and w.
+  dependencies:
+    earlier_book:
+    - Empirical-process coefficient concentration
+    chapter_local:
+    - ch5.def.5_2_13
+    - ch5.prop.5_2_15
+    later_book_uses:
+    - Chapter 6 multiscale confidence sets
+  proof_status: *id002
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Banach-valued CLT in weighted c₀ for a truncated empirical wavelet coefficient process plus deterministic
+      bias.
+    blockers:
+    - Triangular-array empirical-process CLT in M₀(w).
+    - Wavelet bias estimates.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The OCR displays the first resolution condition ambiguously; compare the page to decide between 2^{jₙ}jₙ/n=O(1)
+    and a square-root variant.
+  - Use convergence in law notation per official erratum.
+  - 'Author-corrected reading recorded separately: Official erratum on p.436: every convergence arrow printed as
+    →d is to be read as →L.'
+  - 'Source-transcription status: central_review_required_with_erratum.'
+- id: ch5.ex.5_2_1
+  kind: exercise
+  book:
+    number: Exercise 5.2.1
+    pages:
+    - 437
+    - 438
+    section: 5.2 Exercises
+    equations: []
+  title: Exercise 5.2.1
+  statement: For a finite measure Q, signed μ and measurable f satisfying the stated translation measurability and
+    L² integrability, show f*μ belongs to the L²(Q)-closure of |μ|(ℝ) times the symmetric convex hull of translates
+    of f.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id004
+    chapter_local: *id004
+    later_book_uses:
+    - Proposition 5.2.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: explicitly used in the proof of Proposition 5.2.2; required reusable approximation
+      lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Approximate a Bochner integral by simple functions in L²(Q), retaining a total-variation convex-hull
+      bound.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - explicitly used in the proof of Proposition 5.2.2
+  - required reusable approximation lemma
+- id: ch5.ex.5_2_2
+  kind: exercise
+  book:
+    number: Exercise 5.2.2
+    pages:
+    - 438
+    section: 5.2 Exercises
+    equations: []
+  title: Exercise 5.2.2
+  statement: Construct an atomic/discontinuous example showing that the smoothing discrepancy conclusion of Theorem
+    5.2.7 can fail without the density regularity assumptions.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id004
+    chapter_local:
+    - ch5.thm.5_2_7
+    later_book_uses: *id004
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes a sharpness/counterexample declaration'
+  notes_status: *id005
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Explicit probability measure and kernel for which the cdf discrepancy has non-vanishing scale.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - establishes a sharpness/counterexample declaration
+  used_by: []
+- id: ch5.ex.5_2_3
+  kind: exercise
+  book:
+    number: Exercise 5.2.3
+    pages:
+    - 438
+    - 439
+    section: 5.2 Exercises
+    equations: []
+  title: Exercise 5.2.3
+  statement: For compactly supported bounded-variation scaling function φ, prove uniform VC-type entropy bounds
+    for the classes of projection kernel sections and their integrated versions D_{φ,j}; apply this to Daubechies
+    scaling functions.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id004
+    chapter_local: *id004
+    later_book_uses:
+    - Theorem 5.2.9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: explicitly used in Theorem 5.2.9; required reusable entropy lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Finite sums of boundedly many translates/dilates of φ inherit polynomial covering numbers.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - explicitly used in Theorem 5.2.9
+  - required reusable entropy lemma
+- id: ch5.def.quadratic_white_noise
+  kind: operative_definition
+  book:
+    number: 'Equations (5.87)–(5.92): quadratic functional in white noise'
+    pages:
+    - 439
+    - 443
+    section: 5.3.1
+    equations:
+    - '5.87'
+    - '5.92'
+  title: 'Equations (5.87)–(5.92): quadratic functional in white noise'
+  statement: For Q(f)=∫f², define a finite-resolution quadratic estimator from the white-noise wavelet coefficients
+    by summing squared observed coefficients and subtracting their known noise variances; equivalently estimate
+    ‖K_j f‖²₂ and correct the Gaussian diagonal bias.
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - White-noise model on [0,1] or ℝ in the book’s chosen basis.
+    - A finite projection level j.
+    - f∈L².
+    implicit:
+    - The exact coefficient set and σ²/n subtraction follow equations (5.87)–(5.92).
+  quantifier_order:
+  - For every n and chosen j.
+  constants:
+  - σ²/n per retained coefficient.
+  dependencies:
+    earlier_book:
+    - White-noise coefficient model and wavelet Parseval identity
+    chapter_local: *id004
+    later_book_uses:
+    - Theorem 5.3.1
+  proof_status: *id002
+  notes_status: *id005
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Finite sum of squares of Gaussian affine coefficients minus the trace of the noise covariance.
+    blockers:
+    - Exact page transcription of equations (5.87)–(5.92).
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - The searchable HTML omits pages 440–451; transcribe these equations directly from the uploaded PDF before proof
+    work.
+  - 'Source-transcription status: central_review_required.'
