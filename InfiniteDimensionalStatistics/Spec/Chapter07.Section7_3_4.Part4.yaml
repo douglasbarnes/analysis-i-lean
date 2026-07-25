@@ -1,0 +1,65 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.3.4
+fragment_part: 4
+inventory:
+- id: ch7.cor.7.3.24
+  kind: corollary
+  book:
+    number: Corollary 7.3.24
+    pages:
+    - 602
+    section: 7.3.4
+    equations: []
+  title: Credible sets with Hölder regularity and L∞ diameter
+  statement: "In the multiscale wavelet setting, intersect/regularise the credible ball from\nTheorem 7.3.23 with a growing C^γ constraint controlled by a sequence uₙ→∞.\nThe resulting credible set retains asymptotic frequentist coverage 1-α and its\nL∞-diameter satisfies the officially corrected rate\n  |Cₙ|_∞ = O_{P^Y_{f₀}}((n/log n)^{-γ/(2γ+1)} uₙ)."
+  hypotheses:
+    explicit:
+    - The hypotheses and construction immediately preceding the corollary on p.602.
+    - f₀ has the stated C^γ regularity.
+    - uₙ→∞ at the allowed rate.
+    - Multiscale BvM/credible-ball hypotheses.
+    implicit:
+    - The exact set notation and any additional lower-growth condition on uₙ must
+      be visually verified from the uploaded page before implementation.
+  quantifier_order:
+  - For the allowed sequence uₙ, coverage and diameter conclusions as n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.23
+    - ch7.prop.7.3.15
+    - ch7.cor.7.3.22
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Intersect a weak-topology credible ball with a deterministic/random Hölder
+      ball, then use the multiscale-to-supremum interpolation inequality.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 602
+    detail: The exponent in the final diameter display is negative.
+  - type: source_legibility
+    page: 602
+    detail: Exact construction and auxiliary conditions are hidden in a collapsed
+      text layer; verify visually against the uploaded PDF before formalisation.
