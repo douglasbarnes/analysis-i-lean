@@ -1,0 +1,276 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: '7.3'
+fragment_part: 3
+inventory:
+- id: ex7.3.5
+  kind: exercise
+  book:
+    number: 7.3.5
+    pages:
+    - 602
+    - 603
+    section: '7.3'
+    equations: []
+  title: Sobolev-weighted posterior second-moment summation
+  statement: 'Extend the coordinate posterior second-moment estimates from Theorem
+
+    7.3.12/Corollary 7.3.13 to the weighted negative Sobolev norm H(δ), proving
+
+    the tail/moment estimates required for tightness and the posterior-mean
+
+    bound in the proof of Theorem 7.3.19.'
+  hypotheses:
+    explicit:
+    - Condition 7.3.11 and the weighted space H(δ).
+    - δ>1/2 under the official correction.
+    implicit:
+    - The exact exercise may formulate a more general Sobolev-risk result; this statement
+      records only the reusable consequence explicitly cited in the main text.
+  quantifier_order:
+  - Sum the coordinate bounds uniformly in n, then let the projection cutoff tend
+    to infinity.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.12
+    - ch7.cor.7.3.13
+    - ch7.def.weightedSobolevBvMSpace
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Tonelli summation of posterior coordinate moments with deterministic weighted-series
+      convergence.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - type: source_verification
+    page: 603
+    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
+      text layer does not expose the final §7.3 exercise block cleanly; visually verify
+      exact wording and page before implementation.
+  selection_reasons:
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.thm.7.3.19
+- id: ex7.3.6
+  kind: exercise
+  book:
+    number: 7.3.6
+    pages:
+    - 602
+    - 603
+    section: '7.3'
+    equations: []
+  title: Contiguity for finite-dimensional tilted posterior laws
+  statement: 'Prove the finite-dimensional contiguity/change-of-measure step invoked
+    in
+
+    Theorem 7.3.18 for the tilted law displayed around (7.124), so that
+
+    convergence established under the reference finite-dimensional Gaussian
+
+    law transfers to the data-dependent posterior shift.'
+  hypotheses:
+    explicit:
+    - Condition 7.3.17 on the prior density over every fixed finite-dimensional projection.
+    - The finite-dimensional Gaussian likelihood shift.
+    implicit:
+    - The dimension is fixed as n→∞ and likelihood ratios are uniformly integrable.
+  quantifier_order:
+  - For each fixed finite-dimensional V, prove contiguity as n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.condition.7.3.17
+    - ch7.def.finiteDimensionalPosteriorShift
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Le Cam first-lemma style contiguity via convergence and uniform integrability
+      of finite-dimensional likelihood ratios.
+    blockers: []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review:
+  - type: source_verification
+    page: 603
+    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
+      text layer does not expose the final §7.3 exercise block cleanly; visually verify
+      exact wording and page before implementation.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.thm.7.3.18
+- id: ex7.3.7
+  kind: exercise
+  book:
+    number: 7.3.7
+    pages:
+    - 602
+    - 603
+    section: '7.3'
+    equations: []
+  title: Uniform Portmanteau theorem for regular-boundary classes
+  statement: "Prove Proposition 7.3.21: weak convergence μₙ⇒μ and\n  lim_{ε↓0} sup_{B∈𝒞\
+    } μ(∂_εB)=0\nimply\n  sup_{B∈𝒞}|μₙ(B)-μ(B)|→0.\nUse open/closed ε-enlargements\
+    \ and the standard Portmanteau inequalities."
+  hypotheses:
+    explicit:
+    - The hypotheses of Proposition 7.3.21.
+    implicit:
+    - Uniformity follows by applying Portmanteau to common ε-thickenings rather than
+      setwise to each B.
+  quantifier_order:
+  - First fix ε; take n→∞; then let ε↓0.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.boundaryThickening
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A uniform consequence of mathlib's Portmanteau inequalities using inf-distance
+      neighbourhood inclusions.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - type: source_verification
+    page: 603
+    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
+      text layer does not expose the final §7.3 exercise block cleanly; visually verify
+      exact wording and page before implementation.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.cor.7.3.22
+  - ch7.prop.7.3.21
+- id: ex7.3.8
+  kind: exercise
+  book:
+    number: 7.3.8
+    pages:
+    - 602
+    - 603
+    section: '7.3'
+    equations: []
+  title: Uniform integrability and posterior-mean convergence under weak BvM
+  statement: "Supply the uniform-integrability argument omitted after Theorems 7.3.19\n\
+    and 7.3.20. Upgrade weak convergence of the shifted posterior laws to\nconvergence\
+    \ of the relevant Bochner first moments, obtaining (7.127) and\n(7.131), in particular\n\
+    \  ||f̄ₙ-Y||_{H(δ)}=o_P(n^{-1/2})\nand\n  ||f̄ₙ-Y||_{M₀(w)}=o_P(n^{-1/2}).\nRecord\
+    \ the corresponding consequence used for posterior-mean-centred\ncredible sets\
+    \ in Theorem 7.3.23."
+  hypotheses:
+    explicit:
+    - The hypotheses and posterior moment/tail estimates proved in Theorem 7.3.19
+      or 7.3.20.
+    implicit:
+    - Bochner integrability of the identity map under each posterior.
+    - Weak convergence alone is insufficient; a uniform-integrability/tight-tail estimate
+      is essential.
+  quantifier_order:
+  - For each of the two BvM spaces, prove moment convergence as n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.12
+    - ch7.prop.7.3.14
+    - ch7.def.weightedSobolevBvMSpace
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A Bochner-valued uniform-integrability theorem for random probability
+      measures, applied conditionally and then in sampling probability.
+    blockers: []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review:
+  - type: source_verification
+    page: 603
+    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
+      text layer does not expose the final §7.3 exercise block cleanly; visually verify
+      exact wording and page before implementation.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.thm.7.3.19
+  - ch7.thm.7.3.20
+  - ch7.thm.7.3.23
