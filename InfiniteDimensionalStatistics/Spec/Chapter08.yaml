@@ -35,3 +35,6 @@ acceptance:
   central_review_issue_count: 29
   missing_numbered_labels: []
   duplicate_identifiers: []
+validation:
+  canonical_migration_audit: pending_rerun_after_rate_label_repair
+  strict_eight_chapter_gate: blocked_by_repository_wide_recovery
