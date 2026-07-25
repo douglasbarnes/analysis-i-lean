@@ -1,0 +1,537 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 4
+chunk_count: 16
+inventory:
+- id: ch8.linear_estimator_8_7
+  kind: definition
+  book:
+    number: (8.7)
+    pages:
+    - 616
+    section: 8.2.1
+    equations:
+    - '8.7'
+  title: Linear wavelet projection estimator
+  statement: f_n(j)=∑_{ℓ≤j−1}∑_k y_{ℓk}ψ_{ℓk}; its expectation is K_jf=∑_{ℓ≤j−1}∑_k f_{ℓk}ψ_{ℓk}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - j∈ℕ
+    - coefficient observation (8.6)
+    implicit:
+    - At each level the k-sum is finite; the retained total is finite.
+  quantifier_order:
+  - Fix n,j
+  - Define the finite wavelet sum
+  - Compute expectation coefficientwise
+  constants: []
+  dependencies:
+    earlier_book:
+    - Finite orthonormal projection theory
+    chapter_local:
+    - ch8.gaussian_wavelet_sequence_8_6
+    later_book_uses:
+    - ch8.bias_bound_8_8
+    - ch8.variance_identity_8_9
+    - ch8.lepski_l2_8_12
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite linear combination in L2, with `K_j` an orthogonal projection onto a finite wavelet span.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.bias_bound_8_8
+  kind: lemma
+  book:
+    number: (8.8)
+    pages:
+    - 616
+    section: 8.2.1
+    equations:
+    - '8.8'
+  title: Besov projection-bias bound
+  statement: For s>0 and f∈B^s_{2,∞}, ‖K_jf−f‖₂²≤c(s)‖f‖_{B^s_{2,∞}}²2^{-2js}=:B(j,f), where c(s)=1/(1−2^{-2s}).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - j∈ℕ
+    - f∈B^s_{2,∞}
+    implicit:
+    - The wavelet basis is regular enough for s.
+  quantifier_order:
+  - Fix s,f,j
+  - Define c(s)
+  - Define B(j,f)
+  - prove the inequality
+  constants:
+  - c(s)>0.
+  dependencies:
+    earlier_book:
+    - Chapter 4 wavelet characterisation of Besov spaces
+    chapter_local:
+    - ch8.linear_estimator_8_7
+    later_book_uses:
+    - ch8.oracle_l2_8_11
+    - ch8.theorem_8_2_2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Geometric-series estimate on squared coefficient blocks.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.variance_identity_8_9
+  kind: lemma
+  book:
+    number: (8.9)
+    pages:
+    - 616
+    section: 8.2.1
+    equations:
+    - '8.9'
+  title: Projection-estimator variance identity
+  statement: Under σ=1, E_f‖f_n(j)−E_ff_n(j)‖₂²=2^j/n.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - n∈ℕ
+    - j in the admissible dyadic range
+    - orthonormal retained wavelets
+    - independent N(0,1) noise
+    implicit:
+    - The number of retained coordinates is exactly 2^j under the book’s indexing.
+  quantifier_order:
+  - Fix n,j,f
+  - expand by Parseval
+  - take Gaussian second moments
+  constants: []
+  dependencies:
+    earlier_book:
+    - Parseval identity
+    - Gaussian variance
+    chapter_local:
+    - ch8.gaussian_wavelet_sequence_8_6
+    - ch8.linear_estimator_8_7
+    later_book_uses:
+    - ch8.oracle_l2_8_11
+    - ch8.theorem_8_2_2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - lp
+      - ContinuousLinearMap
+      - Metric.diam
+      - Finset.sum
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite orthogonal-sum second-moment computation.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - CR-001
+  - CR-003
+- id: ch8.l2_resolution_grid_8_10
+  kind: definition
+  book:
+    number: (8.10)
+    pages:
+    - 616
+    section: 8.2.1
+    equations:
+    - '8.10'
+  title: L2 Lepski resolution grid
+  statement: Choose j_max∈ℕ with 2^{j_max} comparable to n and set J={j∈ℕ:1≤j≤j_max}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - n∈ℕ
+    implicit:
+    - The exact comparison constants in the printed condition require verification.
+  quantifier_order:
+  - For each n choose j_max
+  - Define the finite interval J
+  constants:
+  - j_max is logarithmic in n.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - ch8.oracle_l2_8_11
+    - ch8.lepski_l2_8_12
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.Integral
+      - Filter.liminf
+      - Metric.diam
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A nonempty finite interval `Finset.Icc 1 jMax` with dyadic comparison hypotheses.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - CR-006
+  - CR-030
+- id: ch8.oracle_l2_8_11
+  kind: definition
+  book:
+    number: (8.11)
+    pages:
+    - 616
+    section: 8.2.1
+    equations:
+    - '8.11'
+  title: Oracle L2 resolution
+  statement: j_n^*(f)=min{j∈J:B(j,f)≤2^j/n}. By monotonicity, the bias bound is below the variance proxy for j≥j_n^*
+    and above it for j<j_n^*.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f∈B^s_{2,∞}
+    - finite nonempty J
+    implicit:
+    - The defining set is nonempty at the chosen maximal resolution, or a convention is required.
+  quantifier_order:
+  - Fix f,n
+  - form admissible subset of J
+  - take its minimum
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.bias_bound_8_8
+    - ch8.variance_identity_8_9
+    - ch8.l2_resolution_grid_8_10
+    later_book_uses:
+    - ch8.lemma_8_2_1
+    - ch8.theorem_8_2_2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.Integral
+      - Filter.liminf
+      - Metric.diam
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite `argmin`/minimum with a proof of nonemptiness; expose its balancing inequalities as lemmas.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-005
+  - CR-030
+- id: ch8.lepski_l2_8_12
+  kind: definition
+  book:
+    number: (8.12)
+    pages:
+    - 616
+    section: 8.2.1
+    equations:
+    - '8.12'
+  title: L2 Lepski selector
+  statement: 'j̄_n=min{j∈J: ‖f_n(j)−f_n(l)‖₂²≤τ·2^l/n for every l∈J with l>j}; if this set is empty, define j̄_n=j_max.'
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - τ>0
+    - finite grid J
+    - projection estimators at all grid levels
+    implicit:
+    - All pairwise norm comparisons are measurable.
+  quantifier_order:
+  - Fix n,τ,data
+  - form the admissible set
+  - take minimum or fallback to j_max
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.linear_estimator_8_7
+    - ch8.l2_resolution_grid_8_10
+    later_book_uses:
+    - ch8.lemma_8_2_1
+    - ch8.theorem_8_2_2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id002
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A total measurable function into a finite index type, defined by decidable finite search.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-005
+- id: ch8.lemma_8_2_1
+  kind: lemma
+  book:
+    number: Lemma 8.2.1
+    pages:
+    - 617
+    section: 8.2.1
+    equations:
+    - '8.2'
+  title: Upper-tail control for the L2 Lepski selector
+  statement: If f∈B^s_{2,∞}, s>0, and τ≥4, then for every j>j_n^* and n there is C>0 depending only on σ such that
+    P_f(j̄_n=j)≤C^{-1}exp(−Cτ2^j), and P_f(j̄_n>j_n^*)≤C^{-1}exp(−Cτ2^{j_n^*}).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - f∈B^s_{2,∞}
+    - τ≥4
+    - j>j_n^*
+    implicit:
+    - The white-noise sequence is separable/measurable and the grid conventions hold.
+  quantifier_order:
+  - Fix σ
+  - There exists C(σ)>0
+  - For all n,f,s,τ,j satisfying hypotheses both bounds hold
+  constants:
+  - C is uniform in n,f,s,τ,j except through σ.
+  dependencies:
+    earlier_book:
+    - Theorem 3.1.9
+    - Gaussian tail bound
+    chapter_local:
+    - ch8.oracle_l2_8_11
+    - ch8.lepski_l2_8_12
+    later_book_uses:
+    - ch8.theorem_8_2_2
+    - ch8.theorem_8_3_5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Exponential tail theorem for finite chi-square/Gaussian sums and a union bound.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-001
+  - CR-003
+  - CR-004
+- id: ch8.theorem_8_2_2
+  kind: theorem
+  book:
+    number: Theorem 8.2.2
+    pages:
+    - 618
+    section: 8.2.1
+    equations:
+    - '8.2'
+  title: Adaptive L2 estimation in white noise
+  statement: Let f̂_n=f_n(j̄_n) with τ>4. For every fixed s,B>0 and every n, sup_{‖f‖_{B^s_{2,∞}}≤B}E_f‖f̂_n−f‖₂≤D·max(1,B)^{1/(2s+1)}n^{-s/(2s+1)},
+    where D depends only on s,σ,τ.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - white-noise model
+    - s,B>0 fixed
+    - τ>4
+    implicit:
+    - The Besov ball and estimator are measurable.
+  quantifier_order:
+  - Fix s,B,σ,τ
+  - There exists D
+  - For every n the uniform risk bound holds
+  constants:
+  - D=D(s,σ,τ), independent of B,n,f.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7
+    chapter_local:
+    - ch8.l2_minimax_benchmark_8_5
+    - ch8.bias_bound_8_8
+    - ch8.lemma_8_2_1
+    later_book_uses:
+    - ch8.theorem_8_3_5
+    - ch8.theorem_8_3_8
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Risk bound for a data-dependent finite projection. Formal proof requires Gaussian concentration plus
+      Besov bias estimates.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-001
+  - CR-003
+  - CR-004
+  - CR-029
