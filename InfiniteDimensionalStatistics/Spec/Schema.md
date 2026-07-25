@@ -7,7 +7,19 @@ A chapter specification is either:
 1. a self-contained YAML file whose top level contains `source`, `inventory` and `chapter_local_dependency_dag`; or
 2. a package descriptor whose `package.declaration_inventory.file` and `package.chapter_local_dependency_dag.file` point to those components.
 
-The package loader is part of `scripts/validate_ids_specs.py`. All paths are resolved relative to the descriptor.
+The package loader is implemented by `scripts/validate_ids_specs.py`. All component paths are resolved relative to the descriptor.
+
+## Readable inventory packages
+
+A package inventory component may itself be an index. An inventory index has the same source, policy, summary and completeness metadata as a normal inventory file, and adds:
+
+```yaml
+inventory_files:
+  - Chapter02.Section2_1.Part1.yaml
+  - Chapter02.Section2_1.Part2.yaml
+```
+
+Each listed fragment must be YAML with a top-level `inventory` list. The loader concatenates the fragments in listed order. Fragmentation is permitted only to improve reviewability; identifiers, dependency references and completeness checks remain chapter-global. A package descriptor may repeat the fragment list as non-authoritative human-readable metadata, but the inventory index is authoritative.
 
 ## Source metadata
 
@@ -25,7 +37,7 @@ source:
 
 ## Inventory entry
 
-Every declaration, operative example, selected exercise and later-used notes result is an inventory entry.
+Every definition, notation, construction, lemma, proposition, theorem, corollary, mathematically operative example or remark, selected exercise, and later-used notes result is an inventory entry.
 
 ```yaml
 inventory:
@@ -75,10 +87,9 @@ inventory:
 ### Required entry fields
 
 - `id`: unique stable identifier within the chapter;
-- `kind`: definition, notation, construction, operative example, lemma, proposition, theorem, corollary, remark, note result or exercise;
+- `kind`;
 - `book.number`, `book.pages`, `book.section`;
-- `title`;
-- `statement`;
+- `title` and a precise `statement`;
 - `hypotheses.explicit`, `hypotheses.implicit`;
 - `quantifier_order` and `constants`;
 - `dependencies.earlier_book`, `dependencies.chapter_local`, `dependencies.later_book_uses`;
@@ -90,7 +101,7 @@ inventory:
 - `pass`;
 - `issues_for_central_review`.
 
-Chapter-specific names such as `discussed_or_extended_in_section_4_5` are accepted only by the package loader as legacy aliases. New or repaired files use `discussed_or_extended_in_notes`.
+Chapter-specific legacy names such as `discussed_or_extended_in_section_4_5` are accepted only by the package loader. New and repaired files use `discussed_or_extended_in_notes`.
 
 ## Pass and difficulty enums
 
@@ -102,20 +113,20 @@ difficulty: routine | substantial | major-library | research-level
 Pass semantics are source-based:
 
 - `core`: unstarred main-text material;
-- `starred`: material explicitly starred by the book;
+- `starred`: material explicitly starred in the book;
 - `exercise`: extracted exercise declarations.
 
 Difficulty must not alter the pass.
 
 ## Exercise selection
 
-An exercise entry must include at least one of:
+An exercise entry must include at least one selection reason:
 
 - completes a proof omitted from the main text;
 - is cited by a later result;
 - establishes a required reusable lemma or counterexample.
 
-The reasons may be recorded in `selection_reasons`; downstream declarations are recorded in `used_by` and in the DAG.
+Record the reasons in `selection_reasons`; record downstream declarations in `used_by` and in the DAG.
 
 ## Dependency DAG
 
@@ -130,13 +141,11 @@ chapter_local_dependency_dag:
   acyclic: true
 ```
 
-Every node must be an inventory identifier. Every edge endpoint must resolve. Self-loops and directed cycles are forbidden.
-
-A separate DAG file may use JSON-compatible YAML, provided the package descriptor identifies the file and the loader produces the canonical `nodes` and `edges` view.
+Every DAG node must be an inventory identifier. The node set must equal the inventory identifier set. Every edge endpoint must resolve. Self-loops and directed cycles are forbidden. A separate DAG file may use JSON-compatible YAML if the package descriptor identifies it and the loader produces the canonical view.
 
 ## Completeness metadata
 
-Each chapter should record:
+Every chapter inventory, including an inventory index, records:
 
 - expected and found numbered labels;
 - missing numbered labels;
@@ -145,4 +154,4 @@ Each chapter should record:
 - central-review issue count;
 - inventory and DAG counts.
 
-The validator treats any missing numbered label, duplicate identifier, dangling dependency, invalid enum, unresolved local reference or cycle as an error.
+The validator rejects missing chapter files, missing required fields, duplicate identifiers, invalid pass or difficulty values, unresolved local references, incomplete DAG node sets, dangling edges, self-loops, cycles, missing numbered labels, or exercises without a documented selection reason.
