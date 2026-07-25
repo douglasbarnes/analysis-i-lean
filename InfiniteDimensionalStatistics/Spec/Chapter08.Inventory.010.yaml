@@ -425,10 +425,11 @@ inventory:
     equations:
     - '8.66'
   title: Smoothness-grid classification bound
-  statement: For the sequential composite-test classifier ŝ_n and the stratum label s(f), sup_{f∈F_n} P_f(ŝ_n≠s(f))
-    ≤ α/2 for all sufficiently large n. The extracted display omits the inequality sign “≠”; the proof and required
-    conclusion determine the misclassification event, which remains flagged for page-image confirmation.
-  source_fidelity: logical-transcription-with-typography-flag
+  statement: The printed equation (8.66) states that for the sequential composite-test classifier ŝ_n and the
+    stratum label s(f), sup_{f∈F_n} P_f(ŝ_n=s(f)) ≤ α/2 for all sufficiently large n. The surrounding construction
+    and the next sentence treat ŝ_n=s(f) as the successful-classification event, so the printed display is internally
+    inconsistent; the likely intended relation has ŝ_n≠s(f), but it is not substituted here.
+  source_fidelity: exact-printed-statement-with-typography-flag
   hypotheses:
     explicit:
     - tests at level α/N
@@ -437,7 +438,8 @@ inventory:
     - s(f) is uniquely defined by the separated strata.
   quantifier_order:
   - Choose L from testing guarantees
-  - Eventually sup_{f∈F_n}P_f(ŝ_n≠s(f))≤α/2
+  - Printed: eventually sup_{f∈F_n}P_f(ŝ_n=s(f))≤α/2
+  - Operational candidate recorded for central review: replace = by ≠
   constants:
   - Uniform testing constants depend on α/N.
   dependencies:
@@ -470,7 +472,8 @@ inventory:
       assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
       repository: douglasbarnes/analysis-i-lean
   likely_lean_representation:
-    sketch: Finite sequential classifier with union-bound error estimate.
+    sketch: Record the printed equality-event bound and a separately named corrected candidate using the
+      misclassification event; central review determines which statement is implemented as the source theorem.
     blockers: []
   difficulty: major-library
   pass: core
