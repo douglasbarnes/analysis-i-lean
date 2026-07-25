@@ -1,0 +1,281 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.2.3
+fragment_part: 1
+inventory:
+- id: ch7.def.periodicSobolevNorm
+  kind: definition
+  book:
+    number: (7.52)
+    pages:
+    - 555
+    section: 7.2.3
+    equations:
+    - (7.52)
+  title: Periodic Sobolev wavelet norm
+  statement: For t≥0 define the periodic Sobolev norm by the weighted square sum of
+    periodic wavelet coefficients, equivalent to the H^t norm used in Chapter 4.
+  hypotheses:
+    explicit:
+    - A sufficiently regular periodised orthonormal wavelet basis is fixed.
+    implicit:
+    - The scaling coefficient and exact low-frequency convention are those of §4.3.4.
+  quantifier_order:
+  - ∀ f in the periodic Sobolev space.
+  constants: []
+  dependencies:
+    earlier_book:
+    - §4.3.4 periodic Besov/Sobolev spaces
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - Hilbert-space weighted ℓ² constructions
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A weighted `ℓ²` coefficient space with an isometric wavelet transform;
+      this is a major custom function-space library.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.def.sobolevDensityModel
+  kind: definition
+  book:
+    number: (7.53)–(7.54)
+    pages:
+    - 555
+    section: 7.2.3
+    equations:
+    - (7.53)
+    - (7.54)
+  title: Sobolev-ball density model and MLE
+  statement: 'For t>1/2 and D>1 define P(t,D) as the continuous nonnegative probability
+
+    densities p on [0,1] with ||p||_{H^t}≤D. Define p̂ₙ as a maximiser of ℓₙ over
+    P(t,D).'
+  hypotheses:
+    explicit:
+    - t>1/2.
+    - D>1.
+    - Periodic Sobolev convention.
+    - p≥0 and ∫_0^1 p=1.
+    implicit:
+    - Sobolev embedding supplies continuous representatives.
+    - MLE existence is established next.
+  quantifier_order:
+  - Fix t,D; define the model and estimator for each n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.periodicSobolevNorm
+    - ch7.def.npmle
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A subtype of continuous functions with positivity, unit integral, and
+      Sobolev norm bound; the estimator is an `argmax` witness.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.prop.7.2.7
+  kind: proposition
+  book:
+    number: Proposition 7.2.7
+    pages:
+    - 555
+    - 556
+    section: 7.2.3
+    equations: []
+  title: Compactness and existence of the Sobolev-ball MLE
+  statement: "For t>1/2 and D>1:\n(a) P(t,D) is compact in C([0,1]) with the uniform\
+    \ norm;\n(b) ℓₙ:P(t,D)→[-∞,∞) is upper semicontinuous (the printed text states\
+    \ continuity\n    in the extended-real topology) for each sample;\n(c) a maximiser\
+    \ exists and a Borel-measurable maximiser p̂ₙ can be selected."
+  hypotheses:
+    explicit:
+    - The model of (7.53).
+    - Fixed finite sample.
+    implicit:
+    - Part (b)'s exact continuity notion at zeros uses the topology on the extended
+      real line.
+    - Part (c) uses a measurable maximum theorem.
+  quantifier_order:
+  - ∀ n and samples, existence; ∃ measurable selector as a function of the sample.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Sobolev compact embedding
+    - Arzelà–Ascoli
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.2.3
+    contains_omitted_steps: true
+    comment: measurable-selection proof of part (c)
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Compact subtype in `C([0,1],ℝ)` plus an upper-semicontinuous extended-real
+      objective; measurable argmax selection likely needs a new theorem.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - type: statement_precision
+    page: 556
+    detail: Verify whether the book's 'continuous' assertion for extended-real log-likelihood
+      is literally continuous or upper semicontinuous at densities vanishing at sample
+      points.
+- id: ch7.def.sobolevSieveMLE
+  kind: definition
+  book:
+    number: (7.55)–(7.56)
+    pages:
+    - 556
+    section: 7.2.3
+    equations:
+    - (7.55)
+    - (7.56)
+  title: Finite-dimensional Sobolev sieve MLE
+  statement: 'Let V_j be the wavelet approximation space and P(t,D,j)=P(t,D)∩V_j.
+
+    Define p̂ₙ(j) as an MLE over P(t,D,j).'
+  hypotheses:
+    explicit:
+    - Wavelet approximation spaces V_j are as in Chapter 4.
+    implicit: []
+  quantifier_order:
+  - ∀ j,n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    - ch7.def.sieveMLE
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Intersection of the density model with a finite-dimensional wavelet span;
+      optimisation over a compact finite-dimensional subtype.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.prop.7.2.8
+  kind: proposition
+  book:
+    number: Proposition 7.2.8
+    pages:
+    - 556
+    - 557
+    section: 7.2.3
+    equations: []
+  title: Uniform consistency of the Sobolev-ball MLE
+  statement: If p₀∈P(t,D) and p₀ is strictly positive, then ||p̂ₙ-p₀||∞→0 almost surely.
+  hypotheses:
+    explicit:
+    - t>1/2, D>1.
+    - p₀∈P(t,D).
+    - p₀(x)>0 for every x.
+    - p̂ₙ is any measurable MLE.
+    implicit:
+    - Compactness and likelihood identifiability are used; strict positivity plus
+      continuity on [0,1] implies a positive lower bound.
+  quantifier_order:
+  - Under P₀^∞, almost surely as n→∞.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Uniform law of large numbers/compactness argument
+    chapter_local:
+    - ch7.prop.7.2.7
+    - ch7.prop.klIdentifiability
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
+      `OP` and `oP` predicates over the sequence of experiments.
+
+      Almost-sure convergence in the sup norm of random continuous functions.'
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
