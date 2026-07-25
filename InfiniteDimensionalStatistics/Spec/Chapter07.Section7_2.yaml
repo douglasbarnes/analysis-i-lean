@@ -1,0 +1,663 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: Cambridge University Press, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+section: '7.2'
+inventory:
+- id: ch7.def.likelihood
+  kind: definition
+  book:
+    number: (7.19)
+    pages:
+    - 546
+    section: '7.2'
+    equations:
+    - (7.19)
+  title: Likelihood function
+  statement: For a model P of μ-densities and observations X₁,…,Xₙ, define Lₙ(p)=∏_{i=1}^n
+    p(Xᵢ).
+  hypotheses:
+    explicit:
+    - n≥1; p∈P; observations are measurable.
+    implicit:
+    - Pointwise density representatives are fixed; changing representatives can alter
+      values on null sample configurations.
+  quantifier_order:
+  - ∀ data x∈X^n, ∀ p∈P.
+  constants: []
+  dependencies:
+    earlier_book:
+    - §6.1 likelihoods
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Finite product of evaluation maps on a bundled density model; joint measurability
+      of `(x,p)↦p x` should be part of the model.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: ex7.2.1
+  kind: exercise
+  book:
+    number: 7.2.1
+    pages:
+    - 569
+    section: '7.2'
+    equations: []
+  title: Hellinger comparison with a midpoint density
+  statement: "For probability densities p and p₀, let p̄=(p+p₀)/2. Prove that\n  h²(p,p₀)\
+    \ ≤ C h²(p̄,p₀)\nfor a universal constant C. The stated hint is the pointwise\
+    \ inequality\n  (√p̄+√p₀)/(√p+√p₀) ≤ 2."
+  hypotheses:
+    explicit:
+    - p and p₀ are probability densities with respect to a common dominating measure.
+    implicit:
+    - Hellinger distance uses the Chapter 7 normalisation.
+  quantifier_order:
+  - There exists a universal C such that for all density pairs (p,p₀).
+  constants:
+  - Universal C; the hint yields an explicit non-optimised constant.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.hellinger
+    - ch7.def.averageDensityClass
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A pointwise square-root inequality integrated against the dominating measure.
+    blockers: []
+  difficulty: routine
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.thm.7.2.1
+- id: ex7.2.2
+  kind: exercise
+  book:
+    number: 7.2.2
+    pages:
+    - 569
+    section: '7.2'
+    equations: []
+  title: L¹ bracketing bound for log-midpoint densities
+  statement: "Let 0≤p_L≤p_U. Define p̄_L=(p_L+p₀)/2 and p̄_U=(p_U+p₀)/2, and on {p₀>0}\n\
+    \  g_L=(1/2)log(p̄_L/p₀),  g_U=(1/2)log(p̄_U/p₀).\nProve\n  ρ₁(g_U-g_L) ≤ 2 h(p̄_L,p̄_U),\n\
+    using (7.33) and g_U-g_L≥0."
+  hypotheses:
+    explicit:
+    - p_L,p_U,p₀ are densities or nonnegative integrable functions in the bracketing
+      setup.
+    - 0≤p_L≤p_U pointwise.
+    implicit:
+    - The logarithms are defined only on {p₀>0}, with the Chapter 7 convention elsewhere.
+    - ρ₁ is the L¹(P₀)-type semimetric used in the empirical-process bound.
+  quantifier_order:
+  - For every ordered bracket p_L≤p_U.
+  constants:
+  - Factor 2.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.averageDensityClass
+    - ch7.def.hellinger
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Monotonicity of log plus a pointwise comparison between log ratios and
+      square-root differences, then integration.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.thm.7.2.1
+- id: ex7.2.3
+  kind: exercise
+  book:
+    number: 7.2.3
+    pages:
+    - 569
+    section: '7.2'
+    equations: []
+  title: Measurable argmax selection on a compact metric space
+  statement: "Let (X,A) be measurable, Θ a compact metric space, and u:X×Θ→ℝ such\
+    \ that\nx↦u(x,θ) is measurable for every θ and θ↦u(x,θ) is continuous for every\
+    \ x.\nProve that there is a Borel-measurable θ̂:X→Θ satisfying\n  u(x,θ̂(x)) =\
+    \ sup_{θ∈Θ} u(x,θ).\nDeduce Proposition 7.2.7(c)."
+  hypotheses:
+    explicit:
+    - Θ compact metric.
+    - u is a Carathéodory function.
+    implicit:
+    - The supremum is attained by compactness.
+  quantifier_order:
+  - For every such u, construct one measurable maximiser selector.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A measurable maximum theorem. The book's lexicographic construction can
+      be formalised after embedding a compact metric space into a countable product.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.prop.7.2.7
+- id: ex7.2.4
+  kind: exercise
+  book:
+    number: 7.2.4
+    pages:
+    - 569
+    section: '7.2'
+    equations: []
+  title: Differentiation under the integral in a Banach space
+  statement: "Let V be open in a Banach space E, (S,A,μ) a measure space, and\nf:V×S→ℝ\
+    \ with f(v,·)∈L¹(μ). Assume D₁f(v,s) exists for every (v,s),\nv↦D₁f(v,s) is continuous\
+    \ into E*, and\n  ||D₁f(v,s)||_{E*} ≤ g(s)\nfor a fixed g∈L¹(μ), uniformly in\
+    \ v. Prove that\n  φ(v)=∫ f(v,s)dμ(s)\nis Fréchet differentiable and\n  Dφ(v)(h)=∫\
+    \ D₁f(v,s)(h)dμ(s).\nApply this to the population likelihood derivative in Proposition\
+    \ 7.2.4."
+  hypotheses:
+    explicit:
+    - V open in Banach E.
+    - Pointwise Fréchet differentiability in v.
+    - Continuity of the derivative in v.
+    - An integrable uniform derivative envelope g.
+    implicit:
+    - The derivative field is sufficiently measurable for the integral; this should
+      be stated explicitly in Lean.
+  quantifier_order:
+  - For every v∈V and h∈E, the derivative formula holds.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Bochner/scalar dominated convergence for difference quotients of a parameterised
+      integral; likely a reusable analysis lemma.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - type: measurability
+    page: 569
+    detail: The printed assumptions do not separately state joint/strong measurability
+      of (v,s)↦D₁f(v,s)(h); formalisation must derive it or add it as a flagged hypothesis
+      rather than silently assuming it.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.prop.7.2.4
+- id: ex7.2.5
+  kind: exercise
+  book:
+    number: 7.2.5
+    pages:
+    - 569
+    section: '7.2'
+    equations: []
+  title: Uniqueness of the Sobolev-ball MLE
+  statement: 'Prove that the MLE p̂ₙ over the Sobolev ball in (7.54) is unique. Use
+
+    concavity of ℓₙ on the convex model, Proposition 7.2.9 showing every
+
+    maximiser lies on the Hᵗ sphere of radius D, and strict convexity of the
+
+    Hilbert norm to show the convex set of maximisers is a singleton.'
+  hypotheses:
+    explicit:
+    - The Sobolev density model and MLE of (7.54).
+    - The boundary conclusion of Proposition 7.2.9.
+    implicit:
+    - A strictly convex norm has no nontrivial line segment in its sphere.
+  quantifier_order:
+  - For each sample for which the boundary result applies, the maximiser is unique.
+  constants:
+  - Sobolev radius D.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    - ch7.prop.7.2.9
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Strict convexity of a Hilbert norm combined with concavity of an extended-real
+      objective.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - establishes required reusable lemma
+  used_by:
+  - ch7.prop.7.2.8
+  - ch7.thm.7.2.14
+- id: ex7.2.6
+  kind: exercise
+  book:
+    number: 7.2.6
+    pages:
+    - 569
+    - 570
+    section: '7.2'
+    equations: []
+  title: Rates for the finite-dimensional Sobolev sieve MLE
+  statement: "Prove Proposition 7.2.11 by combining Theorem 7.2.10 with the sieve\
+    \ theorem.\nFor the approximation choose\n  pₙ* = π_{V_{jₙ}}(p₀) / ||π_{V_{jₙ}}(p₀)||₁,\n\
+    prove pₙ*∈P∩V_{jₙ} for large n, and establish\n  h(pₙ*,p₀)=O(||pₙ*-p₀||₂)=O(2^{-jₙt})=O(n^{-t/(2t+1)})."
+  hypotheses:
+    explicit:
+    - The hypotheses of Proposition 7.2.11.
+    - The wavelet approximation and positivity conditions used in the hint.
+    implicit:
+    - '||π_{V_j}p₀-p₀||∞→0 ensures eventual positivity and model membership.'
+  quantifier_order:
+  - For the prescribed resolution jₙ and n sufficiently large.
+  constants:
+  - Implicit approximation constants depend on the Sobolev ball parameters and lower
+    bound for p₀.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.2.3
+    - ch7.thm.7.2.10
+    - ch7.def.sobolevSieveMLE
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Wavelet projection approximation, L¹ normalisation, positivity by uniform
+      convergence, and transfer to Hellinger distance.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.prop.7.2.11
+- id: ex7.2.7
+  kind: exercise
+  book:
+    number: 7.2.7
+    pages:
+    - 570
+    section: '7.2'
+    equations: []
+  title: Grenander MLE as the derivative of the least concave majorant
+  statement: 'Prove that the monotone-density MLE p̂ₙ in (7.70) is the left derivative
+
+    of the least concave majorant F̂ₙ of the empirical cdf Fₙ. Deduce that p̂ₙ
+
+    is left-continuous, piecewise constant, has jumps only at observation
+
+    points, is zero on (X_(n),1], and is unique.'
+  hypotheses:
+    explicit:
+    - The monotone density model (7.70).
+    - The empirical cdf Fₙ and its least concave majorant.
+    implicit:
+    - Ties in the observations require grouping; the printed description uses strict
+      order statistics.
+  quantifier_order:
+  - For every finite sample, modulo the standard tied-observation convention.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.monotoneDensityMLE
+    - ch7.prop.klIdentifiability
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Finite-dimensional reduction of monotone step densities plus convex/concave-envelope
+      theory and KL strictness.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - type: generality
+    page: 570
+    detail: The strict order-statistic notation suppresses ties; formalisation should
+      state the grouped version or explicitly assume a continuous sampling law.
+  selection_reasons:
+  - completes proof omitted from main text
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.example.grenanderCharacterisation
+  - ch7.lemma.7.2.16
+- id: ex7.2.8
+  kind: exercise
+  book:
+    number: 7.2.8
+    pages:
+    - 570
+    section: '7.2'
+    equations: []
+  title: Order-statistic densities and exponential spacings
+  statement: "For i.i.d. X₁,…,Xₙ with cdf F and density f on [0,1], derive the joint\n\
+    density n!∏ᵢf(xᵢ) on x₁<⋯<xₙ and the beta-form marginal density of X_(i).\nIf\
+    \ inf f≥ζ and aₙ↓0 with n aₙ→∞, prove\n  P(1-X_(n)>aₙ) ≤ (1-c aₙ)^n → 0\nfor c=c(ζ).\
+    \ For a uniform sample prove the exponential-spacing\nrepresentation (U_(i)) ≡d\
+    \ (Z_i/Z_{n+1}), where Z_i are partial sums of\nindependent Exp(1) variables."
+  hypotheses:
+    explicit:
+    - i.i.d. sample with density f on [0,1].
+    - For the tail bound, inf f≥ζ>0.
+    - aₙ→0 and n aₙ→∞.
+    implicit:
+    - The exponential representation uses Z_i=E₁+⋯+E_i.
+  quantifier_order:
+  - For every n and order i; then asymptotically for the sequence aₙ.
+  constants:
+  - c depends only on ζ.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Joint-density calculation on the ordered simplex, beta marginals, and
+      distributional identity for normalised exponential spacings.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.lemma.7.2.16
+  - ex7.2.9
+- id: ex7.2.9
+  kind: exercise
+  book:
+    number: 7.2.9
+    pages:
+    - 570
+    section: '7.2'
+    equations: []
+  title: Exact boundary-crossing probability for a uniform empirical cdf
+  statement: "For the empirical cdf Fₙ^U of a U(0,1) sample and every M≥1, prove\n\
+    \  P(Fₙ^U(t)≤M t for all t∈[0,1]) = 1-1/M."
+  hypotheses:
+    explicit:
+    - U₁,…,Uₙ are i.i.d. uniform on [0,1].
+    - M≥1.
+    implicit:
+    - The event can be expressed through the order statistics U_(i)≥i/(nM).
+  quantifier_order:
+  - For every n∈ℕ and every M≥1.
+  constants:
+  - Exact value 1-1/M.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ex7.2.8
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Integrate the uniform order-statistic density over a nested simplex; alternatively
+      use exponential spacings.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited by later result
+  - establishes required reusable lemma
+  used_by:
+  - ch7.lemma.7.2.16
+- id: ex7.2.10
+  kind: exercise
+  book:
+    number: 7.2.10
+    pages:
+    - 570
+    section: '7.2'
+    equations: []
+  title: Grenander cdf at a jump point
+  statement: "If a bounded nonincreasing density p₀ has a jump discontinuity at\n\
+    x₀∈(0,1), prove for the Grenander cdf F̂ₙ and empirical cdf Fₙ that\n  F̂ₙ(x₀)-Fₙ(x₀)=o_{P₀}(n^{-1/2}).\n\
+    Use the indicator direction h=1_[0,x₀], interpreted distributionally, and\nthe\
+    \ argument of Theorem 7.2.20."
+  hypotheses:
+    explicit:
+    - p₀ bounded and nonincreasing.
+    - x₀ is an interior jump point.
+    implicit:
+    - The distributional derivative of the indicator is a Dirac mass and preserves
+      admissibility for a suitably signed small perturbation.
+  quantifier_order:
+  - As n→∞ at the fixed jump point x₀.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.lemma.7.2.16
+    - ch7.thm.7.2.20
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A bounded-variation/distributional perturbation version of the monotone
+      score argument.
+    blockers: []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - establishes required reusable lemma
+  used_by: []
