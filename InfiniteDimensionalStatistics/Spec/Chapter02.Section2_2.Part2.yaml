@@ -1,0 +1,444 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.2'
+fragment_part: 2
+inventory:
+- id: definition-2-2-5b
+  kind: definition
+  book:
+    number: 2.2.5b
+    pages:
+    - 32
+    section: '2.2'
+    equations: []
+  title: Median
+  statement: For measurable f under γ, M_f:=inf{t∈ℝ:γ(f≤t)>1/2}.
+  hypotheses:
+    explicit:
+    - f measurable.
+    - γ the canonical product Gaussian measure.
+    implicit:
+    - This is the lower median convention with strict >1/2.
+  quantifier_order:
+  - Infimum in ℝ∪{±∞}; finiteness follows in applications.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-2-6
+    later_book_uses:
+    - theorem-2-2-6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: An extended-real quantile followed by a finiteness lemma, or a real `sInf` with nonempty/bounded hypotheses.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-2-6
+  kind: theorem
+  book:
+    number: 2.2.6
+    pages:
+    - 33
+    section: '2.2'
+    equations: []
+  title: Gaussian concentration for ℓ²-Lipschitz functions
+  statement: 'If f is ℓ²-Lipschitz with median M_f, then for ε>0: γ(f≥M_f+ε)≤1−Φ(ε/‖f‖_{Lip₂}) and γ(f≤M_f−ε)≤1−Φ(ε/‖f‖_{Lip₂});
+    hence γ(|f−M_f|≥ε)≤2(1−Φ(ε/L))≤exp(−ε²/(2L²)).'
+  hypotheses:
+    explicit:
+    - f measurable and ℓ²-Lipschitz.
+    - 0<L=‖f‖_{Lip₂}<∞; constant-function case handled separately.
+    - ε>0.
+    implicit: []
+  quantifier_order:
+  - Exact Gaussian tail and exponential constants.
+  constants:
+  - Exact Gaussian tail and exponential constants.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-2-5a
+    - definition-2-2-5b
+    - exercise-2-2-8
+    - theorem-2-2-4
+    chapter_local_dependents:
+    - exercise-2-2-11
+    - theorem-2-2-7
+    later_book_uses:
+    - theorem-2-2-7
+    - exercise-2-2-11
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-2-8
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Apply product isoperimetry to sublevel/superlevel sets and use the directional Lipschitz inclusion.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - In the printed proof, the lower-tail step appears to reuse the upper sublevel set without changing sign; formalisation
+    should preserve the theorem but flag the proof's set-sign bookkeeping for review.
+- id: theorem-2-2-7
+  kind: theorem
+  book:
+    number: 2.2.7
+    pages:
+    - 34
+    section: '2.2'
+    equations: []
+  title: Borell–Sudakov–Tsirelson concentration about a median
+  statement: Let X be centred separable Gaussian with Pr(‖X‖∞<∞)>0, M a median of ‖X‖∞, and σ²=sup_t EX(t)². For u>0, both
+    tails around M are ≤1−Φ(u/σ), and Pr(|‖X‖∞−M|>u)≤2(1−Φ(u/σ))≤exp(−u²/(2σ²)).
+  hypotheses:
+    explicit:
+    - X centred, separable, and bounded with positive probability.
+    - M finite median.
+    - σ² finite (deduced from Theorem 2.1.20).
+    - u>0.
+    implicit: []
+  quantifier_order:
+  - No hidden dimension factor; exact σ and 1/2 exponent.
+  constants:
+  - No hidden dimension factor; exact σ and 1/2 exponent.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-2-8
+    - theorem-2-1-20
+    - theorem-2-2-6
+    chapter_local_dependents:
+    - corollary-2-19
+    - corollary-2-2-8
+    - corollary-2-2-9
+    - corollary-2-20
+    - corollary-2-7-6
+    - exercise-2-2-12
+    - exercise-2-2-9
+    - exercise-2-3-9
+    later_book_uses:
+    - corollary-2-19
+    - corollary-2-20
+    - corollary-2-2-8
+    - corollary-2-2-9
+    - corollary-2-7-6
+    - exercise-2-2-9
+    - exercise-2-2-12
+    - exercise-2-3-9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Realise the countable process as a Lipschitz functional of a Gaussian coordinate sequence, then apply Theorem
+      2.2.6.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-19
+  kind: corollary
+  book:
+    number: '2.19'
+    pages:
+    - 34
+    section: '2.2'
+    equations: []
+  title: Mean–median bound
+  statement: '|E‖X‖∞−M|≤√(2/π)σ (with the direction/absolute-value convention exactly as displayed).'
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 2.2.7.
+    implicit: []
+  quantifier_order:
+  - √(2/π).
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-2-7
+    chapter_local_dependents:
+    - corollary-2-20
+    - exercise-2-3-9
+    later_book_uses:
+    - corollary-2-20
+    - exercise-2-3-9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Integrate the one-sided Gaussian tail or compare with `E|g|`.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - Verify whether the book states `|E‖X‖−M|` or two separate inequalities; OCR compresses the display.
+- id: corollary-2-20
+  kind: corollary
+  book:
+    number: '2.20'
+    pages:
+    - 34
+    section: '2.2'
+    equations: []
+  title: BST concentration about the expectation
+  statement: The median-centred BST bound implies the displayed expectation-centred upper/lower tail estimate (2.20), with
+    the book's explicit shift by √(2/π)σ.
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 2.2.7.
+    - u in the range required by the displayed formula.
+    implicit: []
+  quantifier_order:
+  - Shift √(2/π)σ and Gaussian variance proxy σ².
+  constants:
+  - Shift √(2/π)σ and Gaussian variance proxy σ².
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-19
+    - theorem-2-2-7
+    chapter_local_dependents:
+    - corollary-2-7-6
+    later_book_uses:
+    - corollary-2-7-6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Substitute the mean–median estimate into the median tail inequalities.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - The exact one-sided display must be checked visually because OCR does not preserve its brackets reliably.
+- id: corollary-2-2-8
+  kind: corollary
+  book:
+    number: 2.2.8
+    pages:
+    - 34
+    section: '2.2'
+    equations: []
+  title: Moments of the supremum
+  statement: Under Theorem 2.2.7, for every p≥1, (E‖X‖∞^p)^{1/p}≤2E‖X‖∞+(E|g|^p)^{1/p}σ≤K√p·E‖X‖∞ for a universal K.
+  hypotheses:
+    explicit:
+    - p≥1.
+    - g standard normal.
+    - X as in Theorem 2.2.7.
+    implicit: []
+  quantifier_order:
+  - Universal K independent of p and X.
+  constants:
+  - Universal K independent of p and X.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-1-2
+    - theorem-2-2-7
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Integrate the BST tail; use Gaussian moment bounds and lower comparison of σ by `E‖X‖∞`.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-2-9
+  kind: corollary
+  book:
+    number: 2.2.9
+    pages:
+    - 35
+    section: '2.2'
+    equations: []
+  title: Exact logarithmic tail and square-exponential threshold
+  statement: For X as in Theorem 2.2.7, lim_{u→∞}u^{-2}log Pr(‖X‖∞>u)=−1/(2σ²), and E exp(λ‖X‖∞²)<∞ iff λ<1/(2σ²).
+  hypotheses:
+    explicit:
+    - σ>0 for the displayed reciprocal; the degenerate σ=0 case is separate.
+    - λ∈ℝ.
+    implicit: []
+  quantifier_order:
+  - Sharp threshold 1/(2σ²).
+  constants:
+  - Sharp threshold 1/(2σ²).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-2-7
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Upper bound from BST; lower bound from any coordinate whose variance approaches σ²; tail-integral criterion for
+      exponential square moments.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
