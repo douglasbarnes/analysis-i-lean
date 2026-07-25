@@ -1,5 +1,6 @@
 import AdvancedProbability.DiscreteMartingales
 import Mathlib.Probability.Process.Filtration
+import Mathlib.MeasureTheory.Measure.NullMeasurable
 
 noncomputable section
 
@@ -110,10 +111,20 @@ instance rightContinuousFiltration_isRightContinuous {Ω : Type u} (ℱ : Contin
   unfold rightContinuousFiltration
   infer_instance
 
-/-- Source 67: completeness and right-continuity (the usual conditions). -/
-structure UsualConditions {Ω : Type u} (ℱ : ContinuousFiltration Ω) where
-  complete : Prop
-  rightContinuous : Prop
+/-- Source 67: a filtration satisfies the usual conditions when the underlying probability measure is
+complete and the filtration is right-continuous. -/
+structure UsualConditions {Ω : Type u} {mΩ : MeasurableSpace Ω}
+    (P : @Measure Ω mΩ) (ℱ : Filtration ℝ≥0 mΩ) : Prop where
+  complete : P.IsComplete
+  rightContinuous : Filtration.IsRightContinuous ℱ
+
+/-- The canonical right continuation satisfies the right-continuity part of the usual conditions;
+therefore it satisfies the usual conditions whenever the ambient measure is complete. -/
+theorem rightContinuousFiltration_usualConditions {Ω : Type u}
+    (ℱ : ContinuousFiltration Ω) (P : @Measure Ω (⊤ : MeasurableSpace Ω)) [P.IsComplete] :
+    UsualConditions P (rightContinuousFiltration ℱ) where
+  complete := inferInstance
+  rightContinuous := inferInstance
 
 /-- Source 68: open-set hitting times are stopping times for the right-continuous filtration. -/
 structure OpenSetHittingTime (isOpen cadlag stopping : Prop) where
