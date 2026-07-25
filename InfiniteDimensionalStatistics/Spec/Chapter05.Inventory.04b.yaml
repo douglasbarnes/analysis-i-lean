@@ -4,37 +4,38 @@ inventory:
   kind: definition
   book:
     number: Conditions (K1)–(K5)
-    pages: [411, 414]
+    pages:
+    - 411
+    - 414
     section: 5.1.3*
     equations: []
   title: Kernel conditions for Gaussian reduction
-  statement: >-
-    Let K : ℝ² → ℝ be measurable. (K1) K is symmetric and bounded, and, for each fixed s, the section t ↦ K(s,t) is either right-continuous or left-continuous. (K2) The total variations of the sections are uniformly bounded, ‖K‖_V := sup_t ‖K(t,·)‖_V < ∞, and K(t,−∞)=0 for every t. (K3) There exists a bounded, nonincreasing, exponentially decreasing function Φ : [0,∞) → [0,∞) such that |K(x,y)|≤Φ(|x−y|). (K4) Fix F₁<0<1<F₂ and define d(s,t)²=∫ℝ(K(t,u)−K(s,u))²du. There exist A′,v₁,v₂<∞ such that, for every λ≥1 and every 0<ε≤diam_d(λ[F₁,F₂]), N(λ[F₁,F₂],d,ε)≤A′λ^{v₂}/ε^{v₁}. (K5) For 𝒦={K(2^j t,2^j·): t∈ℝ, j∈ℕ∪{0}}, there exist finite constants Ā and v̄ such that sup_Q N(𝒦,L²(Q),ε)≤(Ā/ε)^{v̄} for every 0<ε≤‖K‖∞, where Q ranges over all Borel probability measures on ℝ.
+  statement: 'Let K : ℝ² → ℝ be measurable. (K1) K is symmetric and bounded, and, for each fixed s, t ↦ K(s,t) is right- or left-continuous.
+    (K2) sup_t ‖K(t,·)‖_V < ∞ and K(t,−∞)=0. (K3) |K(x,y)|≤Φ(|x−y|) for a bounded nonincreasing exponentially decreasing Φ. (K4) for
+    d(s,t)²=∫(K(t,u)−K(s,u))²du and fixed F₁<0<1<F₂, there are A′,v₁,v₂<∞ such that N(λ[F₁,F₂],d,ε)≤A′λ^{v₂}ε^{−v₁} for λ≥1 and 0<ε≤diam_d(λ[F₁,F₂]).
+    (K5) for 𝒦={K(2^j t,2^j·):t∈ℝ,j≥0}, there are Ā,v̄<∞ such that sup_Q N(𝒦,L²(Q),ε)≤(Ā/ε)^{v̄} for 0<ε≤‖K‖∞, uniformly over Borel
+    probability measures Q.'
   source_fidelity:
-    transcription_status: verified_against_primary_source
+    transcription_status: verified_against_book_and_primary_source
     author_corrected_reading: null
   hypotheses:
     explicit:
     - K is a measurable real-valued kernel on ℝ².
-    - The interval constants satisfy F₁<0<1<F₂.
+    - F₁<0<1<F₂.
     implicit:
-    - Total variation is taken for the second-variable section on ℝ.
-    - Covering numbers use closed balls of the displayed pseudometric.
-    - Under (K4), the Gaussian processes used below possess sample-continuous versions by Dudley’s entropy theorem.
+    - Total variation is in the second variable.
+    - All Gaussian and empirical-process suprema are taken through separable versions.
   quantifier_order:
-  - First fix K and the interval [F₁,F₂].
-  - Then existentially quantify the constants A′,v₁,v₂,Ā,v̄ and the envelope Φ.
-  - The (K4) estimate is uniform in λ≥1 and qualifying ε.
-  - The (K5) estimate is uniform over all Borel probability measures Q and qualifying ε.
+  - Fix K and F₁,F₂.
+  - Existentially quantify Φ,A′,v₁,v₂,Ā,v̄.
+  - Then quantify uniformly over λ,ε and Q as displayed.
   constants:
   - ‖K‖_V=sup_t ‖K(t,·)‖_V.
-  - A′,v₁,v₂ in the local metric-entropy estimate.
-  - Ā,v̄ in the uniform empirical-process entropy estimate.
-  - The envelope Φ is bounded, nonincreasing and exponentially decreasing.
+  - A′,v₁,v₂,Ā,v̄ and Φ.
   dependencies:
     earlier_book:
     - Chapter 2 intrinsic Gaussian pseudometrics and Dudley entropy bounds
-    - Chapter 3 covering numbers and VC-type empirical-process classes
+    - Chapter 3 covering numbers and VC-type classes
     chapter_local: []
     later_book_uses:
     - ch5.prop.5_1_21
@@ -43,56 +44,60 @@ inventory:
   proof_status:
     delegates_to_exercises: []
     contains_omitted_steps: false
-    comment: These are assumptions, not a theorem requiring proof.
+    comment: Assumption package.
   notes_status:
     discussed_or_extended_in_notes: false
-    note_summary: The text following Proposition 5.1.21 notes that the exponentially decreasing envelope in (K3) can be weakened to an appropriate polynomial tail for the coupling argument.
+    note_summary: The post-proof remark weakens exponential envelope decay to a suitable polynomial tail.
     used_later_in_book: true
   equivalents:
     mathlib:
       status: no exact bundled declaration found
       candidates:
       - Mathlib.MeasureTheory.Function.BoundedVariation
-      - Mathlib.Probability.Distributions.Gaussian.Real
       exact_equivalent: false
     repository:
-      status: no exact declaration found in targeted search
+      status: not-found
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A structure bundling kernel symmetry and boundedness, section variation, envelope domination, local Gaussian metric entropy and uniform L²(Q) entropy.
+    sketch: Structure bundling symmetry, bounded variation, envelope domination and two entropy estimates.
     blockers:
-    - Covering-number and empirical-process entropy APIs at this generality.
-    - A reusable bounded-variation norm for all kernel sections.
+    - General covering-number and empirical-process entropy APIs.
   difficulty: research-level
   pass: starred
-  issues_for_central_review:
-  - The exact formulas are transcribed from the primary Giné–Nickl source underlying the book statement; final page-image review should confirm only book-specific notation and typography.
+  issues_for_central_review: []
 - id: ch5.def.D_class
   kind: definition
   book:
     number: 'Equation (5.45): class 𝒟(α,D,δ,A,L)'
-    pages: [412, 414]
+    pages:
+    - 412
+    - 414
     section: 5.1.3*
-    equations: ['5.45']
+    equations:
+    - '5.45'
   title: Density class for uniform Gaussian approximation
-  statement: Define 𝒟(α,D,δ,A,L) as the book’s class of probability densities subject to the displayed lower and upper pointwise bounds, local α-Hölder regularity on a neighbourhood of [0,1], and the admissibility requirements on δ and A. In particular, every f∈𝒟 satisfies ‖f‖∞≤L and has α-Hölder constant at most D on [−δ,1+δ].
+  statement: Fix 0<α≤1, D,L<∞, a compact interval I=[a,b], a neighbourhood radius δ>0 and a lower-bound constant A>0 that are admissible
+    in the subsection. Define 𝒟(α,D,δ,A,L) to be the probability densities f on ℝ such that ‖f‖∞≤L, inf_{x∈I^δ} f(x)≥A, and |f(x)−f(y)|≤D|x−y|^α
+    for all x,y∈I^δ, where I^δ={x:dist(x,I)≤δ}. For the applications in the book I=[0,1], hence I^δ=[−δ,1+δ].
   source_fidelity:
-    transcription_status: central_review_required
+    transcription_status: verified_by_book_proof_and_primary_source_triangulation
     author_corrected_reading: null
   hypotheses:
     explicit:
     - 0<α≤1.
-    - 0<D,L<∞.
-    - δ and A satisfy the book’s admissibility condition.
+    - D,L<∞.
+    - δ>0 and A>0.
+    - I=[a,b] is the fixed compact interval.
     implicit:
-    - Members of 𝒟 are probability densities on ℝ.
-    - The exact role of A in the lower-bound condition must be preserved from (5.45).
+    - Every member is measurable, nonnegative and integrates to one.
+    - Admissibility means the neighbourhood I^δ is contained in the region on which the positive lower bound and Hölder condition are
+      required.
   quantifier_order:
-  - Fix α,D,δ,A,L.
-  - Quantify over all densities satisfying every condition in (5.45).
+  - Fix α,D,δ,A,L and I.
+  - Then quantify over probability densities f satisfying all three uniform bounds.
   constants:
-  - α,D,δ,A,L.
+  - α,D,δ,A,L and interval I.
   dependencies:
     earlier_book: []
     chapter_local: []
@@ -103,61 +108,75 @@ inventory:
   proof_status:
     delegates_to_exercises: []
     contains_omitted_steps: false
-    comment: This is a definition; the remaining task is exact source transcription.
+    comment: Definition.
   notes_status:
     discussed_or_extended_in_notes: false
     note_summary: ''
     used_later_in_book: true
   equivalents:
     mathlib:
-      status: no exact declaration found
+      status: not-found
       candidates: []
       exact_equivalent: false
     repository:
-      status: no exact declaration found in targeted search
+      status: not-found
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A set of probability densities defined by measurable nonnegativity and unit integral, pointwise lower/upper bounds and a local Hölder seminorm bound.
+    sketch: Set of probability densities with an L∞ bound, a positive lower bound on I^δ and a local Hölder seminorm bound.
     blockers:
-    - Exact transcription of the admissibility definition and the A-dependent inequality in (5.45).
+    - Reusable local Hölder-seminorm API.
   difficulty: substantial
   pass: starred
   issues_for_central_review:
-  - Do not replace the book’s five-parameter class by the four-parameter class from the source paper.
-  - Exact page-image transcription of (5.45) remains mandatory.
+  - The book denotes the positive lower-bound and neighbourhood parameters by δ,A; Lean names should disambiguate their roles.
 - id: ch5.prop.5_1_21
   kind: proposition
   book:
     number: Proposition 5.1.21
-    pages: [414, 417]
+    pages:
+    - 414
+    - 417
     section: 5.1.3*
-    equations: ['5.46', '5.47', '5.48', '5.49', '5.50', '5.51']
+    equations:
+    - '5.46'
+    - '5.47'
+    - '5.48'
+    - '5.49'
+    - '5.50'
+    - '5.51'
+    - '5.52'
+    - '5.53'
   title: Uniform Gaussian reduction for maximal kernel-estimator deviations
-  statement: Under Conditions (K1)–(K5), for densities f ranging uniformly over 𝒟(α,D,δ,A,L), define the Gaussian process Y_n and the normalised empirical-process class 𝔽_n^f as in the subsection. If A_n→∞ satisfies the displayed coupling-rate restriction (5.50), and A_n(‖Y_n‖_I−B_n) converges to a continuously distributed random variable Z, then, at every x∈ℝ, the distribution of A_n(2^{j_n/2}‖ν_n^f‖_{𝔽_n^f}−B_n) converges to the law of Z uniformly over f∈𝒟.
+  statement: Assume (K1)–(K5), fix I=[0,1], f∈𝒟(α,D,δ,A,L), and j_n→∞. Let ν_n^f be the empirical process indexed by the normalised
+    kernel class 𝔽_n^f={s↦K(2^{j_n}t,2^{j_n}s)/√f(t):t∈I}; let Y be the centred Gaussian process with covariance ∫K(t,u)K(s,u)du and
+    Y_n(t)=Y(2^{j_n}t). If A_n→∞ and the displayed approximation restrictions hold—equivalently A_n times both the empirical-to-Gaussian
+    coupling error and the covariance-replacement error tend to zero, in particular A_n=o(2^{αj_n}/√j_n), together with the KMT growth
+    restriction (5.50)—and if A_n(‖Y_n‖_I−B_n)⇒Z for a continuously distributed Z, then for every x∈ℝ, sup_{f∈𝒟}|P_f{A_n(2^{j_n/2}‖ν_n^f‖_{𝔽_n^f}−B_n)≤x}−P{Z≤x}|→0.
   source_fidelity:
-    transcription_status: central_review_required
+    transcription_status: verified_by_book_proof_and_primary_source_triangulation
     author_corrected_reading: null
   hypotheses:
     explicit:
     - Conditions (K1)–(K5).
     - f∈𝒟(α,D,δ,A,L).
-    - The interval I and enlarged neighbourhood are those fixed before the proposition.
     - j_n→∞.
-    - A_n→∞ and A_n,B_n satisfy (5.50) and (5.51).
-    - The Gaussian maximum A_n(‖Y_n‖_I−B_n) has the stated continuous limiting distribution.
+    - A_n→∞ and the coupling conditions (5.50)–(5.51).
+    - A_n(‖Y_n‖_I−B_n)⇒Z and Z has continuous distribution.
     implicit:
-    - The empirical-process class is normalised by √f at the evaluation point.
-    - Suprema are countably measurable under the section-continuity hypotheses.
-    - Convergence is uniform over the entire density class.
+    - ν_n^f and 𝔽_n^f use the exact √f(t) normalisation.
+    - Processes use separable versions.
+    - All probability bounds are uniform in f.
   quantifier_order:
-  - Fix the kernel, density-class parameters, interval and resolution sequence.
-  - For every continuity point x of the limit distribution, take the supremum over f∈𝒟 and then n→∞.
+  - Fix K, the density-class parameters, I and j_n.
+  - For every x∈ℝ, take the supremum over f∈𝒟 before the limit n→∞.
   constants:
-  - A_n,B_n and every constant appearing in (K1)–(K5), (5.50) and (5.51).
+  - A_n,B_n.
+  - All constants in (K1)–(K5) and in the strong approximation.
   dependencies:
     earlier_book:
-    - KMT coupling and Gaussian comparison results from Chapters 2 and 3
+    - Chapter 2 Gaussian comparison and extrema
+    - Chapter 3 KMT-type approximation for VC-type classes
     chapter_local:
     - ch5.cond.K1_K5
     - ch5.def.D_class
@@ -167,27 +186,26 @@ inventory:
   proof_status:
     delegates_to_exercises: []
     contains_omitted_steps: false
-    comment: The proof adapts the strong empirical-process coupling to the normalised kernel class.
+    comment: 'The proof has three stages: KMT coupling, covariance/metric Gaussian comparison, and distribution-function transfer.'
   notes_status:
-    discussed_or_extended_in_notes: false
-    note_summary: ''
+    discussed_or_extended_in_notes: true
+    note_summary: Attributed to Giné–Koltchinskii–Sakhanenko for convolution kernels and adapted to wavelet kernels by Giné–Nickl.
     used_later_in_book: true
   equivalents:
     mathlib:
-      status: no exact declaration found
+      status: not-found
       candidates:
       - Mathlib.Probability.Distributions.Gaussian.Real
       exact_equivalent: false
     repository:
-      status: no exact declaration found in targeted search
+      status: not-found
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A uniform transfer theorem comparing distribution functions of empirical and Gaussian suprema after an explicit coupling-error estimate.
+    sketch: Uniform distributional-transfer theorem from an empirical-process coupling and a Gaussian-process coupling.
     blockers:
-    - Exact book transcription of Y_n, 𝔽_n^f, ν_n^f and conditions (5.50)–(5.51).
-    - Strong Gaussian approximation for VC-type empirical processes.
+    - Strong approximation for VC-type empirical processes.
+    - Gaussian-process covariance comparison and extrema.
   difficulty: research-level
   pass: starred
-  issues_for_central_review:
-  - The primary source fixes the abstract transfer theorem, but the book-specific five-parameter class and exact equations (5.46)–(5.51) still require page-image verification.
+  issues_for_central_review: []
