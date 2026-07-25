@@ -1,0 +1,242 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.3.4
+fragment_part: 3
+inventory:
+- id: ch7.prop.posteriorContinuousMapping
+  kind: proposition
+  book:
+    number: (7.136)
+    label: (7.136)
+    pages:
+    - 600
+    - 601
+    section: 7.3.4
+    equations:
+    - (7.136)
+    section_title: Nonparametric Bernstein–von Mises Theorems
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Continuous mapping for shifted posteriors
+  statement: "If F is continuous from H(δ) or M₀(w) to a metric space S, then under the\ncorresponding BvM theorem,\n  β_S((Π(·|Y)∘τ_Y^{-1})∘F^{-1}, N∘F^{-1})→0\nin P^Y_{f₀}-probability."
+  hypotheses:
+    explicit:
+    - F continuous.
+    - Corresponding BvM hypotheses.
+    - δ>1/2 in the H(δ) case.
+    implicit:
+    - Pushforwards are Borel probability measures.
+  quantifier_order:
+  - For every continuous F.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.19
+    - ch7.thm.7.3.20
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial_equivalent
+      candidates:
+      - TendstoInDistribution.continuous_comp
+      - ProbabilityMeasure.map continuous mapping
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Continuity of pushforward on the weak topology, lifted to convergence in probability of random measures.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 601: The probability law in (7.136) is P^Y_{f₀}.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_posteriorContinuousMapping
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/BernsteinVonMises.lean
+- id: ch7.thm.7.3.23
+  kind: theorem
+  book:
+    number: Theorem 7.3.23 (officially corrected)
+    label: Theorem 7.3.23 (officially corrected)
+    pages:
+    - 601
+    - 602
+    section: 7.3.4
+    equations: []
+    section_title: Nonparametric Bernstein–von Mises Theorems
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Frequentist coverage of Bayesian credible balls
+  statement: "Let S=H(δ) with δ>1/2, or S=M(w) with admissible w. Assume the corresponding\nBvM theorem. For 0<α<1 choose Rₙ so that\n  Cₙ={f:||f-Tₙ||_S≤Rₙ/√n},  Π(Cₙ|Y)=1-α,\nwhere Tₙ=Y or the posterior mean f̄ₙ. Then\n  P^Y_{f₀}(f₀∈Cₙ)→1-α,\n  Rₙ→Φ^{-1}(1-α) in P^Y_{f₀}-probability,\nwhere Φ(t)=N({z:||z||_S≤t})."
+  hypotheses:
+    explicit:
+    - 0<α<1.
+    - δ>1/2 in the Sobolev case.
+    - w admissible in the multiscale case.
+    - Rₙ is a measurable posterior quantile.
+    - Tₙ is one of the two stated centres.
+    implicit:
+    - The Gaussian norm distribution Φ is continuous and strictly increasing.
+    - For posterior-mean centring, Exercise 7.3.8's `o_P(n^{-1/2})` result is used.
+  quantifier_order:
+  - For either space/centre, as n→∞.
+  constants:
+  - Limit radius is the (1-α)-quantile of the Gaussian norm.
+  dependencies:
+    earlier_book:
+    - Exercise 2.4.4
+    - Theorem 2.4.5
+    - Corollary 2.6.18
+    chapter_local:
+    - ch7.cor.7.3.22
+    - ch7.thm.7.3.19
+    - ch7.thm.7.3.20
+    - ch7.def.weightedSobolevBvMSpace
+    later_book_uses:
+    - ch7.cor.7.3.24
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.8
+    contains_omitted_steps: true
+    comment: posterior-mean centring
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Random closed balls and measurable quantiles in separable Banach spaces; prove Gaussian norm cdf continuity/strict increase, then coverage by uniform BvM.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 595: H(δ) requires δ>1/2.'
+  - '[official_erratum] p. 601: Coverage probability is under P^Y_{f₀}.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_3_23
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/BernsteinVonMises.lean
+- id: ch7.cor.7.3.24
+  kind: corollary
+  book:
+    number: Corollary 7.3.24
+    label: Corollary 7.3.24
+    pages:
+    - 602
+    section: 7.3.4
+    equations: []
+    section_title: Nonparametric Bernstein–von Mises Theorems
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Credible sets with Hölder regularity and L∞ diameter
+  statement: "In the multiscale wavelet setting, intersect/regularise the credible ball from\nTheorem 7.3.23 with a growing C^γ constraint controlled by a sequence uₙ→∞.\nThe resulting credible set retains asymptotic frequentist coverage 1-α and its\nL∞-diameter satisfies the officially corrected rate\n  |Cₙ|_∞ = O_{P^Y_{f₀}}((n/log n)^{-γ/(2γ+1)} uₙ)."
+  hypotheses:
+    explicit:
+    - The hypotheses and construction immediately preceding the corollary on p.602.
+    - f₀ has the stated C^γ regularity.
+    - uₙ→∞ at the allowed rate.
+    - Multiscale BvM/credible-ball hypotheses.
+    implicit:
+    - The exact set notation and any additional lower-growth condition on uₙ must be visually verified from the uploaded page before implementation.
+  quantifier_order:
+  - For the allowed sequence uₙ, coverage and diameter conclusions as n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.3.23
+    - ch7.prop.7.3.15
+    - ch7.cor.7.3.22
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Intersect a weak-topology credible ball with a deterministic/random Hölder ball, then use the multiscale-to-supremum interpolation inequality.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 602: The exponent in the final diameter display is negative.'
+  - '[source_legibility] p. 602: Exact construction and auxiliary conditions are hidden in a collapsed text layer; verify visually against the uploaded PDF before formalisation.'
+  verification_status: central_review_required
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_cor_7_3_24
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/BernsteinVonMises.lean
