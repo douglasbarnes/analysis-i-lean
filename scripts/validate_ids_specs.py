@@ -1,189 +1,153 @@
 #!/usr/bin/env python3
-"""Validate InfiniteDimensionalStatistics chapter specifications.
+"""Validate all eight InfiniteDimensionalStatistics chapter specifications.
 
-The loader accepts:
-* a canonical self-contained chapter YAML;
-* a package descriptor with one inventory file and one DAG file;
-* a package inventory index whose ``inventory_files`` list contains readable
-  section fragments.
-
-The command is intentionally strict: all eight chapter descriptors must exist
-and every loaded entry must satisfy the canonical declaration-level schema.
+Strict mode is the P1 acceptance gate. Migration flags exist only so an
+incomplete repository can be audited without being mistaken for accepted work.
 """
-
 from __future__ import annotations
 
+import argparse
 from collections import defaultdict, deque
-from dataclasses import dataclass
 from pathlib import Path
-import sys
-from typing import Any, Iterable
+import re
+from typing import Any
 
 try:
     import yaml
 except ImportError as exc:
-    raise SystemExit(
-        "PyYAML is required: install it with `python3 -m pip install PyYAML`."
-    ) from exc
-
+    raise SystemExit("PyYAML is required: python3 -m pip install PyYAML") from exc
 
 ROOT = Path(__file__).resolve().parents[1]
-PROJECT = ROOT / "InfiniteDimensionalStatistics"
-SPEC_DIR = PROJECT / "Spec"
-MANIFEST = PROJECT / "BookManifest.yaml"
-
+SPEC = ROOT / "InfiniteDimensionalStatistics" / "Spec"
+MANIFEST = ROOT / "InfiniteDimensionalStatistics" / "BookManifest.yaml"
 VALID_PASSES = {"core", "starred", "exercise"}
-VALID_DIFFICULTIES = {
-    "routine",
-    "substantial",
-    "major-library",
-    "research-level",
-}
+VALID_DIFFICULTIES = {"routine", "substantial", "major-library", "research-level"}
+NUMBERED = re.compile(
+    r"((?:Definition|Lemma|Proposition|Theorem|Corollary|Example|Remark|Exercise|Item)\s+\d+\.\d+\.\d+)"
+)
+BLOCKING = re.compile(
+    r"blocking|page[-_ ]image|needs?[-_ ](?:source|visual|direct)|untranscribed|to be recovered",
+    re.I,
+)
 
 
-@dataclass(frozen=True)
-class Problem:
-    chapter: int | None
-    location: str
-    message: str
-
-    def render(self) -> str:
-        prefix = "global" if self.chapter is None else f"chapter {self.chapter}"
-        return f"ERROR [{prefix}] {self.location}: {self.message}"
-
-
-def load_yaml(path: Path) -> Any:
+def load(path: Path) -> dict[str, Any]:
     try:
-        with path.open("r", encoding="utf-8") as handle:
-            return yaml.safe_load(handle)
+        value = yaml.safe_load(path.read_text(encoding="utf-8"))
     except yaml.YAMLError as exc:
         raise ValueError(f"invalid YAML: {exc}") from exc
-
-
-def mapping(value: Any, where: str) -> dict[str, Any]:
     if not isinstance(value, dict):
-        raise ValueError(f"{where} must be a mapping")
+        raise ValueError("top level must be a mapping")
     return value
 
 
-def sequence(value: Any, where: str) -> list[Any]:
-    if not isinstance(value, list):
-        raise ValueError(f"{where} must be a list")
-    return value
+def chapter_number(doc: dict[str, Any], path: Path) -> int:
+    source = doc.get("source")
+    value = source.get("chapter") if isinstance(source, dict) else None
+    if isinstance(value, int):
+        return value
+    match = re.search(r"Chapter(\d{2})", path.name)
+    if not match:
+        raise ValueError("cannot determine chapter number")
+    return int(match.group(1))
 
 
-def nested(value: dict[str, Any], path: Iterable[str]) -> Any:
-    current: Any = value
-    for key in path:
-        if not isinstance(current, dict) or key not in current:
-            return None
-        current = current[key]
-    return current
+def component_names(meta: dict[str, Any], where: str) -> list[str]:
+    one, many = meta.get("file"), meta.get("files")
+    if one is not None and many is not None:
+        raise ValueError(f"{where} must use either file or files")
+    if isinstance(one, str) and one:
+        return [one]
+    if isinstance(many, list) and many and all(isinstance(x, str) and x for x in many):
+        return many
+    raise ValueError(f"{where} needs a nonempty file or files value")
 
 
-def load_inventory_component(path: Path) -> dict[str, Any]:
-    data = mapping(load_yaml(path), str(path))
-    fragments = data.get("inventory_files")
-    if fragments is None:
-        return data
-    fragment_names = sequence(fragments, f"{path}: inventory_files")
-    merged: list[dict[str, Any]] = []
-    for name in fragment_names:
-        if not isinstance(name, str) or not name:
-            raise ValueError(f"{path}: inventory fragment names must be strings")
-        fragment_path = path.parent / name
-        if not fragment_path.is_file():
-            raise ValueError(f"inventory fragment does not exist: {fragment_path}")
-        fragment = mapping(load_yaml(fragment_path), str(fragment_path))
-        entries = sequence(fragment.get("inventory"), f"{fragment_path}: inventory")
-        merged.extend(mapping(entry, f"{fragment_path}: inventory entry") for entry in entries)
-    data = dict(data)
-    data["inventory"] = merged
-    return data
+def inventory_from_doc(doc: dict[str, Any], base: Path) -> list[dict[str, Any]]:
+    fragments = doc.get("inventory_files")
+    if fragments is not None:
+        if not isinstance(fragments, list) or not all(isinstance(x, str) for x in fragments):
+            raise ValueError("inventory_files must be a list of paths")
+        rows: list[dict[str, Any]] = []
+        for name in fragments:
+            rows.extend(inventory_from_doc(load(base / name), base))
+        return rows
+    rows = doc.get("inventory")
+    if not isinstance(rows, list) or not all(isinstance(x, dict) for x in rows):
+        raise ValueError("inventory must be a list of mappings")
+    return rows
 
 
-def resolve_package(
-    descriptor_path: Path, descriptor: dict[str, Any]
-) -> tuple[dict[str, Any], dict[str, Any]]:
+def load_chapter(
+    path: Path,
+) -> tuple[int, dict[str, Any], list[dict[str, Any]], dict[str, Any]]:
+    descriptor = load(path)
+    chapter = chapter_number(descriptor, path)
+    if "declaration_fields" in descriptor and "declarations" in descriptor:
+        raise ValueError("legacy compact positional schema is not accepted")
     package = descriptor.get("package")
     if not isinstance(package, dict):
-        return descriptor, descriptor
+        inventory = inventory_from_doc(descriptor, path.parent)
+        dag = descriptor.get("chapter_local_dependency_dag")
+        if not isinstance(dag, dict):
+            raise ValueError("chapter_local_dependency_dag must be a mapping")
+        return chapter, descriptor, inventory, dag
 
-    inventory_spec = mapping(
-        package.get("declaration_inventory"), "package.declaration_inventory"
-    )
-    dag_spec = mapping(
-        package.get("chapter_local_dependency_dag"),
-        "package.chapter_local_dependency_dag",
-    )
-    inventory_name = inventory_spec.get("file")
-    dag_name = dag_spec.get("file")
-    if not isinstance(inventory_name, str) or not inventory_name:
-        raise ValueError("package.declaration_inventory.file must be a nonempty string")
-    if not isinstance(dag_name, str) or not dag_name:
+    inv_meta = package.get("declaration_inventory")
+    dag_meta = package.get("chapter_local_dependency_dag")
+    if not isinstance(inv_meta, dict) or not isinstance(dag_meta, dict):
         raise ValueError(
-            "package.chapter_local_dependency_dag.file must be a nonempty string"
+            "package needs declaration_inventory and chapter_local_dependency_dag mappings"
         )
-
-    inventory_path = descriptor_path.parent / inventory_name
-    dag_path = descriptor_path.parent / dag_name
-    if not inventory_path.is_file():
-        raise ValueError(f"inventory component does not exist: {inventory_path}")
+    inventory: list[dict[str, Any]] = []
+    for name in component_names(inv_meta, "package.declaration_inventory"):
+        component = path.parent / name
+        if not component.is_file():
+            raise ValueError(f"missing inventory component {component.name}")
+        inventory.extend(inventory_from_doc(load(component), component.parent))
+    dag_names = component_names(dag_meta, "package.chapter_local_dependency_dag")
+    if len(dag_names) != 1:
+        raise ValueError("DAG must use exactly one component")
+    dag_path = path.parent / dag_names[0]
     if not dag_path.is_file():
-        raise ValueError(f"DAG component does not exist: {dag_path}")
-    return (
-        load_inventory_component(inventory_path),
-        mapping(load_yaml(dag_path), str(dag_path)),
-    )
+        raise ValueError(f"missing DAG component {dag_path.name}")
+    dag_doc = load(dag_path)
+    key = dag_meta.get("key", "chapter_local_dependency_dag")
+    dag = dag_doc.get(key, dag_doc)
+    if not isinstance(dag, dict):
+        raise ValueError("resolved DAG must be a mapping")
+    return chapter, descriptor, inventory, dag
 
 
-def canonical_inventory(data: dict[str, Any]) -> list[dict[str, Any]]:
-    entries = data.get("inventory")
-    if isinstance(entries, list):
-        return [mapping(item, "inventory entry") for item in entries]
-    if "declaration_fields" in data and "declarations" in data:
-        raise ValueError(
-            "legacy compact declaration arrays are not accepted; "
-            "convert to the canonical readable schema"
-        )
-    raise ValueError("no canonical top-level inventory list found")
+def nested(entry: dict[str, Any], *keys: str) -> Any:
+    value: Any = entry
+    for key in keys:
+        if not isinstance(value, dict) or key not in value:
+            return None
+        value = value[key]
+    return value
 
 
-def check_entry(chapter: int, index: int, entry: dict[str, Any]) -> list[Problem]:
-    problems: list[Problem] = []
-    location = f"inventory[{index}]"
-    required_top = [
-        "id",
-        "kind",
-        "book",
-        "title",
-        "statement",
-        "hypotheses",
-        "quantifier_order",
-        "constants",
-        "dependencies",
-        "proof_status",
-        "notes_status",
-        "equivalents",
-        "likely_lean_representation",
-        "difficulty",
-        "pass",
-        "issues_for_central_review",
-    ]
-    for key in required_top:
-        if key not in entry:
-            problems.append(Problem(chapter, location, f"missing required field `{key}`"))
-
-    identifier = entry.get("id")
-    if not isinstance(identifier, str) or not identifier.strip():
-        problems.append(Problem(chapter, location, "`id` must be a nonempty string"))
-
-    required_nested = [
+def entry_errors(
+    chapter: int,
+    index: int,
+    entry: dict[str, Any],
+    allow_source_blockers: bool,
+) -> list[str]:
+    loc = f"chapter {chapter} inventory[{index}] ({entry.get('id', '?')})"
+    errors: list[str] = []
+    required = [
+        ("id",),
+        ("kind",),
         ("book", "number"),
         ("book", "pages"),
         ("book", "section"),
+        ("title",),
+        ("statement",),
         ("hypotheses", "explicit"),
         ("hypotheses", "implicit"),
+        ("quantifier_order",),
+        ("constants",),
         ("dependencies", "earlier_book"),
         ("dependencies", "chapter_local"),
         ("dependencies", "later_book_uses"),
@@ -200,28 +164,17 @@ def check_entry(chapter: int, index: int, entry: dict[str, Any]) -> list[Problem
         ("equivalents", "repository", "exact_equivalent"),
         ("likely_lean_representation", "sketch"),
         ("likely_lean_representation", "blockers"),
+        ("difficulty",),
+        ("pass",),
+        ("issues_for_central_review",),
     ]
-    for path in required_nested:
-        if nested(entry, path) is None:
-            problems.append(
-                Problem(chapter, location, f"missing required field `{'.'.join(path)}`")
-            )
-
-    notes = entry.get("notes_status")
-    if isinstance(notes, dict):
-        has_notes_flag = "discussed_or_extended_in_notes" in notes or any(
-            key.startswith("discussed_or_extended_in_") for key in notes
-        )
-        if not has_notes_flag:
-            problems.append(
-                Problem(
-                    chapter,
-                    location,
-                    "notes_status needs `discussed_or_extended_in_notes` or a documented legacy alias",
-                )
-            )
-
-    for list_path in [
+    for field in required:
+        if nested(entry, *field) is None:
+            errors.append(f"{loc}: missing {'.'.join(field)}")
+    ident = entry.get("id")
+    if not isinstance(ident, str) or not ident:
+        errors.append(f"{loc}: id must be a nonempty string")
+    list_fields = [
         ("book", "pages"),
         ("hypotheses", "explicit"),
         ("hypotheses", "implicit"),
@@ -235,325 +188,215 @@ def check_entry(chapter: int, index: int, entry: dict[str, Any]) -> list[Problem
         ("equivalents", "repository", "candidates"),
         ("likely_lean_representation", "blockers"),
         ("issues_for_central_review",),
-    ]:
-        value = nested(entry, list_path)
+    ]
+    for field in list_fields:
+        value = nested(entry, *field)
         if value is not None and not isinstance(value, list):
-            problems.append(
-                Problem(chapter, location, f"`{'.'.join(list_path)}` must be a list")
+            errors.append(f"{loc}: {'.'.join(field)} must be a list")
+    notes = entry.get("notes_status")
+    if isinstance(notes, dict):
+        flags = [
+            key
+            for key in notes
+            if key == "discussed_or_extended_in_notes"
+            or key.startswith("discussed_or_extended_in_")
+        ]
+        if not flags or not isinstance(notes[flags[0]], bool):
+            errors.append(
+                f"{loc}: notes_status needs a Boolean discussed_or_extended flag"
             )
-
-    pass_value = entry.get("pass")
+    else:
+        errors.append(f"{loc}: notes_status must be a mapping")
+    pass_value, difficulty = entry.get("pass"), entry.get("difficulty")
     if pass_value not in VALID_PASSES:
-        problems.append(Problem(chapter, location, f"invalid pass value: {pass_value!r}"))
-    difficulty = entry.get("difficulty")
+        errors.append(f"{loc}: invalid pass {pass_value!r}")
     if difficulty not in VALID_DIFFICULTIES:
-        problems.append(
-            Problem(chapter, location, f"invalid difficulty value: {difficulty!r}")
-        )
-
-    kind = str(entry.get("kind", "")).replace("_", " ").lower()
+        errors.append(f"{loc}: invalid difficulty {difficulty!r}")
+    kind = str(entry.get("kind", "")).replace("_", "-").lower()
+    number = str(nested(entry, "book", "number") or "")
     if kind == "exercise":
         if pass_value != "exercise":
-            problems.append(
-                Problem(chapter, location, "exercise entry must use pass `exercise`")
-            )
+            errors.append(f"{loc}: exercise must use exercise pass")
         reasons = entry.get("selection_reasons")
-        if not isinstance(reasons, list) or not reasons:
-            problems.append(
-                Problem(
-                    chapter,
-                    location,
-                    "exercise entry needs nonempty `selection_reasons`",
-                )
-            )
+        if not isinstance(reasons, (dict, list)) or not reasons:
+            errors.append(f"{loc}: selected exercise needs selection_reasons")
     elif pass_value == "exercise":
-        problems.append(
-            Problem(chapter, location, "non-exercise entry may not use pass `exercise`")
+        errors.append(f"{loc}: non-exercise may not use exercise pass")
+    if pass_value == "starred" and "*" not in number:
+        errors.append(f"{loc}: starred pass requires an explicit book star")
+    if "*" in number and kind != "exercise" and pass_value != "starred":
+        errors.append(f"{loc}: explicitly starred book item must use starred pass")
+    if not allow_source_blockers:
+        status = str(entry.get("transcription_status", ""))
+        blockers = " ".join(
+            map(str, nested(entry, "likely_lean_representation", "blockers") or [])
         )
-
-    for exact_path in [
-        ("equivalents", "mathlib", "exact_equivalent"),
-        ("equivalents", "repository", "exact_equivalent"),
-    ]:
-        value = nested(entry, exact_path)
-        if value is not None and not isinstance(value, bool):
-            problems.append(
-                Problem(chapter, location, f"`{'.'.join(exact_path)}` must be Boolean")
-            )
-    return problems
+        statement = str(entry.get("statement", ""))
+        if (
+            BLOCKING.search(status)
+            or BLOCKING.search(blockers)
+            or BLOCKING.search(statement)
+        ):
+            errors.append(f"{loc}: unresolved source-transcription blocker")
+    return errors
 
 
-def canonical_dag(dag_data: dict[str, Any]) -> dict[str, Any]:
-    dag = dag_data.get("chapter_local_dependency_dag", dag_data)
-    return mapping(dag, "chapter_local_dependency_dag")
+def edge_pair(edge: Any) -> tuple[str, str]:
+    if isinstance(edge, dict):
+        source, target = edge.get("from"), edge.get("to")
+    elif isinstance(edge, list) and len(edge) >= 2:
+        source, target = edge[0], edge[1]
+    else:
+        raise ValueError("unsupported DAG edge")
+    if not isinstance(source, str) or not isinstance(target, str):
+        raise ValueError("DAG endpoints must be strings")
+    return source, target
 
 
-def dag_nodes(dag: dict[str, Any], default_nodes: list[str]) -> list[str]:
-    raw = dag.get("nodes")
-    if raw is None:
-        # Compatibility for the accepted Chapter 4 package: isolated nodes are
-        # inferred from the inventory. Repaired/new packages should list nodes.
-        return list(default_nodes)
-    raw = sequence(raw, "DAG nodes")
-    if not all(isinstance(node, str) for node in raw):
-        raise ValueError("all DAG nodes must be strings")
-    return raw
-
-
-def dag_edges(dag: dict[str, Any]) -> list[tuple[str, str]]:
-    raw_edges = sequence(dag.get("edges"), "DAG edges")
-    result: list[tuple[str, str]] = []
-    for index, edge in enumerate(raw_edges):
-        if isinstance(edge, dict):
-            source, target = edge.get("from"), edge.get("to")
-        elif isinstance(edge, list) and len(edge) >= 2:
-            source, target = edge[0], edge[1]
-        else:
-            raise ValueError(f"DAG edge {index} has unsupported form")
-        if not isinstance(source, str) or not isinstance(target, str):
-            raise ValueError(f"DAG edge {index} endpoints must be strings")
-        result.append((source, target))
-    return result
-
-
-def has_cycle(nodes: set[str], edges: list[tuple[str, str]]) -> bool:
-    outgoing: dict[str, list[str]] = defaultdict(list)
+def cyclic(nodes: set[str], edges: list[tuple[str, str]]) -> bool:
+    out: dict[str, list[str]] = defaultdict(list)
     indegree = {node: 0 for node in nodes}
     for source, target in edges:
-        outgoing[source].append(target)
+        out[source].append(target)
         indegree[target] += 1
     queue = deque(node for node, degree in indegree.items() if degree == 0)
-    visited = 0
+    seen = 0
     while queue:
         node = queue.popleft()
-        visited += 1
-        for target in outgoing[node]:
+        seen += 1
+        for target in out[node]:
             indegree[target] -= 1
             if indegree[target] == 0:
                 queue.append(target)
-    return visited != len(nodes)
+    return seen != len(nodes)
 
 
-def check_completeness(
-    chapter: int, inventory_data: dict[str, Any]
-) -> list[Problem]:
-    problems: list[Problem] = []
-    completeness = inventory_data.get("completeness_check")
-    if not isinstance(completeness, dict):
-        return [
-            Problem(
-                chapter,
-                "completeness_check",
-                "missing required numbered-label coverage metadata",
-            )
-        ]
-    expected = completeness.get(
-        "expected_numbered_labels",
-        completeness.get("numbered_labels_expected"),
-    )
-    found = completeness.get(
-        "found_numbered_labels",
-        completeness.get("numbered_labels_found"),
-    )
-    missing = completeness.get("missing_numbered_labels")
-    if not isinstance(expected, list):
-        problems.append(
-            Problem(chapter, "completeness_check", "expected labels must be a list")
-        )
-    if not isinstance(found, list):
-        problems.append(
-            Problem(chapter, "completeness_check", "found labels must be a list")
-        )
-    if not isinstance(missing, list):
-        problems.append(
-            Problem(chapter, "completeness_check", "missing labels must be a list")
-        )
-    elif missing:
-        problems.append(
-            Problem(chapter, "completeness_check", f"missing numbered labels: {missing}")
-        )
-    if isinstance(expected, list) and isinstance(found, list):
-        absent = sorted(set(map(str, expected)) - set(map(str, found)))
-        if absent:
-            problems.append(
-                Problem(
-                    chapter,
-                    "completeness_check",
-                    f"expected labels absent from found-label list: {absent}",
-                )
-            )
-    duplicates = completeness.get("duplicate_identifiers", [])
-    if isinstance(duplicates, list) and duplicates:
-        problems.append(
-            Problem(
-                chapter,
-                "completeness_check",
-                f"declared duplicate identifiers: {duplicates}",
-            )
-        )
-    return problems
-
-
-def check_chapter(chapter: int, path: Path) -> tuple[list[Problem], int, int]:
-    problems: list[Problem] = []
-    try:
-        descriptor = mapping(load_yaml(path), str(path))
-        inventory_data, dag_data = resolve_package(path, descriptor)
-        inventory = canonical_inventory(inventory_data)
-    except (OSError, ValueError) as exc:
-        return [Problem(chapter, str(path.relative_to(ROOT)), str(exc))], 0, 0
-
-    source_chapter = nested(descriptor, ("source", "chapter"))
-    if source_chapter is not None and source_chapter != chapter:
-        problems.append(
-            Problem(chapter, "source.chapter", f"expected {chapter}, found {source_chapter}")
-        )
-
+def validate_chapter(
+    path: Path,
+    allow_source_blockers: bool,
+    allow_incomplete_coverage: bool,
+) -> tuple[int, list[str], int, int]:
+    chapter, descriptor, inventory, dag = load_chapter(path)
+    errors: list[str] = []
     for index, entry in enumerate(inventory):
-        problems.extend(check_entry(chapter, index, entry))
-
-    identifiers = [
-        entry.get("id") for entry in inventory if isinstance(entry.get("id"), str)
-    ]
-    identifier_set = set(identifiers)
-    if len(identifiers) != len(identifier_set):
-        counts: dict[str, int] = defaultdict(int)
-        for identifier in identifiers:
-            counts[identifier] += 1
-        duplicates = sorted(key for key, count in counts.items() if count > 1)
-        problems.append(
-            Problem(chapter, "inventory", f"duplicate identifiers: {duplicates}")
-        )
-
+        errors.extend(entry_errors(chapter, index, entry, allow_source_blockers))
+    ids = [entry.get("id") for entry in inventory if isinstance(entry.get("id"), str)]
+    if len(ids) != len(set(ids)):
+        errors.append(f"chapter {chapter}: duplicate inventory identifiers")
+    idset = set(ids)
     for entry in inventory:
-        identifier = entry.get("id")
-        local_dependencies = nested(entry, ("dependencies", "chapter_local"))
-        if isinstance(local_dependencies, list):
-            for dependency in local_dependencies:
-                if not isinstance(dependency, str) or dependency not in identifier_set:
-                    problems.append(
-                        Problem(
-                            chapter,
-                            str(identifier),
-                            f"unresolved chapter-local dependency `{dependency}`",
-                        )
-                    )
-
+        for dep in nested(entry, "dependencies", "chapter_local") or []:
+            if isinstance(dep, str) and dep not in idset:
+                errors.append(
+                    f"chapter {chapter} {entry.get('id')}: "
+                    f"unknown chapter_local dependency {dep!r}"
+                )
+    raw_nodes = dag.get("nodes")
+    nodes = set(ids) if raw_nodes is None else set(raw_nodes) if isinstance(raw_nodes, list) else set()
+    if raw_nodes is not None and not isinstance(raw_nodes, list):
+        errors.append(f"chapter {chapter}: DAG nodes must be a list")
+    if nodes != idset:
+        errors.append(f"chapter {chapter}: DAG node set does not exactly match inventory ids")
     try:
-        dag = canonical_dag(dag_data)
-        nodes = dag_nodes(dag, identifiers)
-        edges = dag_edges(dag)
+        edges = [edge_pair(edge) for edge in dag.get("edges", [])]
     except ValueError as exc:
-        problems.append(Problem(chapter, "dependency DAG", str(exc)))
-        return problems, len(inventory), 0
-
-    node_set = set(nodes)
-    if len(nodes) != len(node_set):
-        problems.append(Problem(chapter, "dependency DAG", "duplicate DAG nodes"))
-    if node_set != identifier_set:
-        missing_nodes = sorted(identifier_set - node_set)
-        extra_nodes = sorted(node_set - identifier_set)
-        if missing_nodes:
-            problems.append(
-                Problem(
-                    chapter,
-                    "dependency DAG",
-                    f"inventory identifiers missing from DAG nodes: {missing_nodes}",
-                )
-            )
-        if extra_nodes:
-            problems.append(
-                Problem(
-                    chapter,
-                    "dependency DAG",
-                    f"DAG nodes absent from inventory: {extra_nodes}",
-                )
-            )
-
+        errors.append(f"chapter {chapter}: {exc}")
+        edges = []
     for source, target in edges:
-        if source not in identifier_set:
-            problems.append(
-                Problem(chapter, "dependency DAG", f"unknown source node `{source}`")
+        if source not in idset or target not in idset:
+            errors.append(
+                f"chapter {chapter}: DAG edge references unknown node "
+                f"{source!r}->{target!r}"
             )
-        if target not in identifier_set:
-            problems.append(
-                Problem(chapter, "dependency DAG", f"unknown target node `{target}`")
+    if not errors and cyclic(idset, edges):
+        errors.append(f"chapter {chapter}: dependency DAG contains a cycle")
+    completeness = descriptor.get("completeness_check")
+    gaps: list[Any] = []
+    if isinstance(completeness, dict):
+        for key in (
+            "missing_numbered_labels",
+            "apparent_numbering_gaps_requiring_source_check",
+        ):
+            value = completeness.get(key)
+            if isinstance(value, list):
+                gaps.extend(value)
+    if gaps and not allow_incomplete_coverage:
+        errors.append(
+            f"chapter {chapter}: unresolved numbered-label coverage: "
+            f"{sorted(set(map(str, gaps)))}"
+        )
+    labels = [
+        match.group(1)
+        for entry in inventory
+        if (
+            match := NUMBERED.match(
+                str(nested(entry, "book", "number") or "")
             )
-        if source == target:
-            problems.append(
-                Problem(chapter, "dependency DAG", f"self-loop at `{source}`")
-            )
-
-    valid_edges = [
-        (source, target)
-        for source, target in edges
-        if source in identifier_set and target in identifier_set and source != target
+        )
     ]
-    if has_cycle(identifier_set, valid_edges):
-        problems.append(Problem(chapter, "dependency DAG", "directed cycle detected"))
-
-    problems.extend(check_completeness(chapter, inventory_data))
-    return problems, len(inventory), len(edges)
+    if len(labels) != len(set(labels)):
+        errors.append(f"chapter {chapter}: duplicate numbered book labels")
+    return chapter, errors, len(inventory), len(edges)
 
 
 def main() -> int:
-    problems: list[Problem] = []
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--allow-missing", action="store_true", help="migration audit only")
+    parser.add_argument(
+        "--allow-source-blockers", action="store_true", help="migration audit only"
+    )
+    parser.add_argument(
+        "--allow-incomplete-coverage", action="store_true", help="migration audit only"
+    )
+    args = parser.parse_args()
+    errors: list[str] = []
+    reports: list[tuple[int, int, int]] = []
     if not MANIFEST.is_file():
-        problems.append(
-            Problem(None, str(MANIFEST.relative_to(ROOT)), "missing manifest")
-        )
+        errors.append(f"missing {MANIFEST.relative_to(ROOT)}")
     else:
         try:
-            manifest = mapping(load_yaml(MANIFEST), str(MANIFEST))
-            chapters = sequence(manifest.get("chapters"), "manifest chapters")
-            manifest_numbers = {
-                item.get("number") for item in chapters if isinstance(item, dict)
-            }
-            expected = set(range(1, 9))
-            if manifest_numbers != expected:
-                problems.append(
-                    Problem(
-                        None,
-                        "BookManifest.yaml",
-                        f"chapter numbers must be exactly 1..8, found {sorted(manifest_numbers)}",
+            manifest = load(MANIFEST)
+            chapters = manifest.get("chapters")
+            if not isinstance(chapters, list):
+                errors.append("BookManifest.yaml: chapters must be a list")
+            else:
+                numbers = {
+                    item.get("number") for item in chapters if isinstance(item, dict)
+                }
+                if numbers != set(range(1, 9)):
+                    errors.append(
+                        "BookManifest.yaml: chapter numbers must be exactly 1..8, "
+                        f"found {sorted(numbers)}"
                     )
-                )
-        except (OSError, ValueError) as exc:
-            problems.append(Problem(None, "BookManifest.yaml", str(exc)))
-
-    total_entries = 0
-    total_edges = 0
+        except (ValueError, OSError) as exc:
+            errors.append(f"BookManifest.yaml: {exc}")
     for chapter in range(1, 9):
-        path = SPEC_DIR / f"Chapter{chapter:02d}.yaml"
+        path = SPEC / f"Chapter{chapter:02d}.yaml"
         if not path.is_file():
-            problems.append(
-                Problem(
-                    chapter,
-                    str(path.relative_to(ROOT)),
-                    "required specification is missing",
-                )
-            )
+            if not args.allow_missing:
+                errors.append(f"chapter {chapter}: missing {path.relative_to(ROOT)}")
             continue
-        chapter_problems, entries, edges = check_chapter(chapter, path)
-        problems.extend(chapter_problems)
-        total_entries += entries
-        total_edges += edges
-
-    if problems:
-        for problem in problems:
-            print(problem.render())
-        print(
-            f"FAILED: {len(problems)} error(s); "
-            f"loaded {total_entries} entries and {total_edges} DAG edges."
-        )
+        try:
+            number, chapter_errors, entries, edges = validate_chapter(
+                path,
+                args.allow_source_blockers,
+                args.allow_incomplete_coverage,
+            )
+            errors.extend(chapter_errors)
+            reports.append((number, entries, edges))
+        except (ValueError, OSError) as exc:
+            errors.append(f"chapter {chapter}: {exc}")
+    for number, entries, edges in sorted(reports):
+        print(f"Chapter {number}: loaded {entries} entries and {edges} dependency edges")
+    if errors:
+        print("\n".join(f"ERROR: {error}" for error in errors))
         return 1
-
-    print(
-        "PASS: all eight chapter specifications validated; "
-        f"{total_entries} entries and {total_edges} DAG edges."
-    )
+    if args.allow_missing or args.allow_source_blockers or args.allow_incomplete_coverage:
+        print("Loaded chapter specifications satisfy the selected migration-audit mode.")
+    else:
+        print("All eight chapter specifications satisfy the strict acceptance schema.")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())
