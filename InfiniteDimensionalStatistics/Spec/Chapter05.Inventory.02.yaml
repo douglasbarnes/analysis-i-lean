@@ -1,0 +1,465 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id004
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id002
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id003
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id001
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.prop.5_1_2
+  kind: proposition
+  book:
+    number: Proposition 5.1.2
+    pages:
+    - 393
+    - 395
+    section: 5.1.1
+    equations: []
+  title: Proposition 5.1.2
+  statement: Under Condition 5.1.1(c) or (d), for the white-noise estimator based on K_j, there is C=C(φ,p) such
+    that E‖fₙ−Efₙ‖_p≤Cσ√(2^j/n) for 1≤p<∞, and E‖fₙ−Efₙ‖_∞≤C(φ,∞)σ√(2^j(j+1)/n).
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - f∈L²([0,1]).
+    - In the periodised case f satisfies the endpoint periodicity convention.
+    - Y_f^{(n)} follows (5.5).
+    - For boundary wavelets 2^j≥2N.
+    - 1≤p≤∞.
+    implicit:
+    - Norms are Lebesgue Lp norms on the interval.
+    - Expectations are finite by Gaussian moment bounds.
+  quantifier_order:
+  - For each p and admissible basis there exists C.
+  - For every n≥1 and admissible j the stated bound holds.
+  constants:
+  - C(φ,p), σ, boundary N.
+  dependencies:
+    earlier_book:
+    - Gaussian moment equivalence and maximal inequalities from Chapter 2
+    chapter_local:
+    - ch5.eq.5_6_5_8
+    - ch5.eq.5_9_5_11
+    later_book_uses:
+    - Exercise 5.1.6
+    - Exercise 5.1.8
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Moment bounds for a finite-dimensional Gaussian random element in Lp; p=∞ requires a Gaussian maximum
+      bound over O(2^j) coefficients.
+    blockers:
+    - Banach-valued Gaussian integration.
+    - Lp norm of finite wavelet series.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: &id005 []
+- id: ch5.lem.5_1_3
+  kind: lemma
+  book:
+    number: Lemma 5.1.3
+    pages:
+    - 394
+    - 395
+    section: 5.1.1
+    equations: []
+  title: Lemma 5.1.3
+  statement: Let 0<r<1, t≥0, s>(1-r)/r and dμ_a(x)=(1+|x|)^a dx. If f,k≥0 belong to L¹(μ_{s+t/r}), then for every
+    b>0, sup_{0<h≤b}∫(k_h*f)^r(y)(1+|y|)^t dy ≤ C(‖f‖_{L¹(μ_{s+t/r})}‖k‖_{L¹(μ_{s+t/r})})^r, where C=(2(1-r)/(sr-(1-r)))^{1-r}(1∨b)^{sr+t}.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - 0<r<1.
+    - t≥0.
+    - s>(1-r)/r.
+    - b>0.
+    - f,k are nonnegative and weighted-integrable.
+    implicit:
+    - k_h(x)=h⁻¹k(x/h).
+  quantifier_order:
+  - For all f,k satisfying the hypotheses.
+  - For all b>0.
+  - Supremum over 0<h≤b.
+  constants:
+  - Exact C displayed above.
+  dependencies:
+    earlier_book:
+    - Weighted Hölder inequality and convolution algebra
+    chapter_local: &id006 []
+    later_book_uses:
+    - Theorem 5.1.5, case 1≤p<2
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: A weighted integral inequality over ℝ using ENNReal/Bochner integrals; formulate first for nonnegative
+      measurable functions.
+    blockers:
+    - Managing fractional powers and weighted measures.
+    - Explicit constant arithmetic.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id005
+- id: ch5.rem.5_1_4
+  kind: operative_example
+  book:
+    number: Remark 5.1.4
+    pages:
+    - 394
+    - 395
+    section: 5.1.1
+    equations: []
+  title: Remark 5.1.4
+  statement: If K is bounded and has finite p-variation, then the class {K((x-·)/h):x∈ℝ,h>0} is VC type. For 0<ε≤v_p(K)^{1/p}
+    and w>6 (w>3 under one-sided continuity), N(𝒦,L²(Q),εv_p(K)^{1/p})≤(A_{w,p}/ε)^{(p∨2)w} for every Borel probability
+    Q. Suprema used later are countably measurable by Exercise 5.1.3.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - K bounded.
+    - Finite p-variation for p≥1.
+    - Required right/left continuity.
+    - Q any Borel probability measure.
+    implicit:
+    - Covering number is for the L²(Q) pseudometric.
+  quantifier_order:
+  - For every admissible w there exists A_{w,p}.
+  - For all Q and all ε in the displayed range.
+  constants:
+  - A_{w,p}; exponent (p∨2)w; variation v_p(K).
+  dependencies:
+    earlier_book:
+    - Proposition 3.6.12
+    chapter_local: *id006
+    later_book_uses:
+    - Theorem 5.1.5 p=∞
+    - Lemma 5.3.5 by analogous method
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 5.1.3
+    contains_omitted_steps: true
+    comment: ''
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Uniform covering-number statement for a parameterised function class; likely requires a dedicated VC-subgraph/variation
+      library.
+    blockers:
+    - VC theory and covering numbers are not present at this generality in mathlib.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005
+- id: ch5.thm.5_1_5
+  kind: theorem
+  book:
+    number: Theorem 5.1.5
+    pages:
+    - 395
+    - 399
+    section: 5.1.1
+    equations: []
+  title: Theorem 5.1.5
+  statement: Let f be a density in Lp(A), let K satisfy any case of Condition 5.1.1, and let fₙ be (5.3). For 1≤p<2
+    in cases (a),(b), assume f,K²,Φ² have a finite moment ∫(1+|t|^s)|·| with s>(2-p)/p. Then for 1≤p<∞ there is
+    Lp with E‖fₙ−Efₙ‖p≤Lp√(2^j/n), for all j when p≤2 and for 2^j<n when p>2. If p=∞ and f is bounded, there is
+    L∞ with E‖fₙ−Efₙ‖∞≤L∞√(2^j(j+1)/n) whenever 2^j j<n.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Condition 5.1.1(a),(b),(c), or (d).
+    - f is a probability density and belongs to the stated Lp space.
+    - Extra weighted integrability for p<2 in cases (a),(b).
+    - Resolution restrictions for p>2 and p=∞.
+    implicit:
+    - Norms are on A.
+    - The random suprema are measurable/countably determined.
+    - The constants are uniform in n,j but depend on p, f and the kernel data.
+  quantifier_order:
+  - For each p and fixed model data there exists Lp<∞.
+  - For every n and every j satisfying the relevant restriction.
+  constants:
+  - Lp and L∞ with dependency stated in the theorem.
+  dependencies:
+    earlier_book:
+    - Hoffmann–Jørgensen inequalities
+    - VC-type empirical-process moment bound, Corollary 3.5.8
+    chapter_local:
+    - ch5.eq.5_3
+    - ch5.cond.5_1_1
+    - ch5.lem.5_1_3
+    - ch5.rem.5_1_4
+    later_book_uses:
+    - Propositions 5.1.7–5.1.11
+    - Theorems 5.1.13 and 5.1.15
+    - Proposition 5.1.18
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 5.1.3
+    contains_omitted_steps: true
+    comment: ''
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: A family of empirical-process Lp moment estimates split into p<2, p=2, p>2 and p=∞ declarations; a top-level
+      theorem can package them.
+    blockers:
+    - Empirical-process moment inequalities.
+    - VC covering numbers.
+    - Bochner measurability of Lp-valued estimators.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id005
+- id: ch5.rem.5_1_6
+  kind: lemma
+  book:
+    number: Remark 5.1.6
+    pages:
+    - 395
+    - 396
+    section: 5.1.1
+    equations: []
+  title: Remark 5.1.6
+  statement: The proof of Theorem 5.1.5 yields explicit upper bounds for Lp. In cases (a),(b) (taking Φ=K in (a)),
+    the bounds are expressed through weighted L¹ norms of f and Φ² for p<2, through ‖f‖p and ‖Φ‖2/‖Φ‖p for p>2,
+    L2≤‖Φ‖2, and L∞≤C(1∨‖f‖∞)^{1/2}; analogous C(φ)(1∨‖f‖_{p/2})^{1/2} bounds hold in (c),(d).
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: On p.395 in the first display, ν^{1/p} is corrected by the author to ν_p^{1/p}.
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 5.1.5.
+    implicit:
+    - The numerical constants in intermediate inequalities retain the dependencies stated in the proof.
+  quantifier_order:
+  - For each p the theorem constant may be chosen below the displayed expression.
+  constants:
+  - Lp, L∞, ν_p and kernel-dependent numerical constants.
+  dependencies:
+    earlier_book: *id006
+    chapter_local:
+    - ch5.thm.5_1_5
+    later_book_uses: *id006
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Separate explicit-constant refinements of the main moment theorem.
+    blockers:
+    - The exact p-dependent formula must be transcribed from the page image before formalisation.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - The author erratum changes ν to ν_p.
+  - OCR is not reliable enough for every exponent in the long explicit constant; central review must compare the
+    hardback page.
+  - 'Author-corrected reading recorded separately: On p.395 in the first display, ν^{1/p} is corrected by the author
+    to ν_p^{1/p}.'
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.prop.5_1_7
+  kind: proposition
+  book:
+    number: Proposition 5.1.7
+    pages:
+    - 399
+    - 400
+    section: 5.1.1
+    equations: []
+  title: Proposition 5.1.7
+  statement: For an S-regular wavelet projection estimator with S>s, or a convolution estimator with a kernel of
+    order S>s, choose the resolution/bandwidth balancing stochastic error and Besov bias. Over a Besov ball of radius
+    B, the expected Lp risk is bounded by a constant times n^{-s/(2s+1)} for p<∞, and the expected sup-norm risk
+    by a constant times (n/log n)^{-s/(2s+1)}.
+  source_fidelity:
+    transcription_status: verified_with_erratum
+    author_corrected_reading: 'Author erratum: in (5.19) and (5.20) delete the displayed suprema over f; replace
+      the prose “if f∈B…” by the explicit hypotheses ‖f‖_{B^s_{p∞}}≤B and ‖f‖_{B^s_{∞∞}}≤B, respectively.'
+  hypotheses:
+    explicit:
+    - s>0 and S>s.
+    - f is a density in the appropriate Besov ball.
+    - Kernel/wavelet satisfies the assumptions of Theorem 5.1.5 and the Chapter 4 approximation theorem.
+    - jₙ or hₙ is chosen at the stated balance.
+    implicit:
+    - Constants depend only on p,s,S,B and the kernel/basis data.
+    - The density and domain restrictions from Condition 5.1.1 remain in force.
+  quantifier_order:
+  - For every density f satisfying the norm bound.
+  - For all n≥1 after choosing the prescribed resolution.
+  constants:
+  - Besov radius B; approximation constant c; stochastic constant Lp.
+  dependencies:
+    earlier_book:
+    - Proposition 4.3.14 and Besov approximation bounds
+    chapter_local:
+    - ch5.thm.5_1_5
+    later_book_uses:
+    - Remark 5.2.6
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Bias–variance corollary combining an approximation theorem with Theorem 5.1.5; formalise separately
+      for finite p and p=∞.
+    blockers:
+    - Besov spaces/wavelet approximation library.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - The printed quantification is altered by the official erratum; retain both readings and use the corrected pointwise
+    norm-bound formulation.
+  - 'Author-corrected reading recorded separately: Author erratum: in (5.19) and (5.20) delete the displayed suprema
+    over f; replace the prose “if f∈B…” by the explicit hypotheses ‖f‖_{B^s_{p∞}}≤B and ‖f‖_{B^s_{∞∞}}≤B, respectively.'
+  - 'Source-transcription status: verified_with_erratum.'
+- id: ch5.prop.5_1_8
+  kind: proposition
+  book:
+    number: Proposition 5.1.8
+    pages:
+    - 401
+    section: 5.1.1
+    equations: []
+  title: Proposition 5.1.8
+  statement: Under Theorem 5.1.5 with bounded f and 2^j j<n, for empirical scaling and wavelet coefficients α̂_{jk}=Pₙφ_{jk},
+    β̂_{jk}=Pₙψ_{jk}, E sup_k|α̂_{jk}-α_{jk}|≤‖φ‖₁L∞√(j/n) and E sup_k|β̂_{jk}-β_{jk}|≤2‖φ‖₁L∞√(j/n).
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Wavelet cases (b),(c), or (d) of Condition 5.1.1.
+    - f bounded.
+    - 2^j j<n.
+    implicit:
+    - Coefficient index set is ℤ or the finite interval index set.
+    - L∞ is the constant from Theorem 5.1.5.
+  quantifier_order:
+  - For every admissible n,j.
+  constants:
+  - ‖φ‖₁ and L∞.
+  dependencies:
+    earlier_book: *id006
+    chapter_local:
+    - ch5.thm.5_1_5
+    later_book_uses:
+    - Remark 5.1.16
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Use coefficient extraction as a bounded linear functional on the projection estimator, then apply the
+      sup-norm moment bound.
+    blockers:
+    - Wavelet coefficient API.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id005
+- id: ch5.eq.5_26_5_27
+  kind: lemma
+  book:
+    number: Equations (5.26)–(5.27)
+    pages:
+    - 401
+    section: 5.1.1
+    equations:
+    - '5.26'
+    - '5.27'
+  title: Equations (5.26)–(5.27)
+  statement: If f and K are m-times differentiable with sufficient integrability, then (E fₙ)^{(m)}=K_h*f^{(m)},
+    and the sample derivative is fₙ^{(m)}(x)=(nh^{m+1})⁻¹∑ᵢK^{(m)}((x-Xᵢ)/h).
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - K and f have the required classical/weak derivatives through order m.
+    - Differentiation under the integral/convolution is justified by the integrability assumptions used in Proposition
+      5.1.9.
+    implicit:
+    - The derivative notation is classical wherever pointwise formulas are asserted.
+  quantifier_order:
+  - For every integer m≥0 and every x where the derivatives are defined.
+  constants:
+  - Bandwidth exponent h^{m+1}.
+  dependencies:
+    earlier_book:
+    - Differentiation of convolution
+    chapter_local:
+    - ch5.eq.5_1
+    later_book_uses:
+    - Propositions 5.1.9 and 5.1.10
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Derivative-of-convolution and derivative-of-rescaled-kernel lemmas, preferably first in weak derivative
+      form and then pointwise under stronger assumptions.
+    blockers:
+    - Higher Fréchet/classical derivatives for real functions and differentiation under integral.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id005
