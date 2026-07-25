@@ -53,11 +53,12 @@ theorem inter_mem {Ω : Type u} (𝒢 : SigmaField Ω) {A B : Set Ω}
 
 end SigmaField
 
-/-- Source 62: pointwise maxima and minima of continuous-time stopping times are stopping times. -/
+/-- Source 62: pointwise maxima and minima of extended-valued continuous-time stopping times are
+stopping times. -/
 theorem ContinuousStoppingCalculusTheorem {Ω : Type u} (ℱ : ContinuousFiltration Ω) :
-    (∀ S T : Ω → ℝ≥0, IsContinuousStoppingTime ℱ S → IsContinuousStoppingTime ℱ T →
+    (∀ S T : Ω → WithTop ℝ≥0, IsContinuousStoppingTime ℱ S → IsContinuousStoppingTime ℱ T →
       IsContinuousStoppingTime ℱ (fun ω ↦ max (S ω) (T ω))) ∧
-    (∀ S T : Ω → ℝ≥0, IsContinuousStoppingTime ℱ S → IsContinuousStoppingTime ℱ T →
+    (∀ S T : Ω → WithTop ℝ≥0, IsContinuousStoppingTime ℱ S → IsContinuousStoppingTime ℱ T →
       IsContinuousStoppingTime ℱ (fun ω ↦ min (S ω) (T ω))) := by
   constructor
   · intro S T hS hT t
@@ -77,7 +78,7 @@ theorem ContinuousStoppingCalculusTheorem {Ω : Type u} (ℱ : ContinuousFiltrat
 
 /-- The sigma-field of events observable at a continuous stopping time. -/
 def continuousStoppingSigmaField {Ω : Type u} (ℱ : ContinuousFiltration Ω)
-    (T : Ω → ℝ≥0) (hT : IsContinuousStoppingTime ℱ T) : SigmaField Ω where
+    (T : Ω → WithTop ℝ≥0) (hT : IsContinuousStoppingTime ℱ T) : SigmaField Ω where
   sets := {A | ∀ t, A ∩ {ω | T ω ≤ t} ∈ (ℱ.sigma t).sets}
   empty_mem := by
     intro t
@@ -109,7 +110,7 @@ def continuousStoppingSigmaField {Ω : Type u} (ℱ : ContinuousFiltration Ω)
 
 /-- Source 62(2): if `S ≤ T`, then every event observable at `S` is observable at `T`. -/
 theorem continuousStoppingSigmaField_mono {Ω : Type u} (ℱ : ContinuousFiltration Ω)
-    {S T : Ω → ℝ≥0} (hS : IsContinuousStoppingTime ℱ S)
+    {S T : Ω → WithTop ℝ≥0} (hS : IsContinuousStoppingTime ℱ S)
     (hT : IsContinuousStoppingTime ℱ T) (hST : S ≤ T) :
     (continuousStoppingSigmaField ℱ S hS).Subfield
       (continuousStoppingSigmaField ℱ T hT) := by
@@ -131,7 +132,7 @@ theorem continuousStoppingSigmaField_mono {Ω : Type u} (ℱ : ContinuousFiltrat
 /-- Source 63: a real random variable is measurable at a stopping time iff each localization
 `Z 1_{T ≤ t}` is measurable at deterministic time `t`. -/
 theorem StoppingSigmaMeasurabilityTheorem {Ω : Type u} (ℱ : ContinuousFiltration Ω)
-    (T : Ω → ℝ≥0) (hT : IsContinuousStoppingTime ℱ T) (Z : Ω → ℝ) :
+    (T : Ω → WithTop ℝ≥0) (hT : IsContinuousStoppingTime ℱ T) (Z : Ω → ℝ) :
     Observable (continuousStoppingSigmaField ℱ T hT) Z ↔
       ∀ t, Observable (ℱ.sigma t) ({ω | T ω ≤ t}.indicator Z) := by
   constructor
