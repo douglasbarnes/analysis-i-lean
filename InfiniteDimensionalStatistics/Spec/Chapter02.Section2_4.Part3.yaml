@@ -1,0 +1,476 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.4'
+fragment_part: 3
+inventory:
+- id: corollary-2-4-13
+  kind: corollary
+  book:
+    number: 2.4.13
+    pages:
+    - 57
+    section: '2.4'
+    equations: []
+  title: Entropy obstruction to sample boundedness
+  statement: If liminf_{ε↓0} ε√(log N(T,d_X,ε))=∞, then sup_{t∈T}|X(t)|=∞ almost surely.
+  hypotheses:
+    explicit:
+    - X centred Gaussian.
+    implicit: []
+  quantifier_order:
+  - Limit inferior at zero.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-20
+    - theorem-2-4-12
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Contrapositive using finite expected maxima and the zero-one/integrability theorem for a separable bounded version.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-4-14
+  kind: corollary
+  book:
+    number: 2.4.14
+    pages:
+    - 58
+    section: '2.4'
+    equations: []
+  title: Entropy necessity for sample continuity
+  statement: If X is a sample-continuous centred Gaussian process, then lim_{ε↓0} ε√(log N(T,d_X,ε))=0.
+  hypotheses:
+    explicit:
+    - X has a version with bounded uniformly d_X-continuous paths.
+    implicit: []
+  quantifier_order:
+  - Limit equals zero.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-20
+    - theorem-2-4-12
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Apply Sudakov to the increment process restricted to pairs with d_X≤δ, then let δ↓0 using expected modulus convergence.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-61
+  kind: corollary
+  book:
+    number: '2.61'
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Matching entropy bounds under regular variation
+  statement: Under the stated two-sided regular-variation control of log N(T,d_X,1/τ), the Dudley upper and Sudakov lower
+    bounds combine to give K^{-1}σ_X√(log N(T,d_X,σ_X))≤E sup_t|X(t)|≤Kσ_X√(log N(T,d_X,σ_X)).
+  hypotheses:
+    explicit:
+    - The metric entropy has the regular-variation comparability described in the surrounding paragraph.
+    - σ_X is the natural process scale.
+    implicit: []
+  quantifier_order:
+  - A finite comparability constant K.
+  constants:
+  - A finite comparability constant K.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-3-6
+    - theorem-2-4-12
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: A corollary parameterised by a regular-variation/comparability hypothesis on the entropy function.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: exercise-2-4-1
+  kind: exercise
+  book:
+    number: Exercise 2.4.1
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Brunn–Minkowski from Prékopa–Leindler
+  statement: For compact A,B⊆ℝ^n, first deduce Vol(λA+(1−λ)B)≥Vol(A)^λ Vol(B)^(1−λ), then prove Vol(A+B)^(1/n)≥Vol(A)^(1/n)+Vol(B)^(1/n).
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-2
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Instantiate Prékopa–Leindler with indicators and normalise volumes.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-4-2
+  kind: exercise
+  book:
+    number: Exercise 2.4.2
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Covariance domination and Anderson comparison
+  statement: If centred Gaussian vectors X,Y in ℝ^n satisfy E⟨x,Y⟩²≤E⟨x,X⟩² for every x, prove C_X−C_Y is positive semidefinite;
+    construct independent Gaussian Z with this covariance so X≡_dY+Z; conclude Pr(X∈C)≤Pr(Y∈C) for convex symmetric C.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-4
+    chapter_local_dependents:
+    - theorem-2-4-5
+    later_book_uses:
+    - theorem-2-4-5
+    - Discussion after Theorem 2.4.5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Matrix PSD covariance construction, equality of characteristic functions, and Fubini with Anderson.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Discussion after Theorem 2.4.5
+- id: exercise-2-4-3
+  kind: exercise
+  book:
+    number: Exercise 2.4.3
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Anderson inequality for process cylinder-convex sets
+  statement: For a centred Gaussian process X on T and a convex symmetric C⊆ℝ^T expressible as a countable intersection of
+    sets {|f_k(x)|≤1} with each f_k a finite linear combination of coordinates, prove Pr(X+x∈C)≤Pr(X∈C) for every x∈ℝ^T.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-4
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Approximate the countable intersection by finite coordinate Gaussian vectors.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-4-4
+  kind: exercise
+  book:
+    number: Exercise 2.4.4
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Continuity of Gaussian Banach norms
+  statement: For a centred Gaussian B-valued random variable on separable B, prove t↦Pr(||X||≤t) is continuous for every t>0;
+    if Pr(X=0)=0, prove uniform continuity on [0,∞).
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-2-11
+    - exercise-2-2-13
+    - theorem-2-4-5
+    chapter_local_dependents:
+    - proposition-2-6-19
+    later_book_uses:
+    - proposition-2-6-19
+    - Proposition 2.6.19
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Show every positive-radius centred ball has positive mass and apply quantile continuity.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Proposition 2.6.19
+- id: exercise-2-4-5
+  kind: exercise
+  book:
+    number: Exercise 2.4.5
+    pages:
+    - 59
+    section: '2.4'
+    equations: []
+  title: Monotonicity form of Anderson's lemma
+  statement: In Theorems 2.4.4 and 2.4.5, prove λ↦Pr(X+λx∈C) is nonincreasing on [0,1].
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-3
+    - theorem-2-4-5
+    chapter_local_dependents:
+    - corollary-2-4-6
+    - exercise-2-4-6
+    later_book_uses:
+    - exercise-2-4-6
+    - corollary-2-4-6
+    - Corollary 2.4.6
+    - Exercise 2.4.6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof; cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Apply log-concavity to C−λx and C.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Corollary 2.4.6
+  - Exercise 2.4.6
