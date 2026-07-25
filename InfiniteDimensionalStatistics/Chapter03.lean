@@ -9,13 +9,15 @@ import InfiniteDimensionalStatistics.Chapter03.Hoeffding
 import InfiniteDimensionalStatistics.Chapter03.Rademacher
 import InfiniteDimensionalStatistics.Chapter03.Bennett
 import InfiniteDimensionalStatistics.Chapter03.FiniteMaximum
+import InfiniteDimensionalStatistics.Chapter03.ProductGeometry
 
 /-!
 # Chapter 3: Empirical Processes
 
 Source-order implementation root for Chapter 3.  The current implementation
 contains the reusable definition layer and proved concentration results through
-the finite maximal mgf inequality.  Deep entropy, VC and Donsker theorem proofs
-are added only when they have genuine Lean proofs; no assumption or placeholder
-is used to simulate completion.
+the finite maximal mgf inequality, together with the multiplier and
+product-geometry definitions used in Section 3.2.  Deep entropy, VC and Donsker
+theorem proofs are added only when they have genuine Lean proofs; no assumption
+or placeholder is used to simulate completion.
 -/
