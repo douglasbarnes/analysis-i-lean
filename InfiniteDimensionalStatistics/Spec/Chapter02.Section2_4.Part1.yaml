@@ -1,0 +1,497 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.4'
+fragment_part: 1
+inventory:
+- id: definition-unnumbered-2-4-convex-symmetric
+  kind: definition
+  book:
+    number: unnumbered-2.4-convex-symmetric
+    pages:
+    - 48
+    section: '2.4'
+    equations: []
+  title: Convex symmetric set
+  statement: C in a real vector space is convex and symmetric when ∑ᵢλᵢxᵢ∈C whenever xᵢ∈C and ∑ᵢ|λᵢ|=1; equivalently C is
+    convex and C=−C.
+  hypotheses:
+    explicit:
+    - Finite families only.
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Use `Convex ℝ C` and `Set.EqNeg C`/`∀x∈C,-x∈C`; prove equivalence to the balanced-convex finite-combination formulation.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-4-minkowski
+  kind: definition
+  book:
+    number: unnumbered-2.4-minkowski
+    pages:
+    - 48
+    section: '2.4'
+    equations: []
+  title: Minkowski sum and scalar dilation
+  statement: A+B={a+b:a∈A,b∈B} and λA={λa:a∈A}.
+  hypotheses:
+    explicit:
+    - A,B subsets of a real vector space.
+    - λ∈ℝ.
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - lemma-2-4-1
+    later_book_uses:
+    - lemma-2-4-1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Use `Set.image2 (·+·)` and scalar images.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-4-1
+  kind: lemma
+  book:
+    number: 2.4.1
+    pages:
+    - 49
+    section: '2.4'
+    equations: []
+  title: One-dimensional Brunn–Minkowski
+  statement: For Borel measurable A,B⊆ℝ, Lebesgue measure satisfies m(A+B)≥m(A)+m(B).
+  hypotheses:
+    explicit:
+    - A and B Borel subsets of ℝ.
+    implicit:
+    - A+B need not be Borel; it is analytic and Lebesgue measurable in the completion.
+  quantifier_order:
+  - No finiteness assumption; extended-real inequality.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-unnumbered-2-4-minkowski
+    chapter_local_dependents:
+    - theorem-2-4-2
+    later_book_uses:
+    - theorem-2-4-2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Lebesgue-completion measurability of analytic sums plus compact approximation and interval-component argument.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - The statement's measurability relies on analytic-set/universal measurability; this is not automatic from `MeasurableSet`
+    under continuous images.
+- id: theorem-2-4-2
+  kind: theorem
+  book:
+    number: 2.4.2
+    pages:
+    - 49
+    section: '2.4'
+    equations: []
+  title: Prékopa–Leindler inequality
+  statement: For 0<λ<1 and nonnegative measurable f,g,φ on ℝⁿ satisfying φ(λx+(1−λ)y)≥f(x)^λg(y)^{1−λ} for all x,y, ∫φ≥(∫f)^λ(∫g)^{1−λ}.
+  hypotheses:
+    explicit:
+    - n finite.
+    - f,g,φ nonnegative measurable.
+    - 0<λ<1.
+    - Pointwise interpolation inequality.
+    implicit:
+    - Extended integrals and conventions when an integral is 0 or ∞.
+  quantifier_order:
+  - Dimension-free; exact exponents λ and 1−λ.
+  constants:
+  - Dimension-free; exact exponents λ and 1−λ.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-4-1
+    chapter_local_dependents:
+    - exercise-2-4-1
+    - theorem-2-4-3
+    - theorem-2-5-6
+    later_book_uses:
+    - theorem-2-4-3
+    - theorem-2-5-6
+    - exercise-2-4-1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: A finite-dimensional Lebesgue-integral theorem; likely substantial new convex-measure infrastructure.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-4-logconcave-measure
+  kind: definition
+  book:
+    number: unnumbered-2.4-logconcave-measure
+    pages:
+    - 50
+    section: '2.4'
+    equations: []
+  title: Log-concave measure
+  statement: A measure μ on ℝⁿ is log-concave when μ(λA+(1−λ)B)≥μ(A)^λμ(B)^{1−λ} for Borel A,B and 0<λ<1.
+  hypotheses:
+    explicit:
+    - The Minkowski combination is measurable in the completion.
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Predicate on measurable sets, preferably phrased with outer measure or completed measure to avoid analytic-set
+      gaps.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-4-3
+  kind: theorem
+  book:
+    number: 2.4.3
+    pages:
+    - 50
+    section: '2.4'
+    equations: []
+  title: Log-concavity of centred Gaussian measures
+  statement: 'Every centred Gaussian measure μ on ℝⁿ is log-concave: μ(λA+(1−λ)B)≥μ(A)^λμ(B)^{1−λ}.'
+  hypotheses:
+    explicit:
+    - μ may be degenerate.
+    - A,B Borel.
+    - 0<λ<1.
+    implicit:
+    - The measure is represented on its linear support if covariance is singular.
+  quantifier_order:
+  - Exact log-concavity exponent.
+  constants:
+  - Exact log-concavity exponent.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-2
+    chapter_local_dependents:
+    - exercise-2-4-5
+    - theorem-2-4-4
+    later_book_uses:
+    - theorem-2-4-4
+    - exercise-2-4-5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Reduce to the support subspace and apply Prékopa–Leindler to the Gaussian density there.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - For degenerate Gaussian measures, support-subspace Lebesgue measure and the measurability of λA+(1−λ)B require explicit
+    handling.
+- id: theorem-2-4-4
+  kind: theorem
+  book:
+    number: 2.4.4
+    pages:
+    - 51
+    section: '2.4'
+    equations: []
+  title: Anderson's lemma in finite dimensions
+  statement: For a centred jointly Gaussian X∈ℝⁿ, measurable convex symmetric C⊆ℝⁿ, and x∈ℝⁿ, Pr(X+x∈C)≤Pr(X∈C).
+  hypotheses:
+    explicit:
+    - C measurable, convex, symmetric.
+    - x arbitrary.
+    implicit: []
+  quantifier_order:
+  - ∀x∈ℝⁿ.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-3
+    chapter_local_dependents:
+    - corollary-2-4-6
+    - exercise-2-4-2
+    - exercise-2-4-3
+    - theorem-2-4-5
+    later_book_uses:
+    - theorem-2-4-5
+    - corollary-2-4-6
+    - exercise-2-4-2
+    - exercise-2-4-3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Apply Gaussian log-concavity with A=C+x, B=C−x, λ=1/2.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - The prose says measurability is superfluous because boundaries of convex sets have Gaussian measure zero. This is not
+    valid without qualification for degenerate Gaussian measures or lower-dimensional convex sets; retain measurability.
+- id: theorem-2-4-5
+  kind: theorem
+  book:
+    number: 2.4.5
+    pages:
+    - 51
+    section: '2.4'
+    equations: []
+  title: Anderson's lemma in a separable Banach space
+  statement: Let B be separable Banach, X a centred Gaussian B-valued variable, and C⊆B closed, convex, symmetric. Then Pr(X+x∈C)≤Pr(X∈C)
+    for all x∈B. In particular Pr(‖X‖≤ε)>0 for every ε>0.
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - X centred Gaussian.
+    - C closed convex symmetric.
+    - ε>0.
+    implicit: []
+  quantifier_order:
+  - ∀x∈B; ∀ε>0.
+  constants:
+  - ∀x∈B; ∀ε>0.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example-2-1-16
+    - exercise-2-4-2
+    - theorem-2-4-4
+    chapter_local_dependents:
+    - corollary-2-4-6
+    - corollary-2-6-17
+    - corollary-2-6-18
+    - exercise-2-4-4
+    - exercise-2-4-5
+    - lemma-2-6-28
+    - proposition-2-6-19
+    later_book_uses:
+    - corollary-2-4-6
+    - corollary-2-6-17
+    - corollary-2-6-18
+    - proposition-2-6-19
+    - lemma-2-6-28
+    - exercise-2-4-4
+    - exercise-2-4-5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Represent C as a countable intersection of strips from the dual, apply finite-dimensional Anderson, and pass to
+      a limit.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
