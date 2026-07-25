@@ -37,7 +37,7 @@ summary:
     substantial: 23
     major-library: 36
     research-level: 36
-  central_review_flags: 15
+  central_review_flags: 13
   dag_nodes: 106
   dag_edges: 207
 package:
@@ -81,8 +81,8 @@ completeness_check:
   all_entries_have_required_fields: true
   exercise_selection_complete: true
   exercise_source_verification: Exercises 7.3.1–7.3.8 were verified against the printed exercise block on pp. 602–603.
-  unresolved_source_items:
-  - Exact constants and typography in Lemma 7.3.8 require visual confirmation.
+  lemma_7_3_8_source_verification: The exact constants, exponents, integration orientation and the printed p,p₀ aliases in part (c) were transcribed from p. 581.
+  unresolved_source_items: []
   central_review_items:
   - Corollary 7.3.24 preserves the printed C^α truth condition pending review against the C^γ prior/constraint notation.
   - Corollary 7.3.24 follows the displayed diameter of C̄_n while flagging the surrounding prose reference to C_n.
