@@ -1,0 +1,450 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.2'
+fragment_part: 1
+inventory:
+- id: definition-unnumbered-2-2-spherical-neighbourhood
+  kind: definition
+  book:
+    number: unnumbered-2.2-spherical-neighbourhood
+    pages:
+    - 26
+    section: '2.2'
+    equations: []
+  title: Spherical distance, caps and ε-enlargement
+  statement: On the unit sphere Sⁿ with geodesic distance, A^ε={x:d(x,A)<ε}; a spherical cap is a geodesic ball/half-space
+    section, and the comparison cap C is chosen with μ(C)=μ(A).
+  hypotheses:
+    explicit:
+    - Uniform probability μ on Sⁿ.
+    - A measurable subset of Sⁿ.
+    - ε>0.
+    implicit: []
+  quantifier_order:
+  - A^ε uses strict distance <ε.
+  constants:
+  - A^ε uses strict distance <ε.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Use a sphere subtype, geodesic distance, metric neighbourhoods, and normalized surface measure.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-2-1
+  kind: theorem
+  book:
+    number: 2.2.1
+    pages:
+    - 27
+    section: '2.2'
+    equations: []
+  title: Isoperimetric inequality on the sphere
+  statement: Let A⊆Sⁿ be measurable and nonempty, and C a spherical cap with μ(C)=μ(A). Then for every ε>0, μ(A^ε)≥μ(C^ε)
+    (equivalently μ(C^ε)≤μ(A^ε)).
+  hypotheses:
+    explicit:
+    - n finite.
+    - μ uniform probability on Sⁿ.
+    - A measurable and nonempty.
+    - C a spherical cap of equal μ-measure.
+    - ε>0.
+    implicit: []
+  quantifier_order:
+  - ∀ε>0.
+  constants:
+  - ∀ε>0.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-2-1
+    - exercise-2-2-2
+    - exercise-2-2-3
+    chapter_local_dependents:
+    - exercise-2-2-4
+    - lemma-2-2-2
+    - theorem-2-2-3
+    later_book_uses:
+    - lemma-2-2-2
+    - theorem-2-2-3
+    - exercise-2-2-4
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-2-1
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: A theorem about normalized Hausdorff/surface measure on finite-dimensional spheres and geodesic neighbourhoods.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-2-2
+  kind: lemma
+  book:
+    number: 2.2.2
+    pages:
+    - 30
+    section: '2.2'
+    equations: []
+  title: Poincaré limit lemma
+  statement: Fix n. If U_{n+m} is uniform on the sphere of radius √(n+m) in ℝ^{n+m}, then its first n coordinates have an
+    explicit density converging pointwise to the standard N(0,I_n) density, and the projected laws converge to γ_n on Borel
+    sets.
+  hypotheses:
+    explicit:
+    - n fixed.
+    - m→∞.
+    - Uniform surface measure on √(n+m)S^{n+m−1} (indexing to be matched exactly to the book).
+    implicit:
+    - Boundary/index convention for Sⁿ versus ambient dimension must match the book.
+  quantifier_order:
+  - Pointwise density convergence and setwise/weak convergence to γ_n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-2-1
+    chapter_local_dependents:
+    - theorem-2-2-3
+    later_book_uses:
+    - theorem-2-2-3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Compute projected spherical density using Gamma constants and prove convergence by dominated convergence/Stirling
+      asymptotics.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - Sphere-dimension indexing is convention-sensitive; verify the ambient dimension and radius visually before Lean transcription.
+- id: theorem-2-2-3
+  kind: theorem
+  book:
+    number: 2.2.3
+    pages:
+    - 31
+    section: '2.2'
+    equations: []
+  title: Finite-dimensional Gaussian isoperimetry
+  statement: For standard Gaussian measure γ_n on ℝⁿ, measurable A, and a half-space H with γ_n(H)=γ_n(A), γ_n(A+εO_n)≥γ_n(H+εO_n)=Φ(Φ⁻¹(γ_n(A))+ε)
+    for every ε>0.
+  hypotheses:
+    explicit:
+    - n≥1.
+    - A Borel measurable.
+    - O_n Euclidean closed unit ball.
+    - ε>0.
+    implicit:
+    - Minkowski enlargement is measurable; use completion/analytic measurability if needed.
+  quantifier_order:
+  - ∀ε>0; no dimension-dependent constant.
+  constants:
+  - ∀ε>0; no dimension-dependent constant.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-2-2
+    - theorem-2-2-1
+    chapter_local_dependents:
+    - exercise-2-2-6
+    - theorem-2-2-4
+    later_book_uses:
+    - theorem-2-2-4
+    - exercise-2-2-6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Gaussian probability measure on `EuclideanSpace ℝ (Fin n)`; half-space quantile and Minkowski neighbourhood.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - For arbitrary Borel A, A+εO may be analytic rather than Borel. State the measure using completion or prove the required
+    measurability.
+- id: definition-unnumbered-2-2-product-gaussian
+  kind: definition
+  book:
+    number: unnumbered-2.2-product-gaussian
+    pages:
+    - 31
+    section: '2.2'
+    equations: []
+  title: Canonical product Gaussian measure
+  statement: γ is the countable product ⨂_{k∈ℕ}N(0,1) on ℝ^ℕ with its cylindrical/product σ-algebra; O is the closed unit
+    ball of ℓ² embedded in ℝ^ℕ.
+  hypotheses:
+    explicit:
+    - Countable product measurable space.
+    implicit: []
+  quantifier_order:
+  - Coordinate projections are iid standard normal.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-6-15
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: 'A countable product probability measure and the subset `{x : Summable (fun k => (x k)^2) ∧ tsum ... ≤ 1}`.'
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-2-4
+  kind: theorem
+  book:
+    number: 2.2.4
+    pages:
+    - 32
+    section: '2.2'
+    equations: []
+  title: Infinite-product Gaussian isoperimetry
+  statement: For every cylindrical/product-Borel A⊆ℝ^ℕ and ε>0, γ(A+εO)≥Φ(Φ⁻¹(γ(A))+ε), where O is the ℓ² unit ball.
+  hypotheses:
+    explicit:
+    - A measurable in the product σ-algebra.
+    - ε>0.
+    implicit:
+    - A+εO may only be universally/completion measurable.
+  quantifier_order:
+  - Dimension-free; ∀ε>0.
+  constants:
+  - Dimension-free; ∀ε>0.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-1-6
+    - exercise-2-2-5
+    - exercise-2-2-6
+    - exercise-2-2-7
+    - proposition-2-1-4
+    - theorem-2-2-3
+    chapter_local_dependents:
+    - theorem-2-2-6
+    - theorem-2-6-12
+    later_book_uses:
+    - theorem-2-2-6
+    - theorem-2-6-12
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-2-5
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Project to finite coordinates, apply finite-dimensional isoperimetry, and pass through compact approximations/tightness.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The proof is explicitly delegated to Exercises 2.2.5–2.2.7.
+  - Measurability of Minkowski sums needs an explicit completed-measure treatment.
+- id: definition-2-2-5a
+  kind: definition
+  book:
+    number: 2.2.5a
+    pages:
+    - 32
+    section: '2.2'
+    equations: []
+  title: ℓ²-direction Lipschitz function
+  statement: 'A measurable f:ℝ^ℕ→ℝ is ℓ²-Lipschitz when ‖f‖_{Lip₂}:=sup{|f(x)−f(y)|/‖x−y‖₂ : x≠y, x−y∈ℓ²}<∞.'
+  hypotheses:
+    explicit:
+    - f measurable for the product σ-algebra.
+    implicit: []
+  quantifier_order:
+  - Supremum over pairs with ℓ² difference; the denominator is the ℓ² norm.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-2-6
+    later_book_uses:
+    - theorem-2-2-6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: A custom Lipschitz-on-Cameron–Martin-directions predicate rather than ordinary `LipschitzWith` on all of ℝ^ℕ.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
