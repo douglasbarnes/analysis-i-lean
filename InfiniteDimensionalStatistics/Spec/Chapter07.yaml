@@ -8,180 +8,32 @@ source:
   uploaded_file: FULLPDF.pdf
   chapter: 7
   chapter_title: Likelihood-Based Procedures
-  book_pages:
-    start: 541
-    end: 606
-  sections:
-  - number: '7.1'
-    title: Nonparametric Testing in Hellinger Distance
-    start_page: 542
-  - number: '7.2'
-    title: Nonparametric Maximum Likelihood Estimators
-    start_page: 546
-  - number: 7.2.1
-    title: Rates of Convergence in Hellinger Distance
-    start_page: 547
-  - number: 7.2.2
-    title: The Information Geometry of the Likelihood Function
-    start_page: 551
-  - number: 7.2.3
-    title: The Maximum Likelihood Estimator over a Sobolev Ball
-    start_page: 554
-  - number: 7.2.4
-    title: The Maximum Likelihood Estimator of a Monotone Density
-    start_page: 563
-  - number: '7.3'
-    title: Nonparametric Bayes Procedures
-    start_page: 570
-  - number: 7.3.1
-    title: General Contraction Results for Posterior Distributions
-    start_page: 573
-  - number: 7.3.2
-    title: Contraction Results with Gaussian Priors
-    start_page: 578
-  - number: 7.3.3
-    title: Product Priors in Gaussian Regression
-    start_page: 582
-  - number: 7.3.4
-    title: Nonparametric Bernstein–von Mises Theorems
-    start_page: 591
-  - number: '7.4'
-    title: Notes
-    start_page: 603
-purpose: Declaration-level specification only; this file contains no Lean proofs.
+  book_pages: {start: 541, end: 606}
+purpose: Declaration-level Chapter 7 specification only; contains no Lean proofs.
 specification_policy:
   no_lean_proofs: true
-  statement_fidelity: Statements are transcribed or mathematically normalised without changing content. Only corrections in
-    the authors' official errata are incorporated. Other suspected typographical, measurability, normalisation or generality
-    problems remain explicitly flagged.
-  pagination: All page references are printed book pages, not PDF viewer indices.
+  statement_fidelity: Preserve printed statements and quantifiers. Apply official errata explicitly; flag all remaining typographical, measurability, source-legibility and generality issues without silent repair.
   pass_semantics:
-    core: All unstarred Chapter 7 main-text declarations and operative examples, irrespective of implementation difficulty.
-    starred: Only items explicitly marked with a star in the book. Chapter 7 contains no such items.
-    exercise: Selected exercises satisfying the project dependency/reuse criteria.
-  difficulty_values:
-  - routine
-  - substantial
-  - major-library
-  - research-level
+    core: Every unstarred main-text declaration and operative example.
+    starred: Only material explicitly starred in the book; Chapter 7 has no starred entries.
+    exercise: Selected exercises completing omitted proofs, cited later, or supplying reusable lemmas.
+  difficulty_values: [routine, substantial, major-library, research-level]
 audit:
-  official_errata_applied:
-  - page: 545
-    target: Theorem 7.1.4
-    correction: Require n ε² ≥ c₀ and take K=K(c₀), rather than one universal K for every n.
-  - pages:
-    - 559
-    - 560
-    target: Proof of Lemma 7.2.12
-    correction: Use the corrected joint L²/L∞ high-probability event; the first display on p.560 uses the L² rate.
-  - page: 560
-    target: Proof of Lemma 7.2.12
-    correction: Replace the empirical-process citation by Corollary 3.5.7 with the stated parameters, or Remark 3.5.14.
-  - page: 561
-    target: Proof of Lemma 7.2.13
-    correction: The first display uses the L² rate, not the L∞ rate.
-  - page: 562
-    target: Proof of Theorem 7.2.14 and following text
-    correction: Replace the deleted phrase as specified; cite Theorem 4.4.5 and Corollary 3.7.39.
-  - page: 571
-    target: Bayesian joint model
-    correction: Require joint measurability of (x,f)↦p_f(x).
-  - page: 573
-    target: Theorem 7.3.1 setup
-    correction: Require joint measurability of (x,p)↦p(x).
-  - page: 576
-    target: Proof of Theorem 7.3.3
-    correction: Use ε₀=m εₙ for fixed sufficiently large m<M.
-  - page: 577
-    target: Equation (7.95)
-    correction: Use ||f-f₀||₂≤εₙ, not ≤εₙ².
-  - page: 582
-    target: Noise-process sentence
-    correction: Read 'If the noise process ...', not 'Since the noise process ...'.
-  - page: 583
-    target: Condition 7.3.11(a)
-    correction: Delete the assertion that the displayed condition ensures f∈L² almost surely.
-  - page: 588
-    target: Proof citation near Corollary 7.3.13
-    correction: Replace Lemma 2.3.2 by Lemma 2.3.4.
-  - page: 591
-    target: BvM introductory statement
-    correction: Centre at the likelihood estimator or, more generally, any efficient estimator.
-  - page: 595
-    target: H(δ), Theorems 7.3.19 and 7.3.23
-    correction: Require δ>1/2, not merely δ>0.
-  - page: 601
-    target: Equation (7.136) and Theorem 7.3.23
-    correction: The sampling law is P^Y_{f₀}.
-  - page: 602
-    target: Corollary 7.3.24
-    correction: The exponent in the L∞-diameter rate is -γ/(2γ+1).
-  notes_section:
-    pages:
-    - 603
-    - 604
-    - 605
-    - 606
-    audited: true
-    self_contained_declarations_extracted: []
-    notes_only_results_used_later: []
-    conclusion: The notes are bibliographic and historical. No separate mathematically operative result stated only in §7.4
-      was identified as a dependency of a later declaration.
-  mathlib_overlap:
-    checked_on: '2026-07-24'
-    exact_or_close_foundations:
-    - module: Mathlib.Probability.Kernel.Posterior
-      use: Posterior kernels, posterior density and Bayes/disintegration foundations.
-    - module: Mathlib.InformationTheory.KullbackLeibler.Basic
-      use: Kullback–Leibler divergence and zero-divergence characterisations.
-    - module: Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-      use: Probability measures and the weak topology.
-    - module: Mathlib.MeasureTheory.Measure.Portmanteau
-      use: Portmanteau implications for weak convergence.
-    - module: Mathlib.Probability.WeakConvergence
-      use: Convergence in distribution and continuous-mapping infrastructure.
-    not_found_as_exact_theorems:
-    - Chapter 7 Hellinger testing inequalities and composite-test theorem.
-    - Unsieved/sieved NPMLE convergence and efficiency theorems.
-    - Grenander endpoint/rate/efficiency results.
-    - General posterior contraction theorems in the exact book form.
-    - Product-prior contraction bounds.
-    - Finite- and infinite-dimensional nonparametric Bernstein–von Mises theorems.
-    - Frequentist coverage theorem for Bayesian credible balls.
-    hellinger_status: No exact Hellinger-distance module or Chapter 7 theorem was found in the targeted official mathlib documentation
-      audit.
-  repository_overlap:
-    repository: douglasbarnes/analysis-i-lean
-    branch: main
-    checked_on: '2026-07-24'
-    search_terms:
-    - Hellinger
-    - Kullback
-    - posterior
-    - likelihood
-    - maximum likelihood
-    - Sobolev
-    - Besov
-    result: No matching Chapter 7 formalisation was found in the targeted repository search. The InfiniteDimensionalStatistics
-      hierarchy and prior Chapter specification files were absent before this file was created.
+  full_chapter_read: true
+  printed_pages: [541, 606]
+  notes_section_read: true
+  official_errata_integrated: true
+  mathlib_equivalence_recorded_per_entry: true
+  repository_equivalence_recorded_per_entry: true
   source_limitations:
-  - The final §7.3 exercise block is not exposed cleanly by the available searchable text layer. Exercises 7.3.1–7.3.8 are
-    conservatively reconstructed from explicit main-text referrals, with page range and exact wording flagged for visual central
-    review.
-  - Lemma 7.3.8 and Corollary 7.3.24 contain formulae whose exact typography is not fully legible in the searchable layer;
-    the official errata are applied and remaining details are flagged.
+  - Exercises 7.3.1–7.3.8 were reconstructed conservatively from explicit main-text cross-references because the searchable text layer does not expose the final exercise block cleanly; each is individually flagged for page-image verification.
+  - Lemma 7.3.8 and Corollary 7.3.24 retain explicit source-legibility review flags.
 summary:
   inventory_entries: 106
   declarations: 88
   selected_exercises: 18
-  by_pass:
-    core: 88
-    exercise: 18
-  by_difficulty:
-    substantial: 23
-    routine: 10
-    major-library: 37
-    research-level: 36
+  by_pass: {core: 88, exercise: 18, starred: 0}
+  by_difficulty: {routine: 10, substantial: 23, major-library: 37, research-level: 36}
   central_review_flags: 22
   dag_nodes: 106
   dag_edges: 233
@@ -189,16 +41,28 @@ package:
   declaration_inventory:
     files:
     - Chapter07.Section7_1.yaml
-    - Chapter07.Section7_2.yaml
-    - Chapter07.Section7_2_1.yaml
+    - Chapter07.Section7_2.Part1.yaml
+    - Chapter07.Section7_2.Part2.yaml
+    - Chapter07.Section7_2.Part3.yaml
+    - Chapter07.Section7_2_1.Part1.yaml
+    - Chapter07.Section7_2_1.Part2.yaml
     - Chapter07.Section7_2_2.yaml
-    - Chapter07.Section7_2_3.yaml
-    - Chapter07.Section7_2_4.yaml
-    - Chapter07.Section7_3.yaml
-    - Chapter07.Section7_3_1.yaml
+    - Chapter07.Section7_2_3.Part1.yaml
+    - Chapter07.Section7_2_3.Part2.yaml
+    - Chapter07.Section7_2_3.Part3.yaml
+    - Chapter07.Section7_2_4.Part1.yaml
+    - Chapter07.Section7_2_4.Part2.yaml
+    - Chapter07.Section7_3.Part1.yaml
+    - Chapter07.Section7_3.Part2.yaml
+    - Chapter07.Section7_3.Part3.yaml
+    - Chapter07.Section7_3_1.Part1.yaml
+    - Chapter07.Section7_3_1.Part2.yaml
     - Chapter07.Section7_3_2.yaml
-    - Chapter07.Section7_3_3.yaml
-    - Chapter07.Section7_3_4.yaml
+    - Chapter07.Section7_3_3.Part1.yaml
+    - Chapter07.Section7_3_3.Part2.yaml
+    - Chapter07.Section7_3_4.Part1.yaml
+    - Chapter07.Section7_3_4.Part2.yaml
+    - Chapter07.Section7_3_4.Part3.yaml
     key: inventory
     entry_count: 106
     declaration_count: 88
@@ -210,232 +74,12 @@ package:
     edge_count: 233
     acyclic: true
 completeness_check:
-  expected_numbered_labels: &id001
-  - Proposition 7.1.1
-  - Theorem 7.1.2
-  - Corollary 7.1.3
-  - Theorem 7.1.4 (officially corrected)
-  - Theorem 7.2.1
-  - Lemma 7.2.2
-  - Theorem 7.2.3
-  - Proposition 7.2.4
-  - Lemma 7.2.5
-  - Lemma 7.2.6
-  - Proposition 7.2.7
-  - Proposition 7.2.8
-  - Proposition 7.2.9
-  - Theorem 7.2.10
-  - Proposition 7.2.11
-  - Lemma 7.2.12 (proof corrected)
-  - Lemma 7.2.13
-  - Theorem 7.2.14
-  - Theorem 7.2.15
-  - Lemma 7.2.16
-  - Theorem 7.2.17
-  - Lemma 7.2.18
-  - Proposition 7.2.19
-  - Theorem 7.2.20
-  - Theorem 7.3.1
-  - Lemma 7.3.2
-  - Theorem 7.3.3
-  - Lemma 7.3.4
-  - Theorem 7.3.5
-  - Theorem 7.3.6
-  - Theorem 7.3.7
-  - Lemma 7.3.8
-  - Theorem 7.3.9
-  - Definition 7.3.10
-  - Condition 7.3.11
-  - Theorem 7.3.12
-  - Corollary 7.3.13
-  - Proposition 7.3.14
-  - Proposition 7.3.15
-  - Theorem 7.3.16
-  - Condition 7.3.17
-  - Theorem 7.3.18
-  - Theorem 7.3.19 (officially corrected)
-  - Theorem 7.3.20
-  - Proposition 7.3.21
-  - Corollary 7.3.22
-  - Theorem 7.3.23 (officially corrected)
-  - Corollary 7.3.24
-  found_numbered_labels: *id001
   missing_numbered_labels: []
   apparent_numbering_gaps_requiring_source_check: []
   duplicate_ids: []
   all_entries_have_required_fields: true
   exercise_selection_complete: true
-  exercise_source_verification_caveat: Exercises 7.3.1-7.3.8 are reconstructed from explicit main-text cross-references and
-    remain individually flagged for page-image verification.
-central_review_flags:
-- id: ch7.prop.klIdentifiability
-  book_label: (7.22)
-  pages:
-  - 547
-  priority: medium
-  issue: '[generality_or_orientation] p. 547: Check the absolute-continuity direction in the prose against ∫log(p/p₀)dP₀.'
-- id: ch7.prop.7.2.4
-  book_label: Proposition 7.2.4
-  pages:
-  - 552
-  - 553
-  priority: medium
-  issue: '[lean_representation] p. 552: Book writes L∞ but evaluates representatives at sample points; quotient Lp is unsuitable.'
-- id: ch7.lemma.7.2.6
-  book_label: Lemma 7.2.6
-  pages:
-  - 554
-  priority: medium
-  issue: '[generality] p. 554: Population Fréchet differentiability was stated on densities bounded away from zero, while
-    this lemma prints only p₀>0.'
-- id: ch7.prop.7.2.7
-  book_label: Proposition 7.2.7
-  pages:
-  - 555
-  - 556
-  priority: medium
-  issue: '[statement_precision] p. 556: Verify whether the book''s ''continuous'' assertion for extended-real log-likelihood
-    is literally continuous or upper semicontinuous at densities vanishing at sample points.'
-- id: ch7.prop.posteriorConditionalFormulas
-  book_label: (7.77)–(7.79)
-  pages:
-  - 571
-  - 572
-  priority: high
-  issue: '[measurability_and_existence] p. 572: Regular conditional probabilities are not available on arbitrary measurable
-    parameter spaces; Lean should impose Standard Borel hypotheses or phrase the formula as an explicitly constructed kernel
-    when measurable.'
-- id: ch7.def.posteriorContractionRate
-  book_label: Unnumbered definition before Theorem 7.3.1
-  pages:
-  - 573
-  priority: medium
-  issue: '[quantifier_convention] p. 573: The prose definition and individual contraction theorems vary between ''some sufficiently
-    large fixed M'' and ''every sufficiently large fixed M''; preserve each theorem''s own quantifier.'
-- id: ch7.lemma.7.3.4
-  book_label: Lemma 7.3.4
-  pages:
-  - 576
-  - 577
-  priority: medium
-  issue: '[normalisation_review] p. 577: Retain the book''s exact constants when the white-noise likelihood normalisation
-    is fixed in Lean.'
-- id: ch7.lemma.7.3.8
-  book_label: Lemma 7.3.8
-  pages:
-  - 581
-  priority: high
-  issue: '[source_legibility] p. 581: Visually verify the exact exponents and `(1+a)` powers in parts (b),(c) against the
-    uploaded PDF before formalisation.'
-- id: ch7.def.boundaryThickening
-  book_label: Definition preceding Proposition 7.3.21
-  pages:
-  - 599
-  priority: medium
-  issue: '[measurability] p. 599: For arbitrary subsets the distance functions are continuous, but the specification should
-    state the Borel/measurability assumptions needed for evaluating μ(∂_εB).'
-- id: ch7.cor.7.3.24
-  book_label: Corollary 7.3.24
-  pages:
-  - 602
-  priority: medium
-  issue: '[official_erratum] p. 602: The exponent in the final diameter display is negative.'
-- id: ch7.cor.7.3.24
-  book_label: Corollary 7.3.24
-  pages:
-  - 602
-  priority: high
-  issue: '[source_legibility] p. 602: Exact construction and auxiliary conditions are hidden in a collapsed text layer; verify
-    visually against the uploaded PDF before formalisation.'
-- id: ex7.2.4
-  book_label: Exercise 7.2.4
-  pages:
-  - 569
-  priority: medium
-  issue: '[measurability] p. 569: The printed assumptions do not separately state joint/strong measurability of (v,s)↦D₁f(v,s)(h);
-    formalisation must derive it or add it as a flagged hypothesis rather than silently assuming it.'
-- id: ex7.2.7
-  book_label: Exercise 7.2.7
-  pages:
-  - 570
-  priority: medium
-  issue: '[generality] p. 570: The strict order-statistic notation suppresses ties; formalisation should state the grouped
-    version or explicitly assume a continuous sampling law.'
-- id: ex7.3.1
-  book_label: Exercise 7.3.1
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[source_verification] p. 603: Reconstructed from explicit main-text cross-references because the uploaded/public
-    text layer does not expose the final §7.3 exercise block cleanly; visually verify exact wording and page before implementation.'
-- id: ex7.3.2
-  book_label: Exercise 7.3.2
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[source_verification] p. 603: Reconstructed from explicit main-text cross-references because the uploaded/public
-    text layer does not expose the final §7.3 exercise block cleanly; visually verify exact wording and page before implementation.'
-- id: ex7.3.3
-  book_label: Exercise 7.3.3
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[source_verification] p. 603: Reconstructed from explicit main-text cross-references because the uploaded/public
-    text layer does not expose the final §7.3 exercise block cleanly; visually verify exact wording and page before implementation.'
-- id: ex7.3.3
-  book_label: Exercise 7.3.3
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[constant_verification] p. 581: Verify exact constants and the final power/exponential factor in all three parts
-    of Lemma 7.3.8 against the page image.'
-- id: ex7.3.4
-  book_label: Exercise 7.3.4
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[source_verification] p. 603: Reconstructed from explicit main-text cross-references because the uploaded/public
-    text layer does not expose the final §7.3 exercise block cleanly; visually verify exact wording and page before implementation.'
-- id: ex7.3.5
-  book_label: Exercise 7.3.5
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[source_verification] p. 603: Reconstructed from explicit main-text cross-references because the uploaded/public
-    text layer does not expose the final §7.3 exercise block cleanly; visually verify exact wording and page before implementation.'
-- id: ex7.3.6
-  book_label: Exercise 7.3.6
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[source_verification] p. 603: Reconstructed from explicit main-text cross-references because the uploaded/public
-    text layer does not expose the final §7.3 exercise block cleanly; visually verify exact wording and page before implementation.'
-- id: ex7.3.7
-  book_label: Exercise 7.3.7
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[source_verification] p. 603: Reconstructed from explicit main-text cross-references because the uploaded/public
-    text layer does not expose the final §7.3 exercise block cleanly; visually verify exact wording and page before implementation.'
-- id: ex7.3.8
-  book_label: Exercise 7.3.8
-  pages:
-  - 602
-  - 603
-  priority: high
-  issue: '[source_verification] p. 603: Reconstructed from explicit main-text cross-references because the uploaded/public
-    text layer does not expose the final §7.3 exercise block cleanly; visually verify exact wording and page before implementation.'
 validation:
-  chapter_local_schema: true
-  all_entry_fields_present: true
   unique_identifiers: true
   valid_pass_values: true
   valid_difficulty_values: true
@@ -443,5 +87,5 @@ validation:
   dag_acyclic: true
   source_based_pass_semantics: true
   starred_entry_count: 0
-  strict_validator_scope_note: The Chapter 7 package passes the chapter-local strict schema checks. Repository-wide strict
-    acceptance remains dependent on all eight chapter specifications and the P0 clean build.
+  chapter_local_status: pass_with_flagged_central_review_items
+  repository_wide_note: P2 remains blocked until the P0 clean build and all eight chapter specifications pass the common strict validator.
