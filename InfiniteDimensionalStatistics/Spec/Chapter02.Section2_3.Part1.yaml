@@ -1,0 +1,481 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.3'
+fragment_part: 1
+inventory:
+- id: definition-unnumbered-2-3-subgaussian-rv
+  kind: definition
+  book:
+    number: unnumbered-2.3-subgaussian-rv
+    pages:
+    - 36
+    section: '2.3'
+    equations: []
+  title: Sub-Gaussian random variable
+  statement: A centred real random variable ξ is sub-Gaussian with variance proxy σ² when E exp(λξ)≤exp(λ²σ²/2) for every
+    λ∈ℝ.
+  hypotheses:
+    explicit:
+    - ξ measurable and integrable/centred.
+    - σ≥0.
+    implicit: []
+  quantifier_order:
+  - ∀λ∈ℝ.
+  constants:
+  - ∀λ∈ℝ.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: 'Predicate `∀ λ : ℝ, mgf ξ λ ≤ exp (λ^2*σ^2/2)` with integrability encoded by finiteness.'
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-3-psi2
+  kind: definition
+  book:
+    number: unnumbered-2.3-psi2
+    pages:
+    - 37
+    section: '2.3'
+    equations: []
+  title: ψ₂ Orlicz norm
+  statement: ‖ξ‖_{ψ₂}:=inf{c>0:E exp(ξ²/c²)≤2}; L_{ψ₂} is the class where this is finite.
+  hypotheses:
+    explicit:
+    - ξ a real random variable.
+    implicit:
+    - The infimum is over positive real c and is a norm modulo almost-sure equality under the stated Orlicz convention.
+  quantifier_order:
+  - Threshold 2 is fixed.
+  constants:
+  - Threshold 2 is fixed.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-3-5
+    chapter_local_dependents:
+    - lemma-2-3-1
+    - lemma-2-3-3
+    later_book_uses:
+    - lemma-2-3-1
+    - lemma-2-3-3
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-3-5
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: An Orlicz/Luxemburg norm specialised to `ψ₂(x)=exp(x²)-1`, likely requiring a custom definition.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-3-1
+  kind: lemma
+  book:
+    number: 2.3.1
+    pages:
+    - 38
+    section: '2.3'
+    equations: []
+  title: Equivalent sub-Gaussian formulations
+  statement: The Laplace bound, Gaussian tail bound, and finite ψ₂ norm imply each other with the explicit constants in the
+    book; in particular a tail Pr(|ξ|≥t)≤2e^{-t²/(2σ²)} implies ‖ξ‖_{ψ₂}≤√6σ, and a centred ψ₂ variable is sub-Gaussian with
+    proxy bounded by a universal multiple of ‖ξ‖_{ψ₂}².
+  hypotheses:
+    explicit:
+    - ξ real; centring required for the MGF implication.
+    - σ>0.
+    implicit: []
+  quantifier_order:
+  - Explicit constants include √6 and the displayed book constants; quantifiers are ∀t>0 and ∀λ∈ℝ.
+  constants:
+  - Explicit constants include √6 and the displayed book constants; quantifiers are ∀t>0 and ∀λ∈ℝ.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-unnumbered-2-3-psi2
+    chapter_local_dependents:
+    - exercise-2-3-4
+    - lemma-2-3-2
+    later_book_uses:
+    - lemma-2-3-2
+    - exercise-2-3-4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: A bundle of implications proved by Chernoff optimisation, tail integration, and power-series/MGF estimates.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - Retain the book's nonoptimal constants; do not normalise to a different ψ₂ convention.
+- id: lemma-2-3-2
+  kind: lemma
+  book:
+    number: 2.3.2
+    pages:
+    - 38
+    section: '2.3'
+    equations: []
+  title: Sub-Gaussian bounds with a prefactor
+  statement: If a tail or Laplace inequality holds with prefactor C, then ‖ξ‖_{ψ₂}≤√(2(2C+1))σ; if ξ is centred, it is sub-Gaussian
+    with variance proxy 12(2C+1)σ².
+  hypotheses:
+    explicit:
+    - C≥1 or C>0 as in the book.
+    - σ>0.
+    - Centring for the final MGF bound.
+    implicit: []
+  quantifier_order:
+  - √(2(2C+1)); 12(2C+1).
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-3-1
+    chapter_local_dependents:
+    - exercise-2-3-9
+    later_book_uses:
+    - exercise-2-3-9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Reduce the prefactor inequality to ψ₂ integrability, then invoke Lemma 2.3.1.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-3-3
+  kind: lemma
+  book:
+    number: 2.3.3
+    pages:
+    - 39
+    section: '2.3'
+    equations: []
+  title: ψ₂ norm of a finite maximum
+  statement: For ξ₁,…,ξ_N, ‖max_{i≤N}|ξᵢ|‖_{ψ₂}≤4√(log N)·max_i‖ξᵢ‖_{ψ₂} (with the small-N convention implicit in the book),
+    and corresponding L^p/maximal bounds follow.
+  hypotheses:
+    explicit:
+    - N finite and at least the range needed for log N; N=1 treated separately.
+    - Each ξᵢ∈L_{ψ₂}.
+    implicit: []
+  quantifier_order:
+  - Factor 4 and √log N.
+  constants:
+  - Factor 4 and √log N.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-unnumbered-2-3-psi2
+    chapter_local_dependents:
+    - exercise-2-3-1
+    - exercise-2-3-8
+    - exercise-2-3-9
+    later_book_uses:
+    - exercise-2-3-1
+    - exercise-2-3-8
+    - exercise-2-3-9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Use union bound and the Orlicz definition; finite `Finset.max` and expectation estimates.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-3-4
+  kind: lemma
+  book:
+    number: 2.3.4
+    pages:
+    - 40
+    section: '2.3'
+    equations: []
+  title: Expected maximum of Gaussian/sub-Gaussian variables
+  statement: If E exp(λξᵢ)≤exp(λ²σᵢ²/2), then E max_{i≤N}ξᵢ≤√(2log N)max_iσᵢ; if the same holds for ±ξᵢ, then E max_i|ξᵢ|≤√(2log(2N))max_iσᵢ.
+  hypotheses:
+    explicit:
+    - Finite N.
+    - MGFs finite and satisfy the displayed bounds.
+    implicit: []
+  quantifier_order:
+  - √(2log N), √(2log(2N)).
+  constants:
+  - √(2log N), √(2log(2N)).
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-3-6
+    - theorem-2-8-1
+    later_book_uses:
+    - theorem-2-3-6
+    - theorem-2-8-1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Log-sum-exp/Jensen bound followed by optimisation in λ.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-3-5
+  kind: definition
+  book:
+    number: 2.3.5
+    pages:
+    - 40
+    section: '2.3'
+    equations: []
+  title: Sub-Gaussian process relative to d
+  statement: X is sub-Gaussian relative to a pseudometric d when every increment X(t)−X(s) is centred and E exp(λ(X(t)−X(s)))≤exp(λ²d(s,t)²/2)
+    for all λ; a relaxed version permits a fixed prefactor C.
+  hypotheses:
+    explicit:
+    - A real process X on T.
+    - A pseudometric d.
+    - Coordinate/increment measurability.
+    implicit: []
+  quantifier_order:
+  - ∀s,t∈T ∀λ∈ℝ; optional universal prefactor C.
+  constants:
+  - ∀s,t∈T ∀λ∈ℝ; optional universal prefactor C.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-3-6
+    - theorem-2-8-1
+    later_book_uses:
+    - theorem-2-3-6
+    - theorem-2-8-1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Predicate on increments parameterised by a `PseudoMetricSpace T`.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-3-covering
+  kind: definition
+  book:
+    number: unnumbered-2.3-covering
+    pages:
+    - 41
+    section: '2.3'
+    equations: []
+  title: Covering number and metric entropy
+  statement: N(T,d,ε) is the least number of d-balls of radius ε needed to cover T; log N(T,d,ε) is the metric entropy.
+  hypotheses:
+    explicit:
+    - ε>0.
+    - (T,d) pseudometric.
+    implicit: []
+  quantifier_order:
+  - Infimum/minimum over finite covers; value ∞ if no finite cover.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - corollary-2-124
+    - definition-unnumbered-2-3-packing
+    - theorem-2-3-6
+    later_book_uses:
+    - definition-unnumbered-2-3-packing
+    - theorem-2-3-6
+    - corollary-2-124
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: An `ℕ∞`-valued minimal-cardinality finite cover, with an extended-real logarithm for the entropy integral.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
