@@ -76,7 +76,7 @@ chapters:
     printed_pages: {start: 467, end: 540}
     specification: InfiniteDimensionalStatistics/Spec/Chapter06.yaml
     audit_step: P1.6
-    status: artifact_available_not_ingested
+    status: specification_ingested_pending_acceptance
   - number: 7
     title: Likelihood-Based Procedures
     printed_pages: {start: 541, end: 606}
@@ -106,7 +106,7 @@ phase_gates:
   P1:
     all_eight_specifications_required: true
     validator_must_pass: true
-    status: blocked_on_six_uningested_chapters
+    status: blocked_on_remaining_chapters_and_full_validation
   P2:
     status: blocked
     unblock_condition: P0 clean build certified and every P1 chapter specification accepted by the common validator.
