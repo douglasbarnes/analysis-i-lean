@@ -1,0 +1,444 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.6'
+fragment_part: 6
+inventory:
+- id: exercise-2-6-8
+  kind: exercise
+  book:
+    number: Exercise 2.6.8
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Lévy maximal inequality in a Banach space
+  statement: For independent symmetric B-valued random variables X_i, S_k=∑_{i≤k}X_i, prove Pr(max_{k≤n}||S_k||>t)≤2Pr(||S_n||>t)
+    for every t>0.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-6-10
+    later_book_uses:
+    - theorem-2-6-10
+    - Theorem 2.6.10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Stopping-time reflection/involution on the first crossing event.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Theorem 2.6.10
+- id: exercise-2-6-9
+  kind: exercise
+  book:
+    number: Exercise 2.6.9
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Lévy–Ciesielski series for Brownian motion
+  statement: Using the integrated Haar functions h₀,h_{n,k}, prove they form an orthonormal basis of the Brownian RKHS and
+    that ∑g_{n,k}h_{n,k}+g₀h₀ converges uniformly a.s. and in every Lp, defining Brownian motion.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example-2-6-7
+    - theorem-2-6-10
+    chapter_local_dependents:
+    - exercise-2-6-12
+    - exercise-2-6-13
+    - theorem-2-6-26
+    later_book_uses:
+    - theorem-2-6-26
+    - exercise-2-6-12
+    - exercise-2-6-13
+    - Theorem 2.6.26
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: RKHS basis calculation plus Gaussian series maximal/convergence estimates.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Theorem 2.6.26
+- id: exercise-2-6-10
+  kind: exercise
+  book:
+    number: Exercise 2.6.10
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Uniqueness from the characteristic functional
+  statement: For Borel probabilities μ,ν on separable Banach B, prove that equality of characteristic functionals ∫e^{if(x)}dμ=∫e^{if(x)}dν
+    for every f∈B* implies μ=ν.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-6-13
+    later_book_uses:
+    - theorem-2-6-13
+    - Theorem 2.6.13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Reduce to all finite-dimensional cylindrical marginals; use Borel=cylindrical σ-algebra.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Theorem 2.6.13
+- id: exercise-2-6-11
+  kind: exercise
+  book:
+    number: Exercise 2.6.11
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Alternative support description
+  statement: For a centred Gaussian law μ=L(X) on separable Banach B, prove supp μ is the B-closure of F={E[f(X)X]:f∈B*}.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-6-17
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Show F is dense in the RKHS image and invoke the support theorem.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-6-12
+  kind: exercise
+  book:
+    number: Exercise 2.6.12
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Brownian small balls in Lp
+  statement: For 1≤p<∞, prove that constants C_p∈(0,∞) exist such that, for small ε, −C_p ε^{-2}≤log Pr(||W||_{L^p}<ε)≤−C_p^{-1}ε^{-2}.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - ∀1≤p<∞; two-sided order ε^{-2}.
+  constants:
+  - ∀1≤p<∞; two-sided order ε^{-2}.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-6-9
+    - theorem-2-6-26
+    chapter_local_dependents: []
+    later_book_uses:
+    - Notes and later small-ball estimates
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Adapt the Haar-block proof of Theorem 2.6.26 using ℓp norm comparisons.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Notes and later small-ball estimates
+- id: exercise-2-6-13
+  kind: exercise
+  book:
+    number: Exercise 2.6.13
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Brownian small balls in a Hölder norm
+  statement: For the Hölder seminorm ||x||_{Lip(α)}:=sup_{s≠t}|x(t)−x(s)|/|t−s|^α with 0≤α<1/2, prove a two-sided logarithmic
+    small-ball estimate of order ε^{-2/(1−2α)} for Brownian motion, by modifying the block scale in the proof of Theorem 2.6.26.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - Expected exponent 2/(1−2α), α<1/2.
+  constants:
+  - Expected exponent 2/(1−2α), α<1/2.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-6-9
+    - theorem-2-6-26
+    chapter_local_dependents: []
+    later_book_uses:
+    - Notes on Hölder-norm small balls
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Haar coefficient characterisation of Hölder regularity and independent Gaussian block probabilities.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - The OCR drops most of Exercise 2.6.13. The norm, α-range, constants and exact two-sided display must be transcribed visually
+    from page 87 before implementation. The exponent recorded here is the standard one indicated by the notes, not a silent
+    replacement of the printed text.
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Notes on Hölder-norm small balls
+- id: exercise-2-6-14
+  kind: exercise
+  book:
+    number: Exercise 2.6.14
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Spectral representation of a Hilbert-valued Gaussian
+  statement: For centred X in separable Hilbert B with E||X||²<∞, let Q be its covariance operator. Prove Q is self-adjoint
+    positive Hilbert–Schmidt; for an eigenbasis e_i with eigenvalues λ_i², prove ∑λ_i g_i e_i has the same law as X.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - example-2-6-15
+    later_book_uses:
+    - example-2-6-15
+    - Example 2.6.15
+    - Chapter 6 Gaussian sequence models
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Covariance-operator spectral theorem plus equality of Gaussian finite-dimensional laws.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Example 2.6.15
+  - Chapter 6 Gaussian sequence models

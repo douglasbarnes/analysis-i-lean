@@ -1,0 +1,493 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.6'
+fragment_part: 5
+inventory:
+- id: corollary-2-6-30
+  kind: corollary
+  book:
+    number: 2.6.30
+    pages:
+    - 86
+    section: '2.6'
+    equations: []
+  title: Small-ball concentration of released integrated Brownian motion
+  statement: For every k∈ℕ∪{0}, φ₀^{W_k}(ε)≤C_k ε^{-2/(2k+1)} for all sufficiently small ε.
+  hypotheses:
+    explicit:
+    - W_k released k-times integrated Brownian motion.
+    implicit: []
+  quantifier_order:
+  - Exponent 2/(2k+1).
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-6-27
+    - corollary-2-83
+    - proposition-2-6-24
+    - theorem-2-6-29
+    chapter_local_dependents: []
+    later_book_uses:
+    - 'later-bayesian-density-estimation: The notes explicitly announce later Bayesian density-estimation use.'
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: The notes state that the inequality is actually two-sided; the printed chapter only proves/records the upper
+      bound. The result is explicitly announced as used later in Bayesian density estimation.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Instantiate the entropy exponent α=1/(k+1) in Theorem 2.6.29 and simplify 2α/(2−α)=2/(2k+1).
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: exercise-2-6-1
+  kind: exercise
+  book:
+    number: Exercise 2.6.1
+    pages:
+    - 86
+    section: '2.6'
+    equations: []
+  title: Continuous dual of the product space ℝ^T
+  statement: Prove that every continuous linear functional on ℝ^T with the product topology is a finite linear combination
+    of coordinate evaluations, and conversely.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses:
+    - Process RKHS cylinder-functional representation
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: supporting functional-analysis infrastructure only
+      candidates:
+      - ContinuousLinearMap
+      - StrongDual
+      - HilbertSpace
+      - MeasureTheory.BochnerIntegral
+      - MeasureTheory.Integrable
+      - Metric.IsCompact
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: functional_analysis
+  likely_lean_representation:
+    sketch: Continuity at zero yields dependence on finitely many basic-product coordinates.
+    blockers:
+    - No exact declaration matching the book statement was located.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Process RKHS cylinder-functional representation
+- id: exercise-2-6-2
+  kind: exercise
+  book:
+    number: Exercise 2.6.2
+    pages:
+    - 86
+    section: '2.6'
+    equations: []
+  title: Banach–Alaoglu and weak-* metrisability
+  statement: For a Banach space B prove (a) the dual unit ball is weak-* compact; (b) if B is separable, its weak-* topology
+    on the dual unit ball is metrisable.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - proposition-2-6-9
+    later_book_uses:
+    - proposition-2-6-9
+    - Proposition 2.6.9 compactness arguments
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: supporting functional-analysis infrastructure only
+      candidates:
+      - ContinuousLinearMap
+      - StrongDual
+      - HilbertSpace
+      - MeasureTheory.BochnerIntegral
+      - MeasureTheory.Integrable
+      - Metric.IsCompact
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: functional_analysis
+  likely_lean_representation:
+    sketch: Use Tychonoff and a metric induced by a countable dense set.
+    blockers:
+    - No exact declaration matching the book statement was located.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Proposition 2.6.9 compactness arguments
+- id: exercise-2-6-3
+  kind: exercise
+  book:
+    number: Exercise 2.6.3
+    pages:
+    - 86
+    section: '2.6'
+    equations: []
+  title: Finite-support measures are weak-* sequentially dense
+  statement: 'Prove that finitely supported Borel measures on [a,b] are weak-* sequentially dense in the finite signed measures
+    C([a,b])*. '
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - example-2-6-7
+    later_book_uses:
+    - example-2-6-7
+    - Brownian RKHS dual computations
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: supporting functional-analysis infrastructure only
+      candidates:
+      - ContinuousLinearMap
+      - StrongDual
+      - HilbertSpace
+      - MeasureTheory.BochnerIntegral
+      - MeasureTheory.Integrable
+      - Metric.IsCompact
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: functional_analysis
+  likely_lean_representation:
+    sketch: Approximate positive measures by step-distribution measures and use Jordan decomposition.
+    blockers:
+    - No exact declaration matching the book statement was located.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Brownian RKHS dual computations
+- id: exercise-2-6-4
+  kind: exercise
+  book:
+    number: Exercise 2.6.4
+    pages:
+    - 86
+    section: '2.6'
+    equations: []
+  title: Proof of the RKHS dual characterisation
+  statement: 'Prove Proposition 2.6.8: x lies in the RKHS H iff there is D<∞ with |f(x)|²≤D C_X(f,f) for every f∈B*, and the
+    least such D is ||x||_H².'
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-6-4
+    chapter_local_dependents:
+    - proposition-2-6-8
+    later_book_uses:
+    - proposition-2-6-8
+    - Proposition 2.6.8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Riesz representation on the Gaussian first chaos after extending x↦f(x).
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  used_by:
+  - Proposition 2.6.8
+- id: exercise-2-6-5
+  kind: exercise
+  book:
+    number: Exercise 2.6.5
+    pages:
+    - 86
+    section: '2.6'
+    equations: []
+  title: RKHS under a continuous linear map
+  statement: For continuous linear A:B₁→B₂ and centred Gaussian X with RKHS H₁, prove the RKHS of A(X) is A(H₁), ||Ax||_{H₂}≤||x||_{H₁},
+    and each y=A x has a minimum-norm preimage attaining equality; if A is injective, A is an isometry.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-6-4
+    chapter_local_dependents:
+    - exercise-2-6-16
+    - lemma-2-6-22
+    later_book_uses:
+    - lemma-2-6-22
+    - exercise-2-6-16
+    - Lemma 2.6.22 and consistency of process/Banach RKHS definitions
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Identify the first-chaos maps and quotient Hilbert norm under A.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Lemma 2.6.22 and consistency of process/Banach RKHS definitions
+- id: exercise-2-6-6
+  kind: exercise
+  book:
+    number: Exercise 2.6.6
+    pages:
+    - 86
+    section: '2.6'
+    equations: []
+  title: Process analogues of Banach RKHS topology and KL expansion
+  statement: State and prove the process-indexed analogues of Proposition 2.6.9 and Theorem 2.6.10 for separable Gaussian
+    processes.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-6-9
+    - theorem-2-6-10
+    chapter_local_dependents: []
+    later_book_uses:
+    - Process KL expansions
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Use the product-space dual from Exercise 2.6.1 and countable separability.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Process KL expansions
+- id: exercise-2-6-7
+  kind: exercise
+  book:
+    number: Exercise 2.6.7
+    pages:
+    - 87
+    section: '2.6'
+    equations: []
+  title: Countable norming set for a compact convex symmetric body
+  statement: Let K≠∅ be compact, convex and symmetric in separable Banach B; with its Minkowski functional ||·||_K on B_K,
+    prove there is countable D_K⊆B*₁ such that ||x||_K=sup_{f∈D_K}|f(x)|. Deduce separability of f↦f(X) and E||X||_K²<∞ whenever
+    Pr(||X||_K<∞)>0.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-20
+    chapter_local_dependents:
+    - proposition-2-6-9
+    later_book_uses:
+    - proposition-2-6-9
+    - Theorem 2.1.20 applications
+    - Proposition 2.6.9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: supporting functional-analysis infrastructure only
+      candidates:
+      - ContinuousLinearMap
+      - StrongDual
+      - HilbertSpace
+      - MeasureTheory.BochnerIntegral
+      - MeasureTheory.Integrable
+      - Metric.IsCompact
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: functional_analysis
+  likely_lean_representation:
+    sketch: Separate rational exterior points and choose a countable dense family of supporting functionals.
+    blockers:
+    - No exact declaration matching the book statement was located.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Theorem 2.1.20 applications
+  - Proposition 2.6.9

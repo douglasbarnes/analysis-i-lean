@@ -236,11 +236,31 @@ completeness_check:
   method: Compared the full Chapter 2 source-order inventory, including operative unnumbered statements, notes results and
     all selected exercises, against the extracted node list.
 inventory_files:
-- Chapter02.Section2_1.yaml
-- Chapter02.Section2_2.yaml
-- Chapter02.Section2_3.yaml
-- Chapter02.Section2_4.yaml
+- Chapter02.Section2_1.Part1.yaml
+- Chapter02.Section2_1.Part2.yaml
+- Chapter02.Section2_1.Part3.yaml
+- Chapter02.Section2_1.Part4.yaml
+- Chapter02.Section2_1.Part5.yaml
+- Chapter02.Section2_2.Part1.yaml
+- Chapter02.Section2_2.Part2.yaml
+- Chapter02.Section2_2.Part3.yaml
+- Chapter02.Section2_2.Part4.yaml
+- Chapter02.Section2_3.Part1.yaml
+- Chapter02.Section2_3.Part2.yaml
+- Chapter02.Section2_3.Part3.yaml
+- Chapter02.Section2_4.Part1.yaml
+- Chapter02.Section2_4.Part2.yaml
+- Chapter02.Section2_4.Part3.yaml
+- Chapter02.Section2_4.Part4.yaml
 - Chapter02.Section2_5.yaml
-- Chapter02.Section2_6.yaml
-- Chapter02.Section2_7.yaml
+- Chapter02.Section2_6.Part1.yaml
+- Chapter02.Section2_6.Part2.yaml
+- Chapter02.Section2_6.Part3.yaml
+- Chapter02.Section2_6.Part4.yaml
+- Chapter02.Section2_6.Part5.yaml
+- Chapter02.Section2_6.Part6.yaml
+- Chapter02.Section2_6.Part7.yaml
+- Chapter02.Section2_7.Part1.yaml
+- Chapter02.Section2_7.Part2.yaml
+- Chapter02.Section2_7.Part3.yaml
 - Chapter02.Section2_8.yaml

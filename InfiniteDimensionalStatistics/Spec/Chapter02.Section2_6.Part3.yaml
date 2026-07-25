@@ -1,0 +1,481 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.6'
+fragment_part: 3
+inventory:
+- id: corollary-2-6-17
+  kind: corollary
+  book:
+    number: 2.6.17
+    pages:
+    - 77
+    section: '2.6'
+    equations: []
+  title: Support of a centred Gaussian measure
+  statement: The topological support of μ is the B-norm closure of its RKHS H.
+  hypotheses:
+    explicit:
+    - μ centred Gaussian Borel probability on separable Banach B.
+    implicit: []
+  quantifier_order:
+  - Equality of closed subsets of B.
+  constants:
+  - Equality of closed subsets of B.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-6-11
+    - theorem-2-4-5
+    - theorem-2-6-13
+    chapter_local_dependents:
+    - exercise-2-6-11
+    later_book_uses:
+    - exercise-2-6-11
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Show every ball around H has positive μ-measure by Cameron–Martin and Anderson; show μ is carried by closure H
+      via KL expansion.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-6-18
+  kind: corollary
+  book:
+    number: 2.6.18
+    pages:
+    - 77
+    section: '2.6'
+    equations: []
+  title: Shifted small-ball lower bound
+  statement: For h∈H and ε>0, Pr(‖X−h‖<ε)≥exp(−‖h‖_H²/2)Pr(‖X‖<ε).
+  hypotheses:
+    explicit:
+    - X centred Gaussian in separable Banach B.
+    - h∈H.
+    - ε>0.
+    implicit: []
+  quantifier_order:
+  - Factor exp(−‖h‖²/2).
+  constants:
+  - Factor exp(−‖h‖²/2).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-5
+    - theorem-2-6-13
+    chapter_local_dependents:
+    - proposition-2-6-19
+    later_book_uses:
+    - proposition-2-6-19
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: The notes identify this consequence as observed by Borell and other authors.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Use the Cameron–Martin density, symmetry/Anderson, and Jensen or a half-space argument.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - Check strict `<ε` versus closed `≤ε` balls; later use invokes continuity of the norm distribution to switch boundaries.
+- id: definition-unnumbered-2-6-concentration-function
+  kind: definition
+  book:
+    number: unnumbered-2.6-concentration-function
+    pages:
+    - 77
+    section: '2.6'
+    equations: []
+  title: Gaussian concentration function
+  statement: For x in closure_B H and ε>0, φ_x(ε):=inf{½‖h‖_H²−log Pr(‖X‖<ε):h∈H, ‖h−x‖<ε}.
+  hypotheses:
+    explicit:
+    - x∈closure H.
+    - ε>0.
+    - Small-ball probability positive by Anderson/support.
+    implicit: []
+  quantifier_order:
+  - Coefficient 1/2; the approximation radius and small-ball radius are both ε.
+  constants:
+  - Coefficient 1/2; the approximation radius and small-ball radius are both ε.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: An extended-real infimum over the RKHS subtype, with positivity/finite-value lemmas.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-6-19
+  kind: proposition
+  book:
+    number: 2.6.19
+    pages:
+    - 78
+    section: '2.6'
+    equations: []
+  title: Concentration function bounds shifted small balls
+  statement: For x∈closure H and ε>0, φ_x(ε)≤−log Pr(‖X−x‖<ε)≤φ_x(ε/2).
+  hypotheses:
+    explicit:
+    - X centred Gaussian B-valued.
+    - x∈closure H.
+    - ε>0.
+    implicit: []
+  quantifier_order:
+  - Radii ε and ε/2 exactly.
+  constants:
+  - Radii ε and ε/2 exactly.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-6-18
+    - exercise-2-2-13
+    - exercise-2-4-4
+    - theorem-2-4-5
+    chapter_local_dependents:
+    - lemma-2-6-20
+    later_book_uses:
+    - lemma-2-6-20
+    - 'later-chapter7-gaussian-prior-contraction: The notes identify the concentration-function small-ball bound as a later
+      Bayesian input.'
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Notes say this precise form is due to van der Vaart–van Zanten and is used later in Bayesian applications.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Upper bound via an RKHS approximant; lower bound via the minimum-norm approximant and Cameron–Martin/Anderson.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-6-20
+  kind: lemma
+  book:
+    number: 2.6.20
+    pages:
+    - 78
+    section: '2.6'
+    equations: []
+  title: Minimum-norm RKHS approximant
+  statement: 'As printed/OCR, for x in the support closure and ε>0, define B_{ε,x}:={h∈H: ||h−x||_B < ε}. The text claims
+    that inf_{h∈B_{ε,x}} ||h||_H is attained at a unique h₀∈B_{ε,x}.'
+  hypotheses:
+    explicit:
+    - x∈closure H.
+    - ε>0.
+    - B_{ε,x} nonempty.
+    implicit: []
+  quantifier_order:
+  - Variational inequality for all h in the feasible convex set.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-6-19
+    - proposition-2-6-9
+    chapter_local_dependents:
+    - lemma-2-6-21
+    later_book_uses:
+    - lemma-2-6-21
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Metric projection of 0 onto a nonempty closed convex subset of H, with compactness of bounded H-balls in B used
+      to prove feasibility/closedness.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - 'The displayed set is OCR-transcribed with the strict inequality `||h−x||<ε`, but the proof uses a closed convex feasible
+    set and boundary arguments. Open-ball attainment is generally false. Check the printed PDF: this is likely a `<`/`≤` typographical
+    or OCR issue, and no formal statement should be generated until central review resolves it.'
+- id: lemma-2-6-21
+  kind: lemma
+  book:
+    number: 2.6.21
+    pages:
+    - 79
+    section: '2.6'
+    equations: []
+  title: Sign of the Cameron–Martin functional on the shifted ball
+  statement: With h_ε from Lemma 2.6.20, φ⁻¹(h_ε)≥0 almost surely on {‖X+h_ε−x‖<ε}.
+  hypotheses:
+    explicit:
+    - All notation from Proposition 2.6.19 and Lemma 2.6.20.
+    implicit: []
+  quantifier_order:
+  - Almost-sure statement restricted to the displayed event.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-6-20
+    - theorem-2-6-10
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Use KL partial sums in H, the variational inequality, L² convergence of the inner products, and an almost-sure
+      subsequence.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-6-integrated-bm
+  kind: definition
+  book:
+    number: unnumbered-2.6-integrated-bm
+    pages:
+    - 79
+    section: '2.6'
+    equations: []
+  title: Integrated and released Brownian motions
+  statement: I_{0+}f(t)=∫₀^t f(s)ds, iterated as I_{0+}^k; the released k-times integrated Brownian motion is W_k(t)=I_{0+}^kW(t)+∑_{j=0}^k
+    t^j g_j/j! with independent standard Gaussian release variables.
+  hypotheses:
+    explicit:
+    - W Brownian motion on [0,1].
+    - Release variables independent of W and each other.
+    implicit: []
+  quantifier_order:
+  - Polynomial coefficients 1/j!.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Iterated Bochner/Lebesgue integral operator on continuous paths and a finite Gaussian polynomial process.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-6-22
+  kind: lemma
+  book:
+    number: 2.6.22
+    pages:
+    - 79
+    section: '2.6'
+    equations: []
+  title: RKHS of integrated Brownian motion
+  statement: The RKHS of I_{0+}^kW consists of functions h with h^{(j)}(0)=0 for 0≤j≤k, h^{(k)} absolutely continuous and
+    h^{(k+1)}∈L²; its norm is ‖h^{(k+1)}‖₂.
+  hypotheses:
+    explicit:
+    - k∈ℕ∪{0}.
+    - Functions on [0,1].
+    implicit: []
+  quantifier_order:
+  - k+1 derivative in L²; k+1 zero initial conditions.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example-2-6-7
+    - exercise-2-6-5
+    chapter_local_dependents:
+    - proposition-2-6-24
+    later_book_uses:
+    - proposition-2-6-24
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian-measure foundation exists; RKHS/Cameron-Martin theorem not located
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - StrongDual
+      - HilbertSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: rkhs
+  likely_lean_representation:
+    sketch: Apply the RKHS-under-injective-continuous-linear-map exercise to iterated integration and identify the range as
+      a Sobolev/AC space.
+    blockers:
+    - A book-compatible Cameron-Martin/RKHS interface is new major-library work.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
