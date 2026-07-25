@@ -1,16 +1,12 @@
 schema_version: '1.0-package'
 source:
   title: Mathematical Foundations of Infinite-Dimensional Statistical Models
-  authors:
-  - Evarist Giné
-  - Richard Nickl
+  authors: [Evarist Giné, Richard Nickl]
   edition: First edition (2016)
   uploaded_file: FULLPDF.pdf
   chapter: 7
   chapter_title: Likelihood-Based Procedures
-  book_pages:
-    start: 541
-    end: 606
+  book_pages: {start: 541, end: 606}
 purpose: Declaration-level specification only; this package contains no Lean proofs.
 specification_policy:
   statement_fidelity: Preserve the printed statement and apply only identified official errata. Suspected typographical, measurability, normalisation and generality issues remain explicitly flagged.
