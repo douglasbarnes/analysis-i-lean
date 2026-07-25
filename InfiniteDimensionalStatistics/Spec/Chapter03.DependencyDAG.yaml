@@ -1,0 +1,777 @@
+schema_version: '1.0'
+chapter_local_dependency_dag:
+  nodes:
+  - HFP
+  - KP_entropy_integral
+  - P_bridge
+  - P_motion
+  - Qf_notation
+  - bounded_Lipschitz_distance
+  - bounded_differences
+  - bracketing_number
+  - canonical_Ustat
+  - centred_empirical_process
+  - ch3.ex.3_1_10
+  - ch3.ex.3_1_11
+  - ch3.ex.3_1_3
+  - ch3.ex.3_1_4
+  - ch3.ex.3_1_5
+  - ch3.ex.3_1_6
+  - ch3.ex.3_1_7
+  - ch3.ex.3_1_8
+  - ch3.ex.3_1_9
+  - ch3.ex.3_2_1
+  - ch3.ex.3_2_2
+  - ch3.ex.3_2_3
+  - ch3.ex.3_2_4
+  - ch3.ex.3_3_2
+  - ch3.ex.3_3_3
+  - ch3.ex.3_3_4
+  - ch3.ex.3_3_5
+  - ch3.ex.3_3_6
+  - ch3.ex.3_3_7
+  - ch3.ex.3_3_9
+  - ch3.ex.3_4_1
+  - ch3.ex.3_4_2
+  - ch3.ex.3_4_4
+  - ch3.ex.3_5_4
+  - ch3.ex.3_5_5
+  - ch3.ex.3_6_13
+  - ch3.ex.3_6_15
+  - ch3.ex.3_6_16
+  - ch3.ex.3_6_17
+  - ch3.ex.3_6_5
+  - ch3.ex.3_6_6
+  - ch3.ex.3_6_7
+  - ch3.ex.3_6_8
+  - ch3.ex.3_6_9
+  - ch3.ex.3_7_1
+  - ch3.ex.3_7_10
+  - ch3.ex.3_7_14
+  - ch3.ex.3_7_15
+  - ch3.ex.3_7_16
+  - ch3.ex.3_7_17
+  - ch3.ex.3_7_19
+  - ch3.ex.3_7_2
+  - ch3.ex.3_7_20
+  - ch3.ex.3_7_21
+  - ch3.ex.3_7_3
+  - ch3.ex.3_7_5
+  - ch3.ex.3_7_6
+  - ch3.ex.3_7_7
+  - ch3.ex.3_7_8
+  - ch3.ex.3_7_9
+  - convex_distance
+  - coordinate_expectation
+  - corollary_3_1_18
+  - corollary_3_1_20
+  - corollary_3_1_25
+  - corollary_3_2_2
+  - corollary_3_2_5
+  - corollary_3_2_6
+  - corollary_3_3_6
+  - corollary_3_3_8
+  - corollary_3_5_7
+  - corollary_3_5_8
+  - corollary_3_5_9
+  - corollary_3_6_4
+  - corollary_3_6_5
+  - corollary_3_7_15
+  - corollary_3_7_16
+  - corollary_3_7_17
+  - corollary_3_7_21
+  - corollary_3_7_35
+  - corollary_3_7_39
+  - corollary_3_7_48
+  - corollary_3_7_50
+  - corollary_3_7_9
+  - countable_approximation
+  - definition_3_1_19
+  - definition_3_3_2
+  - definition_3_5_10
+  - definition_3_6_1
+  - definition_3_6_10
+  - definition_3_6_13
+  - definition_3_6_8
+  - definition_3_7_10
+  - definition_3_7_11
+  - definition_3_7_22
+  - definition_3_7_26
+  - definition_3_7_29
+  - definition_3_7_41
+  - definition_3_7_44
+  - definition_3_7_5
+  - empirical_L2_metric
+  - empirical_measure
+  - example_3_1_3
+  - example_3_1_4
+  - example_3_3_13
+  - example_3_6_14
+  - example_3_7_12
+  - example_3_7_13
+  - example_3_7_19
+  - example_3_7_4
+  - example_3_7_42
+  - example_3_7_43
+  - example_3_7_56
+  - example_3_7_57
+  - example_3_7_6
+  - example_3_7_7
+  - gaussian_empirical_process
+  - item_3_7_51
+  - kde_example
+  - lemma_3_1_1
+  - lemma_3_1_13
+  - lemma_3_2_10
+  - lemma_3_2_11
+  - lemma_3_2_3
+  - lemma_3_3_17
+  - lemma_3_3_18
+  - lemma_3_3_19
+  - lemma_3_3_3
+  - lemma_3_3_4
+  - lemma_3_4_6
+  - lemma_3_4_7
+  - lemma_3_5_12
+  - lemma_3_5_3
+  - lemma_3_6_11
+  - lemma_3_6_15
+  - lemma_3_6_16
+  - lemma_3_7_45
+  - lemma_3_7_46
+  - lemma_3_7_53
+  - lorentz_L21
+  - outer_expectation
+  - outer_probability
+  - p_variation
+  - phi_nu
+  - prelinear_map
+  - proposition_3_1_11
+  - proposition_3_1_12
+  - proposition_3_1_14
+  - proposition_3_1_23
+  - proposition_3_1_24
+  - proposition_3_1_26
+  - proposition_3_1_6
+  - proposition_3_1_8
+  - proposition_3_2_8
+  - proposition_3_3_1
+  - proposition_3_3_5
+  - proposition_3_5_15
+  - proposition_3_6_12
+  - proposition_3_6_3
+  - proposition_3_6_6
+  - proposition_3_6_7
+  - proposition_3_7_1
+  - proposition_3_7_2
+  - proposition_3_7_24
+  - proposition_3_7_3
+  - proposition_3_7_32
+  - proposition_3_7_33
+  - proposition_3_7_34
+  - proposition_3_7_49
+  - proposition_3_7_8
+  - rademacher_empirical_process
+  - random_entropy_numbers
+  - remark_3_3_11
+  - remark_3_4_2
+  - remark_3_4_4
+  - remark_3_5_2
+  - remark_3_5_5
+  - remark_3_7_18
+  - remark_3_7_27
+  - remark_3_7_30
+  - sample_bounded
+  - theorem_3_1_10
+  - theorem_3_1_15
+  - theorem_3_1_16
+  - theorem_3_1_17
+  - theorem_3_1_2
+  - theorem_3_1_21
+  - theorem_3_1_22
+  - theorem_3_1_5
+  - theorem_3_1_7
+  - theorem_3_1_9
+  - theorem_3_2_1
+  - theorem_3_2_4
+  - theorem_3_2_7
+  - theorem_3_2_9
+  - theorem_3_3_10
+  - theorem_3_3_14
+  - theorem_3_3_15
+  - theorem_3_3_16
+  - theorem_3_3_7
+  - theorem_3_3_9
+  - theorem_3_4_1
+  - theorem_3_4_3
+  - theorem_3_4_5
+  - theorem_3_4_8
+  - theorem_3_5_1
+  - theorem_3_5_11
+  - theorem_3_5_13
+  - theorem_3_5_21
+  - theorem_3_5_4
+  - theorem_3_5_6
+  - theorem_3_6_17
+  - theorem_3_6_2
+  - theorem_3_6_9
+  - theorem_3_7_14
+  - theorem_3_7_20
+  - theorem_3_7_23
+  - theorem_3_7_25
+  - theorem_3_7_28
+  - theorem_3_7_31
+  - theorem_3_7_36
+  - theorem_3_7_37
+  - theorem_3_7_38
+  - theorem_3_7_40
+  - theorem_3_7_47
+  - theorem_3_7_52
+  - theorem_3_7_54
+  - theorem_3_7_55
+  - uncentred_empirical_process
+  - uniform_deviation
+  edges:
+  - from: empirical_measure
+    to: uncentred_empirical_process
+  - from: Qf_notation
+    to: centred_empirical_process
+  - from: empirical_measure
+    to: centred_empirical_process
+  - from: lemma_3_1_1
+    to: theorem_3_1_2
+  - from: theorem_3_1_2
+    to: example_3_1_3
+  - from: theorem_3_1_5
+    to: proposition_3_1_6
+  - from: proposition_3_1_6
+    to: theorem_3_1_7
+  - from: theorem_3_1_7
+    to: proposition_3_1_8
+  - from: proposition_3_1_6
+    to: theorem_3_1_9
+  - from: sample_bounded
+    to: proposition_3_1_11
+  - from: proposition_3_1_12
+    to: lemma_3_1_13
+  - from: lemma_3_1_13
+    to: proposition_3_1_14
+  - from: proposition_3_1_14
+    to: theorem_3_1_15
+  - from: theorem_3_1_15
+    to: theorem_3_1_16
+  - from: theorem_3_1_17
+    to: corollary_3_1_18
+  - from: corollary_3_1_18
+    to: corollary_3_1_20
+  - from: definition_3_1_19
+    to: corollary_3_1_20
+  - from: definition_3_1_19
+    to: theorem_3_1_21
+  - from: proposition_3_1_11
+    to: theorem_3_1_21
+  - from: theorem_3_1_15
+    to: theorem_3_1_22
+  - from: theorem_3_1_21
+    to: theorem_3_1_22
+  - from: theorem_3_1_21
+    to: proposition_3_1_23
+  - from: proposition_3_1_23
+    to: proposition_3_1_24
+  - from: proposition_3_1_24
+    to: corollary_3_1_25
+  - from: lorentz_L21
+    to: proposition_3_1_26
+  - from: theorem_3_1_21
+    to: proposition_3_1_26
+  - from: definition_3_1_19
+    to: theorem_3_2_1
+  - from: theorem_3_1_17
+    to: theorem_3_2_1
+  - from: theorem_3_2_1
+    to: corollary_3_2_2
+  - from: convex_distance
+    to: lemma_3_2_3
+  - from: ch3.ex.3_2_1
+    to: theorem_3_2_4
+  - from: lemma_3_2_3
+    to: theorem_3_2_4
+  - from: theorem_3_2_4
+    to: corollary_3_2_5
+  - from: corollary_3_2_5
+    to: corollary_3_2_6
+  - from: ch3.ex.3_2_2
+    to: theorem_3_2_7
+  - from: ch3.ex.3_2_3
+    to: theorem_3_2_7
+  - from: corollary_3_2_6
+    to: theorem_3_2_7
+  - from: lemma_3_2_10
+    to: theorem_3_2_9
+  - from: lemma_3_2_11
+    to: theorem_3_2_9
+  - from: proposition_3_2_8
+    to: theorem_3_2_9
+  - from: proposition_3_2_8
+    to: lemma_3_2_11
+  - from: definition_3_3_2
+    to: lemma_3_3_3
+  - from: phi_nu
+    to: lemma_3_3_4
+  - from: definition_3_3_2
+    to: proposition_3_3_5
+  - from: lemma_3_3_4
+    to: proposition_3_3_5
+  - from: proposition_3_3_1
+    to: proposition_3_3_5
+  - from: lemma_3_3_3
+    to: corollary_3_3_6
+  - from: proposition_3_3_5
+    to: corollary_3_3_6
+  - from: corollary_3_3_6
+    to: theorem_3_3_7
+  - from: lemma_3_3_3
+    to: theorem_3_3_7
+  - from: proposition_3_1_6
+    to: corollary_3_3_8
+  - from: theorem_3_3_7
+    to: corollary_3_3_8
+  - from: corollary_3_3_8
+    to: theorem_3_3_9
+  - from: lemma_3_3_3
+    to: theorem_3_3_9
+  - from: lemma_3_3_3
+    to: theorem_3_3_10
+  - from: proposition_3_3_1
+    to: theorem_3_3_10
+  - from: theorem_3_3_10
+    to: remark_3_3_11
+  - from: bounded_differences
+    to: example_3_3_13
+  - from: bounded_differences
+    to: theorem_3_3_14
+  - from: proposition_3_3_1
+    to: theorem_3_3_14
+  - from: definition_3_3_2
+    to: theorem_3_3_15
+  - from: phi_nu
+    to: theorem_3_3_15
+  - from: proposition_3_3_1
+    to: theorem_3_3_15
+  - from: proposition_3_3_1
+    to: theorem_3_3_16
+  - from: proposition_3_3_1
+    to: lemma_3_3_17
+  - from: lemma_3_3_17
+    to: lemma_3_3_18
+  - from: lemma_3_3_17
+    to: lemma_3_3_19
+  - from: theorem_3_1_22
+    to: theorem_3_4_1
+  - from: theorem_3_3_9
+    to: theorem_3_4_1
+  - from: theorem_3_4_1
+    to: remark_3_4_2
+  - from: remark_3_3_11
+    to: theorem_3_4_3
+  - from: theorem_3_1_21
+    to: theorem_3_4_3
+  - from: theorem_3_3_9
+    to: theorem_3_4_3
+  - from: theorem_3_4_3
+    to: remark_3_4_4
+  - from: theorem_3_1_21
+    to: theorem_3_4_5
+  - from: theorem_3_3_14
+    to: theorem_3_4_5
+  - from: canonical_Ustat
+    to: lemma_3_4_7
+  - from: lemma_3_4_6
+    to: lemma_3_4_7
+  - from: lemma_3_4_6
+    to: theorem_3_4_8
+  - from: lemma_3_4_7
+    to: theorem_3_4_8
+  - from: empirical_measure
+    to: empirical_L2_metric
+  - from: empirical_L2_metric
+    to: random_entropy_numbers
+  - from: random_entropy_numbers
+    to: theorem_3_5_1
+  - from: theorem_3_1_21
+    to: theorem_3_5_1
+  - from: theorem_3_5_1
+    to: remark_3_5_2
+  - from: lemma_3_5_3
+    to: theorem_3_5_4
+  - from: theorem_3_1_15
+    to: theorem_3_5_4
+  - from: theorem_3_5_1
+    to: theorem_3_5_4
+  - from: theorem_3_5_4
+    to: remark_3_5_5
+  - from: theorem_3_5_4
+    to: theorem_3_5_6
+  - from: theorem_3_5_6
+    to: corollary_3_5_7
+  - from: corollary_3_5_7
+    to: corollary_3_5_8
+  - from: theorem_3_5_6
+    to: corollary_3_5_9
+  - from: theorem_3_5_6
+    to: definition_3_5_10
+  - from: corollary_3_5_9
+    to: theorem_3_5_11
+  - from: theorem_3_2_9
+    to: theorem_3_5_11
+  - from: theorem_3_3_9
+    to: theorem_3_5_11
+  - from: theorem_3_1_10
+    to: lemma_3_5_12
+  - from: theorem_3_1_5
+    to: lemma_3_5_12
+  - from: bracketing_number
+    to: theorem_3_5_13
+  - from: lemma_3_5_12
+    to: theorem_3_5_13
+  - from: theorem_3_5_13
+    to: proposition_3_5_15
+  - from: theorem_3_1_7
+    to: theorem_3_5_21
+  - from: theorem_3_5_13
+    to: theorem_3_5_21
+  - from: definition_3_6_1
+    to: theorem_3_6_2
+  - from: proposition_3_6_3
+    to: theorem_3_6_2
+  - from: definition_3_6_1
+    to: proposition_3_6_3
+  - from: theorem_3_6_2
+    to: corollary_3_6_4
+  - from: theorem_3_6_2
+    to: corollary_3_6_5
+  - from: definition_3_6_1
+    to: proposition_3_6_6
+  - from: theorem_3_6_2
+    to: proposition_3_6_7
+  - from: definition_3_6_1
+    to: definition_3_6_8
+  - from: corollary_3_6_5
+    to: theorem_3_6_9
+  - from: definition_3_6_8
+    to: theorem_3_6_9
+  - from: theorem_3_6_9
+    to: definition_3_6_10
+  - from: ch3.ex.3_6_13
+    to: lemma_3_6_11
+  - from: p_variation
+    to: lemma_3_6_11
+  - from: lemma_3_6_11
+    to: proposition_3_6_12
+  - from: theorem_3_6_9
+    to: proposition_3_6_12
+  - from: definition_3_6_13
+    to: example_3_6_14
+  - from: lemma_3_6_15
+    to: lemma_3_6_16
+  - from: lemma_3_6_15
+    to: theorem_3_6_17
+  - from: lemma_3_6_16
+    to: theorem_3_6_17
+  - from: outer_probability
+    to: outer_expectation
+  - from: outer_expectation
+    to: proposition_3_7_1
+  - from: proposition_3_7_1
+    to: proposition_3_7_2
+  - from: proposition_3_7_1
+    to: proposition_3_7_3
+  - from: ch3.ex.3_7_3
+    to: example_3_7_4
+  - from: proposition_3_1_11
+    to: example_3_7_4
+  - from: proposition_3_1_23
+    to: example_3_7_4
+  - from: proposition_3_7_3
+    to: example_3_7_4
+  - from: theorem_3_1_15
+    to: example_3_7_4
+  - from: definition_3_7_5
+    to: example_3_7_6
+  - from: definition_3_7_5
+    to: example_3_7_7
+  - from: ch3.ex.3_7_2
+    to: proposition_3_7_8
+  - from: proposition_3_7_1
+    to: proposition_3_7_8
+  - from: proposition_3_7_8
+    to: corollary_3_7_9
+  - from: outer_probability
+    to: definition_3_7_10
+  - from: uniform_deviation
+    to: definition_3_7_10
+  - from: definition_3_7_11
+    to: example_3_7_12
+  - from: definition_3_7_11
+    to: example_3_7_13
+  - from: p_variation
+    to: example_3_7_13
+  - from: corollary_3_7_9
+    to: theorem_3_7_14
+  - from: definition_3_7_11
+    to: theorem_3_7_14
+  - from: theorem_3_1_21
+    to: theorem_3_7_14
+  - from: theorem_3_7_14
+    to: corollary_3_7_15
+  - from: corollary_3_7_15
+    to: corollary_3_7_16
+  - from: definition_3_6_1
+    to: corollary_3_7_16
+  - from: corollary_3_7_15
+    to: corollary_3_7_17
+  - from: definition_3_6_10
+    to: corollary_3_7_17
+  - from: theorem_3_6_9
+    to: corollary_3_7_17
+  - from: definition_3_7_10
+    to: remark_3_7_18
+  - from: corollary_3_7_17
+    to: example_3_7_19
+  - from: example_3_7_12
+    to: example_3_7_19
+  - from: bracketing_number
+    to: theorem_3_7_20
+  - from: theorem_3_7_20
+    to: corollary_3_7_21
+  - from: outer_expectation
+    to: definition_3_7_22
+  - from: sample_bounded
+    to: definition_3_7_22
+  - from: ch3.ex.3_7_8
+    to: theorem_3_7_23
+  - from: definition_3_7_22
+    to: theorem_3_7_23
+  - from: definition_3_7_22
+    to: bounded_Lipschitz_distance
+  - from: bounded_Lipschitz_distance
+    to: proposition_3_7_24
+  - from: theorem_3_7_23
+    to: proposition_3_7_24
+  - from: ch3.ex.3_7_9
+    to: theorem_3_7_25
+  - from: definition_3_7_5
+    to: theorem_3_7_25
+  - from: proposition_3_7_24
+    to: theorem_3_7_25
+  - from: P_bridge
+    to: definition_3_7_26
+  - from: definition_3_7_26
+    to: remark_3_7_27
+  - from: ch3.ex.3_7_10
+    to: theorem_3_7_28
+  - from: definition_3_7_26
+    to: theorem_3_7_28
+  - from: prelinear_map
+    to: theorem_3_7_28
+  - from: theorem_3_7_25
+    to: theorem_3_7_28
+  - from: P_bridge
+    to: definition_3_7_29
+  - from: centred_empirical_process
+    to: definition_3_7_29
+  - from: definition_3_7_22
+    to: definition_3_7_29
+  - from: definition_3_7_29
+    to: remark_3_7_30
+  - from: definition_3_7_26
+    to: theorem_3_7_31
+  - from: definition_3_7_29
+    to: theorem_3_7_31
+  - from: theorem_3_7_23
+    to: theorem_3_7_31
+  - from: example_3_7_4
+    to: proposition_3_7_32
+  - from: proposition_3_1_23
+    to: proposition_3_7_32
+  - from: theorem_3_7_31
+    to: proposition_3_7_32
+  - from: theorem_3_7_31
+    to: proposition_3_7_33
+  - from: HFP
+    to: proposition_3_7_34
+  - from: theorem_3_7_25
+    to: proposition_3_7_34
+  - from: theorem_3_7_28
+    to: proposition_3_7_34
+  - from: proposition_3_7_33
+    to: corollary_3_7_35
+  - from: proposition_3_7_34
+    to: corollary_3_7_35
+  - from: theorem_3_5_1
+    to: theorem_3_7_36
+  - from: theorem_3_7_31
+    to: theorem_3_7_36
+  - from: corollary_3_7_35
+    to: theorem_3_7_37
+  - from: theorem_3_6_17
+    to: theorem_3_7_37
+  - from: theorem_3_6_9
+    to: theorem_3_7_37
+  - from: theorem_3_7_36
+    to: theorem_3_7_37
+  - from: theorem_3_5_13
+    to: theorem_3_7_38
+  - from: theorem_3_7_31
+    to: theorem_3_7_38
+  - from: example_3_7_19
+    to: corollary_3_7_39
+  - from: theorem_3_7_37
+    to: corollary_3_7_39
+  - from: definition_3_1_19
+    to: rademacher_empirical_process
+  - from: P_bridge
+    to: P_motion
+  - from: P_motion
+    to: theorem_3_7_40
+  - from: example_3_7_4
+    to: theorem_3_7_40
+  - from: rademacher_empirical_process
+    to: theorem_3_7_40
+  - from: theorem_3_7_31
+    to: theorem_3_7_40
+  - from: P_motion
+    to: definition_3_7_41
+  - from: definition_3_7_41
+    to: example_3_7_42
+  - from: theorem_3_6_17
+    to: example_3_7_42
+  - from: theorem_3_6_9
+    to: example_3_7_42
+  - from: definition_3_7_41
+    to: example_3_7_43
+  - from: bounded_Lipschitz_distance
+    to: definition_3_7_44
+  - from: definition_3_7_29
+    to: definition_3_7_44
+  - from: bounded_Lipschitz_distance
+    to: lemma_3_7_46
+  - from: definition_3_7_41
+    to: theorem_3_7_47
+  - from: definition_3_7_44
+    to: theorem_3_7_47
+  - from: lemma_3_7_45
+    to: theorem_3_7_47
+  - from: lemma_3_7_46
+    to: theorem_3_7_47
+  - from: theorem_3_7_23
+    to: theorem_3_7_47
+  - from: theorem_3_7_47
+    to: corollary_3_7_48
+  - from: definition_3_7_41
+    to: proposition_3_7_49
+  - from: theorem_3_7_47
+    to: proposition_3_7_49
+  - from: ch3.ex.3_6_7
+    to: corollary_3_7_50
+  - from: example_3_6_14
+    to: corollary_3_7_50
+  - from: proposition_3_7_49
+    to: corollary_3_7_50
+  - from: rademacher_empirical_process
+    to: theorem_3_7_52
+  - from: theorem_3_7_31
+    to: theorem_3_7_52
+  - from: theorem_3_7_40
+    to: theorem_3_7_52
+  - from: proposition_3_1_24
+    to: lemma_3_7_53
+  - from: theorem_3_1_2
+    to: lemma_3_7_53
+  - from: lemma_3_7_53
+    to: theorem_3_7_54
+  - from: theorem_3_7_52
+    to: theorem_3_7_54
+  - from: definition_3_6_1
+    to: theorem_3_7_55
+  - from: theorem_3_7_54
+    to: theorem_3_7_55
+  - from: ch3.ex.3_1_8
+    to: example_3_7_56
+  - from: ch3.ex.3_7_21
+    to: example_3_7_56
+  - from: theorem_3_7_55
+    to: example_3_7_56
+  - from: ch3.ex.3_6_17
+    to: example_3_7_57
+  - from: ch3.ex.3_7_21
+    to: example_3_7_57
+  - from: theorem_3_7_37
+    to: example_3_7_57
+  - from: theorem_3_7_52
+    to: example_3_7_57
+  - from: sample_bounded
+    to: ch3.ex.3_1_3
+  - from: sample_bounded
+    to: ch3.ex.3_1_4
+  - from: proposition_3_1_23
+    to: ch3.ex.3_1_5
+  - from: proposition_3_1_23
+    to: ch3.ex.3_1_6
+  - from: theorem_3_1_21
+    to: ch3.ex.3_1_7
+  - from: theorem_3_1_2
+    to: ch3.ex.3_1_10
+  - from: theorem_3_1_7
+    to: ch3.ex.3_1_10
+  - from: theorem_3_1_9
+    to: ch3.ex.3_1_11
+  - from: lemma_3_2_3
+    to: ch3.ex.3_2_1
+  - from: corollary_3_2_6
+    to: ch3.ex.3_2_2
+  - from: ch3.ex.3_2_2
+    to: ch3.ex.3_2_3
+  - from: theorem_3_3_10
+    to: ch3.ex.3_3_2
+  - from: theorem_3_3_9
+    to: ch3.ex.3_3_2
+  - from: ch3.ex.3_1_7
+    to: ch3.ex.3_3_3
+  - from: theorem_3_3_9
+    to: ch3.ex.3_3_3
+  - from: theorem_3_3_9
+    to: ch3.ex.3_3_4
+  - from: ch3.ex.3_3_4
+    to: ch3.ex.3_3_5
+  - from: ch3.ex.3_3_4
+    to: ch3.ex.3_3_6
+  - from: theorem_3_4_8
+    to: ch3.ex.3_4_4
+  - from: bracketing_number
+    to: ch3.ex.3_5_4
+  - from: proposition_3_5_15
+    to: ch3.ex.3_5_5
+  - from: theorem_3_6_17
+    to: ch3.ex.3_6_7
+  - from: theorem_3_6_2
+    to: ch3.ex.3_6_9
+  - from: proposition_3_7_1
+    to: ch3.ex.3_7_1
+  - from: proposition_3_7_1
+    to: ch3.ex.3_7_2
+  - from: theorem_3_7_20
+    to: ch3.ex.3_7_5
+  - from: theorem_3_7_14
+    to: ch3.ex.3_7_6
+  - from: prelinear_map
+    to: ch3.ex.3_7_10
+  - from: proposition_3_7_34
+    to: ch3.ex.3_7_14
+  - from: proposition_3_1_26
+    to: ch3.ex.3_7_15
+  - from: theorem_3_7_40
+    to: ch3.ex.3_7_15
+  - from: ch3.ex.3_7_19
+    to: ch3.ex.3_7_20
+  acyclic: true
