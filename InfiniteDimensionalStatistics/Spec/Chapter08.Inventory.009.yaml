@@ -1,0 +1,531 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 9
+chunk_count: 16
+inventory:
+- id: ch8.separated_l2_class_8_47
+  kind: definition
+  book:
+    number: (8.47)
+    pages:
+    - 634
+    section: 8.3.1
+    equations:
+    - '8.47'
+  title: L2-separated rough class
+  statement: S̃(r,ρ)={f∈S(r):inf_{g∈S(s)}‖f−g‖₂≥ρ}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - ρ≥0
+    - 0<r<s
+    implicit: []
+  quantifier_order:
+  - Fix ρ
+  - take metric distance to S(s)
+  - intersect with S(r)
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.sobolev_besov_ball_8_45
+    later_book_uses:
+    - ch8.l2_confidence_criteria_8_48_50
+    - ch8.theorem_8_3_5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - lp
+      - ContinuousLinearMap
+      - Metric.diam
+      - Finset.sum
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Metric separation predicate in L2.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.l2_confidence_criteria_8_48_50
+  kind: definition
+  book:
+    number: (8.48)–(8.50)
+    pages:
+    - 634
+    section: 8.3.1
+    equations:
+    - '8.48'
+    - '8.50'
+  title: Two-class L2 confidence criteria
+  statement: Require asymptotic coverage over S(s)∪S̃(r,ρ_n), a smooth-class diameter tail at Lr_n, and a rough-class
+    diameter tail at L n^{-r/(2r+1)}, each uniformly over the indicated class for all sufficiently large n.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - 0<α<1
+    - α′>0
+    - L>0
+    - sequence ρ_n≥0
+    implicit:
+    - The rough-class rate is the L2 estimation rate; random-set diameter is measurable.
+  quantifier_order:
+  - Fix α,α′
+  - choose L and C_n
+  - state coverage liminf and two eventual tail bounds
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.separated_l2_class_8_47
+    later_book_uses:
+    - ch8.theorem_8_3_5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.Integral
+      - Filter.liminf
+      - Metric.diam
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Three predicates analogous to (8.39)–(8.41), with L2 metric.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-019
+  - CR-025
+- id: ch8.theorem_8_3_5
+  kind: theorem
+  book:
+    number: Theorem 8.3.5
+    pages:
+    - 634
+    section: 8.3.1
+    equations:
+    - '8.3'
+  title: Sharp separation window for adaptive L2 confidence balls
+  statement: (a) If a confidence set satisfies (8.48)–(8.50) with any r_n=o(n^{-r/(2r+1/2)}), then necessarily liminf_n
+    ρ_n/n^{-r/(2r+1/2)}>0. (b) With smooth-class target n^{-s/(2s+1)}, such confidence sets exist either when s≤2r
+    with ρ_n=0, or when s>2r and ρ_n≥c n^{-r/(2r+1/2)} eventually for c sufficiently large.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - white-noise model
+    - known radius B
+    - 0<r<s
+    implicit:
+    - Confidence sets can be constructed from sample splitting and unbiased risk estimation.
+  quantifier_order:
+  - 'Lower: quantify error levels and sub-rate, then derive necessary separation'
+  - 'Upper: split into s≤2r and s>2r cases'
+  constants:
+  - c and confidence-radius constants depend on model parameters and error levels.
+  dependencies:
+    earlier_book:
+    - Theorem 6.4.8
+    - Theorem 6.2.20
+    - Theorem 6.2.11(c)
+    chapter_local:
+    - ch8.l2_confidence_diameter_benchmark_8_46
+    - ch8.l2_confidence_criteria_8_48_50
+    - ch8.theorem_8_2_2
+    - ch8.lemma_8_2_1
+    later_book_uses:
+    - ch8.theorem_8_3_8
+    - ch8.theorem_8_3_11
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Core two-class adaptive confidence-ball theorem combining unbiased risk estimation with minimax composite
+      testing.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-019
+  - CR-025
+  - CR-028
+  - CR-029
+- id: ch8.minimax_estimation_rates_8_53
+  kind: definition
+  book:
+    number: (8.53)
+    pages:
+    - 636
+    section: 8.3.1
+    equations:
+    - '8.53'
+  title: Abstract minimax estimation rates for nested models
+  statement: For an experiment {P_f^(n):f∈Θ}, metric d and submodel Θ₀⊂Θ, let r_n(Θ₀),r_n(Θ) be rates achieved by
+    estimators uniformly over the respective classes in the probability-tail minimax sense stated in (8.53).
+  source_fidelity: exact-conceptual-paraphrase
+  hypotheses:
+    explicit:
+    - Θ₀⊂Θ
+    - d is a metric or pseudometric
+    - statistical experiment indexed by Θ
+    implicit:
+    - Standard measurable sample spaces and measurable estimators are assumed.
+  quantifier_order:
+  - For each class and every error tolerance choose a constant and estimator giving a uniform tail bound
+  constants: []
+  dependencies:
+    earlier_book:
+    - Chapter 6 minimax estimation definitions
+    chapter_local: []
+    later_book_uses:
+    - ch8.abstract_separation_8_54
+    - ch8.proposition_8_3_6
+    - ch8.proposition_8_3_7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - Measure.map
+      - Measure.dirac
+      - ProbabilityTheory.HasLaw
+      - ProbabilityTheory.IdentDistrib
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib supplies measurable spaces, probability measures, kernels, Gaussian
+        variables, finite products, and filters for asymptotics, but not the chapter’s statistical-experiment or
+        minimax-testing declarations.
+      audit_profile: statistical_experiment
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean after searches for Lepski, Besov, Gaussian
+        white noise, self-similar, and adaptive confidence.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Abstract predicates `IsUniformEstimationRate experiment d Θ rate` and nested-model variants.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-025
+  - CR-028
+  - CR-029
+- id: ch8.abstract_separation_8_54
+  kind: definition
+  book:
+    number: (8.54)
+    pages:
+    - 636
+    section: 8.3.1
+    equations:
+    - '8.54'
+  title: Abstract separated alternative
+  statement: Θ̃(ρ)={f∈Θ:d(f,Θ₀)≥ρ}, where d(f,Θ₀)=inf_{v∈Θ₀}d(f,v).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - Θ₀⊂Θ
+    - ρ≥0
+    implicit:
+    - The infimum is well-defined in ℝ≥0∞ or Θ₀ is nonempty.
+  quantifier_order:
+  - Fix ρ
+  - define distance to set
+  - define separated subset
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.minimax_estimation_rates_8_53
+    later_book_uses:
+    - ch8.abstract_testing_problem_8_55
+    - ch8.abstract_model_P
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - lp
+      - ContinuousLinearMap
+      - Metric.diam
+      - Finset.sum
+      exact_equivalent: false
+      assessment: No exact declaration. Basic Hilbert-space projections, ℓ², norm inequalities, finite sums, and
+        topology are available; the statistical or Besov-specific layer is not.
+      audit_profile: functional_analysis
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Set distance and separated subtype.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - CR-028
+- id: ch8.abstract_testing_problem_8_55
+  kind: definition
+  book:
+    number: (8.55)
+    pages:
+    - 636
+    section: 8.3.1
+    equations:
+    - '8.55'
+  title: Abstract composite testing problem
+  statement: Test H₀:f∈Θ₀ against H₁:f∈Θ̃(ρ).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - abstract experiment and separated class
+    implicit:
+    - Tests are measurable Boolean-valued maps.
+  quantifier_order:
+  - Fix n,ρ
+  - define type-I and type-II suprema
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.abstract_separation_8_54
+    later_book_uses:
+    - ch8.minimax_testing_rate_8_56_57
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - MeasureTheory.Measure
+      - Measure.map
+      - Measure.dirac
+      - ProbabilityTheory.HasLaw
+      - ProbabilityTheory.IdentDistrib
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib supplies measurable spaces, probability measures, kernels, Gaussian
+        variables, finite products, and filters for asymptotics, but not the chapter’s statistical-experiment or
+        minimax-testing declarations.
+      audit_profile: statistical_experiment
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean after searches for Lepski, Besov, Gaussian
+        white noise, self-similar, and adaptive confidence.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A `TestingProblem` structure with null and alternative sets.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-028
+- id: ch8.minimax_testing_rate_8_56_57
+  kind: definition
+  book:
+    number: (8.56)–(8.57)
+    pages:
+    - 636
+    section: 8.3.1
+    equations:
+    - '8.56'
+    - '8.57'
+  title: Abstract minimax testing rate
+  statement: 'A positive sequence ρ_n^* is a minimax testing rate if: (a) for every β>0 there are L(β) and tests
+    with sup_{Θ₀}E_fφ_n+sup_{Θ̃(Lρ_n^*)}E_f(1−φ_n)≤β; (b) for some β′>0 and every ρ_n′=o(ρ_n^*), liminf_n inf_{φ_n}[sup_{Θ₀}E_fφ_n+sup_{Θ̃(ρ_n′)}E_f(1−φ_n)]≥β′.'
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - positive rate sequence
+    - nonempty null model
+    implicit:
+    - Infima range over measurable tests.
+  quantifier_order:
+  - 'Upper: ∀β ∃L ∃tests ∀n'
+  - 'Lower: ∃β′ ∀sub-rate sequences liminf inf-tests ≥β′'
+  constants:
+  - L depends only on β and fixed problem data.
+  dependencies:
+    earlier_book:
+    - Chapter 6 testing-rate definition
+    chapter_local:
+    - ch8.abstract_testing_problem_8_55
+    later_book_uses:
+    - ch8.proposition_8_3_6
+    - ch8.proposition_8_3_7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib supplies measurable spaces, probability measures, kernels, Gaussian
+        variables, finite products, and filters for asymptotics, but not the chapter’s statistical-experiment or
+        minimax-testing declarations.
+      audit_profile: statistical_experiment
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean after searches for Lepski, Besov, Gaussian
+        white noise, self-similar, and adaptive confidence.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Two predicates for achievability and lower-bound optimality, with explicit filter little-o.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-025
+  - CR-028
+  - CR-029
+- id: ch8.abstract_model_P
+  kind: definition
+  book:
+    number: paragraph after (8.57)
+    pages:
+    - 636
+    section: 8.3.1
+    equations:
+    - '8.57'
+  title: Separated adaptation model
+  statement: P(ρ_n)=Θ₀∪Θ̃(ρ_n).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - sequence ρ_n≥0
+    implicit: []
+  quantifier_order:
+  - For each n define the union model
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.abstract_separation_8_54
+    later_book_uses:
+    - ch8.abstract_confidence_criteria_8_58_60
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.Integral
+      - Filter.liminf
+      - Metric.diam
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: n-indexed set-valued model.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
