@@ -78,3 +78,12 @@ completeness_check:
   unresolved_source_items:
   - Exact constants and typography in Lemma 7.3.8 require visual confirmation.
   - Exact auxiliary construction and conditions in Corollary 7.3.24 require visual confirmation.
+validation:
+  chapter_local_strict_schema: pass
+  unique_identifiers: true
+  valid_pass_values: true
+  valid_difficulty_values: true
+  valid_dependency_references: true
+  dag_acyclic: true
+  source_based_pass_semantics: true
+  starred_entry_count: 0
