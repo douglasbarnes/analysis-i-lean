@@ -1,0 +1,453 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.1'
+fragment_part: 4
+inventory:
+- id: example-2-1-19
+  kind: example
+  book:
+    number: 2.1.19
+    pages:
+    - 23
+    section: '2.1'
+    equations: []
+  title: Finite Gaussian maximum concentration
+  statement: For a centred jointly Gaussian vector (g₁,…,gₙ), σ²=max_i E gᵢ², and every nonnegative even convex Φ increasing
+    on [0,∞), E Φ(max_i|gᵢ|−E max_i|gᵢ|) ≤ E Φ((π/2)σg), g∼N(0,1). Consequently Pr(max_i|gᵢ|−E max_i|gᵢ|>u) ≤ 2 exp(−u²/(2π²σ²)).
+  hypotheses:
+    explicit:
+    - n≥1.
+    - (gᵢ) jointly centred Gaussian.
+    - Φ as stated.
+    - u>0.
+    implicit: []
+  quantifier_order:
+  - σ²=max variances.
+  - Universal factor π/2 and tail denominator 2π²σ².
+  constants:
+  - Universal factor π/2 and tail denominator 2π²σ².
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-17
+    chapter_local_dependents:
+    - theorem-2-1-20
+    later_book_uses:
+    - theorem-2-1-20
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Specialise Theorem 2.1.17 to the sup norm on `Fin n → ℝ`, then use an exponential/cosh test function and Gaussian
+      MGF.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-1-20
+  kind: theorem
+  book:
+    number: 2.1.20
+    pages:
+    - 24
+    section: '2.1'
+    equations: []
+  title: Integrability and concentration of a separable Gaussian supremum
+  statement: Let X be a centred separable Gaussian process and assume Pr(sup_t|X(t)|<∞)>0. Then σ²:=sup_t EX(t)²<∞, E sup_t|X(t)|<∞,
+    and the convex-comparison conclusion of Theorem 2.1.17 extends to the supremum. In particular there is the stated Gaussian
+    upper tail, with the book's constant K=1/π² in its parameterisation.
+  hypotheses:
+    explicit:
+    - X centred and separable.
+    - Positive probability of a finite supremum.
+    implicit:
+    - The supremum is measurable by separability.
+    - σ is finite as part of the conclusion.
+  quantifier_order:
+  - ∀ admissible Φ; ∀u>0; universal constants exactly as displayed in the book.
+  constants:
+  - ∀ admissible Φ; ∀u>0; universal constants exactly as displayed in the book.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-1-14
+    - example-2-1-15
+    - example-2-1-19
+    - theorem-2-1-17
+    chapter_local_dependents:
+    - corollary-2-4-13
+    - corollary-2-4-14
+    - exercise-2-1-1
+    - exercise-2-1-2
+    - exercise-2-1-3
+    - exercise-2-1-4
+    - exercise-2-1-5
+    - exercise-2-6-7
+    - lemma-2-6-3
+    - theorem-2-2-7
+    - theorem-2-5-8
+    later_book_uses:
+    - theorem-2-2-7
+    - corollary-2-4-13
+    - corollary-2-4-14
+    - theorem-2-5-8
+    - lemma-2-6-3
+    - exercise-2-1-1
+    - exercise-2-1-2
+    - exercise-2-1-3
+    - exercise-2-1-4
+    - exercise-2-1-5
+    - exercise-2-6-7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Approximate the countable supremum by finite maxima and pass to limits using monotone/dominated convergence; represent
+      σ as a supremum of variances.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: exercise-2-1-1
+  kind: exercise
+  book:
+    number: Exercise 2.1.1
+    pages:
+    - 25
+    section: '2.1'
+    equations: []
+  title: Fernique integrability from the chapter bounds
+  statement: For the separable centred Gaussian process X fixed in the exercise preamble, with ||X||:=sup_t|X(t)| finite with
+    positive probability, prove that there exists α>0 such that E exp(α||X||²)<∞.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-20
+    chapter_local_dependents: []
+    later_book_uses:
+    - Fernique-type integrability throughout Chapters 2 and 7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Derive square-exponential integrability by integrating the Gaussian tail bound for ||X||.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review:
+  - The OCR suppresses the square on ||X|| in the exponential; the chapter context and later references indicate exp(α||X||²).
+    Verify directly against the PDF.
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Fernique-type integrability throughout Chapters 2 and 7
+- id: exercise-2-1-2
+  kind: exercise
+  book:
+    number: Exercise 2.1.2
+    pages:
+    - 25
+    section: '2.1'
+    equations: []
+  title: Lp moments of a Gaussian supremum
+  statement: For every p≥1, prove (E||X||^p)^(1/p) ≤ K√p E||X|| for a universal K<∞.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - ∀p≥1; one universal K independent of X and p.
+  constants:
+  - ∀p≥1; one universal K independent of X and p.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-20
+    chapter_local_dependents:
+    - corollary-2-2-8
+    later_book_uses:
+    - corollary-2-2-8
+    - Corollary 2.2.8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Integrate the concentration tail, control Gaussian moments, and use σ≤√(π/2)E||X||.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Corollary 2.2.8
+- id: exercise-2-1-3
+  kind: exercise
+  book:
+    number: Exercise 2.1.3
+    pages:
+    - 25
+    section: '2.1'
+    equations: []
+  title: Median versus mean
+  statement: If m is a median of ||X||, prove K E||X|| ≤ m ≤ 2E||X|| for a universal K>0.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - One universal K>0.
+  constants:
+  - One universal K>0.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-20
+    chapter_local_dependents: []
+    later_book_uses:
+    - Concentration arguments comparing means and medians
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Upper bound by Markov/Chebyshev; lower bound from the proof of Theorem 2.1.20.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Concentration arguments comparing means and medians
+- id: exercise-2-1-4
+  kind: exercise
+  book:
+    number: Exercise 2.1.4
+    pages:
+    - 25
+    section: '2.1'
+    equations: []
+  title: Equivalence of probabilistic and Lp convergence
+  statement: Let X_n be separable centred Gaussian processes with Pr(||X_n||<∞)>0. Prove that ||X_n||→0 in probability iff
+    it converges to 0 in Lp for some p≥1 iff it converges to 0 in Lp for every p≥1.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - 'Quantifiers: sequence n→∞, then some/all p≥1.'
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-20
+    chapter_local_dependents:
+    - lemma-2-6-6
+    later_book_uses:
+    - lemma-2-6-6
+    - Lemma 2.6.6 and Gaussian-series convergence arguments
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Uniform-integrability argument from Gaussian concentration, with implications between convergence modes.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Lemma 2.6.6 and Gaussian-series convergence arguments
+- id: exercise-2-1-5
+  kind: exercise
+  book:
+    number: Exercise 2.1.5
+    pages:
+    - 25
+    section: '2.1'
+    equations: []
+  title: Banach-valued extension of the section
+  statement: Let B be separable Banach and X a centred B-valued Gaussian random variable. Prove that the preceding zero-one,
+    integrability and concentration results apply to ||X||_B.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example-2-1-6
+    - theorem-2-1-13
+    - theorem-2-1-17
+    - theorem-2-1-20
+    chapter_local_dependents: []
+    later_book_uses:
+    - Banach-valued Gaussian theory in Sections 2.2 and 2.6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: foundational predicates available
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      exact_equivalent: true
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_measure_def
+  likely_lean_representation:
+    sketch: Represent B isometrically in ℓ∞ of a countable norming set and apply the process theorems.
+    blockers:
+    - These represent Gaussian measures and Gaussian-valued random variables on topological vector spaces; book-specific RKHS
+      and concentration results are not supplied by the predicate alone.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Banach-valued Gaussian theory in Sections 2.2 and 2.6
