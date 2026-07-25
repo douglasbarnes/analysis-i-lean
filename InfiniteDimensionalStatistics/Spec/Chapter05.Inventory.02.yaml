@@ -260,21 +260,28 @@ inventory:
     section: 5.1.1
     equations: []
   title: Remark 5.1.6
-  statement: The proof of Theorem 5.1.5 yields explicit upper bounds for Lp. In cases (a),(b) (taking Φ=K in (a)),
-    the bounds are expressed through weighted L¹ norms of f and Φ² for p<2, through ‖f‖p and ‖Φ‖2/‖Φ‖p for p>2,
-    L2≤‖Φ‖2, and L∞≤C(1∨‖f‖∞)^{1/2}; analogous C(φ)(1∨‖f‖_{p/2})^{1/2} bounds hold in (c),(d).
+  statement: 'The proof of Theorem 5.1.5 gives the following explicit choices of L_p. Under Conditions 5.1.1(a)
+    or (b), with Φ=K in case (a): for 1≤p<2, L_p ≤ [2(2−p)/(sp−(2−p))]^(1/p−1/2) ‖Φ²‖_{L¹(μ_s)}^(1/2) ‖f‖_{L¹(μ_s)}^(1/2);
+    for 2<p<∞, L_p ≤ (p−1)^(1+1/p) 2^(4+3/p) ‖Φ‖₂ ‖f‖_{p/2}^{1/2} + (p−1)^(1+1/p) 2^(1−2/p) ‖Φ‖_p; for p=2, L_2≤‖Φ‖₂;
+    and L_∞≤C(1∨‖f‖_∞)^(1/2), where C is numerical and depends only on K in case (a), and on φ and Φ in case (b).
+    Under Conditions 5.1.1(c) or (d), one may take C(φ)(1∨‖f‖_{p/2})^(1/2) for p<∞ and C(1∨‖f‖_∞)^(1/2) for p=∞.'
   source_fidelity:
-    transcription_status: central_review_required
+    transcription_status: verified_with_erratum
     author_corrected_reading: On p.395 in the first display, ν^{1/p} is corrected by the author to ν_p^{1/p}.
   hypotheses:
     explicit:
-    - Hypotheses of Theorem 5.1.5.
+    - The hypotheses of Theorem 5.1.5.
+    - In cases (a) and (b), the weighted measure μ_s and the exponent s are those used in the proof.
     implicit:
-    - The numerical constants in intermediate inequalities retain the dependencies stated in the proof.
+    - Set Φ=K under Condition 5.1.1(a).
+    - The first displayed factor is meaningful under the integrability range imposed in the theorem.
   quantifier_order:
-  - For each p the theorem constant may be chosen below the displayed expression.
+  - Fix one of Conditions 5.1.1(a)–(d).
+  - For every p in the displayed range, choose L_p according to the corresponding formula.
   constants:
-  - Lp, L∞, ν_p and kernel-dependent numerical constants.
+  - For 1≤p<2 the numerical factor is [2(2−p)/(sp−(2−p))]^(1/p−1/2).
+  - For 2<p<∞ the two numerical factors are (p−1)^(1+1/p)2^(4+3/p) and (p−1)^(1+1/p)2^(1−2/p).
+  - The author corrigendum replaces the printed ν^{1/p} by ν_p^{1/p} in the first display on p.395.
   dependencies:
     earlier_book: *id006
     chapter_local:
@@ -292,17 +299,12 @@ inventory:
     repository: *id004
   likely_lean_representation:
     sketch: Separate explicit-constant refinements of the main moment theorem.
-    blockers:
-    - The exact p-dependent formula must be transcribed from the page image before formalisation.
+    blockers: []
   difficulty: substantial
   pass: core
   issues_for_central_review:
-  - The author erratum changes ν to ν_p.
-  - OCR is not reliable enough for every exponent in the long explicit constant; central review must compare the
-    hardback page.
-  - 'Author-corrected reading recorded separately: On p.395 in the first display, ν^{1/p} is corrected by the author
-    to ν_p^{1/p}.'
-  - 'Source-transcription status: central_review_required.'
+  - The printed first display is retained together with the official correction ν^{1/p}↦ν_p^{1/p}; do not silently
+    erase the original reading.
 - id: ch5.prop.5_1_7
   kind: proposition
   book:
