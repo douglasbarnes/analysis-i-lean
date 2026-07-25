@@ -1,0 +1,420 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.3.3
+fragment_part: 1
+inventory:
+- id: ch7.def.whiteNoiseSequenceModel
+  kind: definition
+  book:
+    number: (7.109)
+    label: (7.109)
+    pages:
+    - 582
+    section: 7.3.3
+    equations:
+    - (7.109)
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Coordinate Gaussian white-noise model
+  statement: "In an orthonormal basis {ψ_{lk}}, write\n  Y_{lk}=f_{lk}+n^{-1/2}g_{lk},  g_{lk} iid N(0,1),\ncorresponding to dY=fdt+n^{-1/2}dW."
+  hypotheses:
+    explicit:
+    - An orthonormal basis of L²[0,1].
+    - White-noise observation with σ=1 in this subsection.
+    implicit:
+    - The coordinate map is jointly measurable and isometric.
+  quantifier_order:
+  - ∀ basis coordinates (l,k).
+  constants: []
+  dependencies:
+    earlier_book:
+    - Isonormal Gaussian process coordinate representation
+    chapter_local:
+    - ch7.def.whiteNoisePosterior
+    later_book_uses:
+    - ch7.def.finiteDimensionalPosteriorShift
+    - ch7.prop.gaussianPosteriorFormula
+    - ch7.thm.7.3.12
+    - ex7.3.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A countable product of Gaussian coordinate observations, ideally proved equivalent to the abstract isonormal observation.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_whiteNoiseSequenceModel
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.def.7.3.10
+  kind: definition
+  book:
+    number: Definition 7.3.10
+    label: Definition 7.3.10
+    pages:
+    - 583
+    section: 7.3.3
+    equations: []
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: S-regular orthonormal bases
+  statement: "An S-regular basis is of one of two types:\n(a) a singly indexed basis with singleton Z_l and scale a_l=max(2,|l|), satisfying\n    the stated uniform C^S/localisation bounds;\n(b) a wavelet basis with |Z_l|=a_l=2^l and the stated S-regularity/localisation bounds."
+  hypotheses:
+    explicit:
+    - S∈ℕ.
+    - The basis is orthonormal in L²[0,1].
+    - All derivative/localisation bounds printed in the definition hold.
+    implicit:
+    - The exact low-frequency index set L and boundary-wavelet conventions are inherited from Chapter 4.
+  quantifier_order:
+  - Fix S and a basis satisfying either branch.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Chapter 4 bases and wavelets
+    chapter_local: []
+    later_book_uses:
+    - ch7.def.gaussianConjugatePrior
+    - ch7.def.productPrior
+    - ch7.def.uniformWaveletPrior
+    - ch7.def.weightedSobolevBvMSpace
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A structure bundling an orthonormal basis, scale/cardinality data and analytic regularity estimates.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_7_3_10
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.def.productPrior
+  kind: definition
+  book:
+    number: (7.110)
+    label: (7.110)
+    pages:
+    - 583
+    section: 7.3.3
+    equations:
+    - (7.110)
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Independent product prior on basis coefficients
+  statement: "Let φ be a probability density on ℝ and σ_l>0 with ∑_{l,k}σ_l²<∞.\nDraw independent coefficients f_{lk}=σ_l ξ_{lk}, ξ_{lk}∼φ, and set\n  f=∑_{l,k} f_{lk}ψ_{lk}.\nEquivalently the coordinate density is φ_{lk}(x)=σ_l^{-1}φ(x/σ_l)."
+  hypotheses:
+    explicit:
+    - The basis is as in Definition 7.3.10.
+    - φ is a probability density.
+    - Positive scales σ_l.
+    - Square-summability over all coordinates when L² support is required.
+    implicit:
+    - The official erratum deletes the assertion that the displayed scale condition in Condition 7.3.11(a) by itself ensures f∈L² a.s.; support must be proved under adequate moment/summability assumptions.
+  quantifier_order:
+  - Independently for all coordinates.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.7.3.10
+    later_book_uses:
+    - ch7.condition.7.3.11
+    - ch7.def.uniformWaveletPrior
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A countable product probability measure followed by a measurable series-summation map into L², with almost-sure convergence proved separately.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_productPrior
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.condition.7.3.11
+  kind: condition
+  book:
+    number: Condition 7.3.11
+    label: Condition 7.3.11
+    pages:
+    - 583
+    - 584
+    section: 7.3.3
+    equations: []
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Assumptions for product-prior coordinate analysis
+  statement: '(a) The prior coefficients are independent with scaled density φ and the scale
+
+    sequence is square-summable in the required coordinate sense.
+
+    (b) For the truth, (P1) sup_{l,k}|f_{0,lk}|/σ_l≤M. For some τ>M, (P2) φ is
+
+    bounded above globally, bounded below by a positive constant on [-τ,τ], and has
+
+    finite second moment.
+
+    The official erratum deletes the text claiming these assumptions automatically
+
+    ensure f∈L² almost surely.'
+  hypotheses:
+    explicit:
+    - Constants M<τ<∞.
+    - 0<c_φ≤φ(x)≤C_φ on the specified regions.
+    - ∫x²φ(x)dx<∞.
+    implicit:
+    - The exact indexing multiplicity must be included in the square-summability condition.
+  quantifier_order:
+  - Uniformly over all l,k.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.productPrior
+    later_book_uses:
+    - ch7.prop.7.3.14
+    - ch7.thm.7.3.12
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A structure of scale, truth and base-density hypotheses; L² support is a separate theorem.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 583: Delete ''ensuring f∈L² almost surely''; prove support separately with the correct multiplicity-weighted summability.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_condition_7_3_11
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.thm.7.3.12
+  kind: theorem
+  book:
+    number: Theorem 7.3.12
+    label: Theorem 7.3.12
+    pages:
+    - 584
+    - 585
+    - 586
+    section: 7.3.3
+    equations: []
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Coordinatewise posterior mean-square bound
+  statement: "Under Condition 7.3.11 there is C<∞, independent of l,k,n, such that\n  E^Y_{f₀} ∫(f_{lk}-f_{0,lk})² dΠ(f_{lk}|Y)\n     ≤ C (σ_l² ∧ n^{-1})."
+  hypotheses:
+    explicit:
+    - White-noise sequence model.
+    - Condition 7.3.11.
+    implicit:
+    - Posterior factorises across coordinates.
+    - C depends only on the constants in the condition, not on l,k,n.
+  quantifier_order:
+  - ∃C, ∀l,k,n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.whiteNoiseSequenceModel
+    - ch7.condition.7.3.11
+    later_book_uses:
+    - ch7.cor.7.3.13
+    - ch7.prop.7.3.14
+    - ch7.thm.7.3.19
+    - ex7.3.5
+    - ex7.3.8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A one-dimensional Bayesian normal-means integral bound, then uniformise constants and lift to all coordinates.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_3_12
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.cor.7.3.13
+  kind: corollary
+  book:
+    number: Corollary 7.3.13
+    label: Corollary 7.3.13
+    pages:
+    - 586
+    - 587
+    section: 7.3.3
+    equations: []
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: L² posterior contraction and posterior-mean risk for product priors
+  statement: "Choose σ_l=|l|^{-1/2-γ} in basis type (a), or σ_l=2^{-l(γ+1/2)} in type (b).\nUnder Theorem 7.3.12,\n  E^Y_{f₀}∫||f-f₀||₂² dΠ(f|Y)=O(n^{-2γ/(2γ+1)}),\nand for the posterior mean f̄ₙ,\n  E^Y_{f₀}||f̄ₙ-f₀||₂²=O(n^{-2γ/(2γ+1)})."
+  hypotheses:
+    explicit:
+    - γ>0.
+    - The corresponding basis type and scale sequence.
+    - Condition 7.3.11.
+    implicit:
+    - Parseval and coordinate cardinalities determine the sum.
+  quantifier_order:
+  - As n→∞.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Parseval's identity
+    chapter_local:
+    - ch7.thm.7.3.12
+    - ch7.def.posteriorContractionRate
+    later_book_uses:
+    - ex7.3.5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Sum coordinate bounds in `ℓ²`; posterior mean is a Bochner integral and needs integrability.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum_reference] p. 588: In the nearby proof citation replace Lemma 2.3.2 by Lemma 2.3.4.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_cor_7_3_13
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
