@@ -1,0 +1,272 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.2.3
+fragment_part: 2
+inventory:
+- id: ch7.prop.7.2.9
+  kind: proposition
+  book:
+    number: Proposition 7.2.9
+    pages:
+    - 557
+    - 558
+    section: 7.2.3
+    equations: []
+  title: Sobolev MLE lies on the boundary
+  statement: Every MLE over P(t,D) satisfies ||p̂ₙ||_{H^t}=D.
+  hypotheses:
+    explicit:
+    - The Sobolev-ball model and an MLE.
+    - The sample is nonempty.
+    implicit:
+    - A feasible perturbation increasing point values at observations is available
+      unless the norm constraint is saturated.
+  quantifier_order:
+  - ∀ samples and every maximiser.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    - ch7.prop.7.2.7
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A deterministic optimisation argument in a strictly convex Hilbert ball,
+      requiring construction of a positive mass-preserving perturbation.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.thm.7.2.10
+  kind: theorem
+  book:
+    number: Theorem 7.2.10
+    pages:
+    - 558
+    - 559
+    section: 7.2.3
+    equations: []
+  title: Exponential Sobolev-MLE convergence rates
+  statement: "Let p₀∈P(t,D) be bounded away from zero. There exist c,C∈(0,∞), depending\
+    \ only\non t,D and inf p₀, such that for every n,\n  P₀^n(h(p̂ₙ,p₀)>C n^{-t/(2t+1)})\
+    \ ≤ c exp(-n^{1/(2t+1)}/c),\n  P₀^n(||p̂ₙ-p₀||₂>C n^{-t/(2t+1)}) ≤ c exp(-n^{1/(2t+1)}/c),\n\
+    \  P₀^n(||p̂ₙ-p₀||∞>C n^{-(t-1/2)/(2t+1)})\n     ≤ c exp(-n^{1/(2t+1)}/c)."
+  hypotheses:
+    explicit:
+    - t>1/2, D>1.
+    - p₀∈P(t,D).
+    - inf p₀>0.
+    implicit:
+    - Wavelet entropy bounds and interpolation inequalities are used.
+    - The same MLE as (7.54).
+  quantifier_order:
+  - ∃ c,C depending only on stated parameters, ∀ n, all three bounds.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Corollary 4.3.38 (metric entropy)
+    - Sobolev interpolation/embedding
+    chapter_local:
+    - ch7.thm.7.2.1
+    - ch7.prop.7.2.8
+    - ch7.def.periodicSobolevNorm
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Three nonasymptotic probability inequalities. Requires the full empirical-process
+      bracketing theorem and Sobolev entropy estimates.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.prop.7.2.11
+  kind: proposition
+  book:
+    number: Proposition 7.2.11
+    pages:
+    - 559
+    section: 7.2.3
+    equations: []
+  title: Rates for the finite-dimensional Sobolev sieve MLE
+  statement: "If 2^{jₙ}≍n^{1/(2t+1)}, the sieve MLE p̂ₙ(jₙ) satisfies\n  h(p̂ₙ(jₙ),p₀)=O_{P₀}(n^{-t/(2t+1)}),\n\
+    \  ||p̂ₙ(jₙ)-p₀||₂=O_{P₀}(n^{-t/(2t+1)}),\n  ||p̂ₙ(jₙ)-p₀||∞=O_{P₀}(n^{-(t-1/2)/(2t+1)})."
+  hypotheses:
+    explicit:
+    - Hypotheses on t,D,p₀ as in the preceding Sobolev setup.
+    - Resolution sequence 2^{jₙ} is bounded above and below by fixed multiples of
+      n^{1/(2t+1)}.
+    implicit: []
+  quantifier_order:
+  - For every such resolution sequence, the three stochastic orders.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.2.3
+    - ch7.def.sobolevSieveMLE
+    - ch7.thm.7.2.10
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.2.6
+    contains_omitted_steps: true
+    comment: entire proof
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
+      `OP` and `oP` predicates over the sequence of experiments.
+
+      Includes approximation by normalised wavelet projections.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.lemma.7.2.12
+  kind: lemma
+  book:
+    number: Lemma 7.2.12 (proof corrected)
+    pages:
+    - 559
+    - 560
+    section: 7.2.3
+    equations: []
+  title: Likelihood derivative in the radial direction
+  statement: "Under the Sobolev-ball hypotheses,\n  |Dℓₙ(p̂ₙ)[p̂ₙ-p₀]|\n    = O_{P₀}(\
+    \ n^{-1/2} n^{-(t-1/2)/(2t+1)} ).\nThe proof must use the corrected high-probability\
+    \ event combining the L² rate\nn^{-t/(2t+1)} and the L∞ rate n^{-(t-1/2)/(2t+1)}."
+  hypotheses:
+    explicit:
+    - p₀ is bounded away from zero and belongs to P(t,D).
+    implicit: []
+  quantifier_order:
+  - As n→∞ under P₀.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Corollary 3.5.7 or Remark 3.5.14, per errata
+    chapter_local:
+    - ch7.prop.7.2.4
+    - ch7.thm.7.2.10
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
+      `OP` and `oP` predicates over the sequence of experiments.
+
+      Formal proof needs stochastic-order algebra and an empirical-process bound for
+      a random local class.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 559
+    detail: Correct L²/L∞ events and replace the proof reference by Corollary 3.5.7
+      (or Remark 3.5.14).
+- id: ch7.def.sobolevInterior
+  kind: condition
+  book:
+    number: (7.65)
+    pages:
+    - 560
+    section: 7.2.3
+    equations:
+    - (7.65)
+  title: Interior true-density condition
+  statement: Assume inf_x p₀(x)>0 and ||p₀||_{H^t}<D.
+  hypotheses:
+    explicit:
+    - p₀∈P(t,D).
+    implicit: []
+  quantifier_order:
+  - Fixed p₀.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A conjunction of a positive lower bound and a strict norm inequality.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
