@@ -1,0 +1,174 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.3.1
+fragment_part: 2
+inventory:
+- id: ch7.thm.7.3.5
+  kind: theorem
+  book:
+    number: Theorem 7.3.5
+    label: Theorem 7.3.5
+    pages:
+    - 577
+    - 578
+    section: 7.3.1
+    equations: []
+    section_title: General Contraction Results for Posterior Distributions
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: General posterior contraction theorem in Gaussian white noise
+  statement: "Let F⊂L² be Borel, dY∼P^Y_{f₀}, and Π=Πₙ. Let εₙ→0 and √nεₙ→∞.\nFor fixed C,L assume:\n(i) Π(||f-f₀||₂≤εₙ)≥e^{-Cnεₙ²} (officially corrected from εₙ² on the norm);\n(ii) Π(F\\Fₙ)≤L e^{-(C+4)nεₙ²};\n(iii) tests φₙ satisfy E_{f₀}φₙ→0 and\n      sup_{f∈Fₙ:d(f,f₀)≥Mεₙ}E_f(1-φₙ)≤L e^{-(C+4)nεₙ²}.\nThen the posterior contracts at rate εₙ in d."
+  hypotheses:
+    explicit:
+    - F Borel in L².
+    - White-noise posterior exists.
+    - Prior mass, sieve tail, and tests as displayed.
+    implicit:
+    - d-balls are measurable.
+  quantifier_order:
+  - For M sufficiently large, posterior outside the Mεₙ ball tends to zero in P^Y_{f₀}-probability.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.whiteNoisePosterior
+    - ch7.lemma.7.3.4
+    - ch7.def.posteriorContractionRate
+    later_book_uses:
+    - ch7.thm.7.3.6
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.2
+    contains_omitted_steps: true
+    comment: entire proof
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: White-noise analogue of Theorem 7.3.1; abstract a common posterior-contraction skeleton after likelihood-specific denominator lemmas.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 577: Equation (7.95) uses ||f-f₀||₂≤εₙ, not ≤εₙ².'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_3_5
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/PosteriorContraction.lean
+- id: ch7.thm.7.3.6
+  kind: theorem
+  book:
+    number: Theorem 7.3.6
+    label: Theorem 7.3.6
+    pages:
+    - 578
+    section: 7.3.1
+    equations: []
+    section_title: General Contraction Results for Posterior Distributions
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: L² contraction from approximation-kernel sieves
+  statement: "Let K_j satisfy Conditions 5.1.1 on [0,1]. Under the white-noise setup, assume the\nprior L²-small-ball condition and sieve-tail condition of Theorem 7.3.5. Choose jₙ\nwith 2^{jₙ}≍nεₙ² and assume\n  Π(f:||K_{jₙ}f-f||₂>εₙ)≤L e^{-(C+4)nεₙ²},\n  ||K_{jₙ}f₀-f₀||₂≤εₙ.\nThen the posterior contracts around f₀ in L² at rate εₙ."
+  hypotheses:
+    explicit:
+    - Approximation kernel satisfies Chapter 5 conditions.
+    - All prior mass/tail conditions.
+    - Resolution balance.
+    - True and prior approximation bounds.
+    implicit:
+    - Corollary 6.2.15 supplies tests on the approximation sieve.
+  quantifier_order:
+  - For M sufficiently large, posterior L² mass outside Mεₙ tends to zero.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Conditions 5.1.1
+    - Corollary 6.2.15
+    chapter_local:
+    - ch7.thm.7.3.5
+    - ch7.def.posteriorContractionRate
+    later_book_uses:
+    - ch7.example.releasedBrownianPrior
+    - ch7.thm.7.3.7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Construct tests from finite-resolution projections, then instantiate Theorem 7.3.5.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_3_6
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/PosteriorContraction.lean
