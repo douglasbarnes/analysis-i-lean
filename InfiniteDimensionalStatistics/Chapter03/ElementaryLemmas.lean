@@ -51,6 +51,29 @@ theorem hammingDistance_comm {n : ℕ} (x y : Fin n → Bool) :
     hammingDistance x y = hammingDistance y x := by
   simp [hammingDistance, ne_comm]
 
+/-- Hamming distance satisfies the triangle inequality. -/
+theorem hammingDistance_triangle {n : ℕ}
+    (x y z : Fin n → Bool) :
+    hammingDistance x z ≤ hammingDistance x y + hammingDistance y z := by
+  let A := Finset.univ.filter fun i ↦ x i ≠ y i
+  let B := Finset.univ.filter fun i ↦ y i ≠ z i
+  let C := Finset.univ.filter fun i ↦ x i ≠ z i
+  have hC : C ⊆ A ∪ B := by
+    intro i hi
+    simp only [C, Finset.mem_filter, Finset.mem_univ, true_and] at hi
+    simp only [A, B, Finset.mem_union, Finset.mem_filter,
+      Finset.mem_univ, true_and]
+    by_cases hxy : x i = y i
+    · right
+      intro hyz
+      exact hi (hxy.trans hyz)
+    · exact Or.inl hxy
+  calc
+    hammingDistance x z = C.card := rfl
+    _ ≤ (A ∪ B).card := Finset.card_le_card hC
+    _ ≤ A.card + B.card := Finset.card_union_le A B
+    _ = hammingDistance x y + hammingDistance y z := rfl
+
 /-- Bennett's function vanishes at zero. -/
 theorem bennettFunction_zero : bennettFunction 0 = 0 := by
   simp [bennettFunction]
