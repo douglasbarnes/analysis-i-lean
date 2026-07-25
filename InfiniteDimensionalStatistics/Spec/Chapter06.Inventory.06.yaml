@@ -1,0 +1,472 @@
+inventory:
+- id: 6.2.17
+  kind: theorem
+  book:
+    number: Theorem 6.2.17
+    pages:
+    - 502
+    - 506
+    section: 6.2.4
+    equations: []
+  title: Minimum UStatistic Test error bound
+  statement: "Let \\(H_0\\) be a family of densities on \\([0,1]\\), uniformly bounded by\n\\(U\\), and\n\\[\nH_1\\\
+    subset\\{f:\\|f\\|_\\infty\\le U,\\ \\operatorname{dist}_2(f,H_0)\\ge\\rho_n\\}.\n\\]\nSuppose \\(B(j)\\downarrow\\\
+    ) and\n\\[\n\\sup_{f_0\\in H_0,f\\in H_1}\n\\|K_j(f-f_0)-(f-f_0)\\|_2^2\\le B(j).\n\\]\nFor positive \\(c,L\\\
+    ), levels \\(j_n\\), and nonnegative \\(d_n\\) satisfying the\nprinted condition\n\\(1\\le d_n\\le\\min(2^{j_n/2},n^{-1/4})\\\
+    ), put\n\\[\n\\tau_n=Ld_n2^{j_n/2}/n,\\qquad\n2^{j_n/2}d_n^3\\le n,\\qquad\n\\rho_n^2\\ge c\\max\\{Ld_n2^{j_n/2}/n,B(j_n)\\\
+    }.\n\\]\nAssume also, for every \\(m\\) with \\(2^m\\ge\\rho_n^2/2\\),\n\\[\n\\sup_{f\\in H_1}E_f\\|P_n-P\\\
+    |_{G_{j_n,m}(H_0,f)}\\le 2^m/16.\n\\]\nThen \\(L=L(U,\\psi)\\), \\(c=c(L,U)\\), and constants \\(c_i>0\\) can\
+    \ be chosen so\nthat the infimum U-statistic test satisfies\n\\[\n\\sup_{H_0}E_f\\Phi_n+\\sup_{H_1}E_f(1-\\\
+    Phi_n)\n \\le c_1e^{-c_2d_n^2}+c_3e^{-c_4n\\rho_n^2}.\n\\]"
+  hypotheses:
+    explicit:
+    - H₀ and H₁ consist of probability densities on [0,1] bounded by the same U.
+    - n≥2 and the U-statistic is measurable.
+    - The bias and empirical-process assumptions are uniform.
+    - The wavelets obey the regularity and envelope estimates used in the proof.
+    implicit: []
+  quantifier_order:
+  - Under all displayed hypotheses, ∃ sufficiently large constants L,c and ∃c₁,…,c₄>0 depending only on c,L,U such
+    that ∀n the uniform error inequality holds.
+  constants:
+  - Under all displayed hypotheses, ∃ sufficiently large constants L,c and ∃c₁,…,c₄>0 depending only on c,L,U such
+    that ∀n the uniform error inequality holds.
+  dependencies:
+    earlier_book:
+    - Theorem 3.4.8 (canonical U-statistic concentration)
+    - Talagrand inequalities from Chapter 3
+    - Wavelet projection estimates from Chapter 4
+    chapter_local:
+    - 6.2.infimum_ustat
+    - 6.2.5
+    - 6.2.13
+    later_book_uses:
+    - Sampling analogue of Proposition 6.2.18
+    - Exercise 6.2.4
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.2
+    contains_omitted_steps: true
+    comment: Exercise 6.2.2 is invoked for existence of a random minimiser.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Requires a reusable concentration theorem for canonical U-statistics with explicit A,B,C,D parameters,
+      plus measurable selection or compact argmin. Preserve the printed dₙ constraint until central review.
+    blockers: &id001
+    - The printed/OCR inequality `d_n ≤ n^{-1/4}` is incompatible with `d_n ≥ 1` for n>1 and is almost certainly
+      a sign/exponent typo; do not repair silently.
+    reusable_primitives:
+    - composite sampling test via U-statistics
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.2.18
+  kind: proposition
+  book:
+    number: Proposition 6.2.18
+    pages:
+    - 506
+    section: 6.2.4
+    equations: []
+  title: Besov Composite Gaussian minimax Separation
+  statement: 'Let \(r,B>0\). Suppose \(H_0\subset L^2([0,1])\) satisfies (6.70)
+
+    for some \(s\ge2r\), contains \(0\), and is contained in a bounded ball of
+
+    \(B^t_{2\infty}([0,1])\) for some \(t>r\). In Gaussian white noise, the
+
+    minimax separation rate for
+
+    \[
+
+    H_0\quad\text{versus}\quad
+
+    H_1=\{f:\|f\|_{B^r_{2\infty}}\le B,\ \operatorname{dist}_2(f,H_0)\ge r_n\}
+
+    \]
+
+    is
+
+    \[
+
+    \rho_n=c\,n^{-r/(2r+1/2)}
+
+    \]
+
+    for a positive constant \(c\) (depending on the prescribed testing level and
+
+    the model constants).'
+  hypotheses:
+    explicit:
+    - r,B>0.
+    - H₀ contains 0.
+    - H₀ satisfies the entropy condition with s≥2r.
+    - 'H₀ is uniformly smoother than the alternatives: contained in a B^t_{2∞}-ball for t>r.'
+    implicit: []
+  quantifier_order:
+  - For every admissible H₀ and B^r-alternative class, the rate sequence n^{-r/(2r+1/2)} satisfies both minimax
+    upper and lower conditions of Definition 6.2.1, up to a level-dependent constant.
+  constants:
+  - For every admissible H₀ and B^r-alternative class, the rate sequence n^{-r/(2r+1/2)} satisfies both minimax
+    upper and lower conditions of Definition 6.2.1, up to a level-dependent constant.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.16
+    - 6.2.11
+    - 6.2.entropy_condition
+    later_book_uses:
+    - Corollary 6.2.19
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Combine a wavelet-packing lower bound with the entropy-controlled minimum-chi-square upper bound. Formalise
+      Besov balls as coefficient predicates and separation by `Metric.infDist`.
+    blockers: &id002 []
+    reusable_primitives:
+    - composite Besov separation theorem
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.2.19
+  kind: corollary
+  book:
+    number: Corollary 6.2.19
+    pages:
+    - 507
+    section: 6.2.4
+    equations: []
+  title: Bounded Variation Null minimax Separation
+  statement: 'Let \(0<r<1/2\), \(B,M>0\), and let \(H_0\) be any subset of the
+
+    bounded-variation ball
+
+    \(\{f:[0,1]\to\mathbb R:\|f\|_{BV}\le M\}\) containing \(0\).
+
+    Then in Gaussian white noise the minimax \(L^2\)-separation rate for
+
+    \[
+
+    H_0\quad\text{versus}\quad
+
+    \{f:\|f\|_{B^r_{2\infty}}\le B,\ \operatorname{dist}_2(f,H_0)\ge r_n\}
+
+    \]
+
+    is \(c\,n^{-r/(2r+1/2)}\). The text further says \(r=1/2\) is admissible when
+
+    \(M\) is fixed and \(B\) is sufficiently large.'
+  hypotheses:
+    explicit:
+    - 0<r<1/2 in the formal corollary.
+    - H₀ is an arbitrary subset of the BV ball but must contain 0.
+    - The endpoint extension is prose, not part of the numbered statement.
+    implicit: []
+  quantifier_order:
+  - ∀r∈(0,1/2), ∀B,M>0, ∀H₀ satisfying the conditions, the specified rate is minimax.
+  constants:
+  - ∀r∈(0,1/2), ∀B,M>0, ∀H₀ satisfying the conditions, the specified rate is minimax.
+  dependencies:
+    earlier_book:
+    - Proposition 4.3.21 (BV embedding)
+    - Proposition 4.3.6
+    - Theorem 4.3.36
+    chapter_local:
+    - 6.2.18
+    later_book_uses:
+    - Used conceptually in Chapter 8 composite testing discussion.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Apply Proposition 6.2.18 after formalising BV-to-Besov embeddings and entropy. Record the r=1/2 endpoint
+      separately as an unnumbered extension.
+    blockers: &id003
+    - 'Official hardback errata: the last display on p.507 should be `1/n`; this affects a proof display, not the
+      stated separation-rate conclusion.'
+    reusable_primitives:
+    - BV null class entropy
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.2.20
+  kind: theorem
+  book:
+    number: Theorem 6.2.20
+    pages:
+    - 508
+    - 510
+    section: 6.2.4
+    equations: []
+  title: Nested Besov Gaussian minimax Separation
+  statement: 'For \(s>r>0\) and \(B>0\), in Gaussian white noise the minimax
+
+    separation rate for
+
+    \[
+
+    H_0=\{f:\|f\|_{B^s_{2\infty}}\le B\}
+
+    \quad\text{versus}\quad
+
+    H_1=\{f:\|f\|_{B^r_{2\infty}}\le B,\ \operatorname{dist}_2(f,H_0)\ge r_n\}
+
+    \]
+
+    is
+
+    \[
+
+    \rho_n=c\,n^{-r/(2r+1/2)},
+
+    \]
+
+    where \(c>0\) depends on \(r,B,\sigma\) and the desired testing level
+
+    \(\alpha\).'
+  hypotheses:
+    explicit:
+    - s>r>0 and B>0.
+    - Both Besov balls are on [0,1] and use the same radius.
+    - The white-noise dispersion σ is fixed and positive.
+    - The rate constant may depend on α.
+    implicit: []
+  quantifier_order:
+  - ∀s>r>0, ∀B>0, ∀α in the testing range, ∃c=c(r,B,σ,α)>0 such that ρₙ gives both the upper and lower minimax assertions.
+  constants:
+  - ∀s>r>0, ∀B>0, ∀α in the testing range, ∃c=c(r,B,σ,α)>0 such that ρₙ gives both the upper and lower minimax assertions.
+  dependencies:
+    earlier_book:
+    - Wavelet characterisation of B^s_{2∞} and B^r_{2∞}
+    chapter_local:
+    - 6.2.11
+    - 6.2.mixtures_lower_bound
+    later_book_uses:
+    - Used in Chapter 8 as the prototype nonparametric regularity test; Exercise 6.2.4 requests its sampling analogue.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A specialised coefficient-space theorem. The upper test is scale-by-scale rather than a direct corollary
+      of the generic infimum test, so the Lean proof will need a dedicated finite family of chi-square tests and
+      Besov geometry.
+    blockers: &id004 []
+    reusable_primitives:
+    - nested regularity testing theorem
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.3.1
+  kind: definition
+  book:
+    number: Definition 6.3.1
+    pages:
+    - 512
+    section: '6.3'
+    equations: []
+  title: Is Minimax Estimation Rate
+  statement: 'For experiments with laws \((P_f:f\in F)\), \(F\subset(S,d)\), a
+
+    sequence \(r_n\ge0\) is a minimax rate of estimation in \(d\)-risk if:
+
+    (i) there exist measurable estimators \(\hat f_n:Y_n\to S\) and a universal
+
+    constant \(C<\infty\) such that, for all sufficiently large \(n\),
+
+    \[
+
+    r_n^{-1}\sup_{f\in F}E_f d(\hat f_n,f)\le C;
+
+    \]
+
+    (ii) there is a universal \(C>0\) such that
+
+    \[
+
+    \liminf_n r_n^{-1}\inf_{\tilde f_n}\sup_{f\in F}E_f d(\tilde f_n,f)\ge C,
+
+    \]
+
+    where the infimum is over all measurable \(\tilde f_n:Y_n\to S\).'
+  hypotheses:
+    explicit:
+    - (S,d) is a metric space with its Borel σ-field.
+    - Each experiment has a measurable sample space (Yₙ,Aₙ).
+    - Estimators are Borel measurable.
+    - The rate should be positive eventually for the displayed inverse to be defined.
+    implicit: []
+  quantifier_order:
+  - A sequence rₙ is minimax iff ∃ upper-bound estimators and C, and ∃ positive lower-bound C with the stated order;
+    the lower infimum quantifies over all measurable estimators before the supremum over f.
+  constants:
+  - A sequence rₙ is minimax iff ∃ upper-bound estimators and C, and ∃ positive lower-bound C with the stated order;
+    the lower infimum quantifies over all measurable estimators before the supremum over f.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.1
+    later_book_uses:
+    - All results in Sections 6.3 and 6.4
+    - Chapter 8 adaptive minimax definitions
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A structure/predicate with an eventual uniform upper risk and a liminf lower risk. Use `Filter.Eventually`,
+      `MeasureTheory.Integral`, and an infimum over measurable maps, probably via an outer `sInf` on extended nonnegative
+      risk.
+    blockers: &id005
+    - In (6.98) the displayed integrand uses `\hat f_n` although the infimum variable is `\tilde f_n`; this is a
+      notation typo.
+    reusable_primitives:
+    - minimax estimation rate predicate
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id005
+- id: 6.3.reduction
+  kind: operative_lemma
+  book:
+    number: General reduction principle (6.99)-(6.102)
+    pages:
+    - 513
+    section: 6.3.1
+    equations: []
+  title: Estimation Risk ge multiple Testing Risk
+  statement: 'For any finite family \(f_0,\ldots,f_M\subset F\),
+
+    \[
+
+    r_n^{-1}\inf_{\tilde f_n}\sup_{f\in F}E_f d(\tilde f_n,f)
+
+    \ge \inf_{\tilde f_n}\sup_{f\in F}P_f\{d(\tilde f_n,f)>r_n\}
+
+    \ge \inf_{\tilde f_n}\max_mP_{f_m}\{d(\tilde f_n,f_m)>r_n\}.
+
+    \]
+
+    If \(d(f_m,f_{m''})\ge2r_n\) for \(m\ne m''\), assigning an estimator to its
+
+    nearest \(f_m\) yields a multiple test \(\Phi_n\) whose classification error
+
+    is bounded by the estimator''s \(r_n\)-error. Consequently,
+
+    \[
+
+    \inf_{\tilde f_n}\max_mP_{f_m}\{d(\tilde f_n,f_m)\ge r_n\}
+
+    \ge \inf_{\Phi_n}\max_m P_{f_m}\{\Phi_n\ne m\}.
+
+    \]'
+  hypotheses:
+    explicit:
+    - The finite alternatives are pairwise 2rₙ-separated.
+    - Nearest-point tie breaking is made measurably; for a finite set this can be done by least index.
+    - The first step uses Markov's inequality with threshold rₙ.
+    implicit: []
+  quantifier_order:
+  - ∀ finite separated families and ∀n, the estimator risk lower-bounds the optimal multiple-testing error in the
+    displayed order.
+  constants:
+  - ∀ finite separated families and ∀n, the estimator risk lower-bounds the optimal multiple-testing error in the
+    displayed order.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.3.1
+    later_book_uses:
+    - Theorem 6.3.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Construct a measurable nearest-index classifier over `Fin (M+1)` and prove the deterministic triangle-inequality
+      implication before integrating probabilities.
+    blockers: &id006 []
+    reusable_primitives:
+    - estimation-to-testing reduction
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006

@@ -1,0 +1,333 @@
+inventory:
+- id: 6.4.ks_band
+  kind: operative_example
+  book:
+    number: Kolmogorov-Smirnov confidence band (6.119)
+    pages:
+    - 525
+    section: 6.4.2
+    equations: []
+  title: Kolmogorov Smirnov Confidence Band
+  statement: "Let \\(X_1,\\ldots,X_n\\) be i.i.d. with continuous distribution function\n\\(F\\), and let \\(F_n\\\
+    ) be the empirical distribution function. If \\(G\\) is a\nstandard Brownian bridge and \\(z_\\alpha\\) is chosen\
+    \ so that\n\\[\n P\\{\\sup_{0\\le x\\le1}|G(x)|\\le z_\\alpha\\}=1-\\alpha,\n\\]\nthen\n\\[\n \\sqrt n\\,\\\
+    |F_n-F\\|_\\infty\\Rightarrow\\sup_{0\\le x\\le1}|G(x)|, \\tag{6.119}\n\\]\nuniformly over continuous \\(F\\\
+    ), and\n\\[\n C_n(x)=\\left[F_n(x)-\\frac{z_\\alpha}{\\sqrt n},\n              F_n(x)+\\frac{z_\\alpha}{\\sqrt\
+    \ n}\\right],\\qquad x\\in\\mathbb R,\n\\]\nhas asymptotic coverage \\(1-\\alpha\\) uniformly in \\(F\\) and\n\
+    \\(L^\\infty\\)-diameter \\(2z_\\alpha/\\sqrt n\\). A slightly enlarged constant\nobtained from the Dvoretzky-Kiefer-Wolfowitz\
+    \ inequality gives nonasymptotic\ncoverage."
+  hypotheses:
+    explicit:
+    - F is continuous for the distribution-free Brownian-bridge limit as stated.
+    - z_alpha is a continuity quantile of the supremum distribution.
+    - The band is interpreted as the set of all functions lying pointwise in the displayed intervals.
+    implicit: []
+  quantifier_order:
+  - ∀0<α<1 choose z_α by the Brownian-bridge law; then as n→∞ the coverage converges uniformly over continuous F
+    to 1-α.
+  constants:
+  - ∀0<α<1 choose z_α by the Brownian-bridge law; then as n→∞ the coverage converges uniformly over continuous F
+    to 1-α.
+  dependencies:
+    earlier_book:
+    - Corollary 3.7.39
+    - Examples 3.7.19 and 3.7.42
+    - Exercise 3.3.3 (DKW)
+    - Proposition 6.3.4
+    chapter_local:
+    - 6.4.1
+    - 6.4.2
+    later_book_uses:
+    - multivariate Rademacher tube in Section 6.4.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Requires empirical CDF, uniform Donsker theorem, continuity mapping for sup norm, and DKW as a separate
+      finite-sample theorem.
+    blockers: &id001
+    - The text calls z_alpha the `α-quantile` while using it as the 1-α acceptance quantile; encode the defining
+      probability rather than terminology.
+    reusable_primitives:
+    - empirical CDF confidence band
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.4.haar_projection
+  kind: definition
+  book:
+    number: Equation (6.120)
+    pages:
+    - 525
+    - 526
+    section: 6.4.2
+    equations: []
+  title: Haar Projection Estimator
+  statement: "In Gaussian white noise with \\(\\sigma=1\\), define the Haar projection\nestimator\n\\[\n f_n(j,x)=\\\
+    sum_{k=0}^{2^j-1}\\phi_{jk}(x)\n          \\int_0^1\\phi_{jk}(t)\\,dY(t),\\qquad\n \\phi_{jk}(x)=2^{j/2}\\mathbf\
+    \ 1_{(k/2^j,(k+1)/2^j]}(x). \\tag{6.120}\n\\]"
+  hypotheses:
+    explicit:
+    - j is a nonnegative integer.
+    - Y is the Gaussian white-noise observation on [0,1].
+    - The stochastic integrals against the normalised Haar scaling functions exist.
+    implicit: []
+  quantifier_order:
+  - For each n,j and observation Y, define a finite measurable function-valued sum.
+  constants:
+  - For each n,j and observation Y, define a finite measurable function-valued sum.
+  dependencies:
+    earlier_book:
+    - Gaussian white noise model (6.3)
+    - Haar multiresolution analysis
+    chapter_local: []
+    later_book_uses:
+    - Proposition 6.4.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A finite orthogonal projection of the white-noise coordinate process onto the Haar scaling space V_j.
+    blockers: &id002 []
+    reusable_primitives:
+    - Haar projection estimator
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.4.3
+  kind: proposition
+  book:
+    number: Proposition 6.4.3
+    pages:
+    - 526
+    - 527
+    section: 6.4.2
+    equations: []
+  title: Haar Confidence Band gumbel Limit
+  statement: "Let \\(B>0\\), \\(0<r\\le1\\), \\(\\sigma=1\\), and\n\\[\n F=\\{f:\\|f\\|_{B^r_{\\infty\\infty}([0,1])}\\\
+    le B\\}.\n\\]\nChoose \\(\\bar j_n\\) and \\(u_n\\) so that\n\\[\n 2^{\\bar j_n}\\asymp(n/\\log n)^{1/(2r+1)},\\\
+    qquad\n j_n=\\bar j_n+u_n,\\qquad 2^{u_n}\\sim(\\log n)^2.\n\\]\nFor the estimator in (6.120), put\n\\[\n a_n=\\\
+    sqrt{2j_n\\log2},\\qquad\n b_n=a_n-\\frac{\\log j_n+\\log(\\pi\\log2)}{2a_n}.\n\\]\nThen, for every \\(t\\in\\\
+    mathbb R\\),\n\\[\n \\lim_{n\\to\\infty}\\sup_{f\\in F}\n \\left|P_f^Y\\!\\left\\{\n a_n\\!\\left(\\sqrt{\\\
+    frac n{2^{j_n}}}\n \\|f_n(j_n)-f\\|_\\infty-b_n\\right)\\le t\\right\\}\n -e^{-e^{-t}}\\right|=0. \\tag{6.121}\n\
+    \\]\nIf \\(1-\\alpha=e^{-e^{-z_\\alpha}}\\), the band\n\\[\n C_n(\\alpha,x)=f_n(j_n,x)\\ \\pm\\\n \\sqrt{\\\
+    frac{2^{j_n}}n}\\frac{z_\\alpha+b_n}{a_n},\\qquad x\\in[0,1], \\tag{6.122}\n\\]\nhas the printed exactness conclusion\n\
+    \\[\n \\inf_{f\\in F}|P_f^Y\\{f\\in C_n\\}-(1-\\alpha)|=o(1),\n\\]\nand its \\(L^\\infty\\)-diameter is\n\\\
+    [\n |C_n|_\\infty\n =O_P\\!\\left((\\log n/n)^{r/(2r+1)}2^{u_n/2}\\right) \\tag{6.123}\n\\]\nuniformly over\
+    \ \\(F\\)."
+  hypotheses:
+    explicit:
+    - The Haar approximation estimate is used, restricting the displayed result to 0<r≤1.
+    - The integer sequences satisfy the exact asymptotic relations displayed.
+    - The Gaussian maxima are formed from 2^{j_n} independent N(0,1) coordinates.
+    implicit: []
+  quantifier_order:
+  - ∀B>0, 0<r≤1 and t∈R, the uniform distributional convergence holds; for each 0<α<1 choose z_α by the Gumbel CDF
+    and obtain the band conclusions.
+  constants:
+  - ∀B>0, 0<r≤1 and t∈R, the uniform distributional convergence holds; for each 0<α<1 choose z_α by the Gumbel CDF
+    and obtain the band conclusions.
+  dependencies:
+    earlier_book:
+    - Theorem 2.7.1
+    - Proposition 4.3.8
+    - Theorem 6.3.5
+    chapter_local:
+    - 6.4.1
+    - 6.4.haar_projection
+    later_book_uses:
+    - Corollary 6.4.5 undersmoothing pattern
+    - general projection/sampling analogues discussed immediately after the proof
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Finite Gaussian-coordinate reduction plus an explicit bias-negligibility estimate and the extreme-value
+      limit for maxima of absolute Gaussians.
+    blockers: &id003
+    - The exactness conclusion again uses the book's infimum of absolute coverage errors rather than a supremum.
+    - The displayed band width is a pointwise interval; formal membership means a simultaneous inequality for all
+      x.
+    reusable_primitives:
+    - Gumbel confidence band
+    - undersmoothing bias removal
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.4.multivariate_cdf_tube
+  kind: operative_example
+  book:
+    number: Rademacher confidence tube (6.124)
+    pages:
+    - 527
+    - 528
+    section: 6.4.2
+    equations: []
+  title: Multivariate Cdf Rademacher Tube
+  statement: "For i.i.d. observations from a distribution function \\(F\\) on\n\\(\\mathbb R^d\\), let\n\\[\n F_n(x)=\\\
+    frac1n\\sum_{i=1}^n\\mathbf1_{(-\\infty,x]}(X_i)\n\\]\nand, for independent Rademacher variables \\(\\varepsilon_i\\\
+    ), define\n\\[\n R_n=\\frac2n\\sup_{x\\in\\mathbb R^d}\n \\left|\\sum_{i=1}^n\\varepsilon_i\\mathbf1_{(-\\infty,x]}(X_i)\\\
+    right|\n +3\\sqrt{\\frac{2\\log(4/\\alpha)}n}.\n\\]\nThen the tube \\(C_n(x)=[F_n(x)\\pm R_n]\\) satisfies,\
+    \ for every \\(n\\),\n\\[\n P_F^N\\{F\\in C_n\\}\n =1-P_F^N\\{\\|F_n-F\\|_\\infty>R_n\\}\\ge1-\\alpha. \\tag{6.124}\n\
+    \\]\nThe random Rademacher term may be replaced by its conditional expectation\n\\(E_\\varepsilon R_n\\). Moreover\
+    \ \\(E_FR_n\\lesssim n^{-1/2}\\), so the diameter\nhas the minimax order."
+  hypotheses:
+    explicit:
+    - The class of lower orthants is measurable/separable or outer probabilities are used.
+    - The Rademacher variables are independent of the sample.
+    - 0<α<1.
+    implicit: []
+  quantifier_order:
+  - ∀d,n,F and 0<α<1, the nonasymptotic coverage bound holds; the expectation order is uniform over F.
+  constants:
+  - ∀d,n,F and 0<α<1, the nonasymptotic coverage bound holds; the expectation order is uniform over F.
+  dependencies:
+    earlier_book:
+    - Theorem 3.4.5
+    - Theorem 3.1.21
+    - Example 3.7.19
+    - Proposition 6.3.4 / Exercise 6.3.1
+    chapter_local:
+    - 6.4.1
+    - 6.4.diameter
+    later_book_uses:
+    - kernel-density Rademacher confidence bands
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Apply a data-dependent empirical-process concentration theorem to the VC class of lower orthants; requires
+      conditional Rademacher expectation.
+    blockers: &id004
+    - The first term's normalisation is recovered as 2/n from the text layer; verify against the typeset display
+      when implementing.
+    reusable_primitives:
+    - Rademacher confidence radius
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.4.rademacher_radius
+  kind: definition
+  book:
+    number: Equations (6.125)-(6.127)
+    pages:
+    - 528
+    - 529
+    section: 6.4.2
+    equations: []
+  title: Kernel Rademacher Confidence Radius
+  statement: "For the kernel density estimator\n\\[\n f_n(h,x)=\\frac1{nh^d}\\sum_{i=1}^nK\\!\\left(\\frac{x-X_i}{h}\\\
+    right)\n\\]\nwith a bounded-variation kernel \\(K\\in L^1\\cap L^\\infty\\), \\(\\int K=1\\),\ndefine the conditional\
+    \ Rademacher complexity\n\\[\n R_n(h)=E_\\varepsilon\\sup_{x\\in\\mathbb R^d}\n \\left|\\frac1n\\sum_{i=1}^n\\\
+    varepsilon_iK_h(x-X_i)\\right|.\n\\]\nIf \\(U\\ge\\|f\\|_\\infty\\) is known, set\n\\[\n \\sigma_R(n,h,z)\n\
+    \ =3R_n(h)+\\sqrt{\\frac{9\\,2U\\|K\\|_2^2z}{4nh^d}}\n              +\\frac{50\\|K\\|_\\infty z}{3nh^d}. \\\n    tag{6.126}\n\\]\nThe band for the mean of the estimator is\n\\[\n \\bar C_n=[f_n(h,\\cdot)-\\sigma_R(n,h,z),\n\
+    \           f_n(h,\\cdot)+\\sigma_R(n,h,z)]. \\tag{6.127}\n\\]\nThe preceding expectation benchmark is\n\\[\n\
+    \ E_f\\sup_x|f_n(h,x)-f(x)|\n \\lesssim \\|f\\|_\\infty^{1/2}\\sqrt{\\frac{\\log(1/h)}{nh^d}}\n           +\\\
+    |f\\|_{B^r_{\\infty\\infty}}h^r. \\tag{6.125}\n\\]"
+  hypotheses:
+    explicit:
+    - K is of bounded variation, integrates to one, and belongs to L1∩L∞; the L2 norm in (6.126) is finite.
+    - h>0, z>0, and U is a deterministic upper bound for the density sup norm.
+    - The translated kernel class satisfies the measurability/separability assumptions of the empirical-process
+      inequalities.
+    implicit: []
+  quantifier_order:
+  - For every n,h,z and observed sample, R_n(h) and σ_R are defined; the benchmark bound holds for f in the stated
+    Besov class.
+  constants:
+  - For every n,h,z and observed sample, R_n(h) and σ_R are defined; the benchmark bound holds for f in the stated
+    Besov class.
+  dependencies:
+    earlier_book:
+    - Chapters 4-5 kernel bias/variance bounds
+    - Section 3.4.2 Rademacher complexity
+    chapter_local: []
+    later_book_uses:
+    - Proposition 6.4.4
+    - Corollary 6.4.5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Bundle kernel assumptions, define a conditional expectation over a finite Rademacher product space,
+      and construct the pointwise band as a random predicate.
+    blockers: &id005
+    - The OCR layout of the square-root term is fragile. The transcription follows the proof's equivalent `sqrt(9·2U||K||₂²
+      z/(4nh^d))` form.
+    - The suggested replacement of unknown U by `||f_n(̄h_n)||∞` needs a separate high-probability upper-bound theorem;
+      consistency alone is not enough for a finite-sample statement.
+    reusable_primitives:
+    - kernel Rademacher radius
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005

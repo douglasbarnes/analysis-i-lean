@@ -1,0 +1,385 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id004
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id006
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id003
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id001
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.ex.5_1_5
+  kind: exercise
+  book:
+    number: Exercise 5.1.5
+    pages:
+    - 420
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.5
+  statement: For the histogram/Haar estimator, prove a matching lower bound of order (nh)^{-1/2} for the expected
+    Lp fluctuation under a binomial normal-approximation condition.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: &id002 []
+    chapter_local:
+    - ch5.thm.5_1_5
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes a reusable sharpness/lower-bound lemma'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Binomial absolute-deviation lower bound and summation over cells.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: &id005 []
+  selection_reasons:
+  - establishes a reusable sharpness/lower-bound lemma
+- id: ch5.ex.5_1_6
+  kind: exercise
+  book:
+    number: Exercise 5.1.6
+    pages:
+    - 420
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.6
+  statement: Show that the p=∞ expectation bound in Proposition 5.1.2 is sharp for the Haar basis by proving a Gaussian
+    maximum lower bound of order √(2^j j).
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.prop.5_1_2
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes a reusable lower Gaussian maximum lemma'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Lower bound for maximum/supremum of independent Gaussian coefficients.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes a reusable lower Gaussian maximum lemma
+- id: ch5.ex.5_1_7
+  kind: exercise
+  book:
+    number: Exercise 5.1.7
+    pages:
+    - 420
+    - 421
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.7
+  statement: Prove white-noise analogues of Propositions 5.1.18 and 5.1.19, using the alternate boundary projection
+    expansion and Lévy’s inequality.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.prop.5_1_18
+    - ch5.prop.5_1_19
+    - ch5.eq.5_6_5_8
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes required reusable almost-sure limit theorems'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Gaussian partial-sum limsup theorems for projection estimators.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes required reusable almost-sure limit theorems
+- id: ch5.ex.5_1_8
+  kind: exercise
+  book:
+    number: Exercise 5.1.8
+    pages:
+    - 421
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.8
+  statement: Prove a lower Lp expectation bound D_p2^{j/2} for the boundary-corrected Gaussian scaling-function
+    series, using equivalence of Gaussian moments and pointwise square-function bounds.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.prop.5_1_2
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes a reusable lower bound complementing Proposition 5.1.2'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Gaussian Banach-space moment equivalence plus wavelet square-function lower estimate.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes a reusable lower bound complementing Proposition 5.1.2
+- id: ch5.ex.5_1_9
+  kind: exercise
+  book:
+    number: Exercise 5.1.9
+    pages:
+    - 421
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.9
+  statement: Use the lower-tail empirical-process inequality to prove a two-sided concentration bound around E‖fₙ−Efₙ‖p
+    with variance v and envelope U, then deduce stochastic and almost-sure fluctuation rates and white-noise analogues.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.thm.5_1_13
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: completes the concentration picture; establishes reusable two-sided concentration
+      and rate lemmas'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Klein–Rio lower tail plus upper Talagrand tail; derive O_P and Borel–Cantelli consequences.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - completes the concentration picture
+  - establishes reusable two-sided concentration and rate lemmas
+- id: ch5.def.weak_seminorm
+  kind: definition
+  book:
+    number: 'Unnumbered definition: weak seminorm'
+    pages:
+    - 421
+    section: '5.2'
+    equations: []
+  title: 'Unnumbered definition: weak seminorm'
+  statement: For a class 𝔽 of measurable functions and a finite signed measure μ, define ‖μ‖_𝔽=sup_{f∈𝔽}|∫f dμ|.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Every f∈𝔽 is μ-integrable.
+    implicit:
+    - The value may be +∞ unless boundedness is separately proved.
+  quantifier_order:
+  - For every finite signed measure μ and index class 𝔽.
+  constants: *id002
+  dependencies:
+    earlier_book: *id002
+    chapter_local: *id002
+    later_book_uses:
+    - All results in Section 5.2
+  proof_status: *id006
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: An extended-real seminorm on signed measures indexed by a function set.
+    blockers:
+    - Signed measure integration and possibly nonmeasurable suprema.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: *id005
+- id: ch5.def.sobolev_ball
+  kind: definition
+  book:
+    number: 'Unnumbered definition: H^s_{2,M}(A)'
+    pages:
+    - 422
+    section: 5.2.1
+    equations: []
+  title: 'Unnumbered definition: H^s_{2,M}(A)'
+  statement: For s>1/2 and M>0, H^s_{2,M}(A)={g∈C_u(A):‖g‖_{H^s_2(A)}≤M}.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - s>1/2.
+    - M>0.
+    - A is ℝ or the relevant interval domain.
+    implicit:
+    - The Sobolev space and restriction/extension convention is that of Chapter 4.
+  quantifier_order:
+  - All uniformly continuous g with norm at most M.
+  constants: *id002
+  dependencies:
+    earlier_book:
+    - Section 4.3 Sobolev/Besov spaces
+    chapter_local: *id002
+    later_book_uses:
+    - Propositions 5.2.1, Theorem 5.2.5, Theorem 5.2.11
+  proof_status: *id006
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Closed norm ball intersected with uniformly continuous representatives.
+    blockers:
+    - Sobolev spaces on intervals and representative selection.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005
+- id: ch5.def.BV_ball
+  kind: definition
+  book:
+    number: 'Unnumbered definition: BV_M'
+    pages:
+    - 422
+    section: 5.2.1
+    equations: []
+  title: 'Unnumbered definition: BV_M'
+  statement: BV_M(ℝ) consists of functions g(x)=g(−∞+)+ν((−∞,x]) whose distributional derivative is a finite signed
+    measure ν with total variation |ν|(ℝ)≤M; interval and periodic analogues are used on [0,1].
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - M>0.
+    - ν finite signed Borel measure.
+    implicit:
+    - Functions are identified with their right-continuous bounded-variation representative.
+  quantifier_order:
+  - All such g,ν.
+  constants: *id002
+  dependencies:
+    earlier_book: *id002
+    chapter_local: *id002
+    later_book_uses:
+    - Propositions 5.2.1, Theorems 5.2.7–5.2.10
+  proof_status: *id006
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Structure pairing a base value with a finite signed measure derivative; quotient by nonunique representation
+      if needed.
+    blockers:
+    - BV functions and Stieltjes-measure correspondence.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005

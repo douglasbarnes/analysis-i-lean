@@ -1,0 +1,339 @@
+schema_version: '1.0'
+acceptance_status: needs_revision
+acceptance_blockers:
+- Exact source transcription remains required for the declarations listed in `blocking_source_transcriptions`.
+- The remaining unresolved material is concentrated in the class 𝒟 and Proposition 5.1.21, and in the quadratic-functional formulas on pp.439–451.
+- Structural validation cannot certify source fidelity for unresolved formulas.
+- P2 remains blocked until central review clears every blocking source transcription.
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016 hardback); official corrections recorded without silent repair
+  uploaded_file: FULLPDF.pdf
+  chapter: 5
+  chapter_title: Linear Nonparametric Estimators
+  book_pages:
+    start: 389
+    end: 466
+  read_scope: Chapter 5 in full, Sections 5.1–5.4, including operative examples and exercises.
+  no_lean_proofs: true
+  audit_date: '2026-07-25'
+scope:
+  inclusion_rule: Every definition, lemma, proposition, theorem, corollary and mathematically operative example,
+    plus exercises meeting the proof-completion, later-use or reusable-lemma criteria.
+  source_fidelity_policy: Preserve printed content; record corrigenda, suspected defects, measurability issues and
+    unresolved transcription explicitly.
+  pass_policy:
+    core: Unstarred main-text and later-used notes material.
+    starred: Material in the explicitly starred Section 5.1.3 only.
+    exercise: Extracted exercise declaration.
+blocking_source_transcriptions:
+- ch5.def.D_class
+- ch5.prop.5_1_21
+- ch5.def.quadratic_white_noise
+- ch5.thm.5_3_1
+- ch5.thm.5_3_2
+- ch5.def.weighted_quadratic
+- ch5.thm.5_3_3
+- ch5.def.general_integral_estimator
+- ch5.thm.5_3_4
+selected_exercises:
+- id: ch5.ex.5_1_1
+  book_number: Exercise 5.1.1
+  page: 419
+  reasons:
+  - cited by Theorem 5.1.13
+  - required reusable concentration input
+- id: ch5.ex.5_1_2
+  book_number: Exercise 5.1.2
+  page: 419
+  reasons:
+  - cited by Theorem 5.1.13
+  - required reusable concentration input
+- id: ch5.ex.5_1_3
+  book_number: Exercise 5.1.3
+  page: 419
+  reasons:
+  - cited in Theorem 5.1.5 proof
+  - cited by concentration arguments
+  - reusable measurability lemma
+- id: ch5.ex.5_1_4
+  book_number: Exercise 5.1.4
+  page: 419–420
+  reasons:
+  - establishes reusable concentration corollaries
+- id: ch5.ex.5_1_5
+  book_number: Exercise 5.1.5
+  page: 420
+  reasons:
+  - establishes a reusable sharpness/lower-bound lemma
+- id: ch5.ex.5_1_6
+  book_number: Exercise 5.1.6
+  page: 420
+  reasons:
+  - establishes a reusable lower Gaussian maximum lemma
+- id: ch5.ex.5_1_7
+  book_number: Exercise 5.1.7
+  page: 420–421
+  reasons:
+  - establishes required reusable almost-sure limit theorems
+- id: ch5.ex.5_1_8
+  book_number: Exercise 5.1.8
+  page: 421
+  reasons:
+  - establishes a reusable lower bound complementing Proposition 5.1.2
+- id: ch5.ex.5_1_9
+  book_number: Exercise 5.1.9
+  page: 421
+  reasons:
+  - completes the concentration picture
+  - establishes reusable two-sided concentration and rate lemmas
+- id: ch5.ex.5_2_1
+  book_number: Exercise 5.2.1
+  page: 437–438
+  reasons:
+  - explicitly used in the proof of Proposition 5.2.2
+  - required reusable approximation lemma
+- id: ch5.ex.5_2_3
+  book_number: Exercise 5.2.3
+  page: 438–439
+  reasons:
+  - explicitly used in Theorem 5.2.9
+  - required reusable entropy lemma
+- id: ch5.ex.5_3_1
+  book_number: Exercise 5.3.1
+  page: 461
+  reasons:
+  - explicitly completes an omitted main-text proof
+- id: ch5.ex.5_3_2
+  book_number: Exercise 5.3.2
+  page: 461
+  reasons:
+  - establishes reusable wavelet and boundary variants
+- id: ch5.ex.5_3_3
+  book_number: Exercise 5.3.3
+  page: 461
+  reasons:
+  - establishes required reusable general-functional wavelet estimator
+- id: ch5.ex.5_3_4
+  book_number: Exercise 5.3.4
+  page: 461
+  reasons:
+  - establishes a reusable nonlinear-functional application
+- id: ch5.ex.5_3_5
+  book_number: Exercise 5.3.5
+  page: 461
+  reasons:
+  - establishes a required reusable band-limited positive-kernel example
+- id: ch5.ex.5_3_6
+  book_number: Exercise 5.3.6
+  page: 462
+  reasons:
+  - explicitly completes a proof omitted around (5.112)
+  - required reusable deconvolution identity
+- id: ch5.ex.5_3_7
+  book_number: Exercise 5.3.7
+  page: 462
+  reasons:
+  - establishes reusable entropy and coefficient concentration lemmas
+- id: ch5.ex.5_3_8
+  book_number: Exercise 5.3.8
+  page: 462
+  reasons:
+  - establishes reusable exponential L² bounds
+- id: ch5.ex.5_3_10
+  book_number: Exercise 5.3.10
+  page: 462
+  reasons:
+  - establishes reusable spectral-cutoff estimator and rates
+  - cited by notes as improving Proposition 5.3.8
+- id: ch5.ex.5_3_11
+  book_number: Exercise 5.3.11
+  page: 462
+  reasons:
+  - establishes reusable higher-moment extension
+central_review_queue:
+- declaration: ch5.eq.5_9_5_11
+  book_number: Equations (5.9)–(5.11)
+  page: 392
+  issue: Author erratum changes D_{jm}; preserve the corrected factor 2^{-j/2}.
+- declaration: ch5.eq.5_9_5_11
+  book_number: Equations (5.9)–(5.11)
+  page: 392
+  issue: The exact individual inequalities (5.9)–(5.11) require page-image transcription before proof work.
+- declaration: ch5.rem.5_1_6
+  book_number: Remark 5.1.6
+  page: 395–396
+  issue: The printed first display is retained together with the official correction ν^{1/p}↦ν_p^{1/p}; do not silently
+    erase the original reading.
+- declaration: ch5.prop.5_1_7
+  book_number: Proposition 5.1.7
+  page: 399–400
+  issue: The printed quantification is altered by the official erratum; retain both readings and use the corrected
+    pointwise norm-bound formulation.
+- declaration: ch5.prop.5_1_10
+  book_number: Proposition 5.1.10
+  page: 402
+  issue: The text says “same hypotheses as in Corollary 5.1.9”, but 5.1.9 is a Proposition.
+- declaration: ch5.prop.5_1_10
+  book_number: Proposition 5.1.10
+  page: 402
+  issue: The OCR rendering of one p-norm in the displayed statement is ambiguous; compare the page before proof
+    implementation.
+- declaration: ch5.prop.5_1_12
+  book_number: Proposition 5.1.12
+  page: 406–407
+  issue: Use C_p², not c_p², in (5.31).
+- declaration: ch5.thm.5_1_13
+  book_number: Theorem 5.1.13
+  page: 407–408
+  issue: The prose says “for all t>0” while the formula uses x; treat this as a dummy-variable typo without changing
+    the quantified content.
+- declaration: ch5.prop.5_1_19
+  book_number: Proposition 5.1.19
+  page: 410–411
+  issue: The printed statement says “bounded density on ℝ” while cases (c),(d) are interval kernels; central review
+    should split the domain statement rather than silently generalise it.
+- declaration: ch5.def.D_class
+  book_number: 'Equation (5.45): class 𝒟(α,D,δ,A,L)'
+  page: 412–414
+  issue: Do not replace the printed class by a generic Hölder ball or by the four-parameter class from the source paper; exact lower-bound and admissibility conditions remain operative.
+- declaration: ch5.prop.5_1_21
+  book_number: Proposition 5.1.21
+  page: 414–417
+  issue: Exact formulas (5.46)–(5.51), the normalisation of νₙ^f and the interval I must be transcribed from the book before formalisation.
+- declaration: ch5.thm.5_2_9
+  book_number: Theorem 5.2.9
+  page: 431–433
+  issue: The printed phrase “wavelets of regularity S>s” contains an s not otherwise quantified in the theorem;
+    verify whether S refers only to the preceding t<S+1 condition.
+- declaration: ch5.thm.5_2_11
+  book_number: Theorem 5.2.11
+  page: 433–434
+  issue: Use plain H symbols per official errata.
+- declaration: ch5.rem.5_2_12
+  book_number: Remark 5.2.12
+  page: 434
+  issue: The printed density condition uses B^t_{p,q}([0,1])∪L^p([0,1]); an intersection may have been intended,
+    but the source is not silently changed.
+- declaration: ch5.rem.5_2_12
+  book_number: Remark 5.2.12
+  page: 434
+  issue: The printed relations 1/p+1/q=1 and 1/p′+1/q′=1 appear inconsistent with the usual conjugate-index roles;
+    retain them pending central review.
+- declaration: ch5.thm.5_2_16
+  book_number: Theorem 5.2.16
+  page: 436–437
+  issue: 'Official erratum on p.436: every convergence arrow printed as →d is to be read as convergence in law →L.'
+- declaration: ch5.def.quadratic_white_noise
+  book_number: 'Equations (5.87)–(5.92): quadratic functional in white noise'
+  page: 439–443
+  issue: The searchable HTML omits pages 440–451; transcribe these equations directly from the uploaded PDF before
+    proof work.
+- declaration: ch5.thm.5_3_1
+  book_number: Theorem 5.3.1
+  page: 441–443
+  issue: Exact ball notation, low-smoothness exponent, and resolution conditions must be transcribed from pp.441–443.
+- declaration: ch5.thm.5_3_2
+  book_number: Theorem 5.3.2
+  page: 444–447
+  issue: Exact kernel conditions, low-smoothness exponent and bandwidth/resolution inequalities require direct PDF
+    transcription.
+- declaration: ch5.def.weighted_quadratic
+  book_number: 'Equation (5.103): weighted/debiased quadratic estimator'
+  page: 447–449
+  issue: Direct PDF transcription of (5.103) is required.
+- declaration: ch5.thm.5_3_3
+  book_number: Theorem 5.3.3
+  page: 447–449
+  issue: Exact hypotheses and low-smoothness statement require direct PDF transcription.
+- declaration: ch5.def.general_integral_estimator
+  book_number: Equation (5.107)
+  page: 449–450
+  issue: Direct PDF transcription of (5.107) is required.
+- declaration: ch5.thm.5_3_4
+  book_number: Theorem 5.3.4
+  page: 450–451
+  issue: Exercise 5.3.1 completes the proof; the main-text proof is not complete.
+- declaration: ch5.thm.5_3_4
+  book_number: Theorem 5.3.4
+  page: 450–451
+  issue: Exact hypotheses and estimator coefficients require direct PDF transcription.
+- declaration: ch5.eq.5_112
+  book_number: Equation (5.112)
+  page: 452
+  issue: The equality-to-zero hypothesis is a clear operative typo; retain the printed text and corrected reading
+    explicitly.
+- declaration: ch5.def.delta_Hj
+  book_number: Definitions preceding Lemma 5.3.5
+  page: 454
+  issue: The text says positivity follows because |F[ϕ]|≥0 is uniformly continuous; the missing operative premise
+    is nonvanishing.
+- declaration: ch5.lem.5_3_5
+  book_number: Lemma 5.3.5
+  page: 454–456
+  issue: Use the nonvanishing correction explicitly.
+- declaration: ch5.prop.5_3_7
+  book_number: Proposition 5.3.7
+  page: 458–459
+  issue: Verify exact labels of the Besov ball and constants in the severe case before proof implementation.
+- declaration: ch5.thm.5_4_1
+  book_number: Theorem 5.4.1
+  page: 463
+  issue: No explicit later citation in the book was found; retain as a notes theorem but do not mark it as a prerequisite
+    without further cross-chapter audit.
+- declaration: ch5.thm.5_4_1
+  book_number: Theorem 5.4.1
+  page: 463
+  issue: 'Pass normalised to `core`: Section 5.4 is not explicitly starred in the source.'
+completeness_check:
+  inventory_entries: 104
+  by_kind:
+    definition: 15
+    exercise: 23
+    lemma: 8
+    operative_definition: 14
+    operative_example: 6
+    proposition: 21
+    theorem: 17
+  by_pass:
+    core: 74
+    exercise: 23
+    starred: 7
+  by_difficulty:
+    major-library: 35
+    research-level: 39
+    routine: 5
+    substantial: 25
+  selected_exercise_count: 21
+  blocking_source_transcription_count: 9
+  central_review_issue_count: 30
+  dependency_edge_count: 141
+  missing_numbered_labels: []
+  duplicate_identifiers: []
+  dag_acyclic: true
+package:
+  declaration_inventory:
+    files:
+    - Chapter05.Inventory.01.yaml
+    - Chapter05.Inventory.02.yaml
+    - Chapter05.Inventory.03.yaml
+    - Chapter05.Inventory.04a.yaml
+    - Chapter05.Inventory.04b.yaml
+    - Chapter05.Inventory.05.yaml
+    - Chapter05.Inventory.06.yaml
+    - Chapter05.Inventory.07.yaml
+    - Chapter05.Inventory.08.yaml
+    - Chapter05.Inventory.09.yaml
+    - Chapter05.Inventory.10.yaml
+    - Chapter05.Inventory.11.yaml
+    - Chapter05.Inventory.12.yaml
+    - Chapter05.Inventory.13.yaml
+    format: canonical readable inventory fragments; YAML anchors only remove repeated boilerplate
+    entry_count: 104
+  chapter_local_dependency_dag:
+    file: Chapter05.DependencyDAG.yaml
+    node_count: 104
+    edge_count: 141

@@ -1,0 +1,414 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id004
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id002
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id003
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id001
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.prop.5_2_1
+  kind: proposition
+  book:
+    number: Proposition 5.2.1
+    pages:
+    - 422
+    - 423
+    section: 5.2.1
+    equations: []
+  title: Proposition 5.2.1
+  statement: For boundary-corrected or periodised wavelets of regularity S>s and f∈B^s_{∞∞} with 2^{-jₙ(s+1)}√n→0,
+    the white-noise projection measure Qₙ(dx)=fₙ(x)dx satisfies √n(Qₙ−Q)⇒σW in ℓ∞(BV_M). The same conclusion holds
+    in ℓ∞(H^s_{2,M}) for s>1/2 under the corresponding approximation condition.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - White-noise model (5.5).
+    - Boundary or periodised wavelet basis with sufficient regularity.
+    - f in the stated Besov class.
+    - Bias condition 2^{-jₙ(s+1)}√n→0 for BV; analogous Sobolev exponent as printed.
+    - M<∞.
+    implicit:
+    - W acts on the index class by g↦∫g dW.
+    - The limiting Gaussian process has a sample-continuous version.
+  quantifier_order:
+  - For every fixed M.
+  - As n→∞.
+  constants:
+  - σ.
+  dependencies:
+    earlier_book:
+    - Chapter 4 Donsker properties and wavelet approximation
+    chapter_local:
+    - ch5.eq.5_6_5_8
+    - ch5.def.BV_ball
+    - ch5.def.sobolev_ball
+    later_book_uses: &id005 []
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Weak convergence of random signed measures in a function-indexed ℓ∞ space via exact Gaussian noise plus
+      vanishing bias.
+    blockers:
+    - Weak convergence in nonseparable function spaces.
+    - White-noise random distributions.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: &id006 []
+- id: ch5.def.approx_identity
+  kind: definition
+  book:
+    number: 'Unnumbered definition: approximate convolution identity'
+    pages:
+    - 423
+    section: 5.2.1
+    equations: []
+  title: 'Unnumbered definition: approximate convolution identity'
+  statement: A sequence of finite signed measures μₙ is an approximate convolution identity if μₙ(ℝ)=1 and ∫g dμₙ→g(0)
+    for every bounded continuous g. It is proper if |μₙ|([−a,a]^c)→0 for every a>0.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - μₙ finite signed Borel measures.
+    implicit:
+    - The book first states the mass-one and weak-convergence conditions; “proper” adds concentration in total variation.
+  quantifier_order:
+  - For every bounded continuous g.
+  - For properness, for every a>0.
+  constants: *id005
+  dependencies:
+    earlier_book: *id005
+    chapter_local: *id005
+    later_book_uses:
+    - Proposition 5.2.3
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Predicate on a sequence of finite signed measures, expressed as weak convergence to δ₀ plus optional
+      total-variation tightness.
+    blockers: *id005
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.prop.5_2_2
+  kind: proposition
+  book:
+    number: Proposition 5.2.2
+    pages:
+    - 424
+    section: 5.2.1
+    equations: []
+  title: Proposition 5.2.2
+  statement: Let 𝔽 be a translation-invariant P-Donsker class and 𝓜 a set of finite signed measures with uniformly
+    bounded total variation. If y↦f(x+y) is measurable for every x and y↦‖f(·+y)‖_{L²(P)} is |μ|-integrable for
+    each f∈𝔽, μ∈𝓜, then {f*μ:f∈𝔽, μ∈𝓜} is P-Donsker.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - 𝔽 translation invariant and P-Donsker.
+    - sup_{μ∈𝓜}|μ|(ℝ)<∞.
+    - The two measurability/integrability assumptions in the statement.
+    implicit:
+    - Convolution convention is (f*μ)(x)=∫f(x+y)dμ(y) up to the book’s reflection convention.
+  quantifier_order:
+  - For all f∈𝔽 and μ∈𝓜.
+  constants:
+  - Uniform total-variation bound.
+  dependencies:
+    earlier_book:
+    - Donsker stability under symmetric convex hull, Proposition 3.7.34
+    chapter_local:
+    - ch5.def.weak_seminorm
+    later_book_uses:
+    - Proposition 5.2.3
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 5.2.1
+    contains_omitted_steps: true
+    comment: ''
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Donsker closure theorem via L² approximation by finite signed convex combinations of translates.
+    blockers:
+    - Donsker class framework.
+    - Measurable convolution classes.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.prop.5_2_3
+  kind: proposition
+  book:
+    number: Proposition 5.2.3
+    pages:
+    - 424
+    - 425
+    section: 5.2.1
+    equations: []
+  title: Proposition 5.2.3
+  statement: Let 𝔽 be translation-invariant and P-Donsker and μₙ an approximate identity with μₙ(ℝ)=1 and the stated
+    integrability. If sup_{f∈𝔽}E(∫[f(X+y)−f(X)]dμₙ(y))²→0 and √n sup_{f∈𝔽}|E∫[f(X+y)−f(X)]dμₙ(y)|→0, then √n‖Pₙ*μₙ−Pₙ‖_𝔽→0
+    in outer probability and √n(Pₙ*μₙ−P)⇒G_P in ℓ∞(𝔽).
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - 𝔽 translation-invariant P-Donsker.
+    - μₙ approximate identity, μₙ(ℝ)=1.
+    - 𝔽⊂L¹(|μₙ|) and ∫‖f(·−y)‖_{L²(P)}d|μₙ|(y)<∞.
+    - Conditions (5.70) and (5.71).
+    implicit:
+    - Outer probability is used if the supremum is not measurable.
+    - G_P is the P-Brownian bridge.
+  quantifier_order:
+  - As n→∞.
+  - Both suprema range over f∈𝔽.
+  constants: *id005
+  dependencies:
+    earlier_book:
+    - Asymptotic equicontinuity of Donsker classes
+    chapter_local:
+    - ch5.def.approx_identity
+    - ch5.prop.5_2_2
+    later_book_uses:
+    - Theorem 5.2.5
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: A Slutsky theorem for smoothed empirical processes after bias and variance discrepancy estimates.
+    blockers:
+    - Empirical-process weak convergence and outer probability.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.def.5_2_4
+  kind: definition
+  book:
+    number: Definition 5.2.4
+    pages:
+    - 425
+    section: 5.2.1
+    equations: []
+  title: Definition 5.2.4
+  statement: A symmetric kernel K has order r>0 if K∈L¹, ∫K=1, ∫y^jK(y)dy=0 for j=1,…,{r} (largest integer strictly
+    below r), and ∫|y|^r|K(y)|dy<∞.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - r>0.
+    - K Lebesgue integrable and symmetric.
+    implicit:
+    - All moment integrals are absolutely meaningful as implied by the r-moment condition for lower orders.
+  quantifier_order:
+  - For each integer j with 1≤j<{r}+1.
+  constants:
+  - Order r.
+  dependencies:
+    earlier_book:
+    - Proposition 4.1.6 existence of high-order kernels
+    chapter_local: *id005
+    later_book_uses:
+    - Theorems 5.2.5, 5.2.7, Section 5.3.1
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Predicate on an L¹ function with moment cancellation and finite fractional moment.
+    blockers:
+    - Real-valued noninteger order and moment-index bookkeeping.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.thm.5_2_5
+  kind: theorem
+  book:
+    number: Theorem 5.2.5
+    pages:
+    - 425
+    - 428
+    section: 5.2.1
+    equations: []
+  title: Theorem 5.2.5
+  statement: Let f₀∈H^t_2(ℝ), t≥0, let K be a symmetric kernel of order r=t+s−k with s>1/2 and 0≤k<t+s, and let
+    fₙ=Pₙ*K_{hₙ}. If hₙ^{t+s−k}√n→0, then the P-bridge indexed by H^s_{2,M}(ℝ) has a sample-continuous version and
+    √n(Pₙ^{K}−P)⇒G_P in ℓ∞(H^s_{2,M}) for every M<∞.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - f₀ probability density in H^t_2.
+    - s>1/2.
+    - 0≤k<t+s.
+    - K has order t+s−k.
+    - hₙ→0 and hₙ^{t+s−k}√n→0.
+    implicit:
+    - Pₙ^K is the signed measure with density Pₙ*K_{hₙ}.
+  quantifier_order:
+  - For every M<∞.
+  - As n→∞.
+  constants: *id005
+  dependencies:
+    earlier_book:
+    - Sobolev embedding and approximation
+    chapter_local:
+    - ch5.prop.5_2_3
+    - ch5.def.5_2_4
+    - ch5.def.sobolev_ball
+    later_book_uses:
+    - Remark 5.2.6
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Verify (5.70),(5.71) using Fourier/Sobolev translation estimates and kernel moment cancellation, then
+      apply Proposition 5.2.3.
+    blockers:
+    - Donsker theorem for Sobolev balls.
+    - Fractional Sobolev translation estimates.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.rem.5_2_6
+  kind: operative_example
+  book:
+    number: Remark 5.2.6
+    pages:
+    - 427
+    - 428
+    section: 5.2.1
+    equations: []
+  title: Remark 5.2.6
+  statement: If f₀∈B^t_{2∞}, t>0, and hₙ≈n^{-1/(2t+1)}, then a kernel of order S>t gives the optimal L² density
+    rate n^{-t/(2t+1)}; increasing the order to S>t+1/2 also gives the root-n plug-in property uniformly over Sobolev
+    balls.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - f₀∈B^t_{2∞}.
+    - t>0.
+    - Kernel order as specified.
+    implicit:
+    - Choose k<s−1/2 in Theorem 5.2.5.
+  quantifier_order:
+  - As n→∞.
+  constants:
+  - Bandwidth exponent 1/(2t+1).
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.prop.5_1_7
+    - ch5.thm.5_2_5
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Combine the density risk theorem with the weak-metric CLT and compare kernel-order inequalities.
+    blockers:
+    - Besov approximation.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.def.cdf_estimators
+  kind: operative_definition
+  book:
+    number: Unnumbered definitions preceding Theorem 5.2.7
+    pages:
+    - 428
+    section: 5.2.1
+    equations: []
+  title: Unnumbered definitions preceding Theorem 5.2.7
+  statement: Define Fₙ(x)=Pₙ((−∞,x]) and Fₙ^K(h)(x)=∫_{−∞}^x(Pₙ*K_h)(u)du, the empirical and kernel-smoothed distribution
+    functions.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Pₙ empirical measure.
+    - K_h integrable.
+    implicit:
+    - Fₙ^K is the distribution function of the signed measure with density Pₙ*K_h; positivity is not assumed for
+      higher-order kernels.
+  quantifier_order:
+  - For every x∈ℝ and h>0.
+  constants: *id005
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.eq.5_1
+    later_book_uses:
+    - Theorems 5.2.7 and 5.2.8
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Cumulative signed-measure functions.
+    blockers: *id005
+  difficulty: routine
+  pass: core
+  issues_for_central_review: *id006

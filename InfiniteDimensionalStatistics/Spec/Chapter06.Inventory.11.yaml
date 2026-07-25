@@ -1,0 +1,323 @@
+inventory:
+- id: 6.4.gwn_risk_stat
+  kind: definition
+  book:
+    number: Equation (6.138)
+    pages:
+    - 533
+    - 534
+    section: 6.4.2
+    equations: []
+  title: Gaussian Projected Risk Statistic
+  statement: "After creating two independent white-noise observations \\(dY_1,dY_2\\)\nwith variance \\(2\\sigma^2/n\\\
+    ), let \\(\\tilde f_n\\) be based on \\(dY_1\\) and set\n\\[\n T_n(\\tilde f_n)=\n \\sum_{l\\le j-1,k}\n \\ \
+    left(\\int_0^1\\psi_{lk}\\,dY_2-\\langle\\psi_{lk},\\tilde f_n\\rangle\\right)^2\n -\\frac{2\\sigma^2}{n}\\\
+    ,2^j. \\tag{6.138}\n\\]\nThen, conditionally on \\(dY_1\\),\n\\[\n E_f^{(2)}T_n(\\tilde f_n)=\\|K_j(f-\\tilde\
+    \ f_n)\\|_2^2.\n\\]"
+  hypotheses:
+    explicit:
+    - The wavelet system is S-regular with S>r and has exactly 2^j coordinates through level j-1.
+    - The two white-noise experiments are independent and each has variance parameter 2σ²/n after splitting.
+    - The preliminary estimator is measurable with respect to the first experiment.
+    implicit: []
+  quantifier_order:
+  - For every j,n,f and first-experiment realisation, the conditional expectation identity holds.
+  constants:
+  - For every j,n,f and first-experiment realisation, the conditional expectation identity holds.
+  dependencies:
+    earlier_book:
+    - Gaussian sample splitting around (6.10)
+    - orthonormal wavelet coordinates
+    chapter_local:
+    - 6.1.sample_split
+    later_book_uses:
+    - Theorem 6.4.8
+    - Exercise 6.4.1
+    - Chapter 8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A finite sum of squared independent Gaussian coordinates minus its known noise trace; prove conditional
+      unbiasedness coordinatewise.
+    blockers: &id001 []
+    reusable_primitives:
+    - Gaussian unbiased projected risk estimator
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.4.8
+  kind: theorem
+  book:
+    number: Theorem 6.4.8
+    pages:
+    - 534
+    section: 6.4.2
+    equations: []
+  title: Gaussian Risk Confidence Set coverage
+  statement: "Consider two independent white-noise experiments \\(dY_1,dY_2\\)\ngenerated from (6.3), with \\(f\\\
+    in F\\subset L^2([0,1])\\), and let\n\\(\\tilde f_n\\) be based on \\(dY_1\\). Suppose\n\\[\n \\sup_{f\\in F}\\\
+    |K_j(f-\\tilde f_n)-(f-\\tilde f_n)\\|_2^2\\le B(j).\n\\]\nLet \\(g\\sim N(0,1)\\) and\n\\[\n \\tau_n^2(f)=\\\
+    frac{8\\sigma^2}{n}\\|K_j(f-\\tilde f_n)\\|_2^2\n +\\frac{4E g^4\\,\\sigma^4}{n^2}\\,2^j.\n\\]\nDefine\n\\[\n\
+    \ C_n=\\left\\{f:\\|f-\\tilde f_n\\|_2\n \\le\\sqrt{z_\\alpha\\tau_n(f)+T_n(\\tilde f_n)+B(j)}\\right\\}. \\\n    tag{6.139}\n\\]\nThen, for every \\(n\\in\\mathbb N\\) and \\(z_\\alpha\\) large enough,\n\\[\n \\inf_{f\\in\
+    \ F}P_f^Y\\{f\\in C_n\\}\\ge1-\\alpha. \\tag{6.140}\n\\]"
+  hypotheses:
+    explicit:
+    - The two observations have the doubled variance arising from the splitting construction, as reflected in (6.138).
+    - The bias bound is uniform over f∈F and holds for the random preliminary estimator.
+    - All wavelet sums are finite through level j-1.
+    - z_alpha is chosen sufficiently large as a function of alpha for Chebyshev's inequality.
+    implicit: []
+  quantifier_order:
+  - ∀n, for every sufficiently large z_α (uniform in f), the coverage is at least 1-α.
+  constants:
+  - ∀n, for every sufficiently large z_α (uniform in f), the coverage is at least 1-α.
+  dependencies:
+    earlier_book:
+    - Chebyshev inequality
+    - Gaussian fourth moment
+    - wavelet orthonormality
+    chapter_local:
+    - 6.4.1
+    - 6.4.gwn_risk_stat
+    later_book_uses:
+    - Exercise 6.4.1
+    - Theorem 8.3.5 / Chapter 8 adaptive confidence-set proofs
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Compute the conditional variance of the centred noncentral chi-square statistic exactly, then apply
+      Chebyshev and the deterministic projection-bias inequality.
+    blockers: &id002
+    - The confidence radius depends on the candidate f via τ_n(f), creating set-valued measurability obligations.
+    - The square root requires a nonnegative radicand; the theorem can be encoded more safely as a squared-norm
+      inequality, but that is an equivalent reformulation requiring explicit approval.
+    - The proof switches from `f̃_n` to `f̂_n` in one projection term; this is a notation typo.
+    - The text cites `Theorem 3.1.9` as a Gaussian concentration improvement even though it says `Chapter 2`; the
+      theorem number is in Chapter 3.
+    reusable_primitives:
+    - Gaussian L2 risk confidence set
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.4.multiscale_universal
+  kind: definition
+  book:
+    number: Equations (6.141)-(6.142)
+    pages:
+    - 535
+    section: 6.4.2
+    equations: []
+  title: Multiscale Universal Confidence Set
+  statement: "For an admissible sequence \\(w=(w_l)\\) with\n\\(w_l/\\sqrt l\\to\\infty\\), the white-noise observation\
+    \ satisfies\n\\[\n \\sqrt n\\,(Y^{(n)}-f)=W\\quad\\text{in }M_0(w). \\tag{6.141}\n\\]\nIf \\(z_\\alpha\\) is\
+    \ a \\(1-\\alpha\\) quantile of\n\\(\\|W\\|_{M_0(w)}\\), define\n\\[\n W_n=\\left\\{f:\\|Y^{(n)}-f\\|_{M_0(w)}\n\
+    \                 \\le z_\\alpha/\\sqrt n\\right\\},\n\\qquad\n B_n=\\{f:\\|f\\|_{B^r_{\\infty\\infty}}\\le\
+    \ u_n\\},\n\\qquad\n C_n=W_n\\cap B_n, \\quad u_n\\to\\infty. \\tag{6.142}\n\\]"
+  hypotheses:
+    explicit:
+    - w is admissible in the sense of Definition 5.2.13 and satisfies the extra divergence condition.
+    - White noise is realised as a tight Borel Gaussian random variable in M0(w).
+    - The quantile z_alpha exists; boundary mass at z_alpha affects exact equality.
+    - u_n is deterministic, positive, and diverges.
+    implicit: []
+  quantifier_order:
+  - For every 0<α<1 choose z_α from the fixed law of ||W||; for each n define W_n, B_n, and their intersection.
+  constants:
+  - For every 0<α<1 choose z_α from the fixed law of ||W||; for each n define W_n, B_n, and their intersection.
+  dependencies:
+    earlier_book:
+    - Definition 5.2.13
+    - Equation (5.86)
+    - white-noise tightness in M0(w)
+    chapter_local: []
+    later_book_uses:
+    - Theorem 6.4.9
+    - Exercise 6.4.2
+    - Theorem 7.3.23
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Use the Banach-space-valued white-noise identity and a deterministic Besov-ball predicate; define the
+      random set by two norm inequalities.
+    blockers: &id003 []
+    reusable_primitives:
+    - universal multiscale confidence set
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.4.9
+  kind: theorem
+  book:
+    number: Theorem 6.4.9
+    pages:
+    - 535
+    - 536
+    section: 6.4.2
+    equations: []
+  title: Multiscale Besov Confidence Set
+  statement: "Let \\(B,r>0\\), \\(\\sigma=1\\), and\n\\[\n F=\\{f:\\|f\\|_{B^r_{\\infty\\infty}([0,1])}\\le B\\\
+    }.\n\\]\nChoose \\(j_n\\) by\n\\[\n 2^{j_n}\\asymp(n/\\log n)^{1/(2r+1)}\n\\]\nand choose the admissible weights\
+    \ in (6.142) so that the printed condition is\n\\[\n \\frac{w_{j_n}}{\\sqrt{j_n}}=O(u_n).\n\\]\nThen\n\\[\n\
+    \ \\sup_{f\\in F}|P_f^Y\\{f\\in C_n\\}-(1-\\alpha)|=o(1), \\tag{6.143}\n\\]\nand, uniformly over \\(F\\),\n\\\
+    [\n |C_n|_\\infty\n =O_P\\!\\left((\\log n/n)^{r/(2r+1)}u_n\\right). \\tag{6.144}\n\\]\nThe same set can be\
+    \ written coefficientwise as the threshold rule\n\\[\n C_n=\\left\\{f:\n |\\langle f,\\psi_{lk}\\rangle|\n \\ \
+    le\\min\\!\\left(\\frac{z_\\alpha w_l}{\\sqrt n},\n                2^{-l(r+1/2)}u_n\\right)\n \\ \\text{for\
+    \ all }l,k\\right\\}. \\tag{6.145}\n\\]"
+  hypotheses:
+    explicit:
+    - B,r>0 and an S-regular wavelet basis is used with S>max(1/2,r).
+    - w is admissible and satisfies the displayed relation at j_n.
+    - u_n→∞.
+    - The quantile is chosen so that P(||W||≤z_alpha)=1-alpha, or a continuity point is assumed.
+    implicit: []
+  quantifier_order:
+  - For each fixed B,r,α and admissible sequences, as n→∞ the coverage error tends uniformly to zero and the diameter
+    is uniformly stochastic of the displayed order.
+  constants:
+  - For each fixed B,r,α and admissible sequences, as n→∞ the coverage error tends uniformly to zero and the diameter
+    is uniformly stochastic of the displayed order.
+  dependencies:
+    earlier_book:
+    - wavelet characterisation of Besov and M0(w) norms
+    chapter_local:
+    - 6.4.multiscale_universal
+    later_book_uses:
+    - Exercise 6.4.2
+    - sampling analogue immediately following
+    - Theorem 7.3.23 quantile bootstrap
+    - Chapter 8 adaptive confidence sets
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Split the wavelet coefficient sum at j_n; bound high frequencies by the Besov radius and low frequencies
+      by the multiscale norm and weight growth.
+    blockers: &id004
+    - The OCR rendering of the condition at j_n drops the square-root bar in some text views; the proof confirms
+      the intended ratio is `w_{j_n}/sqrt(j_n)`.
+    - The proof writes `S>(1/2,r)`; interpret as S>max(1/2,r), but preserve this notation issue.
+    - 'Typographical error in prose: `perceding`.'
+    reusable_primitives:
+    - multiscale-to-supnorm interpolation
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.4.sampling_multiscale
+  kind: operative_example
+  book:
+    number: Sampling analogue after Theorem 6.4.9
+    pages:
+    - 536
+    section: 6.4.2
+    equations: []
+  title: Sampling Multiscale Confidence Set
+  statement: "In the i.i.d. sampling model, Theorem 5.2.16 gives the analogue\n\\[\n V_n=\\left\\{P:\\|P-P_n(j_n)\\\
+    |_{M_0(w)}\n                 \\le z_\\alpha/\\sqrt n\\right\\},\n\\]\nwhere \\(z_\\alpha\\) is a \\(1-\\alpha\\\
+    ) quantile of the \\(M_0(w)\\)-norm of the\n\\(P\\)-Brownian bridge. If \\(P\\) has a bounded density\n\\(f\\\
+    in B^r_{\\infty\\infty}([0,1])\\), choose\n\\(2^{j_n}\\asymp(n/\\log n)^{1/(2r+1)}\\) and intersect \\(V_n\\\
+    ) with a growing\n\\(B^r_{\\infty\\infty}\\)-ball. The text asserts an immediate analogue of\nTheorem 6.4.9:\
+    \ asymptotically correct coverage and\n\\(L^\\infty\\)-diameter of near-minimax order\n\\((\\log n/n)^{r/(2r+1)}u_n\\\
+    )."
+  hypotheses:
+    explicit:
+    - The density is bounded and in the stated Besov class.
+    - The projected empirical measure satisfies Theorem 5.2.16 in M0(w).
+    - The Brownian-bridge quantile may depend on P; statistical feasibility of using it is not discussed in this
+      unnumbered assertion.
+    implicit: []
+  quantifier_order:
+  - For every fixed P in the class and admissible sequence, the asserted analogue follows asymptotically; uniformity
+    requires the uniform version of Theorem 5.2.16.
+  constants:
+  - For every fixed P in the class and admissible sequence, the asserted analogue follows asymptotically; uniformity
+    requires the uniform version of Theorem 5.2.16.
+  dependencies:
+    earlier_book:
+    - Theorem 5.2.16
+    chapter_local:
+    - 6.4.9
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A sampling-experiment version of Theorem 6.4.9, parameterised by a Brownian-bridge quantile functional.
+    blockers: &id005
+    - The quantile is P-dependent and hence not directly data-free; the text calls the analogue immediate without
+      resolving feasibility.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id005

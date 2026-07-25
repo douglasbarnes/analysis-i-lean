@@ -1,0 +1,448 @@
+inventory:
+- id: 6.2.9
+  kind: theorem
+  book:
+    number: Theorem 6.2.9
+    pages:
+    - 489
+    - 491
+    section: 6.2.2
+    equations: []
+  title: Density uniformity besov L2 minimax Separation
+  statement: 'Let r>0, B>1 and \(1\le q\le\infty\). In the i.i.d. density model on
+
+    [0,1], test the uniform density 1 against bounded densities satisfying
+
+    \[
+
+    \max\{\|f\|_\infty,\|f\|_{B^r_{2q}}\}\le B,\qquad
+
+    \|f-1\|_2\ge r_n.
+
+    \]
+
+    The minimax separation rate is
+
+    \[
+
+    \rho_n=Cn^{-r/(2r+1/2)},
+
+    \]
+
+    where C depends on r,B and α.'
+  hypotheses:
+    explicit:
+    - r>0, B>1, 1≤q≤∞.
+    - All alternatives are probability densities on [0,1].
+    - The explicit L∞ bound is part of the hypothesis, not inferred silently from the Besov norm.
+    implicit: []
+  quantifier_order:
+  - ∀α>0 ∃C=C(r,B,α)>0 such that ρₙ is a minimax L²-separation rate.
+  constants:
+  - ∀α>0 ∃C=C(r,B,α)>0 such that ρₙ is a minimax L²-separation rate.
+  dependencies:
+    earlier_book:
+    - Wavelet Besov characterisation
+    chapter_local:
+    - 6.2.1
+    - 6.2.5
+    - 6.2.mixtures_lower_bound
+    - 6.1.tensor_kl
+    later_book_uses:
+    - Used as the sampling prototype for Theorem 6.2.11(c); Exercise 6.2.5 treats L¹ separation.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A wavelet U-statistic upper bound and a Rademacher-code/mixture lower bound.
+    blockers: &id001
+    - 'Official hardback errata: the first display on p.490 should read `(1/n)^{r/(2r+1/2)}`; the specification
+      states the corrected coherent rate and records this explicitly.'
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.2.10
+  kind: operative_remark
+  book:
+    number: Remark 6.2.10
+    pages:
+    - 491
+    section: 6.2.2
+    equations: []
+  title: Density uniformity L2 subrate indistinguishable
+  statement: 'As in Remark 6.2.8, the lower-bound proof of Theorem 6.2.9 yields
+
+    asymptotic indistinguishability for every separation sequence
+
+    \(r_n=o(n^{-r/(2r+1/2)})\).'
+  hypotheses:
+    explicit:
+    - The hypotheses of Theorem 6.2.9 and a sub-rate separation sequence.
+    implicit: []
+  quantifier_order:
+  - ∀rₙ=o(ρₙ), the minimax total testing error over the constructed subproblem tends to one.
+  constants:
+  - ∀rₙ=o(ρₙ), the minimax total testing error over the constructed subproblem tends to one.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.9
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A direct asymptotic corollary of the mixture second-moment estimate.
+    blockers: &id002 []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.2.11
+  kind: theorem
+  book:
+    number: Theorem 6.2.11
+    pages:
+    - 492
+    - 494
+    section: 6.2.3
+    equations: []
+  title: White Noise signal Detection minimax Rates
+  statement: 'In Gaussian white noise, test \(H_0:f=0\).
+
+    (a) Against \(\sup_{t\in[0,1]}|\int_0^t f(s)\,ds|\ge r_n\), the minimax rate is
+
+    \(c/\sqrt n\).
+
+    (b) Against \(f\in L^2\), \(\|f\|_{B^r_{\infty\infty}}\le B\), and
+
+    \(\|f\|_\infty\ge r_n\), the minimax rate is
+
+    \(c(\log n/n)^{r/(2r+1)}\).
+
+    (c) Against \(\|f\|_{B^r_{2q}}\le B\) and \(\|f\|_2\ge r_n\), the minimax
+
+    rate is \(cn^{-r/(2r+1/2)}\).
+
+    The constants depend on the parameters displayed in the theorem, σ and α.'
+  hypotheses:
+    explicit:
+    - Gaussian white-noise model with σ>0.
+    - B>0 and 1≤q≤∞ where relevant.
+    - Positive smoothness r is mathematically required in parts (b),(c), although the OCR-visible theorem preamble
+      does not clearly quantify it.
+    implicit: []
+  quantifier_order:
+  - For each part and every α>0 there exists the stated constant c giving both minimax upper and lower bounds.
+  constants:
+  - For each part and every α>0 there exists the stated constant c giving both minimax upper and lower bounds.
+  dependencies:
+    earlier_book:
+    - Gaussian white-noise likelihood and KL
+    - wavelet projection estimators
+    chapter_local:
+    - 6.2.1
+    - 6.2.3
+    - 6.2.6
+    - 6.2.7
+    - 6.2.9
+    - 6.1.1
+    - 6.1.gwn_kl
+    later_book_uses:
+    - Part (b) is used in the impossibility proof for adaptive L∞ confidence sets in Chapter 8.
+    - Part (c) is used in Chapter 8 for adaptive L² confidence-set lower bounds.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Prefer three declarations, one per loss/separation geometry, sharing a white-noise experiment interface.
+    blockers: &id003
+    - type: implicit-hypothesis
+      detail: The positivity assumption r>0 for parts (b) and (c) should be checked in the typeset theorem preamble.
+    - Official hardback errata confirms the exponents in parts (b),(c) are `r/(2r+1)` and `r/(2r+1/2)`, respectively.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.2.12
+  kind: operative_remark
+  book:
+    number: Remark 6.2.12
+    pages:
+    - 494
+    section: 6.2.3
+    equations: []
+  title: White Noise signal Detection subrate indistinguishable
+  statement: 'Each lower bound in Theorem 6.2.11 can be strengthened to asymptotic
+
+    indistinguishability below the corresponding minimax separation rate.'
+  hypotheses:
+    explicit:
+    - The relevant part of Theorem 6.2.11 and a sub-rate sequence.
+    implicit: []
+  quantifier_order:
+  - For each part, ∀rₙ=o(ρₙ), the constructed testing subproblem has total error tending to one.
+  constants:
+  - For each part, ∀rₙ=o(ρₙ), the constructed testing subproblem has total error tending to one.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.11
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Three asymptotic corollaries of the likelihood-mixture second-moment bounds.
+    blockers: &id004 []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.2.composite_ks
+  kind: operative_example
+  book:
+    number: Composite Kolmogorov-Smirnov statistic (6.51)
+    pages:
+    - 495
+    - 496
+    section: 6.2.4
+    equations: []
+  title: Composite Kolmogorov Smirnov Test
+  statement: 'For a composite null \(H_0\) of distribution functions, use
+
+    \[
+
+    T_n=\inf_{G\in H_0}\|F_n-G\|_\infty
+
+    \]
+
+    and reject for large T_n. The triangle inequality controls power against
+
+    alternatives separated from \(H_0\) in uniform distance.'
+  hypotheses:
+    explicit:
+    - The infimum statistic is measurable or an explicitly measurable approximation is used.
+    - The empirical distribution function is formed from i.i.d. observations.
+    implicit: []
+  quantifier_order:
+  - For every null class H₀ and threshold, define the infimum-distance test; its risk is bounded by the estimator
+    reduction.
+  constants:
+  - For every null class H₀ and threshold, define the infimum-distance test; its risk is bounded by the estimator
+    reduction.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.ks_simple
+    - 6.2.13
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Distance from a random empirical CDF to a set; use `sInf` and prove measurability under separability/compactness
+      hypotheses.
+    blockers: &id005 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005
+- id: 6.2.13
+  kind: proposition
+  book:
+    number: Proposition 6.2.13
+    pages:
+    - 496
+    section: 6.2.4
+    equations: []
+  title: Test From Estimator composite Null
+  statement: 'Suppose \(\sup_{f\in\mathcal F}E_fd(\hat f_n,f)\le r_n\). For
+
+    \(H_0\subseteq\mathcal F\) and
+
+    \(H_1\subseteq\mathcal F\cap\{f:d(f,H_0)\ge c r_n\}\), with \(c\ge4/\alpha\),
+
+    define
+
+    \[
+
+    T_n=d(\hat f_n,H_0),\qquad \phi_n=1\{T_n>2r_n/\alpha\}.
+
+    \]
+
+    Then for every n,
+
+    \[
+
+    \sup_{f\in H_0}E_f\phi_n+\sup_{f\in H_1}E_f(1-\phi_n)\le\alpha.
+
+    \]'
+  hypotheses:
+    explicit:
+    - The distance-to-set map and estimator are measurable.
+    - d is a metric/semimetric satisfying the triangle inequality.
+    - α>0 and c≥4/α.
+    implicit: []
+  quantifier_order:
+  - ∀α>0, ∀c≥4/α, ∀n, the displayed test has total worst-case error ≤α.
+  constants:
+  - ∀α>0, ∀c≥4/α, ∀n, the displayed test has total worst-case error ≤α.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.2
+    later_book_uses:
+    - Used in Chapter 8 confidence-set lower/upper reductions.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Generic metric-space theorem with distance to a parameter subset.
+    blockers: &id006 []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: *id006
+- id: 6.2.infimum_chisq
+  kind: operative_example
+  book:
+    number: Infimum chi-square test (6.54)-(6.58)
+    pages:
+    - 496
+    - 497
+    section: 6.2.4
+    equations: []
+  title: White Noise infimum Chi Square Test
+  statement: 'In Gaussian white noise define, for \(h\in H_0\),
+
+    \[
+
+    T_n(h)=\|\hat f_n(j_n)-K_{j_n}h\|_2^2-\sigma^2 2^{j_n}/n,\qquad
+
+    T_n=\inf_{h\in H_0}|T_n(h)|,
+
+    \]
+
+    and reject when \(T_n\ge\tau_n\). The statistic searches for a null element
+
+    whose projected quadratic discrepancy is compatible with noise.'
+  hypotheses:
+    explicit:
+    - H₀ is a subset of L² and K_j is the wavelet projection.
+    - A measurable infimum/minimiser exists or a countable dense replacement is used.
+    implicit: []
+  quantifier_order:
+  - For every resolution and threshold define the test; Theorem 6.2.14 supplies its uniform error bound.
+  constants:
+  - For every resolution and threshold define the test; Theorem 6.2.14 supplies its uniform error bound.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.3
+    - 6.2.13
+    later_book_uses:
+    - Theorem 6.2.14 and Corollaries 6.2.15-6.2.16.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.2
+    contains_omitted_steps: true
+    comment: Exercise 6.2.2 supplies existence and measurability of minimisers/infimum statistics.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A measurable infimum over H₀ of finite-dimensional quadratic statistics.
+    blockers: &id007 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id007

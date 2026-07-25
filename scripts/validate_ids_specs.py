@@ -214,6 +214,12 @@ def entry_errors(
         errors.append(f"{loc}: invalid difficulty {difficulty!r}")
     kind = str(entry.get("kind", "")).replace("_", "-").lower()
     number = str(nested(entry, "book", "number") or "")
+    section = str(nested(entry, "book", "section") or "")
+    source_starred = entry.get("source_starred", False)
+    if not isinstance(source_starred, bool):
+        errors.append(f"{loc}: source_starred must be Boolean when present")
+        source_starred = False
+    has_source_star = "*" in number or "*" in section or source_starred
     if kind == "exercise":
         if pass_value != "exercise":
             errors.append(f"{loc}: exercise must use exercise pass")
@@ -222,12 +228,16 @@ def entry_errors(
             errors.append(f"{loc}: selected exercise needs selection_reasons")
     elif pass_value == "exercise":
         errors.append(f"{loc}: non-exercise may not use exercise pass")
-    if pass_value == "starred" and "*" not in number:
-        errors.append(f"{loc}: starred pass requires an explicit book star")
-    if "*" in number and kind != "exercise" and pass_value != "starred":
-        errors.append(f"{loc}: explicitly starred book item must use starred pass")
+    if pass_value == "starred" and not has_source_star:
+        errors.append(f"{loc}: starred pass requires source-star evidence")
+    if has_source_star and kind != "exercise" and pass_value != "starred":
+        errors.append(f"{loc}: source-starred book item must use starred pass")
     if not allow_source_blockers:
-        status = str(entry.get("transcription_status", ""))
+        status = str(
+            entry.get("transcription_status")
+            or nested(entry, "source_fidelity", "transcription_status")
+            or ""
+        )
         blockers = " ".join(
             map(str, nested(entry, "likely_lean_representation", "blockers") or [])
         )
@@ -278,6 +288,13 @@ def validate_chapter(
 ) -> tuple[int, list[str], int, int]:
     chapter, descriptor, inventory, dag = load_chapter(path)
     errors: list[str] = []
+    if not allow_source_blockers:
+        declared_blockers = descriptor.get("blocking_source_transcriptions")
+        if isinstance(declared_blockers, list) and declared_blockers:
+            errors.append(
+                f"chapter {chapter}: unresolved source transcriptions: "
+                f"{sorted(map(str, declared_blockers))}"
+            )
     for index, entry in enumerate(inventory):
         errors.extend(entry_errors(chapter, index, entry, allow_source_blockers))
     ids = [entry.get("id") for entry in inventory if isinstance(entry.get("id"), str)]
