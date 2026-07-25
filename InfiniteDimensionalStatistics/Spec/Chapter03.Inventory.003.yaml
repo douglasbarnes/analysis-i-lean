@@ -1,0 +1,450 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 3
+inventory:
+- id: theorem_3_1_9
+  kind: theorem
+  book:
+    number: Theorem 3.1.9
+    pages:
+    - 119
+    - 121
+    section: '3.1'
+    equations: []
+  title: Concentration of Gaussian quadratic forms
+  statement: For independent standard normal gᵢ and aᵢ≥0, the centred weighted chi-square ∑aᵢ(gᵢ²−1) satisfies the
+    displayed exact log-mgf inequality and the resulting upper and lower concentration inequalities governed by
+    (∑aᵢ²)^{1/2} and maxᵢaᵢ.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - gᵢ independent N(0,1)
+    - aᵢ≥0
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_1_6
+    later_book_uses:
+    - Exercise 3.1.11.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial-infrastructure-only
+      candidates:
+      - Mathlib supplies underlying measure/integral/probability/independence/Bochner/Gaussian infrastructure, but
+        no exact chapter theorem was located.
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema;
+      explicit countability/separability hypotheses are retained for measurability.
+    blockers: &id001
+    - Exact numerical constants and the lower-tail display must be transcribed visually from pp.119–121.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id001
+- id: theorem_3_1_10
+  kind: theorem
+  book:
+    number: Theorem 3.1.10
+    pages:
+    - 121
+    section: '3.1'
+    equations: []
+  title: Maximal inequality from mgf bounds
+  statement: For Z₁,…,Z_N and λ>0, E max_j Z_j≤λ⁻¹log∑_j E e^{λZ_j}; optimising gives the stated common sub-Gaussian
+    and Bennett-type maximal bounds.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - N<∞
+    - E e^{λZ_j}<∞ at the chosen λ
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Lemma 3.5.12.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Theorem over integrable real random variables with independence, boundedness/moment hypotheses, exponential
+      moments and measurable tail events.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_1_11
+  kind: proposition
+  book:
+    number: Proposition 3.1.11
+    pages:
+    - 123
+    section: '3.1'
+    equations: []
+  title: Lévy maximal inequality for symmetric processes
+  statement: For independent symmetric sample-bounded processes Xᵢ and partial sums S_k, Pr{max_{k≤n}‖S_k‖_T>u}≤2Pr{‖S_n‖_T>u};
+    the corresponding L^p maximal inequality follows.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - Xᵢ independent
+    - Xᵢ symmetric
+    - sample bounded
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - sample_bounded
+    later_book_uses:
+    - Proposition 3.1.12
+    - Exercise 3.7.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Independent Rademacher coordinates on a product probability space, finite sums, and measurable/countable
+      suprema.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_1_12
+  kind: proposition
+  book:
+    number: Proposition 3.1.12
+    pages:
+    - 124
+    section: '3.1'
+    equations: []
+  title: Lévy–Ottaviani inequality
+  statement: For independent sample-bounded processes with partial sums S_k, the one-sided maximal probability is
+    bounded by the terminal-sum probability divided by the infimum of the relevant remaining-increment probabilities,
+    in the exact Ottaviani form displayed.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - independent process increments
+    - positive denominator
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Exercise 3.7.3.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Theorem over integrable real random variables with independence, boundedness/moment hypotheses, exponential
+      moments and measurable tail events.
+    blockers: &id002
+    - Retain the exact denominator and strict/non-strict inequalities from p.124.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id002
+- id: lemma_3_1_13
+  kind: lemma
+  book:
+    number: Lemma 3.1.13
+    pages:
+    - 125
+    section: '3.1'
+    equations: []
+  title: Hoffmann–Jørgensen tail recursion
+  statement: For independent sample-bounded processes, the tail of ‖S_n‖ above a sum of thresholds is bounded by
+    a product/square of lower-threshold tails plus the tail of max_i‖Xᵢ‖; this is the recursion used for moment
+    comparison.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - independent sample-bounded processes
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_1_12
+    later_book_uses:
+    - Proposition 3.1.14
+    - Theorems 3.1.15–3.1.16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Theorem over integrable real random variables with independence, boundedness/moment hypotheses, exponential
+      moments and measurable tail events.
+    blockers: &id003
+    - Exact threshold coefficients require direct transcription.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id003
+- id: proposition_3_1_14
+  kind: proposition
+  book:
+    number: Proposition 3.1.14
+    pages:
+    - 125
+    - 126
+    section: '3.1'
+    equations:
+    - '3.38'
+  title: Integrated Hoffmann–Jørgensen inequality
+  statement: Integrating Lemma 3.1.13 gives (3.38), bounding E‖S_n‖^p by a tail quantile of ‖S_n‖ and E max_i‖Xᵢ‖^p.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - p≥1
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma_3_1_13
+    later_book_uses:
+    - Theorem 3.1.15.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Theorem over integrable real random variables with independence, boundedness/moment hypotheses, exponential
+      moments and measurable tail events.
+    blockers: &id004
+    - Exact universal constants in (3.38) require page-image checking.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id004
+- id: theorem_3_1_15
+  kind: theorem
+  book:
+    number: Theorem 3.1.15
+    pages:
+    - 126
+    section: '3.1'
+    equations: []
+  title: Hoffmann–Jørgensen moment inequality
+  statement: For p≥1 and independent sample-bounded processes, ‖‖∑Xᵢ‖_T‖_{L^p}≤K_p(E‖∑Xᵢ‖_T+‖max_i‖Xᵢ‖_T‖_{L^p}).
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - p≥1
+    - independent sample-bounded processes
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_1_14
+    later_book_uses:
+    - Theorem 3.1.16
+    - Theorems 3.4.1 and 3.5.6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Theorem over integrable real random variables with independence, boundedness/moment hypotheses, exponential
+      moments and measurable tail events.
+    blockers: &id005
+    - Printed grouping of the two terms is typographically ambiguous; use the grouped form shown here after central
+      review.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id005
+- id: theorem_3_1_16
+  kind: theorem
+  book:
+    number: Theorem 3.1.16
+    pages:
+    - 126
+    - 127
+    section: '3.1'
+    equations: []
+  title: Moment comparison for sums of independent processes
+  statement: For 1≤p≤q<∞, the L^q norm of ‖∑Xᵢ‖_T is bounded by K_{p,q} times its L^p norm plus the L^q norm of
+    max_i‖Xᵢ‖_T.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 1≤p≤q<∞
+    - independent sample-bounded processes
+    implicit: []
+  quantifier_order:
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants:
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_1_15
+    later_book_uses:
+    - Exercise 3.7.3 and Sections 3.4–3.5.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema;
+      explicit countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
