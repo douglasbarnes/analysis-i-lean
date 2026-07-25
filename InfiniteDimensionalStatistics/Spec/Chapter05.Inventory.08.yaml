@@ -331,24 +331,32 @@ inventory:
     section: 5.2.1
     equations: []
   title: Remark 5.2.12
-  statement: The preceding argument extends on [0,1] to Besov-density regularity f₀∈B^t_{p,q} and continuous test-function
-    balls in B^s_{p′,q′}, under the printed conjugacy and smoothness conditions and √n2^{-jₙ(t+s)}→0, yielding √n(Pₙ^W−P)⇒G_P.
+  statement: 'Using Theorem 4.4.5 and the bias estimate following Proposition 4.3.14, the preceding proof gives
+    the following printed statement. If f₀∈B^t_{p,q}([0,1])∪L^p([0,1]) for some t>0 and 𝔽={g∈C([0,1]): ‖g‖_{B^s_{p′,q′}([0,1])}≤M},
+    where 1<p,p′,q,q′<∞, 1/p+1/q=1, 1/p′+1/q′=1 and s>max(1/p′,1/2), then G_P|𝔽 is sample continuous. Moreover,
+    if j_n→∞ and √n·2^(−j_n(t+s))→0, then √n(P_n^W−P) converges in law to G_P in ℓ∞(𝔽), for every Borel probability
+    measure P on [0,1]. Here P_n^W has density equal to the boundary-corrected or periodised wavelet projection
+    estimator from Condition 5.1.1(c) or (d).'
   source_fidelity:
-    transcription_status: central_review_required
+    transcription_status: verified_with_typographical_flag
     author_corrected_reading: null
   hypotheses:
     explicit:
-    - Parameters and conjugacy relations exactly as printed in Remark 5.2.12.
-    - Boundary-corrected or periodised wavelets.
+    - The printed density condition is f₀∈B^t_{p,q}([0,1])∪L^p([0,1]), t>0.
+    - 𝔽 is the radius-M ball of continuous functions in B^s_{p′,q′}([0,1]).
+    - 1<p,p′,q,q′<∞, with the two printed relations 1/p+1/q=1 and 1/p′+1/q′=1.
     - s>max(1/p′,1/2).
+    - Boundary-corrected or periodised wavelets satisfying Condition 5.1.1(c) or (d).
+    - j_n→∞ and √n·2^(−j_n(t+s))→0.
     implicit:
-    - The intended density assumption likely includes Lp integrability, but the printed connective is retained for
-      review.
+    - The statement is transcribed as printed; the union sign and conjugacy relations are not repaired.
+    - P_n^W denotes the measure whose density is the corresponding wavelet projection estimator.
   quantifier_order:
-  - For any Borel probability P on [0,1] satisfying the density assumptions.
-  - As n→∞.
+  - Fix t,p,q,p′,q′,s,M and a Borel probability measure P on [0,1] satisfying the printed assumptions.
+  - For every resolution sequence j_n satisfying the displayed limit, let n→∞.
   constants:
-  - p,q,p′,q′,s,t,M.
+  - M<∞.
+  - The bias exponent is t+s.
   dependencies:
     earlier_book:
     - Theorem 4.4.5 and Proposition 4.3.14
@@ -372,10 +380,10 @@ inventory:
   difficulty: research-level
   pass: core
   issues_for_central_review:
-  - Printed “f₀∈B^t_{p,q}([0,1]) ∪ Lp([0,1])” is likely an intersection, not a union.
-  - Printed equations 1/p+1/q=1 and 1/p′+1/q′=1 appear inconsistent with the roles of p′,q′ as conjugates; do not
-    correct without central review.
-  - 'Source-transcription status: central_review_required.'
+  - The printed density condition uses B^t_{p,q}([0,1])∪L^p([0,1]); an intersection may have been intended, but
+    the source is not silently changed.
+  - The printed relations 1/p+1/q=1 and 1/p′+1/q′=1 appear inconsistent with the usual conjugate-index roles; retain
+    them pending central review.
 - id: ch5.def.multiscale_spaces
   kind: definition
   book:
