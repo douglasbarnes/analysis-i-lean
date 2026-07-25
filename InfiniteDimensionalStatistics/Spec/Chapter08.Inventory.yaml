@@ -81,8 +81,9 @@ central_review_flags:
     and envelope parameter. Record all hidden fixed-data dependence before formalisation.
 - id: CR-010
   category: typography
-  description: Equation (8.66) is extracted with P(ŝ_n=s(f))≤α/2; the proof requires the misclassification probability
-    P(ŝ_n≠s(f))≤α/2. Verify the printed relation.
+  description: The printed equation (8.66) has P(ŝ_n=s(f))≤α/2, while the surrounding construction and the next
+    sentence require the misclassification probability P(ŝ_n≠s(f))≤α/2. Preserve the printed statement and treat
+    the ≠ variant as a separately named correction candidate for central review.
 - id: CR-011
   category: quantifiers
   description: The pointwise o_P requirement in Theorem 8.3.11 suppresses whether it holds for every f separately
