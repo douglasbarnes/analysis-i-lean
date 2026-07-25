@@ -1,0 +1,62 @@
+name: Infinite-Dimensional Statistics Spec Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'InfiniteDimensionalStatistics/Spec/**'
+      - 'InfiniteDimensionalStatistics/BookManifest.yaml'
+      - 'scripts/validate_ids_specs.py'
+      - '.github/workflows/infinite-dimensional-statistics-spec-audit.yml'
+  pull_request:
+    paths:
+      - 'InfiniteDimensionalStatistics/Spec/**'
+      - 'InfiniteDimensionalStatistics/BookManifest.yaml'
+      - 'scripts/validate_ids_specs.py'
+      - '.github/workflows/infinite-dimensional-statistics-spec-audit.yml'
+  workflow_dispatch:
+
+jobs:
+  chapter-package-audit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chapter: ['03', '08']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pyyaml
+      - name: Isolate chapter package
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/ids-chapter-${{ matrix.chapter }}"
+          mkdir -p "$root/scripts" "$root/InfiniteDimensionalStatistics/Spec"
+          cp scripts/validate_ids_specs.py "$root/scripts/"
+          cp InfiniteDimensionalStatistics/BookManifest.yaml "$root/InfiniteDimensionalStatistics/"
+          cp InfiniteDimensionalStatistics/Spec/Chapter${{ matrix.chapter }}* "$root/InfiniteDimensionalStatistics/Spec/"
+      - name: Run canonical migration audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/ids-chapter-${{ matrix.chapter }}"
+          cd "$root"
+          python scripts/validate_ids_specs.py \
+            --allow-missing \
+            --allow-source-blockers \
+            --allow-incomplete-coverage
+
+  strict-gate-status:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pyyaml
+      - name: Run strict eight-chapter gate
+        run: python scripts/validate_ids_specs.py
