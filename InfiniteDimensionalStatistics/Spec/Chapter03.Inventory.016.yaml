@@ -1,0 +1,540 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 16
+inventory:
+- id: ch3.ex.3_5_5
+  kind: exercise
+  book:
+    number: Exercise 3.5.5
+    pages:
+    - 211
+    section: '3.5'
+    equations: []
+  title: Exercise 3.5.5
+  statement: Prove the local bracketing result paired with Proposition 3.5.15.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: &id002 []
+  constants: &id003 []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_5_15
+    later_book_uses: &id001
+    - Proposition 3.5.15
+  proof_status: &id004
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: Selected because it completes an omitted proof, is cited later, or establishes reusable infrastructure.
+  notes_status: &id005
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: &id006
+    mathlib:
+      status: not-audited-exercise
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: not-found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation: &id009
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id001
+- id: ch3.ex.3_6_5
+  kind: exercise
+  book:
+    number: Exercise 3.6.5
+    pages:
+    - 226
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.5
+  statement: Establish the Euclidean-ball covering estimate required by the entropy examples.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id008
+    - Later entropy estimates
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation:
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: &id007
+    - Official correction replaces the hint by “See Proposition 4.3.34.”
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id007
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id008
+- id: ch3.ex.3_6_6
+  kind: exercise
+  book:
+    number: Exercise 3.6.6
+    pages:
+    - 226
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.6
+  statement: Establish the ordered/monotone-class entropy estimate stated in the exercise.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id010
+    - Monotone-class entropy
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id010
+- id: ch3.ex.3_6_7
+  kind: exercise
+  book:
+    number: Exercise 3.6.7
+    pages:
+    - 227
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.7
+  statement: Prove the covering/bracketing estimate for functions on [0,1], valued in [0,1], with total variation at most
+    one.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_6_17
+    later_book_uses: &id012
+    - Corollary 3.7.50
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation:
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: &id011
+    - Official correction adds the domain, range and variation restrictions and cites Corollary 3.7.50.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id011
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id012
+- id: ch3.ex.3_6_8
+  kind: exercise
+  book:
+    number: Exercise 3.6.8
+    pages:
+    - 227
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.8
+  statement: Prove the countable-supremum/approximation fact needed for VC-hull closure arguments.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id013
+    - VC-hull measurability
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id013
+- id: ch3.ex.3_6_9
+  kind: exercise
+  book:
+    number: Exercise 3.6.9
+    pages:
+    - 227
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.9
+  statement: Prove the VC Glivenko–Cantelli theorem directly from trace growth.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_6_2
+    later_book_uses: &id014
+    - Corollary 3.7.17
+    - Example 3.7.19
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id014
+- id: ch3.ex.3_6_13
+  kind: exercise
+  book:
+    number: Exercise 3.6.13
+    pages:
+    - 227
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.13
+  statement: Prove the bounded-Lipschitz extension lemma used in the prelinear/Donsker permanence argument.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id015
+    - Remark 3.7.30
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id015
+- id: ch3.ex.3_6_15
+  kind: exercise
+  book:
+    number: Exercise 3.6.15
+    pages:
+    - 227
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.15
+  statement: Prove the inverse-image identities used to show translate/dilate classes are VC type.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id016
+    - Proposition 3.6.12
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id016
+- id: ch3.ex.3_6_16
+  kind: exercise
+  book:
+    number: Exercise 3.6.16
+    pages:
+    - 227
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.16
+  statement: Establish the right-continuity/normalisation result for bounded-p-variation functions.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id017
+    - Proposition 3.6.12
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id017
+- id: ch3.ex.3_6_17
+  kind: exercise
+  book:
+    number: Exercise 3.6.17
+    pages:
+    - 227
+    section: '3.6'
+    equations: []
+  title: Exercise 3.6.17
+  statement: Compute metric-entropy bounds for the bounded-Lipschitz and related smooth one-dimensional classes.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id019
+    - Example 3.7.57
+    - Chapter 5
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation:
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: &id018
+    - Official p.280 correction confirms this is the exercise cited by Example 3.7.57.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id018
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id019
+- id: ch3.ex.3_7_1
+  kind: exercise
+  book:
+    number: Exercise 3.7.1
+    pages:
+    - 282
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.1
+  statement: 'Prove the stated algebraic identities for measurable covers: maxima, powers, and multiplication by measurable
+    nonnegative functions.'
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_7_1
+    later_book_uses: &id020
+    - Outer-expectation calculus
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id020
+- id: ch3.ex.3_7_2
+  kind: exercise
+  book:
+    number: Exercise 3.7.2
+    pages:
+    - 282
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.2
+  statement: Prove the product-space measurable-cover identity for a function depending on one coordinate.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_7_1
+    later_book_uses: &id021
+    - Proposition 3.7.8
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id021
+- id: ch3.ex.3_7_3
+  kind: exercise
+  book:
+    number: Exercise 3.7.3
+    pages:
+    - 282
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.3
+  statement: State and prove outer-probability/outer-expectation versions of Lévy, Ottaviani, Hoffmann–Jørgensen, randomisation
+    and symmetrisation inequalities.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book:
+    - Section 3.1 inequalities
+    chapter_local: []
+    later_book_uses: &id022
+    - Example 3.7.4
+    - Proposition 3.7.32
+    - Theorem 3.7.40
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id022
+- id: ch3.ex.3_7_5
+  kind: exercise
+  book:
+    number: Exercise 3.7.5
+    pages:
+    - 282
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.5
+  statement: Derive the multivariate Glivenko–Cantelli theorem from the L¹ bracketing criterion.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_7_20
+    later_book_uses: &id023
+    - Example 3.7.19
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id023
+- id: ch3.ex.3_7_6
+  kind: exercise
+  book:
+    number: Exercise 3.7.6
+    pages:
+    - 282
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.6
+  statement: Derive Mourier’s law from the random-entropy characterisation.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_7_14
+    later_book_uses: &id024
+    - Corollary 3.7.21
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id009
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id024
