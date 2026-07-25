@@ -141,6 +141,56 @@ variable {S : Type*} [MeasurableSpace S]
 
 end BridgeMetrics
 
+section Shattering
+
+variable {α : Type*}
+
+/-- Enlarging a set class preserves shattering. -/
+theorem Shatters.mono_class {𝓒 𝓓 : Set (Set α)} {A : Finset α}
+    (h𝓒𝓓 : 𝓒 ⊆ 𝓓) (hA : Shatters 𝓒 A) : Shatters 𝓓 A := by
+  unfold Shatters at hA ⊢
+  ext B
+  constructor
+  · exact setClassTrace_subset_powerset 𝓓 A
+  · intro hB
+    rw [← hA] at hB
+    rcases hB with ⟨C, hC, rfl⟩
+    exact ⟨C, h𝓒𝓓 hC, rfl⟩
+
+/-- Every subset of a shattered finite set is shattered. -/
+theorem Shatters.mono_finset {𝓒 : Set (Set α)} {A B : Finset α}
+    (hBA : B ⊆ A) (hA : Shatters 𝓒 A) : Shatters 𝓒 B := by
+  unfold Shatters at hA ⊢
+  ext U
+  constructor
+  · exact setClassTrace_subset_powerset 𝓒 B
+  · intro hUB
+    have hUA : U ⊆ (A : Set α) :=
+      hUB.trans fun x hx ↦ hBA hx
+    have hUtrace : U ∈ setClassTrace 𝓒 A := by
+      rw [hA]
+      exact hUA
+    rcases hUtrace with ⟨C, hC, hCU⟩
+    refine ⟨C, hC, ?_⟩
+    ext x
+    constructor
+    · rintro ⟨hxC, hxB⟩
+      have hxA : x ∈ (A : Set α) := hBA hxB
+      have hxU : x ∈ U := by
+        rw [← hCU]
+        exact ⟨hxC, hxA⟩
+      exact hxU
+    · intro hxU
+      have hxA : x ∈ (A : Set α) := hUA hxU
+      have hxC : x ∈ C := by
+        have : x ∈ C ∩ (A : Set α) := by
+          rw [hCU]
+          exact hxU
+        exact this.1
+      exact ⟨hxC, hUB hxU⟩
+
+end Shattering
+
 section FunctionClasses
 
 variable {S : Type*}
