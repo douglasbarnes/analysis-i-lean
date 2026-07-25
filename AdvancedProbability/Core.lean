@@ -17,6 +17,7 @@ import AdvancedProbability.StoppingResults
 import AdvancedProbability.MarkovResults
 import AdvancedProbability.ContinuousTime
 import AdvancedProbability.ContinuousResults
+import AdvancedProbability.PathSpaceResults
 import AdvancedProbability.VersionResults
 import AdvancedProbability.ContinuousOptionalSamplingResults
 import AdvancedProbability.WeakConvergence
