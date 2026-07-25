@@ -149,11 +149,13 @@ chapters:
     duplicate_identifiers: []
     duplicate_numbered_book_labels: []
     chapter_local_strict_schema: pass
-    central_review_issue_count: 13
+    central_review_issue_count: 5
   source_review_caveats:
   - Exercises 7.3.1–7.3.8 have been verified against the printed exercise block on pp. 602–603.
-  - Lemma 7.3.8 has been verified against p. 581, including exact constants, exponents, integration orientation and the printed p,p₀ aliases in part (c).
-  - Corollary 7.3.24 preserves the printed C^α truth condition and flags the C_n/C̄_n diameter-label mismatch.
+  - Lemmas 7.3.4 and 7.3.8 have been verified against the printed pages, including their exact constants and normalisations.
+  - Eight representation or measurability review items were resolved by explicit constructions or source-faithful conventions.
+  - The remaining reviews concern equation (7.22), the generality of Lemma 7.2.6, and the three recorded Corollary 7.3.24
+    erratum/notation items.
 - number: 8
   title: Adaptive Inference
   printed_pages:
