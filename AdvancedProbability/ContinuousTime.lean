@@ -132,13 +132,17 @@ structure OpenSetHittingTime (isOpen cadlag stopping : Prop) where
   cadlagHypothesis : cadlag
   conclusion : stopping
 
-/-- Source 69: a continuous-time martingale. -/
-def IsContinuousTimeMartingale {Ω : Type u} (expectation : Expectation Ω)
-    (CE : SigmaField Ω → (Ω → ℝ) → Ω → ℝ) (ℱ : ContinuousFiltration Ω)
-    (X : ContinuousProcess Ω) : Prop :=
-  (∀ t, Observable (ℱ.sigma t) (X t)) ∧
-    (∀ t, IntegrableFor expectation (X t)) ∧
-    ∀ s t, s ≤ t → CE (ℱ.sigma s) (X t) = X s
+/-- Source 69: a continuous-time martingale is Mathlib's martingale predicate with index type `ℝ≥0`. -/
+def IsContinuousTimeMartingale {Ω : Type u} {mΩ : MeasurableSpace Ω}
+    (P : @Measure Ω mΩ) (ℱ : Filtration ℝ≥0 mΩ) (X : ContinuousProcess Ω) : Prop :=
+  Martingale X ℱ P
+
+/-- The source-69 adaptedness and conditional-expectation characterization. -/
+theorem isContinuousTimeMartingale_iff {Ω : Type u} {mΩ : MeasurableSpace Ω}
+    (P : @Measure Ω mΩ) (ℱ : Filtration ℝ≥0 mΩ) (X : ContinuousProcess Ω) :
+    IsContinuousTimeMartingale P ℱ X ↔
+      StronglyAdapted ℱ X ∧ ∀ s t : ℝ≥0, s ≤ t → P[X t | ℱ s] =ᵐ[P] X s :=
+  Iff.rfl
 
 /-- Source 70: bounded continuous-time optional stopping. -/
 structure ContinuousOptionalStoppingBounded {Ω : Type u} (expectation : Expectation Ω)
