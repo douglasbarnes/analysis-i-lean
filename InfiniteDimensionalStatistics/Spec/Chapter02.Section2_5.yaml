@@ -1,0 +1,598 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.5'
+inventory:
+- id: definition-2-5-1
+  kind: definition
+  book:
+    number: 2.5.1
+    pages:
+    - 60
+    section: '2.5'
+    equations: []
+  title: Entropy of a nonnegative function
+  statement: For a probability μ and f≥0, Ent_μ(f):=∫f log f dμ−(∫f dμ)log(∫f dμ), finite under ∫f log(1+f)<∞ and +∞ otherwise.
+  hypotheses:
+    explicit:
+    - μ probability measure.
+    - f measurable nonnegative.
+    implicit:
+    - 0 log 0:=0; extended-real conventions.
+  quantifier_order:
+  - No normalization ∫f=1 required.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - lemma-2-5-2
+    - lemma-2-5-4
+    later_book_uses:
+    - lemma-2-5-2
+    - lemma-2-5-4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: An `ENNReal`/`EReal`-valued functional with explicit integrability branch and conventions at zero.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-5-2
+  kind: lemma
+  book:
+    number: 2.5.2
+    pages:
+    - 61
+    section: '2.5'
+    equations: []
+  title: Variational formula for entropy
+  statement: Ent_μ(f)=sup{∫fg dμ:g measurable and ∫e^g dμ≤1}.
+  hypotheses:
+    explicit:
+    - μ probability.
+    - f≥0 measurable.
+    - Integrability/extended-value conventions.
+    implicit: []
+  quantifier_order:
+  - Supremum over all measurable real g satisfying the exponential integral constraint.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-5-1
+    chapter_local_dependents:
+    - proposition-2-5-3
+    later_book_uses:
+    - proposition-2-5-3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Convex duality/Gibbs variational principle in extended real arithmetic.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-5-3
+  kind: proposition
+  book:
+    number: 2.5.3
+    pages:
+    - 61
+    section: '2.5'
+    equations: []
+  title: Tensorisation of entropy
+  statement: For P=μ₁⊗⋯⊗μₙ and nonnegative measurable f, Ent_P(f)≤∑_{i=1}^n∫Ent_{μᵢ}(f with all other coordinates fixed)dP.
+  hypotheses:
+    explicit:
+    - Finite product of probability spaces.
+    - f nonnegative measurable.
+    implicit:
+    - Section entropies are measurable and extended integrals are well-defined.
+  quantifier_order:
+  - Sum over exactly n coordinates.
+  constants:
+  - Sum over exactly n coordinates.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-5-2
+    chapter_local_dependents:
+    - theorem-2-5-6
+    later_book_uses:
+    - theorem-2-5-6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Induction on finite products, using conditional sections and Fubini/Tonelli.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-5-4
+  kind: lemma
+  book:
+    number: 2.5.4
+    pages:
+    - 62
+    section: '2.5'
+    equations: []
+  title: Infimum representation of entropy
+  statement: Ent_μ(f)=inf_{t≥0}∫[f log f−(log t+1)f+t]dμ.
+  hypotheses:
+    explicit:
+    - μ probability.
+    - f≥0 measurable.
+    implicit: []
+  quantifier_order:
+  - Infimum over t≥0 with conventions at t=0.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-5-1
+    chapter_local_dependents:
+    - lemma-2-5-5
+    later_book_uses:
+    - lemma-2-5-5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Pointwise convex minimisation after integrating; special case `∫f=0` handled separately.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-5-5
+  kind: lemma
+  book:
+    number: 2.5.5
+    pages:
+    - 62
+    section: '2.5'
+    equations: []
+  title: Shifted exponential entropy formula
+  statement: With φ(u)=e^{-u}+u−1, Ent_μ(e^f)=inf_{u∈ℝ}∫φ(f−u)e^f dμ.
+  hypotheses:
+    explicit:
+    - f measurable with the relevant exponential integrability.
+    implicit: []
+  quantifier_order:
+  - Infimum over all real u.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-5-4
+    chapter_local_dependents:
+    - theorem-2-5-6
+    later_book_uses:
+    - theorem-2-5-6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Substitute t=e^u in Lemma 2.5.4 and simplify.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-5-6
+  kind: theorem
+  book:
+    number: 2.5.6
+    pages:
+    - 62
+    section: '2.5'
+    equations: []
+  title: Gaussian logarithmic Sobolev inequality
+  statement: For canonical Gaussian γ_n and C² f:ℝⁿ→ℝ with f² and |∇f|² integrable, Ent_{γ_n}(f²)≤2∫|∇f|²dγ_n.
+  hypotheses:
+    explicit:
+    - n≥1.
+    - f twice continuously differentiable.
+    - f² and squared gradient γ_n-integrable.
+    implicit: []
+  quantifier_order:
+  - Sharp displayed constant 2.
+  constants:
+  - Sharp displayed constant 2.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-5-1
+    - lemma-2-5-5
+    - proposition-2-5-3
+    - theorem-2-4-2
+    chapter_local_dependents:
+    - theorem-2-5-7
+    later_book_uses:
+    - theorem-2-5-7
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-5-1
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Finite-dimensional Gaussian integration and Prékopa–Leindler/Taylor expansion; approximation theorem is a separate
+      exercise declaration.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-5-7
+  kind: theorem
+  book:
+    number: 2.5.7
+    pages:
+    - 64
+    section: '2.5'
+    equations: []
+  title: Herbst concentration for Gaussian Lipschitz functions
+  statement: If X∼N(0,I_n) and F:ℝⁿ→ℝ is 1-Lipschitz, then E exp(λF(X))≤exp(λEF(X)+λ²/2) for every λ∈ℝ; hence Pr(F−EF≥t)≤e^{-t²/2}
+    and Pr(F−EF≤−t)≤e^{-t²/2}.
+  hypotheses:
+    explicit:
+    - F measurable and 1-Lipschitz.
+    - EF finite, automatic.
+    - t>0, λ∈ℝ.
+    implicit: []
+  quantifier_order:
+  - Variance proxy 1; scale by L² for L-Lipschitz F.
+  constants:
+  - Variance proxy 1; scale by L² for L-Lipschitz F.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-5-2
+    - theorem-2-5-6
+    chapter_local_dependents:
+    - theorem-2-5-8
+    later_book_uses:
+    - theorem-2-5-8
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-5-2
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Apply log-Sobolev to `exp(λF/2)`, derive differential inequality for log MGF, then Chernoff optimise.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-5-8
+  kind: theorem
+  book:
+    number: 2.5.8
+    pages:
+    - 65
+    section: '2.5'
+    equations: []
+  title: BST concentration about the expectation
+  statement: For a centred separable Gaussian process X with finite supremum and σ²=sup_tEX(t)², Pr(‖X‖∞≥E‖X‖∞+u)≤e^{-u²/(2σ²)}
+    and Pr(‖X‖∞≤E‖X‖∞−u)≤e^{-u²/(2σ²)}.
+  hypotheses:
+    explicit:
+    - X centred separable Gaussian with finite supremum a.s./positive probability as in prior BST results.
+    - u>0.
+    implicit: []
+  quantifier_order:
+  - Exact variance proxy σ² and exponent 1/2.
+  constants:
+  - Exact variance proxy σ² and exponent 1/2.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-5-2
+    - theorem-2-1-20
+    - theorem-2-5-7
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Finite-coordinate approximation of the supremum as a Lipschitz function of a standard Gaussian vector, followed
+      by monotone convergence.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: exercise-2-5-1
+  kind: exercise
+  book:
+    number: Exercise 2.5.1
+    pages:
+    - 65
+    section: '2.5'
+    equations: []
+  title: Approximation step in Gaussian log-Sobolev
+  statement: For f,f'∈L²(γ), carry out the stated cutoff approximation g_n=w_n log(f²+ε_n), h_n²=e^{g_n}; prove Ent_γ(h_n²)≤2∫(h_n')²dγ,
+    pass to the limit, and obtain Ent_γ(f²)≤2∫(f')²dγ.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-5-6
+    later_book_uses:
+    - theorem-2-5-6
+    - Theorem 2.5.6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Sobolev truncation, dominated/Fatou convergence and derivative estimates.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  used_by:
+  - Theorem 2.5.6
+- id: exercise-2-5-2
+  kind: exercise
+  book:
+    number: Exercise 2.5.2
+    pages:
+    - 66
+    section: '2.5'
+    equations: []
+  title: Smoothing a Lipschitz function in the Herbst theorem
+  statement: Show that if Theorem 2.5.8 is proved for C∞ F with ||∇F||∞≤1, then it holds for every 1-Lipschitz F, by Gaussian
+    convolution and ε↓0.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-5-7
+    - theorem-2-5-8
+    later_book_uses:
+    - theorem-2-5-7
+    - theorem-2-5-8
+    - Theorem 2.5.7/2.5.8 approximation step
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Mollification preserves the Lipschitz constant and converges uniformly.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  - required_reusable_lemma
+  used_by:
+  - Theorem 2.5.7/2.5.8 approximation step
