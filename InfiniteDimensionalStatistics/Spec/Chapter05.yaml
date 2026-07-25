@@ -19,8 +19,9 @@ source:
 scope:
   inclusion_rule: Every definition, lemma, proposition, theorem, corollary and mathematically operative example, plus exercises meeting
     the project selection criteria.
-  source_fidelity_policy: Printed content is preserved. Missing OCR displays were reconstructed by exact algebraic expansion and triangulation
-    against the primary sources cited by the chapter; reconstruction provenance is recorded per declaration.
+  source_fidelity_policy: Printed content is preserved. Displays not recoverable from searchable OCR were reconstructed through exact
+    algebraic expansion and triangulation against the primary sources cited by the chapter; reconstruction provenance is recorded per
+    declaration rather than hidden.
   pass_policy:
     core: Unstarred main-text and later-used notes material.
     starred: Material in explicitly starred Section 5.1.3 only.
