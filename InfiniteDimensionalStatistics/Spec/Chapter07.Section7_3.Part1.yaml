@@ -13,9 +13,8 @@ inventory:
     equations:
     - (7.76)
   title: Dominated Bayesian joint model
-  statement: "Let (X,A) be measurable, (F,B) a parameter space, μ σ-finite, Π a prior,\
-    \ and\np_f μ-densities. Under the official correction, (x,f)↦p_f(x) is jointly\
-    \ measurable.\nDefine Q on X×F by\n  dQ(x,f)=p_f(x)dμ(x)dΠ(f)."
+  statement: "Let (X,A) be measurable, (F,B) a parameter space, μ σ-finite, Π a prior, and\np_f μ-densities. Under the official\
+    \ correction, (x,f)↦p_f(x) is jointly measurable.\nDefine Q on X×F by\n  dQ(x,f)=p_f(x)dμ(x)dΠ(f)."
   hypotheses:
     explicit:
     - Joint measurability `(x,f)↦p_f(x)`.
@@ -52,16 +51,15 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A Markov kernel `κ f = μ.withDensity p_f` and joint measure `Π.compProd
-      κ`; joint measurability is encoded by kernel measurability.
+    sketch: A Markov kernel `κ f = μ.withDensity p_f` and joint measure `Π.compProd κ`; joint measurability is encoded by
+      kernel measurability.
     blockers: []
   difficulty: substantial
   pass: core
   issues_for_central_review:
   - type: official_erratum
     page: 571
-    detail: Separate measurability in f is insufficient; require joint measurability
-      in (x,f).
+    detail: Separate measurability in f is insufficient; require joint measurability in (x,f).
 - id: ch7.prop.posteriorConditionalFormulas
   kind: proposition
   book:
@@ -75,19 +73,21 @@ inventory:
     - (7.78)
     - (7.79)
   title: Conditional sampling law and posterior density
-  statement: "Under Q, the conditional law of X given f is p_f dμ. The conditional\
-    \ law of f\ngiven X=x has density proportional to p_f(x) with respect to Π:\n\
-    \  Π(B|x)= [∫_B p_f(x)dΠ(f)]/[∫_F p_f(x)dΠ(f)]\nfor every B∈B, for the marginal\
-    \ law of X-a.e. x."
+  statement: "Under Q, the conditional law of X given f is p_f dμ. Put m(x)=∫_F p_f(x)dΠ(f). On {m>0}, define the posterior\
+    \ kernel by\n  κ(x,B)= [∫_B p_f(x)dΠ(f)]/m(x).\nOn {m=0}, set κ(x,·)=Π; this branch is null for the marginal law of X.\
+    \ Then κ is a probability kernel and is a conditional law of f given X=x; in particular, for every B∈B,\n  Π(B|x)= [∫_B\
+    \ p_f(x)dΠ(f)]/[∫_F p_f(x)dΠ(f)]\nfor the marginal law of X-almost every x."
   hypotheses:
     explicit:
-    - Bayesian joint-model hypotheses.
-    - The denominator is positive for marginal-X almost every x.
+    - The jointly measurable dominated Bayesian model (7.76).
+    - The marginal density m(x)=∫_F p_f(x)dΠ(f) is positive for the marginal law of X-almost every x.
     implicit:
-    - A regular conditional distribution exists; the book's general measurable-space
-      formulation may require Standard Borel/countable-generation hypotheses not printed.
+    - Joint measurability and Tonelli imply measurability of x↦∫_B p_f(x)dΠ(f) for every measurable B.
+    - The displayed normalised integrals construct the conditional kernel directly and satisfy the defining integral identity;
+      an abstract Standard-Borel disintegration theorem is not required.
   quantifier_order:
-  - ∀ B∈B, equality almost surely in x.
+  - Construct one kernel κ; then for every measurable parameter set B, the ratio formula holds for marginal-X almost every
+    x.
   constants: []
   dependencies:
     earlier_book: []
@@ -115,18 +115,14 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A Markov kernel from data to parameters, using `ProbabilityTheory.posterior`
-      where Standard Borel hypotheses apply; density formulas require `rnDeriv`, `withDensity`,
-      and almost-everywhere equality.
+    sketch: Define a kernel by normalising the finite measure `Π.withDensity (p · x)` on the positive marginal-density set
+      and using a fixed fallback probability measure elsewhere. Prove kernel measurability from parameter integrals and verify
+      the conditional-law integral identity by Tonelli.
     blockers: []
   difficulty: major-library
   pass: core
-  issues_for_central_review:
-  - type: measurability_and_existence
-    page: 572
-    detail: Regular conditional probabilities are not available on arbitrary measurable
-      parameter spaces; Lean should impose Standard Borel hypotheses or phrase the
-      formula as an explicitly constructed kernel when measurable.
+  issues_for_central_review: []
+  verification_status: verified_and_explicit_kernel_construction_resolves_existence
 - id: ch7.def.iidPosterior
   kind: definition
   book:
@@ -138,9 +134,8 @@ inventory:
     - (7.80)
     - (7.81)
   title: Posterior in the i.i.d. density model
-  statement: "For a prior Π on a density class P and observations X₁,…,Xₙ,\n  dΠ(p|X₁,…,Xₙ)\n\
-    \    = [∏_{i=1}^n p(X_i) dΠ(p)]/[∫_P ∏_{i=1}^n q(X_i)dΠ(q)].\nUnder truth p₀,\
-    \ the same ratio may be written using ∏ p(X_i)/p₀(X_i)."
+  statement: "For a prior Π on a density class P and observations X₁,…,Xₙ,\n  dΠ(p|X₁,…,Xₙ)\n    = [∏_{i=1}^n p(X_i) dΠ(p)]/[∫_P\
+    \ ∏_{i=1}^n q(X_i)dΠ(q)].\nUnder truth p₀, the same ratio may be written using ∏ p(X_i)/p₀(X_i)."
   hypotheses:
     explicit:
     - Joint measurability of sample and density parameter.
@@ -176,12 +171,10 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: 'A Markov kernel from data to parameters, using `ProbabilityTheory.posterior`
-      where Standard Borel hypotheses apply; density formulas require `rnDeriv`, `withDensity`,
-      and almost-everywhere equality.
+    sketch: 'A Markov kernel from data to parameters, using `ProbabilityTheory.posterior` where Standard Borel hypotheses
+      apply; density formulas require `rnDeriv`, `withDensity`, and almost-everywhere equality.
 
-      For finite samples use an iterated/product kernel and a likelihood density with
-      respect to the prior.'
+      For finite samples use an iterated/product kernel and a likelihood density with respect to the prior.'
     blockers: []
   difficulty: major-library
   pass: core
@@ -201,19 +194,16 @@ inventory:
     - (7.85)
     - (7.86)
   title: Gaussian white-noise likelihood and posterior
-  statement: "In dY=f dt+(σ/√n)dW, f∈L²[0,1], the likelihood relative to the zero-signal\
-    \ law is\n  exp{(n/σ²)∫ f dY - (n/(2σ²))||f||₂²}.\nFor a prior Π on F⊂L², define\
-    \ the posterior by normalising this likelihood:\n  dΠ(f|Y) ∝ exp{(n/σ²)∫ f dY\
-    \ - (n/(2σ²))||f||₂²} dΠ(f).\nUnder truth f₀ it can equivalently be centred using\
-    \ f-f₀ and the isonormal noise."
+  statement: "In dY=f dt+(σ/√n)dW, f∈L²[0,1], the likelihood relative to the zero-signal law is\n  exp{(n/σ²)∫ f dY - (n/(2σ²))||f||₂²}.\n\
+    For a prior Π on F⊂L², define the posterior by normalising this likelihood:\n  dΠ(f|Y) ∝ exp{(n/σ²)∫ f dY - (n/(2σ²))||f||₂²}\
+    \ dΠ(f).\nUnder truth f₀ it can equivalently be centred using f-f₀ and the isonormal noise."
   hypotheses:
     explicit:
     - σ>0, n≥1.
     - F⊂L² has a σ-field for which the likelihood is jointly measurable.
     - Prior Π is a probability measure.
     implicit:
-    - The stochastic integral is realised on a common measurable white-noise sample
-      space.
+    - The stochastic integral is realised on a common measurable white-noise sample space.
     - Normalising denominator is finite and positive a.s.
   quantifier_order:
   - ∀ n,σ and prior, define the posterior a.s.
@@ -242,8 +232,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A Gaussian measure on an abstract Wiener/isonormal sample space, its Cameron–Martin
-      density, and the posterior kernel. This requires a major Gaussian-measure library.
+    sketch: A Gaussian measure on an abstract Wiener/isonormal sample space, its Cameron–Martin density, and the posterior
+      kernel. This requires a major Gaussian-measure library.
     blockers: []
   difficulty: research-level
   pass: core
