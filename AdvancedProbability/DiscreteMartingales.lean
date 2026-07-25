@@ -66,18 +66,6 @@ def stoppedProcess {Ω : Type u} (X : DiscreteProcess Ω) (T : Ω → ℕ) : Dis
 def stoppingSigmaField {Ω : Type u} (ℱ : DiscreteFiltration Ω) (T : Ω → ℕ) : Set (Set Ω) :=
   {A | ∀ n : ℕ, A ∩ {ω | T ω ≤ n} ∈ (ℱ.sigma n).sets}
 
-/-- Source 32: closure, monotonicity, measurability, adaptation, and integrability at stopping times. -/
-structure DiscreteStoppingCalculus {Ω : Type u} (expectation : Expectation Ω)
-    (ℱ : DiscreteFiltration Ω) (X : DiscreteProcess Ω) where
-  maxStopping : ∀ S T, IsDiscreteStoppingTime ℱ S → IsDiscreteStoppingTime ℱ T →
-    IsDiscreteStoppingTime ℱ (fun ω ↦ max (S ω) (T ω))
-  minStopping : ∀ S T, IsDiscreteStoppingTime ℱ S → IsDiscreteStoppingTime ℱ T →
-    IsDiscreteStoppingTime ℱ (fun ω ↦ min (S ω) (T ω))
-  stoppedAdapted : ∀ T, IsDiscreteStoppingTime ℱ T → IsAdapted ℱ X →
-    IsAdapted ℱ (stoppedProcess X T)
-  stoppedIntegrable : ∀ T, IsDiscreteStoppingTime ℱ T → IsIntegrableProcess expectation X →
-    IsIntegrableProcess expectation (stoppedProcess X T)
-
 /-- Source 33: optional stopping for bounded discrete supermartingales. -/
 theorem OptionalStoppingDiscrete {Ω : Type u} [m₀ : MeasurableSpace Ω]
     {μ : Measure Ω} {ℱ : Filtration ℕ m₀} {X : ℕ → Ω → ℝ}
@@ -135,47 +123,17 @@ theorem SequenceConvergenceCertificate (x : ℕ → ℝ)
       (f := fun n (_ : Unit) ↦ x n) (ω := ()) hliminf hup)
 
 /-- Source 38: Doob's upcrossing estimate. -/
-structure DoobUpcrossing (a b : ℝ) where
-  strict : a < b
-  expectedUpcrossings : ℝ
-  upperBound : ℝ
-  estimate : expectedUpcrossings ≤ upperBound
-
-/-- Source 39: discrete maximal inequality. -/
-structure DiscreteMaximalInequality (threshold probability expectationValue : ℝ) where
-  threshold_pos : 0 < threshold
-  estimate : threshold * probability ≤ expectationValue
-
-/-- Source 40: discrete Doob `Lᵖ` inequality. -/
-structure DiscreteDoobLpInequality (p maxNorm terminalNorm : ℝ) where
-  p_gt_one : 1 < p
-  estimate : maxNorm ≤ p / (p - 1) * terminalNorm
-
-/-- Source 41: `Lᵖ` martingale convergence. -/
-structure DiscreteLpMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω) where
-  limit : Ω → ℝ
-  pointwise : ∀ ω, Tendsto (fun n ↦ X n ω) atTop (𝓝 (limit ω))
-  normConvergence : Prop
-
-/-- Source 42: equivalent characterizations of `L¹` convergence of a martingale. -/
-structure DiscreteL1MartingaleConvergence (uniformIntegrable hasTerminalRepresentation convergesL1 : Prop) where
-  ui_iff_terminal : uniformIntegrable ↔ hasTerminalRepresentation
-  terminal_iff_converges : hasTerminalRepresentation ↔ convergesL1
-
-/-- Source 43: optional stopping for uniformly integrable martingales and arbitrary stopping times. -/
-structure DiscreteUIOptionalStopping (conditionalIdentity expectationIdentity : Prop) where
-  conditional : conditionalIdentity
-  expectation : expectationIdentity
+theorem DoobUpcrossing {Ω : Type u} [m₀ : MeasurableSpace Ω]
+    {μ : Measure Ω} [IsFiniteMeasure μ] {ℱ : Filtration ℕ m₀}
+    {X : ℕ → Ω → ℝ} (hX : Submartingale X ℱ μ) (a b : ℝ) (N : ℕ) :
+    (b - a) * μ[MeasureTheory.upcrossingsBefore a b X N] ≤
+      μ[fun ω ↦ (X N ω - a)⁺] := by
+  simpa using hX.mul_integral_upcrossingsBefore_le_integral_pos_part a b N
 
 /-- Source 44: a decreasing sequence of sigma-fields. -/
 structure BackwardFiltration (Ω : Type u) where
   sigma : ℕ → SigmaField Ω
   anti : ∀ m n : ℕ, m ≤ n → (sigma n).Subfield (sigma m)
-
-/-- Source 45: convergence of conditional expectations along a backwards filtration. -/
-structure BackwardMartingaleConvergence {Ω : Type u} (X : DiscreteProcess Ω) where
-  limit : Ω → ℝ
-  converges : ∀ ω, Tendsto (fun n ↦ X n ω) atTop (𝓝 (limit ω))
 
 /-- Source 46: Kolmogorov's zero-one law. -/
 theorem KolmogorovZeroOne {Ω : Type u} [m₀ : MeasurableSpace Ω]
@@ -219,11 +177,5 @@ structure MarkovChain {Ω : Type u} (E : Type v) [Fintype E]
 /-- Source 51: a harmonic function for a transition matrix. -/
 def HarmonicFor (E : Type u) [Fintype E] (P : E → E → ℝ) (f : E → ℝ) : Prop :=
   ∀ x, ∑ y, P x y * f y = f x
-
-/-- Source 52: a bounded harmonic function evaluated along a Markov chain is a martingale. -/
-structure BoundedHarmonicMartingale (harmonic bounded martingale : Prop) where
-  harmonicHypothesis : harmonic
-  boundedHypothesis : bounded
-  conclusion : martingale
 
 end AdvancedProbability

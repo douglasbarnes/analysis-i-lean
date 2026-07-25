@@ -38,24 +38,10 @@ structure WienerExistence where
   independent : (Ω → ℝ) → (Ω → ℝ) → Prop
   brownian : BrownianMotion Ω expectation independent
 
-/-- Source 91: finite-dimensional Gaussianity of Brownian motion. -/
-structure BrownianGaussianProcess (allFiniteLinearCombinationsGaussian : Prop) where
-  conclusion : allFiniteLinearCombinationsGaussian
-
-/-- Source 92: scaling, time inversion, translation, and orthogonal invariance. -/
-structure BrownianInvariance (scaling timeInversion translation reflection : Prop) where
-  scalingLaw : scaling
-  timeInversionLaw : timeInversion
-  translationLaw : translation
-  reflectionLaw : reflection
-
-/-- Source 93: future Brownian increments are independent of the right-limit filtration. -/
-structure BrownianFutureIndependent (futureIndependent : Prop) where
-  conclusion : futureIndependent
-
-/-- Source 94: Blumenthal's zero-one law. -/
-structure BlumenthalZeroOne (probability : ℝ) where
-  dichotomy : probability = 0 ∨ probability = 1
+/-- Source 94: Blumenthal's zero-one property for a germ sigma-algebra. -/
+def BlumenthalZeroOne {Ω : Type u} [MeasurableSpace Ω]
+    (μ : Measure Ω) (germ : MeasurableSpace Ω) : Prop :=
+  ∀ A : Set Ω, MeasurableSet[germ] A → μ A = 0 ∨ μ A = 1
 
 /-- Source 95: immediate oscillation, small-time behavior, and unbounded extrema of Brownian paths. -/
 structure BrownianSamplePathProperties (immediatePositive immediateNegative smallTimeRatio
@@ -74,14 +60,6 @@ structure BrownianStrongMarkov (postStoppingBrownian independentOfStoppedPast : 
 /-- Source 97: the reflection principle. -/
 structure ReflectionPrinciple (reflectedPathHasBrownianLaw : Prop) where
   conclusion : reflectedPathHasBrownianLaw
-
-/-- Source 98: first-passage reflection identity. -/
-structure ReflectionHittingCorollary (hittingProbability doubledTailProbability : ℝ) where
-  identity : hittingProbability = doubledTailProbability
-
-/-- Source 99: the running maximum has the same law as the absolute Brownian position. -/
-structure RunningMaximumLaw (sameLaw : Prop) where
-  conclusion : sameLaw
 
 /-- Source 100: one-dimensional Brownian first-passage probability and density data. -/
 structure BrownianFirstPassage (distributionIdentity densityIdentity : Prop) where
@@ -103,25 +81,19 @@ structure MeanValueCharacterization (harmonic meanValueProperty : Prop) where
 structure HarmonicBrownianMartingale (harmonic martingale : Prop) where
   implication : harmonic → martingale
 
-/-- Source 105: conditioning a sum of independent random variables. -/
-structure ConditionalExpectationOfIndependentSum (independent conditionalFormula : Prop) where
-  implication : independent → conditionalFormula
-
 /-- Source 106: the second-order Taylor/Itô martingale for Brownian motion. -/
 structure ItoMartingale (twiceDifferentiable boundedDerivatives martingale : Prop) where
   smooth : twiceDifferentiable
   bounded : boundedDerivatives
   conclusion : martingale
 
-/-- Source 107: the maximum principle for harmonic functions. -/
-structure MaximumPrinciple (harmonic continuous maximumOnBoundary : Prop) where
-  harmonicHypothesis : harmonic
-  continuousHypothesis : continuous
-  conclusion : maximumOnBoundary
-
-/-- Source 108: uniqueness for the Dirichlet problem. -/
-structure DirichletUniqueness (sameBoundaryData sameSolution : Prop) where
-  implication : sameBoundaryData → sameSolution
+/-- Source 107: the weak maximum-principle property for a domain and a supplied Laplacian.
+Every harmonic function continuous on the closure and bounded above by `c` on the frontier is
+bounded above by `c` throughout the domain. -/
+def MaximumPrinciple {E : Type u} [TopologicalSpace E]
+    (laplacian : (E → ℝ) → E → ℝ) (D : Set E) : Prop :=
+  ∀ (u : E → ℝ), IsHarmonic laplacian D u → ContinuousOn u (closure D) →
+    ∀ c : ℝ, (∀ x, x ∈ frontier D → u x ≤ c) → ∀ x, x ∈ D → u x ≤ c
 
 /-- Source 109: the Poincaré exterior-cone condition. -/
 def PoincareConeCondition {E : Type u} [TopologicalSpace E]
@@ -139,8 +111,27 @@ structure BrownianDirichletSolution (boundaryContinuous harmonic continuousExten
   harmonicConclusion : harmonic
   continuityConclusion : continuousExtension
 
-/-- Source 112: recurrence in dimensions one and two and transience in dimensions at least three. -/
-def BrownianRecurrenceTransience (d : ℕ) : Prop := (d ≤ 2) ∨ (3 ≤ d)
+/-- A `d`-dimensional real process indexed by non-negative time. -/
+abbrev EuclideanBrownianProcess (d : ℕ) (Ω : Type u) := ℝ≥0 → Ω → (Fin d → ℝ)
+
+/-- A multidimensional path is recurrent at the origin when it returns to every neighbourhood of the
+origin at arbitrarily large times, almost surely. -/
+def BrownianRecurrent {Ω : Type u} [MeasurableSpace Ω] {d : ℕ}
+    (P : Measure Ω) (B : EuclideanBrownianProcess d Ω) : Prop :=
+  ∀ᵐ ω ∂P, ∀ ε : ℝ, 0 < ε → ∀ T : ℝ≥0,
+    ∃ t : ℝ≥0, T ≤ t ∧ ‖B t ω‖ < ε
+
+/-- A multidimensional path is transient when its distance from the origin tends to infinity, almost
+surely. -/
+def BrownianTransient {Ω : Type u} [MeasurableSpace Ω] {d : ℕ}
+    (P : Measure Ω) (B : EuclideanBrownianProcess d Ω) : Prop :=
+  ∀ᵐ ω ∂P, Tendsto (fun t ↦ ‖B t ω‖) atTop atTop
+
+/-- Source 112: Brownian motion is recurrent in dimensions one and two and transient in dimensions at
+least three. This is the actual probabilistic statement, rather than the former arithmetic tautology. -/
+def BrownianRecurrenceTransience {Ω : Type u} [MeasurableSpace Ω]
+    (d : ℕ) (P : Measure Ω) (B : EuclideanBrownianProcess d Ω) : Prop :=
+  (d ≤ 2 → BrownianRecurrent P B) ∧ (3 ≤ d → BrownianTransient P B)
 
 /-- Source 113: Donsker's invariance principle. -/
 structure DonskerInvariance (centered unitVariance weakConvergenceToBrownian : Prop) where
@@ -153,12 +144,5 @@ structure SkorokhodEmbedding (centered finiteVariance embeddedRandomWalk : Prop)
   centeredHypothesis : centered
   varianceHypothesis : finiteVariance
   conclusion : embeddedRandomWalk
-
-/-- Source 115: two-sided Brownian exit probability and mean exit time. -/
-structure TwoSidedHittingFormula (x y probability expectedTime : ℝ) where
-  x_pos : 0 < x
-  y_pos : 0 < y
-  probabilityFormula : probability = y / (x + y)
-  expectationFormula : expectedTime = x * y
 
 end AdvancedProbability
