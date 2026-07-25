@@ -1,0 +1,441 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.1'
+fragment_part: 3
+inventory:
+- id: definition-unnumbered-2-1-intrinsic-distance
+  kind: definition
+  book:
+    number: unnumbered-2.1-intrinsic-distance
+    pages:
+    - 20
+    section: '2.1'
+    equations: []
+  title: Intrinsic pseudometric
+  statement: For a centred Gaussian process X with covariance Σ, d_X(s,t)^2 := E(X(t)−X(s))^2 = Σ(t,t)+Σ(s,s)−2Σ(s,t).
+  hypotheses:
+    explicit:
+    - X centred Gaussian.
+    - Finite second moments, automatic for Gaussian coordinates.
+    implicit: []
+  quantifier_order:
+  - ∀s,t∈T, d_X(s,t)=sqrt(E[(X(t)-X(s))²]).
+  constants:
+  - ∀s,t∈T, d_X(s,t)=sqrt(E[(X(t)-X(s))²]).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-1-8
+    - definition-2-1-9
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: A `PseudoMetric` induced by the `L2` distance between coordinate random variables; quotient if definiteness is
+      needed.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-1-12
+  kind: proposition
+  book:
+    number: 2.1.12
+    pages:
+    - 20
+    section: '2.1'
+    equations: []
+  title: Separable version criterion
+  statement: For a centred Gaussian process X, (T,d_X) is separable if and only if X has a separable measurable strict version.
+  hypotheses:
+    explicit:
+    - X centred Gaussian indexed by T.
+    - d_X as intrinsic pseudometric.
+    implicit:
+    - Measurability means each coordinate random variable is measurable; separability is Definition 2.1.2.
+  quantifier_order:
+  - SeparableSpace(T,d_X) ⇔ ∃ measurable strict version Y that is separable.
+  constants:
+  - SeparableSpace(T,d_X) ⇔ ∃ measurable strict version Y that is separable.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-1-1
+    - definition-2-1-2a
+    - definition-2-1-2b
+    chapter_local_dependents:
+    - exercise-2-3-6
+    - theorem-2-3-7
+    later_book_uses:
+    - theorem-2-3-7
+    - exercise-2-3-6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Equivalence using a countable dense set and almost-sure coordinate limits; package modifications with `ae_eq_fun`.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-1-13
+  kind: theorem
+  book:
+    number: 2.1.13
+    pages:
+    - 21
+    section: '2.1'
+    equations: []
+  title: Gaussian zero-one law for measurable linear subspaces
+  statement: If X is a centred Gaussian process and F⊆ℝ^T is a linear subspace measurable for the cylinder σ-algebra, then
+    Pr(X∈F) is either 0 or 1.
+  hypotheses:
+    explicit:
+    - X centred Gaussian process.
+    - F a linear subspace of ℝ^T.
+    - F cylinder-measurable.
+    implicit: []
+  quantifier_order:
+  - Pr(X∈F)∈{0,1}.
+  constants:
+  - Pr(X∈F)∈{0,1}.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-1-8
+    chapter_local_dependents:
+    - corollary-2-1-14
+    - exercise-2-1-5
+    later_book_uses:
+    - corollary-2-1-14
+    - exercise-2-1-5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: A zero-one theorem for a Gaussian measure on a product measurable vector space and measurable additive subgroup/submodule.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-1-14
+  kind: corollary
+  book:
+    number: 2.1.14
+    pages:
+    - 21
+    section: '2.1'
+    equations: []
+  title: Zero-one law for measurable pseudonorms
+  statement: For a centred Gaussian process and a cylinder-measurable pseudonorm N on ℝ^T, Pr(N(X)<∞) is 0 or 1.
+  hypotheses:
+    explicit:
+    - N is a measurable pseudonorm, allowing value ∞.
+    - X centred Gaussian.
+    implicit: []
+  quantifier_order:
+  - Pr[N(X)<∞]∈{0,1}.
+  constants:
+  - Pr[N(X)<∞]∈{0,1}.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-1-13
+    chapter_local_dependents:
+    - example-2-1-15
+    - theorem-2-1-20
+    later_book_uses:
+    - example-2-1-15
+    - theorem-2-1-20
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Apply the zero-one law to the measurable linear subspace `{x | N x < ∞}`.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: example-2-1-15
+  kind: example
+  book:
+    number: 2.1.15
+    pages:
+    - 21
+    section: '2.1'
+    equations: []
+  title: Measurability of Gaussian suprema
+  statement: For a separable process X with countable separating set T₀, sup_{t∈T}|X(t)| equals sup_{t∈T₀}|X(t)| almost surely;
+    hence it is measurable, and for centred Gaussian X the event of finiteness has probability 0 or 1.
+  hypotheses:
+    explicit:
+    - X separable relative to an appropriate pseudometric.
+    - T₀ is the countable separant.
+    implicit: []
+  quantifier_order:
+  - sup_T |X| = sup_T₀ |X| a.s.; Pr(sup_T|X|<∞)∈{0,1}.
+  constants:
+  - sup_T |X| = sup_T₀ |X| a.s.; Pr(sup_T|X|<∞)∈{0,1}.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-1-14
+    - definition-2-1-2a
+    - definition-2-1-2b
+    chapter_local_dependents:
+    - theorem-2-1-20
+    later_book_uses:
+    - theorem-2-1-20
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Countable `iSup` measurability plus an a.e. equality between the full supremum and the dense/countable supremum.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: example-2-1-16
+  kind: example
+  book:
+    number: 2.1.16
+    pages:
+    - 22
+    section: '2.1'
+    equations: []
+  title: Gaussian Banach-valued random variable
+  statement: A B-valued random variable X on a separable Banach space is centred Gaussian iff f(X) is a centred real normal
+    random variable for every continuous linear functional f∈B*. It induces the centred Gaussian process f↦f(X) indexed by
+    B*.
+  hypotheses:
+    explicit:
+    - B separable real Banach.
+    - X:B-valued measurable random variable.
+    implicit: []
+  quantifier_order:
+  - ∀f∈B*, law(f∘X)=N(0,variance_f).
+  constants:
+  - ∀f∈B*, law(f∘X)=N(0,variance_f).
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - definition-2-6-4
+    - theorem-2-4-5
+    later_book_uses:
+    - theorem-2-4-5
+    - definition-2-6-4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: foundational predicates available
+      candidates:
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      exact_equivalent: true
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_measure_def
+  likely_lean_representation:
+    sketch: '`ProbabilityTheory.HasGaussianLaw X P` or `[ProbabilityTheory.IsGaussian (P.map X)]`, with centring constraints.'
+    blockers:
+    - These represent Gaussian measures and Gaussian-valued random variables on topological vector spaces; book-specific RKHS
+      and concentration results are not supplied by the predicate alone.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-1-17
+  kind: theorem
+  book:
+    number: 2.1.17
+    pages:
+    - 22
+    section: '2.1'
+    equations: []
+  title: Maurey–Pisier convex comparison
+  statement: Let B be finite-dimensional, X a centred Gaussian B-valued variable, Y an independent copy, f:B→ℝ Lipschitz,
+    and Φ:ℝ→[0,∞) convex measurable. Then E Φ(f(X)−Ef(X)) ≤ E Φ((π/2)·Df(X)[Y]) wherever the a.e. derivative is used, in the
+    precise book formulation.
+  hypotheses:
+    explicit:
+    - B finite-dimensional normed space.
+    - X,Y independent identically distributed centred Gaussian B-valued variables.
+    - f Lipschitz.
+    - Φ nonnegative convex measurable.
+    - Both sides well-defined, allowing +∞ if the book does.
+    implicit:
+    - Rademacher differentiability of f and a measurable choice/version of f′(X).
+    - The Gaussian law may be supported on a proper subspace, reduced to its support.
+  quantifier_order:
+  - Universal factor π/2; quantification over all admissible Φ.
+  constants:
+  - Universal factor π/2; quantification over all admissible Φ.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - example-2-1-19
+    - exercise-2-1-5
+    - theorem-2-1-20
+    later_book_uses:
+    - example-2-1-19
+    - theorem-2-1-20
+    - exercise-2-1-5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Finite-dimensional Euclidean reduction; almost-everywhere Fréchet derivative and Bochner/scalar expectation inequality
+      for convex functions.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - The derivative term and measurability of a derivative representative require a precise formal convention; do not replace
+    it silently by a Clarke derivative or by an arbitrary subgradient.
