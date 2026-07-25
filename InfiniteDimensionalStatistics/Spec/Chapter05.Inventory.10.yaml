@@ -1,0 +1,459 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id003
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id001
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id002
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id004
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.thm.5_3_1
+  kind: theorem
+  book:
+    number: Theorem 5.3.1
+    pages:
+    - 441
+    - 443
+    section: 5.3.1
+    equations: []
+  title: Theorem 5.3.1
+  statement: The debiased quadratic-functional estimator in the Gaussian white-noise model attains the nonparametric
+    quadratic-functional rate below the smoothness threshold and, when the smoothness exceeds 1/4 and the projection
+    bias is o(n^{-1/2}), satisfies √n(Tₙ−‖f‖²₂)⇒N(0,4σ²‖f‖²₂), the efficient limit for Q(f).
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - f belongs to the Sobolev/Besov smoothness class and radius stated in the theorem.
+    - Resolution jₙ satisfies the theorem’s variance and bias conditions.
+    - For the CLT regime, smoothness α>1/4.
+    implicit:
+    - At f=0 the limiting variance degenerates.
+    - The below-threshold rate is stated in the book with an exact risk convention that must be retained.
+  quantifier_order:
+  - Uniform risk statement over the displayed smoothness ball.
+  - Pointwise CLT for each fixed f in the regular regime.
+  constants:
+  - Threshold α=1/4; variance 4σ²‖f‖²₂.
+  dependencies:
+    earlier_book:
+    - Gaussian quadratic-form concentration/CLT
+    chapter_local:
+    - ch5.def.quadratic_white_noise
+    later_book_uses:
+    - Chapter 6 minimax lower bounds and efficiency discussion
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: 'Analyse a finite noncentral chi-square sum: exact bias/variance, CLT for linear part, negligibility
+      of degenerate quadratic noise.'
+    blockers:
+    - Triangular-array Gaussian quadratic forms.
+    - Besov tail bias.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - Exact ball notation, low-smoothness exponent, and resolution conditions must be transcribed from pp.441–443.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.def.U_quadratic
+  kind: operative_definition
+  book:
+    number: Equation (5.93)
+    pages:
+    - 443
+    - 444
+    section: 5.3.1
+    equations:
+    - '5.93'
+  title: Equation (5.93)
+  statement: For a symmetric smoothing kernel/projection kernel K_h, define the order-two U-statistic Tₙ(h)=[n(n−1)]⁻¹∑_{i≠j}K_h(X_i−X_j)
+    (equivalently 2/[n(n−1)]∑_{i<j}), which estimates ∫f² through E Tₙ(h)=∫(K_h*f)f.
+  source_fidelity: *id004
+  hypotheses:
+    explicit:
+    - X_i i.i.d. with density f.
+    - K_h symmetric and integrable.
+    - n≥2.
+    implicit:
+    - The book may write a projection-kernel form K_j(X_i,X_j); both are instances of a symmetric kernel U-statistic.
+  quantifier_order:
+  - For every n≥2 and smoothing parameter.
+  constants:
+  - Normalisation n(n−1).
+  dependencies:
+    earlier_book: &id005 []
+    chapter_local:
+    - ch5.eq.5_1
+    later_book_uses:
+    - Theorem 5.3.2
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: A degree-two U-statistic over unordered pairs, with expectation computed by Fubini.
+    blockers:
+    - Reusable U-statistic definition and Hoeffding decomposition.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: &id006 []
+- id: ch5.thm.5_3_2
+  kind: theorem
+  book:
+    number: Theorem 5.3.2
+    pages:
+    - 444
+    - 447
+    section: 5.3.1
+    equations: []
+  title: Theorem 5.3.2
+  statement: For the U-statistic (5.93), under the stated boundedness, Besov smoothness and kernel assumptions,
+    if smoothness α>1/4 and the smoothing sequence makes the quadratic bias o(n^{-1/2}) while the degenerate U-statistic
+    part is o_P(n^{-1/2}), then √n(Tₙ−∫f²)⇒N(0,4 Var_f(f(X))). The theorem also gives the optimal low-smoothness
+    risk/rate when α≤1/4.
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - f is a bounded density in the precise Besov ball stated in the theorem.
+    - K is the stated convolution/projection kernel.
+    - Smoothing sequence satisfies the displayed conditions.
+    - α>1/4 for the CLT part.
+    implicit:
+    - The linear Hoeffding projection is 2[(K_h*f)(X)−E Tₙ].
+    - Semiparametric efficiency is asserted when the variance is nonzero.
+  quantifier_order:
+  - Uniform risk over the smoothness ball; pointwise CLT at fixed f.
+  constants:
+  - Limit variance 4 Var_f(f(X)); threshold 1/4.
+  dependencies:
+    earlier_book:
+    - Hoeffding decomposition and U-statistic moment inequalities
+    chapter_local:
+    - ch5.def.U_quadratic
+    later_book_uses:
+    - Exercises 5.3.2 and Chapter 6 efficiency/minimax discussion
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Hoeffding-decompose Tₙ, prove CLT for the linear projection and control the canonical quadratic component.
+    blockers:
+    - U-statistic theory absent at needed strength.
+    - Besov convolution bias for f*f.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - Exact kernel conditions, low-smoothness exponent and bandwidth/resolution inequalities require direct PDF transcription.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.def.weighted_quadratic
+  kind: operative_definition
+  book:
+    number: 'Equation (5.103): weighted/debiased quadratic estimator'
+    pages:
+    - 447
+    - 449
+    section: 5.3.1
+    equations:
+    - '5.103'
+  title: 'Equation (5.103): weighted/debiased quadratic estimator'
+  statement: For Q_ψ(f)=∫ψ(x)f(x)²dx, define a pilot-based debiased estimator T_{n,ψ} that combines a first-order
+    plug-in/linear term with a quadratic U-statistic correction, using sample splitting to make the pilot independent
+    of the correction sample.
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - A bounded/sufficiently smooth weight ψ.
+    - A pilot density estimator based on an independent subsample.
+    - A projection or convolution kernel at the prescribed resolution.
+    implicit:
+    - The exact formula and sample sizes are those in (5.103).
+  quantifier_order:
+  - For each sample split and smoothing level.
+  constants:
+  - Weight ψ and split sizes.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.def.U_quadratic
+    later_book_uses:
+    - Theorem 5.3.3
+    - Exercise 5.3.2
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Define on a product sample space or by deterministic split indices; combine linear statistics and a
+      degree-two U-statistic.
+    blockers:
+    - Exact formula transcription and sample-splitting infrastructure.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - Direct PDF transcription of (5.103) is required.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.thm.5_3_3
+  kind: theorem
+  book:
+    number: Theorem 5.3.3
+    pages:
+    - 447
+    - 449
+    section: 5.3.1
+    equations: []
+  title: Theorem 5.3.3
+  statement: Under the theorem’s smoothness and boundedness assumptions on f and ψ, the debiased estimator (5.103)
+    estimates Q_ψ(f)=∫ψf² at the optimal low-smoothness rate and, for smoothness above 1/4 with undersmoothing,
+    obeys √n(T_{n,ψ}−Q_ψ(f))⇒N(0,4 Var_f(ψ(X)f(X))).
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - f in the stated Besov/Hölder classes and bounded as required.
+    - ψ satisfies the stated regularity and boundedness.
+    - Smoothing and sample-splitting conditions.
+    - Smoothness >1/4 for CLT.
+    implicit:
+    - Influence function is 2(ψf−P(ψf)).
+  quantifier_order:
+  - Uniform risk over the specified class and pointwise CLT.
+  constants:
+  - Limit variance 4 Var_f(ψ(X)f(X)).
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.def.weighted_quadratic
+    - ch5.thm.5_3_2
+    later_book_uses:
+    - Theorem 5.3.4
+    - Exercise 5.3.2
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Weighted Hoeffding decomposition plus pilot-error product control.
+    blockers:
+    - Weighted Besov multiplication and U-statistics.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - Exact hypotheses and low-smoothness statement require direct PDF transcription.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.def.general_integral_estimator
+  kind: operative_definition
+  book:
+    number: Equation (5.107)
+    pages:
+    - 449
+    - 450
+    section: 5.3.1
+    equations:
+    - '5.107'
+  title: Equation (5.107)
+  statement: For Φ(f)=∫φ(f(x),x)f(x)dx, define a sample-split second-order estimator Tₙ by Taylor-expanding the
+    integrand around an independent pilot f̂, retaining the empirical first-order term and estimating the quadratic
+    remainder with the weighted quadratic estimator.
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - φ has the differentiability and growth properties assumed before (5.107).
+    - A pilot estimator f̂ and independent evaluation sample.
+    - Weighted quadratic correction is well-defined.
+    implicit:
+    - The exact coefficients in the Taylor expansion and centring follow (5.107).
+  quantifier_order:
+  - For every admissible f and sample split.
+  constants:
+  - Derivatives ∂₁φ, ∂₁²φ.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.def.weighted_quadratic
+    later_book_uses:
+    - Theorem 5.3.4
+    - Exercises 5.3.3–5.3.4
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: A composite estimator formed from empirical averages, pilot evaluations and a weighted quadratic U-statistic.
+    blockers:
+    - Exact formula and measurable nonlinear pilot composition.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - Direct PDF transcription of (5.107) is required.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.thm.5_3_4
+  kind: theorem
+  book:
+    number: Theorem 5.3.4
+    pages:
+    - 450
+    - 451
+    section: 5.3.1
+    equations: []
+  title: Theorem 5.3.4
+  statement: Under the stated lower/upper bounds and Besov/Hölder regularity of f, smoothness and remainder conditions
+    on φ, and α>1/4, the estimator (5.107) is asymptotically linear with efficient influence function x↦φ(f(x),x)+f(x)∂₁φ(f(x),x)
+    minus its P-mean. Hence √n(Tₙ−Φ(f)) converges to a centred normal law with variance Var_f(φ(f(X),X)+f(X)∂₁φ(f(X),X)).
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - f belongs to the exact intersection of smoothness classes and satisfies the pointwise bounds in the theorem.
+    - α>1/4.
+    - φ has the displayed derivatives and uniform Taylor remainder.
+    - Pilot and smoothing sequences satisfy the theorem conditions.
+    implicit:
+    - The efficient influence function is centred by its P-expectation.
+    - Degenerate zero-variance cases are allowed.
+  quantifier_order:
+  - For each fixed admissible f.
+  - As n→∞.
+  constants:
+  - Limit variance as displayed.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.def.general_integral_estimator
+    - ch5.thm.5_3_3
+    later_book_uses:
+    - Exercises 5.3.1, 5.3.3, 5.3.4
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 5.3.1
+    contains_omitted_steps: true
+    comment: ''
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Second-order von Mises/Taylor expansion; prove all pilot remainder terms o_P(n^{-1/2}) and apply the
+      scalar CLT to the influence function.
+    blockers:
+    - Nonlinear functional differentiability and U-statistic correction.
+    - Besov product/composition estimates.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - Exercise 5.3.1 completes the proof; the main-text proof is not complete.
+  - Exact hypotheses and estimator coefficients require direct PDF transcription.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.def.deconvolution_model
+  kind: definition
+  book:
+    number: Unnumbered deconvolution observation model
+    pages:
+    - 451
+    section: 5.3.2
+    equations: []
+  title: Unnumbered deconvolution observation model
+  statement: Observe Y=X+ε, where X has unknown density f, ε is independent with known distribution/density ϕ, and
+    Y has density g=f*ϕ. Recovery of f is based on F[g]=F[f]F[ϕ] and division by the nonvanishing error characteristic
+    function.
+  source_fidelity: *id004
+  hypotheses:
+    explicit:
+    - X and ε independent.
+    - f is an unknown density.
+    - ϕ is known.
+    - F[ϕ](u)≠0 on the frequencies used.
+    implicit:
+    - Fourier transform convention is the one fixed in Chapter 4.
+  quantifier_order:
+  - For every observation Y_i generated independently from g.
+  constants:
+  - Known error law ϕ.
+  dependencies:
+    earlier_book:
+    - Fourier convolution theorem
+    chapter_local: *id005
+    later_book_uses:
+    - All of Section 5.3.2
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Probability convolution model and characteristic-function identity.
+    blockers:
+    - Probability distribution convolution and Fourier transform of measures/functions.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
