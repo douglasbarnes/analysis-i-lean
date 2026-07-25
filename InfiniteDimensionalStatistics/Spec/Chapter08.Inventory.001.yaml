@@ -1,0 +1,280 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 1
+chunk_count: 29
+inventory:
+- id: ch8.white_noise_model_8_1
+  kind: definition
+  book:
+    number: (8.1)
+    pages:
+    - 608
+    section: 8.1.1
+    equations:
+    - '8.1'
+  title: Gaussian white-noise experiment
+  statement: For n∈ℕ and σ>0, observe dY_f^(n)(t)=f(t)dt+(σ/√n)dW(t), t∈[0,1]; write P_f^Y for its law and E_f for
+    expectation.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - n∈ℕ
+    - σ>0
+    - f is square-integrable on [0,1]
+    - W is standard Gaussian white noise
+    implicit:
+    - A common measurable sample space Y_n realising all translated laws is fixed.
+  quantifier_order:
+  - Fix σ>0
+  - For each n∈ℕ
+  - For each admissible f
+  - define P_f^Y and E_f
+  constants:
+  - Noise level σ/√n.
+  dependencies:
+    earlier_book:
+    - Chapter 1 Gaussian white-noise model
+    - Section 6.1.1 realisation and likelihood
+    chapter_local: []
+    later_book_uses:
+    - All Chapter 8 testing, estimation and confidence declarations
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.Measure
+      - Measure.map
+      - Measure.dirac
+      - ProbabilityTheory.HasLaw
+      - ProbabilityTheory.IdentDistrib
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib supplies measurable spaces, probability measures, kernels, Gaussian
+        variables, finite products, and filters for asymptotics, but not the chapter’s statistical-experiment or
+        minimax-testing declarations.
+      audit_profile: statistical_experiment
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean after searches for Lepski, Besov, Gaussian
+        white noise, self-similar, and adaptive confidence.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: 'A structure `GaussianWhiteNoiseExperiment` or, for the core pass, the equivalent projected Gaussian
+      sequence experiment with `law : L2 → Measure Ω`.'
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-028
+- id: ch8.l2_testing_balance_8_2
+  kind: definition
+  book:
+    number: (8.2)
+    pages:
+    - 608
+    section: 8.1.1
+    equations:
+    - '8.2'
+  title: Fixed-smoothness testing resolution
+  statement: For a Besov alternative of smoothness r and radius B, choose an integer j_n with 2^{j_n} ≍ B^{2/(2r+1/2)}
+    n^{1/(2r+1/2)}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - r>0
+    - B>0
+    - n∈ℕ
+    implicit:
+    - The comparison constants are positive and independent of n.
+  quantifier_order:
+  - Fix r,B
+  - For every n choose j_n∈ℕ satisfying two-sided comparison
+  constants:
+  - Hidden comparison constants may depend on r and the wavelet basis.
+  dependencies:
+    earlier_book:
+    - Section 6.2.3 minimax signal detection
+    chapter_local:
+    - ch8.white_noise_model_8_1
+    later_book_uses:
+    - ch8.theorem_8_1_1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Existential integer sequence with explicit lower/upper constants; use dyadic floor/ceiling lemmas.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-029
+  - CR-030
+- id: ch8.l2_adaptive_alternative
+  kind: definition
+  book:
+    number: preceding Theorem 8.1.1
+    pages:
+    - 609
+    section: 8.1.1
+    equations:
+    - '8.1'
+  title: Union of L2-separated Besov alternatives
+  statement: 'For r,B,ρ>0 define H₁(r,B,ρ)={f: ‖f‖_{B^r_{2,∞}}≤B and ‖f‖₂≥ρ}; for an adaptation ceiling R>0 take
+    the union over B>0 and 0<r≤R.'
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - R>0
+    - r∈(0,R]
+    - B>0
+    - ρ>0
+    implicit:
+    - The Besov norm is generated by the chapter’s fixed wavelet basis.
+  quantifier_order:
+  - Fix R
+  - For each rate family ρ_n(r,B)
+  - form ⋃_{B>0,0<r≤R}H₁(r,B,ρ_n(r,B))
+  constants: []
+  dependencies:
+    earlier_book:
+    - Chapter 4 Besov spaces
+    chapter_local:
+    - ch8.white_noise_model_8_1
+    later_book_uses:
+    - ch8.theorem_8_1_1
+    - ch8.theorem_8_1_2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Set-valued predicate on the signal space with real parameters; represent Besov membership through coefficient
+      block norms.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.adaptive_l2_testing_rate
+  kind: definition
+  book:
+    number: Theorem 8.1.1 rate
+    pages:
+    - 609
+    section: 8.1.1
+    equations:
+    - '8.1'
+  title: Adaptive L2 testing separation rate
+  statement: ρ_n^*(r,B)=C·max(1,B)^{1/(4r+1)}·n^{-r/(2r+1/2)}·(log log n)^{r/(4r+1)}, with log log n replaced by
+    an arbitrary fixed positive constant for n≤e^e.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - R>0
+    - 0<r≤R
+    - B>0
+    - C>0
+    - n∈ℕ
+    implicit:
+    - Real powers use positive bases; the small-n convention makes the expression total.
+  quantifier_order:
+  - Fix C,R
+  - For each r,B,n define ρ_n^*(r,B)
+  constants:
+  - C is chosen sufficiently large for the upper bound and sufficiently small multiples underpin the lower bound.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.l2_testing_balance_8_2
+    - ch8.l2_adaptive_alternative
+    later_book_uses:
+    - ch8.theorem_8_1_1
+    - ch8.theorem_8_1_2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A real-valued rate function with a piecewise definition at n≤⌈e^e⌉; prove positivity and asymptotic
+      identities separately.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review:
+  - CR-029
