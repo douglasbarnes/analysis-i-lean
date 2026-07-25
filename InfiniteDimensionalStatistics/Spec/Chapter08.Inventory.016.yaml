@@ -1,0 +1,178 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 16
+chunk_count: 16
+inventory:
+- id: ch8.notes_converse_prop_8_3_6
+  kind: note result
+  book:
+    number: un-numbered result in notes
+    pages:
+    - 665
+    section: 8.4 Notes
+    equations: []
+  title: Converse construction when testing is no harder than smooth estimation
+  statement: The notes state that when ρ_n^*=O(r_n(Θ₀)), adaptive honest confidence sets can be constructed without
+    removing a separated region from Θ.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - abstract setting of Propositions 8.3.6–8.3.7
+    - testing rate dominated by smooth-model estimation rate
+    implicit:
+    - The result is attributed to later literature and is not proved in the chapter.
+  quantifier_order:
+  - Assume rate domination
+  - construct confidence sets over all Θ
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.proposition_8_3_6
+    - ch8.proposition_8_3_7
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: The notes state that when ρ_n^*=O(r_n(Θ₀)), adaptive honest confidence sets can be constructed
+      without removing a separated region from Θ.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A strengthened abstract upper theorem; formal statement needs the exact external hypotheses from the
+      cited source.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-025
+  - CR-029
+- id: ch8.notes_minimal_linfty_self_similarity
+  kind: note result
+  book:
+    number: un-numbered literature result
+    pages:
+    - 666
+    section: 8.4 Notes
+    equations: []
+  title: Sharper lower bounds for L∞ self-similarity
+  statement: The notes report that lower bounds analogous to Theorem 8.3.18 identify near-minimal self-similarity
+    conditions for adaptive L∞ confidence bands.
+  source_fidelity: bibliographic-summary
+  hypotheses:
+    explicit:
+    - external hypotheses as in the cited literature
+    implicit:
+    - No complete statement or proof is supplied in the book.
+  quantifier_order:
+  - External result only
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.theorem_8_3_18
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: The notes report that lower bounds analogous to Theorem 8.3.18 identify near-minimal self-similarity
+      conditions for adaptive L∞ confidence bands.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Do not formalise from this note alone; create a bibliographic placeholder pending the cited theorem
+      statement.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch8.notes_unbounded_holder_radius
+  kind: note result
+  book:
+    number: un-numbered literature result
+    pages:
+    - 666
+    section: 8.4 Notes
+    equations: []
+  title: Adaptation to unbounded Hölder radius with known self-similarity parameters
+  statement: The notes report confidence-band constructions that adapt to unbounded Hölder norms when the self-similarity
+    parameters are known.
+  source_fidelity: bibliographic-summary
+  hypotheses:
+    explicit:
+    - external assumptions from the cited work
+    implicit:
+    - Not used later and not stated with full quantifiers in the book.
+  quantifier_order:
+  - External result only
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.theorem_8_3_15
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: The notes report confidence-band constructions that adapt to unbounded Hölder norms when the self-similarity
+      parameters are known.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Bibliographic placeholder only until the cited source is specified.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
