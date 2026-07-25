@@ -1,0 +1,581 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 7
+inventory:
+- id: theorem_3_4_3
+  kind: theorem
+  book:
+    number: Theorem 3.4.3
+    pages:
+    - 173
+    - 174
+    section: '3.4'
+    equations: []
+  title: Data-driven Talagrand inequality using Rademacher complexity
+  statement: If 𝓕 is countable, centred by P, |f|≤1/2 and σ²≥sup_fPf², then for x>0, Pr{‖n⁻¹∑(f(X_i)−Pf)‖𝓕≥3‖n⁻¹∑ε_i f(X_i)‖𝓕+4√(2σ²x/n)+70x/(3n)}≤2e^{−x}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - X_i i.i.d. P
+    - ε_i independent Rademacher
+    - 𝓕 countable
+    - '|f|≤1/2'
+    - σ²≥sup Pf²
+    implicit: []
+  quantifier_order: &id001
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants: &id002
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - remark_3_3_11
+    - theorem_3_1_21
+    - theorem_3_3_9
+    later_book_uses:
+    - Data-dependent risk bounds.
+  proof_status: &id003
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status: &id007
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: &id004
+    mathlib:
+      status: partial-infrastructure-only
+      candidates:
+      - Mathlib supplies underlying measure/integral/probability/independence/Bochner/Gaussian infrastructure, but no exact
+        chapter theorem was located.
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: &id005
+    sketch: Independent Rademacher coordinates on a product probability space, finite sums, and measurable/countable suprema.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: remark_3_4_4
+  kind: remark
+  book:
+    number: Remark 3.4.4
+    pages:
+    - 174
+    section: '3.4'
+    equations:
+    - '3.139'
+  title: Conditional Rademacher-complexity version
+  statement: The Rademacher supremum in Theorem 3.4.3 may be replaced by its conditional expectation E_ε, with threshold 3E_ε‖n⁻¹∑ε_i
+    f(X_i)‖𝓕+4√(2σ²x/n)+12x/n.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - hypotheses of Theorem 3.4.3
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_4_3
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: &id006
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents: *id004
+  likely_lean_representation: *id005
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_4_5
+  kind: theorem
+  book:
+    number: Theorem 3.4.5
+    pages:
+    - 175
+    section: '3.4'
+    equations: []
+  title: Variance-free data-driven inequality
+  statement: For countable |f|≤1, i.i.d. X_i and independent Rademacher ε_i, Pr{‖P_n−P‖𝓕≥2‖n⁻¹∑ε_i f(X_i)‖𝓕+3√(2x/n)}≤2e^{−x}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕 countable
+    - '|f|≤1'
+    - X_i i.i.d. P
+    - ε_i independent Rademacher
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_1_21
+    - theorem_3_3_14
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id006
+  equivalents: &id008
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: &id013
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: canonical_Ustat
+  kind: definition
+  book:
+    number: Unnumbered definitions, pp. 176–177
+    pages:
+    - 176
+    - 177
+    section: '3.4'
+    equations: []
+  title: Canonical U-statistic and parameters A, B, C, D
+  statement: For kernels h_{ij}, define U_n:=∑_{1≤i<j≤n}h_{ij}(X_i,X_j). It is canonical/degenerate when each one-coordinate
+    integral vanishes. Define A,B,C,D by the displayed uniform bound, conditional row/column variance bounds, global L² norm
+    and bilinear operator norm.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - independent X_i
+    - measurable kernels h_{ij}
+    - degeneracy conditions
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Lemmas 3.4.6–3.4.7
+    - Theorem 3.4.8
+  proof_status: *id003
+  notes_status: *id007
+  equivalents: *id008
+  likely_lean_representation:
+    sketch: Canonical order-two U-statistic as a finite sum over `i<j`; degeneracy is expressed by zero conditional integrals
+      and the four scale parameters by suprema/operator norms.
+    blockers: &id009
+    - Copy all four parameter definitions exactly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id009
+- id: lemma_3_4_6
+  kind: lemma
+  book:
+    number: Lemma 3.4.6
+    pages:
+    - 177
+    - 178
+    section: '3.4'
+    equations: []
+  title: Martingale exponential supermartingale
+  statement: For martingale differences satisfying the stated conditional exponential bound, the compensated exponential process
+    in the lemma is a supermartingale and yields the displayed tail estimate.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - filtered probability space
+    - martingale differences
+    - printed conditional mgf bound
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Lemma 3.4.7
+    - Theorem 3.4.8
+  proof_status: *id003
+  notes_status: *id007
+  equivalents: *id008
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id010
+    - Exact compensator and λ-domain require transcription.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id010
+- id: lemma_3_4_7
+  kind: lemma
+  book:
+    number: Lemma 3.4.7
+    pages:
+    - 179
+    section: '3.4'
+    equations: []
+  title: Conditional variance control for canonical U-statistics
+  statement: With high probability, the random conditional quadratic-variation terms in the martingale decomposition of a
+    canonical order-two U-statistic are bounded by explicit combinations of A,B,C,D and the deviation parameter.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - setting of canonical U-statistic definitions
+    - u>0
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - canonical_Ustat
+    - lemma_3_4_6
+    later_book_uses:
+    - Theorem 3.4.8.
+  proof_status: *id003
+  notes_status: *id007
+  equivalents: *id008
+  likely_lean_representation:
+    sketch: Canonical order-two U-statistic as a finite sum over `i<j`; degeneracy is expressed by zero conditional integrals
+      and the four scale parameters by suprema/operator norms.
+    blockers: &id011
+    - All coefficients and powers of u must be copied from p.179.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id011
+- id: theorem_3_4_8
+  kind: theorem
+  book:
+    number: Theorem 3.4.8
+    pages:
+    - 180
+    - 183
+    section: '3.4'
+    equations: []
+  title: Bernstein-type inequality for canonical U-statistics of order two
+  statement: For a canonical order-two U-statistic with parameters A,B,C,D, there is a universal c such that for u>0, Pr{|U_n|≥c(C√u+Du+Bu^{3/2}+Au²)}≤2.7e^{−u}.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - independent observations
+    - canonical measurable kernels
+    - finite A,B,C,D
+    - u>0
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma_3_4_6
+    - lemma_3_4_7
+    later_book_uses:
+    - Reusable degenerate U-statistic concentration.
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_4_4
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: &id014
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents: *id008
+  likely_lean_representation:
+    sketch: Canonical order-two U-statistic as a finite sum over `i<j`; degeneracy is expressed by zero conditional integrals
+      and the four scale parameters by suprema/operator norms.
+    blockers: &id012
+    - Verify the universal c and 2.7 constant from pp.180–183.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id012
+- id: empirical_L2_metric
+  kind: definition
+  book:
+    number: Unnumbered definition, p. 184
+    pages:
+    - 184
+    section: '3.5'
+    equations: []
+  title: Empirical L² pseudometric
+  statement: For f,g, define e_{n,2}(f,g):=[P_n(f−g)²]^{1/2}=‖f−g‖_{L²(P_n)}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit:
+    - May be infinite without empirical square integrability.
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - empirical_measure
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id006
+  equivalents: *id008
+  likely_lean_representation: *id013
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: random_entropy_numbers
+  kind: definition
+  book:
+    number: Unnumbered definitions, pp. 184–185
+    pages:
+    - 184
+    - 185
+    section: '3.5'
+    equations:
+    - '3.164'
+  title: Random packing and covering numbers
+  statement: D(𝓕,L²(P_n),ε) is the maximal cardinality of an ε-separated subset and N(𝓕,L²(P_n),ε) the minimal cardinality
+    of an ε-net in the empirical pseudometric; N(ε)≤D(ε)≤N(ε/2).
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit:
+    - Cardinalities may be infinite.
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - empirical_L2_metric
+    later_book_uses:
+    - Theorem 3.5.1
+    - Section 3.7
+  proof_status: *id003
+  notes_status: *id007
+  equivalents: *id008
+  likely_lean_representation: &id015
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_5_1
+  kind: theorem
+  book:
+    number: Theorem 3.5.1
+    pages:
+    - 185
+    - 186
+    section: '3.5'
+    equations:
+    - '3.165'
+    - '3.166'
+  title: Random entropy integral bounds
+  statement: For countable 𝓕 with 0∈𝓕, E√n‖P_n−P‖𝓕≤8√2 E∫₀^{√‖P_nf²‖𝓕}√log(2D(𝓕,L²(P_n),τ))dτ. The local increment bound (3.166)
+    holds with constant 2(16√2+2) and upper integration limit δ.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕 countable
+    - 0∈𝓕
+    - X_i i.i.d. P
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book:
+    - Theorem 2.3.7
+    chapter_local:
+    - random_entropy_numbers
+    - theorem_3_1_21
+    later_book_uses:
+    - Theorem 3.5.4
+    - Theorem 3.7.36
+  proof_status: *id003
+  notes_status: *id014
+  equivalents: *id008
+  likely_lean_representation: *id015
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: remark_3_5_2
+  kind: remark
+  book:
+    number: Remark 3.5.2
+    pages:
+    - 186
+    section: '3.5'
+    equations: []
+  title: Covering numbers may replace packing numbers
+  statement: Apart from the measurability qualification, the random packing numbers in (3.165)–(3.166) may be replaced by
+    random covering numbers.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_1
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id006
+  equivalents: *id008
+  likely_lean_representation: *id015
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: KP_entropy_integral
+  kind: definition
+  book:
+    number: Eq. (3.169)
+    pages:
+    - 186
+    - 187
+    section: '3.5'
+    equations:
+    - '3.169'
+  title: Koltchinskii–Pollard uniform entropy integral
+  statement: For envelope F, define J(𝓕,F,δ):=sup_Q∫₀^δ√log(2N(𝓕,L²(Q),τ‖F‖_{L²(Q)}))dτ, where Q ranges over finitely supported
+    probability measures for which the expression is defined.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - F an envelope
+    - δ≥0
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Theorem 3.5.4
+    - Theorem 3.7.37
+  proof_status: *id003
+  notes_status: *id007
+  equivalents: *id008
+  likely_lean_representation: *id015
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: lemma_3_5_3
+  kind: lemma
+  book:
+    number: Lemma 3.5.3
+    pages:
+    - 186
+    - 187
+    section: '3.5'
+    equations: []
+  title: Calculus of entropy integrals
+  statement: For G(x):=∫₀^xg(t)dt with the printed nonnegative monotonicity assumptions on g, G has the scaling inequalities
+    and concavity property for t↦tG(x/t) used to pass expectations through random entropy integrals.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - g satisfies the lemma’s monotonicity/integrability hypotheses
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Theorem 3.5.4.
+  proof_status: *id003
+  notes_status: *id007
+  equivalents: *id008
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id016
+    - Transcribe parts (a)–(c) and domains exactly.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: *id016
+- id: theorem_3_5_4
+  kind: theorem
+  book:
+    number: Theorem 3.5.4
+    pages:
+    - 187
+    - 188
+    section: '3.5'
+    equations: []
+  title: Uniform entropy bound with square-integrable envelope
+  statement: Let 𝓕 be countable, 0∈𝓕, F a positive envelope with PF²<∞, σ²:=sup_fPf², δ:=σ/‖F‖₂ and U:=max_iF(X_i). If J(𝓕,F,1)<∞,
+    then E‖ν_n‖𝓕 is bounded by the maximum of A₁‖F‖₂J(δ) and A₂‖U‖₂J(δ)²/(√nδ²), with the theorem’s explicit universal A₁,A₂.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - 𝓕 countable
+    - 0∈𝓕
+    - F positive measurable envelope
+    - PF²<∞
+    - J(𝓕,F,1)<∞
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma_3_5_3
+    - theorem_3_1_15
+    - theorem_3_5_1
+    later_book_uses:
+    - Corollaries 3.5.7–3.5.9
+    - Chapters 5–7
+  proof_status: *id003
+  notes_status: *id014
+  equivalents: *id008
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id017
+    - 'Official correction p.188: the indicated proof term is ‖U‖_{L²(P)}/‖F‖_{L²(P)}.'
+    - Copy A₁,A₂ from the theorem display.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id017
+- id: remark_3_5_5
+  kind: remark
+  book:
+    number: Remark 3.5.5
+    pages:
+    - 188
+    section: '3.5'
+    equations: []
+  title: Global uniform-entropy consequence
+  statement: Under Theorem 3.5.4, E‖ν_n‖𝓕≤8√2 J(𝓕,F,1)‖F‖_{L²(P)}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_4
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id006
+  equivalents: *id008
+  likely_lean_representation: *id015
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
