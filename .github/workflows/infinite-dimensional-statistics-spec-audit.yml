@@ -1,4 +1,4 @@
-# Pull-request audit for canonical chapter packages.
+# Fresh pull-request audit for repaired canonical chapter packages.
 name: Infinite-Dimensional Statistics Spec Audit
 
 on:
