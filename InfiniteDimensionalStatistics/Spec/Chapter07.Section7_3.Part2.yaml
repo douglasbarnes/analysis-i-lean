@@ -9,25 +9,22 @@ inventory:
     number: 7.3.1
     pages:
     - 602
-    - 603
     section: '7.3'
     equations: []
-  title: Conditional-distribution derivation of Bayes' formula
-  statement: 'In the dominated joint model (7.76), prove the conditional-law identities
-
-    (7.77)–(7.79): X|f has density p_f dμ, and f|X=x has posterior density
-
-    proportional to p_f(x) with respect to Π. Derive the i.i.d. posterior
-
-    formulas (7.80)–(7.81).'
+  title: Bayesian conditional-law identities
+  statement: 'Prove equations (7.77) and (7.78) for the joint law Q(dx,df)=p_f(x) μ(dx) Π(df): the conditional law
+    of X given f is P_f(dx)=p_f(x) μ(dx), and the conditional law of f given X=x is the posterior kernel with density
+    proportional to p_f(x) with respect to Π, for the marginal law of X-almost every x.'
   hypotheses:
     explicit:
     - The jointly measurable dominated Bayesian model (7.76).
+    - The conditional distributions in (7.77) and (7.78) are defined on the measurable spaces used by the book.
     implicit:
-    - Existence of the stated regular conditional distributions requires the measurable-space
-      hypotheses used by the book.
+    - The denominator in the posterior formula is positive for the marginal law of X-almost every x.
+    - Existence of regular conditional laws requires the measurable-space hypotheses flagged in the main-text proposition.
   quantifier_order:
-  - For marginal-almost every observation x and every measurable parameter set B.
+  - First condition on f to establish (7.77); then, for every measurable parameter set B, establish (7.78) for marginal-X
+    almost every x.
   constants: []
   dependencies:
     earlier_book: []
@@ -52,23 +49,17 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Disintegration/conditional kernel calculation using the posterior kernel
-      already available in mathlib.
+    sketch: Verify the two conditional-kernel identities by Tonelli and the defining integral characterisation of
+      conditional distributions; use mathlib's posterior kernel under Standard Borel hypotheses.
     blockers: []
   difficulty: major-library
   pass: exercise
-  issues_for_central_review:
-  - type: source_verification
-    page: 603
-    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
-      text layer does not expose the final §7.3 exercise block cleanly; visually verify
-      exact wording and page before implementation.
+  issues_for_central_review: []
   selection_reasons:
   - completes proof omitted from main text
   - cited by later result
   - establishes required reusable lemma
   used_by:
-  - ch7.def.iidPosterior
   - ch7.prop.posteriorConditionalFormulas
 - id: ex7.3.2
   kind: exercise
@@ -76,23 +67,18 @@ inventory:
     number: 7.3.2
     pages:
     - 602
-    - 603
     section: '7.3'
     equations: []
-  title: Proof of the Gaussian white-noise contraction theorem
-  statement: 'Prove Theorem 7.3.5 by adapting the proof of Theorem 7.3.1 to the
-
-    white-noise likelihood (7.85), replacing Lemma 7.3.2 by Lemma 7.3.4 and
-
-    using the white-noise tests assumed in the theorem.'
+  title: Proof of Theorem 7.3.5
+  statement: Prove Theorem 7.3.5.
   hypotheses:
     explicit:
     - All hypotheses of Theorem 7.3.5.
     implicit:
-    - The denominator event and posterior numerator are measurable under the chosen
-      white-noise sample-space realisation.
+    - The white-noise likelihood, posterior numerator and denominator events are measurable on the chosen sample-space
+      realisation.
   quantifier_order:
-  - For every sufficiently large fixed M, establish contraction as n→∞.
+  - Use the quantifier order and sufficiently-large-M convention stated in Theorem 7.3.5.
   constants: []
   dependencies:
     earlier_book: []
@@ -119,17 +105,12 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Port the abstract posterior-contraction proof from product likelihoods
-      to Cameron–Martin likelihood ratios.
+    sketch: Adapt the posterior-contraction proof of Theorem 7.3.1 to the Cameron–Martin likelihood, using Lemma
+      7.3.4 and the tests assumed by Theorem 7.3.5.
     blockers: []
   difficulty: major-library
   pass: exercise
-  issues_for_central_review:
-  - type: source_verification
-    page: 603
-    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
-      text layer does not expose the final §7.3 exercise block cleanly; visually verify
-      exact wording and page before implementation.
+  issues_for_central_review: []
   selection_reasons:
   - completes proof omitted from main text
   - cited by later result
@@ -141,28 +122,25 @@ inventory:
     number: 7.3.3
     pages:
     - 602
-    - 603
     section: '7.3'
     equations: []
-  title: Distances and information bounds for normalised exponential densities
-  statement: 'Prove all parts of Lemma 7.3.8 for p_v=e^v/∫e^v and p_w=e^w/∫e^w:
-
-    control Hellinger distance, Kullback–Leibler divergence, and the second
-
-    log-likelihood moment by explicit functions of ||v-w||∞.'
+  title: Proof of Lemma 7.3.8
+  statement: Prove Lemma 7.3.8, including its Hellinger, Kullback–Leibler and squared log-likelihood-ratio bounds
+    for the normalised exponential densities p_v and p_w. The book also points to van der Vaart and van Zanten (2008).
   hypotheses:
     explicit:
-    - v,w are measurable and the normalising integrals are finite and positive.
+    - All hypotheses and notation of Lemma 7.3.8.
     implicit:
-    - The exact constants and exponents are those displayed in Lemma 7.3.8 and require
-      visual confirmation.
+    - The precise constants and powers are exactly those in the displayed statement of Lemma 7.3.8 and remain separately
+      flagged for visual confirmation.
   quantifier_order:
-  - For every admissible pair v,w.
+  - For every admissible pair v,w, prove parts (a), (b) and (c) in order.
   constants: []
   dependencies:
     earlier_book: []
     chapter_local:
     - ch7.def.normalisedExponentialDensity
+    - ch7.def.hellinger
     later_book_uses: []
   proof_status:
     delegates_to_exercises: []
@@ -182,61 +160,49 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Bounds on log normalisers and exponential ratios, followed by pointwise
-      Hellinger/KL estimates and integration.
+    sketch: Bound the ratio of normalising constants and the exponential density ratio pointwise, then integrate
+      the resulting square-root and logarithmic inequalities.
     blockers: []
   difficulty: substantial
   pass: exercise
   issues_for_central_review:
-  - type: source_verification
-    page: 603
-    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
-      text layer does not expose the final §7.3 exercise block cleanly; visually verify
-      exact wording and page before implementation.
   - type: constant_verification
     page: 581
-    detail: Verify exact constants and the final power/exponential factor in all three
-      parts of Lemma 7.3.8 against the page image.
+    detail: Verify exact constants and the final power/exponential factor in all three parts of Lemma 7.3.8 against
+      the page image.
   selection_reasons:
   - completes proof omitted from main text
   - cited by later result
   - establishes required reusable lemma
   used_by:
   - ch7.lemma.7.3.8
-  - ch7.thm.7.3.9
 - id: ex7.3.4
   kind: exercise
   book:
     number: 7.3.4
     pages:
     - 602
-    - 603
     section: '7.3'
     equations: []
-  title: Gaussian conjugate posterior calculation
-  statement: 'Derive the coordinatewise Gaussian posterior formula (7.115) and the
-
-    random-series representation (7.116) from the Gaussian product prior
-
-    (7.114) and sequence observation model (7.109), by completing the square
-
-    independently in each coordinate.'
+  title: Scalar normal–normal conjugacy
+  statement: "Let f∈ℝ and σ²>0. If Y conditional on f has law N(f,1/n) and f has prior law N(0,σ²), prove that the\
+    \ posterior law is\n  f | Y ∼ N((σ²/(σ²+1/n))Y, σ²/(nσ²+1)).\nHint: use equation (7.78)."
   hypotheses:
     explicit:
-    - Independent Gaussian prior coefficients.
-    - Independent Gaussian observation noise.
-    - The coefficient variances are positive.
+    - n∈ℕ with n≥1.
+    - σ²>0.
+    - Y|f∼N(f,1/n) and f∼N(0,σ²).
     implicit:
-    - The infinite product posterior defines a Borel probability law on the intended
-      function/sequence space.
+    - The posterior density is taken with respect to Lebesgue measure on ℝ.
   quantifier_order:
-  - For every coordinate; then identify the infinite product law.
-  constants: []
+  - For every n≥1 and σ²>0, compute the conditional law for every observed Y outside a null set.
+  constants:
+  - Posterior mean coefficient σ²/(σ²+1/n).
+  - Posterior variance σ²/(nσ²+1).
   dependencies:
     earlier_book: []
     chapter_local:
-    - ch7.def.gaussianConjugatePrior
-    - ch7.def.whiteNoiseSequenceModel
+    - ch7.prop.posteriorConditionalFormulas
     later_book_uses: []
   proof_status:
     delegates_to_exercises: []
@@ -256,21 +222,15 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: One-dimensional normal-normal conjugacy plus construction/equality of
-      countable product probability measures.
+    sketch: Multiply the one-dimensional Gaussian likelihood and prior densities, complete the square, and identify
+      the resulting normal probability measure.
     blockers: []
-  difficulty: substantial
+  difficulty: routine
   pass: exercise
-  issues_for_central_review:
-  - type: source_verification
-    page: 603
-    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
-      text layer does not expose the final §7.3 exercise block cleanly; visually verify
-      exact wording and page before implementation.
+  issues_for_central_review: []
   selection_reasons:
   - completes proof omitted from main text
   - cited by later result
   - establishes required reusable lemma
   used_by:
   - ch7.prop.gaussianPosteriorFormula
-  - ch7.thm.7.3.16
