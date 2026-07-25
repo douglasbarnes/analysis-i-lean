@@ -1,0 +1,412 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.2.3
+fragment_part: 2
+inventory:
+- id: ch7.thm.7.2.10
+  kind: theorem
+  book:
+    number: Theorem 7.2.10
+    label: Theorem 7.2.10
+    pages:
+    - 558
+    - 559
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Exponential Sobolev-MLE convergence rates
+  statement: "Let p₀∈P(t,D) be bounded away from zero. There exist c,C∈(0,∞), depending only\non t,D and inf p₀, such that for every n,\n  P₀^n(h(p̂ₙ,p₀)>C n^{-t/(2t+1)}) ≤ c exp(-n^{1/(2t+1)}/c),\n  P₀^n(||p̂ₙ-p₀||₂>C n^{-t/(2t+1)}) ≤ c exp(-n^{1/(2t+1)}/c),\n  P₀^n(||p̂ₙ-p₀||∞>C n^{-(t-1/2)/(2t+1)})\n     ≤ c exp(-n^{1/(2t+1)}/c)."
+  hypotheses:
+    explicit:
+    - t>1/2, D>1.
+    - p₀∈P(t,D).
+    - inf p₀>0.
+    implicit:
+    - Wavelet entropy bounds and interpolation inequalities are used.
+    - The same MLE as (7.54).
+  quantifier_order:
+  - ∃ c,C depending only on stated parameters, ∀ n, all three bounds.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Corollary 4.3.38 (metric entropy)
+    - Sobolev interpolation/embedding
+    chapter_local:
+    - ch7.thm.7.2.1
+    - ch7.prop.7.2.8
+    - ch7.def.periodicSobolevNorm
+    later_book_uses:
+    - ch7.lemma.7.2.12
+    - ch7.lemma.7.2.13
+    - ch7.prop.7.2.11
+    - ch7.thm.7.2.14
+    - ex7.2.6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Three nonasymptotic probability inequalities. Requires the full empirical-process bracketing theorem and Sobolev
+      entropy estimates.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_2_10
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.prop.7.2.11
+  kind: proposition
+  book:
+    number: Proposition 7.2.11
+    label: Proposition 7.2.11
+    pages:
+    - 559
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Rates for the finite-dimensional Sobolev sieve MLE
+  statement: "If 2^{jₙ}≍n^{1/(2t+1)}, the sieve MLE p̂ₙ(jₙ) satisfies\n  h(p̂ₙ(jₙ),p₀)=O_{P₀}(n^{-t/(2t+1)}),\n  ||p̂ₙ(jₙ)-p₀||₂=O_{P₀}(n^{-t/(2t+1)}),\n  ||p̂ₙ(jₙ)-p₀||∞=O_{P₀}(n^{-(t-1/2)/(2t+1)})."
+  hypotheses:
+    explicit:
+    - Hypotheses on t,D,p₀ as in the preceding Sobolev setup.
+    - Resolution sequence 2^{jₙ} is bounded above and below by fixed multiples of n^{1/(2t+1)}.
+    implicit: []
+  quantifier_order:
+  - For every such resolution sequence, the three stochastic orders.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.2.3
+    - ch7.def.sobolevSieveMLE
+    - ch7.thm.7.2.10
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.2.6
+    contains_omitted_steps: true
+    comment: entire proof
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
+
+      Includes approximation by normalised wavelet projections.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_7_2_11
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.lemma.7.2.12
+  kind: lemma
+  book:
+    number: Lemma 7.2.12 (proof corrected)
+    label: Lemma 7.2.12 (proof corrected)
+    pages:
+    - 559
+    - 560
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Likelihood derivative in the radial direction
+  statement: "Under the Sobolev-ball hypotheses,\n  |Dℓₙ(p̂ₙ)[p̂ₙ-p₀]|\n    = O_{P₀}( n^{-1/2} n^{-(t-1/2)/(2t+1)} ).\nThe proof must use the corrected high-probability event combining the L² rate\nn^{-t/(2t+1)} and the L∞ rate n^{-(t-1/2)/(2t+1)}."
+  hypotheses:
+    explicit:
+    - p₀ is bounded away from zero and belongs to P(t,D).
+    implicit: []
+  quantifier_order:
+  - As n→∞ under P₀.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Corollary 3.5.7 or Remark 3.5.14, per errata
+    chapter_local:
+    - ch7.prop.7.2.4
+    - ch7.thm.7.2.10
+    later_book_uses:
+    - ch7.lemma.7.2.13
+    - ch7.prop.scoreBound7.66
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
+
+      Formal proof needs stochastic-order algebra and an empirical-process bound for a random local class.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 559: Correct L²/L∞ events and replace the proof reference by Corollary 3.5.7 (or Remark 3.5.14).'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_lemma_7_2_12
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.def.sobolevInterior
+  kind: condition
+  book:
+    number: (7.65)
+    label: (7.65)
+    pages:
+    - 560
+    section: 7.2.3
+    equations:
+    - (7.65)
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Interior true-density condition
+  statement: Assume inf_x p₀(x)>0 and ||p₀||_{H^t}<D.
+  hypotheses:
+    explicit:
+    - p₀∈P(t,D).
+    implicit: []
+  quantifier_order:
+  - Fixed p₀.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    later_book_uses:
+    - ch7.prop.scoreBound7.66
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A conjunction of a positive lower bound and a strict norm inequality.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_sobolevInterior
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.prop.scoreBound7.66
+  kind: proposition
+  book:
+    number: (7.66)
+    label: (7.66)
+    pages:
+    - 560
+    section: 7.2.3
+    equations:
+    - (7.66)
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Score bound for Sobolev directions
+  statement: "Under the interior condition, for bounded Sobolev g,\n  |Dℓₙ(p̂ₙ)[π₀(g)]|\n  ≤ C (D-||p₀||_{H^t})^{-1} ||g||_{H^t} ||p₀||_{H^t}\n      n^{-2t/(2t+1)}\non events of arbitrarily high probability for n sufficiently large."
+  hypotheses:
+    explicit:
+    - Interior condition (7.65).
+    - g has finite H^t norm.
+    - n is large on the high-probability event.
+    implicit:
+    - The displayed constant C also absorbs lower-bound/interpolation constants.
+  quantifier_order:
+  - For each desired probability level, eventually uniformly over g after scaling by ||g||_{H^t}.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.lemma.7.2.5
+    - ch7.lemma.7.2.12
+    - ch7.def.scoreProjection
+    - ch7.def.sobolevInterior
+    later_book_uses:
+    - ch7.lemma.7.2.13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A high-probability uniform linear-functional bound; represent as `OP` or explicit events.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_scoreBound7_66
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.lemma.7.2.13
+  kind: lemma
+  book:
+    number: Lemma 7.2.13
+    label: Lemma 7.2.13
+    pages:
+    - 560
+    - 561
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Uniform plug-in/empirical discrepancy on Sobolev balls
+  statement: "For every fixed H^t-ball G={g:||g||_{H^t}≤B},\n  sup_{g∈G}|(P̂ₙ-Pₙ)(g)|\n    = O_{P₀}( B n^{-1/2} n^{-(t-1/2)/(2t+1)} )."
+  hypotheses:
+    explicit:
+    - Interior condition (7.65).
+    - B<∞ fixed.
+    - G is a measurable/separable function class.
+    implicit: []
+  quantifier_order:
+  - ∀ fixed B, stochastic-order statement as n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.lemma.7.2.6
+    - ch7.prop.scoreBound7.66
+    - ch7.lemma.7.2.12
+    - ch7.thm.7.2.10
+    later_book_uses:
+    - ch7.thm.7.2.14
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
+
+      A supremum over a function class; needs measurability or outer-probability conventions.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 561: Proof''s first display must use the L² rate, not the L∞ rate.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_lemma_7_2_13
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
