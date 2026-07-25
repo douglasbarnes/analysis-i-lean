@@ -11,14 +11,17 @@ import InfiniteDimensionalStatistics.Chapter03.Bennett
 import InfiniteDimensionalStatistics.Chapter03.FiniteMaximum
 import InfiniteDimensionalStatistics.Chapter03.ProductGeometry
 import InfiniteDimensionalStatistics.Chapter03.EntropyMethod
+import InfiniteDimensionalStatistics.Chapter03.EmpiricalEntropy
+import InfiniteDimensionalStatistics.Chapter03.UStatistics
 
 /-!
 # Chapter 3: Empirical Processes
 
 Source-order implementation root for Chapter 3.  The current implementation
 contains the reusable definition layer and proved concentration results through
-the finite maximal mgf inequality, together with the product-geometry and
-entropy-method definitions used in Sections 3.2–3.3.  Deep entropy, VC and
-Donsker theorem proofs are added only when they have genuine Lean proofs; no
-assumption or placeholder is used to simulate completion.
+the finite maximal mgf inequality, together with the product-geometry,
+entropy-method, empirical-entropy, and canonical U-statistic interfaces used in
+Sections 3.2–3.5.  Deep entropy, VC and Donsker theorem proofs are added only
+when they have genuine Lean proofs; no assumption or placeholder is used to
+simulate completion.
 -/
