@@ -174,34 +174,39 @@ inventory:
     section: 7.3.2
     equations: []
   title: Uniform-norm control of exponential-density distances
-  statement: 'For measurable v,w and p_v,p_w as in (7.107), with a=||v-w||∞:
+  statement: 'For any measurable v,w:(X,A)→ℝ and p_v,p_w as in (7.107), put a=||v-w||∞. Then:
 
     (a) h(p_v,p_w) ≤ a e^{a/2};
 
     (b) -∫ log(p_v/p_w) p_w dμ ≤ a² e^a(1+a);
 
-    (c) ∫ [log(p_v/p_w)]² p_w dμ ≤ a² e^a(1+a)².'
+    (c) ∫ [log(p/p₀)]² p₀ dμ ≤ a² e^a(1+a)², where the printed display switches to the aliases p=p_v and p₀=p_w.'
   hypotheses:
     explicit:
-    - v,w are essentially bounded relative to one another so a<∞.
-    - Both normalising constants are finite and positive.
+    - v and w are measurable real-valued functions on (X,A).
+    - p_v and p_w are the normalised exponential densities defined in (7.107), so their normalising integrals are finite and positive.
     implicit:
-    - The source OCR is poor; constants and powers have been reconstructed from the
-      printed formula and must be visually checked before implementation.
+    - The inequalities are interpreted in the extended nonnegative reals if ||v-w||∞=∞; the informative case has a<∞.
+    - Part (c) is recorded with the printed p,p₀ notation and the contextual identification p=p_v, p₀=p_w; no orientation change is made.
   quantifier_order:
-  - ∀ admissible v,w.
-  constants: []
+  - For every measurable pair v,w for which p_v and p_w are defined, all three inequalities hold in the displayed order.
+  constants:
+  - Part (a) has exponential factor exp(a/2).
+  - Part (b) has exact envelope a² exp(a)(1+a).
+  - Part (c) has exact envelope a² exp(a)(1+a)².
   dependencies:
-    earlier_book: []
+    earlier_book:
+    - Information quantities in (7.87)
     chapter_local:
     - ch7.def.normalisedExponentialDensity
     - ch7.def.hellinger
-    later_book_uses: []
+    later_book_uses:
+    - ch7.thm.7.3.9
   proof_status:
     delegates_to_exercises:
     - ex7.3.3
     contains_omitted_steps: true
-    comment: entire proof
+    comment: The entire proof is assigned to Exercise 7.3.3; the text describes it as basic but somewhat technical.
   notes_status:
     discussed_or_extended_in_notes: false
     note_summary: No notes-only mathematical declaration is used here.
@@ -209,22 +214,21 @@ inventory:
   equivalents:
     mathlib:
       status: none_exact
-      candidates: []
+      candidates:
+      - MeasureTheory.withDensity
+      - Real.exp and Real.log inequalities
       exact_equivalent: false
     repository:
       status: none_found
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Pointwise exponential/log inequalities plus integral normalisation bounds.
+    sketch: Bound the ratio of exponential normalising constants, then prove pointwise square-root and log-ratio inequalities and integrate them against μ or the probability measure with density p_w.
     blockers: []
   difficulty: substantial
   pass: core
-  issues_for_central_review:
-  - type: source_legibility
-    page: 581
-    detail: Visually verify the exact exponents and `(1+a)` powers in parts (b),(c)
-      against the uploaded PDF before formalisation.
+  issues_for_central_review: []
+  verification_status: verified_against_printed_page_581
 - id: ch7.thm.7.3.9
   kind: theorem
   book:
