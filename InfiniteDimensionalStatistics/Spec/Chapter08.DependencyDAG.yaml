@@ -1,0 +1,440 @@
+schema_version: '1.0'
+chapter_local_dependency_dag:
+  nodes:
+  - ch8.white_noise_model_8_1
+  - ch8.l2_testing_balance_8_2
+  - ch8.l2_adaptive_alternative
+  - ch8.adaptive_l2_testing_rate
+  - ch8.test_statistic_8_1_1
+  - ch8.theorem_8_1_1
+  - ch8.iid_uniformity_alternative
+  - ch8.theorem_8_1_2
+  - ch8.linfty_adaptive_alternative
+  - ch8.adaptive_linfty_testing_rate
+  - ch8.linfty_maximum_test
+  - ch8.theorem_8_1_3
+  - ch8.exercise_8_1_1
+  - ch8.exercise_8_1_2
+  - ch8.l2_minimax_benchmark_8_5
+  - ch8.gaussian_wavelet_sequence_8_6
+  - ch8.linear_estimator_8_7
+  - ch8.bias_bound_8_8
+  - ch8.variance_identity_8_9
+  - ch8.l2_resolution_grid_8_10
+  - ch8.oracle_l2_8_11
+  - ch8.lepski_l2_8_12
+  - ch8.lemma_8_2_1
+  - ch8.theorem_8_2_2
+  - ch8.iid_projection_estimator_8_18
+  - ch8.iid_lepski_threshold_8_19
+  - ch8.pilot_envelope_estimator
+  - ch8.theorem_8_2_3
+  - ch8.lemma_8_2_4
+  - ch8.linfty_minimax_benchmark_8_20
+  - ch8.linfty_bias_8_21
+  - ch8.linfty_noise_mean_8_22
+  - ch8.linfty_resolution_grid_8_23
+  - ch8.linfty_oracle_8_24
+  - ch8.linfty_lepski_8_25
+  - ch8.theorem_8_2_5
+  - ch8.lemma_8_2_6
+  - ch8.hard_threshold_estimator_8_27
+  - ch8.theorem_8_2_7
+  - ch8.iid_hard_threshold_estimator_8_31
+  - ch8.empirical_wavelet_max_bound_8_32
+  - ch8.theorem_8_2_8
+  - ch8.exercise_8_2_1
+  - ch8.exercise_8_2_2
+  - ch8.holder_ball_8_35
+  - ch8.honest_coverage_8_36
+  - ch8.adaptive_diameter_8_37
+  - ch8.theorem_8_3_1
+  - ch8.separated_holder_class_8_38
+  - ch8.separated_coverage_8_39
+  - ch8.separated_diameters_8_40_41
+  - ch8.holder_rate_notation
+  - ch8.theorem_8_3_2
+  - ch8.theorem_8_3_4
+  - ch8.sobolev_besov_ball_8_45
+  - ch8.l2_confidence_diameter_benchmark_8_46
+  - ch8.separated_l2_class_8_47
+  - ch8.l2_confidence_criteria_8_48_50
+  - ch8.theorem_8_3_5
+  - ch8.minimax_estimation_rates_8_53
+  - ch8.abstract_separation_8_54
+  - ch8.abstract_testing_problem_8_55
+  - ch8.minimax_testing_rate_8_56_57
+  - ch8.abstract_model_P
+  - ch8.abstract_confidence_criteria_8_58_60
+  - ch8.proposition_8_3_6
+  - ch8.proposition_8_3_7
+  - ch8.canonical_smoothness_grid_8_62
+  - ch8.model_Fn_8_63
+  - ch8.theorem_8_3_8
+  - ch8.classification_bound_8_66
+  - ch8.corollary_8_3_10
+  - ch8.theorem_8_3_11
+  - ch8.holder_exponent
+  - ch8.linfty_self_similarity_8_78
+  - ch8.cusp_example_8_79
+  - ch8.lemma_8_3_13
+  - ch8.low_resolution_modification
+  - ch8.smoothness_estimator_8_83_85
+  - ch8.self_similar_holder_class_8_86
+  - ch8.theorem_8_3_15
+  - ch8.gaussian_sequence_model_8_89
+  - ch8.sobolev_ellipsoid
+  - ch8.self_similar_sequence_class_8_90
+  - ch8.self_similar_union_8_91
+  - ch8.epsilon_condition_8_92
+  - ch8.sample_split_projection_8_93
+  - ch8.sequence_lepski_8_94
+  - ch8.kappa_conditions_8_95
+  - ch8.undersmoothed_resolution_8_96
+  - ch8.risk_estimator_8_97
+  - ch8.confidence_ball_8_98
+  - ch8.oracle_sequence_8_99_102
+  - ch8.lemma_8_3_17
+  - ch8.theorem_8_3_16
+  - ch8.theorem_8_3_18
+  - ch8.corollary_8_3_19
+  - ch8.theorem_8_3_20
+  - ch8.nonselfsimilar_holder_set
+  - ch8.proposition_8_3_21
+  - ch8.l2_wavelet_self_similarity_8_126
+  - ch8.nonselfsimilar_l2_set
+  - ch8.proposition_8_3_22
+  - ch8.uniform_wavelet_prior_8_127
+  - ch8.proposition_8_3_23
+  - ch8.gaussian_wavelet_prior
+  - ch8.proposition_8_3_24
+  - ch8.exercise_8_3_1
+  - ch8.exercise_8_3_2
+  - ch8.exercise_8_3_3
+  - ch8.exercise_8_3_4
+  - ch8.exercise_8_3_5
+  - ch8.notes_converse_prop_8_3_6
+  - ch8.notes_minimal_linfty_self_similarity
+  - ch8.notes_unbounded_holder_radius
+  edges:
+  - - ch8.white_noise_model_8_1
+    - ch8.l2_testing_balance_8_2
+  - - ch8.white_noise_model_8_1
+    - ch8.l2_adaptive_alternative
+  - - ch8.l2_testing_balance_8_2
+    - ch8.adaptive_l2_testing_rate
+  - - ch8.l2_adaptive_alternative
+    - ch8.adaptive_l2_testing_rate
+  - - ch8.white_noise_model_8_1
+    - ch8.test_statistic_8_1_1
+  - - ch8.white_noise_model_8_1
+    - ch8.theorem_8_1_1
+  - - ch8.l2_adaptive_alternative
+    - ch8.theorem_8_1_1
+  - - ch8.adaptive_l2_testing_rate
+    - ch8.theorem_8_1_1
+  - - ch8.test_statistic_8_1_1
+    - ch8.theorem_8_1_1
+  - - ch8.adaptive_l2_testing_rate
+    - ch8.iid_uniformity_alternative
+  - - ch8.iid_uniformity_alternative
+    - ch8.theorem_8_1_2
+  - - ch8.adaptive_l2_testing_rate
+    - ch8.theorem_8_1_2
+  - - ch8.theorem_8_1_1
+    - ch8.theorem_8_1_2
+  - - ch8.white_noise_model_8_1
+    - ch8.linfty_adaptive_alternative
+  - - ch8.linfty_adaptive_alternative
+    - ch8.adaptive_linfty_testing_rate
+  - - ch8.white_noise_model_8_1
+    - ch8.linfty_maximum_test
+  - - ch8.linfty_adaptive_alternative
+    - ch8.theorem_8_1_3
+  - - ch8.adaptive_linfty_testing_rate
+    - ch8.theorem_8_1_3
+  - - ch8.linfty_maximum_test
+    - ch8.theorem_8_1_3
+  - - ch8.theorem_8_1_1
+    - ch8.exercise_8_1_1
+  - - ch8.theorem_8_1_2
+    - ch8.exercise_8_1_1
+  - - ch8.theorem_8_1_3
+    - ch8.exercise_8_1_2
+  - - ch8.white_noise_model_8_1
+    - ch8.gaussian_wavelet_sequence_8_6
+  - - ch8.gaussian_wavelet_sequence_8_6
+    - ch8.linear_estimator_8_7
+  - - ch8.linear_estimator_8_7
+    - ch8.bias_bound_8_8
+  - - ch8.gaussian_wavelet_sequence_8_6
+    - ch8.variance_identity_8_9
+  - - ch8.linear_estimator_8_7
+    - ch8.variance_identity_8_9
+  - - ch8.bias_bound_8_8
+    - ch8.oracle_l2_8_11
+  - - ch8.variance_identity_8_9
+    - ch8.oracle_l2_8_11
+  - - ch8.l2_resolution_grid_8_10
+    - ch8.oracle_l2_8_11
+  - - ch8.linear_estimator_8_7
+    - ch8.lepski_l2_8_12
+  - - ch8.l2_resolution_grid_8_10
+    - ch8.lepski_l2_8_12
+  - - ch8.oracle_l2_8_11
+    - ch8.lemma_8_2_1
+  - - ch8.lepski_l2_8_12
+    - ch8.lemma_8_2_1
+  - - ch8.l2_minimax_benchmark_8_5
+    - ch8.theorem_8_2_2
+  - - ch8.bias_bound_8_8
+    - ch8.theorem_8_2_2
+  - - ch8.lemma_8_2_1
+    - ch8.theorem_8_2_2
+  - - ch8.lepski_l2_8_12
+    - ch8.iid_lepski_threshold_8_19
+  - - ch8.iid_projection_estimator_8_18
+    - ch8.iid_lepski_threshold_8_19
+  - - ch8.iid_projection_estimator_8_18
+    - ch8.pilot_envelope_estimator
+  - - ch8.iid_projection_estimator_8_18
+    - ch8.theorem_8_2_3
+  - - ch8.iid_lepski_threshold_8_19
+    - ch8.theorem_8_2_3
+  - - ch8.lemma_8_2_4
+    - ch8.theorem_8_2_3
+  - - ch8.oracle_l2_8_11
+    - ch8.lemma_8_2_4
+  - - ch8.iid_lepski_threshold_8_19
+    - ch8.lemma_8_2_4
+  - - ch8.linear_estimator_8_7
+    - ch8.linfty_bias_8_21
+  - - ch8.linear_estimator_8_7
+    - ch8.linfty_noise_mean_8_22
+  - - ch8.linfty_bias_8_21
+    - ch8.linfty_oracle_8_24
+  - - ch8.linfty_noise_mean_8_22
+    - ch8.linfty_oracle_8_24
+  - - ch8.linfty_resolution_grid_8_23
+    - ch8.linfty_oracle_8_24
+  - - ch8.linfty_resolution_grid_8_23
+    - ch8.linfty_lepski_8_25
+  - - ch8.linfty_bias_8_21
+    - ch8.theorem_8_2_5
+  - - ch8.linfty_lepski_8_25
+    - ch8.theorem_8_2_5
+  - - ch8.lemma_8_2_6
+    - ch8.theorem_8_2_5
+  - - ch8.linfty_oracle_8_24
+    - ch8.lemma_8_2_6
+  - - ch8.linfty_lepski_8_25
+    - ch8.lemma_8_2_6
+  - - ch8.gaussian_wavelet_sequence_8_6
+    - ch8.hard_threshold_estimator_8_27
+  - - ch8.linfty_minimax_benchmark_8_20
+    - ch8.theorem_8_2_7
+  - - ch8.hard_threshold_estimator_8_27
+    - ch8.theorem_8_2_7
+  - - ch8.iid_hard_threshold_estimator_8_31
+    - ch8.empirical_wavelet_max_bound_8_32
+  - - ch8.iid_hard_threshold_estimator_8_31
+    - ch8.theorem_8_2_8
+  - - ch8.empirical_wavelet_max_bound_8_32
+    - ch8.theorem_8_2_8
+  - - ch8.pilot_envelope_estimator
+    - ch8.exercise_8_2_1
+  - - ch8.theorem_8_2_3
+    - ch8.exercise_8_2_1
+  - - ch8.theorem_8_2_8
+    - ch8.exercise_8_2_1
+  - - ch8.theorem_8_2_5
+    - ch8.exercise_8_2_2
+  - - ch8.holder_ball_8_35
+    - ch8.honest_coverage_8_36
+  - - ch8.holder_ball_8_35
+    - ch8.adaptive_diameter_8_37
+  - - ch8.honest_coverage_8_36
+    - ch8.theorem_8_3_1
+  - - ch8.adaptive_diameter_8_37
+    - ch8.theorem_8_3_1
+  - - ch8.holder_ball_8_35
+    - ch8.separated_holder_class_8_38
+  - - ch8.separated_holder_class_8_38
+    - ch8.separated_coverage_8_39
+  - - ch8.separated_holder_class_8_38
+    - ch8.separated_diameters_8_40_41
+  - - ch8.separated_coverage_8_39
+    - ch8.theorem_8_3_2
+  - - ch8.separated_diameters_8_40_41
+    - ch8.theorem_8_3_2
+  - - ch8.holder_rate_notation
+    - ch8.theorem_8_3_2
+  - - ch8.theorem_8_3_2
+    - ch8.theorem_8_3_4
+  - - ch8.sobolev_besov_ball_8_45
+    - ch8.l2_confidence_diameter_benchmark_8_46
+  - - ch8.sobolev_besov_ball_8_45
+    - ch8.separated_l2_class_8_47
+  - - ch8.separated_l2_class_8_47
+    - ch8.l2_confidence_criteria_8_48_50
+  - - ch8.l2_confidence_diameter_benchmark_8_46
+    - ch8.theorem_8_3_5
+  - - ch8.l2_confidence_criteria_8_48_50
+    - ch8.theorem_8_3_5
+  - - ch8.theorem_8_2_2
+    - ch8.theorem_8_3_5
+  - - ch8.lemma_8_2_1
+    - ch8.theorem_8_3_5
+  - - ch8.minimax_estimation_rates_8_53
+    - ch8.abstract_separation_8_54
+  - - ch8.abstract_separation_8_54
+    - ch8.abstract_testing_problem_8_55
+  - - ch8.abstract_testing_problem_8_55
+    - ch8.minimax_testing_rate_8_56_57
+  - - ch8.abstract_separation_8_54
+    - ch8.abstract_model_P
+  - - ch8.abstract_model_P
+    - ch8.abstract_confidence_criteria_8_58_60
+  - - ch8.minimax_estimation_rates_8_53
+    - ch8.abstract_confidence_criteria_8_58_60
+  - - ch8.minimax_testing_rate_8_56_57
+    - ch8.proposition_8_3_6
+  - - ch8.abstract_confidence_criteria_8_58_60
+    - ch8.proposition_8_3_6
+  - - ch8.minimax_estimation_rates_8_53
+    - ch8.proposition_8_3_7
+  - - ch8.minimax_testing_rate_8_56_57
+    - ch8.proposition_8_3_7
+  - - ch8.abstract_confidence_criteria_8_58_60
+    - ch8.proposition_8_3_7
+  - - ch8.canonical_smoothness_grid_8_62
+    - ch8.model_Fn_8_63
+  - - ch8.sobolev_besov_ball_8_45
+    - ch8.model_Fn_8_63
+  - - ch8.model_Fn_8_63
+    - ch8.theorem_8_3_8
+  - - ch8.theorem_8_3_5
+    - ch8.theorem_8_3_8
+  - - ch8.proposition_8_3_7
+    - ch8.theorem_8_3_8
+  - - ch8.model_Fn_8_63
+    - ch8.classification_bound_8_66
+  - - ch8.theorem_8_3_8
+    - ch8.corollary_8_3_10
+  - - ch8.theorem_8_3_5
+    - ch8.theorem_8_3_11
+  - - ch8.corollary_8_3_10
+    - ch8.theorem_8_3_11
+  - - ch8.holder_exponent
+    - ch8.linfty_self_similarity_8_78
+  - - ch8.linfty_bias_8_21
+    - ch8.linfty_self_similarity_8_78
+  - - ch8.linfty_self_similarity_8_78
+    - ch8.cusp_example_8_79
+  - - ch8.linfty_self_similarity_8_78
+    - ch8.lemma_8_3_13
+  - - ch8.linfty_oracle_8_24
+    - ch8.lemma_8_3_13
+  - - ch8.linfty_lepski_8_25
+    - ch8.lemma_8_3_13
+  - - ch8.lemma_8_3_13
+    - ch8.low_resolution_modification
+  - - ch8.lemma_8_3_13
+    - ch8.smoothness_estimator_8_83_85
+  - - ch8.linfty_self_similarity_8_78
+    - ch8.self_similar_holder_class_8_86
+  - - ch8.self_similar_holder_class_8_86
+    - ch8.theorem_8_3_15
+  - - ch8.smoothness_estimator_8_83_85
+    - ch8.theorem_8_3_15
+  - - ch8.lemma_8_3_13
+    - ch8.theorem_8_3_15
+  - - ch8.gaussian_sequence_model_8_89
+    - ch8.sobolev_ellipsoid
+  - - ch8.sobolev_ellipsoid
+    - ch8.self_similar_sequence_class_8_90
+  - - ch8.self_similar_sequence_class_8_90
+    - ch8.self_similar_union_8_91
+  - - ch8.self_similar_union_8_91
+    - ch8.epsilon_condition_8_92
+  - - ch8.gaussian_sequence_model_8_89
+    - ch8.sample_split_projection_8_93
+  - - ch8.sample_split_projection_8_93
+    - ch8.sequence_lepski_8_94
+  - - ch8.epsilon_condition_8_92
+    - ch8.kappa_conditions_8_95
+  - - ch8.sequence_lepski_8_94
+    - ch8.undersmoothed_resolution_8_96
+  - - ch8.kappa_conditions_8_95
+    - ch8.undersmoothed_resolution_8_96
+  - - ch8.sample_split_projection_8_93
+    - ch8.risk_estimator_8_97
+  - - ch8.undersmoothed_resolution_8_96
+    - ch8.risk_estimator_8_97
+  - - ch8.risk_estimator_8_97
+    - ch8.confidence_ball_8_98
+  - - ch8.sample_split_projection_8_93
+    - ch8.oracle_sequence_8_99_102
+  - - ch8.sobolev_ellipsoid
+    - ch8.oracle_sequence_8_99_102
+  - - ch8.sequence_lepski_8_94
+    - ch8.lemma_8_3_17
+  - - ch8.oracle_sequence_8_99_102
+    - ch8.lemma_8_3_17
+  - - ch8.self_similar_sequence_class_8_90
+    - ch8.lemma_8_3_17
+  - - ch8.self_similar_union_8_91
+    - ch8.theorem_8_3_16
+  - - ch8.epsilon_condition_8_92
+    - ch8.theorem_8_3_16
+  - - ch8.kappa_conditions_8_95
+    - ch8.theorem_8_3_16
+  - - ch8.confidence_ball_8_98
+    - ch8.theorem_8_3_16
+  - - ch8.lemma_8_3_17
+    - ch8.theorem_8_3_16
+  - - ch8.self_similar_sequence_class_8_90
+    - ch8.theorem_8_3_18
+  - - ch8.theorem_8_3_18
+    - ch8.corollary_8_3_19
+  - - ch8.self_similar_holder_class_8_86
+    - ch8.theorem_8_3_20
+  - - ch8.self_similar_sequence_class_8_90
+    - ch8.theorem_8_3_20
+  - - ch8.linfty_self_similarity_8_78
+    - ch8.nonselfsimilar_holder_set
+  - - ch8.nonselfsimilar_holder_set
+    - ch8.proposition_8_3_21
+  - - ch8.self_similar_sequence_class_8_90
+    - ch8.l2_wavelet_self_similarity_8_126
+  - - ch8.l2_wavelet_self_similarity_8_126
+    - ch8.nonselfsimilar_l2_set
+  - - ch8.nonselfsimilar_l2_set
+    - ch8.proposition_8_3_22
+  - - ch8.uniform_wavelet_prior_8_127
+    - ch8.proposition_8_3_23
+  - - ch8.nonselfsimilar_holder_set
+    - ch8.proposition_8_3_23
+  - - ch8.gaussian_wavelet_prior
+    - ch8.proposition_8_3_24
+  - - ch8.nonselfsimilar_l2_set
+    - ch8.proposition_8_3_24
+  - - ch8.lemma_8_3_13
+    - ch8.exercise_8_3_1
+  - - ch8.theorem_8_3_15
+    - ch8.exercise_8_3_1
+  - - ch8.theorem_8_3_18
+    - ch8.exercise_8_3_2
+  - - ch8.theorem_8_3_20
+    - ch8.exercise_8_3_3
+  - - ch8.proposition_8_3_24
+    - ch8.exercise_8_3_4
+  - - ch8.proposition_8_3_6
+    - ch8.notes_converse_prop_8_3_6
+  - - ch8.proposition_8_3_7
+    - ch8.notes_converse_prop_8_3_6
+  - - ch8.theorem_8_3_18
+    - ch8.notes_minimal_linfty_self_similarity
+  - - ch8.theorem_8_3_15
+    - ch8.notes_unbounded_holder_radius
+  acyclic: true
