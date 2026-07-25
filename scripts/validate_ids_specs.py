@@ -175,7 +175,10 @@ def inventory_from_doc(doc: dict[str, Any], base: Path) -> list[dict[str, Any]]:
             raise ValueError("inventory_files must be a list of paths")
         rows: list[dict[str, Any]] = []
         for name in fragments:
-            rows.extend(inventory_from_doc(load(base / name), base))
+            fragment_path = base / name
+            if not fragment_path.is_file():
+                raise ValueError(f"missing inventory fragment {fragment_path.name}")
+            rows.extend(inventory_from_doc(load(fragment_path), fragment_path.parent))
         return rows
     rows = doc.get("inventory")
     if not isinstance(rows, list) or not all(isinstance(x, dict) for x in rows):
@@ -205,11 +208,29 @@ def load_chapter(
             "package needs declaration_inventory and chapter_local_dependency_dag mappings"
         )
     inventory: list[dict[str, Any]] = []
+    component_docs: list[tuple[dict[str, Any], Path]] = []
     for name in component_names(inv_meta, "package.declaration_inventory"):
         component = path.parent / name
         if not component.is_file():
             raise ValueError(f"missing inventory component {component.name}")
-        inventory.extend(inventory_from_doc(load(component), component.parent))
+        component_doc = load(component)
+        component_docs.append((component_doc, component.parent))
+        inventory.extend(inventory_from_doc(component_doc, component.parent))
+    expected_entries = inv_meta.get("entry_count")
+    if isinstance(expected_entries, int) and expected_entries != len(inventory):
+        raise ValueError(
+            f"inventory entry_count={expected_entries}, loaded={len(inventory)}"
+        )
+
+    effective_descriptor = dict(descriptor)
+    if "completeness_check" not in effective_descriptor and len(component_docs) == 1:
+        component_doc, component_base = component_docs[0]
+        repaired = repaired_raw_inventory(component_doc, component_base)
+        metadata_doc = repaired if repaired is not None else component_doc
+        completeness = metadata_doc.get("completeness_check")
+        if isinstance(completeness, dict):
+            effective_descriptor["completeness_check"] = completeness
+
     dag_names = component_names(dag_meta, "package.chapter_local_dependency_dag")
     if len(dag_names) != 1:
         raise ValueError("DAG must use exactly one component")
@@ -221,7 +242,7 @@ def load_chapter(
     dag = dag_doc.get(key, dag_doc)
     if not isinstance(dag, dict):
         raise ValueError("resolved DAG must be a mapping")
-    return chapter, descriptor, inventory, dag
+    return chapter, effective_descriptor, inventory, dag
 
 
 def nested(entry: dict[str, Any], *keys: str) -> Any:
@@ -319,6 +340,13 @@ def entry_errors(
         errors.append(f"{loc}: invalid difficulty {difficulty!r}")
     kind = str(entry.get("kind", "")).replace("_", "-").lower()
     number = str(nested(entry, "book", "number") or "")
+    section = str(nested(entry, "book", "section") or "")
+    source_starred_value = entry.get("source_starred")
+    if source_starred_value is not None and not isinstance(source_starred_value, bool):
+        errors.append(f"{loc}: source_starred must be Boolean when present")
+    source_starred = (
+        "*" in number or "*" in section or source_starred_value is True
+    )
     if kind == "exercise":
         if pass_value != "exercise":
             errors.append(f"{loc}: exercise must use exercise pass")
@@ -327,18 +355,23 @@ def entry_errors(
             errors.append(f"{loc}: selected exercise needs selection_reasons")
     elif pass_value == "exercise":
         errors.append(f"{loc}: non-exercise may not use exercise pass")
-    if pass_value == "starred" and "*" not in number:
-        errors.append(f"{loc}: starred pass requires an explicit book star")
-    if "*" in number and kind != "exercise" and pass_value != "starred":
-        errors.append(f"{loc}: explicitly starred book item must use starred pass")
+    if pass_value == "starred" and not source_starred:
+        errors.append(
+            f"{loc}: starred pass requires a starred declaration or enclosing section"
+        )
+    if source_starred and kind != "exercise" and pass_value != "starred":
+        errors.append(f"{loc}: source-starred item must use starred pass")
     if not allow_source_blockers:
-        status = str(entry.get("transcription_status", ""))
+        statuses = [
+            str(entry.get("transcription_status", "")),
+            str(nested(entry, "source_fidelity", "transcription_status") or ""),
+        ]
         blockers = " ".join(
             map(str, nested(entry, "likely_lean_representation", "blockers") or [])
         )
         statement = str(entry.get("statement", ""))
         if (
-            BLOCKING.search(status)
+            any(BLOCKING.search(status) for status in statuses)
             or BLOCKING.search(blockers)
             or BLOCKING.search(statement)
         ):
@@ -383,6 +416,16 @@ def validate_chapter(
 ) -> tuple[int, list[str], int, int]:
     chapter, descriptor, inventory, dag = load_chapter(path)
     errors: list[str] = []
+
+    for field_name in ("blocking_source_transcriptions", "acceptance_blockers"):
+        value = descriptor.get(field_name)
+        if value is not None and not isinstance(value, list):
+            errors.append(f"chapter {chapter}: {field_name} must be a list")
+        elif value and not allow_source_blockers:
+            errors.append(
+                f"chapter {chapter}: unresolved descriptor blockers in {field_name}: {value}"
+            )
+
     for index, entry in enumerate(inventory):
         errors.extend(entry_errors(chapter, index, entry, allow_source_blockers))
     ids = [entry.get("id") for entry in inventory if isinstance(entry.get("id"), str)]
@@ -407,12 +450,20 @@ def validate_chapter(
     except ValueError as exc:
         errors.append(f"chapter {chapter}: {exc}")
         edges = []
+    seen_edges: set[tuple[str, str]] = set()
     for source, target in edges:
         if source not in idset or target not in idset:
             errors.append(
                 f"chapter {chapter}: DAG edge references unknown node "
                 f"{source!r}->{target!r}"
             )
+        if source == target:
+            errors.append(f"chapter {chapter}: DAG contains self-loop {source!r}")
+        if (source, target) in seen_edges:
+            errors.append(
+                f"chapter {chapter}: duplicate DAG edge {source!r}->{target!r}"
+            )
+        seen_edges.add((source, target))
     if not errors and cyclic(idset, edges):
         errors.append(f"chapter {chapter}: dependency DAG contains a cycle")
     completeness = descriptor.get("completeness_check")
