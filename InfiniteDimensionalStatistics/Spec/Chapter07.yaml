@@ -37,7 +37,7 @@ summary:
     substantial: 23
     major-library: 36
     research-level: 36
-  central_review_flags: 5
+  central_review_flags: 4
   dag_nodes: 106
   dag_edges: 207
 package:
@@ -83,8 +83,6 @@ completeness_check:
   exercise_source_verification: Exercises 7.3.1–7.3.8 were verified against the printed exercise block on pp. 602–603.
   unresolved_source_items: []
   central_review_items:
-  - Equation (7.22) retains a source-orientation review for the printed absolute-continuity wording versus the displayed log
-    ratio.
   - Lemma 7.2.6 retains a generality review because the printed p₀>0 assumption is weaker than the bounded-away-from-zero
     domain used for the population Fréchet derivative.
   - Corollary 7.3.24 applies the official negative-exponent correction, preserves the printed C^α truth condition, and flags
@@ -103,6 +101,8 @@ completeness_check:
   - The contraction-rate definition now preserves the printed existential fixed-M quantifier.
   - Lemma 7.3.4 now records all exact σ-dependent constants.
   - The ε-boundary thickening is recorded as an open, hence Borel, set for every subset of the metric space.
+  - 'Equation (7.22) was verified against p. 547: the printed hypothesis P≪P₀ is the correct condition for the Jensen normalisation
+    ∫(p/p₀)dP₀=1.'
 validation:
   chapter_local_strict_schema: pass
   unique_identifiers: true
