@@ -1,0 +1,452 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.4'
+fragment_part: 2
+inventory:
+- id: corollary-2-4-6
+  kind: corollary
+  book:
+    number: 2.4.6
+    pages:
+    - 52
+    section: '2.4'
+    equations: []
+  title: Khatri–Šidák inequality
+  statement: For a centred jointly Gaussian vector (g₁,…,gₙ) and nonnegative thresholds xᵢ, Pr(∩ᵢ{|gᵢ|≤xᵢ})≥∏ᵢPr(|gᵢ|≤xᵢ).
+  hypotheses:
+    explicit:
+    - Finite centred Gaussian vector.
+    - xᵢ≥0.
+    implicit: []
+  quantifier_order:
+  - Product over all coordinates.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-4-5
+    - exercise-2-4-6
+    - theorem-2-4-4
+    - theorem-2-4-5
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-4-5
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Induction on n using Anderson for conditional/translated symmetric intervals.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-4-7
+  kind: theorem
+  book:
+    number: 2.4.7
+    pages:
+    - 53
+    section: '2.4'
+    equations: []
+  title: Berman Gaussian comparison inequality
+  statement: For centred unit-variance Gaussian vectors X,Y with covariance matrices C¹,C⁰ and ρᵢⱼ=max(|C⁰ᵢⱼ|,|C¹ᵢⱼ|), the
+    difference of lower-orthant probabilities is bounded by the stated sum over i<j of covariance differences divided by √(1−ρᵢⱼ²),
+    times exp(−(threshold_i²+threshold_j²)/(2(1+ρᵢⱼ))). The theorem also gives the absolute symmetric-rectangle bound (2.56)
+    with factor 2/π and |C¹−C⁰|.
+  hypotheses:
+    explicit:
+    - Finite vectors.
+    - Centred jointly Gaussian.
+    - Unit marginal variances.
+    - Threshold vectors as in (2.55) and (2.56).
+    - ρᵢⱼ<1 where denominators are used; limiting convention otherwise.
+    implicit: []
+  quantifier_order:
+  - 1/(2π) in one-sided bound; 2/π in symmetric rectangle bound; exact exponential denominator 2(1+ρᵢⱼ).
+  constants:
+  - 1/(2π) in one-sided bound; 2/π in symmetric rectangle bound; exact exponential denominator 2(1+ρᵢⱼ).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-4-7
+    - exercise-2-4-8
+    chapter_local_dependents:
+    - proposition-2-7-8
+    - theorem-2-4-8
+    - theorem-2-7-4
+    later_book_uses:
+    - theorem-2-4-8
+    - theorem-2-7-4
+    - proposition-2-7-8
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-4-7
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Interpolate covariance matrices, differentiate multivariate Gaussian probabilities, integrate the Plackett identity,
+      and bound bivariate densities.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The OCR of (2.55) is ambiguous about positive parts, threshold names and inequality orientation. The exact PDF display
+    must be visually transcribed before implementation.
+  - Handle |ρ|=1 by a limiting or degenerate-coordinate reduction; division by zero cannot be left implicit.
+- id: theorem-2-4-8
+  kind: theorem
+  book:
+    number: 2.4.8
+    pages:
+    - 55
+    section: '2.4'
+    equations: []
+  title: Slepian's lemma
+  statement: Let X,Y be centred Gaussian vectors with EXᵢ²=EYᵢ² and E(XᵢXⱼ)≤E(YᵢYⱼ) for all i,j. Then for all thresholds λᵢ,
+    Pr(∩ᵢ{Yᵢ>λᵢ})≤Pr(∩ᵢ{Xᵢ>λᵢ}), and E maxᵢYᵢ≤E maxᵢXᵢ.
+  hypotheses:
+    explicit:
+    - Finite centred Gaussian vectors.
+    - Equal coordinate variances.
+    - Covariance order entrywise.
+    - Arbitrary real thresholds.
+    implicit: []
+  quantifier_order:
+  - No multiplicative constant in the maximum comparison.
+  constants:
+  - No multiplicative constant in the maximum comparison.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-7
+    chapter_local_dependents:
+    - corollary-2-4-10
+    - remark-2-4-9
+    later_book_uses:
+    - remark-2-4-9
+    - corollary-2-4-10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Specialise Berman's inequality; derive expectation comparison by integrating distribution functions with careful
+      negative-tail handling.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: remark-2-4-9
+  kind: remark
+  book:
+    number: 2.4.9
+    pages:
+    - 55
+    section: '2.4'
+    equations: []
+  title: Absolute maximum comparison inequalities
+  statement: 'For symmetric Xᵢ and fixed i₀: E maxᵢXᵢ≤E maxᵢ|Xᵢ|≤E|X_{i₀}|+E max_{i,j}|Xᵢ−Xⱼ|≤E|X_{i₀}|+2E maxᵢXᵢ; also adding
+    a common mean-zero variable does not change E maxᵢXᵢ.'
+  hypotheses:
+    explicit:
+    - Finite integrable symmetric variables for the displayed chain.
+    - Common additive variable integrable and mean zero.
+    implicit: []
+  quantifier_order:
+  - Factor 2.
+  constants:
+  - Factor 2.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-4-8
+    chapter_local_dependents:
+    - corollary-2-4-10
+    later_book_uses:
+    - corollary-2-4-10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Elementary identities for finite maxima and symmetry; record as helper lemmas despite being printed as a remark.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: corollary-2-4-10
+  kind: corollary
+  book:
+    number: 2.4.10
+    pages:
+    - 55
+    section: '2.4'
+    equations: []
+  title: Increment-metric comparison
+  statement: If X,Y are centred Gaussian vectors and E(Yᵢ−Yⱼ)²≤E(Xᵢ−Xⱼ)² for all i,j, then E maxᵢYᵢ≤2E maxᵢXᵢ.
+  hypotheses:
+    explicit:
+    - Finite centred jointly Gaussian vectors.
+    - Increment variance domination.
+    implicit: []
+  quantifier_order:
+  - Printed constant 2.
+  constants:
+  - Printed constant 2.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - remark-2-4-9
+    - theorem-2-4-8
+    chapter_local_dependents:
+    - exercise-2-4-10
+    - theorem-2-4-12
+    later_book_uses:
+    - theorem-2-4-12
+    - exercise-2-4-10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Section 2.8 notes state Fernique proved the stronger optimal constant 1; the core specification must retain
+      the printed constant 2 and may add the sharpened result separately.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Anchor each vector at coordinate 1, augment variances if needed, apply Slepian, then use the absolute-maximum
+      comparison.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: lemma-2-4-11
+  kind: lemma
+  book:
+    number: 2.4.11
+    pages:
+    - 56
+    section: '2.4'
+    equations: []
+  title: Gaussian maxima grow as √log n
+  statement: For iid standard normals gᵢ, E max_{i≤n}|gᵢ|/√(2log n)→1; the lemma also records a universal lower bound of order
+    √log n for the relevant one-sided/absolute maximum used in Sudakov's proof.
+  hypotheses:
+    explicit:
+    - n→∞.
+    - gᵢ iid N(0,1).
+    implicit: []
+  quantifier_order:
+  - Asymptotic constant 1 for the absolute maximum; a universal positive constant for the finite-n lower bound.
+  constants:
+  - Asymptotic constant 1 for the absolute maximum; a universal positive constant for the finite-n lower bound.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-4-12
+    later_book_uses:
+    - theorem-2-4-12
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Gaussian tail estimates, independence, and convergence of expectations/uniform integrability.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - The exact wording of part (b), including whether it is `E max g_i` or `E max |g_i|`, must be checked visually; OCR around
+    the lemma is incomplete.
+- id: theorem-2-4-12
+  kind: theorem
+  book:
+    number: 2.4.12
+    pages:
+    - 57
+    section: '2.4'
+    equations: []
+  title: Sudakov lower bound
+  statement: There is universal K<∞ such that for every centred Gaussian process X and ε>0, ε√(log N(T,d_X,ε))≤K·sup{E max_{t∈S}X(t):S⊆T
+    finite}.
+  hypotheses:
+    explicit:
+    - X centred Gaussian.
+    - ε>0.
+    - Covering number finite or the inequality is interpreted in extended form.
+    implicit:
+    - Packing-covering conversion and selection of an ε-separated finite set.
+  quantifier_order:
+  - Universal K independent of X,T,ε.
+  constants:
+  - Universal K independent of X,T,ε.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-4-10
+    - lemma-2-4-11
+    chapter_local_dependents:
+    - corollary-2-4-13
+    - corollary-2-4-14
+    - corollary-2-61
+    - exercise-2-4-9
+    later_book_uses:
+    - corollary-2-4-13
+    - corollary-2-4-14
+    - corollary-2-61
+    - exercise-2-4-9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Choose a maximal separated set, compare increments to independent Gaussian coordinates using Slepian, and invoke
+      Gaussian-max lower bounds.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
