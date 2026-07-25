@@ -22,9 +22,6 @@ specification:
   directory: InfiniteDimensionalStatistics/Spec
   canonical_schema: InfiniteDimensionalStatistics/Spec/Schema.md
   validator: scripts/validate_ids_specs.py
-  validator_modes:
-    strict: P1 acceptance gate; all eight chapters, complete source transcription and complete numbered-label coverage are required.
-    migration_audit: Use explicit --allow-* flags; this mode must never be reported as acceptance.
   required_difficulty_values:
     - routine
     - substantial
@@ -44,7 +41,7 @@ chapters:
     printed_pages: {start: 1, end: 14}
     specification: InfiniteDimensionalStatistics/Spec/Chapter01.yaml
     audit_step: P1.1
-    status: repository_artifact_present_needs_canonical_schema_conversion
+    status: artifact_available_not_ingested
   - number: 2
     title: Gaussian Processes
     printed_pages: {start: 15, end: 108}
@@ -61,16 +58,7 @@ chapters:
     printed_pages: {start: 109, end: 290}
     specification: InfiniteDimensionalStatistics/Spec/Chapter03.yaml
     audit_step: P1.3
-    status: repository_package_present_needs_source_revision
-    package_record:
-      inventory_entries: 230
-      selected_exercises: 50
-      dependency_edges: 271
-      dag_acyclic: true
-      pass_semantics_repaired: true
-    blockers:
-      - Source-sensitive statements and constants still require direct page-image transcription.
-      - Apparent numbered-label gaps 3.3.12, 3.5.14 and 3.5.16–3.5.20 require source verification.
+    status: artifact_available_not_ingested
   - number: 4
     title: Function Spaces and Approximation Theory
     printed_pages: {start: 291, end: 388}
@@ -88,7 +76,7 @@ chapters:
     printed_pages: {start: 467, end: 540}
     specification: InfiniteDimensionalStatistics/Spec/Chapter06.yaml
     audit_step: P1.6
-    status: canonical_package_manifest_available_not_ingested
+    status: specification_ingested_pending_acceptance
   - number: 7
     title: Likelihood-Based Procedures
     printed_pages: {start: 541, end: 606}
@@ -100,20 +88,7 @@ chapters:
     printed_pages: {start: 607, end: 666}
     specification: InfiniteDimensionalStatistics/Spec/Chapter08.yaml
     audit_step: P1.8
-    status: pass_with_central_review_flags
-    package_record:
-      inventory_entries: 115
-      selected_exercises: 9
-      dependency_edges: 160
-      dag_nodes: 115
-      dag_acyclic: true
-      source_starred_entries: 0
-      pass_semantics_normalised: true
-      missing_numbered_labels: []
-      duplicate_identifiers: []
-      duplicate_numbered_book_labels: []
-      chapter_local_strict_schema: pass
-      central_review_issue_count: 29
+    status: artifact_available_requires_pass_normalisation_and_ingestion
 phase_gates:
   P0:
     required_files:
@@ -131,18 +106,7 @@ phase_gates:
   P1:
     all_eight_specifications_required: true
     validator_must_pass: true
-    missing_on_main:
-      - 5
-      - 6
-      - 7
-    present_but_pending_acceptance:
-      - 1
-      - 2
-      - 3
-    accepted:
-      - 4
-      - 8
-    status: blocked_on_three_missing_and_three_pending_acceptance_chapters
+    status: blocked_on_remaining_chapters_and_full_validation
   P2:
     status: blocked
     unblock_condition: P0 clean build certified and every P1 chapter specification accepted by the common validator.

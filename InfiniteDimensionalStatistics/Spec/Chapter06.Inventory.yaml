@@ -1,0 +1,288 @@
+schema_version: '1.0'
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition
+  uploaded_file: FULLPDF.pdf
+  chapter: 6
+  chapter_title: The Minimax Paradigm
+  book_pages:
+    start: 467
+    end: 540
+scope:
+  purpose: Declaration-level planning specification only; no Lean proofs.
+  statement_policy: Printed statements are preserved; official errata and unresolved source issues are explicit.
+  pass_policy:
+    core: Every declaration in unstarred main text or unstarred notes. Proof difficulty is recorded separately and
+      does not change the pass.
+    starred: Only declarations explicitly marked with a star in the book. Chapter 6 has no such declarations.
+    exercise: Selected exercises that complete an omitted proof, are cited later, or establish a reusable lemma.
+audit:
+  scope: Full Chapter 6, including all exercises and Section 6.5 notes.
+  proofs_written: false
+  source_fidelity_policy: Statements are transcribed without silent repair. Where the available text layer is ambiguous,
+    the closest recoverable printed/OCR reading is retained and a central-review flag is attached.
+  repository_audit:
+    repository: douglasbarnes/analysis-i-lean
+    branch_audited: main
+    result: No exact Chapter 6 declarations were found by repository keyword searches for Kullback, Pinsker, minimax,
+      GaussianWhiteNoise, and confidence.
+    date: '2026-07-24'
+  mathlib_audit:
+    result: No exact declarations for Kullback-Leibler divergence, Pinsker's inequality, Cameron-Martin likelihoods,
+      minimax testing/estimation rates, or nonparametric confidence sets were found in a bounded current mathlib4
+      keyword audit.
+    date: '2026-07-24'
+    caveat: This is a declaration-name/content audit, not a proof of absence. Standard primitives such as measures,
+      Radon-Nikodym derivatives, product measures, Bochner integration, Hilbert spaces, Gaussian variables, conditional
+      expectation, and elementary probability inequalities are reusable.
+  official_errata:
+    source: Richard Nickl, CORRECTIONS for the 2016 hardback, compiled 2020-12-16
+    policy: The YAML preserves the hardback/OCR reading in the statement or source-issue field and separately records
+      the official correction. No correction is applied silently.
+    chapter_6_items:
+    - 'p.490: first display should read (1/n)^{r/(2r+1/2)}.'
+    - 'p.492: exponents in Theorem 6.2.11 should be r/(2r+1) and r/(2r+1/2).'
+    - 'p.507: last display in Corollary 6.2.19 should be 1/n.'
+    - 'p.514: factor in (6.104) corrected from sqrt(Mbar)/(1+sqrt(Mbar)) to sqrt(M/3)/(1+sqrt(M)).'
+    - 'p.520: proof reference ''By (6.14)'' corrected to ''By (6.16)''.'
+    - 'p.530: (6.130) replaces sqrt(u_n) by u_n^{-gamma}, for some gamma>0.'
+    - 'p.537: notes exponent denominator corrected from 2r+1+p^{-1} to 2r+1-p^{-1}.'
+  resolved_source_transcriptions:
+  - id: 6.4.6.source
+    resolution: Direct PDF transcription supplied the exact variance proxy, confidence-set formula, and equation
+      numbers (6.132)-(6.133).
+    resolved_on: '2026-07-25'
+  - id: 6.4.7.source
+    resolution: Direct PDF transcription supplied both resolution choices, B(j_n), n0(B,d), and the diameter statement.
+    resolved_on: '2026-07-25'
+summary:
+  total_entries: 83
+  declarations: 70
+  selected_exercises: 13
+  by_pass:
+    core: 70
+    exercise: 13
+  central_review_flag_count: 22
+  dag_nodes: 83
+  dag_edges: 140
+  acyclic: true
+completeness_check:
+  expected_numbered_labels:
+  - 6.1.1
+  - 6.1.2
+  - 6.1.3
+  - 6.1.4
+  - 6.1.5
+  - 6.1.6
+  - 6.1.7
+  - 6.2.1
+  - 6.2.2
+  - 6.2.3
+  - 6.2.4
+  - 6.2.5
+  - 6.2.6
+  - 6.2.7
+  - 6.2.8
+  - 6.2.9
+  - 6.2.10
+  - 6.2.11
+  - 6.2.12
+  - 6.2.13
+  - 6.2.14
+  - 6.2.15
+  - 6.2.16
+  - 6.2.17
+  - 6.2.18
+  - 6.2.19
+  - 6.2.20
+  - 6.3.1
+  - 6.3.2
+  - 6.3.3
+  - 6.3.4
+  - 6.3.5
+  - 6.3.6
+  - 6.3.7
+  - 6.3.8
+  - 6.3.9
+  - 6.3.10
+  - 6.4.1
+  - 6.4.2
+  - 6.4.3
+  - 6.4.4
+  - 6.4.5
+  - 6.4.6
+  - 6.4.7
+  - 6.4.8
+  - 6.4.9
+  found_numbered_labels:
+  - 6.1.1
+  - 6.1.2
+  - 6.1.3
+  - 6.1.4
+  - 6.1.5
+  - 6.1.6
+  - 6.1.7
+  - 6.2.1
+  - 6.2.2
+  - 6.2.3
+  - 6.2.4
+  - 6.2.5
+  - 6.2.6
+  - 6.2.7
+  - 6.2.8
+  - 6.2.9
+  - 6.2.10
+  - 6.2.11
+  - 6.2.12
+  - 6.2.13
+  - 6.2.14
+  - 6.2.15
+  - 6.2.16
+  - 6.2.17
+  - 6.2.18
+  - 6.2.19
+  - 6.2.20
+  - 6.3.1
+  - 6.3.2
+  - 6.3.3
+  - 6.3.4
+  - 6.3.5
+  - 6.3.6
+  - 6.3.7
+  - 6.3.8
+  - 6.3.9
+  - 6.3.10
+  - 6.4.1
+  - 6.4.2
+  - 6.4.3
+  - 6.4.4
+  - 6.4.5
+  - 6.4.6
+  - 6.4.7
+  - 6.4.8
+  - 6.4.9
+  missing_numbered_labels: []
+  duplicate_ids: []
+  all_entries_have_required_fields: true
+  exercise_selection_complete: true
+central_review_flags:
+- id: 6.1.sample_split
+  pages: '473'
+  severity: central-review
+  issue: 'Noise-scale wording: printed prose says factor 2 although the displayed transform gives variance 2σ²/n
+    and standard deviation √2σ/√n.'
+- id: 6.1.6
+  pages: '474'
+  severity: central-review
+  issue: 'Typographical error: “Definifion 2.5.1”.'
+- id: 6.2.1
+  pages: 477-478
+  severity: central-review
+  issue: Variable rₙ is rebound in part (ii), and the printed level quantifier is α>0 rather than 0<α<1.
+- id: 6.2.4
+  pages: '483'
+  severity: central-review
+  issue: The condition number claimed removable by Exercise 6.2.6 requires typeset-source verification.
+- id: 6.2.11
+  pages: 492-494
+  severity: central-review
+  issue: The OCR-visible theorem statement does not clearly quantify r>0 for parts (b),(c), though the rates and
+    Besov classes require it.
+- id: 6.2.14
+  pages: 497-500
+  severity: central-review
+  issue: The first exponential term in (6.61) is OCR-sensitive; current transcription preserves the recoverable
+    reading dₙ²/(1+dₙ2^{-jₙ/2}) pending typeset-source verification.
+- id: 6.2.17
+  pages: '502'
+  severity: central-review
+  issue: Printed/OCR condition `1 ≤ dₙ ≤ min(2^{jₙ/2}, n^{-1/4})` is impossible for n>1. The sign of the exponent
+    requires typeset-source review.
+- id: 6.3.1
+  pages: '512'
+  severity: central-review
+  issue: Equation (6.98) uses `f̂ₙ` inside the risk while the infimum is over `f̃ₙ`; preserve as a notation error
+    and formalise only after confirming intended binding.
+- id: 6.3.9
+  pages: '521'
+  severity: central-review
+  issue: The upper-bound proof's printed/OCR embedding `B^r_{pq} ⊂ B^r_{q∞}` is index-suspicious; verify the intended
+    target space. The theorem also states C depends only on B,r although the construction may hide p,q constants.
+- id: 6.2.9.errata
+  pages: '490'
+  severity: official-erratum
+  issue: 'Official correction to the malformed first display: `(1/n)^{r/(2r+1/2)}`.'
+- id: 6.2.11.errata
+  pages: '492'
+  severity: official-erratum
+  issue: Official correction of the two minimax exponents in Theorem 6.2.11.
+- id: 6.2.19.errata
+  pages: '507'
+  severity: official-erratum
+  issue: 'Official correction: last proof display should be `1/n`.'
+- id: 6.3.2.errata
+  pages: '514'
+  severity: official-erratum
+  issue: Official correction changes the multiplicative Fano factor in (6.104).
+- id: 6.3.9.errata
+  pages: '520'
+  severity: official-erratum
+  issue: Official correction changes a proof cross-reference from (6.14) to (6.16).
+- id: 6.4.1.random_set
+  pages: '523'
+  severity: central-review
+  issue: Definition 6.4.1 types a random subset as a map into the Borel σ-field without specifying a measurable
+    hyperspace structure.
+- id: 6.4.1.exactness
+  pages: '523'
+  severity: central-review
+  issue: Equation (6.115) prints an infimum of absolute coverage errors; uniform exact asymptotic coverage would
+    normally use a supremum.
+- id: 6.4.generic_ball
+  pages: 523-524
+  severity: central-review
+  issue: Equation (6.117) uses ordered interval notation in a generic metric space; formalisation should encode
+    a metric ball only after central approval.
+- id: 6.4.5.errata
+  pages: '530'
+  severity: official-erratum
+  issue: 'Official correction: equation (6.130) replaces `sqrt(u_n)` by `u_n^{-γ}` for some γ>0.'
+- id: 6.4.5.crossref
+  pages: '529'
+  severity: central-review
+  issue: The text says `see Exercise 6.3.2`, but that exercise is a multivariate minimax lower-bound problem and
+    does not directly establish Corollary 6.4.5.
+- id: 6.4.8
+  pages: '534'
+  severity: central-review
+  issue: Theorem 6.4.8 has candidate-dependent radius/measurability and radicand-sign obligations; its proof also
+    switches `f̃_n` to `f̂_n`.
+- id: 6.5.unified_Lp_reference
+  pages: 537-538
+  severity: central-review
+  issue: The notes cite `Exercise 6.4` for the p<2 assertion, but the chapter has no unambiguous exercise of that
+    label; Exercise 6.2.5 appears closest in content.
+- id: 6.5.unified_Lp.errata
+  pages: '537'
+  severity: official-erratum
+  issue: 'Official correction: the unified Lᵖ separation-rate denominator is `2r+1−p^{-1}`, not the hardback''s
+    `2r+1+p^{-1}`.'
+document_type: chapter_declaration_inventory_index
+inventory_files:
+- Chapter06.Inventory.01.yaml
+- Chapter06.Inventory.02.yaml
+- Chapter06.Inventory.03.yaml
+- Chapter06.Inventory.04.yaml
+- Chapter06.Inventory.05.yaml
+- Chapter06.Inventory.06.yaml
+- Chapter06.Inventory.07.yaml
+- Chapter06.Inventory.08.yaml
+- Chapter06.Inventory.09.yaml
+- Chapter06.Inventory.10.yaml
+- Chapter06.Inventory.11.yaml
+- Chapter06.Inventory.12.yaml
+- Chapter06.Inventory.13.yaml
+- Chapter06.Inventory.14.yaml

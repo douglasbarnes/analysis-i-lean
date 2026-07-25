@@ -1,0 +1,350 @@
+inventory:
+- id: 6.2.14
+  kind: theorem
+  book:
+    number: Theorem 6.2.14
+    pages:
+    - 497
+    - 500
+    section: 6.2.4
+    equations: []
+  title: Minimum Chi Square Test error bound
+  statement: "Let \\(H_0\\subset L^2([0,1])\\) be bounded and\n\\(H_1\\subset\\{f:\\operatorname{dist}_2(f,H_0)\\\
+    ge \\rho_n\\}\\).\nLet \\(K_j\\) be the wavelet projection and let \\(B(j)\\downarrow\\) satisfy\n\\[\n\\sup_{f_0\\\
+    in H_0,\\ f\\in H_1}\n\\|K_j(f-f_0)-(f-f_0)\\|_2^2\\le B(j).\n\\]\nFor positive constants \\(c,L\\), levels\
+    \ \\(j_n\\in\\mathbb N\\), and \\(d_n\\ge1\\), set\n\\[\n\\tau_n=L\\sigma^2 d_n\\,2^{j_n/2}/n,\\qquad\n\\rho_n^2\\\
+    ge c\\max\\{L\\sigma^2d_n\\,2^{j_n/2}/n,\\ B(j_n)\\}.\n\\]\nFor the sliced Gaussian classes \\(G_{j_n,m}(H_0,f)\\\
+    ), assume\n\\[\n\\sup_{f\\in H_1}\\mathbb E\\|W\\|_{G_{j_n,m}(H_0,f)}\n \\le \\sqrt n\\,2^m/16\n\\quad\\text{for\
+    \ every }m\\in\\mathbb Z\\text{ with }2^m\\ge\\rho_n^2/2.\n\\]\nThen \\(L=L(\\psi)>0\\) and \\(c=c(L,\\sigma)>0\\\
+    ) can be chosen so that the\nminimum-\\(\\chi^2\\) test \\(\\Phi_n\\) in (6.56) obeys\n\\[\n\\sup_{f\\in H_0}E_f\\\
+    Phi_n+\\sup_{f\\in H_1}E_f(1-\\Phi_n)\n \\le c_1\\exp\\!\\left\\{-c_2\\frac{d_n^2}{1+d_n2^{-j_n/2}}\\right\\\
+    }\n      +c_3e^{-c_4n\\rho_n^2},\n\\]\nwhere \\(c_i>0\\) depend only on \\(c,L,\\sigma\\)."
+  hypotheses:
+    explicit:
+    - H₀ is a bounded subset of real L²([0,1]).
+    - The wavelet basis and projection K_j are fixed and regular enough for the displayed finite-dimensional statistic.
+    - The infimum in the test statistic is measurable; Exercise 6.2.2 supplies a sufficient compactness route.
+    - The approximation bound is uniform over the ordered pair (f₀,f)∈H₀×H₁.
+    - The Gaussian-process expectation bound is uniform in f and required at every dyadic slice above ρₙ²/2.
+    implicit: []
+  quantifier_order:
+  - ∀ bounded H₀, ∀ H₁, ∀ nonincreasing B, ∀ positive sequences/parameters satisfying the bias, separation and entropy
+    conditions, ∃ admissible L,c and ∃ c₁,…,c₄>0 such that ∀n the displayed uniform error bound holds.
+  constants:
+  - ∀ bounded H₀, ∀ H₁, ∀ nonincreasing B, ∀ positive sequences/parameters satisfying the bias, separation and entropy
+    conditions, ∃ admissible L,c and ∃ c₁,…,c₄>0 such that ∀n the displayed uniform error bound holds.
+  dependencies:
+    earlier_book:
+    - Theorem 2.3.7 (Dudley bound)
+    - Theorem 2.4.12 (Gaussian concentration)
+    - Theorem 3.1.9 (centred chi-square concentration)
+    - Section 4.2 wavelet projections
+    chapter_local:
+    - 6.2.infimum_chisq
+    - 6.2.3
+    later_book_uses:
+    - Corollaries 6.2.15 and 6.2.16
+    - Proposition 6.2.18
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.2
+    contains_omitted_steps: true
+    comment: Existence/measurability of an attaining minimiser is delegated to Exercise 6.2.2.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A theorem over a finite wavelet coefficient index type and a compact/measurable null set. Package the
+      sliced isonormal process classes, entropy hypothesis, projection bias, and `Measure`-expectation error bound.
+      The denominator in the first exponent must be checked against the typeset source before formalisation.
+    blockers: &id001
+    - The OCR-visible first exponential denominator is read as `1 + d_n 2^{-j_n/2}`; verify against the printed
+      typesetting.
+    reusable_primitives:
+    - finite-dimensional centred chi-square statistic
+    - Gaussian process slice entropy
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.2.15
+  kind: corollary
+  book:
+    number: Corollary 6.2.15
+    pages:
+    - 500
+    section: 6.2.4
+    equations: []
+  title: Minimum Chi Square Test bounded Null error
+  statement: 'Under the hypotheses of Theorem 6.2.14, take \(d_n=2^{j_n/2}\) and
+
+    \[
+
+    \rho_n^2\ge c\max\{L\sigma^2 2^{j_n}/n,\ B(j_n)\}.
+
+    \]
+
+    For every \(D>0\), \(L=L(\psi,D)\) and \(c=c(L,\sigma,D)\) can be chosen so that
+
+    \[
+
+    \sup_{H_0}E_f\Phi_n+\sup_{H_1}E_f(1-\Phi_n)\le D e^{-D2^{j_n}}.
+
+    \]
+
+    If \(H_0\cup H_1\) is bounded in \(B^r_{2\infty}([0,1])\) and
+
+    \(2^{j_n}\asymp n^{1/(2r+1)}\), one may take
+
+    \(\rho_n^2\asymp c^2n^{-2r/(2r+1)}\), with error at most
+
+    \(D e^{-Dn\rho_n^2}\).'
+  hypotheses:
+    explicit:
+    - All hypotheses of Theorem 6.2.14.
+    - The Besov conclusion additionally assumes a uniform B^r_{2∞}-bound and a sufficiently regular wavelet basis.
+    implicit: []
+  quantifier_order:
+  - ∀D>0, ∃L,c large enough, ∀n the error bound holds; under the Besov hypothesis and specified jₙ, the displayed
+    rate and stronger form follow.
+  constants:
+  - ∀D>0, ∃L,c large enough, ∀n the error bound holds; under the Besov hypothesis and specified jₙ, the displayed
+    rate and stronger form follow.
+  dependencies:
+    earlier_book:
+    - Besov wavelet approximation, Sections 4.3.4-4.3.5
+    chapter_local:
+    - 6.2.14
+    later_book_uses:
+    - Proposition 6.2.18
+    - Corollary 6.2.19
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Specialise Theorem 6.2.14 and discharge the slice expectation with the crude bounded-null estimate;
+      then instantiate the Besov projection-bias bound.
+    blockers: &id002 []
+    reusable_primitives:
+    - composite test with estimation-rate separation
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.2.entropy_condition
+  kind: operative_definition
+  book:
+    number: Condition (6.70)
+    pages:
+    - 500
+    - 501
+    section: 6.2.4
+    equations: []
+  title: Composite Null Entropy Bound
+  statement: "For constants \\(s,A>0\\), the sliced classes satisfy the uniform entropy bound\n\\[\n\\log N\\!\\\
+    left(G_{j,m}(H_0,f),L^2([0,1]),\\varepsilon\\right)\n \\le (A/\\varepsilon)^{1/s},\\qquad 0<\\varepsilon<A,\n\
+    \\]\nuniformly in the integers \\(j,m\\) (and in the relevant alternative \\(f\\))."
+  hypotheses:
+    explicit:
+    - The sliced class G_{j,m}(H₀,f) is the class defined in the proof framework of Theorem 6.2.14.
+    - N denotes the metric covering number in L².
+    implicit: []
+  quantifier_order:
+  - ∃s,A>0 such that ∀j,m,f and ∀ε∈(0,A), the covering-number inequality holds.
+  constants:
+  - ∃s,A>0 such that ∀j,m,f and ∀ε∈(0,A), the covering-number inequality holds.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.14
+    later_book_uses:
+    - Corollary 6.2.16
+    - Proposition 6.2.18
+    - Corollary 6.2.19
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A predicate on a family of subsets of an L² pseudometric space, using finite covering numbers or entropy
+      in `ENNReal`/`ℝ≥0∞`.
+    blockers: &id003 []
+    reusable_primitives:
+    - metric entropy predicate
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.2.16
+  kind: corollary
+  book:
+    number: Corollary 6.2.16
+    pages:
+    - 500
+    - 501
+    section: 6.2.4
+    equations: []
+  title: Minimum Chi Square Test entropy separation
+  statement: 'Assume \(H_0,H_1\) are as in Theorem 6.2.14, \(H_0\cup H_1\) is
+
+    bounded in \(B^r_{2\infty}([0,1])\) for some \(r>0\), and (6.70) holds for
+
+    some \(s>1/2\). With
+
+    \[
+
+    \rho_n^2\asymp c^2\max\{n^{-2s/(2s+1)},\ n^{-2r/(2r+1/2)}\},
+
+    \]
+
+    for every \(\alpha>0\) there are \(L=L(\psi,\alpha)\) and
+
+    \(c=c(L,\sigma,\alpha)\) large enough such that the minimum-\(\chi^2\) test
+
+    satisfies, for every \(n\),
+
+    \[
+
+    \sup_{f\in H_0}E_f\Phi_n+\sup_{f\in H_1}E_f(1-\Phi_n)\le\alpha.
+
+    \]'
+  hypotheses:
+    explicit:
+    - The full assumptions of Theorem 6.2.14 hold.
+    - The entropy exponent satisfies s>1/2.
+    - The displayed `asymp` hides constants independent of n but dependent on model parameters.
+    implicit: []
+  quantifier_order:
+  - ∀r>0, ∀s>1/2, under boundedness and (6.70), ∀α>0, ∃L,c sufficiently large, ∀n the error bound holds at the displayed
+    separation.
+  constants:
+  - ∀r>0, ∀s>1/2, under boundedness and (6.70), ∀α>0, ∃L,c sufficiently large, ∀n the error bound holds at the displayed
+    separation.
+  dependencies:
+    earlier_book:
+    - Theorem 2.3.7 (Dudley entropy integral)
+    - Theorem 4.3.36 (Besov entropy)
+    chapter_local:
+    - 6.2.14
+    - 6.2.entropy_condition
+    later_book_uses:
+    - Proposition 6.2.18
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Instantiate the abstract error theorem with a Dudley integral estimate. Rates should be represented
+      using two-sided constant comparisons rather than informal `asymp`.
+    blockers: &id004 []
+    reusable_primitives:
+    - entropy-controlled composite Gaussian test
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.2.infimum_ustat
+  kind: operative_example
+  book:
+    number: Infimum U-statistic test (6.74)
+    pages:
+    - 501
+    - 502
+    section: 6.2.4
+    equations: []
+  title: Minimum UStatistic Test
+  statement: "For i.i.d. \\(X_1,\\ldots,X_n\\) from a bounded density \\(f\\) on \\([0,1]\\),\na wavelet basis \
+    (\\{\\psi_{lk}\\}\\), \\(j\\in\\mathbb N\\), and \\(h\\in H_0\\), define\n\\[\nU_n(h)=\\frac{2}{n(n-1)}\n \
+    sum_{i<i'}\\sum_{l\\le j-1,k}\n (\\psi_{lk}(X_i)-\\langle\\psi_{lk},h\\rangle)\n (\\psi_{lk}(X_{i'})-\\langle\\\
+    psi_{lk},h\\rangle).\n\\]\nThe composite test rejects when\n\\[\n\\inf_{h\\in H_0}|U_n(h)|>\\tau_n.\n\\]"
+  hypotheses:
+    explicit:
+    - n≥2.
+    - The density and null functions have enough integrability for the coefficients and kernel expectations.
+    - The infimum statistic is measurable.
+    implicit: []
+  quantifier_order:
+  - For each admissible n,j,H₀ and threshold τₙ≥0, define the statistic and its indicator test.
+  constants:
+  - For each admissible n,j,H₀ and threshold τₙ≥0, define the statistic and its indicator test.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.2.5
+    - 6.2.13
+    later_book_uses:
+    - Theorem 6.2.17
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.2
+    contains_omitted_steps: true
+    comment: Measurable attainment/approximation of the infimum is covered by Exercise 6.2.2.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A second-order U-statistic over a finite wavelet index set, followed by an infimum over a compact null
+      set and an indicator test.
+    blockers: &id005 []
+    reusable_primitives:
+    - canonical U-statistic
+    - compact infimum test
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005

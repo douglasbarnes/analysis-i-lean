@@ -1,0 +1,210 @@
+inventory:
+- id: ex.6.3.3
+  kind: exercise
+  book:
+    number: Exercise 6.3.3
+    pages:
+    - 522
+    section: '6.3'
+    equations: []
+  title: Fano wavelet alternatives mem holder besov ball
+  statement: 'Show that the alternatives \(f_m\) in the lower-bound proofs of Theorems
+
+    6.3.8 and 6.3.9 lie in a fixed ball of \(B^r_{\infty\infty}([0,1])\).
+
+    Consequently, for \(1\le p<\infty\), the minimax \(L^p([0,1])\)-rate over such
+
+    Hölder/Besov balls is
+
+    \[
+
+    n^{-r/(2r+1)}.
+
+    \]'
+  hypotheses:
+    explicit:
+    - The functions f_m are the exact lower-bound alternatives from Theorems 6.3.8 and 6.3.9.
+    - The wavelet regularity is sufficient to characterise B^r_{∞∞}.
+    implicit: []
+  quantifier_order:
+  - ∃ a fixed radius B' independent of n,m, ∀ constructed f_m, ||f_m||_{B^r_{∞∞}}≤B'; hence ∀ 1≤p<∞ the Hölder-ball
+    minimax lower rate follows.
+  constants:
+  - ∃ a fixed radius B' independent of n,m, ∀ constructed f_m, ||f_m||_{B^r_{∞∞}}≤B'; hence ∀ 1≤p<∞ the Hölder-ball
+    minimax lower rate follows.
+  dependencies:
+    earlier_book:
+    - Wavelet characterisation of B^r_{∞∞}
+    - Theorems 6.3.8 and 6.3.9
+    chapter_local:
+    - 6.3.8
+    - 6.3.9
+    later_book_uses: &id002
+    - Supports later minimax and adaptive results over Hölder classes.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.3.3
+    contains_omitted_steps: true
+    comment: Establishes a regularity fact not proved in the main lower-bound arguments.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Bound the wavelet \(B^r_{\infty\infty}\) sequence norm of the hypercube alternatives uniformly in the
+      resolution and codeword.
+    blockers: &id001 []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id001
+  selection_reasons:
+  - establishes a required reusable regularity lemma
+  - transfers the lower bound to Hölder balls
+  used_by: *id002
+- id: ex.6.4.1
+  kind: exercise
+  book:
+    number: Exercise 6.4.1
+    pages:
+    - 536
+    section: '6.4'
+    equations: []
+  title: Gaussian White Noise sample Split confidence Ball
+  statement: 'Prove the Gaussian-white-noise analogue of Corollary 6.4.7: construct the
+
+    sample-split \(L^2\)-confidence ball centred at a projection estimator, use the
+
+    independent quadratic risk estimator from (6.138), and prove honest coverage
+
+    together with the stated diameter/radius order.'
+  hypotheses:
+    explicit:
+    - Observations are from the Gaussian white-noise model with a sample-splitting/independent-copy construction.
+    - The parameter class and projection resolution satisfy the Gaussian analogues of Corollary 6.4.7.
+    - The quadratic-risk statistic (6.138) is well-defined and measurable.
+    implicit: []
+  quantifier_order:
+  - For each confidence level 1−α and admissible class, construct C_n such that inf_f P_f(f∈C_n)≥1−α+o(1) and the
+    diameter has the analogue of Corollary 6.4.7's order.
+  constants:
+  - For each confidence level 1−α and admissible class, construct C_n such that inf_f P_f(f∈C_n)≥1−α+o(1) and the
+    diameter has the analogue of Corollary 6.4.7's order.
+  dependencies:
+    earlier_book:
+    - Gaussian white-noise likelihood/model
+    - Theorem 6.4.6 and Corollary 6.4.7
+    chapter_local:
+    - 6.4.7
+    - 6.4.gwn_risk_stat
+    later_book_uses: &id004
+    - This Gaussian construction is a precursor of the adaptive confidence-set results in Chapter 8.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.4.1
+    contains_omitted_steps: true
+    comment: The book explicitly leaves the Gaussian analogue to this exercise.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Construct independent white-noise copies, define the unbiased quadratic-loss statistic, prove its concentration,
+      and package the random closed ball with coverage and diameter bounds.
+    blockers: &id003
+    - The exact corollary statement must choose the same projection dimension and constants as the sampling analogue;
+      the book leaves the full formulation implicit.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id003
+  selection_reasons:
+  - completes a proof explicitly omitted from the main text
+  - is cited immediately before the exercise
+  used_by: *id004
+- id: ex.6.4.2
+  kind: exercise
+  book:
+    number: Exercise 6.4.2
+    pages:
+    - 536
+    - 537
+    section: '6.4'
+    equations: []
+  title: Multiscale confidence Set data Driven weakened Besov
+  statement: "In (6.142), replace the deterministic growing ball\n\\(\\{f:\\|f\\|_{B^r_{\\infty\\infty}}\\le u_n\\\
+    }\\) by\n\\[\n\\left\\{f:\\|f\\|_{B^{r,\\gamma}_{\\infty\\infty}}\n \\le \\|\\widehat f_n\\|_{B^{r,\\gamma}_{\\\
+    infty\\infty}}+\\delta'\\right\\},\n\\qquad \\delta',\\gamma>0.\n\\]\nShow that Theorem 6.4.9 remains valid.\
+    \ The hint asks one to prove that\n\\(\\|\\widehat f_n\\|_{B^{r,\\gamma}_{\\infty\\infty}}\\) consistently estimates\
+    \ the\ncorresponding weakened Besov norm for \\(f\\in B^r_{\\infty\\infty}\\), and to adapt\nthe interpolation\
+    \ argument in Theorem 6.4.9."
+  hypotheses:
+    explicit:
+    - f belongs to the fixed B^r_{∞∞} ball of Theorem 6.4.9.
+    - δ'>0 and γ>0.
+    - The weakened Besov norm B^{r,γ}_{∞∞} is defined by a logarithmically relaxed wavelet weight.
+    - The estimator f̂_n consistently estimates that weakened norm.
+    implicit: []
+  quantifier_order:
+  - ∀ δ',γ>0, replacing the deterministic regularity ball by the displayed data-driven ball preserves the uniform
+    coverage and diameter conclusions of Theorem 6.4.9.
+  constants:
+  - ∀ δ',γ>0, replacing the deterministic regularity ball by the displayed data-driven ball preserves the uniform
+    coverage and diameter conclusions of Theorem 6.4.9.
+  dependencies:
+    earlier_book:
+    - Theorem 6.4.9
+    - Wavelet interpolation inequalities
+    chapter_local:
+    - 6.4.multiscale_universal
+    - 6.4.9
+    later_book_uses: &id006
+    - The data-driven/weakened-norm idea is conceptually reused in adaptive confidence-set theory in Chapter 8.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.4.2
+    contains_omitted_steps: true
+    comment: Strengthens Theorem 6.4.9 by a data-driven regularity constraint; proof is delegated to the exercise.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Define logarithmically weakened Besov sequence norms, prove consistency of the empirical norm, and redo
+      the low/high-frequency interpolation diameter argument.
+    blockers: &id005
+    - The notation \(B^{r,\gamma}_{\infty\infty}\) is introduced only in the exercise and must be defined explicitly
+      from the logarithmically weighted wavelet norm. The OCR obscures whether δ' is fixed or may depend on \(n\);
+      preserve the printed fixed-positive reading pending source inspection.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes a required reusable data-driven regularity constraint
+  - strengthens a main confidence-set theorem
+  used_by: *id006

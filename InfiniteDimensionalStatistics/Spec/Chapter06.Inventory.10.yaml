@@ -1,0 +1,348 @@
+inventory:
+- id: 6.4.4
+  kind: proposition
+  book:
+    number: Proposition 6.4.4
+    pages:
+    - 529
+    section: 6.4.2
+    equations: []
+  title: Kernel Estimator deviation le rademacher Radius
+  statement: "Under the kernel-density assumptions above, if\n\\(X_1,\\ldots,X_n\\) are i.i.d. from \\(f\\in L^\\\
+    infty(\\mathbb R^d)\\), then for\nevery \\(n\\ge1\\), \\(h>0\\), \\(z>0\\),\n\\[\n P_f^N\\!\\left\\{\\sup_{x\\\
+    in\\mathbb R^d}\n |f_n(h,x)-E_ff_n(h,x)|\\ge\\sigma_R(n,h,z)\\right\\}\\le2e^{-z}.\n\\]\nMoreover,\n\\[\n 2E_f\\\
+    sigma_R(n,h,z)\n \\le C\\left[\n \\sqrt{\\frac{\\log(1/h)}{nh^d}}+\n \\frac{\\log(1/h)}{nh^d}\\right],\n\\]\n\
+    for a constant \\(C\\) depending only on \\(U,K,z,d\\)."
+  hypotheses:
+    explicit:
+    - All assumptions in the construction (6.125)-(6.127) hold.
+    - U≥||f||∞.
+    - The expectation bound is read in the regime where log(1/h) is nonnegative; the book states it for all h>0
+      without discussing h>1.
+    implicit: []
+  quantifier_order:
+  - ∀n≥1,h>0,z>0 the tail bound holds; ∃C=C(U,K,z,d) uniform in n,h,f for the expected-radius bound.
+  constants:
+  - ∀n≥1,h>0,z>0 the tail bound holds; ∃C=C(U,K,z,d) uniform in n,h,f for the expected-radius bound.
+  dependencies:
+    earlier_book:
+    - Theorem 3.4.3 and its following remark
+    - Theorem 3.1.21
+    - Equation (6.125)
+    chapter_local:
+    - 6.4.rademacher_radius
+    later_book_uses:
+    - Corollary 6.4.5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Instantiate the data-dependent Talagrand/Rademacher inequality for translated kernels after envelope
+      and weak-variance bounds.
+    blockers: &id001
+    - The statement says every h>0 while the displayed logarithmic upper bound is not real-valued as written for
+      h>1; likely the intended asymptotic range is 0<h<1.
+    reusable_primitives:
+    - kernel uniform-deviation bound
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.4.5
+  kind: corollary
+  book:
+    number: Corollary 6.4.5
+    pages:
+    - 529
+    - 530
+    section: 6.4.2
+    equations: []
+  title: Besov Density kernel Confidence Band
+  statement: "Let \\(X_1,\\ldots,X_n\\) be i.i.d. from a density\n\\[\n f\\in F=\\{f:\\|f\\|_{B^r_{\\infty\\infty}(\\\
+    mathbb R^d)}\\le B\\}.\n\\]\nChoose\n\\[\n \\bar h_n\\asymp(n/\\log n)^{-1/(2r+d)},\\qquad\n h_n=\\bar h_nu_n,\\\
+    qquad u_n\\to0,\n\\]\ntake \\(z_\\alpha\\) so that \\(2e^{-z_\\alpha}=\\alpha\\), and use a kernel of order\n\
+    \\(r\\). Then the band (6.127) with \\(h=h_n,z=z_\\alpha\\) satisfies\n\\[\n \\inf_{f\\in F}P_f^Y\\{f\\in\\\
+    bar C_n\\}\\ge1-\\alpha+e_n,\\qquad e_n=o(1).\n \\tag{6.129}\n\\]\nThe 2016 hardback prints\n\\[\n |\\bar C_n|_\\\
+    infty\n =O_P\\!\\left((\\log n/n)^{r/(2r+d)}\\sqrt{u_n}\\right) \\tag{6.130-hardback}\n\\]\nuniformly in \\ \(F\\\
+    ). The official errata replaces \\(\\sqrt{u_n}\\) by\n\\(u_n^{-\\gamma}\\) for some \\(\\gamma>0\\)."
+  hypotheses:
+    explicit:
+    - B,r,d>0 and the class consists of probability densities.
+    - The density is uniformly bounded as required by Proposition 6.4.4; this follows from the Besov bound only
+      under the relevant embedding/definition assumptions.
+    - The kernel has order r and satisfies all conditions of Proposition 6.4.4.
+    - u_n is positive and tends to zero.
+    implicit: []
+  quantifier_order:
+  - For each 0<α<1 choose z_α; uniformly for f∈F, coverage is asymptotically at least 1-α and the corrected near-minimax
+    diameter bound holds for some γ>0.
+  constants:
+  - For each 0<α<1 choose z_α; uniformly for f∈F, coverage is asymptotically at least 1-α and the corrected near-minimax
+    diameter bound holds for some γ>0.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7 / Besov kernel bias bound
+    chapter_local:
+    - 6.4.1
+    - 6.4.rademacher_radius
+    - 6.4.4
+    later_book_uses:
+    - Section 8.3 discussion of unknown smoothness/radius
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: true
+    comment: The text incorrectly points to Exercise 6.3.2 in the preceding paragraph; the proof itself is given
+      immediately after the corollary.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Combine the nonasymptotic stochastic band for the centred estimator with a uniform deterministic kernel-bias
+      estimate under undersmoothing.
+    blockers: &id002
+    - 'Official hardback erratum: in (6.130), replace `sqrt(u_n)` by `u_n^{-γ}` and add `for some γ>0`.'
+    - The preceding paragraph cites Exercise 6.3.2, which concerns multivariate minimax lower bounds rather than
+      this confidence-band argument.
+    - The probability superscript is OCR-rendered as `P_f^Y` although this is the i.i.d. sampling model; it should
+      be checked against the typeset notation.
+    reusable_primitives:
+    - undersmoothed density confidence band
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.4.sample_split_risk
+  kind: definition
+  book:
+    number: Equation (6.131)
+    pages:
+    - 530
+    - 531
+    section: 6.4.2
+    equations: []
+  title: Sample Split Projected Risk UStat
+  statement: "For a sample of size \\(2n\\), split the indices into independent halves\n\\(S_1,S_2\\) of size \\ \(n\\\
+    ). Let \\(\\tilde f_n\\) be based only on \\(S_1\\). For a\nwavelet projection \\(K_j\\), define\n\\[\n\
+    \ U_n(\\tilde f_n)=\\frac{2}{n(n-1)}\n \\sum_{\\substack{i<i'\\\\i,i'\\in S_2}}\n \\sum_{l\\le j-1,k}\n \\big(\\\
+    psi_{lk}(X_i)-\\langle\\psi_{lk},\\tilde f_n\\rangle\\big)\n \\big(\\psi_{lk}(X_{i'})-\\langle\\psi_{lk},\\\
+    tilde f_n\\rangle\\big). \\tag{6.131}\n\\]\nConditionally on the first half,\n\\[\n E_f^{(2)}U_n(\\tilde f_n)=\\\
+    |K_j(f-\\tilde f_n)\\|_2^2.\n\\]"
+  hypotheses:
+    explicit:
+    - The wavelet basis is orthonormal on [0,1] and the sum includes all scaling/wavelet coordinates in the range
+      of K_j.
+    - The preliminary estimator is measurable with respect to S1 and square integrable.
+    - The density and basis functions give finite second moments.
+    implicit: []
+  quantifier_order:
+  - For every first-half realisation and candidate density f, the conditional expectation over S2 equals the projected
+    squared L2 error.
+  constants:
+  - For every first-half realisation and candidate density f, the conditional expectation over S2 equals the projected
+    squared L2 error.
+  dependencies:
+    earlier_book:
+    - sample splitting
+    - canonical U-statistics
+    - wavelet projection Parseval identity
+    chapter_local: []
+    later_book_uses:
+    - Theorem 6.4.6
+    - Corollary 6.4.7
+    - Chapter 8 risk-estimation confidence sets
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A conditional U-statistic over `Finset.unorderedPairs S₂`; prove unbiasedness by independence and finite
+      Parseval summation.
+    blockers: &id003 []
+    reusable_primitives:
+    - unbiased projected risk estimator
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.4.6
+  kind: theorem
+  book:
+    number: Theorem 6.4.6
+    pages:
+    - 531
+    - 532
+    section: 6.4.2
+    equations: []
+  title: Sample Split Risk Confidence Set coverage
+  statement: "Let \\(X_1,\\ldots,X_{2n}\\) be i.i.d. observations on \\([0,1]\\) from a probability density \\(f\\\
+    in L^2([0,1])\\). Let \\(\\tilde f_n\\in L^2([0,1])\\) be a preliminary estimator based on the first subsample\
+    \ \\(S_1=\\{X_1,\\ldots,X_n\\}\\). Let \\(F\\) be a family of probability densities in \\(L^\\infty([0,1])\\\
+    ) such that\n\\[\n \\sup_{f\\in F}\\|K_j(f-\\tilde f_n)-(f-\\tilde f_n)\\|_2^2\\le B(j).\n\\]\nLet \\(z_\\alpha\\\
+    ) be a numerical quantile constant and define\n\\[\n \\tau_n^2(f)=\\frac{2^{j+1}\\|f\\|_\\infty^2}{n(n-1)}\n\
+    \ +\\frac{4\\|f\\|_\\infty}{n}\\|K_j(f-\\tilde f_n)\\|_2^2.\n\\]\nWith \\(U_n(\\tilde f_n)\\) as in (6.131),\
+    \ based on the second subsample \\(S_2=\\{X_{n+1},\\ldots,X_{2n}\\}\\), define\n\\[\n C_n=\\left\\{f\\in F:\\
+    |f-\\tilde f_n\\|_2\n \\le \\sqrt{z_\\alpha\\tau_n(f)+U_n(\\tilde f_n)+B(j)}\\right\\}. \\tag{6.132}\n\\]\n\
+    Then, for every \\(n\\in\\mathbb N\\) for which the statistic is defined and for \\(z_\\alpha\\) sufficiently\
+    \ large,\n\\[\n \\inf_{f\\in F}P_f^N\\{f\\in C_n\\}\\ge 1-\\alpha. \\tag{6.133}\n\\]"
+  hypotheses:
+    explicit:
+    - The full sample has size 2n and is split into the independent halves S₁ and S₂.
+    - f is a probability density in L²([0,1]); every candidate in F is also essentially bounded.
+    - The preliminary estimator is L²-valued and measurable with respect to S₁.
+    - The uniform projection-bias inequality holds for the chosen resolution j.
+    - n≥2 is implicitly required by the factor n(n−1) in τₙ² and by the order-two U-statistic.
+    - All membership and radius expressions defining Cₙ are measurable.
+    implicit: []
+  quantifier_order:
+  - Fix α and an integer n≥2. Quantify over the class F and every true f∈F after the first-half estimator and resolution
+    j are fixed. Choose a numerical z_α sufficiently large, uniformly in f; the displayed coverage lower bound then
+    holds.
+  constants:
+  - Fix α and an integer n≥2. Quantify over the class F and every true f∈F after the first-half estimator and resolution
+    j are fixed. Choose a numerical z_α sufficiently large, uniformly in f; the displayed coverage lower bound then
+    holds.
+  dependencies:
+    earlier_book:
+    - Theorem 3.4.8 / variance bounds for canonical U-statistics
+    - wavelet Parseval and approximation bounds
+    chapter_local:
+    - 6.4.1
+    - 6.4.sample_split_risk
+    later_book_uses:
+    - Corollary 6.4.7
+    - Theorem 6.4.8 (white-noise analogue)
+    - Section 8.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: First formalise an exact variance lemma for the projected-risk U-statistic, then define a candidate-dependent
+      random set and apply one-sided Chebyshev plus the projection bias bound.
+    blockers: &id004
+    - The radius depends on the candidate f through τₙ(f), so measurability of the resulting random subset is a
+      substantive obligation.
+    - The printed square root requires a nonnegative radicand; the book gives no positive-part convention.
+    reusable_primitives:
+    - sample-split L2 confidence set
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.4.7
+  kind: corollary
+  book:
+    number: Corollary 6.4.7
+    pages:
+    - 532
+    - 533
+    section: 6.4.2
+    equations: []
+  title: Besov Density l2 minimax Confidence Set
+  statement: "Let\n\\[\n F=\\left\\{f:\\max\\left(\\|f\\|_\\infty,\\|f\\|_{B^r_{2\\infty}([0,1])}\\right)\\le B\\\
+    right\\}\n\\]\nbe a class of probability densities. Let \\(\\tilde f_n=f_n(\\bar j_n,\\cdot)\\) be the preliminary\
+    \ wavelet estimator, where\n\\[\n 2^{\\bar j_n}\\asymp n^{1/(2r+1)}.\n\\]\nUse \\(\\tau_n(f)\\), \\(U_n(\\tilde\
+    \ f_n)\\), and \\(C_n\\) from Theorem 6.4.6 with a resolution \\(j=j_n\\ge\\bar j_n\\) such that\n\\[\n 2^{j_n}\\\
+    asymp n^{1/(2r+1/2)},\\qquad\n B(j_n)=d(\\log n)\\,2^{-2j_nr}\n\\]\nfor some \\(d>0\\). Then, for all \\(n\\\
+    ge n_0(B,d)\\),\n\\[\n \\inf_{f\\in F}P_f^N\\{f\\in C_n\\}\\ge1-\\alpha. \\tag{6.136}\n\\]\nIf \\(|C_n|_2\\\
+    ) denotes the \\(L^2\\)-diameter, then for every \\(\\alpha'>0\\) there exists \\(L>0\\) such that, for every\
+    \ \\(n\\in\\mathbb N\\),\n\\[\n \\sup_{f\\in F}P_f^N\\{|C_n|_2\\ge L n^{-r/(2r+1)}\\}\\le\\alpha'. \\tag{6.137}\n\
+    \\]\nThus \\(C_n\\) is a minimax \\(L^2\\)-confidence set in the sense of Definition 6.4.2."
+  hypotheses:
+    explicit:
+    - r>0, B>0, and d>0.
+    - Every f∈F is a probability density and satisfies the displayed L∞ and Besov bounds.
+    - The preliminary estimator is the wavelet projection estimator at resolution bar jₙ.
+    - The two resolutions satisfy the displayed asymptotic comparisons and jₙ≥bar jₙ.
+    - The confidence set and variance proxy are exactly those of Theorem 6.4.6.
+    implicit: []
+  quantifier_order:
+  - Fix r,B,d and α. There exists n₀(B,d) such that coverage holds for every n≥n₀. Separately, for every α′>0 there
+    exists L>0 such that the diameter bound holds for every n.
+  constants:
+  - Fix r,B,d and α. There exists n₀(B,d) such that coverage holds for every n≥n₀. Separately, for every α′>0 there
+    exists L>0 such that the diameter bound holds for every n.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7
+    - Besov wavelet approximation
+    chapter_local:
+    - 6.4.2
+    - 6.4.6
+    later_book_uses:
+    - Exercise 6.4.1
+    - Section 8.3 adaptive confidence sets
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Instantiate Theorem 6.4.6 with a linear wavelet estimator and explicit deterministic approximation and
+      risk bounds, then control the random diameter by Markov.
+    blockers: &id005
+    - The text's cross-reference attached to the preliminary estimator should be checked against the typeset equation
+      numbering; the estimator and both resolution conditions are directly recoverable.
+    reusable_primitives:
+    - minimax L2 density confidence set
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id005
