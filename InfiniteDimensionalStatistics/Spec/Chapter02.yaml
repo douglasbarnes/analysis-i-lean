@@ -15,7 +15,7 @@ source:
   - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
   - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
   - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
-status: repaired_pending_full_eight_chapter_validation
+status: pass_with_central_review_flags
 package:
   declaration_inventory:
     file: Chapter02.Inventory.yaml
@@ -64,9 +64,18 @@ validation:
   duplicate_identifiers: []
   unresolved_local_dependency_references: []
   acyclic: true
+  chapter_local_strict_schema: pass
+  audit_workflow_run: 30159148259
+  audit_exemptions:
+  - repository-wide missing chapters only
+  source_blocker_exemption_used: false
+  incomplete_coverage_exemption_used: false
+  declaration_count: 126
+  selected_exercise_count: 62
+  central_review_entry_count: 29
+  central_review_issue_count: 34
 repair_record:
-- All 126 main-text declarations are assigned to core because Chapter 2 has no source-starred material; difficulty remains
-  independent.
+- All 126 main-text declarations are assigned to core because Chapter 2 has no source-starred material; difficulty remains independent.
 - Each inventory entry now carries explicit declaration-specific mathlib and repository equivalence audit fields.
 - Definition 2.1.2 is transcribed as the full-probability, countable-separant closure condition over every open d-ball.
 - The compact array/profile representation is replaced by a readable package conforming to Schema.md.
