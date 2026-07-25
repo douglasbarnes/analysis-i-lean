@@ -1,0 +1,246 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_index
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+specification_policy:
+  contains_lean_proofs: false
+  statement_fidelity: Statements are declaration-level mathematical paraphrases preserving the printed quantifiers, constants
+    and hypotheses. Suspected OCR, typographical, measurability or generality defects are not repaired silently; they are
+    placed in central_review_flags.
+  page_policy: book_page is the printed book page. A range is used when an exercise crosses a page break.
+  pass_definitions:
+    core: Every unstarred main-text declaration and operative example in Chapter 2, irrespective of implementation difficulty.
+    starred: Reserved for material explicitly starred in the source. Chapter 2 has no source-starred declaration, so this
+      inventory contains no starred entries.
+    exercise: Selected exercise declarations satisfying the project extraction criteria.
+  difficulty_values:
+  - routine
+  - substantial
+  - major-library
+  - research-level
+inventory_summary:
+  declaration_count: 126
+  selected_exercise_count: 62
+  total_entry_count: 188
+  counts_by_pass:
+    core: 126
+    exercise: 62
+  counts_by_kind:
+    definition: 35
+    proposition: 12
+    example: 9
+    theorem: 32
+    corollary: 18
+    lemma: 19
+    remark: 1
+    exercise: 62
+  counts_by_difficulty:
+    routine: 20
+    major-library: 82
+    substantial: 56
+    research-level: 30
+  central_review_entry_count: 29
+  central_review_issue_count: 34
+completeness_check:
+  numbered_labels_expected: &id001
+  - 2.1.1
+  - 2.1.10
+  - 2.1.11
+  - 2.1.12
+  - 2.1.13
+  - 2.1.14
+  - 2.1.15
+  - 2.1.16
+  - 2.1.17
+  - 2.1.19
+  - 2.1.20
+  - 2.1.2a
+  - 2.1.2b
+  - 2.1.3a
+  - 2.1.3b
+  - 2.1.4
+  - 2.1.5
+  - 2.1.6
+  - 2.1.7
+  - 2.1.8
+  - 2.1.9
+  - 2.110-2.111
+  - '2.120'
+  - '2.124'
+  - '2.19'
+  - 2.2.1
+  - 2.2.2
+  - 2.2.3
+  - 2.2.4
+  - 2.2.5a
+  - 2.2.5b
+  - 2.2.6
+  - 2.2.7
+  - 2.2.8
+  - 2.2.9
+  - '2.20'
+  - 2.3.1
+  - 2.3.2
+  - 2.3.3
+  - 2.3.4
+  - 2.3.5
+  - 2.3.6
+  - 2.3.7
+  - 2.3.8
+  - 2.4.1
+  - 2.4.10
+  - 2.4.11
+  - 2.4.12
+  - 2.4.13
+  - 2.4.14
+  - 2.4.2
+  - 2.4.3
+  - 2.4.4
+  - 2.4.5
+  - 2.4.6
+  - 2.4.7
+  - 2.4.8
+  - 2.4.9
+  - 2.5.1
+  - 2.5.2
+  - 2.5.3
+  - 2.5.4
+  - 2.5.5
+  - 2.5.6
+  - 2.5.7
+  - 2.5.8
+  - 2.6.1
+  - 2.6.10
+  - 2.6.11
+  - 2.6.12
+  - 2.6.13
+  - 2.6.15
+  - 2.6.16
+  - 2.6.17
+  - 2.6.18
+  - 2.6.19
+  - 2.6.2
+  - 2.6.20
+  - 2.6.21
+  - 2.6.22
+  - 2.6.23
+  - 2.6.24
+  - 2.6.26
+  - 2.6.27
+  - 2.6.28
+  - 2.6.29
+  - 2.6.3
+  - 2.6.30
+  - 2.6.4
+  - 2.6.6
+  - 2.6.7
+  - 2.6.8
+  - 2.6.9
+  - '2.61'
+  - 2.7.1
+  - 2.7.2
+  - 2.7.3
+  - 2.7.4
+  - 2.7.5
+  - 2.7.6
+  - 2.7.7
+  - 2.7.8
+  - 2.7.9
+  - 2.8.1
+  - 2.8.2
+  - 2.8.3
+  - '2.83'
+  - Exercise 2.1.1
+  - Exercise 2.1.2
+  - Exercise 2.1.3
+  - Exercise 2.1.4
+  - Exercise 2.1.5
+  - Exercise 2.1.6
+  - Exercise 2.2.1
+  - Exercise 2.2.10
+  - Exercise 2.2.11
+  - Exercise 2.2.12
+  - Exercise 2.2.13
+  - Exercise 2.2.2
+  - Exercise 2.2.3
+  - Exercise 2.2.4
+  - Exercise 2.2.5
+  - Exercise 2.2.6
+  - Exercise 2.2.7
+  - Exercise 2.2.8
+  - Exercise 2.2.9
+  - Exercise 2.3.1
+  - Exercise 2.3.10
+  - Exercise 2.3.2
+  - Exercise 2.3.3
+  - Exercise 2.3.4
+  - Exercise 2.3.5
+  - Exercise 2.3.6
+  - Exercise 2.3.7
+  - Exercise 2.3.8
+  - Exercise 2.3.9
+  - Exercise 2.4.1
+  - Exercise 2.4.10
+  - Exercise 2.4.11
+  - Exercise 2.4.12
+  - Exercise 2.4.2
+  - Exercise 2.4.3
+  - Exercise 2.4.4
+  - Exercise 2.4.5
+  - Exercise 2.4.6
+  - Exercise 2.4.7
+  - Exercise 2.4.8
+  - Exercise 2.4.9
+  - Exercise 2.5.1
+  - Exercise 2.5.2
+  - Exercise 2.6.1
+  - Exercise 2.6.10
+  - Exercise 2.6.11
+  - Exercise 2.6.12
+  - Exercise 2.6.13
+  - Exercise 2.6.14
+  - Exercise 2.6.15
+  - Exercise 2.6.16
+  - Exercise 2.6.2
+  - Exercise 2.6.3
+  - Exercise 2.6.4
+  - Exercise 2.6.5
+  - Exercise 2.6.6
+  - Exercise 2.6.7
+  - Exercise 2.6.8
+  - Exercise 2.6.9
+  - Exercise 2.7.1
+  - Exercise 2.7.2
+  - Exercise 2.7.3
+  numbered_labels_found: *id001
+  missing_numbered_labels: []
+  duplicate_identifiers: []
+  selected_exercise_count: 62
+  inventory_entry_count: 188
+  dag_node_count: 188
+  dag_edge_count: 257
+  method: Compared the full Chapter 2 source-order inventory, including operative unnumbered statements, notes results and
+    all selected exercises, against the extracted node list.
+inventory_files:
+- Chapter02.Section2_1.yaml
+- Chapter02.Section2_2.yaml
+- Chapter02.Section2_3.yaml
+- Chapter02.Section2_4.yaml
+- Chapter02.Section2_5.yaml
+- Chapter02.Section2_6.yaml
+- Chapter02.Section2_7.yaml
+- Chapter02.Section2_8.yaml
