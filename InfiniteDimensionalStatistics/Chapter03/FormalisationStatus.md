@@ -22,7 +22,7 @@ The current modules provide source-order interfaces for:
 - Hamming geometry, Lorentz `L_{2,1}`, Talagrand convex distance and product-space coordinate replacement;
 - self-bounding variables, bounded differences and entropy-method functionals;
 - empirical `L1`/`L2` pseudometrics, local classes and Koltchinskii–Pollard entropy;
-- canonical order-two U-statistics and explicit placeholders for the source-defined nonnegative scales `A,B,C,D`;
+- canonical order-two U-statistics and an explicit scale record for the source-defined nonnegative quantities `A,B,C,D`;
 - VC traces, shattering, VC dimension, VC-subgraph and VC-type classes;
 - bounded `p`-variation and translate/dilate classes;
 - measurable majorants, measurable covers, outer convergence in probability, outer law and asymptotic tightness;
@@ -33,17 +33,20 @@ The current modules provide source-order interfaces for:
 
 The following results have Lean proof terms in the repository, although they remain uncompiled in this session:
 
-- empirical-measure evaluation, total-mass, Bochner-integration and centred-sum identities;
+- empirical-measure evaluation, total-mass, probability-measure, Bochner-integration, linearity and centred-sum identities;
 - Hoeffding's sub-Gaussian mgf conclusion and finite independent-sum upper and two-sided tail bounds, using Mathlib's `HasSubgaussianMGF` API;
 - the weighted Rademacher sub-Gaussian and two-sided tail bounds of Example 3.1.3;
 - the generic exponential-Markov/Chernoff consequence of a Bennett mgf estimate;
-- the log-sum-exp finite maximal inequality underlying Theorem 3.1.10;
-- elementary Hamming, coordinate-replacement, entropy-function, product-geometry, local-class and outer-measure lemmas;
-- Mathlib-backed finite Sauer–Shelah trace bound and exact VC complement permanence;
+- the log-sum-exp finite maximal inequality and its common-proxy sub-Gaussian specialization underlying Theorem 3.1.10;
+- Hamming triangle inequality, coordinate replacement, Bennett-function, entropy-function, product-geometry and local-class lemmas;
+- outer-probability monotonicity/subadditivity, measurable outer-expectation identification and uniqueness of measurable covers;
+- finite covering/packing witnesses and singleton/finite bracketing bounds;
+- Mathlib-backed finite Sauer–Shelah trace bound, VC-dimension monotonicity, exact VC complement permanence and Boolean trace-cardinality bounds;
 - finite-class uniform strong law/Glivenko–Cantelli theorem via Mathlib's Banach-valued strong law;
 - measurable bounded-continuous characterization of weak convergence, Portmanteau implications and null-frontier convergence;
 - measurable Prokhorov compactness for tight probability-measure families;
-- measurable continuous-mapping, convergence-in-probability-to-distribution and Slutsky results.
+- measurable continuous-mapping, convergence-in-probability-to-distribution and Slutsky results;
+- Brownian-bridge covariance identification with Mathlib covariance/variance, symmetry and diagonal nonnegativity.
 
 ## Source blockers
 
@@ -65,13 +68,15 @@ The uploaded-PDF retrieval service was unavailable during this work session. No 
 
 Even after the source blockers are resolved, a complete chapter still requires genuine Lean proofs of, among others:
 
+- the cgf second-derivative part of Hoeffding's lemma and the optimized scalar form of the finite maximum bound;
 - Bennett and Bernstein mgf inequalities under the book's boundedness and moment hypotheses;
 - Levy, Levy–Ottaviani and Hoffmann–Jørgensen maximal/moment inequalities;
 - symmetrisation, desymmetrisation, contraction and multiplier inequalities;
+- Paley–Zygmund, Khinchin, Gaussian-comparison and other moment/lower-bound inputs not present in the pinned library;
 - Talagrand convex-distance and entropy-method concentration theorems;
 - moment inequalities and canonical U-statistic concentration;
 - chaining, Dudley, bracketing and local entropy theorems;
-- VC positivity-space, Boolean permanence and polynomial packing estimates beyond the finite Sauer–Shelah core;
+- VC positivity-space, quantitative Boolean permanence and polynomial packing estimates beyond the finite Sauer–Shelah core;
 - outer Glivenko–Cantelli characterisations for general classes;
 - finite-dimensional central limit theory, asymptotic tightness criteria, pre-Gaussian/Donsker equivalences and local Donsker theorems;
 - all selected exercises whose results are dependencies of the main text.
