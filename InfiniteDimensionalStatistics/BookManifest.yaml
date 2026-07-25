@@ -44,7 +44,7 @@ chapters:
     printed_pages: {start: 1, end: 14}
     specification: InfiniteDimensionalStatistics/Spec/Chapter01.yaml
     audit_step: P1.1
-    status: repository_artifact_present_needs_schema_and_pass_audit
+    status: repository_artifact_present_needs_canonical_schema_conversion
   - number: 2
     title: Gaussian Processes
     printed_pages: {start: 15, end: 108}
@@ -100,7 +100,15 @@ chapters:
     printed_pages: {start: 607, end: 666}
     specification: InfiniteDimensionalStatistics/Spec/Chapter08.yaml
     audit_step: P1.8
-    status: repository_package_present_requires_pass_normalisation_and_validation
+    status: repository_package_present_pending_common_validation
+    package_record:
+      inventory_entries: 115
+      selected_exercises: 9
+      dependency_edges: 160
+      dag_acyclic: true
+      source_starred_entries: 0
+      pass_semantics_normalised: true
+      missing_numbered_labels: []
 phase_gates:
   P0:
     required_files:
