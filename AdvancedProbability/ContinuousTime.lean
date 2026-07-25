@@ -62,11 +62,11 @@ theorem dyadicLevel_subset_Icc (n : ℕ) : DyadicLevel n ⊆ Set.Icc (0 : ℝ) 1
   · positivity
   · have hden : (0 : ℝ) < (2 ^ n : ℝ) := by positivity
     apply (div_le_iff₀ hden).2
-    exact_mod_cast hk
+    simpa using (show (k : ℝ) ≤ (2 ^ n : ℝ) by exact_mod_cast hk)
 
 /-- Each fixed dyadic level is countable. -/
 theorem dyadicLevel_countable (n : ℕ) : (DyadicLevel n).Countable := by
-  refine Set.Countable.mono Set.countable_range ?_
+  refine (Set.countable_range (fun k : ℕ ↦ (k : ℝ) / (2 ^ n : ℝ))).mono ?_
   rintro x ⟨k, -, rfl⟩
   exact ⟨k, rfl⟩
 
