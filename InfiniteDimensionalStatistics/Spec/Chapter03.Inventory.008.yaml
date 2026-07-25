@@ -1,0 +1,598 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 8
+inventory:
+- id: theorem_3_5_6
+  kind: theorem
+  book:
+    number: Theorem 3.5.6
+    pages:
+    - 189
+    - 190
+    section: '3.5'
+    equations:
+    - '3.179'
+  title: Expectation bound under regular entropy growth
+  statement: Let 𝓕 be countable with 0∈𝓕 and envelope F. Suppose H satisfies the theorem’s monotonicity/integral regularity
+    with constant C_H and uniformly majorises log[2N(𝓕,L²(Q),τ‖F‖_{L²(Q)})] by H(1/τ). Then (3.179) bounds the centred empirical
+    supremum by a term of order σ√H(‖F‖₂/σ) and an envelope-maximum term of order ‖U‖₂H(‖F‖₂/σ)/√n.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - 𝓕 countable, 0∈𝓕
+    - F∈L²(P)
+    - H satisfies conditions (a),(b)
+    - uniform entropy majorisation
+    implicit: []
+  quantifier_order: &id002
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants: &id003
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_4
+    later_book_uses:
+    - Corollaries 3.5.7–3.5.9
+    - Chapter 5
+  proof_status: &id004
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status: &id010
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents: &id005
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id001
+    - Official correction deletes the p.189 sentence invoking Exercise 3.6.17.
+    - Copy A₁,A₂ and the exact H argument from (3.179).
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id001
+- id: corollary_3_5_7
+  kind: corollary
+  book:
+    number: Corollary 3.5.7
+    pages:
+    - 190
+    section: '3.5'
+    equations: []
+  title: Bounded-envelope regular-entropy bound
+  statement: Under Theorem 3.5.6 and |f|≤u, E‖ν_n‖𝓕≤8√2 C_H σ√H(‖F‖₂/σ)+2⁷C_H²u H(‖F‖₂/σ)/√n.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - hypotheses of Theorem 3.5.6
+    - '|f|≤u'
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_6
+    later_book_uses:
+    - Corollary 3.5.8.
+  proof_status: *id004
+  notes_status: &id007
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_5_8
+  kind: corollary
+  book:
+    number: Corollary 3.5.8
+    pages:
+    - 190
+    - 191
+    section: '3.5'
+    equations:
+    - '3.184'
+  title: Polynomial uniform-entropy bound
+  statement: If N(𝓕,L²(Q),ε‖F‖_{L²(Q)})≤(A/ε)^v uniformly in finitely supported Q, A≥2, v≥1, and the envelope is bounded by
+    u, then (3.184) gives the explicit expectation bound of order √{nvσ²log(A‖F‖₂/σ)}+vu log(A‖F‖₂/σ).
+  transcription_status: exact-with-official-correction
+  hypotheses:
+    explicit:
+    - polynomial uniform entropy
+    - A≥2
+    - v≥1
+    - bounded envelope
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_5_7
+    later_book_uses:
+    - Chapter 5.
+  proof_status: *id004
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id006
+    - 'Official correction: both envelope norms in (3.184) are L²(P), not L²(Q).'
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
+- id: corollary_3_5_9
+  kind: corollary
+  book:
+    number: Corollary 3.5.9
+    pages:
+    - 191
+    section: '3.5'
+    equations:
+    - '3.185'
+    - '3.186'
+  title: Two-sided scale under the large-variance condition
+  statement: Under Theorem 3.5.6 and condition (3.185), the expectation of the supremum is bounded above at the Gaussian entropy
+    scale; for a class full in the sense of Definition 3.5.10, Theorem 3.5.11 gives the matching lower scale (3.190).
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - hypotheses of Theorem 3.5.6
+    - condition (3.185)
+    - λ≥1
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_6
+    later_book_uses:
+    - Definition 3.5.10
+    - Theorem 3.5.11
+  proof_status: *id004
+  notes_status: *id007
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id008
+    - Copy exact constants from (3.186).
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id008
+- id: definition_3_5_10
+  kind: definition
+  book:
+    number: Definition 3.5.10
+    pages:
+    - 191
+    section: '3.5'
+    equations: []
+  title: Class full for H and P
+  statement: A bounded class satisfying Theorem 3.5.6 is full for H and P if its L²(P) covering numbers satisfy the printed
+    lower bound cH(‖F‖₂/ε) throughout the specified ε range.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - hypotheses of Theorem 3.5.6
+    - '|f|≤1'
+    - existence of c>0
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_6
+    later_book_uses:
+    - Theorem 3.5.11.
+  proof_status: *id004
+  notes_status: *id007
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id009
+    - Copy the exact lower-bound range and normalisation.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id009
+- id: theorem_3_5_11
+  kind: theorem
+  book:
+    number: Theorem 3.5.11
+    pages:
+    - 191
+    - 195
+    section: '3.5'
+    equations:
+    - '3.188'
+    - '3.189'
+    - '3.190'
+  title: 'Partial converse: Sudakov lower bound for empirical suprema'
+  statement: Let 𝓕,H,F satisfy Theorem 3.5.6, with f∈[−1,1], Pf=0 and the two sample-size/variance conditions (3.188). Then
+    E‖∑_{i=1}^n f(X_i)‖𝓕≥(√nσ/(32K))√log N(𝓕,L²(P),σ/2). For a full class, this combines with the upper estimate to give (3.190).
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - hypotheses of Theorem 3.5.6
+    - f∈[−1,1]
+    - Pf=0
+    - conditions (3.188)
+    - K from Theorem 3.2.9
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_5_9
+    - theorem_3_2_9
+    - theorem_3_3_9
+    later_book_uses:
+    - Sharpness of entropy bounds.
+  proof_status: *id004
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id011
+    - 'Official correction p.193: the first quantity in the final display is Q[(f²−g²)²].'
+    - 'Official correction p.195: L^p(R) is L^p(P).'
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id011
+- id: bracketing_number
+  kind: definition
+  book:
+    number: Unnumbered definitions, pp. 195–196
+    pages:
+    - 195
+    - 196
+    section: '3.5'
+    equations: []
+  title: L^p brackets and bracketing number
+  statement: N_{[]}(𝓕,L^p(P),ε) is the least number of measurable partition cells whose measurable-cover diameter has p-th
+    P-moment at most ε^p; equivalently, cover 𝓕 by order intervals [l_i,u_i] with ‖u_i−l_i‖_{L^p(P)}≤ε.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕⊂L^p(P)
+    - p>0
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Theorems 3.5.13 and 3.5.21
+    - Theorems 3.7.20 and 3.7.38
+  proof_status: *id004
+  notes_status: *id007
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id012
+    - 'Official correction: printed L^p(R) is L^p(P).'
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id012
+- id: lemma_3_5_12
+  kind: lemma
+  book:
+    number: Lemma 3.5.12
+    pages:
+    - 196
+    section: '3.5'
+    equations: []
+  title: Finite-class Bernstein maximal inequality
+  statement: For i.i.d. X_i and measurable f₁,…,f_N with max_r‖f_r−Pf_r‖∞≤c and σ²:=max_rVar(f_r(X)), E max_{r≤N}|∑(f_r(X_i)−Pf_r)|≤√(2nσ²log(2N))+(c/3)log(2N).
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - i.i.d. sample
+    - finite family
+    - uniform centred bound c
+    - variance bound σ²
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_1_10
+    - theorem_3_1_5
+    later_book_uses:
+    - Theorem 3.5.13.
+  proof_status: *id004
+  notes_status: *id007
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Theorem over integrable real random variables with independence, boundedness/moment hypotheses, exponential moments
+      and measurable tail events.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_5_13
+  kind: theorem
+  book:
+    number: Theorem 3.5.13
+    pages:
+    - 196
+    - 202
+    section: '3.5'
+    equations:
+    - '3.203'
+  title: Bracketing expectation inequality
+  statement: Let F be a P-square-integrable envelope and assume ∫₀^{2‖F‖₂}√log N_{[]}(𝓕,L²(P),τ)dτ<∞. With σ²:=sup_fPf² and
+    a(δ):=δ/[32√log(2N_{[]}(𝓕,L²(P),δ/2))], (3.203) bounds the outer expectation of ‖∑(f(X_i)−Pf)‖𝓕 by the bracketing integral
+    up to 2δ, the envelope tail 4nP[F1_{F>√n a(δ)}], and the printed finite-net variance term.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - i.i.d. P sample
+    - measurable class
+    - square-integrable envelope
+    - finite bracketing integral
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - bracketing_number
+    - lemma_3_5_12
+    later_book_uses:
+    - Theorem 3.7.38.
+  proof_status: *id004
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id013
+    - OCR obscures square roots and parentheses in a(δ) and the last term; copy (3.203) visually.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id013
+- id: proposition_3_5_15
+  kind: proposition
+  book:
+    number: Proposition 3.5.15
+    pages:
+    - 202
+    section: '3.5'
+    equations: []
+  title: Local bracketing maximal inequality
+  statement: For a class localised by Pf²≤δ² and satisfying the proposition’s bracketing/envelope assumptions, the expected
+    local empirical-process supremum is bounded by the corresponding bracketing integral and envelope-tail terms.
+  transcription_status: exact-with-official-correction
+  hypotheses:
+    explicit:
+    - local class Pf²≤δ²
+    - printed bracketing and envelope assumptions
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_13
+    later_book_uses:
+    - Exercise 3.5.5.
+  proof_status: *id004
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id014
+    - 'Official correction: printed ≤δ is ≤δ².'
+    - Remaining constants require direct transcription.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id014
+- id: theorem_3_5_21
+  kind: theorem
+  book:
+    number: Theorem 3.5.21
+    pages:
+    - 206
+    - 211
+    section: '3.5'
+    equations: []
+  title: Bracketing exponential inequality for unbounded classes
+  statement: Under the theorem’s variance, envelope-tail/truncation and bracketing-entropy assumptions, the supremum of the
+    centred empirical process over a not-necessarily-bounded class has the displayed exponential tail with Gaussian and linear
+    regimes.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - i.i.d. sample
+    - measurable class
+    - variance bound
+    - bracketing entropy condition
+    - envelope-tail/truncation condition
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_1_7
+    - theorem_3_5_13
+    later_book_uses:
+    - Likelihood and exponential-bracketing applications.
+  proof_status: *id004
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id015
+    - The full theorem display on pp.206–211 must be transcribed directly; no constants or truncation quantifiers may be inferred
+      from OCR.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id015
+- id: definition_3_6_1
+  kind: definition
+  book:
+    number: Definition 3.6.1
+    pages:
+    - 212
+    section: '3.6'
+    equations: []
+  title: Shattering, trace growth and VC index
+  statement: For a set class 𝒞 and finite A={x₁,…,xₙ}, define 𝒞|A:={C∩A:C∈𝒞}; A is shattered when 𝒞|A=2^A. Define C(x₁,…,xₙ):=|𝒞|{x₁,…,xₙ}|
+    and the VC index as the least v for which no v-point set is shattered, or ∞ if none.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝒞⊂2^S and A finite
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - All Section 3.6 results.
+  proof_status: *id004
+  notes_status: *id007
+  equivalents: *id005
+  likely_lean_representation: &id016
+    sketch: Finite traces of set systems, shattering predicates, an `WithTop ℕ` VC index, and finite-cardinality combinatorics.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_6_2
+  kind: theorem
+  book:
+    number: Theorem 3.6.2
+    pages:
+    - 212
+    - 214
+    section: '3.6'
+    equations: []
+  title: Sauer–Shelah lemma
+  statement: If 𝒞 has VC index v<∞, then C(x₁,…,xₙ)≤∑_{j=0}^{v−1}{n\choose j}; for n≥v−1 this is at most (en/(v−1))^{v−1}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - VC index v<∞
+    - n≥1
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_6_1
+    - proposition_3_6_3
+    later_book_uses:
+    - Corollaries 3.6.4–3.6.5
+    - Theorem 3.6.9
+  proof_status: *id004
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation: *id016
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_6_3
+  kind: proposition
+  book:
+    number: Proposition 3.6.3
+    pages:
+    - 213
+    - 214
+    section: '3.6'
+    equations: []
+  title: Trace recursion
+  statement: The maximal trace count on n points under a VC-index bound satisfies the recursion obtained by splitting traces
+    according to inclusion of the last point; this is the inductive engine for Sauer–Shelah.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - finite set system
+    - VC index bound
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_6_1
+    later_book_uses:
+    - Theorem 3.6.2.
+  proof_status: *id004
+  notes_status: *id007
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Finite traces of set systems, shattering predicates, an `WithTop ℕ` VC index, and finite-cardinality combinatorics.
+    blockers: &id017
+    - Copy the exact recursion; official corrigenda also amend surrounding text/bibliography.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id017
+- id: corollary_3_6_4
+  kind: corollary
+  book:
+    number: Corollary 3.6.4
+    pages:
+    - 214
+    section: '3.6'
+    equations: []
+  title: Polynomial trace growth of a VC class
+  statement: A class of finite VC index has trace growth polynomial in n with exponent v−1, in the explicit form derived from
+    Theorem 3.6.2.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_6_2
+    later_book_uses:
+    - Corollary 3.6.5.
+  proof_status: *id004
+  notes_status: *id007
+  equivalents: *id005
+  likely_lean_representation: *id016
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
