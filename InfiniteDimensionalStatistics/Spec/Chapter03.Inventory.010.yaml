@@ -1,0 +1,539 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 10
+inventory:
+- id: outer_expectation
+  kind: definition
+  book:
+    number: Eq. (3.242)
+    pages:
+    - 230
+    section: '3.7'
+    equations:
+    - '3.242'
+  title: Outer expectation
+  statement: For an arbitrary extended-real f, E*f is the infimum of Eg over measurable majorants g≥f for which the expectation
+    is defined; when a measurable cover f* exists, E*f=Ef*.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit:
+    - Conventions exclude undefined ∞−∞.
+  quantifier_order: &id001
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants: &id002
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - outer_probability
+    later_book_uses:
+    - Propositions 3.7.1–3.7.3 and all weak-convergence definitions.
+  proof_status: &id003
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status: &id004
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: &id005
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: &id006
+    sketch: New outer-probability/outer-expectation API for arbitrary functions and events, with measurable envelopes and
+      completed measures.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_7_1
+  kind: proposition
+  book:
+    number: Proposition 3.7.1
+    pages:
+    - 229
+    - 230
+    section: '3.7'
+    equations: []
+  title: Existence and calculus of measurable covers
+  statement: Under the chapter’s completeness convention, every real function has an essentially minimal measurable majorant
+    f*; parts (a)–(c) give its monotonicity, countable-maximum and algebraic properties.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - completed probability space as required
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - outer_expectation
+    later_book_uses:
+    - Propositions 3.7.2–3.7.3
+    - bracketing definitions
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_7_2
+  kind: proposition
+  book:
+    number: Proposition 3.7.2
+    pages:
+    - 230
+    - 231
+    section: '3.7'
+    equations: []
+  title: Calculus of measurable covers and outer integrals
+  statement: The proposition gives subadditivity, monotone-transformation and comparison identities for measurable covers,
+    outer expectations and outer probabilities, under the sign/integrability conditions in each clause.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - arbitrary functions subject to the clause-specific sign conditions
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_7_1
+    later_book_uses:
+    - Example 3.7.4
+    - Proposition 3.7.32
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: New outer-probability/outer-expectation API for arbitrary functions and events, with measurable envelopes and
+      completed measures.
+    blockers: &id007
+    - Each enumerated clause must be transcribed exactly.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id007
+- id: proposition_3_7_3
+  kind: proposition
+  book:
+    number: Proposition 3.7.3
+    pages:
+    - 231
+    section: '3.7'
+    equations: []
+  title: One-sided Fubini–Tonelli theorem for outer expectation
+  statement: For a possibly nonmeasurable function on a product probability space, iterated outer expectations are bounded
+    in the direction stated by the outer expectation on the product; equality is not asserted without measurability.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - nonnegative function or the printed integrability alternative
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_7_1
+    later_book_uses:
+    - Example 3.7.4
+    - random entropy arguments
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: example_3_7_4
+  kind: example
+  book:
+    number: Example 3.7.4
+    pages:
+    - 231
+    - 232
+    section: '3.7'
+    equations: []
+  title: Outer versions of finite-sample inequalities
+  statement: Lévy, Hoffmann–Jørgensen, symmetrisation and randomisation inequalities extend to arbitrary index sets after
+    replacing probabilities/expectations of suprema by outer versions and using Proposition 3.7.3 in its permitted direction.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - sample-bounded processes with arbitrary index set
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_7_3
+    - proposition_3_1_11
+    - proposition_3_1_23
+    - proposition_3_7_3
+    - theorem_3_1_15
+    later_book_uses:
+    - Proposition 3.7.32
+    - Theorem 3.7.40
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_7_3
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: &id009
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition_3_7_5
+  kind: definition
+  book:
+    number: Definition 3.7.5
+    pages:
+    - 232
+    section: '3.7'
+    equations: []
+  title: P-perfect map
+  statement: A map into an arbitrary coordinate space is P-perfect when it has the exact finite-coordinate measurability/perfectness
+    property in the definition, enabling image and coupling arguments without assuming a separable target.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - probability space and target coordinate class
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Examples 3.7.6–3.7.7
+    - Theorem 3.7.25
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id008
+    - Copy the exact sigma-field/perfectness formulation from p.232.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id008
+- id: example_3_7_6
+  kind: example
+  book:
+    number: Example 3.7.6
+    pages:
+    - 233
+    section: '3.7'
+    equations: []
+  title: Canonical coordinate maps are perfect
+  statement: The canonical coordinate process on the indicated product measurable space is P-perfect.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_5
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: &id010
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents: *id005
+  likely_lean_representation: *id009
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: example_3_7_7
+  kind: example
+  book:
+    number: Example 3.7.7
+    pages:
+    - 233
+    section: '3.7'
+    equations: []
+  title: Piecewise coordinate maps are perfect
+  statement: The piecewise coordinate map constructed in the example is P-perfect and supplies an admissible map for later
+    coupling arguments.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_5
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id011
+    - Copy the piecewise construction exactly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id011
+- id: proposition_3_7_8
+  kind: proposition
+  book:
+    number: Proposition 3.7.8
+    pages:
+    - 233
+    section: '3.7'
+    equations: []
+  title: Reversed-submartingale convergence of empirical suprema
+  statement: If 𝓕 has an integrable measurable cover F, then ‖P_n−P‖*𝓕 converges almost surely and in L¹ to a finite limit,
+    by a reversed-submartingale argument.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - i.i.d. sample
+    - PF<∞
+    - measurable cover
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_7_2
+    - proposition_3_7_1
+    later_book_uses:
+    - Corollary 3.7.9.
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_7_2
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id009
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_7_9
+  kind: corollary
+  book:
+    number: Corollary 3.7.9
+    pages:
+    - 234
+    section: '3.7'
+    equations: []
+  title: Weak Glivenko–Cantelli implies strong
+  statement: If the hypotheses of Proposition 3.7.8 hold and ‖P_n−P‖*𝓕→0 in probability, then convergence is almost sure and
+    in L¹.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_7_8
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: definition_3_7_10
+  kind: definition
+  book:
+    number: Definition 3.7.10
+    pages:
+    - 234
+    section: '3.7'
+    equations: []
+  title: P-Glivenko–Cantelli class
+  statement: A class 𝓕 is P-Glivenko–Cantelli when ‖P_n−P‖*𝓕→0 almost surely for an i.i.d. P sample.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - outer_probability
+    - uniform_deviation
+    later_book_uses:
+    - Theorem 3.7.14 and corollaries.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id009
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition_3_7_11
+  kind: definition
+  book:
+    number: Definition 3.7.11
+    pages:
+    - 235
+    section: '3.7'
+    equations: []
+  title: P-measurable class
+  statement: A class 𝓕 is P-measurable if for every n, every real a₁,…,aₙ,b, the random variable ‖∑_{i=1}^n a_i f(X_i)+bPf‖𝓕
+    is measurable for the completion of P^n.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - all n≥1
+    - all real coefficients
+    - Pf exists
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Theorems 3.7.14 and 3.7.36–3.7.40
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: example_3_7_12
+  kind: example
+  book:
+    number: Example 3.7.12
+    pages:
+    - 235
+    section: '3.7'
+    equations: []
+  title: Measurable rectangle and kernel classes
+  statement: The lower-orthant indicator class and the translation/kernel classes displayed in the example are P-measurable
+    by countable dense parameter approximation.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - the parameter and kernel assumptions printed in each subexample
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_11
+    later_book_uses:
+    - Example 3.7.19
+    - kernel applications
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: example_3_7_13
+  kind: example
+  book:
+    number: Example 3.7.13
+    pages:
+    - 235
+    - 236
+    section: '3.7'
+    equations: []
+  title: Measurability of bounded p-variation classes
+  statement: The bounded-p-variation class considered in Section 3.6 is P-measurable by countable approximation.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_11
+    - p_variation
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_14
+  kind: theorem
+  book:
+    number: Theorem 3.7.14
+    pages:
+    - 236
+    - 239
+    section: '3.7'
+    equations: []
+  title: Random-entropy characterisation of Glivenko–Cantelli classes
+  statement: For a P-measurable, uniformly L¹(P)-bounded class with integrable measurable cover, P-Glivenko–Cantelli is equivalent
+    to the vanishing random L¹(P_n) packing/covering entropy and to the finite random-net approximation conditions listed
+    in the theorem.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - P-measurable class
+    - uniform L¹(P) boundedness
+    - integrable measurable cover
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_7_9
+    - definition_3_7_11
+    - theorem_3_1_21
+    later_book_uses:
+    - Corollaries 3.7.15–3.7.17.
+  proof_status: *id003
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id012
+    - All equivalent clauses, radii and modes of convergence must be transcribed from pp.236–239.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id012
