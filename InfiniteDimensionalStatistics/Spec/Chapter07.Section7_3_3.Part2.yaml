@@ -1,0 +1,405 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.3.3
+fragment_part: 2
+inventory:
+- id: ch7.prop.7.3.14
+  kind: proposition
+  book:
+    number: Proposition 7.3.14
+    label: Proposition 7.3.14
+    pages:
+    - 587
+    - 588
+    section: 7.3.3
+    equations: []
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Sub-Gaussian posterior coordinate bounds
+  statement: "Under Theorem 7.3.12, if √n σ_l≥S₀>0, then for every t∈ℝ and coordinate k,\n  E^Y_{f₀} E_Π[exp(t√n(f_{lk}-Y_{lk}))|Y] ≤ C exp(t²/2).\nConsequently,\n  E^Y_{f₀} E_Π[max_{k∈Z_l}|f_{lk}-f_{0,lk}| |Y]\n     ≤ C' √(log(1+|Z_l|)/n)."
+  hypotheses:
+    explicit:
+    - Fixed S₀>0.
+    - Frequency l satisfies √nσ_l≥S₀.
+    - Condition 7.3.11.
+    implicit:
+    - Constants C,C' are uniform in l,k,n and t except through fixed model constants.
+    - The second bound also includes the Gaussian observation noise.
+  quantifier_order:
+  - ∃C,C', ∀ admissible n,l,k, ∀t∈ℝ.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Sub-Gaussian maxima, Lemma 2.3.4
+    chapter_local:
+    - ch7.thm.7.3.12
+    - ch7.condition.7.3.11
+    later_book_uses:
+    - ch7.prop.7.3.15
+    - ch7.thm.7.3.20
+    - ex7.3.8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Uniform Laplace-transform estimates for one-dimensional posterior marginals and a finite-maximum bound.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_7_3_14
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.def.uniformWaveletPrior
+  kind: definition
+  book:
+    number: (7.113)
+    label: (7.113)
+    pages:
+    - 588
+    section: 7.3.3
+    equations:
+    - (7.113)
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Uniform Hölder-ball wavelet prior
+  statement: "In a wavelet basis let ξ_{lk} iid U[-B,B] and\n  f_{lk}=2^{-l(γ+1/2)}ξ_{lk},  γ>0.\nThe induced prior Π_{γ,B} is supported in the corresponding wavelet-defined C^γ ball."
+  hypotheses:
+    explicit:
+    - γ>0, B>0.
+    - S-regular wavelet basis with S>γ.
+    implicit:
+    - The book notes a slight abuse of C^γ notation; it is the wavelet coefficient norm.
+  quantifier_order:
+  - Independently for all wavelet coordinates.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.productPrior
+    - ch7.def.7.3.10
+    later_book_uses:
+    - ch7.prop.7.3.15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A product of compactly supported coefficient laws pushed to a Hölder/Besov coefficient space.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_uniformWaveletPrior
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.prop.7.3.15
+  kind: proposition
+  book:
+    number: Proposition 7.3.15
+    label: Proposition 7.3.15
+    pages:
+    - 588
+    - 589
+    section: 7.3.3
+    equations: []
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Supremum-norm contraction for the uniform wavelet prior
+  statement: "If ||f₀||_{C^γ}<B and Π_{γ,B} is the uniform wavelet prior, then for some M<∞,\n  E^Y_{f₀} E_{Π_{γ,B}}[||f-f₀||∞ |Y]\n     ≤ M (log n/n)^{γ/(2γ+1)}."
+  hypotheses:
+    explicit:
+    - γ>0, B>0.
+    - Truth lies strictly inside the coefficient Hölder ball.
+    - Wavelet basis regular enough.
+    implicit:
+    - The result is an expected posterior loss bound, hence implies contraction by Markov.
+  quantifier_order:
+  - ∃M independent of n, ∀n sufficiently large (printed display can be read all n after adjustment).
+  constants: []
+  dependencies:
+    earlier_book:
+    - Wavelet reconstruction sup-norm inequality
+    chapter_local:
+    - ch7.prop.7.3.14
+    - ch7.def.uniformWaveletPrior
+    - ch7.def.posteriorContractionRate
+    later_book_uses:
+    - ch7.cor.7.3.24
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Split low/high frequencies at `2^{j_n}≈(n/log n)^{1/(2γ+1)}` and combine coordinate maxima with deterministic tails.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_7_3_15
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.def.gaussianConjugatePrior
+  kind: definition
+  book:
+    number: (7.114)
+    label: (7.114)
+    pages:
+    - 589
+    section: 7.3.3
+    equations:
+    - (7.114)
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Gaussian product prior
+  statement: "Draw independent g_{lk}∼N(0,1) and set\n  f=∑_{l,k} σ_l g_{lk} ψ_{lk},\nwith ∑_{l,k}σ_l²<∞."
+  hypotheses:
+    explicit:
+    - Positive scales with multiplicity-weighted square sum finite.
+    - Wavelet basis as in Definition 7.3.10(b).
+    implicit:
+    - The series converges in L² almost surely and defines a Gaussian measure.
+  quantifier_order:
+  - Independent over all coordinates.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.7.3.10
+    later_book_uses:
+    - ch7.prop.gaussianPosteriorFormula
+    - ex7.3.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A centred Gaussian measure on a separable Hilbert space with diagonal covariance, or a convergent Gaussian series.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_gaussianConjugatePrior
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.prop.gaussianPosteriorFormula
+  kind: proposition
+  book:
+    number: (7.115)–(7.116)
+    label: (7.115)–(7.116)
+    pages:
+    - 589
+    - 590
+    section: 7.3.3
+    equations:
+    - (7.115)
+    - (7.116)
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Conjugate Gaussian posterior formula
+  statement: "Conditional on Y=(Y_{lk}), the posterior is the law of\n  f|Y = ∑_{l,k} [σ_l²/(σ_l²+1/n)]Y_{lk} ψ_{lk}\n        + ∑_{l,k} [σ_l²/(nσ_l²+1)]^{1/2} ḡ_{lk} ψ_{lk},\nwhere ḡ_{lk} are iid N(0,1), independent of Y.\nThus each coordinate posterior is normal with mean\n  σ_l²Y_{lk}/(σ_l²+1/n)\nand variance σ_l²/(nσ_l²+1)."
+  hypotheses:
+    explicit:
+    - Gaussian prior (7.114).
+    - Gaussian white-noise sequence likelihood.
+    implicit:
+    - Conditional infinite product/series defines a Gaussian measure in L².
+  quantifier_order:
+  - For every observed coordinate sequence in an a.s. set.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.gaussianConjugatePrior
+    - ch7.def.whiteNoiseSequenceModel
+    later_book_uses:
+    - ch7.thm.7.3.16
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.4
+    contains_omitted_steps: true
+    comment: derivation of conjugate formula
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - ProbabilityTheory.gaussianReal
+      - Gaussian measure foundations (partial)
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Prove one-dimensional normal conjugacy, then identify the product posterior kernel and its L²-valued series.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_gaussianPosteriorFormula
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
+- id: ch7.thm.7.3.16
+  kind: theorem
+  book:
+    number: Theorem 7.3.16
+    label: Theorem 7.3.16
+    pages:
+    - 590
+    - 591
+    section: 7.3.3
+    equations: []
+    section_title: Product Priors in Gaussian Regression
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Sharp Gaussian-prior supremum-norm contraction tails
+  statement: "Let σ_l=2^{-l(γ+1/2)}l^{-1/2}, γ>0, and f₀∈C^γ. There exist M₀,C₁,C₂>0\nsuch that for every M≥M₀,\n  E^Y_{f₀} Π( ||f-f₀||∞ > M (n/log n)^{-γ/(2γ+1)} |Y )\n     ≤ C₁ n^{-C₂(M-M₀)²}."
+  hypotheses:
+    explicit:
+    - γ>0.
+    - Truth f₀∈C^γ.
+    - Gaussian prior with the displayed scales.
+    - Sufficient wavelet regularity.
+    implicit:
+    - The polynomial tail exponent is uniform in n and grows quadratically in M-M₀.
+  quantifier_order:
+  - ∃M₀,C₁,C₂, ∀M≥M₀, ∀n (or all large n), bound.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Gaussian maxima and wavelet sup-norm reconstruction
+    chapter_local:
+    - ch7.prop.gaussianPosteriorFormula
+    - ch7.def.posteriorContractionRate
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Explicit Gaussian posterior mean bias plus Gaussian fluctuation maxima; nonasymptotic tail analysis.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_3_16
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Bayes/ProductPriors.lean
