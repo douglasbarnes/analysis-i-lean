@@ -19,7 +19,8 @@ theorem ContinuousOptionalStoppingCountableRange
     {S T : Ω → WithTop ℝ≥0} (hS : IsStoppingTime ℱ S) (hT : IsStoppingTime ℱ T)
     (hST : S ≤ T) {N : ℝ≥0} (hTbdd : ∀ ω, T ω ≤ N)
     (hTcount : (Set.range T).Countable) (hScount : (Set.range S).Countable) :
-    stoppedValue X S =ᵐ[P] P[stoppedValue X T | hS.measurableSpace] := by
+    MeasureTheory.stoppedValue X S =ᵐ[P]
+      P[MeasureTheory.stoppedValue X T | hS.measurableSpace] := by
   exact hX.stoppedValue_ae_eq_condExp_of_le_of_countable_range
     hT hS hST hTbdd hTcount hScount
 
@@ -31,12 +32,14 @@ theorem ContinuousOptionalStoppingCountableRange_integral
     {S T : Ω → WithTop ℝ≥0} (hS : IsStoppingTime ℱ S) (hT : IsStoppingTime ℱ T)
     (hST : S ≤ T) {N : ℝ≥0} (hTbdd : ∀ ω, T ω ≤ N)
     (hTcount : (Set.range T).Countable) (hScount : (Set.range S).Countable) :
-    ∫ ω, stoppedValue X S ω ∂P = ∫ ω, stoppedValue X T ω ∂P := by
+    ∫ ω, MeasureTheory.stoppedValue X S ω ∂P =
+      ∫ ω, MeasureTheory.stoppedValue X T ω ∂P := by
   have hcond := ContinuousOptionalStoppingCountableRange hX hS hT hST hTbdd hTcount hScount
   calc
-    ∫ ω, stoppedValue X S ω ∂P =
-        ∫ ω, P[stoppedValue X T | hS.measurableSpace] ω ∂P :=
+    ∫ ω, MeasureTheory.stoppedValue X S ω ∂P =
+        ∫ ω, P[MeasureTheory.stoppedValue X T | hS.measurableSpace] ω ∂P :=
       integral_congr_ae hcond
-    _ = ∫ ω, stoppedValue X T ω ∂P := integral_condExp hS.measurableSpace_le
+    _ = ∫ ω, MeasureTheory.stoppedValue X T ω ∂P :=
+      integral_condExp hS.measurableSpace_le
 
 end AdvancedProbability
