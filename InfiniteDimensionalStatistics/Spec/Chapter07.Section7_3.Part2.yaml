@@ -125,57 +125,68 @@ inventory:
     section: '7.3'
     equations: []
   title: Proof of Lemma 7.3.8
-  statement: Prove Lemma 7.3.8, including its Hellinger, Kullback–Leibler and squared log-likelihood-ratio bounds
-    for the normalised exponential densities p_v and p_w. The book also points to van der Vaart and van Zanten (2008).
+  statement: 'Prove Lemma 7.3.8 (the book also refers to van der Vaart and van Zanten (2008)). For a=||v-w||∞, establish:
+
+    (a) h(p_v,p_w) ≤ a exp(a/2);
+
+    (b) -∫ log(p_v/p_w) p_w dμ ≤ a² exp(a)(1+a);
+
+    (c) ∫ [log(p/p₀)]² p₀ dμ ≤ a² exp(a)(1+a)², with the printed aliases p=p_v and p₀=p_w.'
   hypotheses:
     explicit:
-    - All hypotheses and notation of Lemma 7.3.8.
+    - v and w are measurable real-valued functions and p_v,p_w are defined by (7.107).
+    - The normalising integrals for p_v and p_w are finite and positive.
     implicit:
-    - The precise constants and powers are exactly those in the displayed statement of Lemma 7.3.8 and remain separately
-      flagged for visual confirmation.
+    - The extended-real interpretation covers a=∞; the substantive bound is for a<∞.
+    - The notation switch in part (c) is preserved explicitly rather than silently normalised.
   quantifier_order:
   - For every admissible pair v,w, prove parts (a), (b) and (c) in order.
-  constants: []
+  constants:
+  - Exact exponential factor exp(a/2) in part (a).
+  - Exact factor a² exp(a)(1+a) in part (b).
+  - Exact factor a² exp(a)(1+a)² in part (c).
   dependencies:
-    earlier_book: []
+    earlier_book:
+    - Inequalities for exponential and logarithmic functions
     chapter_local:
     - ch7.def.normalisedExponentialDensity
     - ch7.def.hellinger
-    later_book_uses: []
+    later_book_uses:
+    - ch7.lemma.7.3.8
+    - ch7.thm.7.3.9
   proof_status:
     delegates_to_exercises: []
     contains_omitted_steps: false
-    comment: none
+    comment: This exercise supplies the entire proof omitted after Lemma 7.3.8.
   notes_status:
     discussed_or_extended_in_notes: false
-    note_summary: ''
-    used_later_in_book: false
+    note_summary: The exercise cites van der Vaart and van Zanten (2008) for comparison.
+    used_later_in_book: true
   equivalents:
     mathlib:
       status: none_exact
-      candidates: []
+      candidates:
+      - MeasureTheory.withDensity
+      - Real.exp and Real.log inequalities
       exact_equivalent: false
     repository:
       status: none_found
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Bound the ratio of normalising constants and the exponential density ratio pointwise, then integrate
-      the resulting square-root and logarithmic inequalities.
+    sketch: Bound the ratio of normalising constants and the exponential density ratio pointwise, then integrate the resulting square-root and log-ratio inequalities.
     blockers: []
   difficulty: substantial
   pass: exercise
-  issues_for_central_review:
-  - type: constant_verification
-    page: 581
-    detail: Verify exact constants and the final power/exponential factor in all three parts of Lemma 7.3.8 against
-      the page image.
+  issues_for_central_review: []
+  verification_status: verified_against_printed_pages_581_and_602
   selection_reasons:
   - completes proof omitted from main text
   - cited by later result
   - establishes required reusable lemma
   used_by:
   - ch7.lemma.7.3.8
+  - ch7.thm.7.3.9
 - id: ex7.3.4
   kind: exercise
   book:
