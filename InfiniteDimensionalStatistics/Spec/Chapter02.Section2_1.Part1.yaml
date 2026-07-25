@@ -1,0 +1,476 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.1'
+fragment_part: 1
+inventory:
+- id: definition-unnumbered-2-1-process
+  kind: definition
+  book:
+    number: unnumbered-2.1-process
+    pages:
+    - 15
+    section: '2.1'
+    equations: []
+  title: Stochastic process indexed by T
+  statement: A stochastic process indexed by a set T is a family X = (X(t))_{t∈T} of real random variables on one probability
+    space.
+  hypotheses:
+    explicit:
+    - A probability space (Ω,𝒜,Pr).
+    - An index type T.
+    - For each t∈T, a measurable map X(t):Ω→ℝ.
+    implicit:
+    - All random variables share the same probability space.
+  quantifier_order:
+  - ∀ probability spaces Ω, ∀ index sets T, ∀ families X:T→Ω→ℝ.
+  constants:
+  - ∀ probability spaces Ω, ∀ index sets T, ∀ families X:T→Ω→ℝ.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: 'A function `X : T → Ω → ℝ` with `[MeasurableSpace Ω]` and coordinate measurability hypotheses.'
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-1-1
+  kind: definition
+  book:
+    number: 2.1.1
+    pages:
+    - 16
+    section: '2.1'
+    equations: []
+  title: Version and strict version
+  statement: Processes X and Y indexed by T are versions when every finite vector (X(t₁),…,X(tₙ)) has the same law as (Y(t₁),…,Y(tₙ));
+    they are strict versions (modifications) when Pr(X(t)=Y(t))=1 for every t∈T.
+  hypotheses:
+    explicit:
+    - X and Y are real processes on (possibly different for version, common for strict version) probability spaces.
+    - n≥1 and t₁,…,tₙ∈T for finite-dimensional-law equality.
+    implicit:
+    - For strict versions, coordinatewise almost-sure equality implies equal finite-dimensional laws.
+  quantifier_order:
+  - 'Version: ∀n≥1 ∀t₁…tₙ, law vectors equal.'
+  - 'Strict version: ∀t∈T, Pr[X(t)=Y(t)]=1.'
+  constants:
+  - 'Strict version: ∀t∈T, Pr[X(t)=Y(t)]=1.'
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - proposition-2-1-12
+    - proposition-2-1-7
+    later_book_uses:
+    - proposition-2-1-7
+    - proposition-2-1-12
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Predicates `SameFiniteDimensionalDistributions X Y P Q` and `IsModification X Y P := ∀ t, X t =ᵐ[P] Y t`.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-1-2a
+  kind: definition
+  book:
+    number: 2.1.2a
+    pages:
+    - 16
+    section: '2.1'
+    equations: []
+  title: Separable process
+  statement: 'Let (T,d) be a metric or pseudometric space and X:T×Ω→ℝ a process. The process X is separable when there exist
+    a countable set T₀⊆T and a set Ω₀⊆Ω with Pr(Ω₀)=1 such that, for every ω∈Ω₀, every t∈T and every ε>0, X(t,ω) belongs to
+    the closure in ℝ of {X(s,ω) : s∈T₀∩B_d(t,ε)}, where B_d(t,ε) is the open d-ball.'
+  hypotheses:
+    explicit:
+    - (T,d) is a metric or pseudometric space.
+    - X:T×Ω→ℝ is a stochastic process on (Ω,𝒜,Pr).
+    implicit:
+    - Closure is taken in ℝ.
+    - One common full-probability set Ω₀ works simultaneously for every t and ε.
+    - The countable separant T₀ need not be prescribed in advance.
+  quantifier_order:
+  - ∃ T₀⊆T, Countable T₀, ∃ Ω₀⊆Ω, Pr(Ω₀)=1, ∀ ω∈Ω₀, ∀ t∈T, ∀ ε>0, X(t,ω)∈closure {X(s,ω) | s∈T₀∩B_d(t,ε)}.
+  constants:
+  - ∃ T₀⊆T, Countable T₀, ∃ Ω₀⊆Ω, Pr(Ω₀)=1, ∀ ω∈Ω₀, ∀ t∈T, ∀ ε>0, X(t,ω)∈closure {X(s,ω) | s∈T₀∩B_d(t,ε)}.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - example-2-1-15
+    - proposition-2-1-12
+    - proposition-2-1-5
+    later_book_uses:
+    - proposition-2-1-5
+    - proposition-2-1-12
+    - example-2-1-15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: 'A predicate with witnesses `T₀ : Set T` and `Ω₀ : Set Ω`, `T₀.Countable`, `μ Ω₀ = 1`, and a pathwise closure-membership
+      condition for every `ω ∈ Ω₀`, `t` and positive radius.'
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-1-2b
+  kind: definition
+  book:
+    number: 2.1.2b
+    pages:
+    - 16
+    section: '2.1'
+    equations: []
+  title: Joint measurability
+  statement: X is jointly measurable when (t,ω)↦X(t,ω) is measurable on T×Ω for the product σ-algebra.
+  hypotheses:
+    explicit:
+    - T carries a measurable space.
+    - Ω carries the probability σ-algebra.
+    implicit: []
+  quantifier_order:
+  - Measurable (Function.uncurry X).
+  constants:
+  - Measurable (Function.uncurry X).
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - example-2-1-15
+    - proposition-2-1-12
+    - proposition-2-1-5
+    later_book_uses:
+    - proposition-2-1-5
+    - proposition-2-1-12
+    - example-2-1-15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: '`Measurable (Function.uncurry X)`.'
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-1-3a
+  kind: definition
+  book:
+    number: 2.1.3a
+    pages:
+    - 17
+    section: '2.1'
+    equations: []
+  title: Sample bounded process
+  statement: X is sample bounded when it has a version whose sample paths t↦X(t,ω) are bounded on T for almost every ω.
+  hypotheses:
+    explicit:
+    - A process X indexed by T.
+    implicit: []
+  quantifier_order:
+  - ∃ version Y of X, Pr({ω | sup_t |Y(t,ω)|<∞})=1.
+  constants:
+  - ∃ version Y of X, Pr({ω | sup_t |Y(t,ω)|<∞})=1.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - proposition-2-1-5
+    - proposition-2-1-7
+    later_book_uses:
+    - proposition-2-1-5
+    - proposition-2-1-7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Predicate using a modification/version and `∀ᵐ ω, Bornology.IsBounded (Set.range fun t => Y t ω)`.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-1-3b
+  kind: definition
+  book:
+    number: 2.1.3b
+    pages:
+    - 17
+    section: '2.1'
+    equations: []
+  title: Sample continuous process
+  statement: Relative to d, X is sample continuous when it has a version whose sample paths are bounded and uniformly d-continuous
+    almost surely.
+  hypotheses:
+    explicit:
+    - A pseudometric d on T.
+    - A process X.
+    implicit: []
+  quantifier_order:
+  - ∃ version Y, ∀ᵐω, bounded(Y·ω) ∧ UniformContinuous(Y·ω).
+  constants:
+  - ∃ version Y, ∀ᵐω, bounded(Y·ω) ∧ UniformContinuous(Y·ω).
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - proposition-2-1-5
+    - proposition-2-1-7
+    later_book_uses:
+    - proposition-2-1-5
+    - proposition-2-1-7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Predicate over a version `Y` with `∀ᵐ ω, UniformContinuous (Y · ω)` and bounded range.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-1-4
+  kind: proposition
+  book:
+    number: 2.1.4
+    pages:
+    - 17
+    section: '2.1'
+    equations: []
+  title: Oxtoby–Ulam tightness
+  statement: 'Every Borel probability measure on a complete separable metric space is tight: for every ε>0 there is compact
+    K with μ(K)>1−ε.'
+  hypotheses:
+    explicit:
+    - (S,d) complete and separable metric.
+    - μ a Borel probability measure on S.
+    - ε>0.
+    implicit: []
+  quantifier_order:
+  - ∀μ ∀ε>0, ∃ compact K, μ(K)>1−ε.
+  constants:
+  - ∀μ ∀ε>0, ∃ compact K, μ(K)>1−ε.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-1-6
+    chapter_local_dependents:
+    - exercise-2-2-7
+    - proposition-2-1-5
+    - theorem-2-2-4
+    later_book_uses:
+    - proposition-2-1-5
+    - theorem-2-2-4
+    - exercise-2-2-7
+  proof_status:
+    delegates_to_exercises:
+    - exercise-2-1-6
+    contains_omitted_steps: true
+    comment: The printed proof delegates one or more steps to the listed exercise(s).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: A theorem from Polish/Radon probability-measure infrastructure, stated using `IsTightMeasure μ` or compact inner
+      regularity.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - The text cross-reference says 'Exercise 2.6'; the relevant exercise is 2.1.6. Treat as a typographical cross-reference
+    error.
