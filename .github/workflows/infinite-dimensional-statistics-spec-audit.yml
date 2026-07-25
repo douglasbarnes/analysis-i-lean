@@ -46,6 +46,8 @@ jobs:
       - name: Run canonical migration audit
         id: audit
         continue-on-error: true
+        env:
+          CHAPTER: ${{ matrix.chapter }}
         shell: bash
         run: |
           set +e
@@ -56,6 +58,42 @@ jobs:
             --allow-source-blockers \
             --allow-incomplete-coverage > audit.log 2>&1
           status=$?
+          if [ "$status" -ne 0 ]; then
+            python - <<'PY' >> audit.log 2>&1
+          import collections
+          import os
+          from pathlib import Path
+          import re
+          import yaml
+
+          chapter = os.environ["CHAPTER"]
+          spec = Path("InfiniteDimensionalStatistics/Spec")
+          descriptor = yaml.safe_load((spec / f"Chapter{chapter}.yaml").read_text())
+          inv_meta = descriptor.get("package", {}).get("declaration_inventory", {})
+          names = inv_meta.get("files") or [inv_meta.get("file")]
+          rows = []
+          for name in names:
+              if not name:
+                  continue
+              doc = yaml.safe_load((spec / name).read_text())
+              fragments = doc.get("inventory_files")
+              if fragments:
+                  for fragment in fragments:
+                      rows.extend(yaml.safe_load((spec / fragment).read_text())["inventory"])
+              else:
+                  rows.extend(doc.get("inventory", []))
+          pattern = re.compile(r"(?:Definition|Lemma|Proposition|Theorem|Corollary|Example|Remark|Exercise|Item)\s+\d+\.\d+\.\d+")
+          grouped = collections.defaultdict(list)
+          for entry in rows:
+              label = str(entry.get("book", {}).get("number", ""))
+              if pattern.match(label):
+                  grouped[label].append(entry.get("id"))
+          print("Duplicate numbered-label detail:")
+          for label, ids in sorted(grouped.items()):
+              if len(ids) > 1:
+                  print(f"  {label}: {ids}")
+          PY
+          fi
           cat audit.log
           echo "status=$status" >> "$GITHUB_OUTPUT"
       - name: Post diagnostic to pull request
