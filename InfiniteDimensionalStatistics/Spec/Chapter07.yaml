@@ -18,24 +18,13 @@ specification_policy:
     core: All unstarred Chapter 7 main-text declarations and operative examples, irrespective of difficulty.
     starred: Only declarations explicitly starred by the book; Chapter 7 contains none.
     exercise: Selected exercises completing omitted proofs, cited later, or establishing reusable lemmas.
-  difficulty_values:
-  - routine
-  - substantial
-  - major-library
-  - research-level
+  difficulty_values: [routine, substantial, major-library, research-level]
 summary:
   inventory_entries: 106
   declarations: 88
   selected_exercises: 18
-  by_pass:
-    core: 88
-    starred: 0
-    exercise: 18
-  by_difficulty:
-    routine: 10
-    substantial: 23
-    major-library: 37
-    research-level: 36
+  by_pass: {core: 88, starred: 0, exercise: 18}
+  by_difficulty: {routine: 10, substantial: 23, major-library: 37, research-level: 36}
   central_review_flags: 22
   dag_nodes: 106
   dag_edges: 233
