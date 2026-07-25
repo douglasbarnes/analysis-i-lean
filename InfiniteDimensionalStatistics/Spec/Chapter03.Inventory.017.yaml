@@ -1,0 +1,404 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 17
+inventory:
+- id: ch3.ex.3_7_7
+  kind: exercise
+  book:
+    number: Exercise 3.7.7
+    pages:
+    - 282
+    - 283
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.7
+  statement: Prove the Portmanteau theorem for outer convergence of bounded processes.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: &id002 []
+  constants: &id003 []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id001
+    - Remark 3.7.30
+    - Theorem 3.7.47
+  proof_status: &id010
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: Selected because it completes an omitted proof, is cited later, or establishes reusable infrastructure.
+  notes_status: &id004
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: &id005
+    mathlib:
+      status: not-audited-exercise
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: not-found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation: &id006
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id001
+- id: ch3.ex.3_7_8
+  kind: exercise
+  book:
+    number: Exercise 3.7.8
+    pages:
+    - 283
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.8
+  statement: Prove the uniform-continuity extension from compact subsets used in the weak-convergence criterion.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id007
+    - Theorem 3.7.23
+  proof_status: &id008
+    delegates_to_exercises: []
+    contains_omitted_steps: true
+    comment: Selected because it completes an omitted proof, is cited later, or establishes reusable infrastructure.
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: true
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id007
+- id: ch3.ex.3_7_9
+  kind: exercise
+  book:
+    number: Exercise 3.7.9
+    pages:
+    - 283
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.9
+  statement: Prove that almost-sure uniform convergence implies outer-probability convergence and then convergence in law.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id009
+    - Theorem 3.7.25
+  proof_status: *id008
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: true
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id009
+- id: ch3.ex.3_7_10
+  kind: exercise
+  book:
+    number: Exercise 3.7.10
+    pages:
+    - 283
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.10
+  statement: Prove that a prelinear map extends uniquely to a linear map on the span.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - prelinear_map
+    later_book_uses: &id011
+    - Theorem 3.7.28
+  proof_status: *id010
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id011
+- id: ch3.ex.3_7_14
+  kind: exercise
+  book:
+    number: Exercise 3.7.14
+    pages:
+    - 283
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.14
+  statement: Replace sequential closure by closure in Proposition 3.7.34 using the join of the pointwise and L²(P) topologies.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_7_34
+    later_book_uses: &id013
+    - Proposition 3.7.34
+  proof_status: *id010
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: &id012
+    - Official correction supplies the corrected neighbourhood definition.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id012
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id013
+- id: ch3.ex.3_7_15
+  kind: exercise
+  book:
+    number: Exercise 3.7.15
+    pages:
+    - 283
+    - 284
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.15
+  statement: Replace Rademacher randomisation by Gaussian randomisation in Theorem 3.7.40.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_1_26
+    - theorem_3_7_40
+    later_book_uses: &id014
+    - Theorem 3.7.40
+  proof_status: *id010
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id014
+- id: ch3.ex.3_7_16
+  kind: exercise
+  book:
+    number: Exercise 3.7.16
+    pages:
+    - 284
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.16
+  statement: Prove the alternative randomisation characterisation following Theorem 3.7.40.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id015
+    - Donsker randomisation API
+  proof_status: *id010
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id015
+- id: ch3.ex.3_7_17
+  kind: exercise
+  book:
+    number: Exercise 3.7.17
+    pages:
+    - 284
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.17
+  statement: Prove the bounded-Lipschitz interval covering estimate stated in the exercise.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id017
+    - Local bounded-Lipschitz entropy
+  proof_status: *id010
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: &id016
+    - Do not use this as the p.280 citation; official correction points Example 3.7.57 to Exercise 3.6.17.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id016
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id017
+- id: ch3.ex.3_7_19
+  kind: exercise
+  book:
+    number: Exercise 3.7.19
+    pages:
+    - 284
+    - 285
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.19
+  statement: Construct the Hilbert-space class in the exercise and prove it is UPG.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id018
+    - Uniform pre-Gaussian examples
+  proof_status: *id010
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id018
+- id: ch3.ex.3_7_20
+  kind: exercise
+  book:
+    number: Exercise 3.7.20
+    pages:
+    - 285
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.20
+  statement: Show that if the sequence in Exercise 3.7.19 does not tend to zero, the class can fail UPG_f; deduce universal
+    Donsker need not imply uniform Donsker.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_7_19
+    later_book_uses: &id019
+    - Separation of uniform notions
+  proof_status: *id010
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id019
+- id: ch3.ex.3_7_21
+  kind: exercise
+  book:
+    number: Exercise 3.7.21
+    pages:
+    - 285
+    section: '3.7'
+    equations: []
+  title: Exercise 3.7.21
+  statement: For 𝒞=2^ℕ and P=∑p_kδ_k, prove P-pre-Gaussianity iff ∑√p_k<∞.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id020
+    - Example 3.7.56
+    - Example 3.7.57
+  proof_status: *id010
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id020
