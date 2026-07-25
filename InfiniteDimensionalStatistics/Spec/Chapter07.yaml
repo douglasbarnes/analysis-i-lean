@@ -31,6 +31,11 @@ summary:
     core: 88
     starred: 0
     exercise: 18
+  by_difficulty:
+    routine: 10
+    substantial: 23
+    major-library: 37
+    research-level: 36
   central_review_flags: 22
   dag_nodes: 106
   dag_edges: 233
