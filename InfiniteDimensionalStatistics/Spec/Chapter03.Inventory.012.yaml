@@ -1,0 +1,572 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 12
+inventory:
+- id: remark_3_7_27
+  kind: remark
+  book:
+    number: Remark 3.7.27
+    pages:
+    - 251
+    section: '3.7'
+    equations: []
+  title: Total boundedness forced by pre-Gaussianity
+  statement: A P-pre-Gaussian class is totally bounded for d_P; suitable versions and tightness are tied to this total boundedness
+    and sample continuity.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: &id001
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants: &id002
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_26
+    later_book_uses:
+    - Theorem 3.7.31.
+  proof_status: &id003
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status: &id004
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: &id007
+    mathlib:
+      status: partial-infrastructure-only
+      candidates:
+      - Mathlib supplies underlying measure/integral/probability/independence/Bochner/Gaussian infrastructure, but no exact
+        chapter theorem was located.
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: &id006
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: prelinear_map
+  kind: definition
+  book:
+    number: Unnumbered definition, p. 251
+    pages:
+    - 251
+    section: '3.7'
+    equations: []
+  title: Prelinear map
+  statement: A map G:C→ℝ is prelinear if every finite relation ∑λ_ic_i=0 implies ∑λ_iG(c_i)=0; equivalently G extends linearly
+    to span(C).
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - C is a subset of a real vector space
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Theorem 3.7.28.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: &id005
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: &id012
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_28
+  kind: theorem
+  book:
+    number: Theorem 3.7.28
+    pages:
+    - 252
+    - 253
+    section: '3.7'
+    equations: []
+  title: Suitable prelinear version of the P-bridge
+  statement: For a P-pre-Gaussian class satisfying the countable approximation assumptions, the P-bridge has a suitable bounded
+    uniformly continuous prelinear version that extends consistently to the pointwise sequential convex/symmetric hull specified
+    in the theorem.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - P-pre-Gaussian class
+    - countable approximation/measurability assumptions
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_7_10
+    - definition_3_7_26
+    - prelinear_map
+    - theorem_3_7_25
+    later_book_uses:
+    - Proposition 3.7.34
+    - Theorem 3.7.40
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_7_10
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: definition_3_7_29
+  kind: definition
+  book:
+    number: Definition 3.7.29
+    pages:
+    - 253
+    section: '3.7'
+    equations: []
+  title: P-Donsker class
+  statement: A class 𝓕 is P-Donsker if ν_n⇒G_P in ℓ∞(𝓕), with convergence as in Definition 3.7.22 and a suitable tight version
+    of G_P.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - countable approximation/measurability sufficient for ν_n
+    - 𝓕⊂L²(P)
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - P_bridge
+    - centred_empirical_process
+    - definition_3_7_22
+    later_book_uses:
+    - all subsequent Donsker results
+    - Chapters 4–5
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: remark_3_7_30
+  kind: remark
+  book:
+    number: Remark 3.7.30
+    pages:
+    - 253
+    - 254
+    section: '3.7'
+    equations: []
+  title: Banach-space CLT as a Donsker property
+  statement: For a separable Banach space B and B-valued X, the CLT for √n(P_n−P)X in B is equivalent to the P-Donsker property
+    of the dual unit ball under the evaluation class.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - B separable Banach
+    - X has the required second moments
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_29
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: &id009
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents: *id007
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_31
+  kind: theorem
+  book:
+    number: Theorem 3.7.31
+    pages:
+    - 254
+    section: '3.7'
+    equations: []
+  title: Equivalent characterisations of the P-Donsker property
+  statement: For a class satisfying (3.257), P-Donsker is equivalent to finite-dimensional convergence together with asymptotic
+    d_P-equicontinuity of ν_n; the theorem also gives equivalent randomised formulations and total-boundedness/pre-Gaussian
+    conclusions in clauses (a)–(c).
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - condition (3.257)
+    - 𝓕⊂L²(P)
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_26
+    - definition_3_7_29
+    - theorem_3_7_23
+    later_book_uses:
+    - Propositions 3.7.32–3.7.34
+    - Theorems 3.7.40 and 3.7.52
+  proof_status: *id003
+  notes_status: &id010
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id008
+    - Transcribe every equivalent clause and the precise order of limits.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id008
+- id: proposition_3_7_32
+  kind: proposition
+  book:
+    number: Proposition 3.7.32
+    pages:
+    - 254
+    - 255
+    section: '3.7'
+    equations: []
+  title: Weak-L² envelope is necessary for Donsker classes
+  statement: If 𝓕⊂L²(P) is P-Donsker and satisfies (3.257), with measurable cover F, then lim_{t→∞}t²P{F>t}=0; hence PF^α<∞
+    for every 0<α<2.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - P-Donsker
+    - condition (3.257)
+    - measurable cover F
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example_3_7_4
+    - proposition_3_1_23
+    - theorem_3_7_31
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id009
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_7_33
+  kind: proposition
+  book:
+    number: Proposition 3.7.33
+    pages:
+    - 255
+    - 256
+    section: '3.7'
+    equations: []
+  title: Finite-union permanence of Donsker classes
+  statement: If 𝓕₁ and 𝓕₂ are P-Donsker, then 𝓕₁∪𝓕₂ is P-Donsker.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕₁ and 𝓕₂ P-Donsker
+    - combined measurability assumptions
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_7_31
+    later_book_uses:
+    - Corollary 3.7.35
+    - Theorem 3.7.37
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: HFP
+  kind: definition
+  book:
+    number: Unnumbered definition, p. 257
+    pages:
+    - 257
+    section: '3.7'
+    equations: []
+  title: 'H(𝓕,P): symmetric convex sequential closure'
+  statement: H(𝓕,P) is the pointwise and L²(P) sequential closure of the symmetric convex hull of 𝓕, with the exact joint-topology
+    convention in the text.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕⊂L²(P)
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Proposition 3.7.34.
+  proof_status: *id003
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Independent Rademacher coordinates on a product probability space, finite sums, and measurable/countable suprema.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_7_34
+  kind: proposition
+  book:
+    number: Proposition 3.7.34
+    pages:
+    - 257
+    section: '3.7'
+    equations: []
+  title: Convex-hull permanence of Donsker classes
+  statement: If 𝓕 is P-Donsker, then H(𝓕,P) is P-Donsker.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕 P-Donsker
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - HFP
+    - theorem_3_7_25
+    - theorem_3_7_28
+    later_book_uses:
+    - Corollary 3.7.35.
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_7_14
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id004
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_7_35
+  kind: corollary
+  book:
+    number: Corollary 3.7.35
+    pages:
+    - 257
+    section: '3.7'
+    equations: []
+  title: Finite sums of Donsker classes
+  statement: If 𝓕_i, 1≤i≤k<∞, are P-Donsker, then {∑_{i=1}^k f_i:f_i∈𝓕_i} is P-Donsker.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - finite family of P-Donsker classes
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_7_33
+    - proposition_3_7_34
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id009
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_36
+  kind: theorem
+  book:
+    number: Theorem 3.7.36
+    pages:
+    - 257
+    - 259
+    section: '3.7'
+    equations:
+    - '3.268'
+  title: Random-entropy Donsker criterion
+  statement: For a P-measurable class with square-integrable cover, if the random empirical-L² entropy integral in (3.268)
+    tends to zero in outer probability as the radius tends to zero, then 𝓕 is P-Donsker.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - P-measurable class
+    - F∈L²(P)
+    - condition (3.268)
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_1
+    - theorem_3_7_31
+    later_book_uses:
+    - Theorem 3.7.37.
+  proof_status: *id003
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id011
+    - Copy order of limits, expectations and random upper limit exactly.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id011
+- id: theorem_3_7_37
+  kind: theorem
+  book:
+    number: Theorem 3.7.37
+    pages:
+    - 259
+    - 260
+    section: '3.7'
+    equations:
+    - '3.269'
+  title: Uniform-entropy Donsker criterion
+  statement: If 𝓕 is measurable with F∈L²(P) and the Koltchinskii–Pollard uniform entropy integral (3.269) is finite, then
+    𝓕 is P-Donsker. Consequently bounded VC-subgraph/VC-type/VC-hull classes and finite unions/sums with an L² envelope are
+    Donsker.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - measurability
+    - F∈L²(P)
+    - uniform entropy integral finite
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_7_35
+    - theorem_3_6_17
+    - theorem_3_6_9
+    - theorem_3_7_36
+    later_book_uses:
+    - Chapter 4.4
+    - Chapter 5
+  proof_status: *id003
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation: *id006
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_38
+  kind: theorem
+  book:
+    number: Theorem 3.7.38
+    pages:
+    - 260
+    section: '3.7'
+    equations: []
+  title: Bracketing central limit theorem
+  statement: If 𝓕 has measurable cover F∈L²(P) and ∫₀^{2‖F‖₂}√log N_{[]}(𝓕,L²(P),τ)dτ<∞, then 𝓕 is P-Donsker.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - measurable class/cover
+    - F∈L²(P)
+    - finite L² bracketing integral
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_5_13
+    - theorem_3_7_31
+    later_book_uses:
+    - Shape-constrained and smooth-class CLTs.
+  proof_status: *id003
+  notes_status: *id010
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_7_39
+  kind: corollary
+  book:
+    number: Corollary 3.7.39
+    pages:
+    - 260
+    - 261
+    section: '3.7'
+    equations: []
+  title: Multivariate empirical distribution-function CLT
+  statement: The lower-orthant indicator class in ℝ^d is P-Donsker; hence √n(F_n−F) converges in ℓ∞(ℝ^d) to the corresponding
+    P-Brownian bridge.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - X_i i.i.d. in ℝ^d
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - example_3_7_19
+    - theorem_3_7_37
+    later_book_uses: []
+  proof_status: *id003
+  notes_status: *id009
+  equivalents: *id005
+  likely_lean_representation: *id012
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
