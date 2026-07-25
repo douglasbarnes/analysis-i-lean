@@ -34,6 +34,10 @@ package:
 
 The loader reads inventory fragments in the listed order and concatenates their top-level `inventory` lists. Each fragment must independently be valid YAML and must contain only canonical readable declaration mappings. YAML anchors may remove repeated boilerplate inside a fragment, but they do not change the loaded schema.
 
+A logical source-order block may be split into alphabetically adjacent fragments, such as `Chapter05.Inventory.04a.yaml` and `Chapter05.Inventory.04b.yaml`, when one part is replaced during source-transcription review. The descriptor order, not filename globbing, is authoritative.
+
 The validator rejects descriptors that provide both `file` and `files`, missing components, entry-count mismatches, compact declaration/profile arrays, invalid dependency references, duplicate identifiers or cyclic DAGs.
+
+An `acceptance_status: needs_revision` descriptor may still be structurally loadable. Structural validation checks schema and graph integrity; it does not certify that a blocked source transcription is mathematically complete.
 
 This packaging distinction is storage-only. Acceptance criteria and declaration semantics are identical for self-contained and descriptor packages.
