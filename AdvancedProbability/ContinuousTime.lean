@@ -1,4 +1,5 @@
 import AdvancedProbability.DiscreteMartingales
+import Mathlib.Probability.Process.Filtration
 
 noncomputable section
 
@@ -29,7 +30,7 @@ def ContinuousPathSpace := {f : ℝ≥0 → ℝ // Continuous f}
 /-- Source 57: a finite-dimensional distribution of a process. -/
 def FiniteDimensionalDistribution {Ω : Type u} (X : ContinuousProcess Ω)
     (times : List ℝ≥0) : Ω → (Fin times.length → ℝ) :=
-  fun ω i ↦ X (times.get i) ω
+  fun ω i ↦ X (times.get i)
 
 /-- Source 58: Kolmogorov's continuity criterion. -/
 structure KolmogorovContinuityCriterion {Ω : Type u} (X : ContinuousProcess Ω) where
@@ -48,6 +49,35 @@ structure ContinuousFiltration (Ω : Type u) where
   sigma : ℝ≥0 → SigmaField Ω
   mono : ∀ s t : ℝ≥0, s ≤ t → (sigma s).Subfield (sigma t)
 
+namespace SigmaField
+
+/-- The Mathlib measurable space carried by a course-facing sigma-field. -/
+def toMeasurableSpace {Ω : Type u} (𝒢 : SigmaField Ω) : MeasurableSpace Ω where
+  MeasurableSet' := fun A ↦ A ∈ 𝒢.sets
+  measurableSet_empty := 𝒢.empty_mem
+  measurableSet_compl := 𝒢.compl_mem
+  measurableSet_iUnion := 𝒢.iUnion_mem
+
+@[simp] theorem measurableSet_toMeasurableSpace {Ω : Type u} (𝒢 : SigmaField Ω)
+    (A : Set Ω) : @MeasurableSet Ω 𝒢.toMeasurableSpace A ↔ A ∈ 𝒢.sets :=
+  Iff.rfl
+
+end SigmaField
+
+namespace ContinuousFiltration
+
+/-- A course-facing continuous filtration as a Mathlib filtration of the maximal ambient measurable
+space. -/
+def toMathlib {Ω : Type u} (ℱ : ContinuousFiltration Ω) :
+    Filtration ℝ≥0 (⊤ : MeasurableSpace Ω) where
+  seq t := (ℱ.sigma t).toMeasurableSpace
+  mono' := by
+    intro s t hst A hA
+    exact ℱ.mono s t hst hA
+  le' := fun _ ↦ le_top
+
+end ContinuousFiltration
+
 /-- Source 61: a continuous-time stopping time. -/
 def IsContinuousStoppingTime {Ω : Type u} (ℱ : ContinuousFiltration Ω)
     (T : Ω → ℝ≥0) : Prop := ∀ t, {ω | T ω ≤ t} ∈ (ℱ.sigma t).sets
@@ -62,13 +92,22 @@ structure ClosedSetHittingTime (isClosed continuousPaths stopping : Prop) where
   continuousHypothesis : continuousPaths
   conclusion : stopping
 
-/-- Source 66: right-continuous augmentation `F_{t+}`. -/
-def rightContinuousFiltration {Ω : Type u} (_ℱ : ContinuousFiltration Ω)
-    (rightLimit : ℝ≥0 → SigmaField Ω)
-    (hmono : ∀ s t : ℝ≥0, s ≤ t → (rightLimit s).Subfield (rightLimit t)) :
-    ContinuousFiltration Ω :=
-  { sigma := rightLimit
-    mono := hmono }
+/-- Source 66: the canonical right continuation `F_{t+}` of a continuous filtration. -/
+noncomputable def rightContinuousFiltration {Ω : Type u} (ℱ : ContinuousFiltration Ω) :
+    Filtration ℝ≥0 (⊤ : MeasurableSpace Ω) :=
+  ℱ.toMathlib.rightCont
+
+/-- On non-negative real time, the right-continuous filtration at `t` is the infimum of all
+sigma-algebras strictly after `t`. -/
+theorem rightContinuousFiltration_apply {Ω : Type u} (ℱ : ContinuousFiltration Ω) (t : ℝ≥0) :
+    rightContinuousFiltration ℱ t = ⨅ s > t, ℱ.toMathlib s := by
+  change ℱ.toMathlib.rightCont t = _
+  exact Filtration.rightCont_eq ℱ.toMathlib t
+
+/-- The canonical right continuation is right-continuous. -/
+instance rightContinuousFiltration_isRightContinuous {Ω : Type u} (ℱ : ContinuousFiltration Ω) :
+    Filtration.IsRightContinuous (rightContinuousFiltration ℱ) :=
+  inferInstance
 
 /-- Source 67: completeness and right-continuity (the usual conditions). -/
 structure UsualConditions {Ω : Type u} (ℱ : ContinuousFiltration Ω) where
@@ -128,7 +167,7 @@ structure ContinuousLpMartingaleConvergence {Ω : Type u} (X : ContinuousProcess
 /-- Source 77: continuous-time `L¹` martingale convergence. -/
 structure ContinuousL1MartingaleConvergence (uniformIntegrable terminalRepresentation convergesL1 : Prop) where
   ui_iff_terminal : uniformIntegrable ↔ terminalRepresentation
-  terminal_iff_converges : terminalRepresentation ↔ convergesL1
+  terminal_iff_converges : hasTerminalRepresentation ↔ convergesL1
 
 /-- Source 78: optional stopping for uniformly integrable continuous martingales. -/
 structure ContinuousUIOptionalStopping (conditionalIdentity expectationIdentity : Prop) where
