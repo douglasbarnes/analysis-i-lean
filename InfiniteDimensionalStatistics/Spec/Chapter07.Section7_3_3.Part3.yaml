@@ -1,0 +1,113 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.3.3
+fragment_part: 3
+inventory:
+- id: ch7.prop.gaussianPosteriorFormula
+  kind: proposition
+  book:
+    number: (7.115)–(7.116)
+    pages:
+    - 589
+    - 590
+    section: 7.3.3
+    equations:
+    - (7.115)
+    - (7.116)
+  title: Conjugate Gaussian posterior formula
+  statement: "Conditional on Y=(Y_{lk}), the posterior is the law of\n  f|Y = ∑_{l,k} [σ_l²/(σ_l²+1/n)]Y_{lk} ψ_{lk}\n         + ∑_{l,k} [σ_l²/(nσ_l²+1)]^{1/2} ḡ_{lk} ψ_{lk},\nwhere ḡ_{lk} are iid N(0,1), independent of Y.\nThus each coordinate posterior is normal with mean\n  σ_l²Y_{lk}/(σ_l²+1/n)\nand variance σ_l²/(nσ_l²+1)."
+  hypotheses:
+    explicit:
+    - Gaussian prior (7.114).
+    - Gaussian white-noise sequence likelihood.
+    implicit:
+    - Conditional infinite product/series defines a Gaussian measure in L².
+  quantifier_order:
+  - For every observed coordinate sequence in an a.s. set.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.gaussianConjugatePrior
+    - ch7.def.whiteNoiseSequenceModel
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.4
+    contains_omitted_steps: true
+    comment: derivation of conjugate formula
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - ProbabilityTheory.gaussianReal
+      - Gaussian measure foundations (partial)
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Prove one-dimensional normal conjugacy, then identify the product posterior
+      kernel and its L²-valued series.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.thm.7.3.16
+  kind: theorem
+  book:
+    number: Theorem 7.3.16
+    pages:
+    - 590
+    - 591
+    section: 7.3.3
+    equations: []
+  title: Sharp Gaussian-prior supremum-norm contraction tails
+  statement: "Let σ_l=2^{-l(γ+1/2)}l^{-1/2}, γ>0, and f₀∈C^γ. There exist M₀,C₁,C₂>0\nsuch that for every M≥M₀,\n  E^Y_{f₀} Π( ||f-f₀||∞ > M (n/log n)^{-γ/(2γ+1)} |Y )\n     ≤ C₁ n^{-C₂(M-M₀)²}."
+  hypotheses:
+    explicit:
+    - γ>0.
+    - Truth f₀∈C^γ.
+    - Gaussian prior with the displayed scales.
+    - Sufficient wavelet regularity.
+    implicit:
+    - The polynomial tail exponent is uniform in n and grows quadratically in M-M₀.
+  quantifier_order:
+  - ∃M₀,C₁,C₂, ∀M≥M₀, ∀n (or all large n), bound.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Gaussian maxima and wavelet sup-norm reconstruction
+    chapter_local:
+    - ch7.prop.gaussianPosteriorFormula
+    - ch7.def.posteriorContractionRate
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Explicit Gaussian posterior mean bias plus Gaussian fluctuation maxima;
+      nonasymptotic tail analysis.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
