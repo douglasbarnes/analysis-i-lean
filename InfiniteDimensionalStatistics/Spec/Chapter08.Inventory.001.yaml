@@ -1,7 +1,7 @@
 schema_version: '1.0'
 chapter: 8
 chunk: 1
-chunk_count: 29
+chunk_count: 16
 inventory:
 - id: ch8.white_noise_model_8_1
   kind: definition
@@ -212,7 +212,7 @@ inventory:
 - id: ch8.adaptive_l2_testing_rate
   kind: definition
   book:
-    number: Theorem 8.1.1 rate
+    number: rate in Theorem 8.1.1(a)
     pages:
     - 609
     section: 8.1.1
