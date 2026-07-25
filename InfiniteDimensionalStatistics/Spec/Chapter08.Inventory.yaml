@@ -1,0 +1,262 @@
+schema_version: '1.0'
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 8
+  chapter_title: Adaptive Inference
+  book_pages:
+    start: 607
+    end: 666
+  scope: Chapter 8 read in full, including all exercises and Section 8.4 notes.
+  correction_policy: The uploaded first-edition PDF is primary. Suspected typography, measurability, generality
+    and extraction defects are recorded explicitly and are never repaired silently.
+policy:
+  no_lean_proofs: true
+  no_silent_repairs: true
+  pass_semantics:
+    core: Every unstarred main-text or notes declaration; Chapter 8 has no source-starred material.
+    starred: Reserved exclusively for material explicitly starred in the book.
+    exercise: Selected exercise declarations satisfying the project extraction criteria.
+  difficulty_values:
+  - routine
+  - substantial
+  - major-library
+  - research-level
+  pass_values:
+  - core
+  - starred
+  - exercise
+repository_audit:
+  repository: douglasbarnes/analysis-i-lean
+  search_terms:
+  - Lepski
+  - Besov
+  - Gaussian white noise
+  - self-similar
+  - adaptive confidence
+  result: No exact Chapter 8 equivalents found.
+  mathlib_audit: No exact Lepski/Besov/self-similarity/adaptive-confidence declarations found. Reuse general measure
+    theory, Gaussian probability, finite sums, normed spaces, ℓp, topology and asymptotic filters.
+central_review_flags:
+- id: CR-001
+  category: normalisation
+  description: Equations (8.6), (8.9) and several proofs set σ²=1, while theorem constants retain σ-dependence.
+    The formalisation must make the normalisation explicit and transport constants under rescaling.
+- id: CR-002
+  category: source-fidelity
+  description: The displayed rate in Theorem 8.1.3 is damaged in available text extraction. The inventory records
+    the rate inferred from the proof; verify whether the factor is B^{1/(2r+1)} or max(1,B)^{1/(2r+1)} against the
+    typeset page.
+- id: CR-003
+  category: representation
+  description: Every Besov/Hölder/Sobolev ball depends on a concrete wavelet or coefficient norm. A central choice
+    of basis, index type, boundary convention and norm-equivalence policy is required.
+- id: CR-004
+  category: measurability
+  description: Tests, estimators, finite argmin selectors, suprema, random confidence sets, membership events and
+    diameters all require explicit measurability. The book often suppresses these hypotheses.
+- id: CR-005
+  category: definition-totality
+  description: Lepski selectors use minima of finite sets and a convention when the admissible set is empty. Lean
+    definitions must encode totality and prove the selected index lies in the grid.
+- id: CR-006
+  category: typography
+  description: The condition around (8.10) is extracted as “n ≲ 2^{jmax} ≤ n”, which is internally compressed/ambiguous.
+    Verify the intended two-sided comparability 2^{jmax} ≍ n.
+- id: CR-007
+  category: notation
+  description: Lemma 8.2.4 alternates between τ-hat and τ-tilde in the extracted text. Verify the threshold symbol
+    and whether the exponent uses τ or √τ.
+- id: CR-008
+  category: typography
+  description: Exercise 8.2.1 writes n/log² n in a way that can be parsed as n/log_2 n. Verify that the intended
+    pilot resolution is 2^{j̃_n}=n/(log n)^2.
+- id: CR-009
+  category: constant-dependence
+  description: Theorem 8.2.8 states that D depends only on s, although the construction fixes a wavelet, threshold
+    and envelope parameter. Record all hidden fixed-data dependence before formalisation.
+- id: CR-010
+  category: typography
+  description: Equation (8.66) is extracted with P(ŝ_n=s(f))≤α/2; the proof requires the misclassification probability
+    P(ŝ_n≠s(f))≤α/2. Verify the printed relation.
+- id: CR-011
+  category: quantifiers
+  description: The pointwise o_P requirement in Theorem 8.3.11 suppresses whether it holds for every f separately
+    and how the sequence r_n is quantified. Preserve the book statement until checked.
+- id: CR-012
+  category: typography
+  description: The cusp example following (8.78) has a malformed assertion about non-membership in a smoother Hölder
+    class. It is likely f∉B^{1+γ}_{∞∞}; verify rather than repair.
+- id: CR-013
+  category: typography
+  description: Lemma 8.3.13 has now been transcribed with both displayed exponential bounds. Retain a page-image
+    check for the prime notation, strict inequality j<j_n^*−m, and the placement of j and j_min in the exponents.
+- id: CR-014
+  category: notation
+  description: Theorem 8.3.15 defines a lower smoothness estimate s̃ but one extracted sentence says to use r=s
+    in the confidence-band construction. The proof uses the lower estimate; verify r=s̃.
+- id: CR-016
+  category: normalisation
+  description: Sample splitting changes the Gaussian coordinate noise from N(0,1) to N(0,2). All risk, unbiased-risk
+    and quantile constants must consistently use the doubled variance.
+- id: CR-017
+  category: definition
+  description: The self-similar sequence class (8.90) uses ceilings and dyadic windows; non-emptiness and the exact
+    lower summation endpoint must be formalised and checked.
+- id: CR-018
+  category: source-fidelity
+  description: Equations (8.95) and (8.96) have been transcribed explicitly. Before Lean implementation, verify
+    the first rational inequality in (8.95), including every parenthesis and the use of κ₁, directly against the
+    typeset page.
+- id: CR-019
+  category: measurability
+  description: An arbitrary random subset C_n needs measurable-multifunction machinery. Positive constructions should
+    initially be represented as measurable centre/radius balls; impossibility theorems need a principled random-set
+    interface.
+- id: CR-020
+  category: constant-dependence
+  description: Theorem 8.3.16 suppresses dependencies of constants and quantiles on the fixed adaptation window
+    and self-similarity parameters. Audit these dependencies.
+- id: CR-021
+  category: notation
+  description: Theorem 8.3.18 uses r′, r and s with the nonstandard ordering r′<r<r′/(1−ε) and s∈(r,r′/(1−ε)). Verify
+    every prime and endpoint.
+- id: CR-022
+  category: generality
+  description: Theorem 8.3.20 suppresses b, B, J0 and class non-emptiness in its informal formulation. These must
+    remain explicit in Lean.
+- id: CR-023
+  category: measurability
+  description: The Gaussian product prior on B^s_{2∞} raises Borel/cylindrical measurability and nonseparability
+    questions. Prefer a sequence-space probability law with a proved measurable embedding.
+- id: CR-024
+  category: typography
+  description: Proposition 8.3.23 is extracted as exp(−log(1/ε)2^j); the proof gives exactly ε^{2^j}. Preserve the
+    latter algebraic equality and verify the displayed exponent.
+- id: CR-025
+  category: quantifiers
+  description: The chapter alternates between “for all sufficiently large n” and limsup/liminf formulations. Each
+    Lean theorem must use the exact book quantifier order rather than a silently strengthened equivalent.
+- id: CR-026
+  category: implicit-hypotheses
+  description: Density-estimation statements suppress nonnegativity, integral-one and sometimes bounded-envelope
+    assumptions when using Besov-ball notation.
+- id: CR-027
+  category: quantifiers
+  description: Proposition 8.3.7’s prose says “for every α” while the target criteria also contain α′. Verify whether
+    L depends on both α and α′.
+- id: CR-028
+  category: measurability
+  description: Infima over all tests/estimators presuppose standard measurable sample spaces and nonempty classes.
+    Make these structural assumptions explicit.
+- id: CR-029
+  category: constants
+  description: Symbols ≍, ≲ and “large enough” hide existential constants and dependency sets. Every formal declaration
+    needs explicit positive constants and eventual-index witnesses.
+- id: CR-030
+  category: rounding
+  description: Dyadic resolution equations require a fixed floor/ceiling convention. The book frequently suppresses
+    integer rounding as asymptotically immaterial.
+selected_exercises:
+- id: ch8.exercise_8_3_2
+  reason:
+  - completes a proof omitted from the main text
+- id: ch8.exercise_8_3_3
+  reason:
+  - completes a proof omitted from the main text
+- id: ch8.exercise_8_3_5
+  reason:
+  - establishes a reusable lemma
+  - is cited in the proof of Theorem 8.3.16
+- id: ch8.exercise_8_3_1
+  reason:
+  - establishes a reusable alternative confidence-band construction
+- id: ch8.exercise_8_1_1
+  reason:
+  - establishes a reusable all-smoothness extension
+- id: ch8.exercise_8_1_2
+  reason:
+  - establishes a required sampling-model analogue
+- id: ch8.exercise_8_2_1
+  reason:
+  - establishes a reusable random-envelope lemma
+- id: ch8.exercise_8_2_2
+  reason:
+  - establishes a required sampling-model analogue
+- id: ch8.exercise_8_3_4
+  reason:
+  - establishes a reusable prior-support analogue
+completeness_check:
+  inventory_entries: 115
+  selected_exercises: 9
+  expected_numbered_labels: &id001
+  - Theorem 8.1.1 rate
+  - Theorem 8.1.1
+  - Theorem 8.1.2
+  - Theorem 8.1.3 rate
+  - Theorem 8.1.3
+  - Exercise 8.1.1
+  - Exercise 8.1.2
+  - Lemma 8.2.1
+  - Theorem 8.2.2
+  - Theorem 8.2.3
+  - Lemma 8.2.4
+  - Theorem 8.2.5
+  - Lemma 8.2.6
+  - Theorem 8.2.7
+  - Theorem 8.2.8
+  - Exercise 8.2.1
+  - Exercise 8.2.2
+  - Theorem 8.3.1
+  - Theorem 8.3.2
+  - Theorem 8.3.4
+  - Theorem 8.3.5
+  - Proposition 8.3.6
+  - Proposition 8.3.7
+  - Theorem 8.3.8
+  - Corollary 8.3.10
+  - Theorem 8.3.11
+  - Lemma 8.3.13
+  - Theorem 8.3.15
+  - Lemma 8.3.17
+  - Theorem 8.3.16
+  - Theorem 8.3.18
+  - Corollary 8.3.19
+  - Theorem 8.3.20
+  - Proposition 8.3.21
+  - Proposition 8.3.22
+  - Proposition 8.3.23
+  - Proposition 8.3.24
+  - Exercise 8.3.1
+  - Exercise 8.3.2
+  - Exercise 8.3.3
+  - Exercise 8.3.4
+  - Exercise 8.3.5
+  found_numbered_labels: *id001
+  missing_numbered_labels: []
+  duplicate_identifiers: []
+  central_review_issue_count: 29
+  dag_node_count: 115
+  dag_edge_count: 160
+  source_starred_entry_count: 0
+inventory_files:
+- Chapter08.Inventory.001.yaml
+- Chapter08.Inventory.002.yaml
+- Chapter08.Inventory.003.yaml
+- Chapter08.Inventory.004.yaml
+- Chapter08.Inventory.005.yaml
+- Chapter08.Inventory.006.yaml
+- Chapter08.Inventory.007.yaml
+- Chapter08.Inventory.008.yaml
+- Chapter08.Inventory.009.yaml
+- Chapter08.Inventory.010.yaml
+- Chapter08.Inventory.011.yaml
+- Chapter08.Inventory.012.yaml
+- Chapter08.Inventory.013.yaml
+- Chapter08.Inventory.014.yaml
+- Chapter08.Inventory.015.yaml
+- Chapter08.Inventory.016.yaml
