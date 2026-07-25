@@ -37,7 +37,7 @@ summary:
     substantial: 23
     major-library: 36
     research-level: 36
-  central_review_flags: 13
+  central_review_flags: 5
   dag_nodes: 106
   dag_edges: 207
 package:
@@ -81,11 +81,28 @@ completeness_check:
   all_entries_have_required_fields: true
   exercise_selection_complete: true
   exercise_source_verification: Exercises 7.3.1–7.3.8 were verified against the printed exercise block on pp. 602–603.
-  lemma_7_3_8_source_verification: The exact constants, exponents, integration orientation and the printed p,p₀ aliases in part (c) were transcribed from p. 581.
   unresolved_source_items: []
   central_review_items:
-  - Corollary 7.3.24 preserves the printed C^α truth condition pending review against the C^γ prior/constraint notation.
-  - Corollary 7.3.24 follows the displayed diameter of C̄_n while flagging the surrounding prose reference to C_n.
+  - Equation (7.22) retains a source-orientation review for the printed absolute-continuity wording versus the displayed log
+    ratio.
+  - Lemma 7.2.6 retains a generality review because the printed p₀>0 assumption is weaker than the bounded-away-from-zero
+    domain used for the population Fréchet derivative.
+  - Corollary 7.3.24 applies the official negative-exponent correction, preserves the printed C^α truth condition, and flags
+    the C_n/C̄_n diameter-label mismatch.
+  lemma_7_3_8_source_verification: The exact constants, exponents, integration orientation and the printed p,p₀ aliases in
+    part (c) were transcribed from p. 581.
+  lemma_7_3_4_source_verification: The exact support radius, likelihood threshold and σ-dependent probability bound were transcribed
+    from pp. 576–577.
+  resolved_review_items:
+  - Proposition 7.2.4 now records the book’s pointwise bounded-function Banach space rather than a quotient L∞ interpretation.
+  - Proposition 7.2.7 now states the printed extended-real continuity topology explicitly.
+  - Exercise 7.2.4 derives derivative measurability from measurable difference quotients.
+  - Exercise 7.2.7 records the distinct-sample and grouped-tie conventions explicitly.
+  - The posterior conditional law is represented by an explicitly constructed normalised kernel, avoiding an unnecessary abstract-disintegration
+    assumption.
+  - The contraction-rate definition now preserves the printed existential fixed-M quantifier.
+  - Lemma 7.3.4 now records all exact σ-dependent constants.
+  - The ε-boundary thickening is recorded as an open, hence Borel, set for every subset of the metric space.
 validation:
   chapter_local_strict_schema: pass
   unique_identifiers: true
@@ -96,3 +113,4 @@ validation:
   dag_acyclic: true
   source_based_pass_semantics: true
   starred_entry_count: 0
+  resolved_central_review_items_recorded: true
