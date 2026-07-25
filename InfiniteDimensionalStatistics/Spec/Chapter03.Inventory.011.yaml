@@ -1,0 +1,579 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 11
+inventory:
+- id: corollary_3_7_15
+  kind: corollary
+  book:
+    number: Corollary 3.7.15
+    pages:
+    - 239
+    - 240
+    section: '3.7'
+    equations: []
+  title: Entropy-rate criterion for Glivenko–Cantelli
+  statement: Under Theorem 3.7.14, 𝓕 is P-Glivenko–Cantelli exactly when PF<∞ and the empirical entropy divided by n tends
+    to zero in probability, equivalently in every finite L^r, for each fixed accuracy.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - P-measurable class
+    - measurable cover F
+    implicit: []
+  quantifier_order: &id002
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants: &id003
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_7_14
+    later_book_uses:
+    - Corollaries 3.7.16–3.7.17
+  proof_status: &id004
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status: &id005
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: &id006
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id001
+    - Verify whether each equivalent form uses e_{n,1} or e_{n,2}.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id001
+- id: corollary_3_7_16
+  kind: corollary
+  book:
+    number: Corollary 3.7.16
+    pages:
+    - 240
+    section: '3.7'
+    equations: []
+  title: Trace-growth characterisation for set classes
+  statement: For a P-measurable set class 𝒞, ‖P_n−P‖*𝒞→0 a.s. iff n⁻¹log C(X₁,…,X_n)^*→0 in probability, equivalently in L^r
+    for every r<∞.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - P-measurable set class
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_7_15
+    - definition_3_6_1
+    later_book_uses:
+    - Corollary 3.7.17
+    - Theorem 3.7.55
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: &id007
+    sketch: Finite traces of set systems, shattering predicates, an `WithTop ℕ` VC index, and finite-cardinality combinatorics.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_7_17
+  kind: corollary
+  book:
+    number: Corollary 3.7.17
+    pages:
+    - 240
+    section: '3.7'
+    equations: []
+  title: VC and VC-hull classes are Glivenko–Cantelli
+  statement: A P-measurable class with P-integrable measurable cover that is VC-subgraph/VC type or a VC hull is P-Glivenko–Cantelli.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - P-measurable
+    - integrable cover
+    - VC-subgraph/VC-type or VC-hull
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_7_15
+    - definition_3_6_10
+    - theorem_3_6_9
+    later_book_uses:
+    - Example 3.7.19.
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id007
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: remark_3_7_18
+  kind: remark
+  book:
+    number: Remark 3.7.18
+    pages:
+    - 240
+    section: '3.7'
+    equations: []
+  title: Convex-hull permanence of Glivenko–Cantelli
+  statement: Since ‖P_n−P‖𝓕=‖P_n−P‖_{co(𝓕)}, the Glivenko–Cantelli property is preserved by convex hulls and pointwise closures
+    under the stated measurability convention.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_10
+    later_book_uses: []
+  proof_status: *id004
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents: *id006
+  likely_lean_representation: &id008
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: example_3_7_19
+  kind: example
+  book:
+    number: Example 3.7.19
+    pages:
+    - 240
+    - 241
+    section: '3.7'
+    equations: []
+  title: Multivariate empirical distribution functions
+  statement: For the lower-orthant class {(−∞,x]:x∈ℝ^d}, the empirical distribution function F_n converges uniformly almost
+    surely to F because the class is VC.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - X_i i.i.d. in ℝ^d
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_7_17
+    - example_3_7_12
+    later_book_uses:
+    - Corollary 3.7.39.
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: &id009
+    mathlib:
+      status: partial-infrastructure-only
+      candidates:
+      - Mathlib supplies underlying measure/integral/probability/independence/Bochner/Gaussian infrastructure, but no exact
+        chapter theorem was located.
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: *id008
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_20
+  kind: theorem
+  book:
+    number: Theorem 3.7.20
+    pages:
+    - 241
+    section: '3.7'
+    equations: []
+  title: L¹ bracketing Glivenko–Cantelli criterion
+  statement: If 𝓕⊂L¹(P) and N_{[]}(𝓕,L¹(P),ε)<∞ for every ε>0, then ‖P_n−P‖*𝓕→0 almost surely.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕⊂L¹(P)
+    - finite L¹ bracketing numbers for every ε>0
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - bracketing_number
+    later_book_uses:
+    - Exercise 3.7.5.
+  proof_status: *id004
+  notes_status: &id011
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents: *id006
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_7_21
+  kind: corollary
+  book:
+    number: Corollary 3.7.21
+    pages:
+    - 241
+    - 242
+    section: '3.7'
+    equations: []
+  title: Mourier strong law in separable Banach spaces
+  statement: If B is separable Banach and X_i are i.i.d. B-valued with E‖X₁‖<∞, then n⁻¹∑X_i→EX₁ almost surely in B, where
+    EX₁ is the Bochner integral.
+  transcription_status: exact-with-official-correction
+  hypotheses:
+    explicit:
+    - B separable Banach
+    - X_i strongly/Bochner measurable and i.i.d.
+    - E‖X₁‖<∞
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_7_20
+    later_book_uses:
+    - Banach-valued laws of large numbers.
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id009
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id010
+    - Official correction adds the Bochner-integration qualification/reference.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id010
+- id: definition_3_7_22
+  kind: definition
+  book:
+    number: Definition 3.7.22
+    pages:
+    - 243
+    section: '3.7'
+    equations: []
+  title: Convergence in law of bounded processes
+  statement: For bounded processes X_n,X indexed by T, with X having tight Borel law on ℓ∞(T), write X_n⇒X when E*H(X_n)→EH(X)
+    for every bounded continuous H:ℓ∞(T)→ℝ.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - X_n sample bounded
+    - X has tight Borel law
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - outer_expectation
+    - sample_bounded
+    later_book_uses:
+    - Theorem 3.7.23
+    - Definition 3.7.29
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: &id012
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_23
+  kind: theorem
+  book:
+    number: Theorem 3.7.23
+    pages:
+    - 243
+    - 246
+    section: '3.7'
+    equations: []
+  title: Asymptotic equicontinuity criterion for weak convergence
+  statement: A sequence of bounded processes converges in law in ℓ∞(T) to a tight limit iff its finite-dimensional distributions
+    converge and it is asymptotically uniformly equicontinuous in outer probability for a semimetric making T totally bounded;
+    the theorem states both directions and the suitable-version conclusion.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - bounded processes
+    - tight candidate limit
+    - finite-dimensional convergence
+    - total-bounded semimetric
+    - asymptotic equicontinuity
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_7_8
+    - definition_3_7_22
+    later_book_uses:
+    - Theorem 3.7.31
+    - Theorem 3.7.47
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_7_8
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id011
+  equivalents: *id006
+  likely_lean_representation: *id008
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: bounded_Lipschitz_distance
+  kind: definition
+  book:
+    number: Eq. (3.254)
+    pages:
+    - 246
+    section: '3.7'
+    equations:
+    - '3.254'
+  title: Bounded-Lipschitz distance
+  statement: For laws of bounded processes on ℓ∞(T), d_BL is the supremum of the expectation difference over H with ‖H‖∞≤1
+    and Lipschitz constant≤1, using outer expectation for a nonmeasurable input.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - one law tight Borel where required
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_7_22
+    later_book_uses:
+    - Proposition 3.7.24
+    - uniform Donsker theory
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id012
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: proposition_3_7_24
+  kind: proposition
+  book:
+    number: Proposition 3.7.24
+    pages:
+    - 246
+    - 248
+    section: '3.7'
+    equations: []
+  title: Bounded-Lipschitz metric metrises convergence
+  statement: For bounded processes with a tight Borel candidate limit, convergence in law in ℓ∞(T) is equivalent to convergence
+    to zero of the bounded-Lipschitz distance between the laws.
+  transcription_status: exact-with-official-correction
+  hypotheses:
+    explicit:
+    - tight Borel limit law
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - bounded_Lipschitz_distance
+    - theorem_3_7_23
+    later_book_uses:
+    - Theorems 3.7.40 and 3.7.47
+    - Corollary 3.7.48
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id013
+    - 'Official correction p.245: all six occurrences of f in (3.253) are H.'
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id013
+- id: theorem_3_7_25
+  kind: theorem
+  book:
+    number: Theorem 3.7.25
+    pages:
+    - 248
+    - 250
+    section: '3.7'
+    equations: []
+  title: Skorokhod representation for bounded processes
+  statement: Under convergence in law to a tight Borel limit and the stated P-perfect hypotheses, versions exist on a common
+    probability space that converge uniformly almost surely; conversely such a representation implies convergence in law.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - convergence in law
+    - tight Borel limit
+    - P-perfect maps/versions
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_7_9
+    - definition_3_7_5
+    - proposition_3_7_24
+    later_book_uses:
+    - Proposition 3.7.28
+    - Proposition 3.7.34
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_7_9
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id011
+  equivalents: *id006
+  likely_lean_representation: *id012
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: countable_approximation
+  kind: definition
+  book:
+    number: Conditions (3.256)–(3.257)
+    pages:
+    - 250
+    section: '3.7'
+    equations:
+    - '3.256'
+    - '3.257'
+  title: Countable approximation and boundedness hypotheses
+  statement: Conditions (3.256) and (3.257) are the chapter’s pointwise countable approximation and stronger empirical-measurability/L¹-boundedness
+    assumptions on 𝓕; they are distinct and are used to construct bounded process versions.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - class of measurable functions
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Definitions 3.7.26 and 3.7.29
+    - Theorems 3.7.31 onward
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id014
+    - Copy both conditions verbatim; they are not interchangeable.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id014
+- id: P_bridge
+  kind: definition
+  book:
+    number: Eq. (3.258)
+    pages:
+    - 250
+    - 251
+    section: '3.7'
+    equations:
+    - '3.258'
+  title: P-Brownian bridge
+  statement: A P-bridge G_P indexed by 𝓕 is a centred Gaussian process with covariance E[G_P(f)G_P(g)]=P(fg)−PfPg; its intrinsic
+    semimetric is d_P(f,g):=[P(f−g)²−(P(f−g))²]^{1/2}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - f,g∈L²(P)
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Definition 3.7.26
+    - all Donsker results
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id006
+  likely_lean_representation: *id008
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition_3_7_26
+  kind: definition
+  book:
+    number: Definition 3.7.26
+    pages:
+    - 251
+    section: '3.7'
+    equations: []
+  title: P-pre-Gaussian class
+  statement: A class 𝓕⊂L²(P) is P-pre-Gaussian if the P-bridge has a version with bounded and uniformly d_P-continuous sample
+    paths.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - 𝓕⊂L²(P)
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - P_bridge
+    later_book_uses:
+    - Theorems 3.7.31, 3.7.52 and 3.7.54
+  proof_status: *id004
+  notes_status: *id005
+  equivalents: *id009
+  likely_lean_representation: *id012
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
