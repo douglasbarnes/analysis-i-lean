@@ -44,7 +44,19 @@ chapters:
     printed_pages: {start: 1, end: 14}
     specification: InfiniteDimensionalStatistics/Spec/Chapter01.yaml
     audit_step: P1.1
-    status: repository_artifact_present_needs_canonical_schema_conversion
+    status: pass_with_central_review_flags
+    package_record:
+      inventory_entries: 72
+      selected_exercises: 1
+      dependency_edges: 156
+      dag_nodes: 72
+      dag_acyclic: true
+      source_starred_entries: 0
+      pass_semantics_normalised: true
+      missing_numbered_labels: []
+      duplicate_identifiers: []
+      chapter_local_strict_schema: pass
+      central_review_issue_count: 23
   - number: 2
     title: Gaussian Processes
     printed_pages: {start: 15, end: 108}
@@ -160,14 +172,14 @@ phase_gates:
       - 5
       - 6
     present_but_pending_acceptance:
-      - 1
       - 2
       - 3
     accepted:
+      - 1
       - 4
       - 7
       - 8
-    status: blocked_on_two_missing_and_three_pending_acceptance_chapters
+    status: blocked_on_two_missing_and_two_pending_acceptance_chapters
   P2:
     status: blocked
     unblock_condition: P0 clean build certified and every P1 chapter specification accepted by the common validator.
