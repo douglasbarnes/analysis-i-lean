@@ -1,0 +1,599 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 14
+inventory:
+- id: theorem_3_7_52
+  kind: theorem
+  book:
+    number: Theorem 3.7.52
+    pages:
+    - 273
+    - 275
+    section: '3.7'
+    equations: []
+  title: Characterisation of bounded P-Donsker classes by local randomisation
+  statement: Let 𝓕 be uniformly bounded and pointwise-countably approximable. Then 𝓕 is P-Donsker iff it is P-pre-Gaussian
+    and, for every γ>0, lim_{ε↓0}limsup_{n→∞}Pr*{‖ν_{n,rad}‖_{𝓕′_{ε,n}}≥γ}=0, where 𝓕′_{ε,n}:={f−g:f,g∈𝓕, P(f−g)²≤ε/√n}.
+  transcription_status: exact-with-official-correction
+  hypotheses:
+    explicit:
+    - uniformly bounded 𝓕
+    - pointwise countable approximation
+    - P-pre-Gaussianity for the reverse implication
+    implicit: []
+  quantifier_order: &id002
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants: &id003
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - rademacher_empirical_process
+    - theorem_3_7_31
+    - theorem_3_7_40
+    later_book_uses:
+    - Theorem 3.7.54
+    - Examples 3.7.56–3.7.57
+  proof_status: &id004
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status: &id006
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents: &id005
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id001
+    - Official correction deletes the erroneous Proposition 3.1.23/exercises citation and uses Theorem 3.7.31(c), then (b).
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id001
+- id: lemma_3_7_53
+  kind: lemma
+  book:
+    number: Lemma 3.7.53
+    pages:
+    - 275
+    - 277
+    section: '3.7'
+    equations: []
+  title: Square-root trick
+  statement: Let σ²:=sup_fPf² and r:=sup_f‖f‖∞. If u>4nσ² and 0<2^{5/2}ρ<√u−2√nσ, put λ:=½(√u−2√nσ−2^{5/2}ρ)². Then for n,m≥1,
+    Pr*{‖∑_{i=1}^n f²(X_i)‖𝓕>u}≤4Pr*{N(𝓕,e_{n,2},ρ/√n)>m}+16m e^{−λ/(2r²)}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - pointwise countable approximation
+    - finite σ,r
+    - printed u,ρ restrictions
+    - n,m≥1
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_1_24
+    - theorem_3_1_2
+    later_book_uses:
+    - Theorem 3.7.54.
+  proof_status: *id004
+  notes_status: &id011
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_7_54
+  kind: theorem
+  book:
+    number: Theorem 3.7.54
+    pages:
+    - 277
+    - 279
+    section: '3.7'
+    equations:
+    - '3.287'
+    - '3.289'
+  title: Local empirical-entropy criterion for Donsker classes
+  statement: A uniformly bounded, pointwise-countably-approximable P-pre-Gaussian class is P-Donsker if the local empirical
+    L¹ covering-entropy condition (3.287) holds for 𝓕′_{ε,n}; for indicator classes the condition is also necessary.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - uniform boundedness
+    - pointwise countable approximation
+    - P-pre-Gaussian
+    - condition (3.287)
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma_3_7_53
+    - theorem_3_7_52
+    later_book_uses:
+    - Theorem 3.7.55.
+  proof_status: *id004
+  notes_status: *id006
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id007
+    - Copy the supremum over λ, constants and order of limits in (3.287); the converse is only for indicators.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id007
+- id: theorem_3_7_55
+  kind: theorem
+  book:
+    number: Theorem 3.7.55
+    pages:
+    - 279
+    section: '3.7'
+    equations:
+    - '3.290'
+  title: Donsker criterion for a class of sets
+  statement: Let 𝒞 satisfy pointwise countable approximation. If 𝒞 is P-pre-Gaussian and log C(X₁,…,X_n)/√n→0 in outer probability,
+    then 𝒞 is P-Donsker.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - set class with pointwise countable approximation
+    - P-pre-Gaussian
+    - trace-growth condition
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_6_1
+    - theorem_3_7_54
+    later_book_uses:
+    - Example 3.7.56.
+  proof_status: *id004
+  notes_status: *id006
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id008
+    - The title says “necessary and sufficient”, but the displayed theorem proves only sufficiency; the converse is mentioned
+      but not proved. Formalise only the implication.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id008
+- id: example_3_7_56
+  kind: example
+  book:
+    number: Example 3.7.56
+    pages:
+    - 279
+    - 280
+    section: '3.7'
+    equations: []
+  title: 'All subsets of ℕ: exact Donsker criterion'
+  statement: For P=∑_{k≥1}p_kδ_k on ℕ and 𝒞=2^ℕ, 𝒞 is P-Donsker iff ∑_{k≥1}√p_k<∞; equivalently iff 𝒞 is P-pre-Gaussian.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - p_k≥0
+    - ∑p_k=1
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_1_8
+    - ch3.ex.3_7_21
+    - theorem_3_7_55
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_7_21
+    - ch3.ex.3_1_8
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: &id009
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: example_3_7_57
+  kind: example
+  book:
+    number: Example 3.7.57
+    pages:
+    - 280
+    - 282
+    section: '3.7'
+    equations: []
+  title: Donsker criterion for BL₁(ℝ)
+  statement: The unit bounded-Lipschitz ball BL₁(ℝ) is P-Donsker iff ∑_{j=1}^∞P{j−1<|x|≤j}^{1/2}<∞; this is also equivalent
+    to P-pre-Gaussianity.
+  transcription_status: exact-with-official-correction
+  hypotheses:
+    explicit:
+    - P a probability on ℝ
+    implicit: []
+  quantifier_order: *id002
+  constants: *id003
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_6_17
+    - ch3.ex.3_7_21
+    - theorem_3_7_37
+    - theorem_3_7_52
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_6_17
+    - ch3.ex.3_7_21
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id009
+  equivalents: *id005
+  likely_lean_representation:
+    sketch: Random elements and laws in `BoundedContinuousFunction`/`ℓ∞(F)`-type spaces, tight Borel probability measures,
+      finite-dimensional convergence, and asymptotic equicontinuity; substantial new empirical-process infrastructure.
+    blockers: &id010
+    - 'Official correction: the p.280 citation is Exercise 3.6.17, not Exercise 3.7.17.'
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id010
+- id: ch3.ex.3_1_3
+  kind: exercise
+  book:
+    number: Exercise 3.1.3
+    pages:
+    - 134
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.3
+  statement: Prove the countable-separability/sample-boundedness reduction for a stochastic process stated in the exercise.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: &id013 []
+  constants: &id014 []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - sample_bounded
+    later_book_uses: &id012
+    - Measurability infrastructure
+  proof_status: &id015
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: Selected because it completes an omitted proof, is cited later, or establishes reusable infrastructure.
+  notes_status: *id011
+  equivalents: &id016
+    mathlib:
+      status: not-audited-exercise
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: not-found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation: &id017
+    sketch: Exercise-pass declaration; factor as a reusable lemma wherever a later declaration cites it.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id012
+- id: ch3.ex.3_1_4
+  kind: exercise
+  book:
+    number: Exercise 3.1.4
+    pages:
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.4
+  statement: Construct and analyse the exercise’s nonmeasurable process supremum and its measurable-cover/Borel phenomena.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id013
+  constants: *id014
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - sample_bounded
+    later_book_uses: &id018
+    - Outer-probability design
+  proof_status: *id015
+  notes_status: *id011
+  equivalents: *id016
+  likely_lean_representation: *id017
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id018
+- id: ch3.ex.3_1_5
+  kind: exercise
+  book:
+    number: Exercise 3.1.5
+    pages:
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.5
+  statement: Prove the improved constants in the i.i.d. tail randomisation/contraction inequalities.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id013
+  constants: *id014
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_1_23
+    later_book_uses: &id019
+    - Proposition 3.1.23
+    - Theorem 3.7.52
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: true
+    comment: Selected because it completes an omitted proof, is cited later, or establishes reusable infrastructure.
+  notes_status: *id011
+  equivalents: *id016
+  likely_lean_representation: *id017
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: true
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id019
+- id: ch3.ex.3_1_6
+  kind: exercise
+  book:
+    number: Exercise 3.1.6
+    pages:
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.6
+  statement: Prove the moment/uniform-integrability consequence paired with tail randomisation.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id013
+  constants: *id014
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_1_23
+    later_book_uses: &id020
+    - Theorem 3.7.52
+  proof_status: *id015
+  notes_status: *id011
+  equivalents: *id016
+  likely_lean_representation: *id017
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id020
+- id: ch3.ex.3_1_7
+  kind: exercise
+  book:
+    number: Exercise 3.1.7
+    pages:
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.7
+  statement: Prove E‖F_n−F‖∞≤4/√n for empirical distribution functions.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id013
+  constants: *id014
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_1_21
+    later_book_uses: &id021
+    - Exercise 3.3.3
+  proof_status: *id015
+  notes_status: *id011
+  equivalents: *id016
+  likely_lean_representation: *id017
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id021
+- id: ch3.ex.3_1_8
+  kind: exercise
+  book:
+    number: Exercise 3.1.8
+    pages:
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.8
+  statement: Establish the occupancy/distinct-values probability estimate used for discrete probability laws.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id013
+  constants: *id014
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id022
+    - Example 3.7.56
+  proof_status: *id015
+  notes_status: *id011
+  equivalents: *id016
+  likely_lean_representation: *id017
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id022
+- id: ch3.ex.3_1_9
+  kind: exercise
+  book:
+    number: Exercise 3.1.9
+    pages:
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.9
+  statement: Derive the expected-maximum estimate for a finite family from exponential tail bounds.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id013
+  constants: *id014
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: &id023
+    - Finite-class maxima
+  proof_status: *id015
+  notes_status: *id011
+  equivalents: *id016
+  likely_lean_representation: *id017
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id023
+- id: ch3.ex.3_1_10
+  kind: exercise
+  book:
+    number: Exercise 3.1.10
+    pages:
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.10
+  statement: Derive maximal Hoeffding, Bennett, Bernstein and Prokhorov inequalities for partial sums.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id013
+  constants: *id014
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_1_2
+    - theorem_3_1_7
+    later_book_uses: &id024
+    - Later maximal-sum arguments
+  proof_status: *id015
+  notes_status: *id011
+  equivalents: *id016
+  likely_lean_representation: *id017
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: false
+    establishes_reusable_lemma: true
+  used_by: *id024
+- id: ch3.ex.3_1_11
+  kind: exercise
+  book:
+    number: Exercise 3.1.11
+    pages:
+    - 135
+    section: '3.1'
+    equations: []
+  title: Exercise 3.1.11
+  statement: Bound maxima of Gaussian squares using Theorem 3.1.9.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id013
+  constants: *id014
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_1_9
+    later_book_uses: &id025
+    - Later Gaussian-square estimates
+  proof_status: *id015
+  notes_status: *id011
+  equivalents: *id016
+  likely_lean_representation: *id017
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+    completes_omitted_proof: false
+    cited_by_later_result: true
+    establishes_reusable_lemma: true
+  used_by: *id025
