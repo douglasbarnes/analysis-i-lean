@@ -167,7 +167,7 @@ structure ContinuousLpMartingaleConvergence {Ω : Type u} (X : ContinuousProcess
 /-- Source 77: continuous-time `L¹` martingale convergence. -/
 structure ContinuousL1MartingaleConvergence (uniformIntegrable terminalRepresentation convergesL1 : Prop) where
   ui_iff_terminal : uniformIntegrable ↔ terminalRepresentation
-  terminal_iff_converges : hasTerminalRepresentation ↔ convergesL1
+  terminal_iff_converges : terminalRepresentation ↔ convergesL1
 
 /-- Source 78: optional stopping for uniformly integrable continuous martingales. -/
 structure ContinuousUIOptionalStopping (conditionalIdentity expectationIdentity : Prop) where
