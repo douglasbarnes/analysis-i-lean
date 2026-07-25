@@ -1,0 +1,250 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: '7.3'
+fragment_part: 1
+inventory:
+- id: ch7.def.bayesianJointModel
+  kind: definition
+  book:
+    number: (7.76)
+    pages:
+    - 571
+    section: '7.3'
+    equations:
+    - (7.76)
+  title: Dominated Bayesian joint model
+  statement: "Let (X,A) be measurable, (F,B) a parameter space, μ σ-finite, Π a prior,\
+    \ and\np_f μ-densities. Under the official correction, (x,f)↦p_f(x) is jointly\
+    \ measurable.\nDefine Q on X×F by\n  dQ(x,f)=p_f(x)dμ(x)dΠ(f)."
+  hypotheses:
+    explicit:
+    - Joint measurability `(x,f)↦p_f(x)`.
+    - Each p_f is a probability density.
+    - μ σ-finite.
+    - Π is a probability measure.
+    implicit:
+    - Tonelli proves Q is a probability measure.
+  quantifier_order:
+  - For every such model and prior, define Q.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Product measures, kernels
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - MeasureTheory.Measure.compProd
+      - Kernel.withDensity
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A Markov kernel `κ f = μ.withDensity p_f` and joint measure `Π.compProd
+      κ`; joint measurability is encoded by kernel measurability.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 571
+    detail: Separate measurability in f is insufficient; require joint measurability
+      in (x,f).
+- id: ch7.prop.posteriorConditionalFormulas
+  kind: proposition
+  book:
+    number: (7.77)–(7.79)
+    pages:
+    - 571
+    - 572
+    section: '7.3'
+    equations:
+    - (7.77)
+    - (7.78)
+    - (7.79)
+  title: Conditional sampling law and posterior density
+  statement: "Under Q, the conditional law of X given f is p_f dμ. The conditional\
+    \ law of f\ngiven X=x has density proportional to p_f(x) with respect to Π:\n\
+    \  Π(B|x)= [∫_B p_f(x)dΠ(f)]/[∫_F p_f(x)dΠ(f)]\nfor every B∈B, for the marginal\
+    \ law of X-a.e. x."
+  hypotheses:
+    explicit:
+    - Bayesian joint-model hypotheses.
+    - The denominator is positive for marginal-X almost every x.
+    implicit:
+    - A regular conditional distribution exists; the book's general measurable-space
+      formulation may require Standard Borel/countable-generation hypotheses not printed.
+  quantifier_order:
+  - ∀ B∈B, equality almost surely in x.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.bayesianJointModel
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.1
+    contains_omitted_steps: true
+    comment: derivation from conditional distributions
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial_equivalent
+      candidates:
+      - ProbabilityTheory.posterior
+      - posterior_eq_withDensity
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A Markov kernel from data to parameters, using `ProbabilityTheory.posterior`
+      where Standard Borel hypotheses apply; density formulas require `rnDeriv`, `withDensity`,
+      and almost-everywhere equality.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - type: measurability_and_existence
+    page: 572
+    detail: Regular conditional probabilities are not available on arbitrary measurable
+      parameter spaces; Lean should impose Standard Borel hypotheses or phrase the
+      formula as an explicitly constructed kernel when measurable.
+- id: ch7.def.iidPosterior
+  kind: definition
+  book:
+    number: (7.80)–(7.81)
+    pages:
+    - 572
+    section: '7.3'
+    equations:
+    - (7.80)
+    - (7.81)
+  title: Posterior in the i.i.d. density model
+  statement: "For a prior Π on a density class P and observations X₁,…,Xₙ,\n  dΠ(p|X₁,…,Xₙ)\n\
+    \    = [∏_{i=1}^n p(X_i) dΠ(p)]/[∫_P ∏_{i=1}^n q(X_i)dΠ(q)].\nUnder truth p₀,\
+    \ the same ratio may be written using ∏ p(X_i)/p₀(X_i)."
+  hypotheses:
+    explicit:
+    - Joint measurability of sample and density parameter.
+    - The marginal likelihood denominator is positive a.s.
+    implicit:
+    - The two displayed expressions agree where the p₀ likelihood is nonzero.
+  quantifier_order:
+  - ∀ n and almost every sample.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.prop.posteriorConditionalFormulas
+    - ch7.def.likelihood
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.1
+    contains_omitted_steps: true
+    comment: posterior formula
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial_equivalent
+      candidates:
+      - ProbabilityTheory.posterior_eq_withDensity
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A Markov kernel from data to parameters, using `ProbabilityTheory.posterior`
+      where Standard Borel hypotheses apply; density formulas require `rnDeriv`, `withDensity`,
+      and almost-everywhere equality.
+
+      For finite samples use an iterated/product kernel and a likelihood density with
+      respect to the prior.'
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch7.def.whiteNoisePosterior
+  kind: definition
+  book:
+    number: (7.82)–(7.86)
+    pages:
+    - 572
+    - 573
+    section: '7.3'
+    equations:
+    - (7.82)
+    - (7.83)
+    - (7.84)
+    - (7.85)
+    - (7.86)
+  title: Gaussian white-noise likelihood and posterior
+  statement: "In dY=f dt+(σ/√n)dW, f∈L²[0,1], the likelihood relative to the zero-signal\
+    \ law is\n  exp{(n/σ²)∫ f dY - (n/(2σ²))||f||₂²}.\nFor a prior Π on F⊂L², define\
+    \ the posterior by normalising this likelihood:\n  dΠ(f|Y) ∝ exp{(n/σ²)∫ f dY\
+    \ - (n/(2σ²))||f||₂²} dΠ(f).\nUnder truth f₀ it can equivalently be centred using\
+    \ f-f₀ and the isonormal noise."
+  hypotheses:
+    explicit:
+    - σ>0, n≥1.
+    - F⊂L² has a σ-field for which the likelihood is jointly measurable.
+    - Prior Π is a probability measure.
+    implicit:
+    - The stochastic integral is realised on a common measurable white-noise sample
+      space.
+    - Normalising denominator is finite and positive a.s.
+  quantifier_order:
+  - ∀ n,σ and prior, define the posterior a.s.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Proposition 6.1.1 (Cameron–Martin likelihood)
+    chapter_local:
+    - ch7.prop.posteriorConditionalFormulas
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A Gaussian measure on an abstract Wiener/isonormal sample space, its Cameron–Martin
+      density, and the posterior kernel. This requires a major Gaussian-measure library.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
