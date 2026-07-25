@@ -1,0 +1,51 @@
+name: Audit Chapter 2 Strictly
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/audit-chapter02-strict.yml'
+      - 'InfiniteDimensionalStatistics/Spec/Chapter02*'
+      - 'scripts/validate_ids_specs.py'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  audit:
+    if: github.head_ref == 'audit/chapter02-strict'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pyyaml
+      - name: Isolate and validate Chapter 2
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/chapter02-strict"
+          mkdir -p "$root/scripts" "$root/InfiniteDimensionalStatistics/Spec"
+          cp scripts/validate_ids_specs.py "$root/scripts/"
+          cp InfiniteDimensionalStatistics/BookManifest.yaml "$root/InfiniteDimensionalStatistics/"
+          cp InfiniteDimensionalStatistics/Spec/Chapter02* "$root/InfiniteDimensionalStatistics/Spec/"
+          cd "$root"
+          python scripts/validate_ids_specs.py --allow-missing 2>&1 | tee validation.log
+      - name: Post result
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          root="$RUNNER_TEMP/chapter02-strict"
+          {
+            echo '### Chapter 2 strict chapter-local audit'
+            echo
+            echo 'No source-blocker or incomplete-coverage exemptions were used.'
+            echo
+            echo '```text'
+            if [ -f "$root/validation.log" ]; then cat "$root/validation.log"; else echo 'Validation did not run.'; fi
+            echo '```'
+          } > "$RUNNER_TEMP/chapter02-comment.md"
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/chapter02-comment.md"
