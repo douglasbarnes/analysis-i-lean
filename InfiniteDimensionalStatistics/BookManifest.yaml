@@ -35,7 +35,7 @@ specification:
   - exercise
   pass_policy:
     core: Unstarred main-text material, irrespective of implementation difficulty.
-    starred: Material explicitly starred in the book.
+    starred: Material explicitly starred in the book, including declarations inside explicitly starred sections.
     exercise: Extracted exercises satisfying the project selection criteria.
 chapters:
 - number: 1
@@ -110,7 +110,23 @@ chapters:
     end: 388
   specification: InfiniteDimensionalStatistics/Spec/Chapter04.yaml
   audit_step: P1.4
-  status: pass_with_documented_package_loader
+  status: pass_with_documented_transport_repair
+  package_record:
+    inventory_entries: 132
+    numbered_declarations: 69
+    unnumbered_operative_entries: 42
+    selected_exercises: 21
+    dependency_edges: 262
+    dag_nodes: 132
+    dag_acyclic: true
+    missing_numbered_labels: []
+    duplicate_identifiers: []
+    chapter_local_strict_schema: pending_new_local_run
+  transport_repair:
+    wrapper: InfiniteDimensionalStatistics/Spec/Chapter04.Inventory.yaml
+    preserved_raw_inventory: InfiniteDimensionalStatistics/Spec/Chapter04.Inventory.raw.txt
+    source_blob_sha: 0253800be6b475c490d34fd950d82cfc15092f7d
+    scope: One unquoted colon in the statement of Proposition 4.3.6; mathematical text unchanged.
 - number: 5
   title: Linear Nonparametric Estimators
   printed_pages:
@@ -118,7 +134,21 @@ chapters:
     end: 466
   specification: InfiniteDimensionalStatistics/Spec/Chapter05.yaml
   audit_step: P1.5
-  status: artifact_available_not_ingested
+  status: pass_with_reconstruction_provenance
+  package_record:
+    inventory_entries: 104
+    selected_exercises: 21
+    dependency_edges: 141
+    dag_nodes: 104
+    dag_acyclic: true
+    source_starred_entries: 7
+    missing_numbered_labels: []
+    duplicate_identifiers: []
+    blocking_source_transcriptions: []
+    chapter_local_strict_schema: pending_new_local_run
+  source_review_caveats:
+  - Displays not recoverable from searchable OCR were reconstructed through exact algebraic identities and triangulation against
+    primary sources cited by the chapter; each affected declaration records its provenance.
 - number: 6
   title: The Minimax Paradigm
   printed_pages:
@@ -126,7 +156,20 @@ chapters:
     end: 540
   specification: InfiniteDimensionalStatistics/Spec/Chapter06.yaml
   audit_step: P1.6
-  status: canonical_package_manifest_available_not_ingested
+  status: pass_with_central_review_flags
+  package_record:
+    inventory_entries: 83
+    declarations: 70
+    selected_exercises: 13
+    dependency_edges: 140
+    dag_nodes: 83
+    dag_acyclic: true
+    source_starred_entries: 0
+    missing_numbered_labels: []
+    duplicate_identifiers: []
+    unresolved_local_dependency_references: []
+    chapter_local_strict_schema: pending_new_local_run
+    central_review_issue_count: 22
 - number: 7
   title: Likelihood-Based Procedures
   printed_pages:
@@ -198,26 +241,29 @@ phase_gates:
     certification_merge_commit: 0ebdfdfc73a56acf754f3a5c44d8030e17107bf3
     certification_artifact_id: 8619566501
     certification_artifact_digest: sha256:1389ec5f1b16483ca23fa8343ba30594a3e81b61c988c61dc12e0931c11f90e5
-    post_build_main_changes: specification_yaml_only
+    post_build_main_changes: specification_and_validator_only
     local_replication_caveat: The assistant container could not resolve external hosts, so a separate workstation-local clone
       was unavailable.
     build_report: InfiniteDimensionalStatistics/BuildReports/P0.md
-    status: complete_with_environment_caveat
+    status: awaiting_current_main_local_build
   P1:
     all_eight_specifications_required: true
     validator_must_pass: true
-    missing_on_main:
-    - 5
-    - 6
+    missing_on_main: []
     present_but_pending_acceptance:
     - 3
-    accepted:
+    accepted_package_records:
     - 1
     - 2
     - 4
+    - 5
+    - 6
     - 7
     - 8
-    status: blocked_on_two_missing_and_one_pending_acceptance_chapter
+    current_main_strict_validator_run_required: true
+    last_local_run_commit: 94317aa7794a63793ad98b84822b8f8337b8b566
+    last_local_run_result: failed_before_lean_build
+    status: blocked_on_chapter_3_and_current_main_local_validation
   P2:
     status: blocked
-    unblock_condition: P0 clean build certified and every P1 chapter specification accepted by the common validator.
+    unblock_condition: Current main passes a local clean build and every P1 chapter specification passes the strict common validator.
