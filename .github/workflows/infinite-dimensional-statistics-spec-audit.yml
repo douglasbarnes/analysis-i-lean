@@ -85,13 +85,14 @@ jobs:
           pattern = re.compile(r"(?:Definition|Lemma|Proposition|Theorem|Corollary|Example|Remark|Exercise|Item)\s+\d+\.\d+\.\d+")
           grouped = collections.defaultdict(list)
           for entry in rows:
-              label = str(entry.get("book", {}).get("number", ""))
-              if pattern.match(label):
-                  grouped[label].append(entry.get("id"))
+              raw = str(entry.get("book", {}).get("number", ""))
+              match = pattern.match(raw)
+              if match:
+                  grouped[match.group(0)].append((entry.get("id"), raw))
           print("Duplicate numbered-label detail:")
-          for label, ids in sorted(grouped.items()):
-              if len(ids) > 1:
-                  print(f"  {label}: {ids}")
+          for label, values in sorted(grouped.items()):
+              if len(values) > 1:
+                  print(f"  {label}: {values}")
           PY
           fi
           cat audit.log
