@@ -1,6 +1,6 @@
 name = "maths-lecture-formalisations"
 version = "0.3.0"
-defaultTargets = ["AnalysisI", "Groups", "NumbersAndSets", "Probability", "AnalysisII", "LinearAlgebraCourse", "MarkovChains", "ComplexAnalysisCourse", "ComplexMethods", "Geometry", "GroupsRingsModules", "StatisticsCourse", "MetricTopologicalSpaces", "OptimisationCourse"]
+defaultTargets = ["AnalysisI", "Groups", "NumbersAndSets", "Probability", "AnalysisII", "LinearAlgebraCourse", "MarkovChains", "ComplexAnalysisCourse", "ComplexMethods", "Geometry", "GroupsRingsModules", "StatisticsCourse", "MetricTopologicalSpaces", "OptimisationCourse", "InfiniteDimensionalStatistics"]
 
 [[require]]
 name = "mathlib"
@@ -48,3 +48,6 @@ name = "MetricTopologicalSpaces"
 
 [[lean_lib]]
 name = "OptimisationCourse"
+
+[[lean_lib]]
+name = "InfiniteDimensionalStatistics"
