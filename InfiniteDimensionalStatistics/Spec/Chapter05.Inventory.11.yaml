@@ -1,0 +1,441 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id002
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id005
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id001
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id003
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.eq.5_112
+  kind: lemma
+  book:
+    number: Equation (5.112)
+    pages:
+    - 452
+    section: 5.3.2
+    equations:
+    - '5.112'
+  title: Equation (5.112)
+  statement: If F[K] is supported in [−a,a], f is bounded with F[f]∈L¹, and F[ϕ] is nonzero, then K_h*f=g*K_h^*,
+    where K_h^*=(K_h*F^{-1}(1_{[-a/h,a/h]}/F[ϕ]))~ and ~ denotes reflection.
+  source_fidelity:
+    transcription_status: verified_with_typographical_correction
+    author_corrected_reading: The printed hypothesis says F[ϕ](x)=0 for all x; the computation and Exercise 5.3.6
+      require F[ϕ](x)≠0 for all x (or at least on the relevant compact frequency interval).
+  hypotheses:
+    explicit:
+    - K integrable, F[K] supported in [−a,a].
+    - f bounded and F[f]∈L¹.
+    - F[ϕ] nonzero on [−a/h,a/h].
+    implicit:
+    - Plancherel/Fourier inversion hypotheses as justified in Exercise 5.3.6.
+  quantifier_order:
+  - For every h>0 and x∈ℝ.
+  constants:
+  - Support radius a.
+  dependencies:
+    earlier_book: &id004 []
+    chapter_local:
+    - ch5.def.deconvolution_model
+    later_book_uses:
+    - Equations (5.113)–(5.114)
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 5.3.6
+    contains_omitted_steps: true
+    comment: ''
+  notes_status: *id001
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id002
+  likely_lean_representation:
+    sketch: Fourier-transform proof of a deconvolution identity, first in L²/a.e. form then pointwise under L¹ Fourier
+      assumptions.
+    blockers:
+    - Fourier inversion and division by a continuous nonzero characteristic function.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - The equality-to-zero hypothesis is a clear operative typo; retain the printed text and corrected reading explicitly.
+  - 'Author-corrected reading recorded separately: The printed hypothesis says F[ϕ](x)=0 for all x; the computation
+    and Exercise 5.3.6 require F[ϕ](x)≠0 for all x (or at least on the relevant compact frequency interval).'
+  - 'Source-transcription status: verified_with_typographical_correction.'
+- id: ch5.eq.5_113_5_114
+  kind: operative_definition
+  book:
+    number: Equations (5.113)–(5.114)
+    pages:
+    - 452
+    - 453
+    section: 5.3.2
+    equations:
+    - '5.113'
+    - '5.114'
+  title: Equations (5.113)–(5.114)
+  statement: Define the deconvolution kernel estimator fₙ(x,h)=n⁻¹∑ᵢK_h^*(x−Yᵢ). Equivalently fₙ(x,h)=(2π)⁻¹∫e^{-iux}[F[K](hu)/F[ϕ](u)](n⁻¹∑ᵢe^{iuYᵢ})du.
+  source_fidelity: *id003
+  hypotheses:
+    explicit:
+    - Deconvolution model and (5.112) hypotheses.
+    - h>0.
+    - Y_i i.i.d. with density g.
+    implicit:
+    - The inverse Fourier integral is absolutely or L² justified by the compact support and nonvanishing denominator.
+  quantifier_order:
+  - For every n≥1,h>0,x∈ℝ.
+  constants:
+  - 2π according to the book Fourier convention.
+  dependencies:
+    earlier_book: *id004
+    chapter_local:
+    - ch5.eq.5_112
+    later_book_uses:
+    - Theorem 5.3.6
+    - Propositions 5.3.7–5.3.9
+  proof_status: *id005
+  notes_status: *id001
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id002
+  likely_lean_representation:
+    sketch: Finite average of translated inverse-Fourier deconvolution kernels; prove equivalence of the spatial
+      and Fourier forms.
+    blockers:
+    - Complex Fourier integrals and real-valuedness.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: &id006 []
+- id: ch5.eq.5_115
+  kind: definition
+  book:
+    number: Equation (5.115)
+    pages:
+    - 453
+    section: 5.3.2
+    equations:
+    - '5.115'
+  title: Equation (5.115)
+  statement: Fix a band-limited orthonormal MRA with scaling function φ and wavelet ψ such that c_φ=‖∑_k|φ(·−k)|‖∞<∞
+    and c_ψ=‖∑_k|ψ(·−k)|‖∞<∞.
+  source_fidelity: *id003
+  hypotheses:
+    explicit:
+    - φ,ψ satisfy Theorem 4.2.9 (Meyer-type band-limited basis).
+    implicit:
+    - The sums are pointwise absolutely convergent.
+  quantifier_order:
+  - Supremum over x∈ℝ.
+  constants:
+  - c_φ,c_ψ.
+  dependencies:
+    earlier_book:
+    - Theorem 4.2.9
+    chapter_local: *id004
+    later_book_uses:
+    - Equations (5.116)–(5.118)
+    - Lemma 5.3.5
+  proof_status: *id005
+  notes_status: *id001
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id002
+  likely_lean_representation:
+    sketch: Summability constants for integer translates of Schwartz/band-limited wavelets.
+    blockers:
+    - Meyer wavelet construction.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.eq.5_116_5_118
+  kind: operative_definition
+  book:
+    number: Equations (5.116)–(5.118)
+    pages:
+    - 453
+    - 454
+    section: 5.3.2
+    equations:
+    - '5.116'
+    - '5.118'
+  title: Equations (5.116)–(5.118)
+  statement: Define deconvolved scaling functions φ̃_{jk}=F^{-1}(F[φ_k](2^{-j}·)/F[ϕ]) and the nonsymmetric kernel
+    K_j^*(x,y)=2^j∑_kφ(2^jx−k)φ̃_{jk}(y), so that K_j f(x)=∫K_j^*(x,y)g(y)dy. The wavelet deconvolution estimator
+    is fₙ(x,j)=n⁻¹∑ᵢK_j^*(x,Yᵢ).
+  source_fidelity: *id003
+  hypotheses:
+    explicit:
+    - Band-limited MRA (5.115).
+    - F[ϕ] nonzero.
+    - f/g deconvolution model.
+    implicit:
+    - Series convergence is uniform enough to define a bounded continuous kernel.
+  quantifier_order:
+  - For every j≥0 and x,y∈ℝ.
+  constants:
+  - Dyadic resolution j.
+  dependencies:
+    earlier_book: *id004
+    chapter_local:
+    - ch5.eq.5_115
+    - ch5.def.deconvolution_model
+    later_book_uses:
+    - Lemma 5.3.5
+    - Theorem 5.3.6
+  proof_status: *id005
+  notes_status: *id001
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id002
+  likely_lean_representation:
+    sketch: Define deconvolved basis functions by Fourier multipliers and a kernel series; estimator is a finite
+      empirical average.
+    blockers:
+    - Fourier multiplier on band-limited wavelets and uniform series convergence.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.def.delta_Hj
+  kind: definition
+  book:
+    number: Definitions preceding Lemma 5.3.5
+    pages:
+    - 454
+    section: 5.3.2
+    equations: []
+  title: Definitions preceding Lemma 5.3.5
+  statement: Let δ_j=inf_{|t|≤2^ja}|F[ϕ](t)|>0. In the wavelet case set H_j={δ_j φ̃_{jk}:k∈ℤ}; in the convolution
+    case (h=2^{-j}) set H_j={δ_j2^{-j}K_j^*(x−·):x∈ℝ}.
+  source_fidelity:
+    transcription_status: verified_with_reasoning_flag
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - F[ϕ] continuous and nonzero.
+    - a is the Fourier support radius of φ or K.
+    implicit:
+    - Strict positivity follows from compactness and nonvanishing, not merely from uniform continuity.
+  quantifier_order:
+  - For every j∈ℕ.
+  constants:
+  - δ_j,a.
+  dependencies:
+    earlier_book: *id004
+    chapter_local:
+    - ch5.eq.5_113_5_114
+    - ch5.eq.5_116_5_118
+    later_book_uses:
+    - Lemma 5.3.5
+    - Theorem 5.3.6
+  proof_status: *id005
+  notes_status: *id001
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id002
+  likely_lean_representation:
+    sketch: Compact infimum of the norm of a continuous complex function, plus rescaled function classes.
+    blockers:
+    - Extreme value theorem over compact intervals and complex modulus.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - The text says positivity follows because |F[ϕ]|≥0 is uniformly continuous; the missing operative premise is
+    nonvanishing.
+  - 'Source-transcription status: verified_with_reasoning_flag.'
+- id: ch5.lem.5_3_5
+  kind: lemma
+  book:
+    number: Lemma 5.3.5
+    pages:
+    - 454
+    - 456
+    section: 5.3.2
+    equations: []
+  title: Lemma 5.3.5
+  statement: Let ϕ be a probability measure with nonvanishing Fourier transform. Let K be even, in L¹∩L², integrate
+    to one and have Fourier support in [−a,a], or let φ,ψ be the band-limited MRA functions of Theorem 4.2.9. Then
+    the normalised classes H_j are uniformly bounded and there exist A,v<∞ such that sup_j sup_Q N(H_j,L²(Q),ε)≤(A/ε)^v
+    for 0<ε≤A.
+  source_fidelity:
+    transcription_status: verified_with_typographical_correction
+    author_corrected_reading: As in (5.112), the printed hypothesis F[ϕ](x)=0 must read F[ϕ](x)≠0.
+  hypotheses:
+    explicit:
+    - All kernel/wavelet assumptions in the statement.
+    - Q ranges over all Borel probability measures.
+    implicit:
+    - The H_j are those defined immediately before the lemma.
+    - Uniform boundedness is in the pointwise envelope norm.
+  quantifier_order:
+  - There exist A,v depending only on K, or on φ,ψ.
+  - For every j,Q,ε.
+  constants:
+  - A,v.
+  dependencies:
+    earlier_book:
+    - Proposition 3.6.12 and embedding B^{1/2}_{2,1}→V²
+    chapter_local:
+    - ch5.def.delta_Hj
+    - ch5.eq.5_115
+    later_book_uses:
+    - Theorem 5.3.6
+    - Exercise 5.3.7
+  proof_status: *id005
+  notes_status: *id001
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id002
+  likely_lean_representation:
+    sketch: Show each H_j is a translate class of a uniformly bounded finite-2-variation function, then invoke a
+      VC/variation covering theorem.
+    blockers:
+    - Besov-to-variation embedding and VC entropy.
+    - Band-limited wavelets.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - Use the nonvanishing correction explicitly.
+  - 'Author-corrected reading recorded separately: As in (5.112), the printed hypothesis F[ϕ](x)=0 must read F[ϕ](x)≠0.'
+  - 'Source-transcription status: verified_with_typographical_correction.'
+- id: ch5.thm.5_3_6
+  kind: theorem
+  book:
+    number: Theorem 5.3.6
+    pages:
+    - 456
+    - 457
+    section: 5.3.2
+    equations: []
+  title: Theorem 5.3.6
+  statement: Under Lemma 5.3.5, for bounded f, deconvolution estimator fₙ(·,j), and 2^j j≤Cn, there are L′,L″ such
+    that (E‖fₙ−Efₙ‖∞^p)^{1/p}≤(L′/δ_j)(‖g‖∞^{1/2}∨1)√(2^j(j∨1)/n), and for u>0, P{‖fₙ−Efₙ‖∞≥(L″/δ_j)[(‖g‖∞^{1/2}∨1)√((1+u)2^j(j∨1)/n)+(1+u)2^j(j∨1)/n]}≤e^{-(1+u)(j∨1)}.
+  source_fidelity: *id003
+  hypotheses:
+    explicit:
+    - Lemma 5.3.5 assumptions.
+    - f bounded, hence g bounded.
+    - p∈[1,∞).
+    - 2^j j≤Cn.
+    - u>0 for the tail inequality.
+    implicit:
+    - The constants depend as specified on C,p,K or φ,ψ but not on f,n,j except through ‖g‖∞.
+  quantifier_order:
+  - For each p,C there exist L′,L″.
+  - For all admissible n,j,u.
+  constants:
+  - L′,L″,δ_j.
+  dependencies:
+    earlier_book:
+    - Corollary 3.5.8 and Talagrand inequality
+    chapter_local:
+    - ch5.lem.5_3_5
+    - ch5.eq.5_113_5_114
+    - ch5.eq.5_116_5_118
+    later_book_uses:
+    - Propositions 5.3.7–5.3.8
+  proof_status: *id005
+  notes_status: *id001
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id002
+  likely_lean_representation:
+    sketch: Apply uniform VC empirical-process moment and tail bounds to the δ_j-normalised deconvolution kernel
+      class.
+    blockers:
+    - Empirical-process inequalities and exact variance calculations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.eq.5_122
+  kind: lemma
+  book:
+    number: Equation (5.122)
+    pages:
+    - 457
+    section: 5.3.2
+    equations:
+    - '5.122'
+  title: Equation (5.122)
+  statement: 'For both deconvolution estimators, the bias is unchanged by the inverse problem: f−Efₙ=f−K_j(f) (or
+    f−K_h*f in the convolution notation).'
+  source_fidelity: *id003
+  hypotheses:
+    explicit:
+    - Deconvolution identities (5.112) or (5.116).
+    implicit:
+    - Expectation is taken under observations with density g=f*ϕ.
+  quantifier_order:
+  - For every j/h and x (a.e. or pointwise under the stated Fourier assumptions).
+  constants: *id004
+  dependencies:
+    earlier_book: *id004
+    chapter_local:
+    - ch5.eq.5_112
+    - ch5.eq.5_116_5_118
+    later_book_uses:
+    - Propositions 5.3.7–5.3.9
+  proof_status: *id005
+  notes_status: *id001
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id002
+  likely_lean_representation:
+    sketch: Expectation of the empirical estimator plus the Fourier deconvolution identity.
+    blockers: *id004
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
