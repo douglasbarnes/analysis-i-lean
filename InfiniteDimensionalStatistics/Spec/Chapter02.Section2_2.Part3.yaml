@@ -1,0 +1,514 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.2'
+fragment_part: 3
+inventory:
+- id: exercise-2-2-1
+  kind: exercise
+  book:
+    number: Exercise 2.2.1
+    pages:
+    - 35
+    section: '2.2'
+    equations: []
+  title: Closedness of spherical symmetrisation
+  statement: If A⊆S^n is closed and H is an n-dimensional subspace, prove that the spherical symmetrisation s_H(A) is closed.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-2-1
+    later_book_uses:
+    - theorem-2-2-1
+    - Proof of Theorem 2.2.1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Compactness/closed-union argument for the cap fibres.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  - required_reusable_lemma
+  used_by:
+  - Proof of Theorem 2.2.1
+- id: exercise-2-2-2
+  kind: exercise
+  book:
+    number: Exercise 2.2.2
+    pages:
+    - 35
+    section: '2.2'
+    equations: []
+  title: Compactness of the hyperspace of compact subsets
+  statement: Let K be the set of nonempty compact subsets of S^n with Hausdorff distance h. Prove that (K,h) is compact.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - exercise-2-2-7
+    - theorem-2-2-1
+    later_book_uses:
+    - exercise-2-2-7
+    - theorem-2-2-1
+    - Proof of Theorem 2.2.1
+    - Exercise 2.2.7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Embed K isometrically into C(S^n) by A↦dist(·,A) and apply Arzelà–Ascoli.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  - required_reusable_lemma
+  used_by:
+  - Proof of Theorem 2.2.1
+  - Exercise 2.2.7
+- id: exercise-2-2-3
+  kind: exercise
+  book:
+    number: Exercise 2.2.3
+    pages:
+    - 35
+    section: '2.2'
+    equations: []
+  title: Lebesgue density theorem on the sphere
+  statement: For uniform probability μ on S^n, prove that if μ(E)>0 then for μ-a.e. x∈E, μ(E∩C(x,ρ))/μ(C(x,ρ))→1 as ρ↓0.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-2-1
+    later_book_uses:
+    - theorem-2-2-1
+    - Proof of Theorem 2.2.1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Vitali covering theorem on the compact doubling metric sphere.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  - required_reusable_lemma
+  used_by:
+  - Proof of Theorem 2.2.1
+- id: exercise-2-2-4
+  kind: exercise
+  book:
+    number: Exercise 2.2.4
+    pages:
+    - 35
+    section: '2.2'
+    equations: []
+  title: Spherical concentration consequence
+  statement: For n≥2 and uniform μ on S^n, prove that μ(A)≥1/2 implies μ(A_ε)≥1−√(π/8) exp(−(n−1)ε²/2).
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - n≥2; ε≥0; exact factor √(π/8).
+  constants:
+  - n≥2; ε≥0; exact factor √(π/8).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-2-1
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Insert hemisphere/cap comparison into spherical isoperimetry and use the Gaussian tail bound.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-2-5
+  kind: exercise
+  book:
+    number: Exercise 2.2.5
+    pages:
+    - 35
+    section: '2.2'
+    equations: []
+  title: Finite-coordinate approximation in the Gaussian product space
+  statement: For π_n:ℝ^ℕ→ℝ^n, prove (a) γ_n=γ∘π_n⁻¹; (b) every compact K⊆ℝ^ℕ satisfies K=⋂_n π_n⁻¹(π_nK); and (c) K+tO is
+    compact, where O is the closed ℓ²-unit ball.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - exercise-2-2-6
+    - theorem-2-2-4
+    later_book_uses:
+    - exercise-2-2-6
+    - theorem-2-2-4
+    - Exercise 2.2.6
+    - Theorem 2.2.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Product-measure marginals, compactness and finite-coordinate separation.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  - required_reusable_lemma
+  used_by:
+  - Exercise 2.2.6
+  - Theorem 2.2.4
+- id: exercise-2-2-6
+  kind: exercise
+  book:
+    number: Exercise 2.2.6
+    pages:
+    - 35
+    section: '2.2'
+    equations: []
+  title: Product Gaussian isoperimetry for compact sets
+  statement: Use Theorem 2.2.3 and Exercise 2.2.5 to prove Theorem 2.2.4 when A⊆ℝ^ℕ is compact.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-2-5
+    - theorem-2-2-3
+    chapter_local_dependents:
+    - exercise-2-2-7
+    - theorem-2-2-4
+    later_book_uses:
+    - exercise-2-2-7
+    - theorem-2-2-4
+    - Theorem 2.2.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Pass finite-dimensional isoperimetry through coordinate projections and compact limits.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  used_by:
+  - Theorem 2.2.4
+- id: exercise-2-2-7
+  kind: exercise
+  book:
+    number: Exercise 2.2.7
+    pages:
+    - 35
+    section: '2.2'
+    equations: []
+  title: Product Gaussian isoperimetry for measurable sets
+  statement: Using tightness of γ and compact approximation, extend Exercise 2.2.6 to every measurable A in the product cylindrical/Borel
+    σ-algebra, proving Theorem 2.2.4.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-2-2
+    - exercise-2-2-6
+    - proposition-2-1-4
+    chapter_local_dependents:
+    - theorem-2-2-4
+    later_book_uses:
+    - theorem-2-2-4
+    - Theorem 2.2.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes_omitted_proof'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Inner regularity plus monotonicity of ε-enlargements.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - completes_omitted_proof
+  used_by:
+  - Theorem 2.2.4
+- id: exercise-2-2-8
+  kind: exercise
+  book:
+    number: Exercise 2.2.8
+    pages:
+    - 36
+    section: '2.2'
+    equations: []
+  title: Two-sided Gaussian tail simplification
+  statement: For the standard normal CDF Φ and every u≥0, prove 2(1−Φ(u))≤exp(−u²/2).
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-2-6
+    - theorem-2-2-7
+    later_book_uses:
+    - theorem-2-2-6
+    - theorem-2-2-7
+    - Theorem 2.2.6
+    - Theorem 2.2.7
+    - inequality (2.23)
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: Elementary calculus split at u=√(2/π).
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: routine
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Theorem 2.2.6
+  - Theorem 2.2.7
+  - inequality (2.23)
