@@ -1,0 +1,37 @@
+schema_version: '1.0'
+chapter:
+  number: 8
+  title: Adaptive Inference
+  book_pages: &id001
+    start: 607
+    end: 666
+  status: inventory_complete_with_central_review_flags
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 8
+  chapter_title: Adaptive Inference
+  book_pages: *id001
+  scope: Chapter 8 read in full, including all exercises and Section 8.4 notes.
+  correction_policy: The uploaded first-edition PDF is primary. Suspected typography, measurability, generality
+    and extraction defects are recorded explicitly and are never repaired silently.
+package:
+  declaration_inventory:
+    file: Chapter08.Inventory.yaml
+    entry_count: 115
+  chapter_local_dependency_dag:
+    file: Chapter08.DependencyDAG.yaml
+    node_count: 115
+    edge_count: 160
+    acyclic: true
+acceptance:
+  no_lean_proofs: true
+  source_starred_entry_count: 0
+  selected_exercise_count: 9
+  central_review_issue_count: 29
+  missing_numbered_labels: []
+  duplicate_identifiers: []
