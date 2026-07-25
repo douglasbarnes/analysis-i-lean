@@ -1,0 +1,420 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.2.3
+fragment_part: 1
+inventory:
+- id: ch7.def.periodicSobolevNorm
+  kind: definition
+  book:
+    number: (7.52)
+    label: (7.52)
+    pages:
+    - 555
+    section: 7.2.3
+    equations:
+    - (7.52)
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Periodic Sobolev wavelet norm
+  statement: For t≥0 define the periodic Sobolev norm by the weighted square sum of periodic wavelet coefficients, equivalent
+    to the H^t norm used in Chapter 4.
+  hypotheses:
+    explicit:
+    - A sufficiently regular periodised orthonormal wavelet basis is fixed.
+    implicit:
+    - The scaling coefficient and exact low-frequency convention are those of §4.3.4.
+  quantifier_order:
+  - ∀ f in the periodic Sobolev space.
+  constants: []
+  dependencies:
+    earlier_book:
+    - §4.3.4 periodic Besov/Sobolev spaces
+    chapter_local: []
+    later_book_uses:
+    - ch7.def.sobolevDensityModel
+    - ch7.thm.7.2.10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - Hilbert-space weighted ℓ² constructions
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A weighted `ℓ²` coefficient space with an isometric wavelet transform; this is a major custom function-space library.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_periodicSobolevNorm
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.def.sobolevDensityModel
+  kind: definition
+  book:
+    number: (7.53)–(7.54)
+    label: (7.53)–(7.54)
+    pages:
+    - 555
+    section: 7.2.3
+    equations:
+    - (7.53)
+    - (7.54)
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Sobolev-ball density model and MLE
+  statement: 'For t>1/2 and D>1 define P(t,D) as the continuous nonnegative probability
+
+    densities p on [0,1] with ||p||_{H^t}≤D. Define p̂ₙ as a maximiser of ℓₙ over P(t,D).'
+  hypotheses:
+    explicit:
+    - t>1/2.
+    - D>1.
+    - Periodic Sobolev convention.
+    - p≥0 and ∫_0^1 p=1.
+    implicit:
+    - Sobolev embedding supplies continuous representatives.
+    - MLE existence is established next.
+  quantifier_order:
+  - Fix t,D; define the model and estimator for each n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.periodicSobolevNorm
+    - ch7.def.npmle
+    later_book_uses:
+    - ch7.def.sobolevInterior
+    - ch7.def.sobolevSieveMLE
+    - ch7.prop.7.2.7
+    - ch7.prop.7.2.9
+    - ex7.2.5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A subtype of continuous functions with positivity, unit integral, and Sobolev norm bound; the estimator is an
+      `argmax` witness.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_sobolevDensityModel
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.prop.7.2.7
+  kind: proposition
+  book:
+    number: Proposition 7.2.7
+    label: Proposition 7.2.7
+    pages:
+    - 555
+    - 556
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Compactness and existence of the Sobolev-ball MLE
+  statement: "For t>1/2 and D>1:\n(a) P(t,D) is compact in C([0,1]) with the uniform norm;\n(b) ℓₙ:P(t,D)→[-∞,∞) is upper semicontinuous (the printed text states continuity\n    in the extended-real topology) for each sample;\n(c) a maximiser exists and a Borel-measurable maximiser p̂ₙ can be selected."
+  hypotheses:
+    explicit:
+    - The model of (7.53).
+    - Fixed finite sample.
+    implicit:
+    - Part (b)'s exact continuity notion at zeros uses the topology on the extended real line.
+    - Part (c) uses a measurable maximum theorem.
+  quantifier_order:
+  - ∀ n and samples, existence; ∃ measurable selector as a function of the sample.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Sobolev compact embedding
+    - Arzelà–Ascoli
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    later_book_uses:
+    - ch7.prop.7.2.8
+    - ch7.prop.7.2.9
+  proof_status:
+    delegates_to_exercises:
+    - ex7.2.3
+    contains_omitted_steps: true
+    comment: measurable-selection proof of part (c)
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Compact subtype in `C([0,1],ℝ)` plus an upper-semicontinuous extended-real objective; measurable argmax selection
+      likely needs a new theorem.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - '[statement_precision] p. 556: Verify whether the book''s ''continuous'' assertion for extended-real log-likelihood is
+    literally continuous or upper semicontinuous at densities vanishing at sample points.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_7_2_7
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.def.sobolevSieveMLE
+  kind: definition
+  book:
+    number: (7.55)–(7.56)
+    label: (7.55)–(7.56)
+    pages:
+    - 556
+    section: 7.2.3
+    equations:
+    - (7.55)
+    - (7.56)
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Finite-dimensional Sobolev sieve MLE
+  statement: 'Let V_j be the wavelet approximation space and P(t,D,j)=P(t,D)∩V_j.
+
+    Define p̂ₙ(j) as an MLE over P(t,D,j).'
+  hypotheses:
+    explicit:
+    - Wavelet approximation spaces V_j are as in Chapter 4.
+    implicit: []
+  quantifier_order:
+  - ∀ j,n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    - ch7.def.sieveMLE
+    later_book_uses:
+    - ch7.prop.7.2.11
+    - ex7.2.6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Intersection of the density model with a finite-dimensional wavelet span; optimisation over a compact finite-dimensional
+      subtype.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_sobolevSieveMLE
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.prop.7.2.8
+  kind: proposition
+  book:
+    number: Proposition 7.2.8
+    label: Proposition 7.2.8
+    pages:
+    - 556
+    - 557
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Uniform consistency of the Sobolev-ball MLE
+  statement: If p₀∈P(t,D) and p₀ is strictly positive, then ||p̂ₙ-p₀||∞→0 almost surely.
+  hypotheses:
+    explicit:
+    - t>1/2, D>1.
+    - p₀∈P(t,D).
+    - p₀(x)>0 for every x.
+    - p̂ₙ is any measurable MLE.
+    implicit:
+    - Compactness and likelihood identifiability are used; strict positivity plus continuity on [0,1] implies a positive lower
+      bound.
+  quantifier_order:
+  - Under P₀^∞, almost surely as n→∞.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Uniform law of large numbers/compactness argument
+    chapter_local:
+    - ch7.prop.7.2.7
+    - ch7.prop.klIdentifiability
+    later_book_uses:
+    - ch7.thm.7.2.10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
+
+      Almost-sure convergence in the sup norm of random continuous functions.'
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_7_2_8
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.prop.7.2.9
+  kind: proposition
+  book:
+    number: Proposition 7.2.9
+    label: Proposition 7.2.9
+    pages:
+    - 557
+    - 558
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Sobolev MLE lies on the boundary
+  statement: Every MLE over P(t,D) satisfies ||p̂ₙ||_{H^t}=D.
+  hypotheses:
+    explicit:
+    - The Sobolev-ball model and an MLE.
+    - The sample is nonempty.
+    implicit:
+    - A feasible perturbation increasing point values at observations is available unless the norm constraint is saturated.
+  quantifier_order:
+  - ∀ samples and every maximiser.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    - ch7.prop.7.2.7
+    later_book_uses:
+    - ex7.2.5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A deterministic optimisation argument in a strictly convex Hilbert ball, requiring construction of a positive
+      mass-preserving perturbation.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_7_2_9
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
