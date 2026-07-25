@@ -1,0 +1,71 @@
+inventory:
+- id: ex.6.2.1
+  kind: exercise
+  book:
+    number: Exercise 6.2.1
+    pages:
+    - 510
+    section: '6.2'
+    equations: []
+  title: Kolmogorov Smirnov distribution free and dkw level
+  statement: |-
+    Let \(F\) be any continuous distribution function on \(\mathbb R\), and
+    let \(G_F\) be the \(F\)-Brownian bridge. Show that
+    \[
+    \sup_{t\in\mathbb R}|G_F(t)|
+    \]
+    has the same distribution as \(\sup_{u\in[0,1]}|G(u)|\) for a standard Brownian
+    bridge \(G\). Using the Dvoretzky-Kiefer-Wolfowitz inequality, give a numerical
+    \(z_\alpha\) such that
+    \[
+    \sup_F P_F^n\!\left(\|F_n-F\|_\infty>z_\alpha/\sqrt n\right)\le\alpha
+    \quad\text{for every }n\in\mathbb N,
+    \]
+    where the supremum is over all distribution functions \(F\).
+  hypotheses:
+    explicit:
+    - F is a continuous distribution function on ℝ.
+    - G_F is an F-Brownian bridge and G is a standard Brownian bridge.
+    - 0<α<1 and n∈ℕ.
+    implicit: []
+  quantifier_order:
+  - ∀ continuous F, the bridge supremum laws agree; ∀ α∈(0,1), ∃ numerical zα, ∀ n∈ℕ, sup_F P_F^n(event)≤α.
+  constants:
+  - ∀ continuous F, the bridge supremum laws agree; ∀ α∈(0,1), ∃ numerical zα, ∀ n∈ℕ, sup_F P_F^n(event)≤α.
+  dependencies:
+    earlier_book:
+    - Exercise 3.3.3 (Dvoretzky-Kiefer-Wolfowitz)
+    - Section 3.7 (Brownian bridges)
+    chapter_local:
+    - 6.2.ks_simple
+    later_book_uses: &id002
+    - Used by the Kolmogorov-Smirnov confidence band construction in Section 6.4.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.1
+    contains_omitted_steps: true
+    comment: Justifies the finite-sample calibration asserted in the discussion after the Kolmogorov-Smirnov test.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Formalise the probability-integral/quantile transform for continuous CDFs and combine it with a DKW theorem to produce a uniform finite-sample threshold.
+    blockers: &id001
+    - "A numerical choice is \\(z_\alpha=\\sqrt{\\frac12\\log(2/\alpha)}\\) under the standard two-sided DKW bound \\(2e^{-2z^2}\\); the exact imported DKW constant must be fixed centrally."
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id001
+  selection_reasons:
+  - establishes a required reusable lemma
+  - justifies the finite-sample distribution-free Kolmogorov-Smirnov calibration cited in the main text
+  used_by: *id002

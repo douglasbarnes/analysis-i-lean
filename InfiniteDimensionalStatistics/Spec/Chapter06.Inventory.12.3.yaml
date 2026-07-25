@@ -1,0 +1,68 @@
+inventory:
+- id: ex.6.1.2
+  kind: exercise
+  book:
+    number: Exercise 6.1.2
+    pages:
+    - 476
+    section: '6.1'
+    equations: []
+  title: Integral log rn Deriv neg Part le total Variation
+  statement: |-
+    For \(a\in\mathbb R\), write \(a^-=\max(0,-a)\) and
+    \(a^+=\max(0,a)\). If \(P\ll Q\), prove
+    \[
+    \int \bigl[\log(dP/dQ)\bigr]^-\,dP\le \|P-Q\|_{\mathrm{TV}},
+    \]
+    and hence, for common densities \(p,q\),
+    \[
+    K(P,Q)=\int_{\{pq>0\}}p[\log(p/q)]^+\,d\mu
+           -\int_{\{pq>0\}}p[\log(p/q)]^-\,d\mu .
+    \]
+  hypotheses:
+    explicit:
+    - P and Q are probability measures on a common measurable space.
+    - P is absolutely continuous with respect to Q.
+    - For the density formula, μ is a common dominating measure and p,q are the corresponding densities.
+    implicit: []
+  quantifier_order:
+  - ∀ P,Q with P≪Q, the negative-part inequality holds; then ∀ common μ, the signed positive/negative decomposition of K(P,Q) follows.
+  constants:
+  - ∀ P,Q with P≪Q, the negative-part inequality holds; then ∀ common μ, the signed positive/negative decomposition of K(P,Q) follows.
+  dependencies:
+    earlier_book:
+    - Definition 6.1.6
+    - Elementary inequalities for log
+    chapter_local:
+    - 6.1.6
+    - 6.1.7
+    later_book_uses: &id002
+    - The decomposition underlies absolute-log-likelihood bounds used in information-theoretic arguments.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.1.2
+    contains_omitted_steps: true
+    comment: Supplies a step invoked in the proof of Proposition 6.1.7(b).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Work with the Radon-Nikodym derivative `dP/dQ`; split its logarithm into positive and negative parts and prove the negative-part integral bound.
+    blockers: &id001 []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id001
+  selection_reasons:
+  - completes a proof step omitted from Proposition 6.1.7(b)
+  - establishes a reusable integrability decomposition for log-likelihood ratios
+  used_by: *id002

@@ -1,0 +1,53 @@
+schema_version: 1.0-package
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition
+  uploaded_file: FULLPDF.pdf
+  chapter: 6
+  chapter_title: The Minimax Paradigm
+  book_pages:
+    start: 467
+    end: 540
+purpose: Declaration-level specification only; this package contains no Lean proofs.
+package:
+  declaration_inventory:
+    files:
+    - Chapter06.Inventory.01.yaml
+    - Chapter06.Inventory.02.yaml
+    - Chapter06.Inventory.03.yaml
+    - Chapter06.Inventory.04.yaml
+    - Chapter06.Inventory.05.yaml
+    - Chapter06.Inventory.06.yaml
+    - Chapter06.Inventory.07.yaml
+    - Chapter06.Inventory.08.yaml
+    - Chapter06.Inventory.09.yaml
+    - Chapter06.Inventory.10.yaml
+    - Chapter06.Inventory.11.yaml
+    - Chapter06.Inventory.12.1.yaml
+    - Chapter06.Inventory.12.2.yaml
+    - Chapter06.Inventory.12.3.yaml
+    - Chapter06.Inventory.12.4.yaml
+    - Chapter06.Inventory.12.5.yaml
+    - Chapter06.Inventory.13.yaml
+    - Chapter06.Inventory.14.yaml
+    key: inventory
+    entry_count: 83
+  chapter_local_dependency_dag:
+    file: Chapter06.DependencyDAG.yaml
+    node_count: 83
+    edge_count: 140
+    acyclic: true
+validation_summary:
+  inventory_entries: 83
+  core_entries: 70
+  exercise_entries: 13
+  starred_entries: 0
+  dag_nodes: 83
+  dag_edges: 140
+  dag_acyclic: true
+  numbered_labels_complete: true
+  central_review_flags: 22
+  validation_scope: YAML, schema, identifiers, dependency references and DAG only; no Lean verification.

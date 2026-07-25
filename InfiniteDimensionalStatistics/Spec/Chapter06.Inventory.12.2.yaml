@@ -1,0 +1,65 @@
+inventory:
+- id: ex.6.1.1
+  kind: exercise
+  book:
+    number: Exercise 6.1.1
+    pages:
+    - 476
+    section: '6.1'
+    equations: []
+  title: Total Variation eq half integral abs density sub
+  statement: |-
+    Let \(P,Q\) be probability measures dominated by \(\mu\), with densities
+    \(p,q\). Prove
+    \[
+    \|P-Q\|_{\mathrm{TV}}=\frac12\int |p-q|\,d\mu
+          =1-\int \min(p,q)\,d\mu.
+    \]
+    The book's hint takes \(A=\{x:q(x)\ge p(x)\}\) and rewrites
+    \(\int|p-q|\,d\mu=2\int_A(q-p)\,d\mu\).
+  hypotheses:
+    explicit:
+    - P and Q are probability measures on a common measurable space.
+    - μ is a common dominating measure with densities p=dP/dμ and q=dQ/dμ.
+    implicit: []
+  quantifier_order:
+  - ∀ measurable spaces, ∀ probability measures P,Q, ∀ common dominating μ, the two identities hold.
+  constants:
+  - ∀ measurable spaces, ∀ probability measures P,Q, ∀ common dominating μ, the two identities hold.
+  dependencies:
+    earlier_book:
+    - Definition of total variation distance
+    - Radon-Nikodym theorem
+    chapter_local:
+    - 6.1.6
+    - 6.1.tv_density
+    later_book_uses: &id002
+    - Used implicitly throughout the chapter when converting density L¹-distance into total variation.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.1.1
+    contains_omitted_steps: true
+    comment: Completes the proof of equation (6.13), which the main text leaves to the exercise.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: For finite measures dominated by a common measure, identify total variation distance with one half of the L¹ norm of the Radon-Nikodym density difference; derive the minimum-density formula.
+    blockers: &id001 []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id001
+  selection_reasons:
+  - establishes a required reusable lemma
+  - supplies the proof omitted before equation (6.13)
+  used_by: *id002

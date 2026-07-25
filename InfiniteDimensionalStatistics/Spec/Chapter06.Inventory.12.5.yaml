@@ -1,0 +1,73 @@
+inventory:
+- id: ex.6.2.2
+  kind: exercise
+  book:
+    number: Exercise 6.2.2
+    pages:
+    - 510
+    - 511
+    section: '6.2'
+    equations: []
+  title: Exists measurable argmin on compact null
+  statement: |-
+    (a) If \(H_0\subset L^2\) is totally bounded, prove that its closure
+    \(\overline H_0\) is compact and that every continuous real-valued map on
+    \(\overline H_0\) attains its infimum. In the notation of the book, show
+    \[
+    \inf_{h\in H_0}|L_f(h)|=|L_f(h^\ast)|
+    \]
+    for some \(h^\ast\in\overline H_0\).
+    (b) Use this fact to establish existence of the infimum test statistics in
+    Theorems 6.2.14 and 6.2.17, including when \(H_0\) is a Besov ball
+    \(B^r_{2\infty}([0,1])\).
+    (c) Since the minimiser \(h^\ast\) is random in (b), prove its measurability
+    under the maintained assumptions.
+  hypotheses:
+    explicit:
+    - H₀ is a totally bounded subset of the complete Hilbert space L².
+    - The objective h↦|L_f(h)| is continuous for each realised data set.
+    - For the random argmin, the objective is jointly measurable in data and h and the compact closure is a standard Borel space.
+    implicit: []
+  quantifier_order:
+  - ∀ totally bounded H₀⊂L², ∀ continuous objectives, ∃ h*∈closure(H₀) attaining the infimum; under joint measurability, ∃ a measurable minimiser/infimum statistic.
+  constants:
+  - ∀ totally bounded H₀⊂L², ∀ continuous objectives, ∃ h*∈closure(H₀) attaining the infimum; under joint measurability, ∃ a measurable minimiser/infimum statistic.
+  dependencies:
+    earlier_book:
+    - Compactness of complete totally bounded metric spaces
+    - Measurable selection/maximum theorem
+    chapter_local:
+    - 6.2.14
+    - 6.2.17
+    later_book_uses: &id002
+    - Required to make the infimum chi-square and infimum U-statistic tests genuine measurable tests.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.2
+    contains_omitted_steps: true
+    comment: Completes existence and measurability details omitted in Theorems 6.2.14 and 6.2.17.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Separate into compactness of the closure of a totally bounded subset of complete L², existence of an argmin for a continuous functional, and a measurable-selection theorem for random continuous functionals on a compact Polish space.
+    blockers: &id001
+    - Part (c) requires an explicit measurable-selection theorem and a precise jointly measurable version of the objective. The prose 'standard continuity and weak compactness' is too compressed for Lean.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id001
+  selection_reasons:
+  - completes a proof omitted from the main text
+  - is cited by later theorems
+  - establishes a required reusable measurable-minimiser lemma
+  used_by: *id002
