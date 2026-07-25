@@ -94,7 +94,24 @@ chapters:
     printed_pages: {start: 541, end: 606}
     specification: InfiniteDimensionalStatistics/Spec/Chapter07.yaml
     audit_step: P1.7
-    status: artifact_available_requires_pass_normalisation_and_ingestion
+    status: pass_with_central_review_flags
+    package_record:
+      inventory_entries: 106
+      declarations: 88
+      selected_exercises: 18
+      dependency_edges: 233
+      dag_nodes: 106
+      dag_acyclic: true
+      source_starred_entries: 0
+      pass_semantics_normalised: true
+      missing_numbered_labels: []
+      duplicate_identifiers: []
+      duplicate_numbered_book_labels: []
+      chapter_local_strict_schema: pass
+      central_review_issue_count: 22
+    source_review_caveats:
+      - Exercises 7.3.1–7.3.8 were reconstructed conservatively from explicit main-text cross-references and remain individually flagged for page-image verification.
+      - Lemma 7.3.8 and Corollary 7.3.24 retain explicit source-legibility flags; no silent repair was made.
   - number: 8
     title: Adaptive Inference
     printed_pages: {start: 607, end: 666}
@@ -142,15 +159,15 @@ phase_gates:
     missing_on_main:
       - 5
       - 6
-      - 7
     present_but_pending_acceptance:
       - 1
       - 2
       - 3
     accepted:
       - 4
+      - 7
       - 8
-    status: blocked_on_three_missing_and_three_pending_acceptance_chapters
+    status: blocked_on_two_missing_and_three_pending_acceptance_chapters
   P2:
     status: blocked
     unblock_condition: P0 clean build certified and every P1 chapter specification accepted by the common validator.
