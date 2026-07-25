@@ -5,13 +5,43 @@ Schema version: `1.0`
 A chapter specification is either:
 
 1. a self-contained YAML file whose top level contains `source`, `inventory` and `chapter_local_dependency_dag`; or
-2. a package descriptor whose `package.declaration_inventory.file` and `package.chapter_local_dependency_dag.file` point to those components.
+2. a package descriptor whose `package.declaration_inventory` selects one or more inventory components and whose `package.chapter_local_dependency_dag.file` selects one DAG component.
 
 The package loader is implemented by `scripts/validate_ids_specs.py`. All component paths are resolved relative to the descriptor.
 
-## Readable inventory packages
+## Package descriptors
 
-A package inventory component may itself be an index. An inventory index has the same source, policy, summary and completeness metadata as a normal inventory file, and adds:
+An inventory package uses exactly one of the following forms:
+
+```yaml
+package:
+  declaration_inventory:
+    file: Chapter04.Inventory.yaml
+    key: inventory
+  chapter_local_dependency_dag:
+    file: Chapter04.DependencyDAG.yaml
+    key: chapter_local_dependency_dag
+```
+
+or:
+
+```yaml
+package:
+  declaration_inventory:
+    files:
+      - Chapter03.Inventory.001.yaml
+      - Chapter03.Inventory.002.yaml
+    key: inventory
+  chapter_local_dependency_dag:
+    file: Chapter03.DependencyDAG.yaml
+    key: chapter_local_dependency_dag
+```
+
+`file` and `files` are mutually exclusive. The `files` form concatenates the top-level `inventory` lists in the stated order. A DAG uses exactly one file.
+
+## Readable inventory indexes
+
+A single inventory component may itself be an index. An inventory index has the same source, policy, summary and completeness metadata as a normal inventory file, and adds:
 
 ```yaml
 inventory_files:
@@ -19,7 +49,7 @@ inventory_files:
   - Chapter02.Section2_1.Part2.yaml
 ```
 
-Each listed fragment must be YAML with a top-level `inventory` list. The loader concatenates the fragments in listed order. Fragmentation is permitted only to improve reviewability; identifiers, dependency references and completeness checks remain chapter-global. A package descriptor may repeat the fragment list as non-authoritative human-readable metadata, but the inventory index is authoritative.
+Each listed fragment must be YAML with a top-level `inventory` list. The loader concatenates the fragments in listed order. Fragmentation is permitted only to improve reviewability; identifiers, dependency references and completeness checks remain chapter-global. When an inventory index is used, its completeness metadata is authoritative. When a descriptor directly lists inventory fragments through `files`, descriptor-level completeness metadata is authoritative.
 
 ## Source metadata
 
@@ -44,7 +74,7 @@ inventory:
   - id: ch1.example_identifier
     kind: theorem
     book:
-      number: '1.2.3'
+      number: 'Theorem 1.2.3'
       pages: [8, 9]
       section: '1.2.3'
       equations: []
@@ -116,7 +146,7 @@ Pass semantics are source-based:
 - `starred`: material explicitly starred in the book;
 - `exercise`: extracted exercise declarations.
 
-Difficulty must not alter the pass.
+Difficulty must not alter the pass. In the canonical representation, a non-exercise entry may use `starred` only when the book number or label explicitly contains the source star.
 
 ## Exercise selection
 
@@ -126,7 +156,7 @@ An exercise entry must include at least one selection reason:
 - is cited by a later result;
 - establishes a required reusable lemma or counterexample.
 
-Record the reasons in `selection_reasons`; record downstream declarations in `used_by` and in the DAG.
+Record the reasons in `selection_reasons`; record downstream declarations in `used_by` and in the DAG. `selection_reasons` may be a nonempty list or a mapping of Boolean role fields.
 
 ## Dependency DAG
 
@@ -145,13 +175,34 @@ Every DAG node must be an inventory identifier. The node set must equal the inve
 
 ## Completeness metadata
 
-Every chapter inventory, including an inventory index, records:
+Every chapter package records:
 
 - expected and found numbered labels;
-- missing numbered labels;
+- missing or source-unverified numbered labels;
 - duplicate identifiers;
 - selected-exercise coverage;
 - central-review issue count;
 - inventory and DAG counts.
 
-The validator rejects missing chapter files, missing required fields, duplicate identifiers, invalid pass or difficulty values, unresolved local references, incomplete DAG node sets, dangling edges, self-loops, cycles, missing numbered labels, or exercises without a documented selection reason.
+The metadata may live in a self-contained chapter file, the inventory index, or a direct multi-file package descriptor. Its location must be unambiguous.
+
+## Validation modes
+
+Strict validation is the P1 acceptance gate:
+
+```bash
+python3 scripts/validate_ids_specs.py
+```
+
+It requires all eight chapter descriptors, canonical fields, valid source-based pass assignments, exact DAG coverage, complete numbered-label coverage, and no unresolved source-transcription blockers.
+
+Migration flags exist only for repository recovery and must not be reported as acceptance:
+
+```bash
+python3 scripts/validate_ids_specs.py \
+  --allow-missing \
+  --allow-source-blockers \
+  --allow-incomplete-coverage
+```
+
+The validator rejects missing chapter files in strict mode, missing required fields, duplicate identifiers, invalid pass or difficulty values, unresolved local references, incomplete DAG node sets, dangling edges, self-loops, cycles, incomplete numbered-label coverage, unresolved source-transcription blockers, or exercises without a documented selection reason.
