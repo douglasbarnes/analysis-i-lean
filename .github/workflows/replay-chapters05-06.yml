@@ -6,6 +6,7 @@ on:
       - '.github/workflows/replay-chapters05-06.yml'
       - 'InfiniteDimensionalStatistics/Spec/Chapter05*'
       - 'InfiniteDimensionalStatistics/Spec/Chapter06*'
+      - 'InfiniteDimensionalStatistics/Spec/Schema.md'
       - 'scripts/validate_ids_specs.py'
 
 permissions:
@@ -66,6 +67,127 @@ jobs:
             'InfiniteDimensionalStatistics/Spec/Chapter06.Inventory.12.yaml' \
             'InfiniteDimensionalStatistics/Spec/Chapter06.Inventory.13.yaml' \
             'InfiniteDimensionalStatistics/Spec/Chapter06.Inventory.14.yaml'
+      - name: Repair canonical source-star and YAML transport representation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          spec = Path('InfiniteDimensionalStatistics/Spec')
+
+          # The source star is attached to Section 5.1.3, not repeated in every
+          # declaration label. Preserve the labels and record that typography
+          # explicitly on the seven section entries.
+          starred_ids = {
+              'ch5.cond.K1_K5',
+              'ch5.def.D_class',
+              'ch5.prop.5_1_21',
+              'ch5.ex.haar_extreme',
+              'ch5.prop.5_1_22',
+              'ch5.ex.convolution_extreme',
+              'ch5.prop.5_1_23',
+          }
+          found = set()
+          for path in sorted(spec.glob('Chapter05.Inventory.*.yaml')):
+              doc = yaml.safe_load(path.read_text(encoding='utf-8'))
+              changed = False
+              for entry in doc.get('inventory', []):
+                  if entry.get('id') in starred_ids:
+                      entry['source_starred'] = True
+                      found.add(entry['id'])
+                      changed = True
+              if changed:
+                  path.write_text(
+                      yaml.safe_dump(doc, sort_keys=False, allow_unicode=True, width=120),
+                      encoding='utf-8',
+                  )
+          if found != starred_ids:
+              raise SystemExit(f'Chapter 5 source-star IDs missing: {sorted(starred_ids - found)}')
+
+          # Repair invalid YAML escapes only inside double-quoted scalar spans.
+          # Existing valid YAML escapes and already doubled backslashes remain
+          # unchanged. This is transport repair, not mathematical rewriting.
+          valid_escape = set('0abtnvfre"\\/N_LPuxU_')
+
+          def repair_double_quoted_scalars(text: str) -> str:
+              chars = list(text)
+              out = []
+              i = 0
+              in_scalar = False
+              while i < len(chars):
+                  ch = chars[i]
+                  if not in_scalar:
+                      out.append(ch)
+                      if ch == ':' and i + 1 < len(chars):
+                          j = i + 1
+                          while j < len(chars) and chars[j] in ' \t':
+                              out.append(chars[j])
+                              j += 1
+                          if j < len(chars) and chars[j] == '"':
+                              out.append('"')
+                              in_scalar = True
+                              i = j + 1
+                              continue
+                      i += 1
+                      continue
+                  if ch == '"':
+                      out.append(ch)
+                      in_scalar = False
+                      i += 1
+                      continue
+                  if ch == '\\':
+                      nxt = chars[i + 1] if i + 1 < len(chars) else ''
+                      if nxt in valid_escape:
+                          out.append(ch)
+                      else:
+                          out.append('\\\\')
+                      i += 1
+                      continue
+                  out.append(ch)
+                  i += 1
+              return ''.join(out)
+
+          repaired_files = []
+          for path in sorted(spec.glob('Chapter06.Inventory.*.yaml')):
+              text = path.read_text(encoding='utf-8')
+              try:
+                  yaml.safe_load(text)
+                  continue
+              except yaml.YAMLError:
+                  repaired = repair_double_quoted_scalars(text)
+                  try:
+                      yaml.safe_load(repaired)
+                  except yaml.YAMLError as exc:
+                      raise SystemExit(f'{path}: transport repair insufficient: {exc}') from exc
+                  path.write_text(repaired, encoding='utf-8')
+                  repaired_files.append(str(path))
+          print('Chapter 6 repaired files:', repaired_files)
+
+          # Extend the common validator for section-level source stars and for
+          # nested source-fidelity status fields used by readable packages.
+          validator = Path('scripts/validate_ids_specs.py')
+          text = validator.read_text(encoding='utf-8')
+          old = '''    kind = str(entry.get("kind", "")).replace("_", "-").lower()\n    number = str(nested(entry, "book", "number") or "")\n    if kind == "exercise":\n        if pass_value != "exercise":\n            errors.append(f"{loc}: exercise must use exercise pass")\n        reasons = entry.get("selection_reasons")\n        if not isinstance(reasons, (dict, list)) or not reasons:\n            errors.append(f"{loc}: selected exercise needs selection_reasons")\n    elif pass_value == "exercise":\n        errors.append(f"{loc}: non-exercise may not use exercise pass")\n    if pass_value == "starred" and "*" not in number:\n        errors.append(f"{loc}: starred pass requires an explicit book star")\n    if "*" in number and kind != "exercise" and pass_value != "starred":\n        errors.append(f"{loc}: explicitly starred book item must use starred pass")\n    if not allow_source_blockers:\n        status = str(entry.get("transcription_status", ""))\n'''
+          new = '''    kind = str(entry.get("kind", "")).replace("_", "-").lower()\n    number = str(nested(entry, "book", "number") or "")\n    section = str(nested(entry, "book", "section") or "")\n    source_starred = entry.get("source_starred", False)\n    if not isinstance(source_starred, bool):\n        errors.append(f"{loc}: source_starred must be Boolean when present")\n        source_starred = False\n    has_source_star = "*" in number or "*" in section or source_starred\n    if kind == "exercise":\n        if pass_value != "exercise":\n            errors.append(f"{loc}: exercise must use exercise pass")\n        reasons = entry.get("selection_reasons")\n        if not isinstance(reasons, (dict, list)) or not reasons:\n            errors.append(f"{loc}: selected exercise needs selection_reasons")\n    elif pass_value == "exercise":\n        errors.append(f"{loc}: non-exercise may not use exercise pass")\n    if pass_value == "starred" and not has_source_star:\n        errors.append(f"{loc}: starred pass requires source-star evidence")\n    if has_source_star and kind != "exercise" and pass_value != "starred":\n        errors.append(f"{loc}: source-starred book item must use starred pass")\n    if not allow_source_blockers:\n        status = str(\n            entry.get("transcription_status")\n            or nested(entry, "source_fidelity", "transcription_status")\n            or ""\n        )\n'''
+          if old not in text:
+              raise SystemExit('Validator source-star block did not match expected text')
+          text = text.replace(old, new, 1)
+          old_descriptor = '''    chapter, descriptor, inventory, dag = load_chapter(path)\n    errors: list[str] = []\n'''
+          new_descriptor = '''    chapter, descriptor, inventory, dag = load_chapter(path)\n    errors: list[str] = []\n    if not allow_source_blockers:\n        declared_blockers = descriptor.get("blocking_source_transcriptions")\n        if isinstance(declared_blockers, list) and declared_blockers:\n            errors.append(\n                f"chapter {chapter}: unresolved source transcriptions: "\n                f"{sorted(map(str, declared_blockers))}"\n            )\n'''
+          if old_descriptor not in text:
+              raise SystemExit('Validator descriptor block did not match expected text')
+          validator.write_text(text.replace(old_descriptor, new_descriptor, 1), encoding='utf-8')
+
+          schema = spec / 'Schema.md'
+          schema_text = schema.read_text(encoding='utf-8')
+          marker = 'Difficulty must not alter the pass. In the canonical representation, a non-exercise entry may use `starred` only when the book number or label explicitly contains the source star.\n'
+          replacement = '''Difficulty must not alter the pass. A source star may be recorded directly in `book.number` or `book.section`. When the source typography stars an enclosing section rather than repeating the star on each declaration, every affected non-exercise entry records `source_starred: true`; the declaration label itself remains unchanged.\n'''
+          if marker not in schema_text:
+              raise SystemExit('Schema source-star paragraph did not match expected text')
+          schema.write_text(schema_text.replace(marker, replacement, 1), encoding='utf-8')
+          PY
       - name: Audit Chapter 5
         id: chapter5
         continue-on-error: true
@@ -144,13 +266,15 @@ jobs:
         run: |
           test "${{ steps.chapter5.outputs.migration }}" = '0'
           test "${{ steps.chapter6.outputs.migration }}" = '0'
-      - name: Commit replayed packages
+      - name: Commit replayed packages and canonical support
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add InfiniteDimensionalStatistics/Spec/Chapter05*.yaml \
-                  InfiniteDimensionalStatistics/Spec/Chapter06*.yaml
+                  InfiniteDimensionalStatistics/Spec/Chapter06*.yaml \
+                  InfiniteDimensionalStatistics/Spec/Schema.md \
+                  scripts/validate_ids_specs.py
           git commit -m 'Ingest Chapter 5 and Chapter 6 specification packages'
           git push origin HEAD:${{ github.head_ref }}
