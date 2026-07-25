@@ -360,7 +360,14 @@ package:
     - Chapter05.Inventory.04.yaml
     - Chapter05.Inventory.05.yaml
     - Chapter05.Inventory.06.yaml
-    format: canonical inventory fragments; concatenated in listed order
+    - Chapter05.Inventory.07.yaml
+    - Chapter05.Inventory.08.yaml
+    - Chapter05.Inventory.09.yaml
+    - Chapter05.Inventory.10.yaml
+    - Chapter05.Inventory.11.yaml
+    - Chapter05.Inventory.12.yaml
+    - Chapter05.Inventory.13.yaml
+    format: canonical readable inventory fragments; YAML anchors only remove repeated boilerplate
     entry_count: 104
   chapter_local_dependency_dag:
     file: Chapter05.DependencyDAG.yaml
