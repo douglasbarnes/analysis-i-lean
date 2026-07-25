@@ -1,0 +1,222 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.2.4
+fragment_part: 2
+inventory:
+- id: ch7.prop.monotoneScoreBound
+  kind: mathematically_operative_bound
+  book:
+    number: (7.73)
+    pages:
+    - 566
+    section: 7.2.4
+    equations:
+    - (7.73)
+  title: Directional score bound in the monotone model
+  statement: "Under the strict positivity and strict decrease hypotheses, for g,g'∈L∞,\n\
+    \  |Dℓₙ(p̂ₙ)[π₀(g)]|\n    ≤ d ||g||_{C¹} |Dℓₙ(p̂ₙ)[p̂ₙ-p₀]|\non events of arbitrarily\
+    \ high probability for all sufficiently large n, where\nd depends only on ζ and\
+    \ ξ."
+  hypotheses:
+    explicit:
+    - Hypotheses of (7.72).
+    - g and g' are bounded.
+    implicit: []
+  quantifier_order:
+  - ∀ g; high-probability eventually.
+  constants:
+  - d=d(ζ,ξ).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.lemma.7.2.5
+    - ch7.def.monotonePerturbation
+    - ch7.lemma.7.2.16
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A scaled application of the directional derivative lemma after constructing
+      feasible line segments.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.lemma.7.2.18
+  kind: lemma
+  book:
+    number: Lemma 7.2.18
+    pages:
+    - 566
+    - 567
+    section: 7.2.4
+    equations: []
+  title: Radial likelihood derivative for the monotone MLE
+  statement: If p₀ is bounded and inf p₀>0, then |Dℓₙ(p̂ₙ)[p̂ₙ-p₀]|=O_{P₀}(n^{-2/3}).
+  hypotheses:
+    explicit:
+    - p₀ bounded, nonincreasing, and bounded away from zero.
+    implicit: []
+  quantifier_order:
+  - As n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.prop.7.2.4
+    - ch7.lemma.7.2.16
+    - ch7.thm.7.2.17
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
+      `OP` and `oP` predicates over the sequence of experiments.
+
+      Needs empirical-process control on local monotone-density differences.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.prop.7.2.19
+  kind: proposition
+  book:
+    number: Proposition 7.2.19
+    pages:
+    - 567
+    - 568
+    section: 7.2.4
+    equations: []
+  title: Uniform asymptotic score control for monotone densities
+  statement: "Suppose p₀ is differentiable, 0<ζ≤p₀, p₀' is bounded and p₀'≤-ξ<0.\n\
+    For g,g'∈L∞,\n  |Dℓₙ(p̂ₙ)[π₀(g)]|=O_{P₀}(||g||_{C¹} n^{-2/3}).\nConsequently,\
+    \ for B={g:g,g'∈L∞, ||g||_{C¹}≤B},\n  sup_{g∈B}|(P̂ₙ-Pₙ)(g)|=O_{P₀}(B n^{-2/3})."
+  hypotheses:
+    explicit:
+    - Strict positivity and strict decrease.
+    - Bounded derivative.
+    - g and g' bounded.
+    implicit: []
+  quantifier_order:
+  - First bound for every g, uniformly by its norm; second for each fixed radius B.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.prop.monotoneScoreBound
+    - ch7.lemma.7.2.18
+    - ch7.lemma.7.2.6
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
+      `OP` and `oP` predicates over the sequence of experiments.
+
+      Includes a third-order Taylor expansion of the likelihood and uniform empirical-process
+      remainders.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.thm.7.2.20
+  kind: theorem
+  book:
+    number: Theorem 7.2.20
+    pages:
+    - 568
+    - 569
+    section: 7.2.4
+    equations: []
+  title: Asymptotic efficiency of the monotone MLE
+  statement: "Under the hypotheses of Proposition 7.2.19, for every bounded class\
+    \ F in C^s,\ns>1/2,\n  ||P̂ₙ-Pₙ||_F=o_{P₀}(n^{-1/2}),\nhence\n  √n(P̂ₙ-P₀)⇒G_{P₀}\
+    \ in ℓ∞(F),\nwith the corresponding scalar normal limit for ∫f(p̂ₙ-p₀)."
+  hypotheses:
+    explicit:
+    - p₀ satisfies strict positivity, differentiability and strict decrease.
+    - s>1/2.
+    - F is a bounded uniform Donsker class.
+    implicit:
+    - Wavelet projections of C^s functions are used.
+  quantifier_order:
+  - ∀ such F, as n→∞.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Chapter 4 wavelet approximation
+    - Chapter 3 Donsker theory
+    chapter_local:
+    - ch7.prop.7.2.19
+    - ch7.thm.7.2.17
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none; Exercise 7.2.10 is a subsequent extension to a jump-point functional
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A random element in `ℓ∞(F)` represented as bounded functions on an index
+      type, with measurability/separability hypotheses explicit; weak convergence
+      via `ProbabilityMeasure`.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
