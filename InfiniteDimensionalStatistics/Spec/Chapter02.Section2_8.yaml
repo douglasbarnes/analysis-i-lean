@@ -1,0 +1,314 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.8'
+inventory:
+- id: theorem-2-8-1
+  kind: theorem
+  book:
+    number: 2.8.1
+    pages:
+    - 103
+    section: '2.8'
+    equations: []
+  title: Generic chaining upper bound
+  statement: Let (T,d) be countable, X sub-Gaussian relative to d, N_n=2^{2^n}, and T_n⊆T with |T_n|≤N_n and ⋃_nT_n=T. For
+    finite F⊆T, t₀∈F and T₀={t₀}, E max_{t∈F}(X(t)−X(t₀))≤L·max_{t∈F}∑_{n≥0}2^{n/2}d(t,T_n), with universal L=(1+√2)(1+√(3log2))/√(3log2)<5.16;
+    the same bound holds for the supremum over T when finite.
+  hypotheses:
+    explicit:
+    - T countable pseudometric.
+    - X sub-Gaussian.
+    - Admissible sequence T_n with cardinal bounds and union T.
+    - F finite.
+    implicit: []
+  quantifier_order:
+  - N_n=2^{2^n}; weights 2^{n/2}; displayed universal L.
+  constants:
+  - N_n=2^{2^n}; weights 2^{n/2}; displayed universal L.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-3-5
+    - lemma-2-3-4
+    chapter_local_dependents:
+    - corollary-2-124
+    - example-2-8-2
+    later_book_uses:
+    - example-2-8-2
+    - corollary-2-124
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Admissible nets and nearest-point maps, telescoping paths, a union bound across levels, and tail integration.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The OCR of the closed form for L is slightly garbled; verify the numerator `1+√(3 log 2)` visually.
+- id: example-2-8-2
+  kind: example
+  book:
+    number: 2.8.2
+    pages:
+    - 104
+    section: '2.8'
+    equations: []
+  title: Generic chaining beyond the entropy integral
+  statement: For T={2,3,…,∞}, X(n)=g_n/√(log n) and X(∞)=0, choose T_n={2,…,N_n,∞}. Then sup_m∑_n2^{n/2}d(m,T_n)<∞, so generic
+    chaining gives a bounded process, while the ordinary Dudley entropy integral diverges; this demonstrates strict improvement
+    of the chaining functional.
+  hypotheses:
+    explicit:
+    - g_n independent standard normals.
+    - Metric d is the intrinsic Gaussian metric.
+    implicit: []
+  quantifier_order:
+  - N_n=2^{2^n}.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-8-1
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Compute the intrinsic distances and compare a dyadic series with the covering-number entropy integral.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - The OCR of `X(n)=g_n/√log n` and the exact interval bounding d(n,m) should be visually verified.
+- id: corollary-2-124
+  kind: corollary
+  book:
+    number: '2.124'
+    pages:
+    - 105
+    section: '2.8'
+    equations: []
+  title: Entropy-number comparison
+  statement: If e_n(T)=inf{ε:N(T,d,ε)≤N_n}, then ∑_n2^{n/2}e_n(T) is bounded by a universal multiple of ∫₀^{diam T}√(log N(T,d,ε))dε,
+    and conversely the generic-chain bound recovers Dudley's entropy bound by replacing a supremum of sums with a sum of suprema.
+  hypotheses:
+    explicit:
+    - (T,d) totally bounded enough for finite entropy numbers.
+    implicit: []
+  quantifier_order:
+  - N_n=2^{2^n}; factors √log2 and 1−1/√2 as displayed.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-unnumbered-2-3-covering
+    - theorem-2-8-1
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Define entropy numbers in `ℝ≥0∞`, partition the entropy integral into intervals [e_{n+1},e_n], and sum.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition-unnumbered-2-8-cyclostationary
+  kind: definition
+  book:
+    number: unnumbered-2.8-cyclostationary
+    pages:
+    - 106
+    section: '2.8'
+    equations: []
+  title: Cyclostationary Gaussian process
+  statement: A centred Gaussian process Y(t), t∈ℝ, is cyclostationary when for every lag v, the map t↦E[Y(t)Y(t+v)] is periodic
+    in t with a period independent of v.
+  hypotheses:
+    explicit:
+    - Centred Gaussian process on ℝ.
+    implicit: []
+  quantifier_order:
+  - One common period for all lags.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - theorem-2-8-3
+    later_book_uses:
+    - theorem-2-8-3
+    - 'later-wavelet-confidence-band-results: The notes connect cyclostationary processes to wavelet density estimators.'
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: The notes say such processes approximate wavelet density estimators and introduce the next theorem because
+      it is used later.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: A predicate on the covariance kernel with a common positive period, plus centred Gaussian-process data.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-8-3
+  kind: theorem
+  book:
+    number: 2.8.3
+    pages:
+    - 106
+    section: '2.8'
+    equations: []
+  title: Gumbel limit for cyclostationary Gaussian processes
+  statement: Let X be centred cyclostationary Gaussian of period 1. Assume mean-square differentiability and a.s. continuity;
+    perfect correlation r_X(s,t)=σ_X(s)σ_X(t) only when s=t; σ_X² has a unique maximum 1 at t₀∈(0,1), is C² there with derivative
+    0, second derivative negative, and E(X′(t₀))²>0; and (log v)sup_{|s−t|≥v}|r_X(s,t)|→0. Then for every x, Pr(a_T(sup_{[0,T]}|X|−b_T)≤x)→exp(−e^{-x}),
+    with a_T=√(2log T) and b_T exactly as displayed in the notes.
+  hypotheses:
+    explicit:
+    - All four numbered hypotheses in the note theorem.
+    - Period exactly 1.
+    - x fixed real.
+    implicit: []
+  quantifier_order:
+  - a_T=√(2log T); b_T uses log log T, log π, E(X′(t₀))² and σ_X²''(t₀) exactly as printed.
+  constants:
+  - a_T=√(2log T); b_T uses log log T, log π, E(X′(t₀))² and σ_X²''(t₀) exactly as printed.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-unnumbered-2-8-cyclostationary
+    chapter_local_dependents: []
+    later_book_uses:
+    - 'later-wavelet-confidence-band-results: The notes state that the quoted extreme-value theorem will be used later.'
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: The notes explicitly state that this result will be used later.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact extreme-value theorem for stationary Gaussian processes located
+      candidates:
+      - Filter.Tendsto
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: extremes
+  likely_lean_representation:
+    sketch: A quoted major theorem requiring mean-square derivatives, periodic covariance geometry, and an extreme-value limit;
+      formal proof is outside a reasonable core pass.
+    blockers:
+    - Requires asymptotic probability, covariance comparison and process-extreme infrastructure beyond existing foundations.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The OCR of b_T is ambiguous. It appears to involve `log(π) − log(1 − E(X′(t₀))² / σ_X²''(t₀))`; transcribe directly from
+    the PDF before implementation.
+  - The condition `r_X(s,t)=σ_X(s)σ_X(t) only at s=t` should be checked for signs and whether absolute correlation was intended.
