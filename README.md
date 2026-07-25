@@ -26,7 +26,11 @@ The current material is based on Cambridge lecture notes published at https://de
 - Metric and Topological Spaces
 - Optimisation
 
-There are currently **14 course libraries**. Each course is exposed as a separate Lake target, so individual libraries can be built independently while `lake build` checks the complete collection.
+### Book formalisation projects
+
+- Infinite-Dimensional Statistics — Giné and Nickl, currently in the governance and declaration-specification phases.
+
+There are currently **15 Lake libraries**. Each course or book project is exposed as a separate Lake target, so individual libraries can be built independently while `lake build` checks the complete collection.
 
 ## Formalisation and audit structure
 
@@ -37,6 +41,13 @@ The repository audit rejects:
 - `sorry` and `admit` proof placeholders;
 - newly declared axioms;
 - `opaque` declarations used to hide proofs.
+
+The Infinite-Dimensional Statistics specifications have an additional cross-chapter validator:
+
+```bash
+python3 -m pip install -r scripts/requirements-spec.txt
+python3 scripts/validate_infinite_dimensional_statistics_specs.py
+```
 
 ## Toolchain
 
