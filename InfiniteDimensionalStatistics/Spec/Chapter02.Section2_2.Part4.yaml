@@ -1,0 +1,306 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.2'
+fragment_part: 4
+inventory:
+- id: exercise-2-2-9
+  kind: exercise
+  book:
+    number: Exercise 2.2.9
+    pages:
+    - 36
+    section: '2.2'
+    equations: []
+  title: One-sided BST inequality
+  statement: Prove the analogue of Theorem 2.2.7 for sup_t X(t) and its median, without absolute values.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-2-7
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Repeat the finite-coordinate Lipschitz argument for max_i x_i.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-2-10
+  kind: exercise
+  book:
+    number: Exercise 2.2.10
+    pages:
+    - 36
+    section: '2.2'
+    equations: []
+  title: Symmetry comparison for absolute and one-sided suprema
+  statement: For the centred Gaussian process in the exercise preamble and every u, prove Pr(sup_t|X(t)|>u)≤2 Pr(sup_t X(t)>u).
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Union bound and equality in law of X and −X.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: routine
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by: []
+- id: exercise-2-2-11
+  kind: exercise
+  book:
+    number: Exercise 2.2.11
+    pages:
+    - 36
+    section: '2.2'
+    equations: []
+  title: Uniqueness and quantile continuity
+  statement: Prove (a) ||X|| has a unique median M and its CDF is continuous at M; (b) for M_a:=inf{u:Pr(||X||≤u)>a}, 0<a<1,
+    the CDF is continuous at M_a.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-2-6
+    chapter_local_dependents:
+    - exercise-2-2-13
+    - exercise-2-4-4
+    later_book_uses:
+    - exercise-2-2-13
+    - exercise-2-4-4
+    - Exercise 2.2.13
+    - Exercise 2.4.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Use strict growth of Gaussian enlargements to exclude atoms at quantile levels.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Exercise 2.2.13
+  - Exercise 2.4.4
+- id: exercise-2-2-12
+  kind: exercise
+  book:
+    number: Exercise 2.2.12
+    pages:
+    - 36
+    section: '2.2'
+    equations: []
+  title: Banach-space BST inequality from a countable norming set
+  statement: Let B have a countable D⊆B*₁ with ||x||=sup_{f∈D}|f(x)|. If X is centred Gaussian, ||X||<∞ a.s., M is a median,
+    and σ²=sup_{f∈D}E[f(X)²], prove Pr(| ||X||−M |>u)≤2(1−Φ(u/σ))≤exp(−u²/(2σ²)).
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - ∀u>0; exact σ² definition.
+  constants:
+  - ∀u>0; exact σ² definition.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-2-7
+    chapter_local_dependents:
+    - exercise-2-2-13
+    later_book_uses:
+    - exercise-2-2-13
+    - Section 2.6 Banach-valued Gaussian results
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: View f↦f(X) as a separable Gaussian process indexed by D.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Section 2.6 Banach-valued Gaussian results
+- id: exercise-2-2-13
+  kind: exercise
+  book:
+    number: Exercise 2.2.13
+    pages:
+    - 36
+    section: '2.2'
+    equations: []
+  title: Continuity of the norm distribution at every quantile
+  statement: Under Exercise 2.2.12, prove that the CDF of ||X|| is continuous at M_a for every 0<a<1.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-2-11
+    - exercise-2-2-12
+    chapter_local_dependents:
+    - exercise-2-4-4
+    - proposition-2-6-19
+    later_book_uses:
+    - exercise-2-4-4
+    - proposition-2-6-19
+    - Exercise 2.4.4
+    - Proposition 2.6.19
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Transfer the process quantile-continuity argument through the countable norming set.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Exercise 2.4.4
+  - Proposition 2.6.19
