@@ -8,14 +8,14 @@ import InfiniteDimensionalStatistics.Chapter03.ElementaryLemmas
 import InfiniteDimensionalStatistics.Chapter03.Hoeffding
 import InfiniteDimensionalStatistics.Chapter03.Rademacher
 import InfiniteDimensionalStatistics.Chapter03.Bennett
+import InfiniteDimensionalStatistics.Chapter03.FiniteMaximum
 
 /-!
 # Chapter 3: Empirical Processes
 
 Source-order implementation root for Chapter 3.  The current implementation
-contains the reusable definition layer, elementary proved consequences, the
-Mathlib-backed Hoeffding and Rademacher bounds, and the generic Bennett Chernoff
-step.  Deep entropy, VC and Donsker theorem proofs are added only when they have
-genuine Lean proofs; no assumption or placeholder is used to simulate
-completion.
+contains the reusable definition layer and proved concentration results through
+the finite maximal mgf inequality.  Deep entropy, VC and Donsker theorem proofs
+are added only when they have genuine Lean proofs; no assumption or placeholder
+is used to simulate completion.
 -/
