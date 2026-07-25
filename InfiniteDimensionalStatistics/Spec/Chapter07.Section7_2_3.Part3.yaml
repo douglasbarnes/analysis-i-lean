@@ -1,0 +1,171 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.2.3
+fragment_part: 3
+inventory:
+- id: ch7.thm.7.2.14
+  kind: theorem
+  book:
+    number: Theorem 7.2.14
+    label: Theorem 7.2.14
+    pages:
+    - 561
+    - 562
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Asymptotic efficiency of the Sobolev MLE
+  statement: "Assume the interior condition and let s>1/2. If F is a bounded subset of H^s\n(or of C^s under the stated embeddings), then\n  ||P̂ₙ-Pₙ||_F = o_{P₀}(n^{-1/2}),\nand therefore\n  √n(P̂ₙ-P₀) ⇒ G_{P₀} in ℓ∞(F).\nIn particular, for each f∈F,\n  √n∫ f(p̂ₙ-p₀)dμ ⇒ N(0, ||f-P₀f||²_{L²(P₀)})."
+  hypotheses:
+    explicit:
+    - t>1/2 and p₀ satisfies (7.65).
+    - s>1/2.
+    - F is bounded in the specified smoothness norm and is a uniform P₀-Donsker class.
+    implicit:
+    - Measurability/separability assumptions for ℓ∞(F) are in force.
+    - The empirical process CLT is invoked.
+  quantifier_order:
+  - ∀ admissible bounded classes F; weak convergence as n→∞; ∀ f∈F scalar CLT.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Theorem 4.4.5 (corrected reference)
+    - Corollary 3.7.39 (corrected reference)
+    - Donsker CLT
+    chapter_local:
+    - ch7.lemma.7.2.13
+    - ch7.thm.7.2.10
+    later_book_uses:
+    - ch7.thm.7.2.15
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A random element in `ℓ∞(F)` represented as bounded functions on an index type, with measurability/separability
+      hypotheses explicit; weak convergence via `ProbabilityMeasure`.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - '[official_erratum] p. 562: Replace deleted proof phrase; cite Theorem 4.4.5 and Corollary 3.7.39.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_2_14
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
+- id: ch7.thm.7.2.15
+  kind: theorem
+  book:
+    number: Theorem 7.2.15
+    label: Theorem 7.2.15
+    pages:
+    - 562
+    - 563
+    section: 7.2.3
+    equations: []
+    section_title: The Maximum Likelihood Estimator over a Sobolev Ball
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Parametric-rate convergence of the Sobolev-MLE cdf
+  statement: "Let F̂ₙ(x)=∫_0^x p̂ₙ(u)du and F₀(x)=∫_0^x p₀(u)du. Under the hypotheses of\nTheorem 7.2.14,\n  √n ||F̂ₙ-F₀||∞ = O_{P₀}(1),\nand the process has the corresponding Brownian-bridge weak limit obtained by\ntesting against indicators [0,x]."
+  hypotheses:
+    explicit:
+    - Sobolev MLE and interior p₀ hypotheses.
+    - Indicator class indexed by x∈[0,1].
+    implicit:
+    - The exact weak-limit formulation is inherited from Theorem 7.2.14/empirical cdf theory.
+  quantifier_order:
+  - As n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.2.14
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Map the signed measure process to cumulative distribution functions; use the empirical-cdf Donsker theorem.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_2_15
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/Sobolev.lean
