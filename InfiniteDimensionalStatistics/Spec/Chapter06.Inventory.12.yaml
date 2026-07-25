@@ -1,0 +1,377 @@
+inventory:
+- id: 6.5.unified_Lp_detection_rate
+  kind: notes_result
+  book:
+    number: Notes-only unified Lᵖ separation rate
+    pages:
+    - 537
+    - 538
+    section: 6.5 (notes to Section 6.2)
+    equations: []
+  title: Besov simple Testing unified Lp separation rate
+  statement: 'For simple nonparametric signal-detection/goodness-of-fit problems over
+
+    smoothness-\(r\) classes, the \(L^2\)-separation rate
+
+    \(n^{-r/(2r+1/2)}\) and the \(L^\infty\)-separation rate
+
+    \(n^{-r/(2r+1)}\), ignoring the logarithmic factor in the latter, are endpoints
+
+    of the unified rate
+
+    \[
+
+    \rho_n\asymp n^{-r/(2r+1-p^{-1})},\qquad 2\le p\le\infty.
+
+    \]
+
+    For \(1\le p<2\), the notes state that no further improvement over the \(L^2\)
+
+    rate is possible.'
+  hypotheses:
+    explicit:
+    - The testing problem is one of the simple smooth alternatives treated in the Ingster theory referenced by the
+      notes.
+    - The regularity parameter satisfies r>0.
+    - For the displayed interpolation formula, 2≤p≤∞.
+    - Logarithmic factors in the L∞ endpoint are deliberately suppressed in this notes-level statement.
+    implicit: []
+  quantifier_order:
+  - ∀ r>0, ∀ p∈[2,∞], the asserted asymptotic separation exponent is r/(2r+1−1/p); for 1≤p<2 the rate does not improve
+    beyond the p=2 rate.
+  constants:
+  - ∀ r>0, ∀ p∈[2,∞], the asserted asymptotic separation exponent is r/(2r+1−1/p); for 1≤p<2 the rate does not improve
+    beyond the p=2 rate.
+  dependencies:
+    earlier_book:
+    - Theorems 6.2.7, 6.2.9 and 6.2.11
+    - Exercise 6.2.5 for the L¹ endpoint phenomenon
+    chapter_local:
+    - 6.2.7
+    - 6.2.9
+    - 6.2.11
+    later_book_uses:
+    - Background for the adaptive L² and L∞ testing problems of Chapter 8; the exact notes statement is not directly
+      invoked as a proved theorem.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.5
+    contains_omitted_steps: true
+    comment: The p<2 assertion points to 'Exercise 6.4' in print, an ambiguous/mistyped reference; Exercise 6.2.5
+      proves the L¹ version for Theorem 6.2.9.
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: This declaration is stated in the chapter notes.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: After formalising the whole Ingster family, parameterise the separation metric by p and state the exponent
+      piecewise. This is not a consequence of the chapter's endpoint proofs alone.
+    blockers: &id001
+    - The hardback prints denominator 2r+1+p^{-1}; the official errata corrects it to 2r+1−p^{-1}.
+    - The reference 'see Exercise 6.4' is not a valid unambiguous exercise label in the chapter and likely points
+      to Exercise 6.2.5 or another omitted numbering.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id001
+- id: ex.6.1.1
+  kind: exercise
+  book:
+    number: Exercise 6.1.1
+    pages:
+    - 476
+    section: '6.1'
+    equations: []
+  title: Total Variation eq half integral abs density sub
+  statement: "Let \\(P,Q\\) be probability measures dominated by \\(\\mu\\), with densities\n\\(p,q\\). Prove\n\\\\
+    [\n\\|P-Q\\|_{\\mathrm{TV}}=\\frac12\\int |p-q|\\,d\\mu\n      =1-\\int \\min(p,q)\\,d\\mu.\n\\]\nThe book's\\
+    \\ hint takes \\(A=\\{x:q(x)\\ge p(x)\\}\\) and rewrites\n\\(\\int|p-q|\\,d\\mu=2\\int_A(q-p)\\,d\\mu\\)."
+  hypotheses:
+    explicit:
+    - P and Q are probability measures on a common measurable space.
+    - μ is a common dominating measure with densities p=dP/dμ and q=dQ/dμ.
+    implicit: []
+  quantifier_order:
+  - ∀ measurable spaces, ∀ probability measures P,Q, ∀ common dominating μ, the two identities hold.
+  constants:
+  - ∀ measurable spaces, ∀ probability measures P,Q, ∀ common dominating μ, the two identities hold.
+  dependencies:
+    earlier_book:
+    - Definition of total variation distance
+    - Radon-Nikodym theorem
+    chapter_local:
+    - 6.1.6
+    - 6.1.tv_density
+    later_book_uses: &id003
+    - Used implicitly throughout the chapter when converting density L¹-distance into total variation.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.1.1
+    contains_omitted_steps: true
+    comment: Completes the proof of equation (6.13), which the main text leaves to the exercise.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: For finite measures dominated by a common measure, identify total variation distance with one half of
+      the L¹ norm of the Radon-Nikodym density difference; derive the minimum-density formula.
+    blockers: &id002 []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id002
+  selection_reasons:
+  - establishes a required reusable lemma
+  - supplies the proof omitted before equation (6.13)
+  used_by: *id003
+- id: ex.6.1.2
+  kind: exercise
+  book:
+    number: Exercise 6.1.2
+    pages:
+    - 476
+    section: '6.1'
+    equations: []
+  title: Integral log rn Deriv neg Part le total Variation
+  statement: "For \\(a\\in\\mathbb R\\), write \\(a^-=\\max(0,-a)\\) and\n\\(a^+=\\max(0,a)\\). If \\(P\\ll Q\\\\
+    ), prove\n\\[\n\\int \\bigl[\\log(dP/dQ)\\bigr]^-\\,dP\\le \\|P-Q\\|_{\\mathrm{TV}},\n\\]\nand hence, for common\\
+    \\ densities \\(p,q\\),\n\\[\nK(P,Q)=\\int_{\\{pq>0\\}}p[\\log(p/q)]^+\\,d\\mu\n       -\\int_{\\{pq>0\\}}p[\\\\
+    log(p/q)]^-\\,d\\mu .\n\\]"
+  hypotheses:
+    explicit:
+    - P and Q are probability measures on a common measurable space.
+    - P is absolutely continuous with respect to Q.
+    - For the density formula, μ is a common dominating measure and p,q are the corresponding densities.
+    implicit: []
+  quantifier_order:
+  - ∀ P,Q with P≪Q, the negative-part inequality holds; then ∀ common μ, the signed positive/negative decomposition
+    of K(P,Q) follows.
+  constants:
+  - ∀ P,Q with P≪Q, the negative-part inequality holds; then ∀ common μ, the signed positive/negative decomposition
+    of K(P,Q) follows.
+  dependencies:
+    earlier_book:
+    - Definition 6.1.6
+    - Elementary inequalities for log
+    chapter_local:
+    - 6.1.6
+    - 6.1.7
+    later_book_uses: &id005
+    - The decomposition underlies absolute-log-likelihood bounds used in information-theoretic arguments.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.1.2
+    contains_omitted_steps: true
+    comment: Supplies a step invoked in the proof of Proposition 6.1.7(b).
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Work with the Radon-Nikodym derivative `dP/dQ`; split its logarithm into positive and negative parts
+      and prove the negative-part integral bound.
+    blockers: &id004 []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id004
+  selection_reasons:
+  - completes a proof step omitted from Proposition 6.1.7(b)
+  - establishes a reusable integrability decomposition for log-likelihood ratios
+  used_by: *id005
+- id: ex.6.2.1
+  kind: exercise
+  book:
+    number: Exercise 6.2.1
+    pages:
+    - 510
+    section: '6.2'
+    equations: []
+  title: Kolmogorov Smirnov distribution free and dkw level
+  statement: 'Let \(F\) be any continuous distribution function on \(\mathbb R\), and
+
+    let \(G_F\) be the \(F\)-Brownian bridge. Show that
+
+    \[
+
+    \sup_{t\in\mathbb R}|G_F(t)|
+
+    \]
+
+    has the same distribution as \(\sup_{u\in[0,1]}|G(u)|\) for a standard Brownian
+
+    bridge \(G\). Using the Dvoretzky-Kiefer-Wolfowitz inequality, give a numerical
+
+    \(z_\alpha\) such that
+
+    \[
+
+    \sup_F P_F^n\!\left(\|F_n-F\|_\infty>z_\alpha/\sqrt n\right)\le\alpha
+
+    \quad\text{for every }n\in\mathbb N,
+
+    \]
+
+    where the supremum is over all distribution functions \(F\).'
+  hypotheses:
+    explicit:
+    - F is a continuous distribution function on ℝ.
+    - G_F is an F-Brownian bridge and G is a standard Brownian bridge.
+    - 0<α<1 and n∈ℕ.
+    implicit: []
+  quantifier_order:
+  - ∀ continuous F, the bridge supremum laws agree; ∀ α∈(0,1), ∃ numerical zα, ∀ n∈ℕ, sup_F P_F^n(event)≤α.
+  constants:
+  - ∀ continuous F, the bridge supremum laws agree; ∀ α∈(0,1), ∃ numerical zα, ∀ n∈ℕ, sup_F P_F^n(event)≤α.
+  dependencies:
+    earlier_book:
+    - Exercise 3.3.3 (Dvoretzky-Kiefer-Wolfowitz)
+    - Section 3.7 (Brownian bridges)
+    chapter_local:
+    - 6.2.ks_simple
+    later_book_uses: &id007
+    - Used by the Kolmogorov-Smirnov confidence band construction in Section 6.4.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.1
+    contains_omitted_steps: true
+    comment: Justifies the finite-sample calibration asserted in the discussion after the Kolmogorov-Smirnov test.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Formalise the probability-integral/quantile transform for continuous CDFs and combine it with a DKW
+      theorem to produce a uniform finite-sample threshold.
+    blockers: &id006
+    - "A numerical choice is \\(z_\alpha=\\sqrt{\frac12\\log(2/\alpha)}\\) under the standard two-sided DKW bound\\
+      \\ \\(2e^{-2z^2}\\); the exact imported DKW constant must be fixed centrally."
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - establishes a required reusable lemma
+  - justifies the finite-sample distribution-free Kolmogorov-Smirnov calibration cited in the main text
+  used_by: *id007
+- id: ex.6.2.2
+  kind: exercise
+  book:
+    number: Exercise 6.2.2
+    pages:
+    - 510
+    - 511
+    section: '6.2'
+    equations: []
+  title: Exists measurable argmin on compact null
+  statement: '(a) If \(H_0\subset L^2\) is totally bounded, prove that its closure
+
+    \(\overline H_0\) is compact and that every continuous real-valued map on
+
+    \(\overline H_0\) attains its infimum. In the notation of the book, show
+
+    \[
+
+    \inf_{h\in H_0}|L_f(h)|=|L_f(h^\ast)|
+
+    \]
+
+    for some \(h^\ast\in\overline H_0\).
+
+    (b) Use this fact to establish existence of the infimum test statistics in
+
+    Theorems 6.2.14 and 6.2.17, including when \(H_0\) is a Besov ball
+
+    \(B^r_{2\infty}([0,1])\).
+
+    (c) Since the minimiser \(h^\ast\) is random in (b), prove its measurability
+
+    under the maintained assumptions.'
+  hypotheses:
+    explicit:
+    - H₀ is a totally bounded subset of the complete Hilbert space L².
+    - The objective h↦|L_f(h)| is continuous for each realised data set.
+    - For the random argmin, the objective is jointly measurable in data and h and the compact closure is a standard
+      Borel space.
+    implicit: []
+  quantifier_order:
+  - ∀ totally bounded H₀⊂L², ∀ continuous objectives, ∃ h*∈closure(H₀) attaining the infimum; under joint measurability,
+    ∃ a measurable minimiser/infimum statistic.
+  constants:
+  - ∀ totally bounded H₀⊂L², ∀ continuous objectives, ∃ h*∈closure(H₀) attaining the infimum; under joint measurability,
+    ∃ a measurable minimiser/infimum statistic.
+  dependencies:
+    earlier_book:
+    - Compactness of complete totally bounded metric spaces
+    - Measurable selection/maximum theorem
+    chapter_local:
+    - 6.2.14
+    - 6.2.17
+    later_book_uses: &id009
+    - Required to make the infimum chi-square and infimum U-statistic tests genuine measurable tests.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.2
+    contains_omitted_steps: true
+    comment: Completes existence and measurability details omitted in Theorems 6.2.14 and 6.2.17.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Separate into compactness of the closure of a totally bounded subset of complete L², existence of an
+      argmin for a continuous functional, and a measurable-selection theorem for random continuous functionals on
+      a compact Polish space.
+    blockers: &id008
+    - Part (c) requires an explicit measurable-selection theorem and a precise jointly measurable version of the
+      objective. The prose 'standard continuity and weak compactness' is too compressed for Lean.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id008
+  selection_reasons:
+  - completes a proof omitted from the main text
+  - is cited by later theorems
+  - establishes a required reusable measurable-minimiser lemma
+  used_by: *id009

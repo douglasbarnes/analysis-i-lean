@@ -146,7 +146,7 @@ Pass semantics are source-based:
 - `starred`: material explicitly starred in the book;
 - `exercise`: extracted exercise declarations.
 
-Difficulty must not alter the pass. In the canonical representation, a non-exercise entry may use `starred` only when the book number or label explicitly contains the source star.
+Difficulty must not alter the pass. A source star may be recorded in `book.number` or `book.section`. When the source stars an enclosing section rather than repeating the star on each declaration, every affected non-exercise entry records `source_starred: true`; its declaration label remains unchanged.
 
 ## Exercise selection
 

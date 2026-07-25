@@ -1,0 +1,433 @@
+inventory:
+- id: ex.6.2.3
+  kind: exercise
+  book:
+    number: Exercise 6.2.3
+    pages:
+    - 511
+    section: '6.2'
+    equations: []
+  title: Multivariate wavelet UStatistic test rate
+  statement: 'Generalise Proposition 6.2.5 and Theorem 6.2.17 to a sample space
+
+    \(A=\mathbb R^d\) by using a tensor-product wavelet basis from Section 4.3.6.
+
+    For the U-statistic variance, majorise the possibly infinite projection kernel
+
+    \(\sum_{l<j,k}\psi_{lk}(x)\psi_{lk}(y)\) by an integrable convolution kernel.
+
+    Deduce that the variances are of order \(2^{jd/2}/n\) in the normalised testing
+
+    calculation and that the minimax separation rate is
+
+    \[
+
+    \rho_n\asymp n^{-r/(2r+d/2)}.
+
+    \]'
+  hypotheses:
+    explicit:
+    - A=ℝ^d and d∈ℕ is positive.
+    - An S-regular tensor-product wavelet basis of L²(A) is available.
+    - The null class satisfies the multivariate analogues of the boundedness, entropy and Besov assumptions of Theorem
+      6.2.17.
+    implicit: []
+  quantifier_order:
+  - ∀ d≥1 and admissible r,B,null classes, ∃ tests with the stated rate; matching lower bounds are inherited from
+    the same wavelet alternatives.
+  constants:
+  - ∀ d≥1 and admissible r,B,null classes, ∃ tests with the stated rate; matching lower bounds are inherited from
+    the same wavelet alternatives.
+  dependencies:
+    earlier_book:
+    - Section 4.3.6 (wavelets on subsets of ℝ^d)
+    - Definition 4.2.14 (projection-kernel majorant)
+    chapter_local:
+    - 6.2.5
+    - 6.2.17
+    later_book_uses: &id002
+    - Feeds the multivariate minimax programme and parallels Exercise 6.3.2.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.3
+    contains_omitted_steps: true
+    comment: The book delegates the full multivariate proof to this exercise.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Build tensor wavelet projections on ℝ^d, prove an integrable kernel majorant, obtain the canonical U-statistic
+      variance bound, and instantiate the abstract testing theorem.
+    blockers: &id001
+    - The OCR phrase about the variance order is compressed; the final separation exponent is clear, but every normalising
+      power of \(2^j\) must be transcribed from the typeset page before implementation.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id001
+  selection_reasons:
+  - establishes a required reusable multivariate extension
+  - extends a theorem used as a template for later multivariate minimax results
+  used_by: *id002
+- id: ex.6.2.4
+  kind: exercise
+  book:
+    number: Exercise 6.2.4
+    pages:
+    - 511
+    section: '6.2'
+    equations: []
+  title: Sampling multiscale composite test
+  statement: 'Prove an i.i.d. sampling analogue of Theorem 6.2.20. Replace each white-noise
+
+    coefficient \(\int\psi_{lk}(t)\,dY(t)\) in the proof by the empirical wavelet
+
+    coefficient \(\int\psi_{lk}(t)\,dP_n(t)\), and obtain the corresponding composite
+
+    multiscale testing result.'
+  hypotheses:
+    explicit:
+    - The sampling model has i.i.d. observations with densities/functions satisfying the sampling analogues of Theorem
+      6.2.20.
+    - The empirical wavelet coefficients possess the required moment and concentration bounds.
+    implicit: []
+  quantifier_order:
+  - For every admissible sampling null and alternative family, construct a test sequence with the analogue of Theorem
+    6.2.20's level and power bounds.
+  constants:
+  - For every admissible sampling null and alternative family, construct a test sequence with the analogue of Theorem
+    6.2.20's level and power bounds.
+  dependencies:
+    earlier_book:
+    - Chapter 3 empirical-process concentration
+    - Chapter 5 projected empirical measures
+    chapter_local:
+    - 6.2.20
+    later_book_uses: &id004
+    - Provides the sampling-model counterpart of the multiscale composite test.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.4
+    contains_omitted_steps: true
+    comment: The main text explicitly cites the exercise for the sampling analogue.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Translate the white-noise proof to empirical wavelet coefficients; reuse concentration and variance
+      estimates for projected empirical measures.
+    blockers: &id003 []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id003
+  selection_reasons:
+  - is cited by the main text
+  - establishes a required reusable sampling analogue
+  used_by: *id004
+- id: ex.6.2.5
+  kind: exercise
+  book:
+    number: Exercise 6.2.5
+    pages:
+    - 511
+    section: '6.2'
+    equations: []
+  title: Wavelet alternatives L1 separated
+  statement: 'Show that the alternatives \(f_m\) used in the proof of Theorem 6.2.9 satisfy
+
+    \[
+
+    \|f_m-1\|_1\ge c\,n^{-r/(2r+1/2)}.
+
+    \]
+
+    Deduce that the minimax separation rate in Theorem 6.2.9 is unchanged when the
+
+    \(L^2\)-separation in \(H_1\) is replaced by \(L^1\)-separation.'
+  hypotheses:
+    explicit:
+    - The alternatives f_m are exactly those constructed in the lower-bound proof of Theorem 6.2.9.
+    - The wavelets/translates have the disjoint-support and normalisation properties used there.
+    implicit: []
+  quantifier_order:
+  - ∃ c>0 independent of n and m, ∀ sufficiently large n, ∀ constructed alternatives f_m, the L¹ separation bound
+    holds.
+  constants:
+  - ∃ c>0 independent of n and m, ∀ sufficiently large n, ∀ constructed alternatives f_m, the L¹ separation bound
+    holds.
+  dependencies:
+    earlier_book:
+    - Theorem 6.2.9 lower-bound construction
+    chapter_local:
+    - 6.2.9
+    later_book_uses: &id006
+    - Supports the notes' discussion of unified \(L^p\)-testing rates.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.5
+    contains_omitted_steps: true
+    comment: Extends the theorem to L¹ alternatives and supports the notes-level p<2 statement.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Compute the L¹ norm of the disjointly supported wavelet perturbations and reuse the same mixture lower
+      bound.
+    blockers: &id005 []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes a required reusable lower-bound lemma
+  - extends the theorem's loss metric
+  used_by: *id006
+- id: ex.6.2.6
+  kind: exercise
+  book:
+    number: Exercise 6.2.6
+    pages:
+    - 511
+    section: '6.2'
+    equations: []
+  title: Haar Projection norm lower bound besov
+  statement: 'Let \(K_j\) be the Haar wavelet projection kernel. For
+
+    \(f\in B^r_{2q}\), \(1\le q\le\infty\), prove
+
+    \[
+
+    \|K_j f\|_2\ge c_1\|f\|_2-c_2\|f\|_{B^r_{2q}}\,2^{-jr}.
+
+    \]
+
+    Deduce that in Proposition 6.2.3 the conclusion (6.34), with its middle
+
+    inequality omitted, remains valid for functions satisfying (6.35) when \(r>1\);
+
+    therefore condition (6.32) can be omitted from Proposition 6.2.3.'
+  hypotheses:
+    explicit:
+    - K_j is the Haar wavelet projection kernel.
+    - f∈B^r_{2q}, 1≤q≤∞, and the Besov norm uses the chapter's wavelet normalisation.
+    - For the application, r>1 and f satisfies (6.35).
+    implicit: []
+  quantifier_order:
+  - ∃ c₁,c₂>0, ∀ j, ∀ f∈B^r_{2q}, the lower bound holds; consequently the weakened Proposition 6.2.3 holds for all
+    admissible f.
+  constants:
+  - ∃ c₁,c₂>0, ∀ j, ∀ f∈B^r_{2q}, the lower bound holds; consequently the weakened Proposition 6.2.3 holds for all
+    admissible f.
+  dependencies:
+    earlier_book:
+    - Chapter 4 Besov approximation estimates
+    - Haar multiresolution projection
+    chapter_local:
+    - 6.2.3
+    - 6.2.4
+    later_book_uses: &id008
+    - Strengthens the plug-in chi-square test used as a building block for confidence-set constructions.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.6
+    contains_omitted_steps: true
+    comment: Completes the omitted weakening announced in Remark 6.2.4.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Use \(f=K_jf+(I-K_j)f\), the triangle inequality, and the Besov approximation bound for the Haar tail;
+      then restate Proposition 6.2.3 under the weakened assumptions.
+    blockers: &id007
+    - The book spells 'ommitted' and 'ommitted'; these are typographical only. Constants \(c_1,c_2\) are existential
+      and depend on the chosen Besov normalisation.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id007
+  selection_reasons:
+  - completes a proof omitted from the main text
+  - establishes a required reusable approximation lower bound
+  - removes an explicit hypothesis from a principal proposition
+  used_by: *id008
+- id: ex.6.3.1
+  kind: exercise
+  book:
+    number: Exercise 6.3.1
+    pages:
+    - 521
+    - 522
+    section: '6.3'
+    equations: []
+  title: Multivariate cdf minimax rate sup Norm
+  statement: 'Prove the analogue of Proposition 6.3.4 for the class of all probability
+
+    distribution functions on \(\mathbb R^d\): under supremum-norm loss, the minimax
+
+    estimation rate based on \(n\) i.i.d. observations is \(n^{-1/2}\).'
+  hypotheses:
+    explicit:
+    - d∈ℕ is positive.
+    - F is the class of all multivariate distribution functions on ℝ^d.
+    - Loss is the supremum norm.
+    implicit: []
+  quantifier_order:
+  - ∀ d≥1, the minimax rate over F is n^{-1/2}, with constants allowed to depend on d.
+  constants:
+  - ∀ d≥1, the minimax rate over F is n^{-1/2}, with constants allowed to depend on d.
+  dependencies:
+    earlier_book:
+    - Multivariate empirical distribution functions
+    - Proposition 6.3.4
+    chapter_local:
+    - 6.3.4
+    later_book_uses: &id010
+    - Used conceptually by the multivariate confidence tube construction in Section 6.4.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.3.1
+    contains_omitted_steps: true
+    comment: The multivariate extension is left entirely to the exercise.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Combine an empirical-process upper bound over lower orthants with a two-point/one-dimensional embedded
+      lower bound.
+    blockers: &id009 []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id009
+  selection_reasons:
+  - establishes a required reusable multivariate extension
+  used_by: *id010
+- id: ex.6.3.2
+  kind: exercise
+  book:
+    number: Exercise 6.3.2
+    pages:
+    - 522
+    section: '6.3'
+    equations: []
+  title: Multivariate besov minimax lower bounds
+  statement: 'Let \(A=[0,1]^d\) or \(A=\mathbb R^d\). Prove multivariate analogues of the
+
+    minimax lower-bound theorems in Section 6.3 for estimation over a Besov ball
+
+    \(B^r_{p\infty}(A)\). The rates are
+
+    \[
+
+    n^{-r/(2r+d)}\quad\text{in }L^p,\qquad
+
+    (n/\log n)^{-r/(2r+d)}\quad\text{in }L^\infty.
+
+    \]
+
+    Use tensor wavelets, with \(2^{jd}\) coefficients at resolution \(j\), and the
+
+    same Varshamov-Gilbert alternatives as in the one-dimensional proofs.'
+  hypotheses:
+    explicit:
+    - A is [0,1]^d or ℝ^d and d≥1.
+    - The parameter class is an admissible Besov ball B^r_{p∞}(A), with model-specific integrability/positivity
+      restrictions.
+    - 1≤p<∞ for L^p loss; the L∞ conclusion uses the corresponding supnorm-separated alternatives.
+    implicit: []
+  quantifier_order:
+  - ∀ d,r,p and admissible radius B, every estimator has risk at least a constant multiple of the displayed rate
+    for some parameter in the ball.
+  constants:
+  - ∀ d,r,p and admissible radius B, every estimator has risk at least a constant multiple of the displayed rate
+    for some parameter in the ball.
+  dependencies:
+    earlier_book:
+    - Section 4.3.6
+    - Theorem 6.3.2 (Fano lower bound)
+    - One-dimensional wavelet alternatives in Theorems 6.3.5 and 6.3.8-6.3.10
+    chapter_local:
+    - 6.3.2
+    - 6.3.5
+    - 6.3.8
+    - 6.3.9
+    - 6.3.10
+    later_book_uses: &id012
+    - Provides the standard \(d\)-dimensional rates used in later applications.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.3.2
+    contains_omitted_steps: true
+    comment: All multivariate lower-bound details are delegated to the exercise.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit; standard analytic/probabilistic primitives may be reusable.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Formalise tensor-wavelet coefficient counts, construct separated hypercubes/single-spike alternatives,
+      control KL divergence, and instantiate Fano's theorem.
+    blockers: &id011
+    - The displayed source writes \(B^r_{p\infty}\) for both losses; for the \(L^\infty\) conclusion the intended
+      regularity ball and positivity/density side conditions must be preserved exactly in each model.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id011
+  selection_reasons:
+  - establishes required reusable multivariate minimax lower bounds
+  - is a direct extension cited by the chapter's discussion
+  used_by: *id012

@@ -1,0 +1,518 @@
+inventory:
+- id: 6.1.7
+  kind: proposition
+  book:
+    number: Proposition 6.1.7
+    pages:
+    - 474
+    - 475
+    section: 6.1.2
+    equations: []
+  title: Total Variation le sqrt kl
+  statement: 'For probability measures P,Q on \((\mathcal X,\mathcal A)\) and a common
+
+    dominating measure \(\mu\), with densities p,q:
+
+    (a) \(\|P-Q\|_{\mathrm{TV}}\le\sqrt{K(P,Q)/2}\).
+
+    (b) If \(P\ll Q\), then
+
+    \[
+
+    \int_{\{pq>0\}}\left|\log\frac pq\right|p\,d\mu
+
+    \le K(P,Q)+\sqrt{2K(P,Q)}.
+
+    \]'
+  hypotheses:
+    explicit:
+    - P,Q are probability measures on the same measurable space.
+    - μ dominates P and Q, p=dP/dμ, q=dQ/dμ.
+    - Part (b) assumes P≪Q.
+    implicit: []
+  quantifier_order:
+  - ∀P,Q,μ,p,q satisfying the hypotheses, (a) holds; additionally P≪Q ⇒ (b).
+  constants:
+  - ∀P,Q,μ,p,q satisfying the hypotheses, (a) holds; additionally P≪Q ⇒ (b).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.1.6
+    later_book_uses:
+    - Gives (6.15), the product-law total-variation bound used in minimax lower bounds.
+    - Its information-control role recurs in Chapters 7 and 8.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.1.1
+    - Exercise 6.1.2
+    contains_omitted_steps: true
+    comment: The proof invokes Exercise 6.1.1 for (6.13) and Exercise 6.1.2 for the negative logarithmic part.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: 'Two theorems: Pinsker''s inequality and the absolute log-density integral bound.'
+    blockers: &id001 []
+    reusable_primitives:
+    - Radon-Nikodym derivatives
+    - Cauchy-Schwarz
+    - extended-real integration
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.1.tv_density
+  kind: operative_identity
+  book:
+    number: Equation (6.13)
+    pages:
+    - 474
+    section: 6.1.2
+    equations: []
+  title: Total Variation eq half l1 rn Deriv
+  statement: 'For P,Q dominated by μ with densities p,q,
+
+    \[
+
+    \|P-Q\|_{\mathrm{TV}}=\frac12\int|p-q|\,d\mu.
+
+    \]'
+  hypotheses:
+    explicit:
+    - P,Q are probability measures and μ is a common dominating measure.
+    implicit: []
+  quantifier_order:
+  - ∀P,Q,μ under domination, the equality holds.
+  constants:
+  - ∀P,Q,μ under domination, the equality holds.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.1.6
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.1.1
+    contains_omitted_steps: true
+    comment: Exercise 6.1.1 proves this identity and a min-density variant.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: An identity between a supremum over measurable sets and an L¹ norm of densities.
+    blockers: &id002 []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.1.tensor_kl
+  kind: operative_identity
+  book:
+    number: Equations (6.14)-(6.15)
+    pages:
+    - 475
+    section: 6.1.2
+    equations: []
+  title: Kullback Leibler prod pow
+  statement: 'For i.i.d. product laws,
+
+    \[
+
+    K(P_f^n,P_g^n)=nK(P_f,P_g),
+
+    \qquad
+
+    2\|P_f^n-P_g^n\|_{\mathrm{TV}}\le\sqrt{2nK(P_f,P_g)}.
+
+    \]'
+  hypotheses:
+    explicit:
+    - P_f and P_g are probability measures on a common measurable space.
+    - The first identity is interpreted in the extended reals.
+    implicit: []
+  quantifier_order:
+  - ∀n∈ℕ, the KL tensorisation identity holds; combining it with Proposition 6.1.7 yields the TV bound.
+  constants:
+  - ∀n∈ℕ, the KL tensorisation identity holds; combining it with Proposition 6.1.7 yields the TV bound.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.1.7
+    later_book_uses:
+    - Used repeatedly in sampling-model lower bounds, including Theorems 6.3.7, 6.3.9 and 6.3.10.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A product-measure tensorisation theorem and a corollary via Pinsker.
+    blockers: &id003 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.1.gwn_kl
+  kind: operative_identity
+  book:
+    number: Equation (6.16)
+    pages:
+    - 476
+    section: 6.1.2
+    equations: []
+  title: Kullback Leibler gaussian White Noise
+  statement: 'For Gaussian white-noise laws,
+
+    \[
+
+    K(P^Y_{f,n,\sigma},P^Y_{g,n,\sigma})
+
+    =\frac n{2\sigma^2}\|f-g\|_2^2.
+
+    \]'
+  hypotheses:
+    explicit:
+    - f,g∈L²([0,1]); σ>0; n∈ℕ.
+    implicit: []
+  quantifier_order:
+  - ∀f,g,σ,n, the KL identity holds.
+  constants:
+  - ∀f,g,σ,n, the KL identity holds.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.1.1
+    - 6.1.3
+    - 6.1.6
+    later_book_uses:
+    - Core input to Gaussian minimax lower bounds in Sections 6.2 and 6.3.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Integrate the log-likelihood under the shifted Gaussian law.
+    blockers: &id004 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.1.sequence_kl
+  kind: operative_identity
+  book:
+    number: Equation (6.17)
+    pages:
+    - 476
+    section: 6.1.2
+    equations: []
+  title: Kullback Leibler gaussian Sequence
+  statement: 'For Gaussian sequence laws,
+
+    \[
+
+    K(P^Y_{f,n,\sigma},P^Y_{g,n,\sigma})
+
+    =\frac n{2\sigma^2}\|f-g\|_{\ell^2}^2.
+
+    \]'
+  hypotheses:
+    explicit:
+    - f,g∈ℓ²; σ>0; n∈ℕ.
+    implicit: []
+  quantifier_order:
+  - ∀f,g,σ,n, the KL identity holds.
+  constants:
+  - ∀f,g,σ,n, the KL identity holds.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.1.4
+    - 6.1.6
+    later_book_uses:
+    - Core input to Gaussian sequence minimax lower bounds.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A product Gaussian KL computation, preferably deduced from the Hilbert-space likelihood.
+    blockers: &id005 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id005
+- id: 6.2.1
+  kind: definition
+  book:
+    number: Definition 6.2.1
+    pages:
+    - 477
+    - 478
+    section: '6.2'
+    equations: []
+  title: Is Minimax Separation Rate
+  statement: 'Let \(H_0\subseteq\mathcal F\), let \(d\) be a semimetric, and write
+
+    \(H_1(d,r)=\{f\in\mathcal F:\inf_{g\in H_0}d(f,g)\ge r\}\).
+
+    A sequence \(\rho_n\) is a minimax d-separation rate if:
+
+    (i) for every \(\alpha>0\), there are tests \(\phi_n\) and N such that for all
+
+    \(n\ge N\),
+
+    \[
+
+    \sup_{f\in H_0}E_f\phi_n+\sup_{f\in H_1(d,\rho_n)}E_f(1-\phi_n)\le\alpha;
+
+    \]
+
+    (ii) for every \(r_n=o(\rho_n)\),
+
+    \[
+
+    \liminf_{n\to\infty}\inf_{\phi_n}
+
+    \left[\sup_{f\in H_0}E_f\phi_n+
+
+    \sup_{f\in H_1(d,r_n)}E_f(1-\phi_n)\right]>0,
+
+    \]
+
+    where the infimum is over measurable tests.'
+  hypotheses:
+    explicit:
+    - A statistical experiment is given for every n.
+    - H₀ and F are parameter sets and d is a nonnegative semimetric on the ambient parameter space.
+    - Tests are measurable and take values in [0,1] (or {0,1} for nonrandomised tests).
+    - ρₙ is positive in the asymptotic regime in which o(ρₙ) is used.
+    implicit: []
+  quantifier_order:
+  - First quantify the model, H₀,d,ρ; then (i) ∀α>0 ∃(φₙ),N ∀n≥N; and (ii) ∀(rₙ) with rₙ/ρₙ→0, liminfₙ inf_{φₙ}
+    error(rₙ)>0.
+  constants:
+  - First quantify the model, H₀,d,ρ; then (i) ∀α>0 ∃(φₙ),N ∀n≥N; and (ii) ∀(rₙ) with rₙ/ρₙ→0, liminfₙ inf_{φₙ}
+    error(rₙ)>0.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - The rate notion is instantiated by Theorems 6.2.7, 6.2.9, 6.2.11, 6.2.18-6.2.20.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A predicate on positive real sequences, using uniform type-I/type-II errors and little-o filters at
+      infinity.
+    blockers: &id006
+    - type: notation
+      detail: The symbol rₙ is introduced before the definition and rebound in part (ii).
+    - type: generality
+      detail: Part (i) prints α>0 rather than the statistically usual 0<α<1; preserve the printed quantifier.
+    reusable_primitives:
+    - Filter.Tendsto
+    - Asymptotics.IsLittleO
+    - measurable functions
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
+- id: 6.2.mixtures_lower_bound
+  kind: operative_lemma
+  book:
+    number: Equations (6.21)-(6.23)
+    pages:
+    - 477
+    - 478
+    section: 6.2.1
+    equations: []
+  title: Testing Error ge likelihood Mixture second Moment
+  statement: 'For a singleton null \(f_0\) and finite alternatives
+
+    \(\{f_1,\dots,f_M\}\), let
+
+    \[
+
+    Z=\frac1M\sum_{m=1}^M\frac{dP_{f_m}}{dP_{f_0}}.
+
+    \]
+
+    For any test \(\phi\) and \(0<\eta<1\), the sum of the null error and average
+
+    alternative error is bounded below by
+
+    \[
+
+    (1-\eta)P_{f_0}(Z\ge1-\eta)
+
+    \ge(1-\eta)\left(1-\frac{\sqrt{E_{f_0}(Z-1)^2}}{\eta}\right).
+
+    \]'
+  hypotheses:
+    explicit:
+    - Every P_fm is absolutely continuous with respect to P_f0.
+    - M≥1 and 0<η<1.
+    - The alternative term is initially an average; it lower-bounds the worst-case alternative error.
+    implicit: []
+  quantifier_order:
+  - ∀ finite alternative families, ∀ tests φ, ∀η∈(0,1), the lower bounds hold.
+  constants:
+  - ∀ finite alternative families, ∀ tests φ, ∀η∈(0,1), the lower bounds hold.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.1.tv_density
+    later_book_uses:
+    - Used for the lower bounds in Theorems 6.2.7, 6.2.9 and 6.2.11.
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A finite-mixture likelihood lemma followed by Markov/Cauchy-Schwarz control of P(Z<1-η).
+    blockers: &id007 []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id007
+- id: 6.2.ks_simple
+  kind: operative_example
+  book:
+    number: Kolmogorov-Smirnov test (6.24)-(6.26)
+    pages:
+    - 478
+    - 480
+    section: 6.2.1
+    equations: []
+  title: Kolmogorov Smirnov Test
+  statement: 'For testing a simple continuous distribution function \(F_0\), use
+
+    \(T_n=\|F_n-F_0\|_\infty\) and reject when
+
+    \(T_n>z_\alpha/\sqrt n\). The Brownian-bridge limit gives asymptotic level
+
+    \(\alpha\); a distribution-free quantile and the Dvoretzky-Kiefer-Wolfowitz
+
+    bound give a nonasymptotic alternative calibration. Under an alternative F,
+
+    \(\|F_n-F_0\|_\infty\ge\|F-F_0\|_\infty-\|F_n-F\|_\infty\).'
+  hypotheses:
+    explicit:
+    - X₁,…,Xₙ are i.i.d. with distribution function F.
+    - F₀ is continuous for the distribution-free Brownian-bridge statement.
+    - z_α is an appropriate upper quantile.
+    implicit: []
+  quantifier_order:
+  - For each α and n define the test; its null level and separated-alternative power are controlled as stated.
+  constants:
+  - For each α and n define the test; its null level and separated-alternative power are controlled as stated.
+  dependencies:
+    earlier_book:
+    - Donsker theorem for empirical distribution functions
+    - DKW inequality / Exercise 6.2.1
+    chapter_local: []
+    later_book_uses:
+    - Provides the upper bound in Proposition 6.2.6 and the confidence band in (6.119).
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.1
+    contains_omitted_steps: true
+    comment: Exercise 6.2.1 supplies the distribution-free transformation and DKW calibration.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A measurable test based on the sup norm of the empirical CDF; exact distribution-free statements require
+      quantile-transform machinery.
+    blockers: &id008 []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id008

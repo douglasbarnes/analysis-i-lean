@@ -1,0 +1,424 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id004
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id002
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id003
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id001
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.ex.haar_extreme
+  kind: operative_example
+  book:
+    number: Unnumbered Haar-kernel example
+    pages:
+    - 417
+    - 418
+    section: 5.1.3*
+    equations: []
+  title: Unnumbered Haar-kernel example
+  statement: For the Haar projection kernel K(x,y)=∑_k1_{[0,1)}(x-k)1_{[0,1)}(y-k)=1_{⌊x⌋=⌊y⌋}, the comparison Gaussian process
+    is piecewise constant and its supremum is the maximum of 2^j independent |N(0,1)| variables. The extreme-value normalisers
+    are A(l)=√(2(log 2)l) and B(l)=A(l)−(log l+log(π log 2))/(2A(l)).
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Haar wavelet basis.
+    - l→∞.
+    implicit:
+    - The index interval produces 2^l cells.
+  quantifier_order:
+  - For every integer l≥1.
+  constants:
+  - A(l),B(l) exactly as displayed.
+  dependencies:
+    earlier_book: &id005 []
+    chapter_local:
+    - ch5.prop.5_1_21
+    later_book_uses:
+    - Proposition 5.1.22
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Identify the Gaussian process with a finite vector of independent standard normals; use a classical maximum-of-Gaussians
+      Gumbel theorem.
+    blockers:
+    - Extreme-value theorem for maxima of Gaussian variables.
+  difficulty: research-level
+  pass: starred
+  issues_for_central_review: &id006 []
+  source_starred: true
+- id: ch5.prop.5_1_22
+  kind: proposition
+  book:
+    number: Proposition 5.1.22
+    pages:
+    - 418
+    section: 5.1.3*
+    equations: []
+  title: Proposition 5.1.22
+  statement: Let f range over 𝒟 and let jₙ→∞ with jₙ2^{jₙ}=o(n/(log n)²). For the Haar estimator, uniformly over f∈𝒟, P_f{A(jₙ)[√(n2^{-jₙ})‖(fₙ−Efₙ)/√f‖_{[0,1]}−B(jₙ)]≤x}→exp(−e^{-x})
+    for every x∈ℝ.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - 𝒟 as in (5.45).
+    - Haar projection estimator.
+    - jₙ2^{jₙ}=o(n/(log n)²).
+    implicit:
+    - f is bounded away from zero on [0,1], so division by √f is defined.
+    - A,B are the Haar normalisers.
+  quantifier_order:
+  - For every x∈ℝ.
+  - The convergence is uniform in f∈𝒟.
+  constants:
+  - A(jₙ),B(jₙ).
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.prop.5_1_21
+    - ch5.ex.haar_extreme
+    - ch5.def.D_class
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Uniform Gumbel limit for a standardised histogram/Haar estimator.
+    blockers:
+    - Proposition 5.1.21 coupling and Gaussian extreme values.
+  difficulty: research-level
+  pass: starred
+  issues_for_central_review: *id006
+  source_starred: true
+- id: ch5.ex.convolution_extreme
+  kind: operative_example
+  book:
+    number: Unnumbered smooth convolution-kernel example
+    pages:
+    - 418
+    section: 5.1.3*
+    equations: []
+  title: Unnumbered smooth convolution-kernel example
+  statement: Let K be bounded, symmetric, supported on [−1,1], and twice continuously differentiable, and define Y(t)=∫_ℝ
+    K(t−s)dW(s). Then Y is stationary with covariance r(t)=∫_ℝ K(t+u)K(u)du=‖K‖₂²−Ct²+o(t²), where C=−(1/2)∫_ℝ K(u)K″(u)du>0,
+    and r(t)=0 for |t|>2. Set Ỹ=Y/‖K‖₂ and C̃=C/‖K‖₂². Equation (5.66) defines B(l)=√(2(log 2)l)+[log√(2C̃)−log π]/√(2(log
+    2)l). Consequently, for every x∈ℝ, Pr{√(2(log 2)j_n)(sup_{0≤t≤2^{j_n}}|Y(t)|/‖K‖₂−B(j_n))≤x}→exp(−e^(−x)).
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - K:ℝ→ℝ is bounded, symmetric, supported on [−1,1], and C² on ℝ.
+    - W is two-sided white noise and Y(t)=∫K(t−s)dW(s).
+    - j_n→∞ for the extreme-value limit.
+    implicit:
+    - Integration by parts has no boundary contribution because K has compact support and is C².
+    - The stochastic integral is normalised so that Cov(Y(t),Y(0))=∫K(t+u)K(u)du.
+  quantifier_order:
+  - Fix K and define C, C̃ and B.
+  - For every real x, take n→∞ along any sequence j_n→∞.
+  constants:
+  - C=−(1/2)∫K K″>0.
+  - C̃=C/‖K‖₂².
+  - B(l)=√(2(log 2)l)+(log√(2C̃)−log π)/√(2(log 2)l).
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.prop.5_1_21
+    later_book_uses:
+    - Proposition 5.1.23
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Stationary Gaussian moving-average process plus a Pickands/Bickel–Rosenblatt extreme-value theorem.
+    blockers:
+    - Stationary Gaussian-process extreme-value theory.
+  difficulty: research-level
+  pass: starred
+  issues_for_central_review: []
+  source_starred: true
+- id: ch5.prop.5_1_23
+  kind: proposition
+  book:
+    number: Proposition 5.1.23
+    pages:
+    - 418
+    - 419
+    section: 5.1.3*
+    equations: []
+  title: Proposition 5.1.23
+  statement: For a bounded symmetric C² convolution kernel supported on [−1,1], for 𝒟 and jₙ as in Proposition 5.1.22, uniformly
+    over f∈𝒟 the variable √(2(log 2)jₙ)[√(n2^{-jₙ})‖(fₙ−Efₙ)/(‖K‖₂√f)‖_{[0,1]}−B(jₙ)] converges to the standard Gumbel law
+    exp(−e^{-x}).
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Kernel assumptions from the preceding example.
+    - 𝒟 and jₙ as in Proposition 5.1.22.
+    implicit:
+    - B is the normaliser (5.66).
+  quantifier_order:
+  - For all x∈ℝ, supremum over f∈𝒟 of the distribution-function error tends to zero.
+  constants:
+  - ‖K‖₂ and B(jₙ).
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.prop.5_1_21
+    - ch5.ex.convolution_extreme
+    - ch5.def.D_class
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Uniform Bickel–Rosenblatt Gumbel limit for a kernel density estimator.
+    blockers:
+    - Strong Gaussian coupling and stationary Gaussian extremes.
+  difficulty: research-level
+  pass: starred
+  issues_for_central_review: *id006
+  source_starred: true
+- id: ch5.ex.5_1_1
+  kind: exercise
+  book:
+    number: Exercise 5.1.1
+    pages:
+    - 419
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.1
+  statement: Compute the envelope U and variance proxy σ² needed for Talagrand’s inequality for the periodised projection
+    kernel, obtaining the constants used in Theorem 5.1.13.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.eq.5_4
+    later_book_uses:
+    - Theorem 5.1.13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: cited by Theorem 5.1.13; required reusable concentration input'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Finite-overlap Lp and L² bounds for periodised kernel sections.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - cited by Theorem 5.1.13
+  - required reusable concentration input
+- id: ch5.ex.5_1_2
+  kind: exercise
+  book:
+    number: Exercise 5.1.2
+    pages:
+    - 419
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.2
+  statement: Compute the corresponding Talagrand envelope and variance bounds for boundary-corrected projection kernels.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.eq.5_4
+    - ch5.eq.5_9_5_11
+    later_book_uses:
+    - Theorem 5.1.13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: cited by Theorem 5.1.13; required reusable concentration input'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Boundary-kernel section norm bounds.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - cited by Theorem 5.1.13
+  - required reusable concentration input
+- id: ch5.ex.5_1_3
+  kind: exercise
+  book:
+    number: Exercise 5.1.3
+    pages:
+    - 419
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.3
+  statement: Show that under Condition 5.1.1 the sup norm ‖fₙ−Efₙ‖∞ equals a supremum over a fixed countable dense index set,
+    establishing measurability of all suprema used in the section.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.cond.5_1_1
+    later_book_uses:
+    - Theorem 5.1.5
+    - Theorem 5.1.13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: cited in Theorem 5.1.5 proof; cited by concentration arguments; reusable measurability lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Separable modification/countable-supremum lemma from one-sided or uniform continuity.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - cited in Theorem 5.1.5 proof
+  - cited by concentration arguments
+  - reusable measurability lemma
+- id: ch5.ex.5_1_4
+  kind: exercise
+  book:
+    number: Exercise 5.1.4
+    pages:
+    - 419
+    - 420
+    section: 5.1 Exercises
+    equations: []
+  title: Exercise 5.1.4
+  statement: Derive further bounded-difference inequalities and stability consequences for ‖fₙ−f‖p and ‖fₙ−Efₙ‖p from Remark
+    5.1.14.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.rem.5_1_14
+    later_book_uses: *id005
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes reusable concentration corollaries'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: McDiarmid corollaries with kernel-section sensitivity.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - establishes reusable concentration corollaries

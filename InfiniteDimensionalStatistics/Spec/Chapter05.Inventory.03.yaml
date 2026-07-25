@@ -1,0 +1,451 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id004
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id002
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id003
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id001
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.prop.5_1_9
+  kind: proposition
+  book:
+    number: Proposition 5.1.9
+    pages:
+    - 401
+    - 402
+    section: 5.1.1
+    equations: []
+  title: Proposition 5.1.9
+  statement: For the mth derivative kernel estimator, under the smoothness, weighted-integrability and variation
+    hypotheses stated in the proposition, E‖fₙ^{(m)}−Efₙ^{(m)}‖p≤Lp/[√n h^{m+1/2}] for 1≤p<∞; for p=∞, E‖·‖∞≤L∞√(log(h⁻¹)/(n
+    h^{2m+1})). The finite-p restriction is h>1/n when p>2, and the sup-norm restriction is h/log(h⁻¹)>1/n.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - K and f are C^m.
+    - K^{(m)} and f satisfy the weighted assumptions analogous to Theorem 5.1.5 for p<2.
+    - K^{(m)} has finite r-variation for p=∞.
+    - Bandwidth restrictions as displayed.
+    implicit:
+    - K^{(m)} is used as a (not necessarily normalised) empirical-process kernel.
+    - Lp constants depend on derivatives and density as in Theorem 5.1.5.
+  quantifier_order:
+  - For each m,p and fixed model data there exists Lp.
+  - For every n,h satisfying the relevant restriction.
+  constants:
+  - Lp,L∞.
+  dependencies:
+    earlier_book: &id005 []
+    chapter_local:
+    - ch5.eq.5_26_5_27
+    - ch5.thm.5_1_5
+    later_book_uses:
+    - Proposition 5.1.10
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Reduce to Theorem 5.1.5 after exact rescaling of K^{(m)}; no new probabilistic principle but substantial
+      analytic bookkeeping.
+    blockers:
+    - Derivative kernel hypotheses and scaled Lp norm identities.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: &id006 []
+- id: ch5.prop.5_1_10
+  kind: proposition
+  book:
+    number: Proposition 5.1.10
+    pages:
+    - 402
+    section: 5.1.1
+    equations: []
+  title: Proposition 5.1.10
+  statement: Assume the hypotheses of Proposition 5.1.9, K has order S, and f has s+m derivatives/smoothness with
+    s+m<S. Choosing h to balance derivative bias h^s and stochastic error (nh^{2m+1})^{-1/2} gives finite-p risk
+    bounded by 2 Lp^{2s/(2(s+m)+1)}(cB)^{(2m+1)/(2(s+m)+1)}n^{-s/(2(s+m)+1)}; the sup-norm analogue replaces n by
+    n/log n.
+  source_fidelity:
+    transcription_status: verified_with_typographical_flag
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - Hypotheses of Proposition 5.1.9.
+    - Kernel order S>s+m.
+    - f belongs to the stated smoothness/Besov ball of radius B.
+    - Bandwidth is the explicit balancing choice.
+    implicit:
+    - c is the approximation constant for derivative bias.
+    - The stated risk is expected Lp error for estimating f^{(m)}.
+  quantifier_order:
+  - For every f satisfying the ball condition and each n, choose h as displayed.
+  - Then the risk inequality holds.
+  constants:
+  - c,B,Lp and exact displayed exponents.
+  dependencies:
+    earlier_book:
+    - Chapter 4 approximation of derivatives
+    chapter_local:
+    - ch5.prop.5_1_9
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: A deterministic optimisation of a two-term risk bound after supplying the derivative approximation theorem.
+    blockers:
+    - Besov/Sobolev derivative approximation.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - The text says “same hypotheses as in Corollary 5.1.9”, but 5.1.9 is a Proposition.
+  - The OCR rendering of one p-norm in the displayed statement is ambiguous; compare the page before proof implementation.
+  - 'Source-transcription status: verified_with_typographical_flag.'
+- id: ch5.prop.5_1_11
+  kind: proposition
+  book:
+    number: Proposition 5.1.11
+    pages:
+    - 403
+    - 405
+    section: 5.1.1
+    equations: []
+  title: Proposition 5.1.11
+  statement: Let φ be an MRA scaling function with m continuous rapidly decaying derivatives and let f be a C^m
+    density. The wavelet derivative estimator f_{n,m} obtained by differentiating the projection estimator satisfies
+    E‖f_{n,m}−Ef_{n,m}‖p≤Lp√(2^{(2m+1)j}/n) for p<∞ (with 2^j<n if p>2), and, if φ^{(m)} has finite p-variation
+    and 2^j j<n, E‖·‖∞≤L∞√(2^{(2m+1)j}j/n). Bias-balanced rates agree with Proposition 5.1.10.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - φ∈C^m and its derivatives decay rapidly.
+    - f∈C^m is a density.
+    - Resolution restrictions as stated.
+    - For p=∞, φ^{(m)} has finite variation exponent.
+    implicit:
+    - The differentiated projection series converges and defines f_{n,m}.
+  quantifier_order:
+  - For every n,j satisfying the restrictions.
+  constants:
+  - Lp,L∞.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.eq.5_3
+    - ch5.prop.5_1_9
+    - ch5.prop.5_1_10
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Differentiate finite/kernel wavelet expansions and apply empirical-process bounds to derivative kernel
+      sections.
+    blockers:
+    - Differentiable wavelet basis and rapid-decay estimates.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.ex.multivariate_rates
+  kind: operative_example
+  book:
+    number: Unnumbered multivariate extension
+    pages:
+    - 403
+    - 405
+    section: 5.1.1
+    equations: []
+  title: Unnumbered multivariate extension
+  statement: In dimension d, the stochastic effective dimension 2^j is replaced by 2^{dj}; balancing with s-smooth
+    bias gives Lp rate n^{-s/(2s+d)} for finite p and sup-norm rate (n/log n)^{-s/(2s+d)}. The same replacement
+    applies to white-noise projection estimators.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Tensor-product or d-dimensional kernels/wavelets satisfying the corresponding assumptions.
+    - Density smoothness s and regularity sufficient for the bias bound.
+    implicit:
+    - Constants depend on d and the multivariate kernel/basis.
+  quantifier_order:
+  - For fixed d≥1 and admissible model data.
+  constants:
+  - Dimension d.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.thm.5_1_5
+    - ch5.prop.5_1_7
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: A dimension-parameterised corollary once d-dimensional kernel and wavelet approximation bounds are available.
+    blockers:
+    - Multivariate wavelets and empirical-process entropy.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.prop.5_1_12
+  kind: proposition
+  book:
+    number: Proposition 5.1.12
+    pages:
+    - 406
+    - 407
+    section: 5.1.2
+    equations: []
+  title: Proposition 5.1.12
+  statement: For the interval white-noise projection estimator under Condition 5.1.1(c) or (d), for every x>0, P{‖fₙ−Efₙ‖p
+    ≥ E‖fₙ−Efₙ‖p + [2 C_p² σ² 2^{j(1-2/(p∨2))}x/n]^{1/2}}≤e^{-x}; substituting Proposition 5.1.2 gives the explicit
+    version (5.31).
+  source_fidelity:
+    transcription_status: verified_with_erratum
+    author_corrected_reading: 'In (5.31), author erratum: c_p² must be C_p².'
+  hypotheses:
+    explicit:
+    - Conditions and white-noise estimator of Proposition 5.1.2.
+    - 1≤p≤∞.
+    - x>0.
+    implicit:
+    - The Lp norm is Lipschitz with respect to the finite Gaussian coefficient vector with variance proxy C_p²σ²2^{j(1-2/(p∨2))}/n.
+  quantifier_order:
+  - For every x>0 and admissible n,j.
+  constants:
+  - C_p from the kernel-section L²-to-Lp operator norm.
+  dependencies:
+    earlier_book:
+    - Gaussian concentration theorem from Chapter 2
+    chapter_local:
+    - ch5.prop.5_1_2
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Apply Gaussian concentration to the norm of an affine finite-dimensional Gaussian random element.
+    blockers:
+    - Gaussian concentration in Banach spaces.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - Use C_p², not c_p², in (5.31).
+  - 'Author-corrected reading recorded separately: In (5.31), author erratum: c_p² must be C_p².'
+  - 'Source-transcription status: verified_with_erratum.'
+- id: ch5.thm.5_1_13
+  kind: theorem
+  book:
+    number: Theorem 5.1.13
+    pages:
+    - 407
+    - 408
+    section: 5.1.2
+    equations: []
+  title: Theorem 5.1.13
+  statement: Under Theorem 5.1.5, for every x>0, P{n‖fₙ−Efₙ‖p ≥ (3/2)nE‖fₙ−Efₙ‖p + [C₁n‖f‖p2^{j(1-1/p)}x]^{1/2}+C₂2^{j(1-1/p)}x}≤e^{-x}.
+    If f is bounded, the variance term is [C₁n‖f‖∞2^{j(1-2/(p∨2))}x]^{1/2}. In cases (a),(b), C₁=2‖Φ‖₂^{2p/(1+p)}
+    and C₂=14‖Φ‖p/3; interval cases use the analogous κ-constants.
+  source_fidelity:
+    transcription_status: verified_with_typographical_flag
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 5.1.5.
+    - x>0.
+    - For the second form, f∈L∞.
+    implicit:
+    - p=∞ is interpreted with 1/p=0.
+    - The supremum/norm is measurable as in Exercise 5.1.3.
+  quantifier_order:
+  - For each admissible model and all x>0.
+  - Constants depend only on the kernel data as specified.
+  constants:
+  - C₁,C₂ and the factor 3/2.
+  dependencies:
+    earlier_book:
+    - Talagrand concentration, Theorem 3.3.9
+    chapter_local:
+    - ch5.thm.5_1_5
+    - ch5.cond.5_1_1
+    later_book_uses:
+    - Propositions 5.1.17–5.1.19
+    - Exercise 5.1.9
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 5.1.1
+    - Exercise 5.1.2
+    - Exercise 5.1.3
+    contains_omitted_steps: true
+    comment: ''
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Talagrand concentration applied to the Lp dual representation of the estimator; split ℝ and interval
+      kernels.
+    blockers:
+    - Talagrand inequality and nonseparable supremum handling.
+    - Duality representation of Lp norm.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The prose says “for all t>0” while the formula uses x; treat this as a dummy-variable typo without changing
+    the quantified content.
+  - 'Source-transcription status: verified_with_typographical_flag.'
+- id: ch5.rem.5_1_14
+  kind: lemma
+  book:
+    number: Remark 5.1.14
+    pages:
+    - 408
+    - 409
+    section: 5.1.2
+    equations: []
+  title: Remark 5.1.14
+  statement: Bounded differences gives P{|‖fₙ−f‖p−E‖fₙ−f‖p|≥[2·2^{2j(1-1/p)}‖Φ‖p²x/n]^{1/2}}≤2e^{-x}; the same holds
+    with f replaced by Efₙ. For p=1 the resolution factor disappears.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Sample-based estimator under Condition 5.1.1(a) or (b); interval analogues use their envelope constants.
+    - x>0.
+    implicit:
+    - Changing one observation changes the Lp norm by at most a deterministic kernel-section bound.
+  quantifier_order:
+  - For all x>0 and admissible n,j.
+  constants:
+  - Bounded-difference constant 2^{j(1-1/p)}‖Φ‖p/n.
+  dependencies:
+    earlier_book:
+    - Theorem 3.3.14 bounded differences
+    chapter_local:
+    - ch5.eq.5_3
+    - ch5.cond.5_1_1
+    later_book_uses:
+    - Proposition 5.1.17
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: McDiarmid inequality for the real-valued map from the sample vector to an Lp norm.
+    blockers:
+    - Bounded differences theorem in the exact form and kernel-section Lp bounds.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.thm.5_1_15
+  kind: theorem
+  book:
+    number: Theorem 5.1.15
+    pages:
+    - 409
+    section: 5.1.2
+    equations: []
+  title: Theorem 5.1.15
+  statement: 'Under Theorem 5.1.5, for 1≤p≤∞ and 1<r<∞ in cases (a),(b), (E‖fₙ−Efₙ‖p^r)^{1/r} is bounded by twice
+    its mean plus explicit √r and r terms: 1.24·3^{1/r}√r‖f‖p^{1/2}‖Φ‖₂^{2p/(1+p)}√(2^{j(1-1/p)}/n) and 4.26·9^{1/r}r‖Φ‖p2^{j(1-1/p)}/n;
+    a bounded-density variant improves the variance exponent, and cases (c),(d) have bounds of the same order.'
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 5.1.5.
+    - 1<r<∞.
+    - Condition (a) or (b) for the displayed constants.
+    implicit:
+    - Conventions for p=∞ apply to exponents.
+    - The interval constants differ but are uniform in n,j.
+  quantifier_order:
+  - For every r>1 and admissible n,j.
+  constants:
+  - 1.24, 4.26, 3^{1/r}, 9^{1/r}, and the kernel/density quantities.
+  dependencies:
+    earlier_book:
+    - Exercise 3.3.4 moment integration of exponential tails
+    chapter_local:
+    - ch5.thm.5_1_5
+    - ch5.thm.5_1_13
+    later_book_uses:
+    - Remark 5.1.16
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 3.3.4
+    contains_omitted_steps: true
+    comment: ''
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Integrate the Talagrand tail bound to obtain explicit Lr moments.
+    blockers:
+    - Exact numerical integration and real-power arithmetic.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id006

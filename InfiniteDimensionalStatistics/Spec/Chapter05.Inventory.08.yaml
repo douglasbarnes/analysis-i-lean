@@ -1,0 +1,432 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id004
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id002
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id003
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id001
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.thm.5_2_7
+  kind: theorem
+  book:
+    number: Theorem 5.2.7
+    pages:
+    - 428
+    - 431
+    section: 5.2.1
+    equations: []
+  title: Theorem 5.2.7
+  statement: Suppose P has bounded density f₀ (set t=0) or f₀∈C^t(ℝ), t>0. Let e^{-1}≥hₙ→0 with hₙ>log n/n and let
+    K have order r=t+1−k, 0≤k<t+1. There exist L>0 and λ₀≥1 such that for all n>1 and λ≥λ₀ max(√(h log(1/h)),√n
+    h^{t+1−k}), P{√n‖Fₙ^K(h)−Fₙ‖∞>λ}≤2exp[−L min(h^{-1}λ²,√n λ)]. Consequently P{√n‖Pₙ^K−Pₙ‖_{BV_M}>2Mλ} obeys the
+    same bound.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Density regularity as stated.
+    - Bandwidth and kernel-order restrictions.
+    - λ above the stochastic and bias thresholds.
+    implicit:
+    - The sup norm is countably measurable by right continuity.
+    - Constants depend on ‖f₀‖∞/‖f₀‖_{C^t} and K.
+  quantifier_order:
+  - There exist L,λ₀.
+  - For all n>1 and all qualifying λ.
+  constants:
+  - L,λ₀ and 2M.
+  dependencies:
+    earlier_book:
+    - Talagrand inequality and VC class of half-lines
+    chapter_local:
+    - ch5.def.BV_ball
+    - ch5.def.cdf_estimators
+    - ch5.def.5_2_4
+    later_book_uses:
+    - Theorem 5.2.8
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Exponential comparison of smoothed and empirical cdfs via bias bound plus Talagrand on smoothed indicators.
+    blockers:
+    - VC empirical-process concentration and BV duality.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: &id006 []
+- id: ch5.thm.5_2_8
+  kind: theorem
+  book:
+    number: Theorem 5.2.8
+    pages:
+    - 431
+    section: 5.2.1
+    equations: []
+  title: Theorem 5.2.8
+  statement: Under the density and kernel assumptions of Theorem 5.2.7, if hₙ^{t+1−k}√n→0, then the P-bridge restricted
+    to BV_M has a sample-continuous version and √n(Pₙ*K_{hₙ}−P)⇒G_P in ℓ∞(BV_M); equivalently √n(Fₙ^K−F_P)⇒G_P in
+    ℓ∞(ℝ).
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 5.2.7.
+    - Bias condition hₙ^{t+1−k}√n→0.
+    implicit:
+    - The empirical cdf Donsker theorem supplies the limit.
+  quantifier_order:
+  - For every M<∞.
+  - As n→∞.
+  constants: &id005 []
+  dependencies:
+    earlier_book:
+    - Donsker theorem for half-lines and BV convex hull
+    chapter_local:
+    - ch5.thm.5_2_7
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Slutsky using the exponential discrepancy from Theorem 5.2.7.
+    blockers:
+    - Weak convergence in ℓ∞(BV_M).
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.def.wavelet_cdf
+  kind: operative_definition
+  book:
+    number: Unnumbered definitions preceding Theorem 5.2.9
+    pages:
+    - 431
+    section: 5.2.1
+    equations: []
+  title: Unnumbered definitions preceding Theorem 5.2.9
+  statement: For a wavelet projection estimator fₙ, define the signed measure Pₙ^W(dx)=fₙ(x)dx and its cumulative
+    function Fₙ^W(x)=∫_{−∞}^x fₙ(u)du.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - A wavelet projection estimator at resolution j=jₙ.
+    implicit:
+    - The measure need not be positive.
+  quantifier_order:
+  - For every x∈ℝ.
+  constants: *id005
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.eq.5_3
+    later_book_uses:
+    - Theorems 5.2.9–5.2.11
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Signed measure associated to an integrable projection estimator and its cdf.
+    blockers: *id005
+  difficulty: routine
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.thm.5_2_9
+  kind: theorem
+  book:
+    number: Theorem 5.2.9
+    pages:
+    - 431
+    - 433
+    section: 5.2.1
+    equations: []
+  title: Theorem 5.2.9
+  statement: Let f₀ be bounded (t=0) or f₀∈C^t(ℝ), 0<t<S+1. For a Daubechies projection estimator with 2^{-j}>log
+    n/n, there exist L>0, λ₀≥1 such that for λ≥λ₀ max(√(j2^{-j}),√n2^{-j(t+1)}), P{√n‖Fₙ^W−Fₙ‖∞>λ}≤2exp[−L min(2^jλ²,√nλ)],
+    and the same bound controls √n‖Pₙ^W−Pₙ‖_{BV_M} above 2Mλ.
+  source_fidelity:
+    transcription_status: verified_with_generality_flag
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - Daubechies scaling/wavelet system of sufficient regularity.
+    - Density regularity and resolution restrictions.
+    - λ threshold as displayed.
+    implicit:
+    - Exercise 5.2.3 supplies a uniform VC bound for integrated projection kernels.
+  quantifier_order:
+  - There exist L,λ₀.
+  - For all n>1 and qualifying λ.
+  constants:
+  - L,λ₀.
+  dependencies:
+    earlier_book:
+    - Talagrand inequality
+    chapter_local:
+    - ch5.def.wavelet_cdf
+    - ch5.def.BV_ball
+    later_book_uses:
+    - Theorem 5.2.10
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 5.2.3
+    contains_omitted_steps: true
+    comment: ''
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Wavelet analogue of Theorem 5.2.7; requires VC entropy for projection-smoothed indicators.
+    blockers:
+    - Daubechies wavelets and VC entropy.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The printed phrase “wavelets of regularity S>s” contains an s not otherwise quantified in the theorem; verify
+    whether S refers only to the preceding t<S+1 condition.
+  - 'Source-transcription status: verified_with_generality_flag.'
+- id: ch5.thm.5_2_10
+  kind: theorem
+  book:
+    number: Theorem 5.2.10
+    pages:
+    - 433
+    section: 5.2.1
+    equations: []
+  title: Theorem 5.2.10
+  statement: Under Theorem 5.2.9, if 2^{-jₙ}≥log n/n and √n2^{-jₙ(t+1)}→0, then √n(Fₙ^W−F_P)⇒G_P in ℓ∞(ℝ), and √n(Pₙ^W−P)⇒G_P
+    in ℓ∞(BV_M) for every M<∞.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorem 5.2.9.
+    - Resolution and bias conditions.
+    implicit:
+    - The P-bridge has a sample-continuous version on both index sets.
+  quantifier_order:
+  - For every M<∞.
+  - As n→∞.
+  constants: *id005
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.thm.5_2_9
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Slutsky theorem from the wavelet cdf discrepancy.
+    blockers:
+    - Weak convergence in function spaces.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.thm.5_2_11
+  kind: theorem
+  book:
+    number: Theorem 5.2.11
+    pages:
+    - 433
+    - 434
+    section: 5.2.1
+    equations: []
+  title: Theorem 5.2.11
+  statement: Let s>1/2, 𝔽=H^s_{2,M}(ℝ), f₀∈H^t_2(ℝ), t≥0, and use an S-regular wavelet basis with S>t+s. If jₙ→∞
+    and √n2^{-jₙ(t+s)}→0, then G_P|𝔽 has sample-continuous paths and √n(Pₙ^W−P)⇒G_P in ℓ∞(𝔽).
+  source_fidelity:
+    transcription_status: verified_with_erratum
+    author_corrected_reading: 'Author erratum: in the last display on p.433 and line 2 of Theorem 5.2.11 on p.434,
+      decorated symbols ~H and ^H are plain H.'
+  hypotheses:
+    explicit:
+    - s>1/2, M<∞.
+    - f₀ density in H^t_2.
+    - S>t+s.
+    - jₙ bias condition.
+    implicit:
+    - Projection K_j is a contraction in the wavelet Sobolev norm.
+  quantifier_order:
+  - As n→∞.
+  constants:
+  - M,S,t,s.
+  dependencies:
+    earlier_book:
+    - Donsker property of bounded Sobolev balls
+    - Proposition 4.3.14
+    chapter_local:
+    - ch5.def.sobolev_ball
+    - ch5.def.wavelet_cdf
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Wavelet plug-in CLT over a Sobolev ball; bias by coefficient duality and random part by Donsker equicontinuity.
+    blockers:
+    - Sobolev/wavelet equivalence and empirical-process CLT.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - Use plain H symbols per official errata.
+  - 'Author-corrected reading recorded separately: Author erratum: in the last display on p.433 and line 2 of Theorem
+    5.2.11 on p.434, decorated symbols ~H and ^H are plain H.'
+  - 'Source-transcription status: verified_with_erratum.'
+- id: ch5.rem.5_2_12
+  kind: proposition
+  book:
+    number: Remark 5.2.12
+    pages:
+    - 434
+    section: 5.2.1
+    equations: []
+  title: Remark 5.2.12
+  statement: 'Using Theorem 4.4.5 and the bias estimate following Proposition 4.3.14, the preceding proof gives
+    the following printed statement. If f₀∈B^t_{p,q}([0,1])∪L^p([0,1]) for some t>0 and 𝔽={g∈C([0,1]): ‖g‖_{B^s_{p′,q′}([0,1])}≤M},
+    where 1<p,p′,q,q′<∞, 1/p+1/q=1, 1/p′+1/q′=1 and s>max(1/p′,1/2), then G_P|𝔽 is sample continuous. Moreover,
+    if j_n→∞ and √n·2^(−j_n(t+s))→0, then √n(P_n^W−P) converges in law to G_P in ℓ∞(𝔽), for every Borel probability
+    measure P on [0,1]. Here P_n^W has density equal to the boundary-corrected or periodised wavelet projection
+    estimator from Condition 5.1.1(c) or (d).'
+  source_fidelity:
+    transcription_status: verified_with_typographical_flag
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - The printed density condition is f₀∈B^t_{p,q}([0,1])∪L^p([0,1]), t>0.
+    - 𝔽 is the radius-M ball of continuous functions in B^s_{p′,q′}([0,1]).
+    - 1<p,p′,q,q′<∞, with the two printed relations 1/p+1/q=1 and 1/p′+1/q′=1.
+    - s>max(1/p′,1/2).
+    - Boundary-corrected or periodised wavelets satisfying Condition 5.1.1(c) or (d).
+    - j_n→∞ and √n·2^(−j_n(t+s))→0.
+    implicit:
+    - The statement is transcribed as printed; the union sign and conjugacy relations are not repaired.
+    - P_n^W denotes the measure whose density is the corresponding wavelet projection estimator.
+  quantifier_order:
+  - Fix t,p,q,p′,q′,s,M and a Borel probability measure P on [0,1] satisfying the printed assumptions.
+  - For every resolution sequence j_n satisfying the displayed limit, let n→∞.
+  constants:
+  - M<∞.
+  - The bias exponent is t+s.
+  dependencies:
+    earlier_book:
+    - Theorem 4.4.5 and Proposition 4.3.14
+    chapter_local:
+    - ch5.thm.5_2_11
+    later_book_uses: *id005
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Besov duality and Donsker extension of Theorem 5.2.11.
+    blockers:
+    - General Besov spaces and conjugate-exponent duality.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - The printed density condition uses B^t_{p,q}([0,1])∪L^p([0,1]); an intersection may have been intended, but
+    the source is not silently changed.
+  - The printed relations 1/p+1/q=1 and 1/p′+1/q′=1 appear inconsistent with the usual conjugate-index roles; retain
+    them pending central review.
+- id: ch5.def.multiscale_spaces
+  kind: definition
+  book:
+    number: 'Definitions (5.83)–(5.84): M(w), M₀(w)'
+    pages:
+    - 434
+    - 435
+    section: 5.2.2
+    equations:
+    - '5.83'
+    - '5.84'
+  title: 'Definitions (5.83)–(5.84): M(w), M₀(w)'
+  statement: For a nondecreasing weight sequence w_l≥1, define ‖x‖_{M(w)}=sup_l max_k|x_{lk}|/w_l, M(w) as all coefficient
+    arrays with finite norm, and M₀(w) as those arrays for which max_k|x_{lk}|/w_l→0.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - w=(w_l) is nondecreasing and w_l≥1.
+    - At level l the coefficient index set is the finite wavelet index set.
+    implicit:
+    - Arrays also include the finite scaling level according to the book convention.
+  quantifier_order:
+  - For every coefficient array x.
+  constants:
+  - Weight sequence w.
+  dependencies:
+    earlier_book:
+    - Wavelet coefficient notation from Chapter 4
+    chapter_local: *id005
+    later_book_uses:
+    - Definition 5.2.13, Propositions 5.2.14–5.2.15, Theorem 5.2.16
+  proof_status: *id002
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Weighted ℓ∞ space over a sigma-finite wavelet index type and its c₀-like closed subspace.
+    blockers:
+    - Indexing boundary/periodic wavelets uniformly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006

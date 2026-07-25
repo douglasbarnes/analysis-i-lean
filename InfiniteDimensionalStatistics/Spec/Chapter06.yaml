@@ -1,0 +1,42 @@
+schema_version: 1.0-package
+status: pass_with_central_review_flags
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition
+  uploaded_file: FULLPDF.pdf
+  chapter: 6
+  chapter_title: The Minimax Paradigm
+  book_pages:
+    start: 467
+    end: 540
+purpose: Declaration-level specification only; this package contains no Lean proofs.
+package:
+  declaration_inventory:
+    file: Chapter06.Inventory.yaml
+    key: inventory
+    entry_count: 83
+  chapter_local_dependency_dag:
+    file: Chapter06.DependencyDAG.yaml
+    node_count: 83
+    edge_count: 140
+    acyclic: true
+validation:
+  canonical_schema: InfiniteDimensionalStatistics/Spec/Schema.md
+  chapter_local_strict_schema: pass
+  audit_workflow_run: 30159743985
+  audit_exemptions:
+  - repository-wide missing or pending chapters only
+  source_blocker_exemption_used: false
+  incomplete_coverage_exemption_used: false
+  declarations: 70
+  selected_exercises: 13
+  source_starred_entries: 0
+  missing_numbered_labels: []
+  duplicate_identifiers: []
+  unresolved_local_dependency_references: []
+  central_review_flag_count: 22
+  transport_repairs:
+  - Chapter06.Inventory.12.yaml contained invalid YAML escaping in a double-quoted scalar; only backslash transport encoding was repaired, without changing the mathematical text.
