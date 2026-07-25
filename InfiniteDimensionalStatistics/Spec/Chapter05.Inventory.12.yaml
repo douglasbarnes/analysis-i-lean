@@ -1,0 +1,425 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id003
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id001
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id002
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id004
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.prop.5_3_7
+  kind: proposition
+  book:
+    number: Proposition 5.3.7
+    pages:
+    - 458
+    - 459
+    section: 5.3.2
+    equations: []
+  title: Proposition 5.3.7
+  statement: For f in a B^s_{∞∞} ball, combine (5.119) with (5.122). If |F[ϕ](t)|≥C exp(−c₀|t|^α), choose jₙ=α^{-1}log₂(ν
+    log n) with c₀a^αν<1/2 to obtain sup-norm risk O((log n)^{-s/α}). If |F[ϕ](t)|≥C(1+t²)^{-w/2}, choose 2^{jₙ}≈(n/log
+    n)^{1/(2s+2w+1)} to obtain O((log n/n)^{s/(2s+2w+1)}).
+  source_fidelity:
+    transcription_status: verified_with_constant_review
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - Theorem 5.3.6 assumptions.
+    - f in the specified Besov ball.
+    - Severe or moderate lower bound on the error Fourier transform.
+    - s>0 in wavelet case and 0<s<S in convolution case.
+    implicit:
+    - The risk is expected sup norm, uniformly over the ball.
+    - Constants depend on class radius and kernel/error parameters.
+  quantifier_order:
+  - For all n and uniformly over f in the ball.
+  constants:
+  - c₀,α,ν,a,w,C.
+  dependencies:
+    earlier_book:
+    - Besov approximation bounds
+    chapter_local:
+    - ch5.thm.5_3_6
+    - ch5.eq.5_122
+    later_book_uses:
+    - Proposition 5.3.8
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Bias–variance balancing with an ill-posedness factor δ_j^{-1}.
+    blockers:
+    - Besov sup-norm approximation and asymptotic algebra.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - Verify exact labels of the Besov ball and constants in the severe case before proof implementation.
+  - 'Source-transcription status: verified_with_constant_review.'
+- id: ch5.def.A_alpha_s
+  kind: definition
+  book:
+    number: Definition of A_{α,s}(L)
+    pages:
+    - 459
+    section: 5.3.2
+    equations: []
+  title: Definition of A_{α,s}(L)
+  statement: A_{α,s}(L) is the set of probability densities f such that ∫|F[f](t)|² exp(2α|t|^s)dt≤2πL.
+  source_fidelity: *id004
+  hypotheses:
+    explicit:
+    - α>0, s>0, L>0.
+    - f is a probability density with Fourier transform in the weighted L² class.
+    implicit:
+    - Fourier normalisation gives the factor 2π.
+  quantifier_order:
+  - All densities satisfying the weighted integral bound.
+  constants:
+  - α,s,L.
+  dependencies:
+    earlier_book: &id005 []
+    chapter_local: *id005
+    later_book_uses:
+    - Proposition 5.3.8
+    - Exercise 5.3.10
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Set of densities defined by a weighted Fourier L² inequality.
+    blockers:
+    - Complex Fourier transform and weighted L².
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: &id006 []
+- id: ch5.prop.5_3_8
+  kind: proposition
+  book:
+    number: Proposition 5.3.8
+    pages:
+    - 459
+    - 460
+    section: 5.3.2
+    equations: []
+  title: Proposition 5.3.8
+  statement: Let f∈A_{α,s}(L) and suppose |F[ϕ](t)|≥b(1+t²)^{-w/2}e^{-β|t|^r}, with β=0 or r=s. For the Meyer wavelet
+    deconvolution estimator, E‖fₙ(·,j)−f‖∞ is bounded by c′√L e^{-α(a′)^s2^{js}}2^{j(1-s)/2} plus [c(‖g‖∞∨1)/δ_j]√(2^j
+    j/n). The displayed logarithmic choice of 2^{jₙ} yields the polynomial-in-n rate with logarithmic factor stated
+    in the proposition.
+  source_fidelity:
+    transcription_status: central_review_required
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - f∈A_{α,s}(L).
+    - Error Fourier lower bound with b,w,β,r.
+    - β=0 or r=s.
+    - Meyer wavelet estimator.
+    implicit:
+    - a′ is the inner Fourier support radius for the Meyer scaling projection.
+    - The precise floor/integer choice of jₙ is immaterial analytically but must be formalised.
+  quantifier_order:
+  - For every j and then for the displayed choice j=jₙ.
+  constants:
+  - α,s,L,b,w,β,r,a,a′,c,c′.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.def.A_alpha_s
+    - ch5.thm.5_3_6
+    - ch5.eq.5_122
+    later_book_uses:
+    - Exercises 5.3.9–5.3.10
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Exponential Fourier-tail bias plus Theorem 5.3.6 variance, followed by explicit balancing.
+    blockers:
+    - Meyer support geometry and exponential-weight estimates.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - Verify the exact denominator in the chosen 2^{jₙ} and every logarithmic exponent; OCR is unreliable in this
+    display.
+  - 'Source-transcription status: central_review_required.'
+- id: ch5.thm.5_3_9
+  kind: theorem
+  book:
+    number: Theorem 5.3.9
+    pages:
+    - 460
+    - 461
+    section: 5.3.2
+    equations: []
+  title: Theorem 5.3.9
+  statement: 'Under Lemma 5.3.5, both deconvolution estimators satisfy E‖fₙ−Efₙ‖²₂≤C2^j/(δ_j²n), with C=1/(2π) in
+    the wavelet case and C=‖K‖²₂/(2π) in the convolution case. For the Besov ball B(s,L): (a) under |F[ϕ](t)|≥C
+    exp(−c₀|t|^α) and jₙ=α^{-1}log₂(ν log n), c₀a^αν<1/2, sup_f E‖fₙ−f‖²₂≤L′(log n)^{-2s/α}; (b) under |F[ϕ](t)|≥C(1+t²)^{-w/2}
+    and 2^{jₙ}≈(n/log n)^{1/(2s+2w+1)}, sup_f E‖fₙ−f‖²₂≤L″n^{-2s/(2s+2w+1)}.'
+  source_fidelity: *id004
+  hypotheses:
+    explicit:
+    - Lemma 5.3.5 assumptions.
+    - f ranges over the stated B^s_{2∞} ball.
+    - Severe or moderate error Fourier lower bound.
+    - s>0 for wavelets; 0<s<S for convolution kernels.
+    implicit:
+    - The displayed part (b) rate intentionally has no log factor although the integer resolution is described using
+      n/log n; preserve the text.
+  quantifier_order:
+  - Uniformly over f in B(s,L), for all n≥1.
+  constants:
+  - Exact C values, L′,L″.
+  dependencies:
+    earlier_book:
+    - Plancherel theorem and Besov L² approximation
+    chapter_local:
+    - ch5.lem.5_3_5
+    - ch5.eq.5_122
+    later_book_uses:
+    - Exercises 5.3.8, 5.3.10, 5.3.11
+  proof_status: *id001
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Fourier.Convolution
+      - Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Exact integrated variance calculation via Plancherel, then bias–variance rates.
+    blockers:
+    - Fourier/Plancherel normalisation and Besov approximation.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id006
+- id: ch5.ex.5_3_1
+  kind: exercise
+  book:
+    number: Exercise 5.3.1
+    pages:
+    - 461
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.1
+  statement: Complete the proof of Theorem 5.3.4 by decomposing the quadratic corrections Q and Q̂ into the sample-split
+    pieces indicated in the hint and controlling every remainder.
+  source_fidelity: *id004
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.thm.5_3_4
+    later_book_uses:
+    - Theorem 5.3.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: explicitly completes an omitted main-text proof'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Full asymptotic-linear expansion and o_P(n^{-1/2}) remainder proof.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - explicitly completes an omitted main-text proof
+- id: ch5.ex.5_3_2
+  kind: exercise
+  book:
+    number: Exercise 5.3.2
+    pages:
+    - 461
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.2
+  statement: Prove wavelet versions of Theorems 5.3.2 and 5.3.3 for Tₙ^W and T_{n,ψ}^W from (5.103), including boundary-corrected
+    wavelets on [0,1].
+  source_fidelity: *id004
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.thm.5_3_2
+    - ch5.thm.5_3_3
+    later_book_uses: *id005
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes reusable wavelet and boundary variants'
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Wavelet U-statistic Hoeffding decomposition and boundary approximation bounds.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - establishes reusable wavelet and boundary variants
+- id: ch5.ex.5_3_3
+  kind: exercise
+  book:
+    number: Exercise 5.3.3
+    pages:
+    - 461
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.3
+  statement: Using Exercise 5.3.2, construct a wavelet estimator of ∫₀¹φ(f(x),x)f(x)dx analogous to (5.107) and
+    prove the CLT of Theorem 5.3.4.
+  source_fidelity: *id004
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.ex.5_3_2
+    - ch5.thm.5_3_4
+    later_book_uses: *id005
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes required reusable general-functional wavelet estimator'
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Wavelet second-order functional estimator and asymptotic linearity.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - establishes required reusable general-functional wavelet estimator
+- id: ch5.ex.5_3_4
+  kind: exercise
+  book:
+    number: Exercise 5.3.4
+    pages:
+    - 461
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.4
+  statement: Construct an estimator of Shannon entropy ∫₀¹f log f for densities bounded below and in B^α_{2∞}∩B^r_{∞∞},
+    α∈(1/4,1), r>0, using the stated second-order Taylor expansion.
+  source_fidelity: *id004
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id005
+    chapter_local:
+    - ch5.ex.5_3_3
+    later_book_uses: *id005
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes a reusable nonlinear-functional application'
+  notes_status: *id002
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id003
+  likely_lean_representation:
+    sketch: Instantiate the general functional theorem with φ(z,x)=log z; verify derivative/remainder bounds from
+      f≥c>0.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id006
+  selection_reasons:
+  - establishes a reusable nonlinear-functional application
