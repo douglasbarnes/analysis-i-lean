@@ -105,6 +105,7 @@ summary:
   source_starred_entries: 0
 completeness_check:
   expected_numbered_labels: &id001
+  - Theorem 1.2.1
   - Exercise 1.1
   found_numbered_labels: *id001
   missing_numbered_labels: []
@@ -3307,12 +3308,13 @@ inventory:
 - id: C1-D051
   kind: theorem
   book:
-    number: Theorem 1.2.1; (1.18)
+    number: Theorem 1.2.1
     pages:
     - 10
     - 12
     section: 1.2.3
-    equations: []
+    equations:
+    - '1.18'
   title: 'Theorem 1.2.1: exact and quantitative comparison'
   statement: Let E_n^(1), E_n^(2), E_n^(3) be respectively the fixed-design regression, white-noise, and Gaussian sequence
     experiments. For every family F of bounded functions and every n, Δ_F(E_n^(2),E_n^(3))=0 and Δ_F(E_n^(1),E_n^(2))≤√(n/σ²)·sup_{f∈F}‖f−π_n(f)‖₂.
