@@ -13,23 +13,22 @@ inventory:
     section: 7.3.1
     equations: []
   title: White-noise integrated-likelihood denominator bound
-  statement: 'Let ν be supported on B={f:||f-f₀||₂²≤ε²/σ²}. For every c>0, the probability
-
-    that the prior-averaged centred white-noise likelihood is at most
-
-    exp(-(1+c)nε²/2) is bounded by a constant of order 1/(c²nε²); in the book''s
-
-    normalisation the displayed bound is 1/(c²nε²).'
+  statement: "Let ε>0 and let ν be a probability measure on\n  B={f∈F : ||f-f₀||₂²≤ε²/σ²}.\nFor every c>0 and n≥1,\n  P^W(\
+    \ ∫_B exp{(√n/σ)∫₀¹(f-f₀)dW - (n/(2σ²))||f-f₀||₂²} dν(f)\n       ≤ exp{-(1+c)nε²/σ²} )\n  ≤ σ²/(c² n ε²)."
   hypotheses:
     explicit:
-    - ν is a probability measure supported on the stated L² ball.
-    - c,ε,σ>0.
+    - ε>0, σ>0, c>0 and n≥1.
+    - ν is a probability measure supported on B={f:||f-f₀||₂²≤ε²/σ²}.
+    - The stochastic integral and the ν-integral are measurable.
     implicit:
-    - Stochastic integrals are jointly measurable in f and W.
-    - Exact half-factors follow the book's likelihood normalisation.
+    - The proof in the book sets σ=1 only to simplify notation; the displayed statement retains the exact σ-dependent constants.
+    - The Gaussian isometry and Jensen bound the variance of the ν-averaged stochastic integral.
   quantifier_order:
-  - ∀ν,c,n.
-  constants: []
+  - ∀ ε,σ,c>0, ∀n≥1, ∀ probability measures ν supported on B, the probability bound holds.
+  constants:
+  - 'Support radius squared: ε²/σ².'
+  - 'Likelihood threshold exponent: -(1+c)nε²/σ².'
+  - 'Right-hand side: σ²/(c²nε²).'
   dependencies:
     earlier_book:
     - Gaussian isometry
@@ -55,16 +54,13 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A Gaussian-process variance calculation for a prior mixture of Cameron–Martin
-      likelihoods.
+    sketch: Apply Jensen to the log of the prior-averaged likelihood, use the isonormal Gaussian isometry to bound the variance
+      of the ν-averaged stochastic integral, and conclude with the one-sided Chebyshev inequality. Keep σ symbolic.
     blockers: []
   difficulty: research-level
   pass: core
-  issues_for_central_review:
-  - type: normalisation_review
-    page: 577
-    detail: Retain the book's exact constants when the white-noise likelihood normalisation
-      is fixed in Lean.
+  issues_for_central_review: []
+  verification_status: verified_against_printed_pages_576_577
 - id: ch7.thm.7.3.5
   kind: theorem
   book:
@@ -75,11 +71,9 @@ inventory:
     section: 7.3.1
     equations: []
   title: General posterior contraction theorem in Gaussian white noise
-  statement: "Let F⊂L² be Borel, dY∼P^Y_{f₀}, and Π=Πₙ. Let εₙ→0 and √nεₙ→∞.\nFor\
-    \ fixed C,L assume:\n(i) Π(||f-f₀||₂≤εₙ)≥e^{-Cnεₙ²} (officially corrected from\
-    \ εₙ² on the norm);\n(ii) Π(F\\Fₙ)≤L e^{-(C+4)nεₙ²};\n(iii) tests φₙ satisfy E_{f₀}φₙ→0\
-    \ and\n      sup_{f∈Fₙ:d(f,f₀)≥Mεₙ}E_f(1-φₙ)≤L e^{-(C+4)nεₙ²}.\nThen the posterior\
-    \ contracts at rate εₙ in d."
+  statement: "Let F⊂L² be Borel, dY∼P^Y_{f₀}, and Π=Πₙ. Let εₙ→0 and √nεₙ→∞.\nFor fixed C,L assume:\n(i) Π(||f-f₀||₂≤εₙ)≥e^{-Cnεₙ²}\
+    \ (officially corrected from εₙ² on the norm);\n(ii) Π(F\\Fₙ)≤L e^{-(C+4)nεₙ²};\n(iii) tests φₙ satisfy E_{f₀}φₙ→0 and\n\
+    \      sup_{f∈Fₙ:d(f,f₀)≥Mεₙ}E_f(1-φₙ)≤L e^{-(C+4)nεₙ²}.\nThen the posterior contracts at rate εₙ in d."
   hypotheses:
     explicit:
     - F Borel in L².
@@ -116,8 +110,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: White-noise analogue of Theorem 7.3.1; abstract a common posterior-contraction
-      skeleton after likelihood-specific denominator lemmas.
+    sketch: White-noise analogue of Theorem 7.3.1; abstract a common posterior-contraction skeleton after likelihood-specific
+      denominator lemmas.
     blockers: []
   difficulty: research-level
   pass: core
@@ -134,11 +128,9 @@ inventory:
     section: 7.3.1
     equations: []
   title: L² contraction from approximation-kernel sieves
-  statement: "Let K_j satisfy Conditions 5.1.1 on [0,1]. Under the white-noise setup,\
-    \ assume the\nprior L²-small-ball condition and sieve-tail condition of Theorem\
-    \ 7.3.5. Choose jₙ\nwith 2^{jₙ}≍nεₙ² and assume\n  Π(f:||K_{jₙ}f-f||₂>εₙ)≤L e^{-(C+4)nεₙ²},\n\
-    \  ||K_{jₙ}f₀-f₀||₂≤εₙ.\nThen the posterior contracts around f₀ in L² at rate\
-    \ εₙ."
+  statement: "Let K_j satisfy Conditions 5.1.1 on [0,1]. Under the white-noise setup, assume the\nprior L²-small-ball condition\
+    \ and sieve-tail condition of Theorem 7.3.5. Choose jₙ\nwith 2^{jₙ}≍nεₙ² and assume\n  Π(f:||K_{jₙ}f-f||₂>εₙ)≤L e^{-(C+4)nεₙ²},\n\
+    \  ||K_{jₙ}f₀-f₀||₂≤εₙ.\nThen the posterior contracts around f₀ in L² at rate εₙ."
   hypotheses:
     explicit:
     - Approximation kernel satisfies Chapter 5 conditions.
@@ -176,8 +168,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Construct tests from finite-resolution projections, then instantiate Theorem
-      7.3.5.
+    sketch: Construct tests from finite-resolution projections, then instantiate Theorem 7.3.5.
     blockers: []
   difficulty: research-level
   pass: core
