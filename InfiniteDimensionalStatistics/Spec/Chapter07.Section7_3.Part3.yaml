@@ -12,31 +12,27 @@ inventory:
     - 603
     section: '7.3'
     equations: []
-  title: Sobolev-weighted posterior second-moment summation
-  statement: 'Extend the coordinate posterior second-moment estimates from Theorem
-
-    7.3.12/Corollary 7.3.13 to the weighted negative Sobolev norm H(δ), proving
-
-    the tail/moment estimates required for tightness and the posterior-mean
-
-    bound in the proof of Theorem 7.3.19.'
+  title: Posterior contraction in intermediate Sobolev norms
+  statement: "Under the conditions of Corollary 7.3.13, prove that for every 0<s<γ the posterior contracts about\
+    \ f₀ in the H₂^s norm at rate n^{-(γ-s)/(2γ+1)}. Precisely, for a sufficiently large fixed M,\n  Π(f : ||f-f₀||_{H₂^s}\
+    \ > M n^{-(γ-s)/(2γ+1)} | Y) → 0\nin P^Y_{f₀}-probability."
   hypotheses:
     explicit:
-    - Condition 7.3.11 and the weighted space H(δ).
-    - δ>1/2 under the official correction.
+    - All hypotheses of Corollary 7.3.13.
+    - 0<s<γ.
     implicit:
-    - The exact exercise may formulate a more general Sobolev-risk result; this statement
-      records only the reusable consequence explicitly cited in the main text.
+    - H₂^s is the Sobolev space and norm used in the product-prior sequence model.
+    - The contraction conclusion uses the same sampling law and posterior-probability convention as Corollary 7.3.13.
   quantifier_order:
-  - Sum the coordinate bounds uniformly in n, then let the projection cutoff tend
-    to infinity.
-  constants: []
+  - For every fixed s with 0<s<γ, there exists a sufficiently large fixed M such that the posterior-probability
+    convergence holds as n→∞.
+  constants:
+  - Smoothness-loss exponent (γ-s)/(2γ+1).
+  - A sufficiently large fixed contraction constant M.
   dependencies:
     earlier_book: []
     chapter_local:
-    - ch7.thm.7.3.12
     - ch7.cor.7.3.13
-    - ch7.def.weightedSobolevBvMSpace
     later_book_uses: []
   proof_status:
     delegates_to_exercises: []
@@ -56,48 +52,37 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Tonelli summation of posterior coordinate moments with deterministic weighted-series
-      convergence.
+    sketch: Interpolate or sum the coordinatewise posterior bounds from Corollary 7.3.13 with Sobolev weights 2^{2js},
+      separating low- and high-frequency tails.
     blockers: []
-  difficulty: major-library
+  difficulty: substantial
   pass: exercise
-  issues_for_central_review:
-  - type: source_verification
-    page: 603
-    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
-      text layer does not expose the final §7.3 exercise block cleanly; visually verify
-      exact wording and page before implementation.
+  issues_for_central_review: []
   selection_reasons:
-  - cited by later result
   - establishes required reusable lemma
-  used_by:
-  - ch7.thm.7.3.19
+  used_by: []
 - id: ex7.3.6
   kind: exercise
   book:
     number: 7.3.6
     pages:
-    - 602
     - 603
     section: '7.3'
     equations: []
-  title: Contiguity for finite-dimensional tilted posterior laws
-  statement: 'Prove the finite-dimensional contiguity/change-of-measure step invoked
-    in
-
-    Theorem 7.3.18 for the tilted law displayed around (7.124), so that
-
-    convergence established under the reference finite-dimensional Gaussian
-
-    law transfers to the data-dependent posterior shift.'
+  title: Contiguity in the finite-dimensional BvM argument
+  statement: Let A_n be measurable events in the finite-dimensional setting of (7.124). If P_C^Y(A_n)→0, prove that
+    P^{WV}(A_n)→0. Equivalently, prove that P^{WV} is contiguous with respect to P_C^Y.
   hypotheses:
     explicit:
-    - Condition 7.3.17 on the prior density over every fixed finite-dimensional projection.
-    - The finite-dimensional Gaussian likelihood shift.
+    - The finite-dimensional Gaussian-shift measures P_C^Y and P^{WV} are those defined around equation (7.124).
+    - A_n is measurable for every n.
+    - P_C^Y(A_n)→0.
     implicit:
-    - The dimension is fixed as n→∞ and likelihood ratios are uniformly integrable.
+    - The finite-dimensional dimension is fixed as n→∞.
+    - The likelihood-ratio lower bound/uniform-integrability argument in the book's hint applies on the relevant
+      compact set C.
   quantifier_order:
-  - For each fixed finite-dimensional V, prove contiguity as n→∞.
+  - For every sequence of measurable events A_n, assume P_C^Y(A_n)→0 and then prove P^{WV}(A_n)→0.
   constants: []
   dependencies:
     earlier_book: []
@@ -123,17 +108,12 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Le Cam first-lemma style contiguity via convergence and uniform integrability
-      of finite-dimensional likelihood ratios.
+    sketch: Formalise the finite-dimensional likelihood ratio between the Gaussian shift laws and prove the one-sided
+      absolute-continuity/contiguity implication used in Theorem 7.3.18.
     blockers: []
   difficulty: research-level
   pass: exercise
-  issues_for_central_review:
-  - type: source_verification
-    page: 603
-    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
-      text layer does not expose the final §7.3 exercise block cleanly; visually verify
-      exact wording and page before implementation.
+  issues_for_central_review: []
   selection_reasons:
   - completes proof omitted from main text
   - cited by later result
@@ -145,22 +125,21 @@ inventory:
   book:
     number: 7.3.7
     pages:
-    - 602
     - 603
     section: '7.3'
     equations: []
-  title: Uniform Portmanteau theorem for regular-boundary classes
-  statement: "Prove Proposition 7.3.21: weak convergence μₙ⇒μ and\n  lim_{ε↓0} sup_{B∈𝒞\
-    } μ(∂_εB)=0\nimply\n  sup_{B∈𝒞}|μₙ(B)-μ(B)|→0.\nUse open/closed ε-enlargements\
-    \ and the standard Portmanteau inequalities."
+  title: Proof of Proposition 7.3.21
+  statement: Prove Proposition 7.3.21. The printed hint partitions the space into countably many μ-continuity sets
+    of diameter less than δ, applies Scheffé's lemma to the induced discrete probabilities, and constructs inner
+    and outer approximations W⊂A⊂V with V\W contained in the δ-boundary of A.
   hypotheses:
     explicit:
-    - The hypotheses of Proposition 7.3.21.
+    - All hypotheses of Proposition 7.3.21.
     implicit:
-    - Uniformity follows by applying Portmanteau to common ε-thickenings rather than
-      setwise to each B.
+    - The countable partition is chosen from μ-continuity sets.
+    - The boundary-uniformity condition controls μ(V\W) uniformly over the class.
   quantifier_order:
-  - First fix ε; take n→∞; then let ε↓0.
+  - Fix δ>0; derive a uniform-in-class bound after n→∞; then let δ↓0.
   constants: []
   dependencies:
     earlier_book: []
@@ -185,50 +164,39 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A uniform consequence of mathlib's Portmanteau inequalities using inf-distance
-      neighbourhood inclusions.
+    sketch: Combine Portmanteau/weak-convergence infrastructure with a countable continuity-set partition and a
+      finite/discrete total-variation estimate.
     blockers: []
   difficulty: major-library
   pass: exercise
-  issues_for_central_review:
-  - type: source_verification
-    page: 603
-    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
-      text layer does not expose the final §7.3 exercise block cleanly; visually verify
-      exact wording and page before implementation.
+  issues_for_central_review: []
   selection_reasons:
   - completes proof omitted from main text
   - cited by later result
   - establishes required reusable lemma
   used_by:
-  - ch7.cor.7.3.22
   - ch7.prop.7.3.21
 - id: ex7.3.8
   kind: exercise
   book:
     number: 7.3.8
     pages:
-    - 602
     - 603
     section: '7.3'
     equations: []
-  title: Uniform integrability and posterior-mean convergence under weak BvM
-  statement: "Supply the uniform-integrability argument omitted after Theorems 7.3.19\n\
-    and 7.3.20. Upgrade weak convergence of the shifted posterior laws to\nconvergence\
-    \ of the relevant Bochner first moments, obtaining (7.127) and\n(7.131), in particular\n\
-    \  ||f̄ₙ-Y||_{H(δ)}=o_P(n^{-1/2})\nand\n  ||f̄ₙ-Y||_{M₀(w)}=o_P(n^{-1/2}).\nRecord\
-    \ the corresponding consequence used for posterior-mean-centred\ncredible sets\
-    \ in Theorem 7.3.23."
+  title: Moment convergence for the posterior mean
+  statement: "Prove equations (7.127) and (7.131). In the H(δ) and M₀(w) Bernstein–von Mises settings, respectively,\
+    \ upgrade the weak posterior convergence to convergence of first moments and deduce\n  ||f̄_n-Y||_{H(δ)}=o_P(n^{-1/2})\n\
+    and\n  ||f̄_n-Y||_{M₀(w)}=o_P(n^{-1/2}).\nThe printed hint reduces to almost-sure weak convergence as in the\
+    \ proof of Corollary 7.3.22."
   hypotheses:
     explicit:
-    - The hypotheses and posterior moment/tail estimates proved in Theorem 7.3.19
-      or 7.3.20.
+    - The hypotheses and posterior moment/tail bounds used in Theorems 7.3.19 and 7.3.20.
     implicit:
-    - Bochner integrability of the identity map under each posterior.
-    - Weak convergence alone is insufficient; a uniform-integrability/tight-tail estimate
-      is essential.
+    - The identity map is Bochner integrable under the posterior laws.
+    - Uniform integrability is required in addition to weak convergence.
   quantifier_order:
-  - For each of the two BvM spaces, prove moment convergence as n→∞.
+  - Treat the H(δ) conclusion (7.127), then the M₀(w) conclusion (7.131), each as n→∞.
   constants: []
   dependencies:
     earlier_book: []
@@ -255,17 +223,12 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A Bochner-valued uniform-integrability theorem for random probability
-      measures, applied conditionally and then in sampling probability.
+    sketch: Use an almost-sure subsequence reduction, weak convergence of random probability measures, and uniform
+      integrability to pass to Bochner first moments.
     blockers: []
   difficulty: research-level
   pass: exercise
-  issues_for_central_review:
-  - type: source_verification
-    page: 603
-    detail: Reconstructed from explicit main-text cross-references because the uploaded/public
-      text layer does not expose the final §7.3 exercise block cleanly; visually verify
-      exact wording and page before implementation.
+  issues_for_central_review: []
   selection_reasons:
   - completes proof omitted from main text
   - cited by later result
