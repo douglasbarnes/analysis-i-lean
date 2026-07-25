@@ -29,8 +29,7 @@ inventory:
     explicit:
     - Hypotheses of (7.19).
     implicit:
-    - Codomain is the extended real line; arithmetic with -∞ follows extended-real
-      conventions.
+    - Codomain is the extended real line; arithmetic with -∞ follows extended-real conventions.
   quantifier_order:
   - ∀ p∈P.
   constants: []
@@ -58,8 +57,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Use `EReal` or a custom extended-real log-likelihood. A real-valued restricted
-      version is available on densities positive at all sample points.
+    sketch: Use `EReal` or a custom extended-real log-likelihood. A real-valued restricted version is available on densities
+      positive at all sample points.
     blockers: []
   difficulty: substantial
   pass: core
@@ -107,8 +106,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Lebesgue integral of `Real.log ∘ p` against `P₀`; integrability is an
-      explicit argument.
+    sketch: Lebesgue integral of `Real.log ∘ p` against `P₀`; integrability is an explicit argument.
     blockers: []
   difficulty: routine
   pass: core
@@ -123,19 +121,19 @@ inventory:
     equations:
     - (7.22)
   title: Kullback–Leibler identifiability
-  statement: "If p is absolutely continuous with respect to p₀ in the sense needed\
-    \ for log(p/p₀), then\n  ℓ(p)-ℓ(p₀)=∫ log(p/p₀) dP₀ ≤ 0,\nwith equality if and\
-    \ only if p=p₀ μ-a.e. Hence ℓ(p)<ℓ(p₀) for p≠p₀."
+  statement: "For every probability density p whose induced measure P is absolutely continuous with respect to P₀=p₀·μ,\n\
+    \  ℓ(p)-ℓ(p₀)=∫ log(p/p₀) dP₀ ≤ log ∫ (p/p₀) dP₀ = 0,\nwith the extended-real convention log 0=-∞. Equality holds if and\
+    \ only if p=p₀ μ-a.e.; hence ℓ(p)<ℓ(p₀) for p≠p₀."
   hypotheses:
     explicit:
-    - p and p₀ are probability densities.
-    - The displayed log ratio is P₀-integrable (or the extended integral is defined).
+    - p and p₀ are probability densities with respect to μ.
+    - The probability measure P=p·μ is absolutely continuous with respect to P₀=p₀·μ, exactly as printed.
     implicit:
-    - The book's wording 'p absolutely continuous with respect to p₀(x)dx' appears
-      directionally inconsistent with the displayed ratio and should be checked; the
-      operative requirement is that p/p₀ is defined P₀-a.s.
+    - Absolute continuity P≪P₀ gives p=0 μ-a.e. on {p₀=0}, so ∫(p/p₀)dP₀=∫p dμ=1.
+    - If P₀ is not absolutely continuous with respect to P, the logarithmic integral may be -∞; the inequality remains an
+      extended-real statement.
   quantifier_order:
-  - ∀ p in the model with the stated absolute-continuity/integrability conditions.
+  - ∀ probability densities p,p₀ with P≪P₀, the inequality holds; equality iff p=p₀ μ-a.e.
   constants: []
   dependencies:
     earlier_book:
@@ -163,15 +161,13 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Express as nonnegativity and zero-characterisation of `InformationTheory.klDiv
-      P₀ P`, after aligning the book's orientation of the log-likelihood ratio.
+    sketch: Express the result as `-InformationTheory.klDiv P₀ P ≤ 0` in the extended-real setting. Use the printed hypothesis
+      `P ≪ P₀` to prove the Jensen normalisation `∫ (p/p₀) dP₀ = 1`; the zero characterisation gives equality only for `P=P₀`.
     blockers: []
   difficulty: substantial
   pass: core
-  issues_for_central_review:
-  - type: generality_or_orientation
-    page: 547
-    detail: Check the absolute-continuity direction in the prose against ∫log(p/p₀)dP₀.
+  issues_for_central_review: []
+  verification_status: verified_against_printed_page_547
 - id: ch7.def.npmle
   kind: definition
   book:
@@ -188,8 +184,7 @@ inventory:
     - The supremum is attained.
     - A measurable maximiser is selected when p̂ₙ is used probabilistically.
     implicit:
-    - Existence and measurability are not automatic and are proved separately in concrete
-      models.
+    - Existence and measurability are not automatic and are proved separately in concrete models.
   quantifier_order:
   - For each n and sample, choose p̂ₙ∈argmax_P ℓₙ.
   constants: []
@@ -216,8 +211,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Separate predicates `IsGreatest (ℓₙ '' P)` / `IsMaxOn ℓₙ P` from a measurable-selection
-      structure. Avoid an unproved global choice of measurable argmax.
+    sketch: Separate predicates `IsGreatest (ℓₙ '' P)` / `IsMaxOn ℓₙ P` from a measurable-selection structure. Avoid an unproved
+      global choice of measurable argmax.
     blockers: []
   difficulty: substantial
   pass: core
@@ -233,9 +228,8 @@ inventory:
     - (7.24)
     - (7.25)
   title: Midpoint densities and root-density class
-  statement: "For p∈P set p̄=(p+p₀)/2 and define the root-density class\n  P̄^{1/2}={√p̄\
-    \ : p∈P}.\nThe reference measure used in the entropy argument is μ₀ with dμ₀=p₀\
-    \ dμ."
+  statement: "For p∈P set p̄=(p+p₀)/2 and define the root-density class\n  P̄^{1/2}={√p̄ : p∈P}.\nThe reference measure used\
+    \ in the entropy argument is μ₀ with dμ₀=p₀ dμ."
   hypotheses:
     explicit:
     - p₀∈P.
@@ -268,8 +262,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Pointwise convex combination of density representatives and its square
-      root as an `L2(μ₀)` element.
+    sketch: Pointwise convex combination of density representatives and its square root as an `L2(μ₀)` element.
     blockers: []
   difficulty: routine
   pass: core
@@ -284,8 +277,7 @@ inventory:
     equations:
     - (7.26)
   title: Bracketing entropy integral
-  statement: "Define\n  J(P̄,δ)= max( ∫_0^δ √(log N_[ ](P̄^{1/2},L²(μ₀),ε)) dε, δ\
-    \ ),\nfor 0<δ≤1."
+  statement: "Define\n  J(P̄,δ)= max( ∫_0^δ √(log N_[ ](P̄^{1/2},L²(μ₀),ε)) dε, δ ),\nfor 0<δ≤1."
   hypotheses:
     explicit:
     - Bracketing numbers are defined for the root-density class in L²(μ₀).
@@ -318,8 +310,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A real/ENNReal integral of the square root of the logarithm of a bracketing
-      number. Brackets are pairs of measurable functions ordered a.e.
+    sketch: A real/ENNReal integral of the square root of the logarithm of a bracketing number. Brackets are pairs of measurable
+      functions ordered a.e.
     blockers: []
   difficulty: major-library
   pass: core
@@ -335,9 +327,9 @@ inventory:
     section: 7.2.1
     equations: []
   title: Hellinger rate for an unsieved NPMLE
-  statement: "Assume p₀∈P and p̂ₙ is an MLE. Let J(δ)≥J(P̄,δ) and assume J(δ)/δ² is\n\
-    nonincreasing on (0,1]. There exists c>0 such that, for every sequence δₙ with\n\
-    \  √n δₙ² ≥ c J(δₙ)  for every n,\nand every δ≥δₙ,\n  P₀^n(h(p̂ₙ,p₀)≥δ) ≤ c exp(-nδ²/c²)."
+  statement: "Assume p₀∈P and p̂ₙ is an MLE. Let J(δ)≥J(P̄,δ) and assume J(δ)/δ² is\nnonincreasing on (0,1]. There exists\
+    \ c>0 such that, for every sequence δₙ with\n  √n δₙ² ≥ c J(δₙ)  for every n,\nand every δ≥δₙ,\n  P₀^n(h(p̂ₙ,p₀)≥δ) ≤\
+    \ c exp(-nδ²/c²)."
   hypotheses:
     explicit:
     - p₀∈P.
@@ -345,8 +337,7 @@ inventory:
     - The entropy majorant and monotonicity condition.
     - δₙ∈(0,1] and δ≥δₙ.
     implicit:
-    - All empirical-process suprema used are measurable or interpreted through a measurable
-      version.
+    - All empirical-process suprema used are measurable or interpreted through a measurable version.
     - The root-density bracketing integral is finite at relevant radii.
   quantifier_order:
   - ∃ universal-for-the-model-proof c>0, ∀ admissible sequences δₙ, ∀ n, ∀ δ≥δₙ, bound.
@@ -380,11 +371,10 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
-      `OP` and `oP` predicates over the sequence of experiments.
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
 
-      The nonasymptotic statement should be formalised first as a tail inequality
-      on product measures.'
+      The nonasymptotic statement should be formalised first as a tail inequality on product measures.'
     blockers: []
   difficulty: major-library
   pass: core
@@ -405,8 +395,8 @@ inventory:
     - p₀∈P and p̂ₙ maximises ℓₙ over P.
     - The ratio is used on A={p₀>0}.
     implicit:
-    - The empirical integral is finite on the event where the MLE comparison is applied;
-      conventions at zeros are as in the text.
+    - The empirical integral is finite on the event where the MLE comparison is applied; conventions at zeros are as in the
+      text.
   quantifier_order:
   - For every realised sample and MLE satisfying (7.23).
   constants: []
@@ -437,8 +427,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A deterministic inequality for a fixed sample, using `EReal` log or a
-      positive-on-sample restriction.
+    sketch: A deterministic inequality for a fixed sample, using `EReal` log or a positive-on-sample restriction.
     blockers: []
   difficulty: substantial
   pass: core
@@ -452,9 +441,8 @@ inventory:
     section: 7.2.1
     equations: []
   title: Local bracketing variant
-  statement: "Replace the global root-density class by\n  P̄^{1/2}(δ)={√p̄ : p∈P,\
-    \ h(p̄,p₀)≤δ}\nand integrate bracketing entropy from δ²/2¹³ to δ. The conclusion\
-    \ of Theorem 7.2.1\nremains valid with a suitable majorant J*(P̄,δ)."
+  statement: "Replace the global root-density class by\n  P̄^{1/2}(δ)={√p̄ : p∈P, h(p̄,p₀)≤δ}\nand integrate bracketing entropy\
+    \ from δ²/2¹³ to δ. The conclusion of Theorem 7.2.1\nremains valid with a suitable majorant J*(P̄,δ)."
   hypotheses:
     explicit:
     - The local classes are bounded away from zero as required in the proof.
@@ -487,8 +475,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A parameterised local class and a variant of the same tail theorem; likely
-      defer until the global theorem exists.
+    sketch: A parameterised local class and a variant of the same tail theorem; likely defer until the global theorem exists.
     blockers: []
   difficulty: major-library
   pass: core
@@ -506,9 +493,8 @@ inventory:
     - (7.36)
     - (7.37)
   title: Sieved MLE and approximation setup
-  statement: "Let Pₙ be a sequence of density models and p̂ₙ maximise ℓₙ over Pₙ.\
-    \ Choose pₙ*∈Pₙ\nsatisfying p₀/pₙ*≤U² for a fixed U<∞. Define\n  P̄_{*,n}^{1/2}={√((p+pₙ*)/2):p∈Pₙ}\n\
-    and its bracketing entropy integral J*(δ)."
+  statement: "Let Pₙ be a sequence of density models and p̂ₙ maximise ℓₙ over Pₙ. Choose pₙ*∈Pₙ\nsatisfying p₀/pₙ*≤U² for\
+    \ a fixed U<∞. Define\n  P̄_{*,n}^{1/2}={√((p+pₙ*)/2):p∈Pₙ}\nand its bracketing entropy integral J*(δ)."
   hypotheses:
     explicit:
     - Each pₙ* is a density in Pₙ.
@@ -542,8 +528,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Sequences of submodels and estimators indexed by `n`; the density-ratio
-      bound is pointwise or a.e. as specified.
+    sketch: Sequences of submodels and estimators indexed by `n`; the density-ratio bound is pointwise or a.e. as specified.
     blockers: []
   difficulty: substantial
   pass: core
@@ -558,8 +543,8 @@ inventory:
     section: 7.2.1
     equations: []
   title: Hellinger rate for a sieve MLE
-  statement: "Under the sieve setup, let J dominate J* and let J(δ)/δ² be nonincreasing.\n\
-    If √n δₙ²≥cJ(δₙ) eventually, then\n  h(p̂ₙ,p₀)=O_{P₀}(δₙ+h(pₙ*,p₀))."
+  statement: "Under the sieve setup, let J dominate J* and let J(δ)/δ² be nonincreasing.\nIf √n δₙ²≥cJ(δₙ) eventually, then\n\
+    \  h(p̂ₙ,p₀)=O_{P₀}(δₙ+h(pₙ*,p₀))."
   hypotheses:
     explicit:
     - All hypotheses of (7.34)–(7.37).
@@ -594,11 +579,10 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
-      `OP` and `oP` predicates over the sequence of experiments.
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
 
-      First prove a corrected nonasymptotic tail bound with approximation error, then
-      derive `O_P`.'
+      First prove a corrected nonasymptotic tail bound with approximation error, then derive `O_P`.'
     blockers: []
   difficulty: major-library
   pass: core
