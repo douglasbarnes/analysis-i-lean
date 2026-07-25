@@ -1,0 +1,270 @@
+schema_version: '1.0'
+inventory:
+- id: ch5.eq.5_1
+  kind: operative_definition
+  book:
+    number: Equation (5.1)
+    pages:
+    - 389
+    section: '5.1'
+    equations:
+    - '5.1'
+  title: Equation (5.1)
+  statement: For i.i.d. X₁,…,Xₙ with density f on ℝ, a kernel K and h>0, define K_h(x)=h⁻¹K(x/h) and fₙ(x)=(Pₙ*K_h)(x)=n⁻¹∑ᵢK_h(x-Xᵢ)=(nh)⁻¹∑ᵢK((x-Xᵢ)/h).
+    Then E_f fₙ=K_h*f.
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - X₁,…,Xₙ are i.i.d. real random variables with common Lebesgue density f.
+    - K is bounded and Lebesgue integrable.
+    - ∫ℝ K(u)du=1.
+    - h=hₙ>0.
+    implicit:
+    - All displayed integrals and random functions are measurable.
+    - Pₙ=n⁻¹∑ᵢδ_{Xᵢ}.
+  quantifier_order:
+  - Fix n≥1.
+  - Fix f,K,h satisfying the hypotheses.
+  - For every x∈ℝ define fₙ(x).
+  constants:
+  - Bandwidth h.
+  - Kernel normalisation ∫K=1.
+  dependencies:
+    earlier_book:
+    - Chapter 1 empirical measure notation
+    - Section 4.1 approximate identities
+    chapter_local: []
+    later_book_uses:
+    - Theorems 5.1.5, 5.1.13, 5.1.15
+    - Section 5.3.2 deconvolution estimators
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      - Mathlib.Analysis.Fourier.Convolution
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates:
+      - kernel density estimator
+      - wavelet Besov Donsker deconvolution empirical process convolution
+      - convolution
+      - Besov
+      - empirical process
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Define a kernel rescaling, empirical measure and Bochner/Lebesgue convolution; define fₙ pointwise as
+      a finite sum and prove its expectation identity as a separate lemma.
+    blockers:
+    - A reusable density-estimator structure.
+    - Measurability and integrability of parameterised convolution.
+    - Expectation of finite sums of real-valued random functions.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch5.eq.5_2
+  kind: operative_definition
+  book:
+    number: Equation (5.2)
+    pages:
+    - 390
+    section: '5.1'
+    equations:
+    - '5.2'
+  title: Equation (5.2)
+  statement: For an orthonormal multiresolution analysis with scaling function φ and wavelet ψ, define K(x,y)=∑_{k∈ℤ}φ(x-k)φ(y-k),
+    K_j(x,y)=2^jK(2^jx,2^jy), and equivalently K_j(x,y)=K(x,y)+∑_{l=0}^{j-1}∑_{k∈ℤ}ψ_{lk}(x)ψ_{lk}(y).
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - (φ,ψ) generate an orthonormal multiresolution wavelet basis of L²(ℝ).
+    - j∈ℕ.
+    implicit:
+    - The series converge in the sense established in Chapter 4 and pointwise where used.
+    - ψ_{lk}(x)=2^{l/2}ψ(2^lx-k).
+  quantifier_order:
+  - For every j≥0 and x,y∈ℝ.
+  constants:
+  - Dyadic resolution j.
+  dependencies:
+    earlier_book:
+    - Section 4.2 multiresolution analyses and projection kernels
+    chapter_local: []
+    later_book_uses:
+    - Equation (5.3)
+    - Condition 5.1.1(b)
+    - All wavelet projection estimators in Chapter 5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates:
+      - kernel density estimator
+      - wavelet Besov Donsker deconvolution empirical process convolution
+      - convolution
+      - Besov
+      - empirical process
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Represent V_j as a closed subspace of L² and K_j as a chosen measurable reproducing kernel; the pointwise
+      infinite series requires a summability theorem from the wavelet library.
+    blockers:
+    - No complete orthonormal wavelet/MRA library in mathlib.
+    - Pointwise convergence of the reproducing-kernel series.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: ch5.eq.5_3
+  kind: operative_definition
+  book:
+    number: Equation (5.3)
+    pages:
+    - 390
+    section: '5.1'
+    equations:
+    - '5.3'
+  title: Equation (5.3)
+  statement: For a projection kernel K_{jₙ}, define the linear projection density estimator fₙ(x)=∫K_{jₙ}(x,y)dPₙ(y)=n⁻¹∑ᵢK_{jₙ}(x,Xᵢ).
+    It belongs to the approximation space V_{jₙ}.
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - K_j is a wavelet projection kernel as in (5.2), or one of the interval variants in (5.4).
+    - jₙ∈ℕ.
+    implicit:
+    - The kernel sections are Pₙ-integrable.
+    - Membership fₙ∈V_{jₙ} uses closure/finite-sum properties of the projection space.
+  quantifier_order:
+  - For every n≥1 and x in the underlying domain.
+  constants:
+  - Resolution jₙ.
+  dependencies:
+    earlier_book:
+    - Section 4.2 projection operators
+    chapter_local:
+    - ch5.eq.5_2
+    later_book_uses:
+    - Theorem 5.1.5 and all projection-estimator results
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.MeasureTheory.Group.Convolution
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates:
+      - kernel density estimator
+      - wavelet Besov Donsker deconvolution empirical process convolution
+      - convolution
+      - Besov
+      - empirical process
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Define the estimator as a finite average of kernel sections; package membership in V_j as a theorem.
+    blockers:
+    - Projection kernel infrastructure.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch5.eq.5_4
+  kind: operative_definition
+  book:
+    number: Equation (5.4)
+    pages:
+    - 390
+    section: '5.1'
+    equations:
+    - '5.4'
+  title: Equation (5.4)
+  statement: On [0,1] define K_{j,bc}(x,y)=∑_{k=0}^{2^j-1}φ^{bc}_{jk}(x)φ^{bc}_{jk}(y); on (0,1] define K_{j,per}(x,y)=∑_{k=0}^{2^j-1}φ^{per}_{jk}(x)φ^{per}_{jk}(y).
+    In either case fₙ is defined by (5.3).
+  source_fidelity:
+    transcription_status: verified
+    author_corrected_reading: null
+  hypotheses:
+    explicit:
+    - A boundary-corrected or periodised orthonormal wavelet system from Chapter 4 is fixed.
+    - j is large enough for the boundary construction when applicable.
+    implicit:
+    - The finite systems span the corresponding V_j.
+    - Interval endpoint conventions follow Chapter 4.
+  quantifier_order:
+  - For every admissible j and x,y in the interval domain.
+  constants:
+  - Boundary construction integer N where applicable.
+  dependencies:
+    earlier_book:
+    - Sections 4.2.2 and 4.3.5
+    chapter_local: []
+    later_book_uses:
+    - Condition 5.1.1(c),(d)
+    - Proposition 5.1.2
+    - Theorems 5.1.5 and 5.2.10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Analysis.Distribution.Sobolev
+      - Mathlib.Analysis.FunctionalSpaces.SobolevInequality
+      exact_equivalent: false
+    repository:
+      status: no exact declaration found in targeted search
+      candidates:
+      - kernel density estimator
+      - wavelet Besov Donsker deconvolution empirical process convolution
+      - convolution
+      - Besov
+      - empirical process
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Finite sums over Fin (2^j), with separate structures for boundary-corrected and periodised bases.
+    blockers:
+    - Boundary-corrected wavelet basis library.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
