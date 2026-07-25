@@ -30,7 +30,7 @@ def ContinuousPathSpace := {f : ℝ≥0 → ℝ // Continuous f}
 /-- Source 57: a finite-dimensional distribution of a process. -/
 def FiniteDimensionalDistribution {Ω : Type u} (X : ContinuousProcess Ω)
     (times : List ℝ≥0) : Ω → (Fin times.length → ℝ) :=
-  fun ω i ↦ X (times.get i)
+  fun ω i ↦ X (times.get i) ω
 
 /-- Source 58: Kolmogorov's continuity criterion. -/
 structure KolmogorovContinuityCriterion {Ω : Type u} (X : ContinuousProcess Ω) where
@@ -52,7 +52,7 @@ structure ContinuousFiltration (Ω : Type u) where
 namespace SigmaField
 
 /-- The Mathlib measurable space carried by a course-facing sigma-field. -/
-def toMeasurableSpace {Ω : Type u} (𝒢 : SigmaField Ω) : MeasurableSpace Ω where
+@[reducible] def toMeasurableSpace {Ω : Type u} (𝒢 : SigmaField Ω) : MeasurableSpace Ω where
   MeasurableSet' := fun A ↦ A ∈ 𝒢.sets
   measurableSet_empty := 𝒢.empty_mem
   measurableSet_compl := 𝒢.compl_mem
@@ -106,8 +106,9 @@ theorem rightContinuousFiltration_apply {Ω : Type u} (ℱ : ContinuousFiltratio
 
 /-- The canonical right continuation is right-continuous. -/
 instance rightContinuousFiltration_isRightContinuous {Ω : Type u} (ℱ : ContinuousFiltration Ω) :
-    Filtration.IsRightContinuous (rightContinuousFiltration ℱ) :=
-  inferInstance
+    Filtration.IsRightContinuous (rightContinuousFiltration ℱ) := by
+  unfold rightContinuousFiltration
+  infer_instance
 
 /-- Source 67: completeness and right-continuity (the usual conditions). -/
 structure UsualConditions {Ω : Type u} (ℱ : ContinuousFiltration Ω) where
