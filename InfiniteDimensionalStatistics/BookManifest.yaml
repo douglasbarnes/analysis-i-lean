@@ -62,7 +62,22 @@ chapters:
     printed_pages: {start: 15, end: 108}
     specification: InfiniteDimensionalStatistics/Spec/Chapter02.yaml
     audit_step: P1.2
-    status: repaired_pending_full_eight_chapter_validation
+    status: pass_with_central_review_flags
+    package_record:
+      inventory_entries: 188
+      declarations: 126
+      selected_exercises: 62
+      dependency_edges: 257
+      dag_nodes: 188
+      dag_acyclic: true
+      source_starred_entries: 0
+      pass_semantics_normalised: true
+      missing_numbered_labels: []
+      duplicate_identifiers: []
+      unresolved_local_dependency_references: []
+      chapter_local_strict_schema: pass
+      central_review_entry_count: 29
+      central_review_issue_count: 34
     repair_record:
       - Source-based pass semantics restored; Chapter 2 has zero starred entries.
       - Definition 2.1.2 transcribed as the countable-separant closure condition.
@@ -172,14 +187,14 @@ phase_gates:
       - 5
       - 6
     present_but_pending_acceptance:
-      - 2
       - 3
     accepted:
       - 1
+      - 2
       - 4
       - 7
       - 8
-    status: blocked_on_two_missing_and_two_pending_acceptance_chapters
+    status: blocked_on_two_missing_and_one_pending_acceptance_chapter
   P2:
     status: blocked
     unblock_condition: P0 clean build certified and every P1 chapter specification accepted by the common validator.
