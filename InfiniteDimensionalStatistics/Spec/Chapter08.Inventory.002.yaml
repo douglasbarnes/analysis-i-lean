@@ -1,7 +1,7 @@
 schema_version: '1.0'
 chapter: 8
 chunk: 2
-chunk_count: 29
+chunk_count: 16
 inventory:
 - id: ch8.test_statistic_8_1_1
   kind: definition
