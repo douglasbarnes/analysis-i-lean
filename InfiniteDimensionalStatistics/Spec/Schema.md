@@ -51,6 +51,37 @@ inventory_files:
 
 Each listed fragment must be YAML with a top-level `inventory` list. The loader concatenates the fragments in listed order. Fragmentation is permitted only to improve reviewability; identifiers, dependency references and completeness checks remain chapter-global. When an inventory index is used, its completeness metadata is authoritative. When a descriptor directly lists inventory fragments through `files`, descriptor-level completeness metadata is authoritative.
 
+## Explicit raw-text transport repairs
+
+A legacy assembled inventory may be retained byte-for-byte as a `.txt` blob when rewriting the entire artifact would obscure a small transport-only YAML correction. The corresponding inventory component remains valid YAML and declares every permitted line replacement explicitly:
+
+```yaml
+schema_version: '1.0-raw-text-repair'
+raw_text_inventory:
+  file: Chapter04.Inventory.raw.txt
+  source_blob_sha: 0123456789abcdef0123456789abcdef01234567
+  rationale: >-
+    Preserve the original assembled inventory while applying one explicit YAML
+    transport repair before parsing.
+  line_replacements:
+  - line: 3320
+    expected: "  statement: original plain scalar containing an unquoted colon"
+    replacement:
+    - "  statement: >-"
+    - "    original plain scalar containing an unquoted colon"
+```
+
+This mechanism is exceptional and subject to the following rules:
+
+- the raw artifact must use a non-YAML extension;
+- `source_blob_sha` is the Git blob SHA of the retained raw bytes and is verified by the loader;
+- each original line number is unique and is checked against the exact `expected` text;
+- replacements are applied in descending line order, so line numbers always refer to the original blob;
+- every replacement is limited to YAML transport syntax and must not change mathematical content, metadata or source-fidelity status;
+- the repaired document must still satisfy every ordinary inventory, dependency, coverage and source-blocker check.
+
+The wrapper is the canonical YAML component. The raw text is preserved only as auditable transport provenance.
+
 ## Source metadata
 
 ```yaml
