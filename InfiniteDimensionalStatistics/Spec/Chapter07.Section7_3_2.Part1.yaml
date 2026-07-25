@@ -1,0 +1,285 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.3.2
+fragment_part: 1
+inventory:
+- id: ch7.example.releasedBrownianPrior
+  kind: operative_example
+  book:
+    number: unnumbered
+    pages:
+    - 579
+    - 580
+    section: 7.3.2
+    equations:
+    - (7.105)
+  title: Released Brownian-motion prior
+  statement: "For a Brownian motion released at zero, W₀=g+W with an independent finite-dimensional\n\
+    release term, and truth f₀∈B^{1/2}_{22}, Theorem 7.3.6 gives white-noise posterior\n\
+    L² contraction at εₙ≍n^{-1/4}:\n  Π(||f-f₀||₂>M n^{-1/4}|Y)→0."
+  hypotheses:
+    explicit:
+    - Released Brownian prior as defined around (2.82).
+    - f₀∈B^{1/2}_{22}.
+    - White-noise observation.
+    implicit:
+    - Small-ball and RKHS approximation estimates from Chapter 2.
+  quantifier_order:
+  - For M sufficiently large.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Proposition 2.6.19
+    - Corollary 2.6.30
+    - wavelet approximation
+    chapter_local:
+    - ch7.thm.7.3.6
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: An application combining Brownian Gaussian-measure/RKHS small balls and
+      the abstract contraction theorem.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.thm.7.3.7
+  kind: theorem
+  book:
+    number: Theorem 7.3.7
+    pages:
+    - 580
+    - 581
+    section: 7.3.2
+    equations: []
+  title: Integrated-Brownian L² contraction rates
+  statement: 'Let W_k be k-times integrated Brownian motion released at zero, k∈ℕ₀,
+    and set
+
+    α=k+1/2. If f₀∈B^α_{22}, then in Gaussian white noise the posterior based on W_k
+
+    contracts in L² at the minimax rate n^{-α/(2α+1)}.'
+  hypotheses:
+    explicit:
+    - k∈ℕ₀; α=k+1/2.
+    - Truth f₀∈B^α_{22}.
+    - Released integrated-Brownian prior.
+    implicit:
+    - The release term spans the polynomial null space required by the RKHS.
+  quantifier_order:
+  - For M sufficiently large, posterior mass outside M n^{-α/(2α+1)} tends to zero.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Integrated Brownian RKHS and small-ball results in §2.6.3
+    chapter_local:
+    - ch7.thm.7.3.6
+    - ch7.example.releasedBrownianPrior
+    - ch7.def.posteriorContractionRate
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A model-specific application requiring formal RKHS identification and
+      small-ball estimates for integrated Brownian motion.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.def.normalisedExponentialDensity
+  kind: definition
+  book:
+    number: (7.107)
+    pages:
+    - 581
+    section: 7.3.2
+    equations:
+    - (7.107)
+  title: Normalised exponential density map
+  statement: For measurable w with 0<∫e^w dμ<∞, define p_w=e^w/∫e^w dμ.
+  hypotheses:
+    explicit:
+    - w measurable.
+    - The normalising integral is finite and strictly positive.
+    implicit:
+    - p_w is defined only up to μ-a.e. equality and is a probability density.
+  quantifier_order:
+  - ∀ admissible w.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A Gibbs density using `Measure.withDensity`; normalisation should use
+      a finite positive real integral.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: ch7.lemma.7.3.8
+  kind: lemma
+  book:
+    number: Lemma 7.3.8
+    pages:
+    - 581
+    section: 7.3.2
+    equations: []
+  title: Uniform-norm control of exponential-density distances
+  statement: 'For measurable v,w and p_v,p_w as in (7.107), with a=||v-w||∞:
+
+    (a) h(p_v,p_w) ≤ a e^{a/2};
+
+    (b) -∫ log(p_v/p_w) p_w dμ ≤ a² e^a(1+a);
+
+    (c) ∫ [log(p_v/p_w)]² p_w dμ ≤ a² e^a(1+a)².'
+  hypotheses:
+    explicit:
+    - v,w are essentially bounded relative to one another so a<∞.
+    - Both normalising constants are finite and positive.
+    implicit:
+    - The source OCR is poor; constants and powers have been reconstructed from the
+      printed formula and must be visually checked before implementation.
+  quantifier_order:
+  - ∀ admissible v,w.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.normalisedExponentialDensity
+    - ch7.def.hellinger
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ex7.3.3
+    contains_omitted_steps: true
+    comment: entire proof
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Pointwise exponential/log inequalities plus integral normalisation bounds.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - type: source_legibility
+    page: 581
+    detail: Visually verify the exact exponents and `(1+a)` powers in parts (b),(c)
+      against the uploaded PDF before formalisation.
+- id: ch7.thm.7.3.9
+  kind: theorem
+  book:
+    number: Theorem 7.3.9
+    pages:
+    - 581
+    - 582
+    section: 7.3.2
+    equations: []
+  title: Hellinger contraction for log-density integrated-Brownian priors
+  statement: "Let Π be the law of p_{W_k} with W_k a k-times integrated Brownian motion\
+    \ released\nat zero, α=k+1/2. If X_i are i.i.d. from p₀ and p₀ and w₀=log p₀ belong\
+    \ to\nB^α_{∞∞}([0,1]), then for M sufficiently large,\n  Π(p:h(p,p₀)>M n^{-α/(2α+1)}\
+    \ | X₁,…,Xₙ)→0\nin P₀^n-probability."
+  hypotheses:
+    explicit:
+    - k∈ℕ₀; α=k+1/2.
+    - p₀ is a density and both p₀,log p₀ have the stated Hölder/Besov regularity.
+    implicit:
+    - The regularity ensures p₀ is bounded and bounded away from zero.
+    - The prior is pushed forward through w↦p_w.
+  quantifier_order:
+  - For M sufficiently large.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Gaussian small-ball/isoperimetric results
+    - Corollary 4.3.38
+    chapter_local:
+    - ch7.thm.7.3.3
+    - ch7.lemma.7.3.8
+    - ch7.def.normalisedExponentialDensity
+    - ch7.def.posteriorContractionRate
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Pushforward of a Gaussian prior through the normalised exponential map,
+      then verify generic contraction hypotheses.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
