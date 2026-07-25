@@ -1,0 +1,385 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.3'
+fragment_part: 3
+inventory:
+- id: exercise-2-3-5
+  kind: exercise
+  book:
+    number: Exercise 2.3.5
+    pages:
+    - 47
+    section: '2.3'
+    equations: []
+  title: Completeness of the ψ₂ Orlicz space
+  statement: Using convexity of exp(x²)−1, prove that ||·||_{ψ₂} is a pseudonorm on the square-exponentially integrable random
+    variables and that the quotient by a.s. equality is complete.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - definition-unnumbered-2-3-psi2
+    later_book_uses:
+    - definition-unnumbered-2-3-psi2
+    - All ψ₂-valued chaining statements
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: supporting functional-analysis infrastructure only
+      candidates:
+      - ContinuousLinearMap
+      - StrongDual
+      - HilbertSpace
+      - MeasureTheory.BochnerIntegral
+      - MeasureTheory.Integrable
+      - Metric.IsCompact
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: functional_analysis
+  likely_lean_representation:
+    sketch: Formalise the Luxemburg norm and apply general Orlicz-space completeness or prove directly.
+    blockers:
+    - No exact declaration matching the book statement was located.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - All ψ₂-valued chaining statements
+- id: exercise-2-3-6
+  kind: exercise
+  book:
+    number: Exercise 2.3.6
+    pages:
+    - 47
+    section: '2.3'
+    equations: []
+  title: Separable versions of sub-Gaussian processes
+  statement: 'Prove the analogue of Proposition 2.1.12 for sub-Gaussian processes: a d-separable index set yields a separable
+    version, with finite-dimensional laws preserved.'
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-1-12
+    chapter_local_dependents:
+    - theorem-2-3-7
+    later_book_uses:
+    - theorem-2-3-7
+    - Theorem 2.3.7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Construct a version by limits along a countable d-dense subset.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Theorem 2.3.7
+- id: exercise-2-3-7
+  kind: exercise
+  book:
+    number: Exercise 2.3.7
+    pages:
+    - 47
+    section: '2.3'
+    equations: []
+  title: Path-law characterisation of sample continuity
+  statement: For a separable process X on (T,d), prove that X is sample continuous iff there is a Borel probability measure
+    on C_u(T,d) whose finite-dimensional marginals equal those of X.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-1-5
+    chapter_local_dependents: []
+    later_book_uses:
+    - Process law/path-space interfaces
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: Push forward a continuous version and reconstruct a version from coordinate evaluations.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Process law/path-space interfaces
+- id: exercise-2-3-8
+  kind: exercise
+  book:
+    number: Exercise 2.3.8
+    pages:
+    - 48
+    section: '2.3'
+    equations: []
+  title: Infinite maximal ψ₂ inequality
+  statement: Prove that a universal K exists such that ||sup_k |ξ_k|/ψ₂^{-1}(k)||_{ψ₂}≤K sup_k||ξ_k||_{ψ₂}; for normal ξ_k
+    replace the right side by sup_k||ξ_k||_{L²}.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - One universal K; normal refinement.
+  constants:
+  - One universal K; normal refinement.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-3-3
+    chapter_local_dependents: []
+    later_book_uses:
+    - Countable Gaussian maxima and series
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Union bound with logarithmic weights and square-exponential integration.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Countable Gaussian maxima and series
+- id: exercise-2-3-9
+  kind: exercise
+  book:
+    number: Exercise 2.3.9
+    pages:
+    - 48
+    section: '2.3'
+    equations: []
+  title: Maximum of Gaussian-process sup norms
+  statement: For separable centred Gaussian processes X_i, i≤n, with E||X_i||∞<∞, variances σ_i² and medians M_i, prove E
+    max_{i≤n}||X_i||∞ ≤ max_i E||X_i||∞ +(8√log n+√(2/π)) max_i σ_i.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary-2-19
+    - lemma-2-3-2
+    - lemma-2-3-3
+    - theorem-2-2-7
+    chapter_local_dependents:
+    - exercise-2-3-10
+    later_book_uses:
+    - exercise-2-3-10
+    - Exercise 2.3.10
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial Gaussian and exponential-integrability infrastructure; exact inequality not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - Mathlib.Probability.Distributions.Gaussian.Fernique
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: concentration
+  likely_lean_representation:
+    sketch: Apply the ψ₂ finite-maximum inequality to centred norm deviations.
+    blockers:
+    - Constants and supremum/median formulations must be formalised explicitly.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review:
+  - The OCR compresses radicals; the displayed constant is transcribed as `(8√log n + √(2/π))`. Verify typography in the PDF.
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Exercise 2.3.10
+- id: exercise-2-3-10
+  kind: exercise
+  book:
+    number: Exercise 2.3.10
+    pages:
+    - 48
+    section: '2.3'
+    equations: []
+  title: Local Gaussian modulus inequality
+  statement: There is a universal K such that, if d_Y²(s,t)≤d²(s,t) and (T,d) is totally bounded, then for every δ>0, E sup_{d(s,t)<δ}|Y(t)−Y(s)|
+    is at most K times [sup_t E sup_{d(s,t)<δ}|Y(t)−Y(s)| + δ√log N(T,d,δ)].
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-3-9
+    chapter_local_dependents:
+    - exercise-2-4-12
+    - exercise-2-4-9
+    later_book_uses:
+    - exercise-2-4-9
+    - exercise-2-4-12
+    - Exercises 2.4.9 and 2.4.12
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: cited_by_later_result; required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Cover T by δ-balls; compare local increment processes centred at net points and control the net maximum.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - cited_by_later_result
+  - required_reusable_lemma
+  used_by:
+  - Exercises 2.4.9 and 2.4.12
