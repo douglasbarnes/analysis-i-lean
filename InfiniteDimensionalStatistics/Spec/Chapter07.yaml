@@ -1,29 +1,45 @@
-schema_version: '1.0-package'
+schema_version: 1.0-package
 source:
   title: Mathematical Foundations of Infinite-Dimensional Statistical Models
-  authors: [Evarist Giné, Richard Nickl]
+  authors:
+  - Evarist Giné
+  - Richard Nickl
   edition: First edition (2016)
   uploaded_file: FULLPDF.pdf
   chapter: 7
   chapter_title: Likelihood-Based Procedures
-  book_pages: {start: 541, end: 606}
+  book_pages:
+    start: 541
+    end: 606
 purpose: Declaration-level specification only; this package contains no Lean proofs.
 specification_policy:
-  statement_fidelity: Preserve the printed statement and apply only identified official errata. Suspected typographical, measurability, normalisation and generality issues remain explicitly flagged.
+  statement_fidelity: Preserve the printed statement and apply only identified official errata. Suspected typographical, measurability,
+    normalisation and generality issues remain explicitly flagged.
   pass_semantics:
     core: All unstarred Chapter 7 main-text declarations and operative examples, irrespective of difficulty.
     starred: Only declarations explicitly starred by the book; Chapter 7 contains none.
     exercise: Selected exercises completing omitted proofs, cited later, or establishing reusable lemmas.
-  difficulty_values: [routine, substantial, major-library, research-level]
+  difficulty_values:
+  - routine
+  - substantial
+  - major-library
+  - research-level
 summary:
   inventory_entries: 106
   declarations: 88
   selected_exercises: 18
-  by_pass: {core: 88, starred: 0, exercise: 18}
-  by_difficulty: {routine: 10, substantial: 23, major-library: 37, research-level: 36}
-  central_review_flags: 22
+  by_pass:
+    core: 88
+    starred: 0
+    exercise: 18
+  by_difficulty:
+    routine: 11
+    substantial: 23
+    major-library: 36
+    research-level: 36
+  central_review_flags: 15
   dag_nodes: 106
-  dag_edges: 233
+  dag_edges: 207
 package:
   declaration_inventory:
     files:
@@ -57,20 +73,23 @@ package:
     file: Chapter07.DependencyDAG.yaml
     key: chapter_local_dependency_dag
     node_count: 106
-    edge_count: 233
+    edge_count: 207
     acyclic: true
 completeness_check:
   missing_numbered_labels: []
   duplicate_ids: []
   all_entries_have_required_fields: true
   exercise_selection_complete: true
-  exercise_source_verification_caveat: Exercises 7.3.1-7.3.8 were reconstructed from explicit main-text cross-references and remain individually flagged for page-image verification.
+  exercise_source_verification: Exercises 7.3.1–7.3.8 were verified against the printed exercise block on pp. 602–603.
   unresolved_source_items:
   - Exact constants and typography in Lemma 7.3.8 require visual confirmation.
-  - Exact auxiliary construction and conditions in Corollary 7.3.24 require visual confirmation.
+  central_review_items:
+  - Corollary 7.3.24 preserves the printed C^α truth condition pending review against the C^γ prior/constraint notation.
+  - Corollary 7.3.24 follows the displayed diameter of C̄_n while flagging the surrounding prose reference to C_n.
 validation:
   chapter_local_strict_schema: pass
   unique_identifiers: true
+  unique_dependency_edges: true
   valid_pass_values: true
   valid_difficulty_values: true
   valid_dependency_references: true
