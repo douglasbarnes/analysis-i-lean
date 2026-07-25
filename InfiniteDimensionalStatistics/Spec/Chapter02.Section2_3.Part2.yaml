@@ -1,0 +1,510 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.3'
+fragment_part: 2
+inventory:
+- id: definition-unnumbered-2-3-packing
+  kind: definition
+  book:
+    number: unnumbered-2.3-packing
+    pages:
+    - 41
+    section: '2.3'
+    equations: []
+  title: Packing number
+  statement: D(T,d,ε) is the largest cardinality of an ε-separated subset; N(T,d,ε)≤D(T,d,ε)≤N(T,d,ε/2).
+  hypotheses:
+    explicit:
+    - ε>0.
+    implicit: []
+  quantifier_order:
+  - Exact radii ε and ε/2.
+  constants:
+  - Exact radii ε and ε/2.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-unnumbered-2-3-covering
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: A supremum of finite cardinalities of pairwise-separated subsets, plus standard packing-covering inequalities.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-3-6
+  kind: theorem
+  book:
+    number: 2.3.6
+    pages:
+    - 41
+    section: '2.3'
+    equations: []
+  title: Finite chaining entropy bounds
+  statement: For a finite S⊆T, t₀∈S, and a process sub-Gaussian relative to d, E max_{t∈S}|X(t)|≤E|X(t₀)|+4√2∫₀^{D/2}√(log(2N(T,d,ε)))dε,
+    where D=diam(T); moreover the expected modulus over pairs in S with d(s,t)≤δ is at most (16√2+2)∫₀^δ√(log(2N(T,d,ε)))dε.
+  hypotheses:
+    explicit:
+    - S finite nonempty.
+    - X sub-Gaussian relative to d.
+    - The entropy integrals are interpreted as extended integrals.
+    - δ<diam(T) for the second display.
+    implicit: []
+  quantifier_order:
+  - 4√2; 16√2+2; upper limits D/2 and δ; log(2N).
+  constants:
+  - 4√2; 16√2+2; upper limits D/2 and δ; log(2N).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-3-5
+    - definition-unnumbered-2-3-covering
+    - lemma-2-3-4
+    chapter_local_dependents:
+    - corollary-2-61
+    - exercise-2-3-1
+    - exercise-2-3-3
+    - exercise-2-3-4
+    - theorem-2-3-7
+    - theorem-2-3-8
+    later_book_uses:
+    - theorem-2-3-7
+    - theorem-2-3-8
+    - corollary-2-61
+    - exercise-2-3-1
+    - exercise-2-3-3
+    - exercise-2-3-4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Dyadic nets `T_k`, nearest-point maps, telescoping increments, finite maximum bounds, and a Riemann/Lebesgue entropy
+      integral.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-3-7
+  kind: theorem
+  book:
+    number: 2.3.7
+    pages:
+    - 43
+    section: '2.3'
+    equations: []
+  title: Dudley entropy condition for bounded continuous versions
+  statement: If (T,d) is totally bounded/separable as induced by the finite entropy condition and ∫₀^{diam(T)}√(log N(T,d,ε))dε<∞,
+    then every separable version of a d-sub-Gaussian process has bounded uniformly d-continuous sample paths; the theorem
+    also gives the displayed expectation and modulus bounds obtained by passing from finite subsets.
+  hypotheses:
+    explicit:
+    - X sub-Gaussian relative to d.
+    - Entropy integral finite.
+    - A separable version is chosen for pathwise conclusions.
+    implicit:
+    - The theorem's exact upper limit and factor 2 inside the logarithm follow the displays preceding it.
+  quantifier_order:
+  - Universal constants inherited from Theorem 2.3.6.
+  constants:
+  - Universal constants inherited from Theorem 2.3.6.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - exercise-2-3-6
+    - proposition-2-1-12
+    - theorem-2-3-6
+    chapter_local_dependents:
+    - exercise-2-3-2
+    - theorem-2-3-8
+    - theorem-2-7-5
+    later_book_uses:
+    - theorem-2-3-8
+    - theorem-2-7-5
+    - exercise-2-3-2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Approximate T by increasing finite dense sets; use monotone convergence and Borel–Cantelli/expectation control
+      for uniform continuity.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: theorem-2-3-8
+  kind: theorem
+  book:
+    number: 2.3.8
+    pages:
+    - 45
+    section: '2.3'
+    equations: []
+  title: Dudley modulus-of-continuity theorem
+  statement: Under the entropy-integrability hypotheses, a separable version satisfies E sup_{s≠t}|X(t)−X(s)| / ∫₀^{d(s,t)}√(log
+    N(T,d,ε))dε <∞, with 0/0:=0, and hence the corresponding almost-sure modulus bound.
+  hypotheses:
+    explicit:
+    - X sub-Gaussian and separable.
+    - The entropy integral is finite at the relevant scales.
+    implicit: []
+  quantifier_order:
+  - A universal finite bound; denominator exactly the local entropy integral.
+  constants:
+  - A universal finite bound; denominator exactly the local entropy integral.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-3-6
+    - theorem-2-3-7
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Normalise increments by a deterministic modulus function and apply multiscale chaining on annuli.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: exercise-2-3-1
+  kind: exercise
+  book:
+    number: Exercise 2.3.1
+    pages:
+    - 47
+    section: '2.3'
+    equations: []
+  title: ψ₂ Dudley bounds
+  statement: 'Replace the expectation maximal inequality in Theorem 2.3.6 by Lemma 2.3.3 to prove the displayed ψ₂ bounds:
+    ||sup_t|X(t)||_{ψ₂}≤||X(t₀)||_{ψ₂}+16√6∫₀ᴰ√log N(T,d,ε)dε and ||sup_{d(s,t)≤δ}|X(t)−X(s)||_{ψ₂}≤128√3∫₀^δ√log N(T,d,ε)dε;
+    deduce Lp analogues.'
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order:
+  - Exact constants 16√6 and 128√3.
+  constants:
+  - Exact constants 16√6 and 128√3.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-3-3
+    - theorem-2-3-6
+    chapter_local_dependents: []
+    later_book_uses:
+    - Orlicz-norm chaining and later empirical-process bounds
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Repeat the chaining telescoping proof in the Orlicz norm.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Orlicz-norm chaining and later empirical-process bounds
+- id: exercise-2-3-2
+  kind: exercise
+  book:
+    number: Exercise 2.3.2
+    pages:
+    - 47
+    section: '2.3'
+    equations: []
+  title: Existence and modulus of Brownian motion
+  statement: Construct Brownian motion W on [0,1] and prove sup_{s≠t}|W(t)−W(s)|/√(|t−s||log|t−s||)<∞ almost surely.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-1-10
+    - theorem-2-3-7
+    chapter_local_dependents:
+    - example-2-6-7
+    - theorem-2-6-26
+    later_book_uses:
+    - example-2-6-7
+    - theorem-2-6-26
+    - Section 2.6 Brownian RKHS and small-ball examples
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Construct from covariance min(s,t), obtain a continuous version by Dudley, then prove the logarithmic modulus.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Section 2.6 Brownian RKHS and small-ball examples
+- id: exercise-2-3-3
+  kind: exercise
+  book:
+    number: Exercise 2.3.3
+    pages:
+    - 47
+    section: '2.3'
+    equations: []
+  title: Entropy proof of a Rademacher empirical CDF bound
+  statement: For real X_i and independent Rademacher ε_i, bound E sup_t |n^{-1/2}∑_{i=1}^n ε_i 1_{X_i≤t}| by the entropy integral
+    and deduce E sup_t |n^{-1}∑ ε_i1_{X_i≤t}|→0.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem-2-3-6
+    chapter_local_dependents: []
+    later_book_uses:
+    - Chapter 3 empirical-process development
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Condition on X_i, quotient ℝ by the empirical pseudometric, and use N≤n+1.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Chapter 3 empirical-process development
+- id: exercise-2-3-4
+  kind: exercise
+  book:
+    number: Exercise 2.3.4
+    pages:
+    - 47
+    section: '2.3'
+    equations: []
+  title: Local increment chaining via a product index
+  statement: Give the alternate proof of inequality (2.39) by indexing increments on V={(s,t):d(s,t)≤δ}, using ρ((s,t),(s',t'))=||[X(t)−X(s)]−[X(t')−X(s')]||_{ψ₂},
+    and the stated diameter and covering estimates.
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: []
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma-2-3-1
+    - theorem-2-3-6
+    chapter_local_dependents: []
+    later_book_uses:
+    - Local modulus estimates
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: required_reusable_lemma'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact generic-chaining or Dudley/Sudakov declaration located
+      candidates:
+      - Finite
+      - Set.Finite
+      - Metric
+      - Bornology
+      - MeasureTheory.Integral
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: entropy_chaining
+  likely_lean_representation:
+    sketch: Apply the finite entropy bound to the increment process on V.
+    blockers:
+    - Covering-number, entropy-integral and chaining APIs appear to require a new library layer.
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - required_reusable_lemma
+  used_by:
+  - Local modulus estimates
