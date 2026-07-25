@@ -13,8 +13,8 @@ inventory:
     equations:
     - (7.52)
   title: Periodic Sobolev wavelet norm
-  statement: For t≥0 define the periodic Sobolev norm by the weighted square sum of
-    periodic wavelet coefficients, equivalent to the H^t norm used in Chapter 4.
+  statement: For t≥0 define the periodic Sobolev norm by the weighted square sum of periodic wavelet coefficients, equivalent
+    to the H^t norm used in Chapter 4.
   hypotheses:
     explicit:
     - A sufficiently regular periodised orthonormal wavelet basis is fixed.
@@ -47,8 +47,7 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A weighted `ℓ²` coefficient space with an isometric wavelet transform;
-      this is a major custom function-space library.
+    sketch: A weighted `ℓ²` coefficient space with an isometric wavelet transform; this is a major custom function-space library.
     blockers: []
   difficulty: major-library
   pass: core
@@ -66,8 +65,7 @@ inventory:
   title: Sobolev-ball density model and MLE
   statement: 'For t>1/2 and D>1 define P(t,D) as the continuous nonnegative probability
 
-    densities p on [0,1] with ||p||_{H^t}≤D. Define p̂ₙ as a maximiser of ℓₙ over
-    P(t,D).'
+    densities p on [0,1] with ||p||_{H^t}≤D. Define p̂ₙ as a maximiser of ℓₙ over P(t,D).'
   hypotheses:
     explicit:
     - t>1/2.
@@ -104,8 +102,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: A subtype of continuous functions with positivity, unit integral, and
-      Sobolev norm bound; the estimator is an `argmax` witness.
+    sketch: A subtype of continuous functions with positivity, unit integral, and Sobolev norm bound; the estimator is an
+      `argmax` witness.
     blockers: []
   difficulty: major-library
   pass: core
@@ -120,18 +118,22 @@ inventory:
     section: 7.2.3
     equations: []
   title: Compactness and existence of the Sobolev-ball MLE
-  statement: "For t>1/2 and D>1:\n(a) P(t,D) is compact in C([0,1]) with the uniform\
-    \ norm;\n(b) ℓₙ:P(t,D)→[-∞,∞) is upper semicontinuous (the printed text states\
-    \ continuity\n    in the extended-real topology) for each sample;\n(c) a maximiser\
-    \ exists and a Borel-measurable maximiser p̂ₙ can be selected."
+  statement: 'For t>1/2 and D>1:
+
+    (a) P(t,D) is compact in C([0,1]) with the uniform norm;
+
+    (b) for every fixed sample, ℓₙ:P(t,D)→[-∞,∞) is continuous when [-∞,∞) has its extended-real order topology, and hence
+    is upper semicontinuous;
+
+    (c) a maximiser exists and a Borel-measurable maximiser p̂ₙ can be selected.'
   hypotheses:
     explicit:
     - The model of (7.53).
     - Fixed finite sample.
     implicit:
-    - Part (b)'s exact continuity notion at zeros uses the topology on the extended
-      real line.
-    - Part (c) uses a measurable maximum theorem.
+    - With log 0=-∞, the map log:[0,∞)→[-∞,∞) is continuous for the extended-real order topology; finite sums of these evaluation
+      terms give the printed continuity assertion.
+    - Part (c) uses the measurable maximum theorem proved in Exercise 7.2.3.
   quantifier_order:
   - ∀ n and samples, existence; ∃ measurable selector as a function of the sample.
   constants: []
@@ -161,17 +163,13 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Compact subtype in `C([0,1],ℝ)` plus an upper-semicontinuous extended-real
-      objective; measurable argmax selection likely needs a new theorem.
+    sketch: Use the compact density subtype in `C([0,1],ℝ)`. Represent log-likelihood in an extended-real type whose order
+      topology contains -∞, prove continuity of the finite sum of log-evaluations, and invoke the measurable argmax theorem.
     blockers: []
   difficulty: major-library
   pass: core
-  issues_for_central_review:
-  - type: statement_precision
-    page: 556
-    detail: Verify whether the book's 'continuous' assertion for extended-real log-likelihood
-      is literally continuous or upper semicontinuous at densities vanishing at sample
-      points.
+  issues_for_central_review: []
+  verification_status: verified_against_print_with_extended_real_topology_explicit
 - id: ch7.def.sobolevSieveMLE
   kind: definition
   book:
@@ -217,8 +215,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: Intersection of the density model with a finite-dimensional wavelet span;
-      optimisation over a compact finite-dimensional subtype.
+    sketch: Intersection of the density model with a finite-dimensional wavelet span; optimisation over a compact finite-dimensional
+      subtype.
     blockers: []
   difficulty: major-library
   pass: core
@@ -241,8 +239,8 @@ inventory:
     - p₀(x)>0 for every x.
     - p̂ₙ is any measurable MLE.
     implicit:
-    - Compactness and likelihood identifiability are used; strict positivity plus
-      continuity on [0,1] implies a positive lower bound.
+    - Compactness and likelihood identifiability are used; strict positivity plus continuity on [0,1] implies a positive lower
+      bound.
   quantifier_order:
   - Under P₀^∞, almost surely as n→∞.
   constants: []
@@ -271,8 +269,8 @@ inventory:
       candidates: []
       exact_equivalent: false
   likely_lean_representation:
-    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
-      `OP` and `oP` predicates over the sequence of experiments.
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
 
       Almost-sure convergence in the sup norm of random continuous functions.'
     blockers: []
