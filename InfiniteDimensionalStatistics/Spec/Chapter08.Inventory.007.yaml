@@ -1,0 +1,533 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 7
+chunk_count: 16
+inventory:
+- id: ch8.empirical_wavelet_max_bound_8_32
+  kind: lemma
+  book:
+    number: (8.32)
+    pages:
+    - 626
+    section: 8.2.2
+    equations:
+    - '8.32'
+  title: Empirical wavelet coefficient maximum bound
+  statement: For every wavelet level ℓ in the range used by the estimator, E_f[sup_{k∈ℤ}|Y_{ℓk}−f_{ℓk}|] ≤ (E_f[sup_{k∈ℤ}|Y_{ℓk}−f_{ℓk}|²])^{1/2}
+    ≤ c√(ℓ/n).
+  source_fidelity: exact-transcription
+  hypotheses:
+    explicit:
+    - The i.i.d. sampling and wavelet-coefficient setting preceding (8.32).
+    - The density and wavelet basis satisfy the boundedness and regularity assumptions used there.
+    implicit:
+    - The countable supremum is measurable.
+    - The constant c is uniform in n and ℓ over the displayed range.
+  quantifier_order:
+  - Fix the model and basis constants
+  - For every admissible n and level ℓ assert both inequalities
+  constants:
+  - c depends only on the fixed envelope and wavelet constants.
+  dependencies:
+    earlier_book:
+    - Theorem 5.1.13
+    chapter_local:
+    - ch8.iid_hard_threshold_estimator_8_31
+    later_book_uses:
+    - ch8.theorem_8_2_8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A countable wavelet-coefficient supremum estimate; the first inequality is L¹–L² monotonicity and the
+      second is the chapter-specific empirical-process bound.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-026
+- id: ch8.theorem_8_2_8
+  kind: theorem
+  book:
+    number: Theorem 8.2.8
+    pages:
+    - 626
+    section: 8.2.2
+    equations:
+    - '8.2'
+  title: Adaptive L∞ density estimation by hard thresholding
+  statement: For an S-regular wavelet basis, τ sufficiently large, B≥1, 0<s<S and n≥2, sup_{density f:‖f‖_{B^s_{∞,∞}(ℝ)}≤B}E_f‖f_n^T−f‖∞≤D·B^{1/(2s+1)}(n/log
+    n)^{-s/(2s+1)}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f is a probability density on ℝ
+    - B≥1
+    - 0<s<S
+    - n≥2
+    implicit:
+    - The Besov ball implies or is combined with the envelope used in the threshold; exact hidden dependence requires
+      audit.
+  quantifier_order:
+  - Fix s and construction data
+  - There exists D
+  - For every B,n the supremum bound holds
+  constants:
+  - Book states D depends only on s; verify hidden fixed-data dependence.
+  dependencies:
+    earlier_book:
+    - Theorem 5.1.13
+    chapter_local:
+    - ch8.iid_hard_threshold_estimator_8_31
+    - ch8.empirical_wavelet_max_bound_8_32
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Empirical hard-threshold risk theorem.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-009
+  - CR-026
+  - CR-029
+- id: ch8.exercise_8_2_1
+  kind: exercise
+  book:
+    number: Exercise 8.2.1
+    pages:
+    - 628
+    section: 8.2 Exercises
+    equations:
+    - '8.2'
+  title: Data-driven envelope in density estimators
+  statement: Show that Theorems 8.2.3 and 8.2.8 remain valid when U is replaced by ‖f_n(j̃_n)‖∞, with 2^{j̃_n}=n/(log
+    n)^2, using concentration and a uniform-continuity bias bound.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - Hypotheses of Theorems 8.2.3 and 8.2.8
+    - uniform continuity of f for the pilot bias
+    implicit:
+    - Exact log typography requires checking.
+  quantifier_order:
+  - Construct pilot
+  - prove concentration around ‖f‖∞
+  - substitute random envelope
+  - recover risk bounds
+  constants: []
+  dependencies:
+    earlier_book:
+    - Concentration of projection estimators
+    chapter_local:
+    - ch8.pilot_envelope_estimator
+    - ch8.theorem_8_2_3
+    - ch8.theorem_8_2_8
+    later_book_uses: &id002 []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Reusable random-threshold lemma and two corollaries.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - CR-008
+  - CR-026
+  selection_reasons:
+  - establishes a reusable random-envelope lemma
+  used_by: *id002
+- id: ch8.exercise_8_2_2
+  kind: exercise
+  book:
+    number: Exercise 8.2.2
+    pages:
+    - 628
+    section: 8.2 Exercises
+    equations:
+    - '8.2'
+  title: Sampling version of L∞ Lepski adaptation
+  statement: Prove an i.i.d.-sampling version of Theorem 8.2.5.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - bounded-density sampling model
+    - appropriate empirical wavelet projection estimator
+    implicit:
+    - Envelope and basis hypotheses must be stated explicitly.
+  quantifier_order:
+  - Construct sampling selector
+  - prove selector tails
+  - derive uniform sup-norm risk
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.theorem_8_2_5
+    later_book_uses: &id003 []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Empirical-process analogue of the white-noise Lepski theorem.
+    blockers: []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review:
+  - CR-003
+  - CR-026
+  selection_reasons:
+  - establishes a required sampling-model analogue
+  used_by: *id003
+- id: ch8.holder_ball_8_35
+  kind: definition
+  book:
+    number: (8.35)
+    pages:
+    - 629
+    section: 8.3.1
+    equations:
+    - '8.35'
+  title: Hölder–Besov confidence-band model
+  statement: For known B>0 and 0<r<s define Σ(t)=Σ(t,B)={f:[0,1]→ℝ:‖f‖_{B^t_{∞,∞}}≤B}, t∈{r,s}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - B>0
+    - 0<r<s
+    implicit:
+    - A common wavelet basis generates both norms.
+  quantifier_order:
+  - Fix B,r,s
+  - define the two nested balls
+  constants: []
+  dependencies:
+    earlier_book:
+    - Chapter 4 Besov embeddings
+    chapter_local: []
+    later_book_uses:
+    - ch8.honest_coverage_8_36
+    - ch8.adaptive_diameter_8_37
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Nested set predicates in a fixed function space.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.honest_coverage_8_36
+  kind: definition
+  book:
+    number: (8.36)
+    pages:
+    - 629
+    section: 8.3.1
+    equations:
+    - '8.36'
+  title: Honest asymptotic coverage
+  statement: A confidence set C_n is honest over Σ(r) at level 1−α if liminf_{n→∞} inf_{f∈Σ(r)}P_f(f∈C_n)≥1−α.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - 0<α<1
+    - random set C_n based only on data
+    implicit:
+    - Membership events are measurable.
+  quantifier_order:
+  - Fix α
+  - take infimum over f for each n
+  - take liminf in n
+  constants: []
+  dependencies:
+    earlier_book:
+    - Definition 6.4.1
+    chapter_local:
+    - ch8.holder_ball_8_35
+    later_book_uses:
+    - ch8.theorem_8_3_1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id004
+      - MeasureTheory.Measure
+      - MeasureTheory.Integral
+      - Filter.liminf
+      - Metric.diam
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Filter-based liminf of a uniform coverage function; initially encode C_n as a measurable ball.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-019
+  - CR-025
+- id: ch8.adaptive_diameter_8_37
+  kind: definition
+  book:
+    number: (8.37)
+    pages:
+    - 630
+    section: 8.3.1
+    equations:
+    - '8.37'
+  title: Two-class adaptive L∞ diameter
+  statement: For t∈{r,s}, require sup_{f∈Σ(t)}P_f(|C_n|∞>L(log n/n)^{t/(2t+1)})≤α′ for all sufficiently large n.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - α′>0
+    - L>0
+    - C_n random subset with finite L∞ diameter
+    implicit:
+    - Diameter measurability is assumed.
+  quantifier_order:
+  - Fix α′
+  - There exists L
+  - For each t∈{r,s}
+  - eventually in n the uniform tail bound holds
+  constants:
+  - L may depend on α′,r,s,B.
+  dependencies:
+    earlier_book:
+    - Definition 6.4.2
+    - Theorem 6.3.5
+    chapter_local:
+    - ch8.holder_ball_8_35
+    later_book_uses:
+    - ch8.theorem_8_3_1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id004
+      exact_equivalent: false
+      assessment: No exact theorem with this statistical content. General measurable maps, probability measures,
+        expectations, metric diameters, and filter-based liminf/limsup are available and should be reused.
+      audit_profile: abstract_probability
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Eventual uniform tail bound for the diameter of a measurable random set.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-019
+  - CR-025
+  - CR-029
+- id: ch8.theorem_8_3_1
+  kind: theorem
+  book:
+    number: Theorem 8.3.1
+    pages:
+    - 630
+    section: 8.3.1
+    equations:
+    - '8.3'
+  title: Impossibility of fully adaptive honest confidence bands
+  statement: No confidence set satisfies both honest coverage (8.36) and adaptive diameter (8.37). More strongly,
+    an honest set over Σ(r) cannot have, uniformly over Σ(s), diameter tail at any rate r_n=o((log n/n)^{r/(2r+1)}).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - white-noise observation
+    - known B
+    - 0<r<s
+    implicit:
+    - Random-set measurability and nonempty confidence sets.
+  quantifier_order:
+  - Assume honesty
+  - For every proposed sub-rate and sufficiently large n derive impossibility
+  constants: []
+  dependencies:
+    earlier_book:
+    - Theorem 6.2.11(b) via the refined result below
+    chapter_local:
+    - ch8.honest_coverage_8_36
+    - ch8.adaptive_diameter_8_37
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Information-theoretic contradiction reducing confidence bands to a composite test.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-004
+  - CR-019
+  - CR-025
+  - CR-028
