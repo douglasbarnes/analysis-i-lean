@@ -1,7 +1,9 @@
 schema_version: '1.0'
 acceptance_status: needs_revision
 acceptance_blockers:
-- Exact page-image transcription remains required for declarations listed in `blocking_source_transcriptions`.
+- Exact source transcription remains required for the declarations listed in `blocking_source_transcriptions`.
+- The remaining unresolved material is concentrated in Conditions (K1)–(K5), the class 𝒟 and Proposition 5.1.21,
+  and the quadratic-functional formulas on pp.439–451.
 - Structural validation cannot certify source fidelity for unresolved formulas.
 - P2 remains blocked until central review clears every blocking source transcription.
 source:
@@ -29,15 +31,9 @@ scope:
     starred: Material in the explicitly starred Section 5.1.3 only.
     exercise: Extracted exercise declaration.
 blocking_source_transcriptions:
-- ch5.rem.5_1_6
 - ch5.cond.K1_K5
 - ch5.def.D_class
 - ch5.prop.5_1_21
-- ch5.ex.convolution_extreme
-- ch5.rem.5_2_12
-- ch5.prop.5_2_14
-- ch5.prop.5_2_15
-- ch5.thm.5_2_16
 - ch5.def.quadratic_white_noise
 - ch5.thm.5_3_1
 - ch5.thm.5_3_2
@@ -45,7 +41,6 @@ blocking_source_transcriptions:
 - ch5.thm.5_3_3
 - ch5.def.general_integral_estimator
 - ch5.thm.5_3_4
-- ch5.prop.5_3_8
 selected_exercises:
 - id: ch5.ex.5_1_1
   book_number: Exercise 5.1.1
@@ -173,12 +168,8 @@ central_review_queue:
 - declaration: ch5.rem.5_1_6
   book_number: Remark 5.1.6
   page: 395–396
-  issue: The author erratum changes ν to ν_p.
-- declaration: ch5.rem.5_1_6
-  book_number: Remark 5.1.6
-  page: 395–396
-  issue: OCR is not reliable enough for every exponent in the long explicit constant; central review must compare
-    the hardback page.
+  issue: The printed first display is retained together with the official correction ν^{1/p}↦ν_p^{1/p}; do not silently
+    erase the original reading.
 - declaration: ch5.prop.5_1_7
   book_number: Proposition 5.1.7
   page: 399–400
@@ -222,11 +213,6 @@ central_review_queue:
   page: 414–417
   issue: Exact formulas (5.50),(5.51), the normalisation of νₙ^f and the interval I must be transcribed from the
     book before formalisation.
-- declaration: ch5.ex.convolution_extreme
-  book_number: Unnumbered smooth convolution-kernel example
-  page: 418
-  issue: OCR is ambiguous about the numerical factor in C=−(constant)∫KK″ and the exact second-order term in B(l);
-    verify (5.65)–(5.66).
 - declaration: ch5.thm.5_2_9
   book_number: Theorem 5.2.9
   page: 431–433
@@ -239,30 +225,17 @@ central_review_queue:
 - declaration: ch5.rem.5_2_12
   book_number: Remark 5.2.12
   page: 434
-  issue: Printed “f₀∈B^t_{p,q}([0,1]) ∪ Lp([0,1])” is likely an intersection, not a union.
+  issue: The printed density condition uses B^t_{p,q}([0,1])∪L^p([0,1]); an intersection may have been intended,
+    but the source is not silently changed.
 - declaration: ch5.rem.5_2_12
   book_number: Remark 5.2.12
   page: 434
-  issue: Printed equations 1/p+1/q=1 and 1/p′+1/q′=1 appear inconsistent with the roles of p′,q′ as conjugates;
-    do not correct without central review.
-- declaration: ch5.prop.5_2_14
-  book_number: Proposition 5.2.14
-  page: 435
-  issue: The parsed source compresses Propositions 5.2.14 and 5.2.15; verify the exact split and any statement about
-    M(w)=M₀(w)^{**}.
-- declaration: ch5.prop.5_2_15
-  book_number: Proposition 5.2.15 and identity (5.86)
-  page: 435–436
-  issue: Verify exact proposition number, σ normalisation and whether the iff direction on admissibility is stated.
+  issue: The printed relations 1/p+1/q=1 and 1/p′+1/q′=1 appear inconsistent with the usual conjugate-index roles;
+    retain them pending central review.
 - declaration: ch5.thm.5_2_16
   book_number: Theorem 5.2.16
   page: 436–437
-  issue: The OCR displays the first resolution condition ambiguously; compare the page to decide between 2^{jₙ}jₙ/n=O(1)
-    and a square-root variant.
-- declaration: ch5.thm.5_2_16
-  book_number: Theorem 5.2.16
-  page: 436–437
-  issue: Use convergence in law notation per official erratum.
+  issue: 'Official erratum on p.436: every convergence arrow printed as →d is to be read as convergence in law →L.'
 - declaration: ch5.def.quadratic_white_noise
   book_number: 'Equations (5.87)–(5.92): quadratic functional in white noise'
   page: 439–443
@@ -315,16 +288,15 @@ central_review_queue:
   book_number: Proposition 5.3.7
   page: 458–459
   issue: Verify exact labels of the Besov ball and constants in the severe case before proof implementation.
-- declaration: ch5.prop.5_3_8
-  book_number: Proposition 5.3.8
-  page: 459–460
-  issue: Verify the exact denominator in the chosen 2^{jₙ} and every logarithmic exponent; OCR is unreliable in
-    this display.
 - declaration: ch5.thm.5_4_1
   book_number: Theorem 5.4.1
   page: 463
   issue: No explicit later citation in the book was found; retain as a notes theorem but do not mark it as a prerequisite
     without further cross-chapter audit.
+- declaration: ch5.thm.5_4_1
+  book_number: Theorem 5.4.1
+  page: 463
+  issue: 'Pass normalised to `core`: Section 5.4 is not explicitly starred in the source.'
 completeness_check:
   inventory_entries: 104
   by_kind:
@@ -345,8 +317,8 @@ completeness_check:
     routine: 5
     substantial: 25
   selected_exercise_count: 21
-  blocking_source_transcription_count: 17
-  central_review_issue_count: 74
+  blocking_source_transcription_count: 10
+  central_review_issue_count: 31
   dependency_edge_count: 141
   missing_numbered_labels: []
   duplicate_identifiers: []
