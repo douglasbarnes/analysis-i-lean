@@ -1,0 +1,402 @@
+schema_version: '1.0'
+templates:
+  repository_equivalence: &id004
+    status: no exact declaration found in targeted search
+    candidates:
+    - kernel density estimator
+    - wavelet Besov Donsker deconvolution empirical process convolution
+    - convolution
+    - Besov
+    - empirical process
+    exact_equivalent: false
+  empty_proof_status: &id006
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  empty_notes_status: &id003
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  verified_source_fidelity: &id001
+    transcription_status: verified
+    author_corrected_reading: null
+inventory:
+- id: ch5.ex.5_3_5
+  kind: exercise
+  book:
+    number: Exercise 5.3.5
+    pages:
+    - 461
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.5
+  statement: For χ=1_{[-1/2,1/2]}, compute F^{-1}χ(x)=sin x/(πx) and F^{-1}(χ*χ)(x)=(sin x)²/(πx)²; normalise the
+    latter to obtain a positive integrable kernel with compactly supported Fourier transform.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: &id002 []
+    chapter_local: *id002
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes a required reusable band-limited positive-kernel example'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Explicit Fourier-transform calculation for an indicator and triangular function.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: &id005 []
+  selection_reasons:
+  - establishes a required reusable band-limited positive-kernel example
+- id: ch5.ex.5_3_6
+  kind: exercise
+  book:
+    number: Exercise 5.3.6
+    pages:
+    - 462
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.6
+  statement: Justify every step of (5.112) using Plancherel, Young and Fourier inversion, and prove K_h^* is bounded.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.eq.5_112
+    later_book_uses:
+    - Equation (5.112)
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: explicitly completes a proof omitted around (5.112); required reusable deconvolution
+      identity'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Fourier-integrability bookkeeping and an L²*L²→L∞ Young bound.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - explicitly completes a proof omitted around (5.112)
+  - required reusable deconvolution identity
+- id: ch5.ex.5_3_7
+  kind: exercise
+  book:
+    number: Exercise 5.3.7
+    pages:
+    - 462
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.7
+  statement: Extend Lemma 5.3.5 entropy bounds to deconvolved wavelet classes H_j(ψ), then prove moment and exponential
+    uniform bounds for the empirical deconvolution wavelet coefficients β̂_{lk}.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.lem.5_3_5
+    - ch5.thm.5_3_6
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes reusable entropy and coefficient concentration lemmas'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Repeat the translate/variation argument for ψ and apply empirical-process concentration.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes reusable entropy and coefficient concentration lemmas
+- id: ch5.ex.5_3_8
+  kind: exercise
+  book:
+    number: Exercise 5.3.8
+    pages:
+    - 462
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.8
+  statement: Complement Theorem 5.3.9 with exponential tail inequalities for ‖fₙ−Efₙ‖₂ for both deconvolution estimators.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.thm.5_3_9
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes reusable exponential L² bounds'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Hilbert-space/Bernstein or empirical-process concentration with exact variance factor.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes reusable exponential L² bounds
+- id: ch5.ex.5_3_9
+  kind: exercise
+  book:
+    number: Exercise 5.3.9
+    pages:
+    - 462
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.9
+  statement: Analyse the remaining relative-smoothness cases for Proposition 5.3.8 and choose resolutions yielding
+    the faster-than-logarithmic or near-parametric rates stated in the exercise.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.prop.5_3_8
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes missing parameter-regime variants'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Asymptotic comparison and bandwidth choice in exponential Fourier classes.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes missing parameter-regime variants
+  used_by: []
+- id: ch5.ex.5_3_10
+  kind: exercise
+  book:
+    number: Exercise 5.3.10
+    pages:
+    - 462
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.10
+  statement: For the spectral-cutoff deconvolution kernel F[K_j^*]=1_{[-2^j,2^j]}/F[ϕ], prove the exponential Fourier-tail
+    bias bound and the stated variance integral bound under supersmooth f and error, then derive optimised L² rates.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.def.A_alpha_s
+    - ch5.thm.5_3_9
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes reusable spectral-cutoff estimator and rates; cited by notes as improving
+      Proposition 5.3.8'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Plancherel tail bound and explicit integral estimate for reciprocal characteristic function.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes reusable spectral-cutoff estimator and rates
+  - cited by notes as improving Proposition 5.3.8
+- id: ch5.ex.5_3_11
+  kind: exercise
+  book:
+    number: Exercise 5.3.11
+    pages:
+    - 462
+    section: 5.3 Exercises
+    equations: []
+  title: Exercise 5.3.11
+  statement: Prove the pth-moment analogue of Theorem 5.3.9 for the deconvolution wavelet density estimator.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All hypotheses referenced in the exercise statement.
+    implicit:
+    - The exercise is to be formalised as one or more reusable declarations rather than as prose.
+  quantifier_order:
+  - As stated in the exercise.
+  constants:
+  - As stated in the exercise.
+  dependencies:
+    earlier_book: *id002
+    chapter_local:
+    - ch5.thm.5_3_9
+    later_book_uses: *id002
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selection reasons: establishes reusable higher-moment extension'
+  notes_status: *id003
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates: []
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Moment bound for the L²-valued empirical deconvolution estimator.
+    blockers:
+    - May require splitting into auxiliary lemmas.
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review: *id005
+  selection_reasons:
+  - establishes reusable higher-moment extension
+- id: ch5.thm.5_4_1
+  kind: theorem
+  book:
+    number: Theorem 5.4.1
+    pages:
+    - 463
+    section: 5.4 Notes
+    equations: []
+  title: Theorem 5.4.1
+  statement: Under Proposition 5.1.19, for convolution or wavelet projection estimators, almost surely lim_{n→∞}
+    √(n/[2(log 2)jₙ2^{jₙ}]) sup_{y∈ℝ}|(fₙ(y)−Efₙ(y))/[∫K²(2^{jₙ}y,x)dx]^{1/2}|=‖f‖∞^{1/2}.
+  source_fidelity: *id001
+  hypotheses:
+    explicit:
+    - All assumptions and notation of Proposition 5.1.19.
+    - One-dimensional convolution or wavelet projection estimator.
+    implicit:
+    - The denominator is positive at relevant y or the ratio is interpreted on the nondegenerate index set.
+  quantifier_order:
+  - The limit holds P_f-almost surely.
+  constants:
+  - 2 log 2.
+  dependencies:
+    earlier_book:
+    - Bickel–Rosenblatt/strong approximation results cited in the notes
+    chapter_local:
+    - ch5.prop.5_1_19
+    later_book_uses: *id002
+  proof_status: *id006
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: Stated in Section 5.4 notes.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: no exact declaration found in targeted search
+      candidates:
+      - Mathlib.Probability.Distributions.Gaussian.Real
+      exact_equivalent: false
+    repository: *id004
+  likely_lean_representation:
+    sketch: Sharp self-normalised almost-sure supremum limit.
+    blockers:
+    - External strong approximation/extreme-value theorem at research level.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - No explicit later citation in the book was found; retain as a notes theorem but do not mark it as a prerequisite
+    without further cross-chapter audit.
+  - 'Pass normalised to `core`: Section 5.4 is not explicitly starred in the source.'
