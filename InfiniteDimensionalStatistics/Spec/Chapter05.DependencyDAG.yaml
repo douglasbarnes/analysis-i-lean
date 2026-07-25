@@ -1,0 +1,392 @@
+schema_version: '1.0'
+chapter_local_dependency_dag:
+  orientation: Each edge points from a prerequisite or proof task to the declaration that consumes it.
+  nodes:
+  - ch5.eq.5_1
+  - ch5.eq.5_2
+  - ch5.eq.5_3
+  - ch5.eq.5_4
+  - ch5.eq.5_5
+  - ch5.eq.5_6_5_8
+  - ch5.cond.5_1_1
+  - ch5.eq.5_9_5_11
+  - ch5.prop.5_1_2
+  - ch5.lem.5_1_3
+  - ch5.rem.5_1_4
+  - ch5.thm.5_1_5
+  - ch5.rem.5_1_6
+  - ch5.prop.5_1_7
+  - ch5.prop.5_1_8
+  - ch5.eq.5_26_5_27
+  - ch5.prop.5_1_9
+  - ch5.prop.5_1_10
+  - ch5.prop.5_1_11
+  - ch5.ex.multivariate_rates
+  - ch5.prop.5_1_12
+  - ch5.thm.5_1_13
+  - ch5.rem.5_1_14
+  - ch5.thm.5_1_15
+  - ch5.rem.5_1_16
+  - ch5.prop.5_1_17
+  - ch5.prop.5_1_18
+  - ch5.eq.5_41
+  - ch5.prop.5_1_19
+  - ch5.cond.K1_K5
+  - ch5.def.D_class
+  - ch5.prop.5_1_21
+  - ch5.ex.haar_extreme
+  - ch5.prop.5_1_22
+  - ch5.ex.convolution_extreme
+  - ch5.prop.5_1_23
+  - ch5.ex.5_1_1
+  - ch5.ex.5_1_2
+  - ch5.ex.5_1_3
+  - ch5.ex.5_1_4
+  - ch5.ex.5_1_5
+  - ch5.ex.5_1_6
+  - ch5.ex.5_1_7
+  - ch5.ex.5_1_8
+  - ch5.ex.5_1_9
+  - ch5.def.weak_seminorm
+  - ch5.def.sobolev_ball
+  - ch5.def.BV_ball
+  - ch5.prop.5_2_1
+  - ch5.def.approx_identity
+  - ch5.prop.5_2_2
+  - ch5.prop.5_2_3
+  - ch5.def.5_2_4
+  - ch5.thm.5_2_5
+  - ch5.rem.5_2_6
+  - ch5.def.cdf_estimators
+  - ch5.thm.5_2_7
+  - ch5.thm.5_2_8
+  - ch5.def.wavelet_cdf
+  - ch5.thm.5_2_9
+  - ch5.thm.5_2_10
+  - ch5.thm.5_2_11
+  - ch5.rem.5_2_12
+  - ch5.def.multiscale_spaces
+  - ch5.def.5_2_13
+  - ch5.prop.5_2_14
+  - ch5.prop.5_2_15
+  - ch5.thm.5_2_16
+  - ch5.ex.5_2_1
+  - ch5.ex.5_2_2
+  - ch5.ex.5_2_3
+  - ch5.def.quadratic_white_noise
+  - ch5.thm.5_3_1
+  - ch5.def.U_quadratic
+  - ch5.thm.5_3_2
+  - ch5.def.weighted_quadratic
+  - ch5.thm.5_3_3
+  - ch5.def.general_integral_estimator
+  - ch5.thm.5_3_4
+  - ch5.def.deconvolution_model
+  - ch5.eq.5_112
+  - ch5.eq.5_113_5_114
+  - ch5.eq.5_115
+  - ch5.eq.5_116_5_118
+  - ch5.def.delta_Hj
+  - ch5.lem.5_3_5
+  - ch5.thm.5_3_6
+  - ch5.eq.5_122
+  - ch5.prop.5_3_7
+  - ch5.def.A_alpha_s
+  - ch5.prop.5_3_8
+  - ch5.thm.5_3_9
+  - ch5.ex.5_3_1
+  - ch5.ex.5_3_2
+  - ch5.ex.5_3_3
+  - ch5.ex.5_3_4
+  - ch5.ex.5_3_5
+  - ch5.ex.5_3_6
+  - ch5.ex.5_3_7
+  - ch5.ex.5_3_8
+  - ch5.ex.5_3_9
+  - ch5.ex.5_3_10
+  - ch5.ex.5_3_11
+  - ch5.thm.5_4_1
+  edges:
+  - from: ch5.eq.5_2
+    to: ch5.eq.5_3
+  - from: ch5.eq.5_4
+    to: ch5.eq.5_6_5_8
+  - from: ch5.eq.5_5
+    to: ch5.eq.5_6_5_8
+  - from: ch5.cond.5_1_1
+    to: ch5.eq.5_9_5_11
+  - from: ch5.eq.5_6_5_8
+    to: ch5.prop.5_1_2
+  - from: ch5.eq.5_9_5_11
+    to: ch5.prop.5_1_2
+  - from: ch5.eq.5_3
+    to: ch5.thm.5_1_5
+  - from: ch5.cond.5_1_1
+    to: ch5.thm.5_1_5
+  - from: ch5.lem.5_1_3
+    to: ch5.thm.5_1_5
+  - from: ch5.rem.5_1_4
+    to: ch5.thm.5_1_5
+  - from: ch5.thm.5_1_5
+    to: ch5.rem.5_1_6
+  - from: ch5.thm.5_1_5
+    to: ch5.prop.5_1_7
+  - from: ch5.thm.5_1_5
+    to: ch5.prop.5_1_8
+  - from: ch5.eq.5_1
+    to: ch5.eq.5_26_5_27
+  - from: ch5.eq.5_26_5_27
+    to: ch5.prop.5_1_9
+  - from: ch5.thm.5_1_5
+    to: ch5.prop.5_1_9
+  - from: ch5.prop.5_1_9
+    to: ch5.prop.5_1_10
+  - from: ch5.eq.5_3
+    to: ch5.prop.5_1_11
+  - from: ch5.prop.5_1_9
+    to: ch5.prop.5_1_11
+  - from: ch5.prop.5_1_10
+    to: ch5.prop.5_1_11
+  - from: ch5.thm.5_1_5
+    to: ch5.ex.multivariate_rates
+  - from: ch5.prop.5_1_7
+    to: ch5.ex.multivariate_rates
+  - from: ch5.prop.5_1_2
+    to: ch5.prop.5_1_12
+  - from: ch5.thm.5_1_5
+    to: ch5.thm.5_1_13
+  - from: ch5.cond.5_1_1
+    to: ch5.thm.5_1_13
+  - from: ch5.eq.5_3
+    to: ch5.rem.5_1_14
+  - from: ch5.cond.5_1_1
+    to: ch5.rem.5_1_14
+  - from: ch5.thm.5_1_5
+    to: ch5.thm.5_1_15
+  - from: ch5.thm.5_1_13
+    to: ch5.thm.5_1_15
+  - from: ch5.prop.5_1_8
+    to: ch5.rem.5_1_16
+  - from: ch5.thm.5_1_13
+    to: ch5.rem.5_1_16
+  - from: ch5.thm.5_1_15
+    to: ch5.rem.5_1_16
+  - from: ch5.rem.5_1_14
+    to: ch5.prop.5_1_17
+  - from: ch5.thm.5_1_5
+    to: ch5.prop.5_1_18
+  - from: ch5.thm.5_1_13
+    to: ch5.prop.5_1_18
+  - from: ch5.cond.5_1_1
+    to: ch5.prop.5_1_19
+  - from: ch5.eq.5_41
+    to: ch5.prop.5_1_19
+  - from: ch5.thm.5_1_13
+    to: ch5.prop.5_1_19
+  - from: ch5.cond.K1_K5
+    to: ch5.prop.5_1_21
+  - from: ch5.def.D_class
+    to: ch5.prop.5_1_21
+  - from: ch5.prop.5_1_21
+    to: ch5.ex.haar_extreme
+  - from: ch5.prop.5_1_21
+    to: ch5.prop.5_1_22
+  - from: ch5.ex.haar_extreme
+    to: ch5.prop.5_1_22
+  - from: ch5.def.D_class
+    to: ch5.prop.5_1_22
+  - from: ch5.prop.5_1_21
+    to: ch5.ex.convolution_extreme
+  - from: ch5.prop.5_1_21
+    to: ch5.prop.5_1_23
+  - from: ch5.ex.convolution_extreme
+    to: ch5.prop.5_1_23
+  - from: ch5.def.D_class
+    to: ch5.prop.5_1_23
+  - from: ch5.eq.5_4
+    to: ch5.ex.5_1_1
+  - from: ch5.eq.5_4
+    to: ch5.ex.5_1_2
+  - from: ch5.eq.5_9_5_11
+    to: ch5.ex.5_1_2
+  - from: ch5.cond.5_1_1
+    to: ch5.ex.5_1_3
+  - from: ch5.rem.5_1_14
+    to: ch5.ex.5_1_4
+  - from: ch5.thm.5_1_5
+    to: ch5.ex.5_1_5
+  - from: ch5.prop.5_1_2
+    to: ch5.ex.5_1_6
+  - from: ch5.prop.5_1_18
+    to: ch5.ex.5_1_7
+  - from: ch5.prop.5_1_19
+    to: ch5.ex.5_1_7
+  - from: ch5.eq.5_6_5_8
+    to: ch5.ex.5_1_7
+  - from: ch5.prop.5_1_2
+    to: ch5.ex.5_1_8
+  - from: ch5.thm.5_1_13
+    to: ch5.ex.5_1_9
+  - from: ch5.eq.5_6_5_8
+    to: ch5.prop.5_2_1
+  - from: ch5.def.BV_ball
+    to: ch5.prop.5_2_1
+  - from: ch5.def.sobolev_ball
+    to: ch5.prop.5_2_1
+  - from: ch5.def.weak_seminorm
+    to: ch5.prop.5_2_2
+  - from: ch5.def.approx_identity
+    to: ch5.prop.5_2_3
+  - from: ch5.prop.5_2_2
+    to: ch5.prop.5_2_3
+  - from: ch5.prop.5_2_3
+    to: ch5.thm.5_2_5
+  - from: ch5.def.5_2_4
+    to: ch5.thm.5_2_5
+  - from: ch5.def.sobolev_ball
+    to: ch5.thm.5_2_5
+  - from: ch5.prop.5_1_7
+    to: ch5.rem.5_2_6
+  - from: ch5.thm.5_2_5
+    to: ch5.rem.5_2_6
+  - from: ch5.eq.5_1
+    to: ch5.def.cdf_estimators
+  - from: ch5.def.BV_ball
+    to: ch5.thm.5_2_7
+  - from: ch5.def.cdf_estimators
+    to: ch5.thm.5_2_7
+  - from: ch5.def.5_2_4
+    to: ch5.thm.5_2_7
+  - from: ch5.thm.5_2_7
+    to: ch5.thm.5_2_8
+  - from: ch5.eq.5_3
+    to: ch5.def.wavelet_cdf
+  - from: ch5.def.wavelet_cdf
+    to: ch5.thm.5_2_9
+  - from: ch5.def.BV_ball
+    to: ch5.thm.5_2_9
+  - from: ch5.thm.5_2_9
+    to: ch5.thm.5_2_10
+  - from: ch5.def.sobolev_ball
+    to: ch5.thm.5_2_11
+  - from: ch5.def.wavelet_cdf
+    to: ch5.thm.5_2_11
+  - from: ch5.thm.5_2_11
+    to: ch5.rem.5_2_12
+  - from: ch5.def.multiscale_spaces
+    to: ch5.def.5_2_13
+  - from: ch5.def.multiscale_spaces
+    to: ch5.prop.5_2_14
+  - from: ch5.def.5_2_13
+    to: ch5.prop.5_2_15
+  - from: ch5.prop.5_2_14
+    to: ch5.prop.5_2_15
+  - from: ch5.eq.5_5
+    to: ch5.prop.5_2_15
+  - from: ch5.def.5_2_13
+    to: ch5.thm.5_2_16
+  - from: ch5.prop.5_2_15
+    to: ch5.thm.5_2_16
+  - from: ch5.thm.5_2_7
+    to: ch5.ex.5_2_2
+  - from: ch5.def.quadratic_white_noise
+    to: ch5.thm.5_3_1
+  - from: ch5.eq.5_1
+    to: ch5.def.U_quadratic
+  - from: ch5.def.U_quadratic
+    to: ch5.thm.5_3_2
+  - from: ch5.def.U_quadratic
+    to: ch5.def.weighted_quadratic
+  - from: ch5.def.weighted_quadratic
+    to: ch5.thm.5_3_3
+  - from: ch5.thm.5_3_2
+    to: ch5.thm.5_3_3
+  - from: ch5.def.weighted_quadratic
+    to: ch5.def.general_integral_estimator
+  - from: ch5.def.general_integral_estimator
+    to: ch5.thm.5_3_4
+  - from: ch5.thm.5_3_3
+    to: ch5.thm.5_3_4
+  - from: ch5.def.deconvolution_model
+    to: ch5.eq.5_112
+  - from: ch5.eq.5_112
+    to: ch5.eq.5_113_5_114
+  - from: ch5.eq.5_115
+    to: ch5.eq.5_116_5_118
+  - from: ch5.def.deconvolution_model
+    to: ch5.eq.5_116_5_118
+  - from: ch5.eq.5_113_5_114
+    to: ch5.def.delta_Hj
+  - from: ch5.eq.5_116_5_118
+    to: ch5.def.delta_Hj
+  - from: ch5.def.delta_Hj
+    to: ch5.lem.5_3_5
+  - from: ch5.eq.5_115
+    to: ch5.lem.5_3_5
+  - from: ch5.lem.5_3_5
+    to: ch5.thm.5_3_6
+  - from: ch5.eq.5_113_5_114
+    to: ch5.thm.5_3_6
+  - from: ch5.eq.5_116_5_118
+    to: ch5.thm.5_3_6
+  - from: ch5.eq.5_112
+    to: ch5.eq.5_122
+  - from: ch5.eq.5_116_5_118
+    to: ch5.eq.5_122
+  - from: ch5.thm.5_3_6
+    to: ch5.prop.5_3_7
+  - from: ch5.eq.5_122
+    to: ch5.prop.5_3_7
+  - from: ch5.def.A_alpha_s
+    to: ch5.prop.5_3_8
+  - from: ch5.thm.5_3_6
+    to: ch5.prop.5_3_8
+  - from: ch5.eq.5_122
+    to: ch5.prop.5_3_8
+  - from: ch5.lem.5_3_5
+    to: ch5.thm.5_3_9
+  - from: ch5.eq.5_122
+    to: ch5.thm.5_3_9
+  - from: ch5.thm.5_3_2
+    to: ch5.ex.5_3_2
+  - from: ch5.thm.5_3_3
+    to: ch5.ex.5_3_2
+  - from: ch5.ex.5_3_2
+    to: ch5.ex.5_3_3
+  - from: ch5.thm.5_3_4
+    to: ch5.ex.5_3_3
+  - from: ch5.ex.5_3_3
+    to: ch5.ex.5_3_4
+  - from: ch5.lem.5_3_5
+    to: ch5.ex.5_3_7
+  - from: ch5.thm.5_3_6
+    to: ch5.ex.5_3_7
+  - from: ch5.thm.5_3_9
+    to: ch5.ex.5_3_8
+  - from: ch5.prop.5_3_8
+    to: ch5.ex.5_3_9
+  - from: ch5.def.A_alpha_s
+    to: ch5.ex.5_3_10
+  - from: ch5.thm.5_3_9
+    to: ch5.ex.5_3_10
+  - from: ch5.thm.5_3_9
+    to: ch5.ex.5_3_11
+  - from: ch5.prop.5_1_19
+    to: ch5.thm.5_4_1
+  - from: ch5.ex.5_1_1
+    to: ch5.thm.5_1_13
+  - from: ch5.ex.5_1_2
+    to: ch5.thm.5_1_13
+  - from: ch5.ex.5_1_3
+    to: ch5.thm.5_1_5
+  - from: ch5.ex.5_1_3
+    to: ch5.thm.5_1_13
+  - from: ch5.ex.5_2_1
+    to: ch5.prop.5_2_2
+  - from: ch5.ex.5_2_3
+    to: ch5.def.wavelet_cdf
+  - from: ch5.ex.5_3_1
+    to: ch5.thm.5_3_4
+  - from: ch5.ex.5_3_6
+    to: ch5.eq.5_112
+  acyclic: true
