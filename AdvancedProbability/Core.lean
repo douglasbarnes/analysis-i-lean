@@ -19,6 +19,7 @@ import AdvancedProbability.ContinuousTime
 import AdvancedProbability.ContinuousResults
 import AdvancedProbability.PathSpaceResults
 import AdvancedProbability.VersionResults
+import AdvancedProbability.KolmogorovProcessResults
 import AdvancedProbability.ContinuousOptionalSamplingResults
 import AdvancedProbability.WeakConvergence
 import AdvancedProbability.WeakConvergenceResults
