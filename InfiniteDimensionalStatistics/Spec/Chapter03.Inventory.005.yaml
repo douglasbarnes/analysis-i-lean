@@ -1,0 +1,594 @@
+schema_version: '1.0'
+source:
+  chapter: 3
+  chunk: 5
+inventory:
+- id: theorem_3_2_4
+  kind: theorem
+  book:
+    number: Theorem 3.2.4
+    pages:
+    - 140
+    - 142
+    section: '3.2'
+    equations: []
+  title: Talagrand convex-distance inequality
+  statement: For a product probability Pⁿ and measurable A with Pⁿ(A)>0, ∫exp(d_c(x,A)²/4)dPⁿ(x)≤1/Pⁿ(A); hence Pⁿ(A)Pⁿ{d_c(x,A)≥t}≤e^{−t²/4}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - product probability
+    - A measurable
+    - Pⁿ(A)>0
+    implicit: []
+  quantifier_order: &id001
+  - Quantifiers occur in the displayed order; an unnamed K,c,C is absolute unless dependence is stated.
+  constants: &id002
+  - Constants and their dependency are those explicitly displayed in the statement and quantifier record.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_2_1
+    - lemma_3_2_3
+    later_book_uses:
+    - Corollaries 3.2.5–3.2.7.
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_2_1
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: &id010
+    discussed_or_extended_in_notes: true
+    note_summary: Section 3.8 records provenance, refinements or related literature for this item.
+    used_later_in_book: true
+  equivalents: &id003
+    mathlib:
+      status: no-exact-equivalent-located
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation: &id016
+    sketch: Independent-coordinate theorem on a product probability space, with conditional expectations, entropy, log-Laplace
+      transforms and explicit measurable suprema.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_2_5
+  kind: corollary
+  book:
+    number: Corollary 3.2.5
+    pages:
+    - 142
+    section: '3.2'
+    equations: []
+  title: Median concentration from convex distance
+  statement: If a measurable Z on a product space has the stated one-sided coordinate-change control by an ℓ²-normalised weight
+    vector depending on x, then its deviations from any median satisfy the one-sided bounds of the corollary and Pr{|Z−M|≥t}≤4e^{−t²/4}.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - product measure
+    - measurable Z
+    - weighted one-sided Lipschitz condition
+    - M median
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - theorem_3_2_4
+    later_book_uses: []
+  proof_status: &id004
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status: &id006
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents: *id003
+  likely_lean_representation: &id009
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: corollary_3_2_6
+  kind: corollary
+  book:
+    number: Corollary 3.2.6
+    pages:
+    - 142
+    - 143
+    section: '3.2'
+    equations: []
+  title: Concentration for bounded-coordinate linear suprema
+  statement: For independent coordinates and a bounded class of coefficient vectors, the supremum of the associated centred
+    linear forms concentrates about a median, with scale determined by the maximal coefficient ℓ² norm and the coordinate
+    bound.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - independent product coordinates
+    - bounded coefficient class
+    - measurable supremum
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - corollary_3_2_5
+    later_book_uses:
+    - Theorem 3.2.7.
+  proof_status: *id004
+  notes_status: &id008
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: *id003
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id005
+    - Exact scaling and median-tail constants require p.142–143 transcription.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id005
+- id: theorem_3_2_7
+  kind: theorem
+  book:
+    number: Theorem 3.2.7
+    pages:
+    - 143
+    section: '3.2'
+    equations: []
+  title: Concentration for Rademacher process suprema
+  statement: For Z:=sup_{t∈T}|∑εᵢtᵢ| and σ²:=sup_{t∈T}∑tᵢ², Z has the displayed sub-Gaussian concentration about a median
+    and about EZ, with universal constants.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - T finite/countable or measurable supremum
+    - εᵢ independent Rademacher
+    - σ²<∞
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch3.ex.3_2_2
+    - ch3.ex.3_2_3
+    - corollary_3_2_6
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises:
+    - ch3.ex.3_2_2
+    - ch3.ex.3_2_3
+    contains_omitted_steps: true
+    comment: Proof steps are delegated exactly as recorded by the source.
+  notes_status: *id006
+  equivalents: &id011
+    mathlib:
+      status: partial-infrastructure-only
+      candidates:
+      - Mathlib supplies underlying measure/integral/probability/independence/Bochner/Gaussian infrastructure, but no exact
+        chapter theorem was located.
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      audit_date: '2026-07-24'
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Independent Rademacher coordinates on a product probability space, finite sums, and measurable/countable suprema.
+    blockers: &id007
+    - Proof and mean/median conversion are delegated; copy all constants exactly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id007
+- id: proposition_3_2_8
+  kind: proposition
+  book:
+    number: Proposition 3.2.8
+    pages:
+    - 143
+    - 144
+    section: '3.2'
+    equations: []
+  title: Khinchin–Kahane and Paley–Zygmund lower bound
+  statement: For a Rademacher sum ∑aᵢεᵢ, its L¹ and L² norms are comparable by absolute constants; Paley–Zygmund yields a
+    fixed positive probability that |∑aᵢεᵢ| exceeds a fixed fraction of ‖a‖₂.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - a∈ℝⁿ deterministic
+    - εᵢ Rademacher
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Lemma 3.2.11
+    - Theorem 3.2.9
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id003
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: theorem_3_2_9
+  kind: theorem
+  book:
+    number: Theorem 3.2.9
+    pages:
+    - 144
+    - 148
+    section: '3.2'
+    equations: []
+  title: Modified Sudakov lower bound for Rademacher processes
+  statement: For finite T⊂ℝⁿ with pairwise ℓ² separation at least a and coordinates uniformly small relative to a and log|T|,
+    E sup_{t∈T}|∑εᵢtᵢ|≥K^{-1}a√log|T|, with the exact coordinate-smallness threshold and universal K stated in the theorem.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - T finite, |T|≥2
+    - pairwise ℓ² separation
+    - printed coordinate-smallness condition
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma_3_2_10
+    - lemma_3_2_11
+    - proposition_3_2_8
+    later_book_uses:
+    - Theorem 3.5.11.
+  proof_status: *id004
+  notes_status: *id010
+  equivalents: *id011
+  likely_lean_representation:
+    sketch: Independent Rademacher coordinates on a product probability space, finite sums, and measurable/countable suprema.
+    blockers: &id012
+    - Exact K and small-coordinate inequality must be copied from pp.144–148.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id012
+- id: lemma_3_2_10
+  kind: lemma
+  book:
+    number: Lemma 3.2.10
+    pages:
+    - 145
+    section: '3.2'
+    equations: []
+  title: Truncated Gaussian mgf bound
+  statement: A standard normal variable truncated to the interval and level specified in the lemma satisfies the exponential-moment
+    comparison required to transfer Gaussian Sudakov separation to Rademacher signs.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - g∼N(0,1) and truncation parameter in the printed range
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Theorem 3.2.9.
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id011
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id013
+    - Exact interval and constants require visual transcription.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id013
+- id: lemma_3_2_11
+  kind: lemma
+  book:
+    number: Lemma 3.2.11
+    pages:
+    - 146
+    section: '3.2'
+    equations: []
+  title: One-point Rademacher L¹–L² comparison
+  statement: Under the coefficient smallness condition of Theorem 3.2.9, E|∑aᵢεᵢ| is bounded below by a fixed multiple of
+    (∑aᵢ²)^{1/2}.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - deterministic coefficients
+    - printed small-coordinate condition
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition_3_2_8
+    later_book_uses:
+    - Theorem 3.2.9.
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id011
+  likely_lean_representation:
+    sketch: Independent Rademacher coordinates on a product probability space, finite sums, and measurable/countable suprema.
+    blockers: &id014
+    - Exact threshold and lower constant require visual transcription.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id014
+- id: phi_nu
+  kind: definition
+  book:
+    number: Eq. (3.74)
+    pages:
+    - 150
+    section: '3.3'
+    equations:
+    - '3.74'
+  title: Entropy-method auxiliary functions
+  statement: Define φ(x):=e^{−x}−1+x and ν(x) by the second formula in (3.74); these functions encode the entropy/Laplace
+    differential inequalities.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - x in the printed real domain
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Lemmas 3.3.4 and Proposition 3.3.5.
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id003
+  likely_lean_representation:
+    sketch: Pseudometric covering/packing/bracketing numbers represented by finite sets or finite indexed covers; entropy
+      integrals as Lebesgue integrals of extended-real functions.
+    blockers: &id015
+    - The searchable layer does not preserve ν(x); copy it directly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id015
+- id: proposition_3_3_1
+  kind: proposition
+  book:
+    number: Proposition 3.3.1
+    pages:
+    - 150
+    - 151
+    section: '3.3'
+    equations: []
+  title: Modified log-Sobolev tensorisation
+  statement: For a nonnegative integrable Z of independent coordinates, Ent(Z) is bounded by the sum of coordinatewise conditional
+    entropy terms; applied to e^{λZ}, this gives the displayed modified log-Sobolev inequality in terms of coordinate replacements.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - independent product coordinates
+    - Z≥0 integrable
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Proposition 3.3.5
+    - Theorem 3.3.15
+  proof_status: *id004
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: ''
+    used_later_in_book: true
+  equivalents: *id003
+  likely_lean_representation: *id016
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: definition_3_3_2
+  kind: definition
+  book:
+    number: Definition 3.3.2
+    pages:
+    - 151
+    section: '3.3'
+    equations: []
+  title: Subadditive/self-bounding random variable
+  statement: A nonnegative Z of n coordinates is subadditive in the book’s sense if coordinate-deleted Z_k, independent of
+    coordinate k, satisfy 0≤Z−Z_k≤1 and ∑_{k=1}^n(Z−Z_k)≤Z.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - Z,Z_k measurable
+    - Z_k independent of coordinate k
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - Lemmas 3.3.3–3.3.4
+    - Proposition 3.3.5
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id003
+  likely_lean_representation: *id016
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: lemma_3_3_3
+  kind: lemma
+  book:
+    number: Lemma 3.3.3
+    pages:
+    - 151
+    - 153
+    section: '3.3'
+    equations: []
+  title: Empirical suprema are subadditive
+  statement: For Z=max_{f∈𝓕}∑_{i=1}^n f(Xᵢ), where 𝓕 is countable, E f(X_k)=0 and 0≤f≤1, the coordinate-deleted maxima satisfy
+    Definition 3.3.2. There are centred Y_k≤Z−Z_k with ∑E_kY_k²≤nσ², σ²:=n⁻¹∑_k sup_fE f(X_k)²; the absolute-supremum case
+    uses 𝓕∪−𝓕.
+  transcription_status: exact-transcription
+  hypotheses:
+    explicit:
+    - independent X_k
+    - 𝓕 countable
+    - 0≤f≤1
+    - E f(X_k)=0
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_3_2
+    later_book_uses:
+    - Theorems 3.3.7
+    - 3.3.9
+    - 3.3.10
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id003
+  likely_lean_representation: *id009
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: lemma_3_3_4
+  kind: lemma
+  book:
+    number: Lemma 3.3.4
+    pages:
+    - 153
+    - 154
+    section: '3.3'
+    equations: []
+  title: Analytic bounds for ν
+  statement: The auxiliary function ν from (3.74) has the monotonicity and comparison properties displayed in the lemma, sufficient
+    to close the log-Laplace differential inequality.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit: []
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - phi_nu
+    later_book_uses:
+    - Proposition 3.3.5.
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id003
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id017
+    - Transcribe every part and domain from pp.153–154.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id017
+- id: proposition_3_3_5
+  kind: proposition
+  book:
+    number: Proposition 3.3.5
+    pages:
+    - 154
+    section: '3.3'
+    equations: []
+  title: Log-Sobolev inequality for subadditive variables
+  statement: If Z is subadditive, Ent(e^{λZ}) is bounded by the explicit λ-function times E[Ze^{λZ}], yielding the differential
+    inequality printed in the proposition.
+  transcription_status: precise-structural-statement-page-image-check
+  hypotheses:
+    explicit:
+    - Z subadditive
+    - λ in printed domain
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition_3_3_2
+    - lemma_3_3_4
+    - proposition_3_3_1
+    later_book_uses:
+    - Corollary 3.3.6
+    - Theorem 3.3.7
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id003
+  likely_lean_representation:
+    sketch: Independent-coordinate theorem on a product probability space, with conditional expectations, entropy, log-Laplace
+      transforms and explicit measurable suprema.
+    blockers: &id018
+    - Exact φ/ν placement and λ sign require page-image checking.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id018
+- id: corollary_3_3_6
+  kind: corollary
+  book:
+    number: Corollary 3.3.6
+    pages:
+    - 154
+    - 155
+    section: '3.3'
+    equations: []
+  title: The Y_{k,a,α} construction
+  statement: For the auxiliary coordinate-deletion variables Y_{k,a,α}, the corollary gives the entropy/moment estimate needed
+    for the centred empirical-supremum Laplace bound.
+  transcription_status: blocking-page-image-transcription
+  hypotheses:
+    explicit:
+    - parameters a,α in the printed ranges
+    implicit: []
+  quantifier_order: *id001
+  constants: *id002
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - lemma_3_3_3
+    - proposition_3_3_5
+    later_book_uses:
+    - Theorem 3.3.7.
+  proof_status: *id004
+  notes_status: *id008
+  equivalents: *id003
+  likely_lean_representation:
+    sketch: Declaration over measurable functions, probability measures, finite sums, integrals and countable suprema; explicit
+      countability/separability hypotheses are retained for measurability.
+    blockers: &id019
+    - Notation-heavy definition and parameter ranges must be copied directly.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id019
