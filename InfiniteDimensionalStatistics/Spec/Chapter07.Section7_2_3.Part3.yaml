@@ -1,0 +1,234 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+section: 7.2.3
+fragment_part: 3
+inventory:
+- id: ch7.prop.scoreBound7.66
+  kind: mathematically_operative_bound
+  book:
+    number: (7.66)
+    pages:
+    - 560
+    section: 7.2.3
+    equations:
+    - (7.66)
+  title: Score bound for Sobolev directions
+  statement: "Under the interior condition, for bounded Sobolev g,\n  |Dℓₙ(p̂ₙ)[π₀(g)]|\n\
+    \  ≤ C (D-||p₀||_{H^t})^{-1} ||g||_{H^t} ||p₀||_{H^t}\n      n^{-2t/(2t+1)}\n\
+    on events of arbitrarily high probability for n sufficiently large."
+  hypotheses:
+    explicit:
+    - Interior condition (7.65).
+    - g has finite H^t norm.
+    - n is large on the high-probability event.
+    implicit:
+    - The displayed constant C also absorbs lower-bound/interpolation constants.
+  quantifier_order:
+  - For each desired probability level, eventually uniformly over g after scaling
+    by ||g||_{H^t}.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.lemma.7.2.5
+    - ch7.lemma.7.2.12
+    - ch7.def.scoreProjection
+    - ch7.def.sobolevInterior
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A high-probability uniform linear-functional bound; represent as `OP`
+      or explicit events.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: ch7.lemma.7.2.13
+  kind: lemma
+  book:
+    number: Lemma 7.2.13
+    pages:
+    - 560
+    - 561
+    section: 7.2.3
+    equations: []
+  title: Uniform plug-in/empirical discrepancy on Sobolev balls
+  statement: "For every fixed H^t-ball G={g:||g||_{H^t}≤B},\n  sup_{g∈G}|(P̂ₙ-Pₙ)(g)|\n\
+    \    = O_{P₀}( B n^{-1/2} n^{-(t-1/2)/(2t+1)} )."
+  hypotheses:
+    explicit:
+    - Interior condition (7.65).
+    - B<∞ fixed.
+    - G is a measurable/separable function class.
+    implicit: []
+  quantifier_order:
+  - ∀ fixed B, stochastic-order statement as n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.lemma.7.2.6
+    - ch7.prop.scoreBound7.66
+    - ch7.lemma.7.2.12
+    - ch7.thm.7.2.10
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom
+      `OP` and `oP` predicates over the sequence of experiments.
+
+      A supremum over a function class; needs measurability or outer-probability conventions.'
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 561
+    detail: Proof's first display must use the L² rate, not the L∞ rate.
+- id: ch7.thm.7.2.14
+  kind: theorem
+  book:
+    number: Theorem 7.2.14
+    pages:
+    - 561
+    - 562
+    section: 7.2.3
+    equations: []
+  title: Asymptotic efficiency of the Sobolev MLE
+  statement: "Assume the interior condition and let s>1/2. If F is a bounded subset\
+    \ of H^s\n(or of C^s under the stated embeddings), then\n  ||P̂ₙ-Pₙ||_F = o_{P₀}(n^{-1/2}),\n\
+    and therefore\n  √n(P̂ₙ-P₀) ⇒ G_{P₀} in ℓ∞(F).\nIn particular, for each f∈F,\n\
+    \  √n∫ f(p̂ₙ-p₀)dμ ⇒ N(0, ||f-P₀f||²_{L²(P₀)})."
+  hypotheses:
+    explicit:
+    - t>1/2 and p₀ satisfies (7.65).
+    - s>1/2.
+    - F is bounded in the specified smoothness norm and is a uniform P₀-Donsker class.
+    implicit:
+    - Measurability/separability assumptions for ℓ∞(F) are in force.
+    - The empirical process CLT is invoked.
+  quantifier_order:
+  - ∀ admissible bounded classes F; weak convergence as n→∞; ∀ f∈F scalar CLT.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Theorem 4.4.5 (corrected reference)
+    - Corollary 3.7.39 (corrected reference)
+    - Donsker CLT
+    chapter_local:
+    - ch7.lemma.7.2.13
+    - ch7.thm.7.2.10
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A random element in `ℓ∞(F)` represented as bounded functions on an index
+      type, with measurability/separability hypotheses explicit; weak convergence
+      via `ProbabilityMeasure`.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - type: official_erratum
+    page: 562
+    detail: Replace deleted proof phrase; cite Theorem 4.4.5 and Corollary 3.7.39.
+- id: ch7.thm.7.2.15
+  kind: theorem
+  book:
+    number: Theorem 7.2.15
+    pages:
+    - 562
+    - 563
+    section: 7.2.3
+    equations: []
+  title: Parametric-rate convergence of the Sobolev-MLE cdf
+  statement: "Let F̂ₙ(x)=∫_0^x p̂ₙ(u)du and F₀(x)=∫_0^x p₀(u)du. Under the hypotheses\
+    \ of\nTheorem 7.2.14,\n  √n ||F̂ₙ-F₀||∞ = O_{P₀}(1),\nand the process has the\
+    \ corresponding Brownian-bridge weak limit obtained by\ntesting against indicators\
+    \ [0,x]."
+  hypotheses:
+    explicit:
+    - Sobolev MLE and interior p₀ hypotheses.
+    - Indicator class indexed by x∈[0,1].
+    implicit:
+    - The exact weak-limit formulation is inherited from Theorem 7.2.14/empirical
+      cdf theory.
+  quantifier_order:
+  - As n→∞.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.2.14
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Map the signed measure process to cumulative distribution functions; use
+      the empirical-cdf Donsker theorem.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
