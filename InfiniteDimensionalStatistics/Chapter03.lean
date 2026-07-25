@@ -22,6 +22,7 @@ import InfiniteDimensionalStatistics.Chapter03.LocalClasses
 import InfiniteDimensionalStatistics.Chapter03.InterfaceLemmas
 import InfiniteDimensionalStatistics.Chapter03.SauerShelah
 import InfiniteDimensionalStatistics.Chapter03.OuterLaw
+import InfiniteDimensionalStatistics.Chapter03.OuterMeasureLemmas
 
 /-!
 # Chapter 3: Empirical Processes
@@ -29,9 +30,10 @@ import InfiniteDimensionalStatistics.Chapter03.OuterLaw
 Source-order implementation root for Chapter 3.  The current implementation
 contains the reusable definition layer and proved concentration results through
 the finite maximal mgf inequality and finite Sauer–Shelah bound, together with
-the product-geometry, entropy-method, empirical-entropy, canonical U-statistic,
-entropy-growth, outer-measure, Glivenko–Cantelli, Gaussian-bridge, Donsker,
-local-class, and outer-law interfaces used through Section 3.7.  Deep entropy,
-VC and Donsker theorem proofs are added only when they have genuine Lean proofs;
-no assumption or placeholder is used to simulate completion.
+proved elementary outer-measure calculus and the product-geometry,
+entropy-method, empirical-entropy, canonical U-statistic, entropy-growth,
+Glivenko–Cantelli, Gaussian-bridge, Donsker, local-class, and outer-law
+interfaces used through Section 3.7.  Deep entropy, VC and Donsker theorem proofs
+are added only when they have genuine Lean proofs; no assumption or placeholder
+is used to simulate completion.
 -/
