@@ -1,3 +1,4 @@
+# Pull-request trigger used to obtain inspectable package-audit logs.
 name: Infinite-Dimensional Statistics Spec Audit
 
 on:
