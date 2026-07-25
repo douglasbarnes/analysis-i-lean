@@ -5,7 +5,7 @@ chapter:
   book_pages: &id001
     start: 607
     end: 666
-  status: inventory_complete_with_central_review_flags
+  status: pass_with_central_review_flags
 source:
   title: Mathematical Foundations of Infinite-Dimensional Statistical Models
   authors:
@@ -35,3 +35,19 @@ acceptance:
   central_review_issue_count: 29
   missing_numbered_labels: []
   duplicate_identifiers: []
+completeness_check:
+  missing_numbered_labels: []
+  apparent_numbering_gaps_requiring_source_check: []
+  duplicate_identifiers: []
+validation:
+  chapter_local_strict_schema: pass
+  inventory_entries: 115
+  dependency_edges: 160
+  dag_nodes: 115
+  dag_acyclic: true
+  pass_counts:
+    core: 106
+    starred: 0
+    exercise: 9
+  duplicate_numbered_book_labels: []
+  note: This chapter-local result does not certify the all-eight-chapter acceptance gate or the required clean Lean build.
