@@ -1,0 +1,209 @@
+name: Finalise Chapters 5 and 6 Replay
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/finalise-chapters05-06.yml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  finalise:
+    if: github.head_ref == 'recovery/chapters05-06-current'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pyyaml
+      - name: Replay prepared package files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin recovery/p1-5-chapter05-spec agent/chapter-06-spec-v5
+          git checkout origin/recovery/p1-5-chapter05-spec -- 'InfiniteDimensionalStatistics/Spec/Chapter05*.yaml'
+          git checkout origin/agent/chapter-06-spec-v5 -- 'InfiniteDimensionalStatistics/Spec/Chapter06*.yaml'
+      - name: Apply canonical representation and transport repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          spec = Path('InfiniteDimensionalStatistics/Spec')
+          starred_ids = {
+              'ch5.cond.K1_K5', 'ch5.def.D_class', 'ch5.prop.5_1_21',
+              'ch5.ex.haar_extreme', 'ch5.prop.5_1_22',
+              'ch5.ex.convolution_extreme', 'ch5.prop.5_1_23',
+          }
+          found = set()
+          for path in sorted(spec.glob('Chapter05.Inventory.*.yaml')):
+              doc = yaml.safe_load(path.read_text(encoding='utf-8'))
+              changed = False
+              for entry in doc.get('inventory', []):
+                  if entry.get('id') in starred_ids:
+                      entry['source_starred'] = True
+                      found.add(entry['id'])
+                      changed = True
+              if changed:
+                  path.write_text(
+                      yaml.safe_dump(doc, sort_keys=False, allow_unicode=True, width=120),
+                      encoding='utf-8',
+                  )
+          if found != starred_ids:
+              raise SystemExit(f'Missing Chapter 5 starred entries: {sorted(starred_ids - found)}')
+
+          valid_escape = set('0abtnvfre"\\/N_LPuxU_')
+
+          def repair_double_quoted_scalars(text: str) -> str:
+              out = []
+              i = 0
+              in_scalar = False
+              line_start = 0
+              while i < len(text):
+                  ch = text[i]
+                  if not in_scalar:
+                      if ch == '\n':
+                          line_start = i + 1
+                      if ch == '"':
+                          prefix = text[line_start:i].strip()
+                          if prefix.endswith(':') or prefix == '-':
+                              in_scalar = True
+                      out.append(ch)
+                      i += 1
+                      continue
+                  if ch == '\\':
+                      nxt = text[i + 1] if i + 1 < len(text) else ''
+                      if nxt in valid_escape:
+                          out.append(ch)
+                          out.append(nxt)
+                          i += 2
+                      else:
+                          out.append('\\\\')
+                          i += 1
+                      continue
+                  if ch == '"':
+                      in_scalar = False
+                  out.append(ch)
+                  if ch == '\n':
+                      line_start = i + 1
+                  i += 1
+              if in_scalar:
+                  raise ValueError('unterminated double-quoted YAML scalar')
+              return ''.join(out)
+
+          repaired_files = []
+          for path in sorted(spec.glob('Chapter06.Inventory.*.yaml')):
+              text = path.read_text(encoding='utf-8')
+              try:
+                  yaml.safe_load(text)
+                  continue
+              except yaml.YAMLError:
+                  repaired = repair_double_quoted_scalars(text)
+                  yaml.safe_load(repaired)
+                  path.write_text(repaired, encoding='utf-8')
+                  repaired_files.append(str(path))
+          print('Transport-repaired Chapter 6 files:', repaired_files)
+
+          validator_path = Path('scripts/validate_ids_specs.py')
+          validator = validator_path.read_text(encoding='utf-8')
+          old = '''    kind = str(entry.get("kind", "")).replace("_", "-").lower()\n    number = str(nested(entry, "book", "number") or "")\n    if kind == "exercise":\n        if pass_value != "exercise":\n            errors.append(f"{loc}: exercise must use exercise pass")\n        reasons = entry.get("selection_reasons")\n        if not isinstance(reasons, (dict, list)) or not reasons:\n            errors.append(f"{loc}: selected exercise needs selection_reasons")\n    elif pass_value == "exercise":\n        errors.append(f"{loc}: non-exercise may not use exercise pass")\n    if pass_value == "starred" and "*" not in number:\n        errors.append(f"{loc}: starred pass requires an explicit book star")\n    if "*" in number and kind != "exercise" and pass_value != "starred":\n        errors.append(f"{loc}: explicitly starred book item must use starred pass")\n    if not allow_source_blockers:\n        status = str(entry.get("transcription_status", ""))\n'''
+          new = '''    kind = str(entry.get("kind", "")).replace("_", "-").lower()\n    number = str(nested(entry, "book", "number") or "")\n    section = str(nested(entry, "book", "section") or "")\n    source_starred = entry.get("source_starred", False)\n    if not isinstance(source_starred, bool):\n        errors.append(f"{loc}: source_starred must be Boolean when present")\n        source_starred = False\n    has_source_star = "*" in number or "*" in section or source_starred\n    if kind == "exercise":\n        if pass_value != "exercise":\n            errors.append(f"{loc}: exercise must use exercise pass")\n        reasons = entry.get("selection_reasons")\n        if not isinstance(reasons, (dict, list)) or not reasons:\n            errors.append(f"{loc}: selected exercise needs selection_reasons")\n    elif pass_value == "exercise":\n        errors.append(f"{loc}: non-exercise may not use exercise pass")\n    if pass_value == "starred" and not has_source_star:\n        errors.append(f"{loc}: starred pass requires source-star evidence")\n    if has_source_star and kind != "exercise" and pass_value != "starred":\n        errors.append(f"{loc}: source-starred book item must use starred pass")\n    if not allow_source_blockers:\n        status = str(\n            entry.get("transcription_status")\n            or nested(entry, "source_fidelity", "transcription_status")\n            or ""\n        )\n'''
+          if old not in validator:
+              raise SystemExit('Validator source-star block does not match current main')
+          validator = validator.replace(old, new, 1)
+          old_descriptor = '''    chapter, descriptor, inventory, dag = load_chapter(path)\n    errors: list[str] = []\n'''
+          new_descriptor = '''    chapter, descriptor, inventory, dag = load_chapter(path)\n    errors: list[str] = []\n    if not allow_source_blockers:\n        declared_blockers = descriptor.get("blocking_source_transcriptions")\n        if isinstance(declared_blockers, list) and declared_blockers:\n            errors.append(\n                f"chapter {chapter}: unresolved source transcriptions: "\n                f"{sorted(map(str, declared_blockers))}"\n            )\n'''
+          if old_descriptor not in validator:
+              raise SystemExit('Validator descriptor block does not match current main')
+          validator_path.write_text(
+              validator.replace(old_descriptor, new_descriptor, 1), encoding='utf-8'
+          )
+
+          schema = spec / 'Schema.md'
+          schema_text = schema.read_text(encoding='utf-8')
+          marker = 'Difficulty must not alter the pass. In the canonical representation, a non-exercise entry may use `starred` only when the book number or label explicitly contains the source star.\n'
+          replacement = 'Difficulty must not alter the pass. A source star may be recorded in `book.number` or `book.section`. When the source stars an enclosing section rather than repeating the star on each declaration, every affected non-exercise entry records `source_starred: true`; its declaration label remains unchanged.\n'
+          if marker not in schema_text:
+              raise SystemExit('Schema source-star paragraph does not match current main')
+          schema.write_text(schema_text.replace(marker, replacement, 1), encoding='utf-8')
+          PY
+      - name: Audit replayed packages
+        id: audit
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          for chapter in 05 06; do
+            root="$RUNNER_TEMP/chapter${chapter}-final"
+            mkdir -p "$root/scripts" "$root/InfiniteDimensionalStatistics/Spec"
+            cp scripts/validate_ids_specs.py "$root/scripts/"
+            cp InfiniteDimensionalStatistics/BookManifest.yaml "$root/InfiniteDimensionalStatistics/"
+            cp InfiniteDimensionalStatistics/Spec/Chapter${chapter}* "$root/InfiniteDimensionalStatistics/Spec/"
+            (
+              cd "$root"
+              python scripts/validate_ids_specs.py --allow-missing --allow-source-blockers > migration.log 2>&1
+              echo $? > migration.status
+              python scripts/validate_ids_specs.py --allow-missing > strict.log 2>&1
+              echo $? > strict.status
+            )
+          done
+          migration5=$(cat "$RUNNER_TEMP/chapter05-final/migration.status")
+          strict5=$(cat "$RUNNER_TEMP/chapter05-final/strict.status")
+          migration6=$(cat "$RUNNER_TEMP/chapter06-final/migration.status")
+          strict6=$(cat "$RUNNER_TEMP/chapter06-final/strict.status")
+          echo "migration5=$migration5" >> "$GITHUB_OUTPUT"
+          echo "strict5=$strict5" >> "$GITHUB_OUTPUT"
+          echo "migration6=$migration6" >> "$GITHUB_OUTPUT"
+          echo "strict6=$strict6" >> "$GITHUB_OUTPUT"
+          test "$migration5" = 0 && test "$migration6" = 0
+      - name: Post final audit results
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          {
+            echo '### Final Chapters 5 and 6 replay audit'
+            echo
+            echo "- Chapter 5 migration: \`${{ steps.audit.outputs.migration5 }}\`"
+            echo "- Chapter 5 strict: \`${{ steps.audit.outputs.strict5 }}\`"
+            echo "- Chapter 6 migration: \`${{ steps.audit.outputs.migration6 }}\`"
+            echo "- Chapter 6 strict: \`${{ steps.audit.outputs.strict6 }}\`"
+            for chapter in 05 06; do
+              echo
+              echo "#### Chapter $chapter migration"
+              echo '```text'
+              cat "$RUNNER_TEMP/chapter${chapter}-final/migration.log" 2>/dev/null || true
+              echo '```'
+              echo
+              echo "#### Chapter $chapter strict"
+              echo '```text'
+              cat "$RUNNER_TEMP/chapter${chapter}-final/strict.log" 2>/dev/null || true
+              echo '```'
+            done
+          } > "$RUNNER_TEMP/final-comment.md"
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/final-comment.md"
+      - name: Enforce migration validity
+        run: |
+          test "${{ steps.audit.outputs.migration5 }}" = 0
+          test "${{ steps.audit.outputs.migration6 }}" = 0
+      - name: Commit packages and canonical support
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add InfiniteDimensionalStatistics/Spec/Chapter05*.yaml \
+                  InfiniteDimensionalStatistics/Spec/Chapter06*.yaml \
+                  InfiniteDimensionalStatistics/Spec/Schema.md \
+                  scripts/validate_ids_specs.py
+          git commit -m 'Ingest Chapter 5 and Chapter 6 specification packages'
+          git push origin HEAD:${{ github.head_ref }}
