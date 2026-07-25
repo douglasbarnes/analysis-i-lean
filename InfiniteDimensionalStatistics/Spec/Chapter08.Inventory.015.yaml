@@ -1,0 +1,506 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 15
+chunk_count: 16
+inventory:
+- id: ch8.proposition_8_3_23
+  kind: proposition
+  book:
+    number: Proposition 8.3.23
+    pages:
+    - 662
+    section: 8.3.4
+    equations:
+    - '8.3'
+  title: Uniform wavelet priors are almost surely self-similar
+  statement: For ε>0,s>0,j∈ℕ, P(‖K_jU_s−U_s‖∞<εB2^{-js})≤ε^{2^j}=exp(−2^jlog(1/ε)). Consequently P(U_s∈N_s)=0.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - 0<ε<1 for the informative bound
+    - s,B>0
+    implicit:
+    - The proof uses 2^j independent level-j coefficients.
+  quantifier_order:
+  - Fix ε,s,j
+  - bound bias below by the maximum coefficient
+  - compute largest-order-statistic probability
+  - deduce null probability by contradiction/eventual quantification
+  constants: []
+  dependencies:
+    earlier_book:
+    - Order statistic of i.i.d. Uniform(0,1)
+    chapter_local:
+    - ch8.uniform_wavelet_prior_8_127
+    - ch8.nonselfsimilar_holder_set
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Finite independence calculation `P(max_{Fin (2^j)} U_k < ε)=ε^(2^j)` plus countable-event logic.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-024
+- id: ch8.gaussian_wavelet_prior
+  kind: definition
+  book:
+    number: paragraph before Proposition 8.3.24
+    pages:
+    - 663
+    section: 8.3.4
+    equations:
+    - '8.3'
+  title: Gaussian product wavelet prior
+  statement: Let γ_{k,ℓ} be independent N(0,2^{-2ℓ(s+1/2)}) coefficients, yielding a Gaussian product law μ_s on
+    the wavelet coefficient representation of B^s_{2,∞}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - fixed wavelet basis
+    implicit:
+    - Almost-sure membership and Borel measurability in nonseparable B^s_{2,∞} require care.
+  quantifier_order:
+  - Construct independent Gaussian coefficients
+  - define μ_s as their image/product law
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - ch8.proposition_8_3_24
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Product Gaussian measure on sequence coordinates; avoid claiming a Borel law on the nonseparable function
+      space until the embedding is proved.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-023
+- id: ch8.proposition_8_3_24
+  kind: proposition
+  book:
+    number: Proposition 8.3.24
+    pages:
+    - 663
+    section: 8.3.4
+    equations:
+    - '8.3'
+  title: Gaussian wavelet priors are almost surely L2 self-similar
+  statement: For the Gaussian product prior μ_s, μ_s(M_s)=0.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - Gaussian coefficient prior above
+    implicit:
+    - Measurability of M_s under the chosen sequence-space law.
+  quantifier_order:
+  - Show failure probabilities for block energies are summable or otherwise null
+  - conclude eventual self-similarity almost surely
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.gaussian_wavelet_prior
+    - ch8.nonselfsimilar_l2_set
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Probability-one block-energy lower bound for independent Gaussian coefficients, then image under the
+      coefficient representation.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-023
+- id: ch8.exercise_8_3_1
+  kind: exercise
+  book:
+    number: Exercise 8.3.1
+    pages:
+    - 664
+    section: 8.3 Exercises
+    equations:
+    - '8.3'
+  title: Direct sample-split confidence band centred at an undersmoothed estimator
+  statement: Using a Haar estimator at resolution j_n=j̄_n+u_n from an independent half-sample, prove the uniform
+    Gaussian limit (6.121) over self-similar Hölder classes and obtain a confidence band with the properties of
+    Theorem 8.3.15; extend to i.i.d. sampling via Propositions 5.1.22 and 5.1.23.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - hypotheses of Theorem 8.3.15
+    - u_n→∞ slowly
+    implicit:
+    - Sample splitting and Haar indexing are explicit.
+  quantifier_order:
+  - Construct estimator
+  - prove uniform extreme-value limit
+  - derive band
+  - repeat in sampling model
+  constants: []
+  dependencies:
+    earlier_book:
+    - Theorem 2.7.1
+    - Propositions 5.1.22 and 5.1.23
+    chapter_local:
+    - ch8.lemma_8_3_13
+    - ch8.theorem_8_3_15
+    later_book_uses: &id002 []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Alternative major construction requiring stationary Gaussian extreme-value theory.
+    blockers: []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review:
+  - CR-003
+  - CR-016
+  selection_reasons:
+  - establishes a reusable alternative confidence-band construction
+  used_by: *id002
+- id: ch8.exercise_8_3_2
+  kind: exercise
+  book:
+    number: Exercise 8.3.2
+    pages:
+    - 664
+    section: 8.3 Exercises
+    equations:
+    - '8.3'
+  title: Complete the lower-bound proof of Theorem 8.3.18
+  statement: Complete the proof of Theorem 8.3.18 from the construction given in the text.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - all hypotheses of Theorem 8.3.18
+    implicit: []
+  quantifier_order:
+  - Finish likelihood-ratio and confidence-to-test estimates
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.theorem_8_3_18
+    later_book_uses: &id003 []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id004
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Required proof-completion task for a named theorem.
+    blockers: []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review:
+  - CR-021
+  selection_reasons:
+  - completes a proof omitted from the main text
+  used_by: *id003
+- id: ch8.exercise_8_3_3
+  kind: exercise
+  book:
+    number: Exercise 8.3.3
+    pages:
+    - 664
+    section: 8.3 Exercises
+    equations:
+    - '8.3'
+  title: L∞ lower bound for Theorem 8.3.20
+  statement: Prove the L∞ part of Theorem 8.3.20, showing that the self-similar Hölder class retains the full minimax
+    rate.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - fixed nonempty self-similar Hölder class
+    implicit: []
+  quantifier_order:
+  - Embed a standard minimax packing/hypercube while preserving self-similarity
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.theorem_8_3_20
+    later_book_uses: &id005 []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id004
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Required lower-bound lemma using a self-similar wavelet packing.
+    blockers: []
+  difficulty: research-level
+  pass: exercise
+  issues_for_central_review:
+  - CR-022
+  selection_reasons:
+  - completes a proof omitted from the main text
+  used_by: *id005
+- id: ch8.exercise_8_3_4
+  kind: exercise
+  book:
+    number: Exercise 8.3.4
+    pages:
+    - 664
+    section: 8.3 Exercises
+    equations:
+    - '8.3'
+  title: Uniform-prior analogue of Proposition 8.3.24
+  statement: Prove an analogue of Proposition 8.3.24 for a suitable uniform product prior in the L2 wavelet setting.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - independent uniform coefficient prior chosen to live in B^s_{2,∞}
+    implicit: []
+  quantifier_order:
+  - Establish block-energy lower bounds almost surely
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.proposition_8_3_24
+    later_book_uses: &id006 []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Independent bounded coefficient block-energy argument.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - CR-003
+  selection_reasons:
+  - establishes a reusable prior-support analogue
+  used_by: *id006
+- id: ch8.exercise_8_3_5
+  kind: exercise
+  book:
+    number: Exercise 8.3.5
+    pages:
+    - 664
+    section: 8.3 Exercises
+    equations:
+    - '8.3'
+  title: Berry–Esseen inequality
+  statement: If X_i are i.i.d. with E X_i=0, E X_i²=1 and E|X_i|³=ρ<∞, prove that for a universal C and all n,t,
+    |P(∑_{i=1}^nX_i≤t√n)−Φ(t)|≤Cρ/√n.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - i.i.d. real variables
+    - mean zero
+    - variance one
+    - finite third absolute moment ρ
+    implicit: []
+  quantifier_order:
+  - There exists universal C
+  - For all n∈ℕ and t∈ℝ the Kolmogorov bound holds
+  constants:
+  - C universal.
+  dependencies:
+    earlier_book:
+    - Classical Berry–Esseen theorem
+    chapter_local: []
+    later_book_uses: &id007
+    - ch8.theorem_8_3_16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - ProbabilityTheory.tendstoInDistribution_inv_sqrt_mul_sum_sub
+      - ProbabilityTheory.tendstoInDistribution_inv_sqrt_mul_sum
+      exact_equivalent: false
+      assessment: No exact Berry–Esseen theorem located. Mathlib has central-limit-theorem infrastructure, but the
+        uniform O(ρ/√n) Kolmogorov bound is not an identified equivalent.
+      audit_profile: berry_esseen
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A uniform distribution-function approximation theorem for normalised sums; likely a major standalone
+      probability-library contribution.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  selection_reasons:
+  - establishes a reusable lemma
+  - is cited in the proof of Theorem 8.3.16
+  used_by: *id007
