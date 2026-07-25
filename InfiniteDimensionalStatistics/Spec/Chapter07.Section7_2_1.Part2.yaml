@@ -1,0 +1,359 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.2.1
+fragment_part: 2
+inventory:
+- id: ch7.thm.7.2.1
+  kind: theorem
+  book:
+    number: Theorem 7.2.1
+    label: Theorem 7.2.1
+    pages:
+    - 548
+    - 549
+    - 550
+    section: 7.2.1
+    equations: []
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Hellinger rate for an unsieved NPMLE
+  statement: "Assume p₀∈P and p̂ₙ is an MLE. Let J(δ)≥J(P̄,δ) and assume J(δ)/δ² is\nnonincreasing on (0,1]. There exists c>0 such that, for every sequence δₙ with\n  √n δₙ² ≥ c J(δₙ)  for every n,\nand every δ≥δₙ,\n  P₀^n(h(p̂ₙ,p₀)≥δ) ≤ c exp(-nδ²/c²)."
+  hypotheses:
+    explicit:
+    - p₀∈P.
+    - A measurable MLE exists.
+    - The entropy majorant and monotonicity condition.
+    - δₙ∈(0,1] and δ≥δₙ.
+    implicit:
+    - All empirical-process suprema used are measurable or interpreted through a measurable version.
+    - The root-density bracketing integral is finite at relevant radii.
+  quantifier_order:
+  - ∃ universal-for-the-model-proof c>0, ∀ admissible sequences δₙ, ∀ n, ∀ δ≥δₙ, bound.
+  constants:
+  - c is fixed independently of n and δ, but may absorb universal constants.
+  dependencies:
+    earlier_book:
+    - Theorem 3.5.21 (bracketing exponential inequality)
+    chapter_local:
+    - ch7.def.npmle
+    - ch7.def.bracketingEntropyIntegral
+    - ch7.lemma.7.2.2
+    later_book_uses:
+    - ch7.remark.localEntropy
+    - ch7.thm.7.2.10
+    - ch7.thm.7.2.17
+    - ch7.thm.7.2.3
+  proof_status:
+    delegates_to_exercises:
+    - ex7.2.1
+    - ex7.2.2
+    contains_omitted_steps: true
+    comment: essential inequalities in the published proof
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
+
+      The nonasymptotic statement should be formalised first as a tail inequality on product measures.'
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_2_1
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.lemma.7.2.2
+  kind: lemma
+  book:
+    number: Lemma 7.2.2
+    label: Lemma 7.2.2
+    pages:
+    - 548
+    - 549
+    section: 7.2.1
+    equations: []
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Basic likelihood inequality
+  statement: "For g_p=(1/2)log((p+p₀)/(2p₀)), one has\n  h²((p̂ₙ+p₀)/2,p₀) ≤ 2 (Pₙ-P₀)(g_{p̂ₙ})."
+  hypotheses:
+    explicit:
+    - p₀∈P and p̂ₙ maximises ℓₙ over P.
+    - The ratio is used on A={p₀>0}.
+    implicit:
+    - The empirical integral is finite on the event where the MLE comparison is applied; conventions at zeros are as in the
+      text.
+  quantifier_order:
+  - For every realised sample and MLE satisfying (7.23).
+  constants: []
+  dependencies:
+    earlier_book:
+    - Concavity of log
+    - Hellinger affinity identity
+    chapter_local:
+    - ch7.def.npmle
+    - ch7.def.averageDensityClass
+    - ch7.def.hellinger
+    later_book_uses:
+    - ch7.thm.7.2.1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A deterministic inequality for a fixed sample, using `EReal` log or a positive-on-sample restriction.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_lemma_7_2_2
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.remark.localEntropy
+  kind: remark
+  book:
+    number: unnumbered
+    label: Unnumbered local-entropy variant after Theorem 7.2.1
+    pages:
+    - 550
+    section: 7.2.1
+    equations: []
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Local bracketing variant
+  statement: "Replace the global root-density class by\n  P̄^{1/2}(δ)={√p̄ : p∈P, h(p̄,p₀)≤δ}\nand integrate bracketing entropy from δ²/2¹³ to δ. The conclusion of Theorem 7.2.1\nremains valid with a suitable majorant J*(P̄,δ)."
+  hypotheses:
+    explicit:
+    - The local classes are bounded away from zero as required in the proof.
+    implicit:
+    - The precise lower integration limit is δ²/2¹³ as printed.
+  quantifier_order:
+  - ∀ relevant δ∈(0,1].
+  constants: []
+  dependencies:
+    earlier_book:
+    - Theorem 3.5.21
+    chapter_local:
+    - ch7.thm.7.2.1
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A parameterised local class and a variant of the same tail theorem; likely defer until the global theorem exists.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_remark_localEntropy
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.def.sieveMLE
+  kind: definition
+  book:
+    number: (7.34)–(7.37)
+    label: (7.34)–(7.37)
+    pages:
+    - 550
+    section: 7.2.1
+    equations:
+    - (7.34)
+    - (7.35)
+    - (7.36)
+    - (7.37)
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Sieved MLE and approximation setup
+  statement: "Let Pₙ be a sequence of density models and p̂ₙ maximise ℓₙ over Pₙ. Choose pₙ*∈Pₙ\nsatisfying p₀/pₙ*≤U² for a fixed U<∞. Define\n  P̄_{*,n}^{1/2}={√((p+pₙ*)/2):p∈Pₙ}\nand its bracketing entropy integral J*(δ)."
+  hypotheses:
+    explicit:
+    - Each pₙ* is a density in Pₙ.
+    - Uniform likelihood-ratio bound p₀≤U²pₙ*.
+    - A measurable sieve MLE exists.
+    implicit: []
+  quantifier_order:
+  - ∃ fixed U, ∀ n, choose pₙ*; define classes for each n.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.npmle
+    - ch7.def.bracketingEntropyIntegral
+    later_book_uses:
+    - ch7.def.sobolevSieveMLE
+    - ch7.thm.7.2.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Sequences of submodels and estimators indexed by `n`; the density-ratio bound is pointwise or a.e. as specified.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_sieveMLE
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.thm.7.2.3
+  kind: theorem
+  book:
+    number: Theorem 7.2.3
+    label: Theorem 7.2.3
+    pages:
+    - 550
+    - 551
+    section: 7.2.1
+    equations: []
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Hellinger rate for a sieve MLE
+  statement: "Under the sieve setup, let J dominate J* and let J(δ)/δ² be nonincreasing.\nIf √n δₙ²≥cJ(δₙ) eventually, then\n  h(p̂ₙ,p₀)=O_{P₀}(δₙ+h(pₙ*,p₀))."
+  hypotheses:
+    explicit:
+    - All hypotheses of (7.34)–(7.37).
+    - Entropy majorant condition for all sufficiently large n.
+    implicit:
+    - The `O_P` constant may depend on U and universal entropy constants.
+  quantifier_order:
+  - ∃ c>0; for every admissible δₙ, the stochastic order conclusion as n→∞.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Theorem 3.5.21
+    chapter_local:
+    - ch7.def.sieveMLE
+    - ch7.thm.7.2.1
+    later_book_uses:
+    - ch7.prop.7.2.11
+    - ex7.2.6
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: 'A theorem about filters and convergence in probability, using `TendstoInMeasure`/custom `OP` and `oP` predicates
+      over the sequence of experiments.
+
+      First prove a corrected nonasymptotic tail bound with approximation error, then derive `O_P`.'
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_thm_7_2_3
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean

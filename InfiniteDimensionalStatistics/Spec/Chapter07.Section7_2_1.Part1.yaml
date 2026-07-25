@@ -1,0 +1,410 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: 7.2.1
+fragment_part: 1
+inventory:
+- id: ch7.def.logLikelihood
+  kind: definition
+  book:
+    number: (7.20)
+    label: (7.20)
+    pages:
+    - 546
+    section: 7.2.1
+    equations:
+    - (7.20)
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Normalised log-likelihood
+  statement: Define ℓₙ(p)=n^{-1}∑_{i=1}^n log p(Xᵢ), with log 0=-∞.
+  hypotheses:
+    explicit:
+    - Hypotheses of (7.19).
+    implicit:
+    - Codomain is the extended real line; arithmetic with -∞ follows extended-real conventions.
+  quantifier_order:
+  - ∀ p∈P.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.likelihood
+    later_book_uses:
+    - ch7.def.npmle
+    - ch7.def.populationLogLikelihood
+    - ch7.prop.7.2.4
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates:
+      - ENNReal/EReal logarithm infrastructure
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Use `EReal` or a custom extended-real log-likelihood. A real-valued restricted version is available on densities
+      positive at all sample points.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_logLikelihood
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.def.populationLogLikelihood
+  kind: definition
+  book:
+    number: (7.21)
+    label: (7.21)
+    pages:
+    - 547
+    section: 7.2.1
+    equations:
+    - (7.21)
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Population log-likelihood
+  statement: If E_{P₀}|log p(X)|<∞, define ℓ(p)=∫ log p dP₀.
+  hypotheses:
+    explicit:
+    - P₀ has density p₀.
+    - For the stated p, log p is P₀-integrable.
+    implicit:
+    - The integral is real-valued under the integrability assumption.
+  quantifier_order:
+  - ∀ p satisfying integrability.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.logLikelihood
+    later_book_uses:
+    - ch7.prop.7.2.4
+    - ch7.prop.klIdentifiability
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Lebesgue integral of `Real.log ∘ p` against `P₀`; integrability is an explicit argument.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_populationLogLikelihood
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.prop.klIdentifiability
+  kind: proposition
+  book:
+    number: (7.22)
+    label: (7.22)
+    pages:
+    - 547
+    section: 7.2.1
+    equations:
+    - (7.22)
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Kullback–Leibler identifiability
+  statement: "If p is absolutely continuous with respect to p₀ in the sense needed for log(p/p₀), then\n  ℓ(p)-ℓ(p₀)=∫ log(p/p₀) dP₀ ≤ 0,\nwith equality if and only if p=p₀ μ-a.e. Hence ℓ(p)<ℓ(p₀) for p≠p₀."
+  hypotheses:
+    explicit:
+    - p and p₀ are probability densities.
+    - The displayed log ratio is P₀-integrable (or the extended integral is defined).
+    implicit:
+    - The book's wording 'p absolutely continuous with respect to p₀(x)dx' appears directionally inconsistent with the displayed
+      ratio and should be checked; the operative requirement is that p/p₀ is defined P₀-a.s.
+  quantifier_order:
+  - ∀ p in the model with the stated absolute-continuity/integrability conditions.
+  constants: []
+  dependencies:
+    earlier_book:
+    - Jensen/Gibbs inequality
+    chapter_local:
+    - ch7.def.populationLogLikelihood
+    later_book_uses:
+    - ch7.example.grenanderCharacterisation
+    - ch7.prop.7.2.8
+    - ex7.2.7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: partial_equivalent
+      candidates:
+      - InformationTheory.klDiv
+      - InformationTheory.klDiv_eq_zero_iff
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Express as nonnegativity and zero-characterisation of `InformationTheory.klDiv P₀ P`, after aligning the book's
+      orientation of the log-likelihood ratio.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - '[generality_or_orientation] p. 547: Check the absolute-continuity direction in the prose against ∫log(p/p₀)dP₀.'
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_prop_klIdentifiability
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.def.npmle
+  kind: definition
+  book:
+    number: (7.23)
+    label: (7.23)
+    pages:
+    - 547
+    section: 7.2.1
+    equations:
+    - (7.23)
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Nonparametric maximum-likelihood estimator
+  statement: A (measurable) MLE p̂ₙ is a P-valued statistic satisfying ℓₙ(p̂ₙ)=sup_{p∈P}ℓₙ(p).
+  hypotheses:
+    explicit:
+    - The supremum is attained.
+    - A measurable maximiser is selected when p̂ₙ is used probabilistically.
+    implicit:
+    - Existence and measurability are not automatic and are proved separately in concrete models.
+  quantifier_order:
+  - For each n and sample, choose p̂ₙ∈argmax_P ℓₙ.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.logLikelihood
+    later_book_uses:
+    - ch7.def.averageDensityClass
+    - ch7.def.monotoneDensityMLE
+    - ch7.def.sieveMLE
+    - ch7.def.sobolevDensityModel
+    - ch7.lemma.7.2.2
+    - ch7.lemma.7.2.5
+    - ch7.lemma.7.2.6
+    - ch7.thm.7.2.1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Separate predicates `IsGreatest (ℓₙ '' P)` / `IsMaxOn ℓₙ P` from a measurable-selection structure. Avoid an unproved
+      global choice of measurable argmax.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_npmle
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.def.averageDensityClass
+  kind: definition
+  book:
+    number: (7.24)–(7.25)
+    label: (7.24)–(7.25)
+    pages:
+    - 547
+    section: 7.2.1
+    equations:
+    - (7.24)
+    - (7.25)
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Midpoint densities and root-density class
+  statement: "For p∈P set p̄=(p+p₀)/2 and define the root-density class\n  P̄^{1/2}={√p̄ : p∈P}.\nThe reference measure used in the entropy argument is μ₀ with dμ₀=p₀ dμ."
+  hypotheses:
+    explicit:
+    - p₀∈P.
+    - p,p₀ are μ-densities.
+    implicit: []
+  quantifier_order:
+  - ∀ p∈P.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.hellinger
+    - ch7.def.npmle
+    later_book_uses:
+    - ch7.def.bracketingEntropyIntegral
+    - ch7.lemma.7.2.2
+    - ex7.2.1
+    - ex7.2.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Pointwise convex combination of density representatives and its square root as an `L2(μ₀)` element.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_averageDensityClass
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean
+- id: ch7.def.bracketingEntropyIntegral
+  kind: definition
+  book:
+    number: (7.26)
+    label: (7.26)
+    pages:
+    - 548
+    section: 7.2.1
+    equations:
+    - (7.26)
+    section_title: Rates of Convergence in Hellinger Distance
+    source_note: Printed book pagination; statement incorporates official errata where listed.
+  title: Bracketing entropy integral
+  statement: "Define\n  J(P̄,δ)= max( ∫_0^δ √(log N_[ ](P̄^{1/2},L²(μ₀),ε)) dε, δ ),\nfor 0<δ≤1."
+  hypotheses:
+    explicit:
+    - Bracketing numbers are defined for the root-density class in L²(μ₀).
+    implicit:
+    - The integral may be infinite; later hypotheses require a finite majorant.
+  quantifier_order:
+  - ∀ δ∈(0,1].
+  constants: []
+  dependencies:
+    earlier_book:
+    - Definition 3.5.20 and Theorem 3.5.21 (bracketing entropy)
+    chapter_local:
+    - ch7.def.averageDensityClass
+    later_book_uses:
+    - ch7.def.sieveMLE
+    - ch7.thm.7.2.1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: none
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: No notes-only mathematical declaration is used here.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: A real/ENNReal integral of the square root of the logarithm of a bracketing number. Brackets are pairs of measurable
+      functions ordered a.e.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+  verification_status: verified_against_print_and_errata
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ch7_def_bracketingEntropyIntegral
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/MaximumLikelihood/General.lean

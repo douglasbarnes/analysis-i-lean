@@ -1,0 +1,383 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition (2016)
+  uploaded_file: FULLPDF.pdf
+  chapter: 7
+  chapter_title: Likelihood-Based Procedures
+  book_pages:
+    start: 541
+    end: 606
+  sections:
+  - number: '7.1'
+    title: Nonparametric Testing in Hellinger Distance
+    start_page: 542
+  - number: '7.2'
+    title: Nonparametric Maximum Likelihood Estimators
+    start_page: 546
+  - number: 7.2.1
+    title: Rates of Convergence in Hellinger Distance
+    start_page: 547
+  - number: 7.2.2
+    title: The Information Geometry of the Likelihood Function
+    start_page: 551
+  - number: 7.2.3
+    title: The Maximum Likelihood Estimator over a Sobolev Ball
+    start_page: 554
+  - number: 7.2.4
+    title: The Maximum Likelihood Estimator of a Monotone Density
+    start_page: 563
+  - number: '7.3'
+    title: Nonparametric Bayes Procedures
+    start_page: 570
+  - number: 7.3.1
+    title: General Contraction Results for Posterior Distributions
+    start_page: 573
+  - number: 7.3.2
+    title: Contraction Results with Gaussian Priors
+    start_page: 578
+  - number: 7.3.3
+    title: Product Priors in Gaussian Regression
+    start_page: 582
+  - number: 7.3.4
+    title: Nonparametric Bernstein–von Mises Theorems
+    start_page: 591
+  - number: '7.4'
+    title: Notes
+    start_page: 603
+section: '7.2'
+fragment_part: 2
+inventory:
+- id: ex7.2.5
+  kind: exercise
+  book:
+    number: 7.2.5
+    label: Exercise 7.2.5
+    pages:
+    - 569
+    section: '7.2'
+    equations: []
+    source_note: Printed book pagination.
+    page_verification: verified
+  title: Uniqueness of the Sobolev-ball MLE
+  statement: 'Prove that the MLE p̂ₙ over the Sobolev ball in (7.54) is unique. Use
+
+    concavity of ℓₙ on the convex model, Proposition 7.2.9 showing every
+
+    maximiser lies on the Hᵗ sphere of radius D, and strict convexity of the
+
+    Hilbert norm to show the convex set of maximisers is a singleton.'
+  hypotheses:
+    explicit:
+    - The Sobolev density model and MLE of (7.54).
+    - The boundary conclusion of Proposition 7.2.9.
+    implicit:
+    - A strictly convex norm has no nontrivial line segment in its sphere.
+  quantifier_order:
+  - For each sample for which the boundary result applies, the maximiser is unique.
+  constants:
+  - Sobolev radius D.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.sobolevDensityModel
+    - ch7.prop.7.2.9
+    later_book_uses:
+    - ch7.prop.7.2.8
+    - ch7.thm.7.2.14
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: establishes a required reusable lemma or counterexample'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Strict convexity of a Hilbert norm combined with concavity of an extended-real objective.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  verification_status: verified_against_print
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ex7_2_5
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Exercises/MaximumLikelihood.lean
+  selection_reasons:
+  - establishes a required reusable lemma or counterexample
+  used_by:
+  - ch7.prop.7.2.8
+  - ch7.thm.7.2.14
+- id: ex7.2.6
+  kind: exercise
+  book:
+    number: 7.2.6
+    label: Exercise 7.2.6
+    pages:
+    - 569
+    - 570
+    section: '7.2'
+    equations: []
+    source_note: Printed book pagination.
+    page_verification: verified
+  title: Rates for the finite-dimensional Sobolev sieve MLE
+  statement: "Prove Proposition 7.2.11 by combining Theorem 7.2.10 with the sieve theorem.\nFor the approximation choose\n  pₙ* = π_{V_{jₙ}}(p₀) / ||π_{V_{jₙ}}(p₀)||₁,\nprove pₙ*∈P∩V_{jₙ} for large n, and establish\n  h(pₙ*,p₀)=O(||pₙ*-p₀||₂)=O(2^{-jₙt})=O(n^{-t/(2t+1)})."
+  hypotheses:
+    explicit:
+    - The hypotheses of Proposition 7.2.11.
+    - The wavelet approximation and positivity conditions used in the hint.
+    implicit:
+    - '||π_{V_j}p₀-p₀||∞→0 ensures eventual positivity and model membership.'
+  quantifier_order:
+  - For the prescribed resolution jₙ and n sufficiently large.
+  constants:
+  - Implicit approximation constants depend on the Sobolev ball parameters and lower bound for p₀.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.thm.7.2.3
+    - ch7.thm.7.2.10
+    - ch7.def.sobolevSieveMLE
+    later_book_uses:
+    - ch7.prop.7.2.11
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes a proof omitted from the main text; is cited by a later result; establishes a required
+      reusable lemma or counterexample'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Wavelet projection approximation, L¹ normalisation, positivity by uniform convergence, and transfer to Hellinger
+      distance.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  verification_status: verified_against_print
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ex7_2_6
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Exercises/MaximumLikelihood.lean
+  selection_reasons:
+  - completes a proof omitted from the main text
+  - is cited by a later result
+  - establishes a required reusable lemma or counterexample
+  used_by:
+  - ch7.prop.7.2.11
+- id: ex7.2.7
+  kind: exercise
+  book:
+    number: 7.2.7
+    label: Exercise 7.2.7
+    pages:
+    - 570
+    section: '7.2'
+    equations: []
+    source_note: Printed book pagination.
+    page_verification: verified
+  title: Grenander MLE as the derivative of the least concave majorant
+  statement: 'Prove that the monotone-density MLE p̂ₙ in (7.70) is the left derivative
+
+    of the least concave majorant F̂ₙ of the empirical cdf Fₙ. Deduce that p̂ₙ
+
+    is left-continuous, piecewise constant, has jumps only at observation
+
+    points, is zero on (X_(n),1], and is unique.'
+  hypotheses:
+    explicit:
+    - The monotone density model (7.70).
+    - The empirical cdf Fₙ and its least concave majorant.
+    implicit:
+    - Ties in the observations require grouping; the printed description uses strict order statistics.
+  quantifier_order:
+  - For every finite sample, modulo the standard tied-observation convention.
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch7.def.monotoneDensityMLE
+    - ch7.prop.klIdentifiability
+    later_book_uses:
+    - ch7.example.grenanderCharacterisation
+    - ch7.lemma.7.2.16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: completes a proof omitted from the main text; is cited by a later result; establishes a required
+      reusable lemma or counterexample'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Finite-dimensional reduction of monotone step densities plus convex/concave-envelope theory and KL strictness.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review:
+  - '[generality] p. 570: The strict order-statistic notation suppresses ties; formalisation should state the grouped version
+    or explicitly assume a continuous sampling law.'
+  verification_status: verified_against_print
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ex7_2_7
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Exercises/MaximumLikelihood.lean
+  selection_reasons:
+  - completes a proof omitted from the main text
+  - is cited by a later result
+  - establishes a required reusable lemma or counterexample
+  used_by:
+  - ch7.example.grenanderCharacterisation
+  - ch7.lemma.7.2.16
+- id: ex7.2.8
+  kind: exercise
+  book:
+    number: 7.2.8
+    label: Exercise 7.2.8
+    pages:
+    - 570
+    section: '7.2'
+    equations: []
+    source_note: Printed book pagination.
+    page_verification: verified
+  title: Order-statistic densities and exponential spacings
+  statement: "For i.i.d. X₁,…,Xₙ with cdf F and density f on [0,1], derive the joint\ndensity n!∏ᵢf(xᵢ) on x₁<⋯<xₙ and the beta-form marginal density of X_(i).\nIf inf f≥ζ and aₙ↓0 with n aₙ→∞, prove\n  P(1-X_(n)>aₙ) ≤ (1-c aₙ)^n → 0\nfor c=c(ζ). For a uniform sample prove the exponential-spacing\nrepresentation (U_(i)) ≡d (Z_i/Z_{n+1}), where Z_i are partial sums of\nindependent Exp(1) variables."
+  hypotheses:
+    explicit:
+    - i.i.d. sample with density f on [0,1].
+    - For the tail bound, inf f≥ζ>0.
+    - aₙ→0 and n aₙ→∞.
+    implicit:
+    - The exponential representation uses Z_i=E₁+⋯+E_i.
+  quantifier_order:
+  - For every n and order i; then asymptotically for the sequence aₙ.
+  constants:
+  - c depends only on ζ.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    later_book_uses:
+    - ch7.lemma.7.2.16
+    - ex7.2.9
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: is cited by a later result; establishes a required reusable lemma or counterexample'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Joint-density calculation on the ordered simplex, beta marginals, and distributional identity for normalised exponential
+      spacings.
+    blockers: []
+  difficulty: major-library
+  pass: exercise
+  issues_for_central_review: []
+  verification_status: verified_against_print
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ex7_2_8
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Exercises/MaximumLikelihood.lean
+  selection_reasons:
+  - is cited by a later result
+  - establishes a required reusable lemma or counterexample
+  used_by:
+  - ch7.lemma.7.2.16
+  - ex7.2.9
+- id: ex7.2.9
+  kind: exercise
+  book:
+    number: 7.2.9
+    label: Exercise 7.2.9
+    pages:
+    - 570
+    section: '7.2'
+    equations: []
+    source_note: Printed book pagination.
+    page_verification: verified
+  title: Exact boundary-crossing probability for a uniform empirical cdf
+  statement: "For the empirical cdf Fₙ^U of a U(0,1) sample and every M≥1, prove\n  P(Fₙ^U(t)≤M t for all t∈[0,1]) = 1-1/M."
+  hypotheses:
+    explicit:
+    - U₁,…,Uₙ are i.i.d. uniform on [0,1].
+    - M≥1.
+    implicit:
+    - The event can be expressed through the order statistics U_(i)≥i/(nM).
+  quantifier_order:
+  - For every n∈ℕ and every M≥1.
+  constants:
+  - Exact value 1-1/M.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ex7.2.8
+    later_book_uses:
+    - ch7.lemma.7.2.16
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: 'Selected because: is cited by a later result; establishes a required reusable lemma or counterexample'
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      status: none_exact
+      candidates: []
+      exact_equivalent: false
+    repository:
+      status: none_found
+      candidates: []
+      exact_equivalent: false
+  likely_lean_representation:
+    sketch: Integrate the uniform order-statistic density over a nested simplex; alternatively use exponential spacings.
+    blockers: []
+  difficulty: substantial
+  pass: exercise
+  issues_for_central_review: []
+  verification_status: verified_against_print
+  proposed_lean_name: InfiniteDimensionalStatistics.Chapter07.ex7_2_9
+  proposed_lean_file: InfiniteDimensionalStatistics/Chapter07/Exercises/MaximumLikelihood.lean
+  selection_reasons:
+  - is cited by a later result
+  - establishes a required reusable lemma or counterexample
+  used_by:
+  - ch7.lemma.7.2.16
