@@ -1,0 +1,524 @@
+schema_version: '1.0'
+chapter: 8
+chunk: 5
+chunk_count: 16
+inventory:
+- id: ch8.iid_projection_estimator_8_18
+  kind: definition
+  book:
+    number: (8.18)
+    pages:
+    - 619
+    section: 8.2.1
+    equations:
+    - '8.18'
+  title: Empirical wavelet projection estimator
+  statement: For i.i.d. X₁,…,X_n with density f on [0,1], define f_n(j)(x)=n^{-1}∑_{i=1}^n K_j(X_i,x), equivalently
+    by empirical wavelet coefficients up to level j−1.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - X_i i.i.d. with density f
+    - finite-rank projection kernel K_j
+    implicit:
+    - Kernel sections are measurable and integrable.
+  quantifier_order:
+  - Fix n,j,sample
+  - form empirical average
+  constants: []
+  dependencies:
+    earlier_book:
+    - Chapter 5 projection estimators
+    chapter_local: []
+    later_book_uses:
+    - ch8.iid_lepski_threshold_8_19
+    - ch8.theorem_8_2_3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates:
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Measurable finite empirical average valued in a finite-dimensional function space.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-026
+- id: ch8.iid_lepski_threshold_8_19
+  kind: definition
+  book:
+    number: (8.19)
+    pages:
+    - 619
+    section: 8.2.1
+    equations:
+    - '8.19'
+  title: Envelope-dependent L2 Lepski threshold
+  statement: In the i.i.d. selector use τ=τ̃·U, where U≥1 is a known upper bound for ‖f‖∞ and τ̃ is a sufficiently
+    large universal constant.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - U≥1
+    - ‖f‖∞≤U
+    - τ̃>0
+    implicit: []
+  quantifier_order:
+  - Fix U,τ̃
+  - set τ=τ̃U
+  constants:
+  - τ̃ is chosen universally large; U carries density dependence.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.lepski_l2_8_12
+    - ch8.iid_projection_estimator_8_18
+    later_book_uses:
+    - ch8.lemma_8_2_4
+    - ch8.theorem_8_2_3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id001
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Threshold parameter definition.
+    blockers: []
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: ch8.pilot_envelope_estimator
+  kind: operative example
+  book:
+    number: paragraph after (8.19)
+    pages:
+    - 619
+    section: 8.2.1
+    equations:
+    - '8.19'
+  title: Pilot replacement for an unknown density envelope
+  statement: The known U can be replaced by ‖f_n(j̃_n)‖∞ at a pilot resolution satisfying 2^{j̃_n}≈n/(log n)^2;
+    a formal proof is deferred to Exercise 8.2.1.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f uniformly continuous
+    - pilot projection estimator
+    implicit:
+    - The exact logarithmic typography requires checking.
+  quantifier_order:
+  - Choose j̃_n
+  - compute the pilot sup norm
+  - substitute it for U
+  constants: []
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - ch8.iid_projection_estimator_8_18
+    later_book_uses:
+    - ch8.exercise_8_2_1
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 8.2.1
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: A measurable random threshold; prove high-probability upper/lower control around ‖f‖∞.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-008
+- id: ch8.theorem_8_2_3
+  kind: theorem
+  book:
+    number: Theorem 8.2.3
+    pages:
+    - 619
+    section: 8.2.1
+    equations:
+    - '8.2'
+  title: Adaptive L2 density estimation
+  statement: For the empirical projection estimator and L2 Lepski selector with τ=τ̃U and τ̃ sufficiently large,
+    for every s>0, B≥1, U≥1 and n, sup_{‖f‖_{B^s_{2,∞}}≤B, ‖f‖∞≤U}E_f‖f̂_n−f‖₂≤D·B^{1/(2s+1)}n^{-s/(2s+1)}, with
+    D depending only on s,U,τ̃.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - f is a density on [0,1]
+    - s>0
+    - B,U≥1
+    - τ̃ sufficiently large
+    implicit:
+    - Positivity and integral-one are included even when omitted from ball notation.
+  quantifier_order:
+  - Fix s,U,τ̃
+  - There exists D
+  - For all B≥1,n the uniform risk bound holds
+  constants:
+  - D independent of B,n,f.
+  dependencies:
+    earlier_book:
+    - Theorem 5.1.5
+    chapter_local:
+    - ch8.iid_projection_estimator_8_18
+    - ch8.iid_lepski_threshold_8_19
+    - ch8.lemma_8_2_4
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id001
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Empirical-process risk theorem over bounded density Besov balls.
+    blockers: []
+  difficulty: research-level
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-004
+  - CR-026
+  - CR-029
+- id: ch8.lemma_8_2_4
+  kind: lemma
+  book:
+    number: Lemma 8.2.4
+    pages:
+    - 619
+    section: 8.2.1
+    equations:
+    - '8.2'
+  title: Upper-tail control for the sampling L2 selector
+  statement: For f∈B^s_{2,∞} with ‖f‖∞≤U, τ̃ sufficiently large and j>j_n^*, there is a universal C>0 such that
+    P_f(j̄_n=j)≤C^{-1}exp(−Cτ̃·min(2^j,√n)) and P_f(j̄_n>j_n^*)≤C^{-1}exp(−Cτ̃·min(2^{j_n^*},√n)).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - i.i.d. density sample
+    - s>0
+    - ‖f‖∞≤U
+    - j>j_n^*
+    - τ̃ sufficiently large
+    implicit:
+    - Exact threshold notation in the first display is under review.
+  quantifier_order:
+  - There exists universal C
+  - For every admissible n,f,j the two bounds hold
+  constants:
+  - C independent of all displayed parameters after τ̃ is large enough.
+  dependencies:
+    earlier_book:
+    - Theorem 5.1.13
+    chapter_local:
+    - ch8.oracle_l2_8_11
+    - ch8.iid_lepski_threshold_8_19
+    later_book_uses:
+    - ch8.theorem_8_2_3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id002
+      - Asymptotics.IsLittleO
+      - Filter.Tendsto
+      - Metric.diam
+      - Measure.map
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Tail theorem from empirical projection concentration plus a finite union bound.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-007
+  - CR-026
+- id: ch8.linfty_minimax_benchmark_8_20
+  kind: definition
+  book:
+    number: (8.20)
+    pages:
+    - 620
+    section: 8.2.2
+    equations:
+    - '8.20'
+  title: Fixed-smoothness L∞ minimax benchmark
+  statement: For fixed s,B>0 and n≥2, a tuned linear estimator obeys sup_{‖f‖_{B^s_{∞,∞}}≤B}E_f‖f_n(j_n)−f‖∞≤C·max(1,B)^{1/(2s+1)}(log
+    n/n)^{s/(2s+1)}.
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s,B>0
+    - n≥2
+    implicit:
+    - The function class and model determine additional envelope assumptions in the sampling case.
+  quantifier_order:
+  - Fix s,B
+  - There exists C
+  - For every n≥2 the risk bound holds
+  constants:
+  - C may depend on s and fixed basis/model data.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7
+    - Theorems 6.3.5 and 6.3.7
+    chapter_local: []
+    later_book_uses:
+    - ch8.theorem_8_2_5
+    - ch8.theorem_8_2_7
+    - ch8.theorem_8_2_8
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id002
+      exact_equivalent: false
+      assessment: No exact equivalent. The result is a nonparametric minimax/adaptation statement absent from mathlib;
+        only general probability, finite sums, norms, and asymptotic notation are reusable.
+      audit_profile: adaptive_inference
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No exact equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Uniform expected sup-norm risk over a Hölder–Besov ball.
+    blockers: []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review:
+  - CR-003
+  - CR-029
+- id: ch8.linfty_bias_8_21
+  kind: lemma
+  book:
+    number: (8.21)
+    pages:
+    - 620
+    section: 8.2.2
+    equations:
+    - '8.21'
+  title: Hölder–Besov projection-bias bound
+  statement: For f∈B^s_{∞,∞}, ‖K_jf−f‖∞≤c(s)‖f‖_{B^s_{∞,∞}}2^{-js}=:B(j,f).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - s>0
+    - sufficiently regular wavelet basis
+    - j∈ℕ
+    implicit: []
+  quantifier_order:
+  - Fix s,f,j
+  - define B(j,f)
+  - prove inequality
+  constants:
+  - c(s) depends on the basis/norm convention.
+  dependencies:
+    earlier_book:
+    - Chapter 4 wavelet characterisation
+    chapter_local:
+    - ch8.linear_estimator_8_7
+    later_book_uses:
+    - ch8.linfty_oracle_8_24
+    - ch8.theorem_8_2_5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: &id003
+      - MeasureTheory.MemLp
+      - lp
+      - Finset.sum
+      - Asymptotics.IsLittleO
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Coefficient-tail sup-norm estimate using wavelet overlap bounds.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-003
+- id: ch8.linfty_noise_mean_8_22
+  kind: lemma
+  book:
+    number: (8.22)
+    pages:
+    - 620
+    section: 8.2.2
+    equations:
+    - '8.22'
+  title: Expected sup-norm fluctuation of a projection estimator
+  statement: E_f‖f_n(j)−E_ff_n(j)‖∞≤c₀√(2^j j/n).
+  source_fidelity: exact-paraphrase
+  hypotheses:
+    explicit:
+    - Gaussian white-noise projection estimator
+    - j≥1
+    implicit:
+    - c₀ depends on σ and the fixed wavelet basis.
+  quantifier_order:
+  - There exists c₀
+  - For every n,j,f the bound holds
+  constants:
+  - c₀ independent of f,n,j.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7 / Chapter 5 moment bounds
+    chapter_local:
+    - ch8.linear_estimator_8_7
+    later_book_uses:
+    - ch8.linfty_oracle_8_24
+    - ch8.linfty_lepski_8_25
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: infrastructure-only; no exact equivalent located
+      candidates: *id003
+      exact_equivalent: false
+      assessment: No exact equivalent. Mathlib has normed sequence/function spaces and measure-theoretic primitives,
+        but no reusable formal library for the periodised/boundary-corrected wavelet bases and Besov norms used
+        here.
+      audit_profile: wavelet_besov
+    repository:
+      status: absent-after-code-search
+      candidates: []
+      exact_equivalent: false
+      assessment: No wavelet/Besov/statistical equivalent found in douglasbarnes/analysis-i-lean.
+      repository: douglasbarnes/analysis-i-lean
+  likely_lean_representation:
+    sketch: Expected maximum/supremum bound for a finite Gaussian wavelet sum.
+    blockers: []
+  difficulty: major-library
+  pass: core
+  issues_for_central_review:
+  - CR-001
+  - CR-003
