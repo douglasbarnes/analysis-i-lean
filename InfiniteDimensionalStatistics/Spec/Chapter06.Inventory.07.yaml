@@ -1,0 +1,489 @@
+inventory:
+- id: 6.3.2
+  kind: theorem
+  book:
+    number: Theorem 6.3.2
+    pages:
+    - 513
+    - 515
+    section: 6.3.1
+    equations: []
+  title: Fano minimax Risk lower Bound
+  statement: "Let \\(f_0,\\ldots,f_M\\in F\\) be pairwise \\(2r_n\\)-separated and suppose\n\\(P_{f_m}\\ll P_{f_0}\\\
+    ) for \\(m=1,\\ldots,M\\). Put\n\\(\\bar M=\\max(e,M)\\). If for some \\(\\alpha>0\\),\n\\[\n\\frac1M\\sum_{m=1}^M\
+    \ K(P_{f_m},P_{f_0})\\le\\alpha\\log\\bar M,\n\\]\nthen\n\\[\n\\inf_{\\tilde f_n}\\sup_{f\\in F}E_f d(\\tilde\
+    \ f_n,f)\n\\ge r_n\\left(1-2\\alpha-\n \\sqrt{\\frac{8\\alpha}{\\log\\bar M}}\\right)\n \\frac{\\sqrt{\\bar\
+    \ M}}{1+\\sqrt{\\bar M}}.\n\\]"
+  hypotheses:
+    explicit:
+    - M is a positive integer; the statement uses M alternatives plus the base point f₀.
+    - All f_m belong to F and are pairwise 2rₙ-separated.
+    - P_{f_m} is absolutely continuous with respect to P_{f₀}.
+    - The average KL bound must make the parenthetical lower-bound factor positive for a nontrivial conclusion.
+    implicit: []
+  quantifier_order:
+  - ∀n and every finite family satisfying separation, domination, and the average-information bound, the minimax
+    risk is at least the displayed quantity.
+  constants:
+  - ∀n and every finite family satisfying separation, domination, and the average-information bound, the minimax
+    risk is at least the displayed quantity.
+  dependencies:
+    earlier_book:
+    - Proposition 6.1.7
+    - Elementary likelihood-ratio truncation and Jensen
+    chapter_local:
+    - 6.3.reduction
+    - 6.1.6
+    - 6.1.7
+    later_book_uses:
+    - Theorems 6.3.5, 6.3.7, 6.3.8, 6.3.9
+    - Theorem 6.3.10 by delegated adaptation
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: A Fano/Tsybakov finite packing theorem for arbitrary experiments. Use finite sums of extended-real KL
+      values, absolute continuity, and a classifier lower bound. Separate a real-valued finite-KL version from an
+      `ENNReal` master theorem.
+    blockers: &id001
+    - Official hardback errata changes the final factor in (6.104) from `sqrt(Mbar)/(1+sqrt(Mbar))` to `sqrt(M/3)/(1+sqrt(M))`.
+      The declaration above preserves the hardback formula; central review must choose the corrected theorem statement.
+    reusable_primitives:
+    - Fano inequality
+    - packing lower bound
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.3.3
+  kind: operative_remark
+  book:
+    number: Remark 6.3.3
+    pages:
+    - 514
+    section: 6.3.1
+    equations: []
+  title: Fano minimax Risk lower Bound sharp
+  statement: 'The numerical constant \(8\) in Theorem 6.3.2 can be replaced by
+
+    \(2\) by a longer argument; the chapter does not use the improvement.'
+  hypotheses:
+    explicit:
+    - Same setting as Theorem 6.3.2.
+    implicit: []
+  quantifier_order:
+  - An existence claim for a sharper proof; no new model quantifiers.
+  constants:
+  - An existence claim for a sharper proof; no new model quantifiers.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.3.2
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Starred optional strengthening of the finite packing theorem.
+    blockers: &id002 []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.3.4
+  kind: proposition
+  book:
+    number: Proposition 6.3.4
+    pages:
+    - 515
+    - 516
+    section: 6.3.2
+    equations: []
+  title: Cdf sup Norm minimax Rate
+  statement: 'For the class \(F\) of all distribution functions on \([0,1]\), based
+
+    on \(n\) i.i.d. observations from \(F\), the minimax rate in supremum-norm
+
+    risk is
+
+    \[
+
+    r_n=n^{-1/2}.
+
+    \]
+
+    The text adds that the same rate remains when \(F\) is restricted to
+
+    distribution functions with any fixed number \(S\) of derivatives bounded in
+
+    supremum norm by any fixed \(M\).'
+  hypotheses:
+    explicit:
+    - The observations are i.i.d. under the distribution corresponding to F.
+    - The loss is the supremum norm on distribution functions.
+    - The smooth subclass extension is an unnumbered consequence of the lower-bound construction.
+    implicit: []
+  quantifier_order:
+  - The sequence n^{-1/2} satisfies Definition 6.3.1 uniformly over all distribution functions; likewise for each
+    fixed smooth subclass described in the prose.
+  constants:
+  - The sequence n^{-1/2} satisfies Definition 6.3.1 uniformly over all distribution functions; likewise for each
+    fixed smooth subclass described in the prose.
+  dependencies:
+    earlier_book:
+    - Exercise 3.1.7 (empirical CDF expectation bound)
+    chapter_local:
+    - 6.2.2
+    - 6.2.6
+    - 6.3.1
+    later_book_uses:
+    - Definition 6.4.2 and Kolmogorov-Smirnov confidence bands
+    - Exercise 6.3.1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Pair the empirical CDF upper bound with the testing lower bound. Requires a formal CDF parameterisation
+      and uniform empirical-process estimate.
+    blockers: &id003 []
+    reusable_primitives:
+    - CDF minimax estimation
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.3.5
+  kind: theorem
+  book:
+    number: Theorem 6.3.5
+    pages:
+    - 516
+    - 517
+    section: 6.3.2
+    equations: []
+  title: Besov Gaussian sup Norm minimax Rate
+  statement: 'Let \(B,r>0\). In Gaussian white noise with dispersion \(\sigma>0\),
+
+    the minimax rate over
+
+    \[
+
+    F=\{f:\|f\|_{B^r_{\infty\infty}([0,1])}\le B\}
+
+    \]
+
+    in \(L^\infty\)-risk is
+
+    \[
+
+    r_n=C\left(\frac{\log n}{n}\right)^{r/(2r+1)},
+
+    \]
+
+    where \(C\) depends on \(B,r,\sigma\).'
+  hypotheses:
+    explicit:
+    - B,r,σ are positive.
+    - The Besov/Hölder ball is represented using a sufficiently regular boundary-corrected or periodic wavelet basis.
+    - The loss is the essential supremum norm.
+    implicit: []
+  quantifier_order:
+  - ∀B,r,σ>0, the displayed rate is minimax in the sense of Definition 6.3.1, with a constant depending only on
+    B,r,σ and basis normalisation.
+  constants:
+  - ∀B,r,σ>0, the displayed rate is minimax in the sense of Definition 6.3.1, with a constant depending only on
+    B,r,σ and basis normalisation.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7
+    - Theorem 4.2.10
+    - Theorem 4.3.2
+    - Varshamov/Gilbert packing
+    chapter_local:
+    - 6.3.2
+    - 6.1.gwn_kl
+    later_book_uses:
+    - Corollary 6.4.5 as an analogous confidence-band benchmark
+    - Chapter 8 adaptive L∞ estimation
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Upper bound from a linear wavelet estimator; lower bound from disjointly supported wavelet spikes and
+      Fano. Needs explicit finite interior-wavelet families.
+    blockers: &id004 []
+    reusable_primitives:
+    - Besov sup-norm minimax rate
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.3.6
+  kind: operative_remark
+  book:
+    number: Remark 6.3.6
+    pages:
+    - 517
+    section: 6.3.2
+    equations: []
+  title: Besov Minimax Constant radius scaling
+  statement: 'In Theorem 6.3.5 the dependence on the radius can be chosen
+
+    \[
+
+    C=c\,B^{1/(2r+1)},
+
+    \]
+
+    where \(c\) is independent of \(B\). The same radius dependence is asserted
+
+    for Theorem 6.3.7.'
+  hypotheses:
+    explicit:
+    - The basis, r and σ are held fixed when asserting independence from B.
+    implicit: []
+  quantifier_order:
+  - For each fixed r,σ and basis, ∃c independent of B such that the minimax comparison constant has the displayed
+    B power.
+  constants:
+  - For each fixed r,σ and basis, ∃c independent of B such that the minimax comparison constant has the displayed
+    B power.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - 6.3.5
+    later_book_uses:
+    - Theorem 6.3.7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: An explicit scaling corollary after normalising the parameter ball.
+    blockers: &id005 []
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id005
+- id: 6.3.7
+  kind: theorem
+  book:
+    number: Theorem 6.3.7
+    pages:
+    - 517
+    - 518
+    section: 6.3.2
+    equations: []
+  title: Besov Density sup Norm minimax Rate
+  statement: 'Let \(B>1\), \(r>0\), and \(A=[0,1]\) or \(A=\mathbb R\). For the class
+
+    of probability densities
+
+    \[
+
+    F=\{f\ge0:\int_Af=1,\ \|f\|_{B^r_{\infty\infty}(A)}\le B\},
+
+    \]
+
+    based on \(n\) i.i.d. observations, the minimax \(L^\infty\)-risk rate is
+
+    \[
+
+    r_n=C\left(\frac{\log n}{n}\right)^{r/(2r+1)},
+
+    \]
+
+    with \(C\) depending on \(B,r\).'
+  hypotheses:
+    explicit:
+    - B>1 is used to embed the uniform density on [0,1] or a sufficiently spread normal density on R in the ball.
+    - The observations are i.i.d. from a density in F.
+    - The density class and Besov norm depend on A.
+    implicit: []
+  quantifier_order:
+  - For either allowed A, ∀B>1,r>0, the displayed sequence is minimax with constants independent of n and f.
+  constants:
+  - For either allowed A, ∀B>1,r>0, the displayed sequence is minimax with constants independent of n and f.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7
+    - Theorem 4.3.2
+    - smooth normal-density Besov membership
+    chapter_local:
+    - 6.3.2
+    - 6.1.tensor_kl
+    - 6.3.6
+    later_book_uses:
+    - Exercise 6.3.2
+    - Chapter 8 adaptive density estimation
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Two separate theorems for compact interval and real line. The lower bound perturbs a positive base density
+      by disjoint mean-zero wavelets.
+    blockers: &id006 []
+    reusable_primitives:
+    - density sup-norm minimax rate
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id006
+- id: 6.3.8
+  kind: theorem
+  book:
+    number: Theorem 6.3.8
+    pages:
+    - 519
+    - 520
+    section: 6.3.3
+    equations: []
+  title: Besov Gaussian lp minimax Rate
+  statement: 'Let \(B,r>0\), \(1\le p<\infty\), and \(1\le q\le\infty\). In
+
+    Gaussian white noise, the minimax rate over the ball
+
+    \[
+
+    F=\{f:\|f\|_{B^r_{pq}([0,1])}\le B\}
+
+    \]
+
+    in \(L^p\)-risk is
+
+    \[
+
+    r_n=Cn^{-r/(2r+1)},
+
+    \]
+
+    where \(C\) depends on \(B,r,p,\sigma\).'
+  hypotheses:
+    explicit:
+    - B,r,σ>0.
+    - 1≤p<∞ and 1≤q≤∞.
+    - The wavelet basis has regularity S>r.
+    - The Lp and Besov norms use the book's boundary convention.
+    implicit: []
+  quantifier_order:
+  - For every admitted parameter tuple, n^{-r/(2r+1)} is the minimax rate; C is uniform in n,f and, as printed,
+    does not list q.
+  constants:
+  - For every admitted parameter tuple, n^{-r/(2r+1)} is the minimax rate; C is uniform in n,f and, as printed,
+    does not list q.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7
+    - Proposition 4.2.8
+    - Theorem 4.3.2
+    - Example 3.1.4 (Varshamov-Gilbert)
+    chapter_local:
+    - 6.3.2
+    - 6.1.gwn_kl
+    later_book_uses:
+    - Theorems 6.3.9-6.3.10
+    - Exercise 6.3.3
+    - Chapter 8 adaptive Lp estimation
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Use a hypercube of wavelet coefficient signs; formalise finite Hamming packings and Lp wavelet lower
+      estimates. Upper bound is a linear estimator theorem.
+    blockers: &id007 []
+    reusable_primitives:
+    - Besov Lp minimax rate
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id007

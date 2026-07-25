@@ -1,0 +1,69 @@
+inventory:
+- id: 6.5.unified_Lp_detection_rate
+  kind: notes_result
+  book:
+    number: Notes-only unified Lᵖ separation rate
+    pages:
+    - 537
+    - 538
+    section: 6.5 (notes to Section 6.2)
+    equations: []
+  title: Besov simple Testing unified Lp separation rate
+  statement: |-
+    For simple nonparametric signal-detection/goodness-of-fit problems over
+    smoothness-\(r\) classes, the \(L^2\)-separation rate
+    \(n^{-r/(2r+1/2)}\) and the \(L^\infty\)-separation rate
+    \(n^{-r/(2r+1)}\), ignoring the logarithmic factor in the latter, are endpoints
+    of the unified rate
+    \[
+    \rho_n\asymp n^{-r/(2r+1-p^{-1})},\qquad 2\le p\le\infty.
+    \]
+    For \(1\le p<2\), the notes state that no further improvement over the \(L^2\)
+    rate is possible.
+  hypotheses:
+    explicit:
+    - The testing problem is one of the simple smooth alternatives treated in the Ingster theory referenced by the notes.
+    - The regularity parameter satisfies r>0.
+    - For the displayed interpolation formula, 2≤p≤∞.
+    - Logarithmic factors in the L∞ endpoint are deliberately suppressed in this notes-level statement.
+    implicit: []
+  quantifier_order:
+  - ∀ r>0, ∀ p∈[2,∞], the asserted asymptotic separation exponent is r/(2r+1−1/p); for 1≤p<2 the rate does not improve beyond the p=2 rate.
+  constants:
+  - ∀ r>0, ∀ p∈[2,∞], the asserted asymptotic separation exponent is r/(2r+1−1/p); for 1≤p<2 the rate does not improve beyond the p=2 rate.
+  dependencies:
+    earlier_book:
+    - Theorems 6.2.7, 6.2.9 and 6.2.11
+    - Exercise 6.2.5 for the L¹ endpoint phenomenon
+    chapter_local:
+    - 6.2.7
+    - 6.2.9
+    - 6.2.11
+    later_book_uses:
+    - Background for the adaptive L² and L∞ testing problems of Chapter 8; the exact notes statement is not directly invoked as a proved theorem.
+  proof_status:
+    delegates_to_exercises:
+    - Exercise 6.2.5
+    contains_omitted_steps: true
+    comment: The p<2 assertion points to 'Exercise 6.4' in print, an ambiguous/mistyped reference; Exercise 6.2.5 proves the L¹ version for Theorem 6.2.9.
+  notes_status:
+    discussed_or_extended_in_notes: true
+    note_summary: This declaration is stated in the chapter notes.
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: After formalising the whole Ingster family, parameterise the separation metric by p and state the exponent piecewise. This is not a consequence of the chapter's endpoint proofs alone.
+    blockers: &id001
+    - The hardback prints denominator 2r+1+p^{-1}; the official errata corrects it to 2r+1−p^{-1}.
+    - The reference 'see Exercise 6.4' is not a valid unambiguous exercise label in the chapter and likely points to Exercise 6.2.5 or another omitted numbering.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id001

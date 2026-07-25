@@ -1,0 +1,406 @@
+inventory:
+- id: 6.3.9
+  kind: theorem
+  book:
+    number: Theorem 6.3.9
+    pages:
+    - 520
+    - 521
+    section: 6.3.3
+    equations: []
+  title: Besov Density lp minimax Rate unit Interval
+  statement: 'Let \(B>1\), \(r>0\), \(1\le p<\infty\), \(1\le q\le\infty\). For
+
+    probability densities on \([0,1]\) in the ball
+
+    \[
+
+    F=\{f:\|f\|_{B^r_{pq}([0,1])}\le B\},
+
+    \]
+
+    the minimax \(L^p\)-risk rate from \(n\) i.i.d. observations is
+
+    \[
+
+    r_n=Cn^{-r/(2r+1)},
+
+    \]
+
+    where the printed statement says \(C\) depends on \(B,r\).'
+  hypotheses:
+    explicit:
+    - B>1, r>0, 1≤p<∞, 1≤q≤∞.
+    - F consists only of nonnegative unit-integral representatives.
+    - A regular wavelet system with interior mean-zero wavelets is used.
+    implicit: []
+  quantifier_order:
+  - For every allowed B,r,p,q, the displayed sequence is minimax. Constants are uniform in n and f.
+  constants:
+  - For every allowed B,r,p,q, the displayed sequence is minimax. Constants are uniform in n and f.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7
+    - Theorem 4.3.2
+    - Varshamov-Gilbert packing
+    chapter_local:
+    - 6.3.2
+    - 6.3.8
+    - 6.1.tensor_kl
+    later_book_uses:
+    - Theorem 6.3.10
+    - Exercise 6.3.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Perturb the uniform density by a finite wavelet hypercube, verify positivity, unit mass and Besov membership,
+      and invoke Fano.
+    blockers: &id001
+    - The proof cites the embedding `B^r_{pq} ⊂ B^r_{q∞}` in the OCR/print reading; standard Besov indexing suggests
+      this cross-reference requires review. The statement's constant suppresses possible p,q dependence.
+    - Official hardback errata corrects the proof reference on p.520 from `(6.14)` to `(6.16)`.
+    reusable_primitives:
+    - density Lp minimax rate
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id001
+- id: 6.3.10
+  kind: theorem
+  book:
+    number: Theorem 6.3.10
+    pages:
+    - 521
+    section: 6.3.3
+    equations: []
+  title: Besov Density lp minimax Rate real Line
+  statement: 'Let \(B>1\), \(r>0\), \(1\le p<\infty\), \(1\le q\le\infty\), and
+
+    \(s>(2-p)/p\). Let \(F\) be the probability densities on \(\mathbb R\) with
+
+    \(\|f\|_{B^r_{pq}(\mathbb R)}\le B\); when \(1\le p<2\), further require
+
+    \[
+
+    \int_{\mathbb R}f(t)(1+|t|^s)\,dt\le B.
+
+    \]
+
+    Then the minimax \(L^p\)-risk rate from \(n\) i.i.d. observations is
+
+    \[
+
+    r_n=Cn^{-r/(2r+1)},
+
+    \]
+
+    with \(C\) depending on \(B,r\).'
+  hypotheses:
+    explicit:
+    - All stated numerical ranges hold.
+    - The moment condition is imposed only for p<2.
+    - F consists of probability densities.
+    - The lower-bound proof uses a smooth positive normal base density.
+    implicit: []
+  quantifier_order:
+  - ∀ admissible B,r,p,q,s, the sequence n^{-r/(2r+1)} is minimax over the specified F.
+  constants:
+  - ∀ admissible B,r,p,q,s, the sequence n^{-r/(2r+1)} is minimax over the specified F.
+  dependencies:
+    earlier_book:
+    - Proposition 5.1.7
+    chapter_local:
+    - 6.3.2
+    - 6.3.7
+    - 6.3.9
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: true
+    comment: The lower-bound details are explicitly left to the reader, by adaptation of Theorems 6.3.7 and 6.3.9.
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Upper bound requires weighted-tail density estimation. Lower bound can reuse the compactly supported
+      perturbation theorem around a positive Gaussian base.
+    blockers: &id002
+    - The proof is omitted with only an adaptation instruction; this belongs in the core result but its proof obligations
+      must be planned explicitly.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: *id002
+- id: 6.4.1
+  kind: definition
+  book:
+    number: Definition 6.4.1
+    pages:
+    - 523
+    section: 6.4.1
+    equations: []
+  title: Honest Confidence Set
+  statement: "Let \\((P_f:f\\in F)\\) be a statistical model for observations\n\\((Y^{(n)}:n\\in\\mathbb N)\\),\
+    \ with \\(Y^{(n)}\\) taking values in\n\\((\\mathcal Y_n,\\mathcal A_n)\\), and let \\(F\\subset(S,d)\\), where\
+    \ \\(S\\) is\nequipped with its Borel \\(\\sigma\\)-field \\(\\mathcal B_S\\). Given \\(0<\\alpha<1\\),\na level\
+    \ \\(1-\\alpha\\) honest confidence set is printed as a random subset\n\\[\n C_n=C(\\alpha,Y^{(n)}):\\mathcal\
+    \ Y_n\\to\\mathcal B_S\n\\]\nsuch that, for some \\(e_n=o(1)\\),\n\\[\n \\inf_{f\\in F}P_f\\{f\\in C_n\\}\\\
+    ge 1-\\alpha+e_n. \\tag{6.114}\n\\]\nIt is printed to have exact asymptotic level \\(1-\\alpha\\) when\n\\[\n\
+    \ \\inf_{f\\in F}\\big|P_f\\{f\\in C_n\\}-(1-\\alpha)\\big|=o(1). \\tag{6.115}\n\\]"
+  hypotheses:
+    explicit:
+    - Each P_f is a probability law on the observation space for every n.
+    - F is embedded in a metric space S; the confidence set is intended to be a random subset of S.
+    - The coverage event {f∈C_n} must be measurable for every f.
+    - The sequence e_n is deterministic and tends to zero; its sign is unrestricted by the printed definition.
+    implicit: []
+  quantifier_order:
+  - ∀α with 0<α<1, a procedure C_n is honest if ∃ deterministic e_n→0 such that ∀n the displayed uniform lower coverage
+    bound holds; exactness is asserted asymptotically.
+  constants:
+  - ∀α with 0<α<1, a procedure C_n is honest if ∃ deterministic e_n→0 such that ∀n the displayed uniform lower coverage
+    bound holds; exactness is asserted asymptotically.
+  dependencies:
+    earlier_book:
+    - Definition 6.3.1
+    - Borel measurable random elements
+    chapter_local: []
+    later_book_uses:
+    - Definition 6.4.2
+    - Proposition 6.4.3
+    - Corollary 6.4.5
+    - Theorems 6.4.6, 6.4.8, 6.4.9
+    - Chapter 8 adaptive confidence sets
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: 'Use a measurable set-valued map only after choosing a hyperspace measurable structure, or more robustly
+      encode a random predicate `C : Ω → S → Prop` with measurable sections `{ω | C ω f}`. Store honesty and exactness
+      as separate predicates on a statistical experiment.'
+    blockers: &id003
+    - The codomain `B_S` is the Borel sigma-field (a collection of sets), not itself the canonical measurable space
+      of subsets needed for a random-set-valued map.
+    - The printed exactness condition uses an infimum of absolute deviations. Uniform exactness ordinarily requires
+      a supremum; the printed formula is preserved and must not be silently changed.
+    - 'Grammar: the book says `a honest` confidence set.'
+    reusable_primitives:
+    - honest confidence set
+    - exact asymptotic coverage
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: *id003
+- id: 6.4.diameter
+  kind: definition
+  book:
+    number: Equation (6.116)
+    pages:
+    - 523
+    section: 6.4.1
+    equations: []
+  title: Confidence Set Diameter
+  statement: "For a confidence set \\(C_n\\subset S\\), its \\(d\\)-diameter is\n\\[\n |C_n|_d=\\sup\\{d(f,g):f,g\\\
+    in C_n\\}. \\tag{6.116}\n\\]\nWhen \\(d\\) is an \\(L^p\\)-metric, the notation is shortened to \\(|C_n|_p\\\
+    )."
+  hypotheses:
+    explicit:
+    - d is an extended-real-finite metric on S in the book's setting.
+    - The supremum over an empty confidence set requires a convention not stated in the book.
+    implicit: []
+  quantifier_order:
+  - For each subset C⊂S, take the supremum over all ordered pairs f,g∈C.
+  constants:
+  - For each subset C⊂S, take the supremum over all ordered pairs f,g∈C.
+  dependencies:
+    earlier_book:
+    - metric-space diameter
+    chapter_local:
+    - 6.4.1
+    later_book_uses:
+    - Definition 6.4.2 and every confidence-set diameter bound in Sections 6.4 and 8.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Reuse `Metric.diam` where possible; otherwise use `sSup {d x y | x∈C ∧ y∈C}` with boundedness/nonemptiness
+      hypotheses.
+    blockers: &id004
+    - The empty-set diameter convention is implicit.
+    reusable_primitives:
+    - random-set diameter
+  difficulty: routine
+  pass: core
+  issues_for_central_review: *id004
+- id: 6.4.generic_ball
+  kind: operative_example
+  book:
+    number: Construction (6.117)
+    pages:
+    - 523
+    - 524
+    section: 6.4.1
+    equations: []
+  title: Confidence Ball of uniform Risk
+  statement: "Suppose an estimator \\(\\tilde f_n\\) satisfies\n\\[\n \\sup_{f\\in F}E_f d(\\tilde f_n,f)\\le Cr_n.\n\
+    \\]\nIf the quantity \\(Cr_n\\) is known, the book writes\n\\[\n C_n=[\\tilde f_n-LCr_n,\\tilde f_n+LCr_n].\
+    \ \\tag{6.117}\n\\]\nFor \\(L=L(\\alpha)\\) large enough, Markov's inequality gives\n\\[\n \\inf_{f\\in F}P_f\\\
+    {f\\in C_n\\}\\ge\n 1-\\frac{\\sup_{f\\in F}E_fd(\\tilde f_n,f)}{LCr_n}\\ge1-\\alpha,\n\\]\nand the diameter\
+    \ is \\(O_P(r_n)\\) uniformly over \\(F\\)."
+  hypotheses:
+    explicit:
+    - The minimax risk constant C and rate r_n are known and positive.
+    - The confidence set is intended to be the closed d-ball of radius LCr_n about the estimator.
+    - A measurable choice of an estimator and measurable distance are available.
+    implicit: []
+  quantifier_order:
+  - Given α, choose L≥1/α (up to the displayed C normalisation); then the bound holds uniformly for every f∈F and
+    every n to which the risk bound applies.
+  constants:
+  - Given α, choose L≥1/α (up to the displayed C normalisation); then the bound holds uniformly for every f∈F and
+    every n to which the risk bound applies.
+  dependencies:
+    earlier_book:
+    - Markov inequality
+    - Equation (6.113)
+    - Definition 6.4.1
+    chapter_local:
+    - 6.4.1
+    - 6.4.diameter
+    later_book_uses:
+    - Definition 6.4.2
+    - motivation for sharper constructions in Section 6.4.2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Define `C_n ω = Metric.closedBall (fTilde n ω) (L*C*r n)` and prove coverage by Markov's inequality.
+    blockers: &id005
+    - The interval notation is not meaningful in an arbitrary metric space; the proof requires a metric ball interpretation.
+    - The text says the diameter is `obviously O_P(r_n)`; a closed ball has diameter at most 2LCr_n, not LCr_n.
+    reusable_primitives:
+    - risk-to-confidence-set reduction
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id005
+- id: 6.4.2
+  kind: definition
+  book:
+    number: Definition 6.4.2
+    pages:
+    - 524
+    section: 6.4.1
+    equations: []
+  title: Minimax Optimal Confidence Set
+  statement: "An honest confidence set \\(C_n\\) is minimax optimal when its diameter\nshrinks at the minimax estimation\
+    \ rate \\(r_n\\): for every \\(\\alpha'>0\\) there\nexists \\(M=M(\\alpha')\\) such that, for every \\(n\\in\\\
+    mathbb N\\),\n\\[\n \\sup_{f\\in F}P_f\\{|C_n|_d>Mr_n\\}<\\alpha'. \\tag{6.118}\n\\]"
+  hypotheses:
+    explicit:
+    - C_n is honest in the sense of Definition 6.4.1.
+    - r_n is a minimax rate in d-risk over F in the sense of Definition 6.3.1.
+    - The diameter random variable is measurable.
+    implicit: []
+  quantifier_order:
+  - ∀α'>0, ∃M>0 depending only on α' and the model, ∀n, ∀f∈F, the tail probability is <α'.
+  constants:
+  - ∀α'>0, ∃M>0 depending only on α' and the model, ∀n, ∀f∈F, the tail probability is <α'.
+  dependencies:
+    earlier_book:
+    - Definition 6.3.1
+    chapter_local:
+    - 6.4.1
+    - 6.4.diameter
+    later_book_uses:
+    - Corollary 6.4.7
+    - Exercise 6.4.1
+    - Section 8.3
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: true
+  equivalents:
+    mathlib:
+      exact_equivalent: false
+      status: No exact equivalent found in bounded audit.
+      candidates: []
+    repository:
+      exact_equivalent: false
+      status: No exact equivalent found on main in bounded audit.
+      candidates: []
+  likely_lean_representation:
+    sketch: Predicate combining `HonestConfidenceSet` with uniform stochastic boundedness of `diam C_n / r_n`.
+    blockers: &id006 []
+    reusable_primitives:
+    - minimax confidence set
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: *id006
