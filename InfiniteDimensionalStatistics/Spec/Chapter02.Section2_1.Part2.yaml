@@ -1,0 +1,457 @@
+schema_version: '1.0'
+document_type: chapter_declaration_inventory_fragment
+source:
+  title: Mathematical Foundations of Infinite-Dimensional Statistical Models
+  authors:
+  - Evarist Giné
+  - Richard Nickl
+  edition: First edition, 2016
+  uploaded_file: FULLPDF.pdf
+  chapter: 2
+  chapter_title: Gaussian Processes
+  book_pages:
+    start: 15
+    end: 108
+  read_scope:
+  - Main text, numbered and unnumbered operative statements in Sections 2.1–2.7.
+  - Section 2.8 notes, including the generic-chaining material and the quoted cyclostationary extreme-value theorem.
+  - All Chapter 2 exercises; every exercise is classified by why it is required for formalisation.
+section: '2.1'
+fragment_part: 2
+inventory:
+- id: proposition-2-1-5
+  kind: proposition
+  book:
+    number: 2.1.5
+    pages:
+    - 17
+    section: '2.1'
+    equations: []
+  title: Continuous process as a Cᵤ(T,d)-valued random variable
+  statement: If (T,d) is totally bounded and X has bounded uniformly d-continuous sample paths, then ω↦X(·,ω) is a measurable
+    random variable with values in the separable Banach space Cᵤ(T,d), and its Borel law is tight.
+  hypotheses:
+    explicit:
+    - (T,d) totally bounded pseudometric.
+    - X jointly/coordinate measurability sufficient for the induced map.
+    - Almost-sure bounded uniformly d-continuous paths.
+    implicit:
+    - Functions at d-distance zero are identified, or Cᵤ is formed on the metric quotient.
+    - The supremum norm is used.
+  quantifier_order:
+  - For every such X, the path map is Borel measurable and its law is tight.
+  constants:
+  - For every such X, the path map is Borel measurable and its law is tight.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-1-2a
+    - definition-2-1-2b
+    - definition-2-1-3a
+    - definition-2-1-3b
+    - proposition-2-1-4
+    chapter_local_dependents:
+    - example-2-1-6
+    - exercise-2-3-7
+    - proposition-2-1-7
+    later_book_uses:
+    - example-2-1-6
+    - proposition-2-1-7
+    - exercise-2-3-7
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: supporting functional-analysis infrastructure only
+      candidates:
+      - ContinuousLinearMap
+      - StrongDual
+      - HilbertSpace
+      - MeasureTheory.BochnerIntegral
+      - MeasureTheory.Integrable
+      - Metric.IsCompact
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: functional_analysis
+  likely_lean_representation:
+    sketch: Define `BoundedContinuousFunction`/uniformly continuous bounded maps on the metric quotient; prove measurability
+      via countable dense evaluation maps and tightness via Polish-space measure theory.
+    blockers:
+    - No exact declaration matching the book statement was located.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: example-2-1-6
+  kind: example
+  book:
+    number: 2.1.6
+    pages:
+    - 17
+    section: '2.1'
+    equations: []
+  title: Separable Banach spaces as function spaces
+  statement: For a separable Banach space B, choose a countable weak-* dense norming set D in the dual unit ball. The map
+    x↦(f↦f(x)) embeds B linearly and isometrically into Cᵤ(D,d), where d is any metric inducing the weak-* topology on D.
+    Hence a B-valued random variable yields a process indexed by D whose supremum norm is the B-norm.
+  hypotheses:
+    explicit:
+    - B separable Banach.
+    - D countable norming subset of the dual unit ball, weak-* dense.
+    implicit: []
+  quantifier_order:
+  - ∀x∈B, ‖x‖=sup_{f∈D}|f(x)|.
+  constants:
+  - ∀x∈B, ‖x‖=sup_{f∈D}|f(x)|.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-1-5
+    chapter_local_dependents:
+    - exercise-2-1-5
+    later_book_uses:
+    - exercise-2-1-5
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: supporting functional-analysis infrastructure only
+      candidates:
+      - ContinuousLinearMap
+      - StrongDual
+      - HilbertSpace
+      - MeasureTheory.BochnerIntegral
+      - MeasureTheory.Integrable
+      - Metric.IsCompact
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: functional_analysis
+  likely_lean_representation:
+    sketch: Use `StrongDual ℝ B`, Banach–Alaoglu/weak-* metrizability, and the evaluation linear isometry into bounded continuous
+      functions.
+    blockers:
+    - No exact declaration matching the book statement was located.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-1-7
+  kind: proposition
+  book:
+    number: 2.1.7
+    pages:
+    - 18
+    section: '2.1'
+    equations: []
+  title: Characterisation of tight laws on ℓ∞(T)
+  statement: A sample-bounded process X has finite-dimensional distributions induced by a tight Borel probability measure
+    on ℓ∞(T) if and only if there exists a totally bounded pseudometric d on T and a version of X with almost surely bounded
+    uniformly d-continuous paths.
+  hypotheses:
+    explicit:
+    - X is a real process indexed by T and sample bounded.
+    implicit:
+    - The cylinder σ-algebra and Borel σ-algebra of ℓ∞(T) differ in general; the assertion is existence of a tight Borel extension
+      with the stated finite-dimensional marginals.
+  quantifier_order:
+  - Tight-law existence ⇔ ∃d total-bounded, ∃version Y, a.s. bounded uniformly d-continuous.
+  constants:
+  - Tight-law existence ⇔ ∃d total-bounded, ∃version Y, a.s. bounded uniformly d-continuous.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-1-1
+    - definition-2-1-3a
+    - definition-2-1-3b
+    - proposition-2-1-5
+    chapter_local_dependents: []
+    later_book_uses: []
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: substantial supporting infrastructure only
+      candidates:
+      - MeasureTheory.Measure
+      - MeasureTheory.ProbabilityMeasure
+      - Measurable
+      - AEMeasurable
+      - Tight
+      - PolishSpace
+      - PseudoMetricSpace
+      - TotallyBoundedSpace
+      - SeparableSpace
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: probability_topology
+  likely_lean_representation:
+    sketch: An equivalence between a `ProbabilityMeasure (BoundedFunction T ℝ)` with prescribed evaluation pushforwards and
+      a path-regular modification; likely requires a custom cylinder-law API.
+    blockers:
+    - No exact book-labelled theorem was located; likely reducible to existing topology and measure-theory APIs plus new glue.
+  difficulty: research-level
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-1-8
+  kind: definition
+  book:
+    number: 2.1.8
+    pages:
+    - 19
+    section: '2.1'
+    equations: []
+  title: Gaussian process
+  statement: X is Gaussian when every finite linear combination ∑ᵢaᵢX(tᵢ) is a real Gaussian random variable; it is centred
+    when all coordinate means vanish.
+  hypotheses:
+    explicit:
+    - A real process X indexed by T.
+    implicit: []
+  quantifier_order:
+  - ∀n≥1 ∀t₁…tₙ ∀a₁…aₙ, ∑aᵢX(tᵢ) has a Gaussian law.
+  - 'Centred: ∀t, E X(t)=0.'
+  constants:
+  - 'Centred: ∀t, E X(t)=0.'
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - definition-unnumbered-2-1-intrinsic-distance
+    - theorem-2-1-13
+    later_book_uses:
+    - definition-unnumbered-2-1-intrinsic-distance
+    - theorem-2-1-13
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: foundational predicate available
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      exact_equivalent: true
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_process_def
+  likely_lean_representation:
+    sketch: Use `ProbabilityTheory.IsGaussianProcess X P`; centredness as `∀ t, ∫ ω, X t ω ∂P = 0`.
+    blockers:
+    - Mathlib's predicate packages the finite-dimensional Gaussian-law condition; book-specific separability, boundedness
+      and path regularity remain separate.
+  difficulty: routine
+  pass: core
+  issues_for_central_review: []
+- id: definition-2-1-9
+  kind: definition
+  book:
+    number: 2.1.9
+    pages:
+    - 19
+    section: '2.1'
+    equations: []
+  title: Covariance kernel
+  statement: A covariance on T is a symmetric function Σ:T×T→ℝ such that for every finite t₁,…,tₙ and a₁,…,aₙ, ∑ᵢⱼaᵢaⱼΣ(tᵢ,tⱼ)≥0.
+  hypotheses:
+    explicit:
+    - An index set T.
+    implicit: []
+  quantifier_order:
+  - Symmetric Σ and ∀ finite coefficient families, quadratic form nonnegative.
+  constants:
+  - Symmetric Σ and ∀ finite coefficient families, quadratic form nonnegative.
+  dependencies:
+    earlier_book: []
+    chapter_local: []
+    chapter_local_dependents:
+    - definition-unnumbered-2-1-intrinsic-distance
+    - proposition-2-1-10
+    later_book_uses:
+    - proposition-2-1-10
+    - definition-unnumbered-2-1-intrinsic-distance
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: elementary ingredients available; exact packaged statement not located
+      candidates:
+      - Real.exp
+      - Real.log
+      - MeasureTheory.Integral
+      - Convex
+      - LipschitzWith
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: basic_analysis
+  likely_lean_representation:
+    sketch: A symmetric positive-semidefinite kernel, likely `Matrix.PosSemidef` on every finite restriction or a custom `IsPositiveSemidefiniteKernel`
+      predicate.
+    blockers:
+    - Likely routine assembly after choosing exact encodings.
+  difficulty: substantial
+  pass: core
+  issues_for_central_review: []
+- id: proposition-2-1-10
+  kind: proposition
+  book:
+    number: 2.1.10
+    pages:
+    - 19
+    section: '2.1'
+    equations: []
+  title: Existence from mean and covariance
+  statement: Given any function f:T→ℝ and covariance kernel Σ on T, there exists a Gaussian process X with E X(t)=f(t) and
+    Cov(X(s),X(t))=Σ(s,t) for all s,t.
+  hypotheses:
+    explicit:
+    - T any index type.
+    - f:T→ℝ.
+    - Σ a covariance kernel in Definition 2.1.9.
+    implicit:
+    - The probability space can be the canonical product space ℝ^T with the cylinder σ-algebra.
+    - Uses Kolmogorov consistency.
+  quantifier_order:
+  - ∀f Σ, ∃ probability space and X, ∀t mean=f(t), ∀s t covariance=Σ(s,t).
+  constants:
+  - ∀f Σ, ∃ probability space and X, ∀t mean=f(t), ∀s t covariance=Σ(s,t).
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - definition-2-1-9
+    chapter_local_dependents:
+    - example-2-1-11
+    - exercise-2-3-2
+    later_book_uses:
+    - example-2-1-11
+    - exercise-2-3-2
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: Construct consistent finite-dimensional Gaussian measures and invoke a Kolmogorov extension theorem; mathlib support
+      must be checked for arbitrary index types.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
+- id: example-2-1-11
+  kind: example
+  book:
+    number: 2.1.11
+    pages:
+    - 19
+    section: '2.1'
+    equations: []
+  title: Isonormal process on a separable Hilbert space
+  statement: For a separable real Hilbert space H with orthonormal basis (ψᵢ) and iid gᵢ∼N(0,1), define X(∑aᵢψᵢ)=∑aᵢgᵢ in
+    L². Then EX(h)=0 and E[X(h)X(k)]=⟨h,k⟩; the map H→V, h↦X(h), is a linear isometry onto the closed Gaussian span V of the
+    gᵢ.
+  hypotheses:
+    explicit:
+    - H separable real Hilbert.
+    - (ψᵢ) orthonormal basis.
+    - (gᵢ) independent standard normals.
+    implicit:
+    - Series convergence is in L²; equality of representatives is up to almost-sure equivalence.
+  quantifier_order:
+  - ∀h,k∈H, covariance equals inner product; ‖X(h)‖₂=‖h‖.
+  constants:
+  - ∀h,k∈H, covariance equals inner product; ‖X(h)‖₂=‖h‖.
+  dependencies:
+    earlier_book: []
+    chapter_local:
+    - proposition-2-1-10
+    chapter_local_dependents:
+    - definition-2-6-1
+    later_book_uses:
+    - definition-2-6-1
+  proof_status:
+    delegates_to_exercises: []
+    contains_omitted_steps: false
+    comment: ''
+  notes_status:
+    discussed_or_extended_in_notes: false
+    note_summary: ''
+    used_later_in_book: false
+  equivalents:
+    mathlib:
+      status: Gaussian foundation present; exact result not located
+      candidates:
+      - ProbabilityTheory.IsGaussianProcess
+      - ProbabilityTheory.IsGaussian
+      - ProbabilityTheory.HasGaussianLaw
+      - ProbabilityTheory.gaussianReal
+      exact_equivalent: false
+    repository:
+      status: not located
+      candidates: []
+      exact_equivalent: false
+    audit_profile: gaussian_foundation
+  likely_lean_representation:
+    sketch: An `Isometry`/linear isometry `H →ₗᵢ[ℝ] Lp ℝ 2 P` constructed from an orthonormal basis and independent Gaussian
+      coordinates.
+    blockers:
+    - The theorem requires new process-level or Banach-space Gaussian development.
+  difficulty: major-library
+  pass: core
+  issues_for_central_review: []
