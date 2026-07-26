@@ -39,9 +39,11 @@ The following results have Lean proof terms in the repository, although they rem
 - empirical-measure evaluation, total-mass, probability-measure, Bochner-integration, linearity and centred-sum identities;
 - Hoeffding's sub-Gaussian mgf conclusion and finite independent-sum upper and two-sided tail bounds, using Mathlib's `HasSubgaussianMGF` API;
 - the weighted Rademacher sub-Gaussian and two-sided tail bounds of Example 3.1.3;
-- the generic exponential-Markov/Chernoff consequence of a Bennett mgf estimate;
+- the bounded-variable Bennett mgf estimate of Theorem 3.1.5, proved by an explicit moment-series expansion and dominated interchange of integral and infinite sum;
+- closure of Bennett mgf certificates under independent addition and finite independent sums;
+- exact optimized Bennett upper tails for finite independent centred uniformly bounded sums;
+- the scalar lower bound `u²/(2(1+u/3)) ≤ h₁(u)` and the resulting quadratic-linear Bernstein tail relaxation;
 - the log-sum-exp finite maximal inequality, common-proxy specialization and optimized nondegenerate square-root bound underlying Theorem 3.1.10;
-- exact Bennett optimizer algebra and the optimized `exp(-(v/c²) h(ct/v))` tail conclusion, conditional on `HasBennettMGF`;
 - Hamming triangle inequality, coordinate replacement, Bennett-function, entropy-function and product-geometry lemmas;
 - outer-probability monotonicity/subadditivity, measurable outer-expectation identification and uniqueness of measurable covers;
 - finite covering/packing witnesses and singleton/finite bracketing bounds;
@@ -52,7 +54,8 @@ The following results have Lean proof terms in the repository, although they rem
 - measurable continuous-mapping, convergence-in-probability-to-distribution and Slutsky results;
 - Brownian-bridge covariance identification with Mathlib covariance/variance, finite bilinearity, projection-variance formula, symmetry and diagonal nonnegativity;
 - restriction permanence for Brownian bridges, Brownian motions, pre-Gaussian realisations, sample-bounded processes and asymptotically equicontinuous processes;
-- subclass permanence of strong and weak outer Glivenko–Cantelli properties;
+- subclass permanence of strong and weak outer Glivenko–Cantelli properties and concrete Donsker realisations;
+- one-Lipschitz contraction of bounded-Lipschitz discrepancy and preservation of weak convergence under such push-forwards;
 - continuous-image permanence of outer convergence in law, asymptotic measurability and outer compact containment, plus reindexing permanence of finite-dimensional outer convergence;
 - class and radius monotonicity of population, Donsker-local and empirical `L1`/`L2` difference classes;
 - zero/addition/scalar/restriction algebra for prelinear maps, and prelinearity of restrictions of linear functionals;
@@ -71,12 +74,13 @@ The following results have Lean proof terms in the repository, although they rem
 - elementary bounded-`p`-variation and transform-class algebra;
 - Mathlib-backed Mourier Banach-valued strong law, corresponding to Corollary 3.7.21;
 - Mathlib-backed scalar CLT, fixed empirical-coordinate CLT and every finite deterministic Cramér–Wold projection CLT;
+- a finite-dimensional Cramér–Wold assembly theorem backed by Mathlib's Lévy convergence theorem;
 - Mathlib-backed Azuma–Hoeffding upper, lower and two-sided martingale tail bounds;
 - reduction of McDiarmid upper, lower and two-sided concentration to an explicit conditionally sub-Gaussian Doob-increment certificate.
 
 ## Source blockers
 
-The following statements cannot be completed faithfully until their exact source displays are recovered from the rendered book pages:
+The following statements still require exact rendered-page transcription or central-review resolution before their final Lean statements can be certified:
 
 - Theorem 3.1.9;
 - Theorem 3.2.9 and Lemmas 3.2.10–3.2.11;
@@ -88,14 +92,14 @@ The following statements cannot be completed faithfully until their exact source
 - Proposition 3.7.49, Corollary 3.7.50 and Item 3.7.51;
 - apparent source-number gaps 3.3.12, 3.5.14 and 3.5.16–3.5.20.
 
-The uploaded-PDF retrieval service was unavailable during this work session. No blocked formula or constant was reconstructed from memory.
+The complete uploaded PDF is available in the project file library, but the retrieval interface does not provide reliable direct extraction of every formula-sensitive rendered page. No blocked formula or constant is reconstructed from memory.
 
 ## Major unproved theorem families
 
-Even after the source blockers are resolved, a complete chapter still requires genuine Lean proofs of, among others:
+A complete chapter still requires genuine Lean proofs of, among others:
 
-- the bounded-variable Bennett mgf estimate and the Bennett-to-Bernstein scalar lower bound;
-- Levy, Levy–Ottaviani and Hoffmann–Jørgensen maximal/moment inequalities;
+- the exact Prokhorov/inverted-threshold refinements accompanying Proposition 3.1.6 and all degenerate-variance cases;
+- Lévy, Lévy–Ottaviani and Hoffmann–Jørgensen maximal/moment inequalities;
 - symmetrisation, desymmetrisation, contraction and multiplier inequalities;
 - Khinchin, fourth-moment Rademacher, Gaussian-comparison and other moment/lower-bound inputs not present in the pinned library;
 - Talagrand convex-distance and entropy-method concentration theorems;
@@ -104,9 +108,9 @@ Even after the source blockers are resolved, a complete chapter still requires g
 - chaining, Dudley, bracketing and local entropy theorems;
 - VC positivity-space, quantitative Boolean permanence and polynomial packing estimates beyond the finite Sauer–Shelah core;
 - outer Glivenko–Cantelli characterisations for general classes;
-- the multivariate/Cramér–Wold assembly theorem for full finite-dimensional convergence, asymptotic tightness criteria, pre-Gaussian/Donsker equivalences and local Donsker theorems;
+- asymptotic tightness criteria, pre-Gaussian/Donsker equivalences and local Donsker theorems;
 - all selected exercises whose results are dependencies of the main text.
 
 ## Gate decision
 
-Chapter 3 is **not complete**. The object layer is extensive and several foundational theorems are proved or delegated to exact Mathlib results, but the substantive empirical-process theorem layer and the source-blocked statements remain open. The chapter must not be marked complete until those proofs are present and a later local Lean check succeeds.
+Chapter 3 is **not complete**. The object layer is extensive and several foundational concentration, finite-dimensional convergence and permanence theorems now have explicit Lean proofs or exact Mathlib delegates, but the substantive empirical-process theorem layer and source-sensitive statements remain open. The chapter must not be marked complete until those proofs are present and a later local Lean check succeeds.
