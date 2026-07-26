@@ -60,6 +60,9 @@ import InfiniteDimensionalStatistics.Chapter03.PaleyZygmund
 import InfiniteDimensionalStatistics.Chapter03.RademacherMoments
 import InfiniteDimensionalStatistics.Chapter03.SubgaussianMaximumOptimized
 import InfiniteDimensionalStatistics.Chapter03.BennettOptimization
+import InfiniteDimensionalStatistics.Chapter03.BennettMGF
+import InfiniteDimensionalStatistics.Chapter03.BennettSums
+import InfiniteDimensionalStatistics.Chapter03.BennettBernstein
 import InfiniteDimensionalStatistics.Chapter03.MourierStrongLaw
 import InfiniteDimensionalStatistics.Chapter03.ScalarCentralLimit
 import InfiniteDimensionalStatistics.Chapter03.CramerWold
@@ -72,8 +75,10 @@ import InfiniteDimensionalStatistics.Chapter03.DonskerPermanence
 
 Source-order implementation root for Chapter 3.  The current implementation
 contains the reusable definition layer and proved concentration results through
-the optimized common sub-Gaussian finite maximal bound, Azuma–Hoeffding
-martingale tails and finite Sauer–Shelah bound, together with empirical-measure
+Hoeffding, the bounded-variable Bennett mgf inequality, exact Bennett tails for
+finite independent bounded sums, the quadratic-linear Bernstein relaxation, the
+optimized common sub-Gaussian finite maximal bound, Azuma–Hoeffding martingale
+tails and the finite Sauer–Shelah bound.  It also contains empirical-measure
 identities and algebra, elementary outer-measure and analytic calculus, finite
 covering/packing and bracketing bounds, a proved finite-class
 Glivenko–Cantelli theorem, measurable Portmanteau and Prokhorov results, exact
@@ -101,14 +106,13 @@ rules; VC traces, subgraphs, thresholds, indicators and envelopes have their
 structural monotonicity theory; bounded `p`-variation is invariant under output
 translation and negation; Paley–Zygmund has both square-root and divided forms;
 weighted Rademacher sums have exact first, variance and second-moment identities;
-the Bennett Chernoff optimizer is reduced exactly to the `h(ct/v)` exponent,
-conditional on the Bennett mgf estimate; Corollary 3.7.21 is supplied by the
-Mathlib-backed Mourier Banach-valued strong law; and scalar projection
-convergence is assembled into full finite-dimensional convergence by a
-Cramér–Wold theorem backed by Mathlib's Lévy convergence theorem.  McDiarmid's
-two-sided tail theorem is reduced to an explicit conditionally sub-Gaussian
-Doob-increment certificate; constructing that certificate from the
-bounded-differences hypotheses remains open.  Deep entropy, VC and Donsker
-theorem proofs are added only when they have genuine Lean proofs; no assumption
-or placeholder is used to simulate completion.
+Corollary 3.7.21 is supplied by the Mathlib-backed Mourier Banach-valued strong
+law; and scalar projection convergence is assembled into full finite-dimensional
+convergence by a Cramér–Wold theorem backed by Mathlib's Lévy convergence
+theorem.  McDiarmid's two-sided tail theorem is reduced to an explicit
+conditionally sub-Gaussian Doob-increment certificate; constructing that
+certificate from the bounded-differences hypotheses remains open.  Deep
+symmetrisation, entropy, VC and Donsker theorem proofs are added only when they
+have genuine Lean proofs; no assumption or placeholder is used to simulate
+completion.
 -/
