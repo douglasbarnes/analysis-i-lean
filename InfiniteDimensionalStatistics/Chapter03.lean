@@ -50,6 +50,8 @@ import InfiniteDimensionalStatistics.Chapter03.EntropyMethodLemmas
 import InfiniteDimensionalStatistics.Chapter03.RademacherLemmas
 import InfiniteDimensionalStatistics.Chapter03.SymmetryLemmas
 import InfiniteDimensionalStatistics.Chapter03.BoundedLipschitzLemmas
+import InfiniteDimensionalStatistics.Chapter03.UniformityLemmas
+import InfiniteDimensionalStatistics.Chapter03.ProductGeometryLemmas
 
 /-!
 # Chapter 3: Empirical Processes
@@ -73,9 +75,10 @@ nonnegativity and symmetry; the order-two U-statistic has its elementary
 finite-sum and canonical-kernel algebra; coordinate-insensitivity, self-bounding
 and bounded-difference predicates have elementary closure properties; the
 Rademacher, independent-copy and symmetric-law interfaces have their basic law
-algebra; and the bounded-Lipschitz discrepancy satisfies nonnegativity, symmetry
-and the triangle inequality.  The product-geometry, entropy-growth and Donsker
-interfaces used through Section 3.7 are also present.  Deep entropy, VC and
-Donsker theorem proofs are added only when they have genuine Lean proofs; no
-assumption or placeholder is used to simulate completion.
+algebra; the bounded-Lipschitz discrepancy satisfies pseudometric algebra;
+uniform Donsker/pre-Gaussian predicates have domination and reindexing rules;
+and weighted/convex product distances have their exact order theory.  The
+entropy-growth and Donsker interfaces used through Section 3.7 are also present.
+Deep entropy, VC and Donsker theorem proofs are added only when they have genuine
+Lean proofs; no assumption or placeholder is used to simulate completion.
 -/
