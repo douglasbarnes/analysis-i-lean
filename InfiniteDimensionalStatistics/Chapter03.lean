@@ -40,6 +40,7 @@ import InfiniteDimensionalStatistics.Chapter03.GaussianPermanence
 import InfiniteDimensionalStatistics.Chapter03.EquicontinuityPermanence
 import InfiniteDimensionalStatistics.Chapter03.GlivenkoCantelliPermanence
 import InfiniteDimensionalStatistics.Chapter03.OuterLawPermanence
+import InfiniteDimensionalStatistics.Chapter03.LocalClassPermanence
 
 /-!
 # Chapter 3: Empirical Processes
@@ -55,10 +56,11 @@ measurable continuous-mapping and Slutsky theorems, Brownian-bridge
 covariance/variance identities, and restriction permanence for Gaussian bridge,
 motion, pre-Gaussian realisations, asymptotic equicontinuity and strong/weak
 Glivenko–Cantelli classes.  Continuous maps also preserve outer convergence in
-law, asymptotic measurability and compact containment, and finite-dimensional
-outer convergence is stable under reindexing.  The product-geometry,
-entropy-method, empirical-entropy, canonical U-statistic, entropy-growth,
-Donsker and local-class interfaces used through Section 3.7 are also present.
+law, asymptotic measurability and compact containment; finite-dimensional outer
+convergence is stable under reindexing; and population/empirical local
+difference classes are monotone under class inclusion and radius enlargement.
+The product-geometry, entropy-method, empirical-entropy, canonical U-statistic,
+entropy-growth and Donsker interfaces used through Section 3.7 are also present.
 Deep entropy, VC and Donsker theorem proofs are added only when they have genuine
 Lean proofs; no assumption or placeholder is used to simulate completion.
 -/
