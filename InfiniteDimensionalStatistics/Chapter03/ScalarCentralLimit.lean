@@ -10,8 +10,8 @@ import Mathlib.Probability.CentralLimitTheorem
 /-!
 # Chapter 3: Scalar central limit theorem
 
-A Chapter 3 wrapper around Mathlib's scalar central limit theorem.  This is the
-one-dimensional finite-distribution input used by the empirical-process weak
+Chapter 3 wrappers around Mathlib's scalar central limit theorem.  These give
+the one-dimensional finite-distribution input used by empirical-process weak
 convergence criteria.  A separate Cramér–Wold/multivariate layer is still needed
 for arbitrary finite index families.
 -/
@@ -65,6 +65,38 @@ theorem scalar_central_limit_standard
     hY hmean hsecond hindep hident
 
 end ScalarCLT
+
+section EmpiricalCoordinateCLT
+
+variable {Ω Ω' S : Type*}
+  [MeasurableSpace Ω] [MeasurableSpace Ω'] [MeasurableSpace S]
+variable {P : Measure Ω} {P' : Measure Ω'}
+  [IsProbabilityMeasure P] [IsProbabilityMeasure P']
+
+/--
+Central limit theorem for one fixed empirical-process coordinate `f`.
+
+For an i.i.d. sample `Xᵢ`, the centred normalized sums of `f(Xᵢ)` converge to a
+Gaussian with variance `Var[f(X₀)]`.
+-/
+theorem empirical_process_coordinate_clt
+    (X : ℕ → Ω → S) (f : S → ℝ) (hf : Measurable f)
+    (Y : Ω' → ℝ)
+    (hY : HasLaw Y
+      (gaussianReal 0 Var[f ∘ X 0; P].toNNReal) P')
+    (hf2 : MemLp (f ∘ X 0) 2 P)
+    (hindep : iIndepFun X P)
+    (hident : ∀ i, IdentDistrib (X i) (X 0) P P) :
+    TendstoInDistribution
+      (fun (n : ℕ) ω => (Real.sqrt n)⁻¹ *
+        (∑ k ∈ Finset.range n, f (X k ω) - n * P[f ∘ X 0]))
+      atTop Y (fun _ => P) P' := by
+  apply scalar_central_limit (fun i => f ∘ X i) Y hY hf2
+  · exact hindep.comp (fun _ => f) (fun _ => hf)
+  · intro i
+    exact (hident i).comp hf
+
+end EmpiricalCoordinateCLT
 
 end Chapter03
 end InfiniteDimensionalStatistics
