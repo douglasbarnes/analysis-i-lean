@@ -10,9 +10,10 @@ import Mathlib.MeasureTheory.Integral.MeanInequalities
 /-!
 # Chapter 3: Paley–Zygmund lower-tail bound
 
-An extended-nonnegative formulation of the Paley–Zygmund argument used in
-Proposition 3.2.8.  The theorem avoids division by the second moment: it gives
-the equivalent square-root inequality obtained from truncation and Hölder.
+Extended-nonnegative formulations of the Paley–Zygmund argument used in
+Proposition 3.2.8.  The square-root theorem is the direct truncation/Hölder
+estimate; the divided theorem derives the standard probability lower bound
+under explicit nonzero finite second-moment hypotheses.
 -/
 
 noncomputable section
@@ -33,10 +34,6 @@ Paley–Zygmund in square-root form.  For a measurable nonnegative random
 variable `X`, a threshold factor `θ ≤ 1`, and finite first moment,
 
 `(1-θ) E X ≤ (E X²)^(1/2) P{θ E X ≤ X}^(1/2)`.
-
-The moments and probability are `ℝ≥0∞`-valued.  Squaring and dividing by the
-finite second moment gives the usual probability lower bound when that moment
-is nonzero.
 -/
 theorem paleyZygmund_holder
     (X : Ω → ℝ≥0∞) (hX : Measurable X)
@@ -99,6 +96,48 @@ theorem paleyZygmund_holder
   rw [hprod, hgpow] at hholder
   change (1 - θ) * m ≤ _
   exact hlower.trans hholder
+
+/--
+Standard divided Paley–Zygmund bound.  When the second moment is nonzero and
+finite,
+
+`((1-θ) E X)² / E(X²) ≤ P{θ E X ≤ X}`.
+-/
+theorem paleyZygmund
+    (X : Ω → ℝ≥0∞) (hX : Measurable X)
+    (θ : ℝ≥0∞) (hθ : θ ≤ 1)
+    (hm : (∫⁻ ω, X ω ∂μ) ≠ ∞)
+    (hsq0 : (∫⁻ ω, X ω ^ (2 : ℝ) ∂μ) ≠ 0)
+    (hsqtop : (∫⁻ ω, X ω ^ (2 : ℝ) ∂μ) ≠ ∞) :
+    ((1 - θ) * (∫⁻ ω, X ω ∂μ)) ^ 2 /
+        (∫⁻ ω, X ω ^ (2 : ℝ) ∂μ) ≤
+      μ {ω | θ * (∫⁻ z, X z ∂μ) ≤ X ω} := by
+  let m : ℝ≥0∞ := ∫⁻ ω, X ω ∂μ
+  let s2 : ℝ≥0∞ := ∫⁻ ω, X ω ^ (2 : ℝ) ∂μ
+  let p : ℝ≥0∞ := μ {ω | θ * m ≤ X ω}
+  have hroot :
+      (1 - θ) * m ≤ s2 ^ (1 / (2 : ℝ)) * p ^ (1 / (2 : ℝ)) := by
+    simpa [m, s2, p] using paleyZygmund_holder X hX θ hθ hm
+  have half_square (x : ℝ≥0∞) :
+      x ^ (1 / (2 : ℝ)) * x ^ (1 / (2 : ℝ)) = x := by
+    rw [← ENNReal.rpow_add_of_nonneg (1 / (2 : ℝ)) (1 / (2 : ℝ))
+      (by positivity) (by positivity)]
+    norm_num
+  have hsquare : ((1 - θ) * m) ^ 2 ≤ s2 * p := by
+    rw [pow_two]
+    calc
+      (1 - θ) * m * ((1 - θ) * m) ≤
+          (s2 ^ (1 / (2 : ℝ)) * p ^ (1 / (2 : ℝ))) *
+            (s2 ^ (1 / (2 : ℝ)) * p ^ (1 / (2 : ℝ))) :=
+        mul_le_mul hroot hroot bot_le bot_le
+      _ =
+          (s2 ^ (1 / (2 : ℝ)) * s2 ^ (1 / (2 : ℝ))) *
+            (p ^ (1 / (2 : ℝ)) * p ^ (1 / (2 : ℝ))) := by
+        ac_rfl
+      _ = s2 * p := by rw [half_square, half_square]
+  change ((1 - θ) * m) ^ 2 / s2 ≤ p
+  apply (ENNReal.div_le_iff_le_mul (Or.inl hsq0) (Or.inl hsqtop)).2
+  simpa [mul_comm] using hsquare
 
 end PaleyZygmund
 
