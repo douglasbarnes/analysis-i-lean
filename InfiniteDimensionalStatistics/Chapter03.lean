@@ -45,6 +45,7 @@ import InfiniteDimensionalStatistics.Chapter03.PrelinearityLemmas
 import InfiniteDimensionalStatistics.Chapter03.ConvexClosurePermanence
 import InfiniteDimensionalStatistics.Chapter03.SampleBoundedPermanence
 import InfiniteDimensionalStatistics.Chapter03.PseudoMetricLemmas
+import InfiniteDimensionalStatistics.Chapter03.UStatisticLemmas
 
 /-!
 # Chapter 3: Empirical Processes
@@ -63,10 +64,10 @@ and strong/weak Glivenko–Cantelli classes.  Continuous maps also preserve oute
 convergence in law, asymptotic measurability and compact containment;
 finite-dimensional outer convergence is stable under reindexing;
 population/empirical local difference classes are monotone; prelinear maps and
-`H(𝓕,P)` have their basic algebra; and the empirical/population pseudometrics
-have nonnegativity, symmetry and radius monotonicity infrastructure.  The
-product-geometry, entropy-method, canonical U-statistic, entropy-growth and
-Donsker interfaces used through Section 3.7 are also present.  Deep entropy, VC
-and Donsker theorem proofs are added only when they have genuine Lean proofs; no
-assumption or placeholder is used to simulate completion.
+`H(𝓕,P)` have their basic algebra; the empirical/population pseudometrics have
+nonnegativity and symmetry; and the order-two U-statistic has its elementary
+finite-sum and canonical-kernel algebra.  The product-geometry, entropy-method,
+entropy-growth and Donsker interfaces used through Section 3.7 are also present.
+Deep entropy, VC and Donsker theorem proofs are added only when they have genuine
+Lean proofs; no assumption or placeholder is used to simulate completion.
 -/
