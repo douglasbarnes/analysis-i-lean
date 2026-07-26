@@ -11,6 +11,8 @@ This implementation has **not been compiled or checked by Lean** in this work se
 
 The implementation contains no intentional `sorry`, `admit`, new axiom, or `opaque` proof substitute. A source theorem is not considered formalised merely because its objects or hypotheses have been represented.
 
+During static review, the argument order in `samplePathUniformDeviation` was corrected so that `uniformEmpiricalDeviation` receives the population measure before the finite sample. This correction has also not been elaboration-checked.
+
 ## Implemented object layer
 
 The current modules provide source-order interfaces for:
@@ -38,7 +40,7 @@ The following results have Lean proof terms in the repository, although they rem
 - the weighted Rademacher sub-Gaussian and two-sided tail bounds of Example 3.1.3;
 - the generic exponential-Markov/Chernoff consequence of a Bennett mgf estimate;
 - the log-sum-exp finite maximal inequality and its common-proxy sub-Gaussian specialization underlying Theorem 3.1.10;
-- Hamming triangle inequality, coordinate replacement, Bennett-function, entropy-function, product-geometry and local-class lemmas;
+- Hamming triangle inequality, coordinate replacement, Bennett-function, entropy-function and product-geometry lemmas;
 - outer-probability monotonicity/subadditivity, measurable outer-expectation identification and uniqueness of measurable covers;
 - finite covering/packing witnesses and singleton/finite bracketing bounds;
 - Mathlib-backed finite Sauer–Shelah trace bound, VC-dimension monotonicity, exact VC complement permanence and Boolean trace-cardinality bounds;
@@ -46,7 +48,19 @@ The following results have Lean proof terms in the repository, although they rem
 - measurable bounded-continuous characterization of weak convergence, Portmanteau implications and null-frontier convergence;
 - measurable Prokhorov compactness for tight probability-measure families;
 - measurable continuous-mapping, convergence-in-probability-to-distribution and Slutsky results;
-- Brownian-bridge covariance identification with Mathlib covariance/variance, symmetry and diagonal nonnegativity.
+- Brownian-bridge covariance identification with Mathlib covariance/variance, symmetry and diagonal nonnegativity;
+- restriction permanence for Brownian bridges, Brownian motions, pre-Gaussian realisations, sample-bounded processes and asymptotically equicontinuous processes;
+- subclass permanence of strong and weak outer Glivenko–Cantelli properties;
+- continuous-image permanence of outer convergence in law, asymptotic measurability and outer compact containment, plus reindexing permanence of finite-dimensional outer convergence;
+- class and radius monotonicity of population, Donsker-local and empirical `L1`/`L2` difference classes;
+- zero/addition/scalar/restriction algebra for prelinear maps, and prelinearity of restrictions of linear functionals;
+- monotonicity and elementary inclusions for scalar, symmetric, star, composition, symmetric-convex and `H(𝓕,P)` class hulls;
+- nonnegativity and symmetry for empirical `L1`, empirical `L2`, population `L2`, Brownian-motion and Brownian-bridge metrics, with empirical-radius monotonicity;
+- zero/addition/scalar identities for order-two U-statistics, elementary canonical-kernel facts and uniform kernel-scale monotonicity;
+- algebraic closure of coordinate-insensitive and bounded-difference statistics and the zero self-bounding statistic;
+- Rademacher negation invariance, almost-sure unit magnitude/square/nonvanishing, and weighted-sum algebra;
+- symmetry of the independent-copy relation and elementary closure of laws symmetric about zero;
+- nonnegativity, symmetry and the triangle inequality for the extended bounded-Lipschitz discrepancy.
 
 ## Source blockers
 
