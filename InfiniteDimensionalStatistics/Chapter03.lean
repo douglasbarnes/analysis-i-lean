@@ -64,6 +64,7 @@ import InfiniteDimensionalStatistics.Chapter03.MourierStrongLaw
 import InfiniteDimensionalStatistics.Chapter03.ScalarCentralLimit
 import InfiniteDimensionalStatistics.Chapter03.AzumaHoeffding
 import InfiniteDimensionalStatistics.Chapter03.McDiarmidReduction
+import InfiniteDimensionalStatistics.Chapter03.DonskerPermanence
 
 /-!
 # Chapter 3: Empirical Processes
@@ -78,18 +79,20 @@ Glivenko–Cantelli theorem, measurable Portmanteau and Prokhorov results, exact
 VC complement permanence, Boolean trace-cardinality bounds, measurable
 continuous-mapping and Slutsky theorems, Brownian-bridge covariance/variance
 identities, and restriction permanence for Gaussian bridge, motion,
-pre-Gaussian realisations, sample boundedness, asymptotic equicontinuity and
-strong/weak Glivenko–Cantelli classes.  Continuous maps also preserve outer
-convergence in law, asymptotic measurability and compact containment;
-finite-dimensional outer convergence is stable under reindexing;
-population/empirical local difference classes are monotone; prelinear maps and
-`H(𝓕,P)` have their basic algebra; the empirical/population pseudometrics have
-nonnegativity and symmetry; the order-two U-statistic has its elementary
-finite-sum and canonical-kernel algebra; coordinate-insensitivity, self-bounding
-and bounded-difference predicates have elementary closure properties; the
-Rademacher, independent-copy and symmetric-law interfaces have their basic law
-algebra; the bounded-Lipschitz discrepancy satisfies pseudometric algebra;
-uniform Donsker/pre-Gaussian predicates have domination and reindexing rules;
+pre-Gaussian realisations, sample boundedness, asymptotic equicontinuity,
+strong/weak Glivenko–Cantelli and concrete Donsker realisations.  One-Lipschitz
+push-forwards contract the bounded-Lipschitz discrepancy and preserve weak
+convergence.  Continuous maps also preserve outer convergence in law,
+asymptotic measurability and compact containment; finite-dimensional outer
+convergence is stable under reindexing; population/empirical local difference
+classes are monotone; prelinear maps and `H(𝓕,P)` have their basic algebra; the
+empirical/population pseudometrics have nonnegativity and symmetry; the
+order-two U-statistic has its elementary finite-sum and canonical-kernel
+algebra; coordinate-insensitivity, self-bounding and bounded-difference
+predicates have elementary closure properties; the Rademacher,
+independent-copy and symmetric-law interfaces have their basic law algebra; the
+bounded-Lipschitz discrepancy satisfies pseudometric algebra; uniform
+Donsker/pre-Gaussian predicates have domination and reindexing rules;
 weighted/convex product distances have their exact order theory; regular,
 uniform, polynomial and lower entropy-growth predicates have positivity and
 monotonicity lemmas; the Lorentz `L₂,₁` functional has invariance and domination
@@ -104,8 +107,7 @@ and finite Cramér–Wold projection central limit theorems are available throug
 Mathlib's CLT.  Full multivariate finite-dimensional convergence remains a
 separate layer.  McDiarmid's two-sided tail theorem is reduced to an explicit
 conditionally sub-Gaussian Doob-increment certificate; constructing that
-certificate from the bounded-differences hypotheses remains open.  The Donsker
-interfaces used through Section 3.7 are also present.  Deep entropy, VC and
-Donsker theorem proofs are added only when they have genuine Lean proofs; no
-assumption or placeholder is used to simulate completion.
+certificate from the bounded-differences hypotheses remains open.  Deep
+entropy, VC and Donsker theorem proofs are added only when they have genuine
+Lean proofs; no assumption or placeholder is used to simulate completion.
 -/
