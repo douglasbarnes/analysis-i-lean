@@ -61,6 +61,7 @@ import InfiniteDimensionalStatistics.Chapter03.RademacherMoments
 import InfiniteDimensionalStatistics.Chapter03.SubgaussianMaximumOptimized
 import InfiniteDimensionalStatistics.Chapter03.BennettOptimization
 import InfiniteDimensionalStatistics.Chapter03.MourierStrongLaw
+import InfiniteDimensionalStatistics.Chapter03.ScalarCentralLimit
 
 /-!
 # Chapter 3: Empirical Processes
@@ -94,9 +95,12 @@ structural monotonicity theory; bounded `p`-variation is invariant under output
 translation and negation; Paley–Zygmund has both square-root and divided forms;
 weighted Rademacher sums have exact first, variance and second-moment identities;
 the Bennett Chernoff optimizer is reduced exactly to the `h(ct/v)` exponent,
-conditional on the Bennett mgf estimate; and Corollary 3.7.21 is supplied by the
-Mathlib-backed Mourier Banach-valued strong law.  The Donsker interfaces used
-through Section 3.7 are also present.  Deep entropy, VC and Donsker theorem
-proofs are added only when they have genuine Lean proofs; no assumption or
-placeholder is used to simulate completion.
+conditional on the Bennett mgf estimate; Corollary 3.7.21 is supplied by the
+Mathlib-backed Mourier Banach-valued strong law; and the scalar, fixed-coordinate
+and finite Cramér–Wold projection central limit theorems are available through
+Mathlib's CLT.  Full multivariate finite-dimensional convergence remains a
+separate layer.  The Donsker interfaces used through Section 3.7 are also
+present.  Deep entropy, VC and Donsker theorem proofs are added only when they
+have genuine Lean proofs; no assumption or placeholder is used to simulate
+completion.
 -/
