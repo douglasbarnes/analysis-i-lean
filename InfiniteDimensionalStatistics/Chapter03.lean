@@ -58,6 +58,8 @@ import InfiniteDimensionalStatistics.Chapter03.VCStructuralLemmas
 import InfiniteDimensionalStatistics.Chapter03.VariationLemmas
 import InfiniteDimensionalStatistics.Chapter03.PaleyZygmund
 import InfiniteDimensionalStatistics.Chapter03.RademacherMoments
+import InfiniteDimensionalStatistics.Chapter03.RademacherFourthMoment
+import InfiniteDimensionalStatistics.Chapter03.RademacherLowerBound
 import InfiniteDimensionalStatistics.Chapter03.SubgaussianMaximumOptimized
 import InfiniteDimensionalStatistics.Chapter03.BennettOptimization
 import InfiniteDimensionalStatistics.Chapter03.BennettMGF
@@ -105,7 +107,8 @@ monotonicity lemmas; the Lorentz `L₂,₁` functional has invariance and domina
 rules; VC traces, subgraphs, thresholds, indicators and envelopes have their
 structural monotonicity theory; bounded `p`-variation is invariant under output
 translation and negation; Paley–Zygmund has both square-root and divided forms;
-weighted Rademacher sums have exact first, variance and second-moment identities;
+weighted Rademacher sums have exact first, second and fourth moments together
+with the universal `1/12` lower probability bound needed in Proposition 3.2.8;
 Corollary 3.7.21 is supplied by the Mathlib-backed Mourier Banach-valued strong
 law; and scalar projection convergence is assembled into full finite-dimensional
 convergence by a Cramér–Wold theorem backed by Mathlib's Lévy convergence
