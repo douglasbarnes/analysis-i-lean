@@ -56,18 +56,21 @@ import InfiniteDimensionalStatistics.Chapter03.EntropyGrowthLemmas
 import InfiniteDimensionalStatistics.Chapter03.LorentzLemmas
 import InfiniteDimensionalStatistics.Chapter03.VCStructuralLemmas
 import InfiniteDimensionalStatistics.Chapter03.VariationLemmas
+import InfiniteDimensionalStatistics.Chapter03.PaleyZygmund
+import InfiniteDimensionalStatistics.Chapter03.RademacherMoments
+import InfiniteDimensionalStatistics.Chapter03.SubgaussianMaximumOptimized
 
 /-!
 # Chapter 3: Empirical Processes
 
 Source-order implementation root for Chapter 3.  The current implementation
 contains the reusable definition layer and proved concentration results through
-the common sub-Gaussian finite maximal bound and finite Sauer–Shelah bound,
-together with empirical-measure identities and algebra, elementary outer-measure
-and analytic calculus, finite covering/packing and bracketing bounds, a proved
-finite-class Glivenko–Cantelli theorem, measurable Portmanteau and Prokhorov
-results, exact VC complement permanence, Boolean trace-cardinality bounds,
-measurable continuous-mapping and Slutsky theorems, Brownian-bridge
+the optimized common sub-Gaussian finite maximal bound and finite Sauer–Shelah
+bound, together with empirical-measure identities and algebra, elementary
+outer-measure and analytic calculus, finite covering/packing and bracketing
+bounds, a proved finite-class Glivenko–Cantelli theorem, measurable Portmanteau
+and Prokhorov results, exact VC complement permanence, Boolean trace-cardinality
+bounds, measurable continuous-mapping and Slutsky theorems, Brownian-bridge
 covariance/variance identities, and restriction permanence for Gaussian bridge,
 motion, pre-Gaussian realisations, sample boundedness, asymptotic equicontinuity
 and strong/weak Glivenko–Cantelli classes.  Continuous maps also preserve outer
@@ -85,9 +88,10 @@ weighted/convex product distances have their exact order theory; regular,
 uniform, polynomial and lower entropy-growth predicates have positivity and
 monotonicity lemmas; the Lorentz `L₂,₁` functional has invariance and domination
 rules; VC traces, subgraphs, thresholds, indicators and envelopes have their
-structural monotonicity theory; and bounded `p`-variation is invariant under
-output translation and negation.  The Donsker interfaces used through Section
-3.7 are also present.  Deep entropy, VC and Donsker theorem proofs are added only
-when they have genuine Lean proofs; no assumption or placeholder is used to
-simulate completion.
+structural monotonicity theory; bounded `p`-variation is invariant under output
+translation and negation; Paley–Zygmund has been proved in Hölder square-root
+form; and weighted Rademacher sums have exact first, variance and second-moment
+identities.  The Donsker interfaces used through Section 3.7 are also present.
+Deep entropy, VC and Donsker theorem proofs are added only when they have genuine
+Lean proofs; no assumption or placeholder is used to simulate completion.
 -/
