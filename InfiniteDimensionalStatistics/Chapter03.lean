@@ -53,6 +53,9 @@ import InfiniteDimensionalStatistics.Chapter03.BoundedLipschitzLemmas
 import InfiniteDimensionalStatistics.Chapter03.UniformityLemmas
 import InfiniteDimensionalStatistics.Chapter03.ProductGeometryLemmas
 import InfiniteDimensionalStatistics.Chapter03.EntropyGrowthLemmas
+import InfiniteDimensionalStatistics.Chapter03.LorentzLemmas
+import InfiniteDimensionalStatistics.Chapter03.VCStructuralLemmas
+import InfiniteDimensionalStatistics.Chapter03.VariationLemmas
 
 /-!
 # Chapter 3: Empirical Processes
@@ -78,10 +81,13 @@ and bounded-difference predicates have elementary closure properties; the
 Rademacher, independent-copy and symmetric-law interfaces have their basic law
 algebra; the bounded-Lipschitz discrepancy satisfies pseudometric algebra;
 uniform Donsker/pre-Gaussian predicates have domination and reindexing rules;
-weighted/convex product distances have their exact order theory; and regular,
+weighted/convex product distances have their exact order theory; regular,
 uniform, polynomial and lower entropy-growth predicates have positivity and
-monotonicity lemmas.  The Donsker interfaces used through Section 3.7 are also
-present.  Deep entropy, VC and Donsker theorem proofs are added only when they
-have genuine Lean proofs; no assumption or placeholder is used to simulate
-completion.
+monotonicity lemmas; the Lorentz `L₂,₁` functional has invariance and domination
+rules; VC traces, subgraphs, thresholds, indicators and envelopes have their
+structural monotonicity theory; and bounded `p`-variation is invariant under
+output translation and negation.  The Donsker interfaces used through Section
+3.7 are also present.  Deep entropy, VC and Donsker theorem proofs are added only
+when they have genuine Lean proofs; no assumption or placeholder is used to
+simulate completion.
 -/
