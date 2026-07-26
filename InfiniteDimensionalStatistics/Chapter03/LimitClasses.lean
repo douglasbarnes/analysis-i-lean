@@ -58,7 +58,7 @@ variable {Ω S : Type*} [MeasurableSpace Ω] [MeasurableSpace S]
 def samplePathUniformDeviation
     (P : Measure S) (𝓕 : Set (S → ℝ))
     (X : ℕ → Ω → S) (n : ℕ) (ω : Ω) : ℝ≥0∞ :=
-  uniformEmpiricalDeviation (samplePrefix (fun i ↦ X i ω) n) P 𝓕
+  uniformEmpiricalDeviation P (samplePrefix (fun i ↦ X i ω) n) 𝓕
 
 /--
 A function class is `P`-Glivenko–Cantelli along a sample when the outer uniform
