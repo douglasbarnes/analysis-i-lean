@@ -49,6 +49,7 @@ import InfiniteDimensionalStatistics.Chapter03.UStatisticLemmas
 import InfiniteDimensionalStatistics.Chapter03.EntropyMethodLemmas
 import InfiniteDimensionalStatistics.Chapter03.RademacherLemmas
 import InfiniteDimensionalStatistics.Chapter03.SymmetryLemmas
+import InfiniteDimensionalStatistics.Chapter03.BoundedLipschitzLemmas
 
 /-!
 # Chapter 3: Empirical Processes
@@ -70,10 +71,11 @@ population/empirical local difference classes are monotone; prelinear maps and
 `H(𝓕,P)` have their basic algebra; the empirical/population pseudometrics have
 nonnegativity and symmetry; the order-two U-statistic has its elementary
 finite-sum and canonical-kernel algebra; coordinate-insensitivity, self-bounding
-and bounded-difference predicates have elementary closure properties; and the
+and bounded-difference predicates have elementary closure properties; the
 Rademacher, independent-copy and symmetric-law interfaces have their basic law
-algebra.  The product-geometry, entropy-growth and Donsker interfaces used
-through Section 3.7 are also present.  Deep entropy, VC and Donsker theorem
-proofs are added only when they have genuine Lean proofs; no assumption or
-placeholder is used to simulate completion.
+algebra; and the bounded-Lipschitz discrepancy satisfies nonnegativity, symmetry
+and the triangle inequality.  The product-geometry, entropy-growth and Donsker
+interfaces used through Section 3.7 are also present.  Deep entropy, VC and
+Donsker theorem proofs are added only when they have genuine Lean proofs; no
+assumption or placeholder is used to simulate completion.
 -/
