@@ -36,6 +36,7 @@ import InfiniteDimensionalStatistics.Chapter03.VCBooleanTrace
 import InfiniteDimensionalStatistics.Chapter03.BridgeCovarianceLemmas
 import InfiniteDimensionalStatistics.Chapter03.MetricEntropyLemmas
 import InfiniteDimensionalStatistics.Chapter03.BracketingLemmas
+import InfiniteDimensionalStatistics.Chapter03.GaussianPermanence
 
 /-!
 # Chapter 3: Empirical Processes
@@ -47,11 +48,11 @@ together with empirical-measure identities and algebra, elementary outer-measure
 and analytic calculus, finite covering/packing and bracketing bounds, a proved
 finite-class Glivenko–Cantelli theorem, measurable Portmanteau and Prokhorov
 results, exact VC complement permanence, Boolean trace-cardinality bounds,
-measurable continuous-mapping and Slutsky theorems, and Brownian-bridge
-covariance/variance identities.  The product-geometry, entropy-method,
-empirical-entropy, canonical U-statistic, entropy-growth, Gaussian-bridge,
-Donsker, local-class, and outer-law interfaces used through Section 3.7 are also
-present.  Deep entropy, VC and Donsker theorem proofs are added only when they
-have genuine Lean proofs; no assumption or placeholder is used to simulate
-completion.
+measurable continuous-mapping and Slutsky theorems, Brownian-bridge
+covariance/variance identities, and restriction permanence for Gaussian bridge,
+motion and pre-Gaussian realisations.  The product-geometry, entropy-method,
+empirical-entropy, canonical U-statistic, entropy-growth, Donsker, local-class,
+and outer-law interfaces used through Section 3.7 are also present.  Deep
+entropy, VC and Donsker theorem proofs are added only when they have genuine
+Lean proofs; no assumption or placeholder is used to simulate completion.
 -/
