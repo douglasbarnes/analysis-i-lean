@@ -62,6 +62,7 @@ import InfiniteDimensionalStatistics.Chapter03.SubgaussianMaximumOptimized
 import InfiniteDimensionalStatistics.Chapter03.BennettOptimization
 import InfiniteDimensionalStatistics.Chapter03.MourierStrongLaw
 import InfiniteDimensionalStatistics.Chapter03.ScalarCentralLimit
+import InfiniteDimensionalStatistics.Chapter03.CramerWold
 import InfiniteDimensionalStatistics.Chapter03.AzumaHoeffding
 import InfiniteDimensionalStatistics.Chapter03.McDiarmidReduction
 import InfiniteDimensionalStatistics.Chapter03.DonskerPermanence
@@ -102,12 +103,12 @@ translation and negation; Paley–Zygmund has both square-root and divided forms
 weighted Rademacher sums have exact first, variance and second-moment identities;
 the Bennett Chernoff optimizer is reduced exactly to the `h(ct/v)` exponent,
 conditional on the Bennett mgf estimate; Corollary 3.7.21 is supplied by the
-Mathlib-backed Mourier Banach-valued strong law; and the scalar, fixed-coordinate
-and finite Cramér–Wold projection central limit theorems are available through
-Mathlib's CLT.  Full multivariate finite-dimensional convergence remains a
-separate layer.  McDiarmid's two-sided tail theorem is reduced to an explicit
-conditionally sub-Gaussian Doob-increment certificate; constructing that
-certificate from the bounded-differences hypotheses remains open.  Deep
-entropy, VC and Donsker theorem proofs are added only when they have genuine
-Lean proofs; no assumption or placeholder is used to simulate completion.
+Mathlib-backed Mourier Banach-valued strong law; and scalar projection
+convergence is assembled into full finite-dimensional convergence by a
+Cramér–Wold theorem backed by Mathlib's Lévy convergence theorem.  McDiarmid's
+two-sided tail theorem is reduced to an explicit conditionally sub-Gaussian
+Doob-increment certificate; constructing that certificate from the
+bounded-differences hypotheses remains open.  Deep entropy, VC and Donsker
+theorem proofs are added only when they have genuine Lean proofs; no assumption
+or placeholder is used to simulate completion.
 -/
