@@ -166,20 +166,11 @@ theorem hasBennettMGF_of_ae_abs_le
     let a : ℕ → ℝ := fun k =>
       (λ ^ k / k !) * (∫ ω, X ω ^ k ∂μ)
     have ha_sum : Summable a := by
-      let F : ℕ → Ω → ℝ := fun k ω => (λ * X ω) ^ k / k !
-      have hF_int : ∀ k, Integrable (F k) μ := by
-        intro k
-        have hk := integrable_pow_of_ae_abs_le hX hc.le hbound k
-        have hfun : F k = fun ω => (λ ^ k / k !) * X ω ^ k := by
-          funext ω
-          simp only [F, mul_pow]
-          ring
-        rw [hfun]
-        exact hk.const_mul _
       have hdom : Summable (fun k => (|λ| * c) ^ k / k !) :=
         Real.summable_pow_div_factorial (|λ| * c)
       refine Summable.of_nonneg_of_le (fun k => norm_nonneg (a k)) ?_ hdom
       intro k
+      have hkint := integrable_pow_of_ae_abs_le hX hc.le hbound k
       calc
         ‖a k‖ ≤ (|λ| ^ k / k !) * |∫ ω, X ω ^ k ∂μ| := by
           simp [a, Real.norm_eq_abs, abs_mul, abs_div, abs_pow, abs_natCast]
@@ -189,7 +180,7 @@ theorem hasBennettMGF_of_ae_abs_le
             |∫ ω, X ω ^ k ∂μ| ≤ ∫ ω, |X ω ^ k| ∂μ :=
               abs_integral_le_integral_abs _
             _ ≤ ∫ _ω, c ^ k ∂μ := by
-              apply integral_mono_ae (hF_int k).abs (integrable_const _)
+              apply integral_mono_ae hkint.abs (integrable_const _)
               filter_upwards [hbound] with ω hω
               simp only [abs_pow]
               exact pow_le_pow_left₀ (abs_nonneg (X ω)) hω k
@@ -206,7 +197,7 @@ theorem hasBennettMGF_of_ae_abs_le
         have hbase : Summable (fun n : ℕ =>
             (λ * c) ^ (n + 2) / (n + 2)!) := by
           exact (Real.summable_pow_div_factorial (λ * c)).comp_injective
-            (fun _ _ h => Nat.add_left_cancel h)
+            (fun _ _ h => Nat.add_right_cancel h)
         exact hbase.mul_left (v / c ^ 2)
       calc
         (∑' n : ℕ, a (n + 2)) ≤ ∑' n : ℕ, b n := by
@@ -229,7 +220,7 @@ theorem hasBennettMGF_of_ae_abs_le
                 dsimp [b]
                 field_simp [hc.ne']
                 ring
-          · exact ha_sum.comp_injective (fun _ _ h => Nat.add_left_cancel h)
+          · exact ha_sum.comp_injective (fun _ _ h => Nat.add_right_cancel h)
           · exact hb_sum
         _ = (v / c ^ 2) * (Real.exp (λ * c) - 1 - λ * c) := by
           rw [← tsum_mul_left]
@@ -238,11 +229,13 @@ theorem hasBennettMGF_of_ae_abs_le
     have hhead : (∑ k ∈ Finset.range 2, a k) = 1 := by
       simp [a, hmean]
     rw [hhead]
-    have hR : 0 ≤ (v / c ^ 2) * (Real.exp (λ * c) - 1 - λ * c) := by
-      apply mul_nonneg (div_nonneg hv (sq_nonneg c))
-      linarith [Real.add_one_le_exp (λ * c)]
-    exact (add_le_add_left htail_le 1).trans
-      (Real.add_one_le_exp _)
+    calc
+      1 + ∑' n : ℕ, a (n + 2)
+          ≤ 1 + (v / c ^ 2) * (Real.exp (λ * c) - 1 - λ * c) :=
+        add_le_add_left htail_le 1
+      _ ≤ Real.exp ((v / c ^ 2) * (Real.exp (λ * c) - λ * c - 1)) := by
+        simpa [sub_sub, add_comm, add_left_comm, add_assoc] using
+          Real.add_one_le_exp ((v / c ^ 2) * (Real.exp (λ * c) - λ * c - 1))
 
 end BennettTheorem
 
