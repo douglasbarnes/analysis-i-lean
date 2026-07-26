@@ -39,7 +39,8 @@ The following results have Lean proof terms in the repository, although they rem
 - Hoeffding's sub-Gaussian mgf conclusion and finite independent-sum upper and two-sided tail bounds, using Mathlib's `HasSubgaussianMGF` API;
 - the weighted Rademacher sub-Gaussian and two-sided tail bounds of Example 3.1.3;
 - the generic exponential-Markov/Chernoff consequence of a Bennett mgf estimate;
-- the log-sum-exp finite maximal inequality and its common-proxy sub-Gaussian specialization underlying Theorem 3.1.10;
+- the log-sum-exp finite maximal inequality, common-proxy specialization and optimized nondegenerate square-root bound underlying Theorem 3.1.10;
+- exact Bennett optimizer algebra and the optimized `exp(-(v/c²) h(ct/v))` tail conclusion, conditional on `HasBennettMGF`;
 - Hamming triangle inequality, coordinate replacement, Bennett-function, entropy-function and product-geometry lemmas;
 - outer-probability monotonicity/subadditivity, measurable outer-expectation identification and uniqueness of measurable covers;
 - finite covering/packing witnesses and singleton/finite bracketing bounds;
@@ -58,9 +59,15 @@ The following results have Lean proof terms in the repository, although they rem
 - nonnegativity and symmetry for empirical `L1`, empirical `L2`, population `L2`, Brownian-motion and Brownian-bridge metrics, with empirical-radius monotonicity;
 - zero/addition/scalar identities for order-two U-statistics, elementary canonical-kernel facts and uniform kernel-scale monotonicity;
 - algebraic closure of coordinate-insensitive and bounded-difference statistics and the zero self-bounding statistic;
-- Rademacher negation invariance, almost-sure unit magnitude/square/nonvanishing, and weighted-sum algebra;
+- Rademacher negation invariance, almost-sure unit magnitude/square/nonvanishing, weighted-sum algebra, exact centring, exact variance and exact second moment;
+- the Paley–Zygmund inequality in an extended-nonnegative Hölder square-root form;
 - symmetry of the independent-copy relation and elementary closure of laws symmetric about zero;
-- nonnegativity, symmetry and the triangle inequality for the extended bounded-Lipschitz discrepancy.
+- nonnegativity, symmetry and the triangle inequality for the extended bounded-Lipschitz discrepancy;
+- domination/reindexing closure for uniform Donsker and uniformly pre-Gaussian predicates;
+- order theory for weighted distance, Talagrand convex distance, disagreement sets and finite Euclidean distance;
+- positivity/monotonicity for entropy-growth predicates and Lorentz `L2,1` invariance/domination;
+- structural monotonicity for VC traces, subgraphs, thresholds, indicators, envelopes and uniform bounds;
+- elementary bounded-`p`-variation and transform-class algebra.
 
 ## Source blockers
 
@@ -82,11 +89,11 @@ The uploaded-PDF retrieval service was unavailable during this work session. No 
 
 Even after the source blockers are resolved, a complete chapter still requires genuine Lean proofs of, among others:
 
-- the cgf second-derivative part of Hoeffding's lemma and the optimized scalar form of the finite maximum bound;
-- Bennett and Bernstein mgf inequalities under the book's boundedness and moment hypotheses;
+- the cgf second-derivative part of Hoeffding's lemma;
+- the bounded-variable Bennett mgf estimate and the Bennett-to-Bernstein scalar lower bound;
 - Levy, Levy–Ottaviani and Hoffmann–Jørgensen maximal/moment inequalities;
 - symmetrisation, desymmetrisation, contraction and multiplier inequalities;
-- Paley–Zygmund, Khinchin, Gaussian-comparison and other moment/lower-bound inputs not present in the pinned library;
+- Khinchin, fourth-moment Rademacher, Gaussian-comparison and other moment/lower-bound inputs not present in the pinned library;
 - Talagrand convex-distance and entropy-method concentration theorems;
 - moment inequalities and canonical U-statistic concentration;
 - chaining, Dudley, bracketing and local entropy theorems;
