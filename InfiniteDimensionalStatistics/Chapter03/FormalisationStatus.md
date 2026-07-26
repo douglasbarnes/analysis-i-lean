@@ -29,7 +29,8 @@ The current modules provide source-order interfaces for:
 - bounded `p`-variation and translate/dilate classes;
 - measurable majorants, measurable covers, outer convergence in probability, outer law and asymptotic tightness;
 - Glivenko–Cantelli, pre-Gaussian, Donsker, Gaussian bridge/motion and asymptotic equicontinuity predicates;
-- symmetric convex sequential closure and the corrected local class from Theorem 3.7.52.
+- symmetric convex sequential closure and the corrected local class from Theorem 3.7.52;
+- conditionally sub-Gaussian Doob-increment certificates for bounded-difference concentration reductions.
 
 ## Proved or library-backed results
 
@@ -49,7 +50,7 @@ The following results have Lean proof terms in the repository, although they rem
 - measurable bounded-continuous characterization of weak convergence, Portmanteau implications and null-frontier convergence;
 - measurable Prokhorov compactness for tight probability-measure families;
 - measurable continuous-mapping, convergence-in-probability-to-distribution and Slutsky results;
-- Brownian-bridge covariance identification with Mathlib covariance/variance, symmetry and diagonal nonnegativity;
+- Brownian-bridge covariance identification with Mathlib covariance/variance, finite bilinearity, projection-variance formula, symmetry and diagonal nonnegativity;
 - restriction permanence for Brownian bridges, Brownian motions, pre-Gaussian realisations, sample-bounded processes and asymptotically equicontinuous processes;
 - subclass permanence of strong and weak outer Glivenko–Cantelli properties;
 - continuous-image permanence of outer convergence in law, asymptotic measurability and outer compact containment, plus reindexing permanence of finite-dimensional outer convergence;
@@ -60,14 +61,18 @@ The following results have Lean proof terms in the repository, although they rem
 - zero/addition/scalar identities for order-two U-statistics, elementary canonical-kernel facts and uniform kernel-scale monotonicity;
 - algebraic closure of coordinate-insensitive and bounded-difference statistics and the zero self-bounding statistic;
 - Rademacher negation invariance, almost-sure unit magnitude/square/nonvanishing, weighted-sum algebra, exact centring, exact variance and exact second moment;
-- the Paley–Zygmund inequality in an extended-nonnegative Hölder square-root form;
+- Paley–Zygmund in both Hölder square-root form and the standard divided probability form under explicit finite nonzero second-moment hypotheses;
 - symmetry of the independent-copy relation and elementary closure of laws symmetric about zero;
 - nonnegativity, symmetry and the triangle inequality for the extended bounded-Lipschitz discrepancy;
 - domination/reindexing closure for uniform Donsker and uniformly pre-Gaussian predicates;
 - order theory for weighted distance, Talagrand convex distance, disagreement sets and finite Euclidean distance;
 - positivity/monotonicity for entropy-growth predicates and Lorentz `L2,1` invariance/domination;
 - structural monotonicity for VC traces, subgraphs, thresholds, indicators, envelopes and uniform bounds;
-- elementary bounded-`p`-variation and transform-class algebra.
+- elementary bounded-`p`-variation and transform-class algebra;
+- Mathlib-backed Mourier Banach-valued strong law, corresponding to Corollary 3.7.21;
+- Mathlib-backed scalar CLT, fixed empirical-coordinate CLT and every finite deterministic Cramér–Wold projection CLT;
+- Mathlib-backed Azuma–Hoeffding upper, lower and two-sided martingale tail bounds;
+- reduction of McDiarmid upper, lower and two-sided concentration to an explicit conditionally sub-Gaussian Doob-increment certificate.
 
 ## Source blockers
 
@@ -89,17 +94,17 @@ The uploaded-PDF retrieval service was unavailable during this work session. No 
 
 Even after the source blockers are resolved, a complete chapter still requires genuine Lean proofs of, among others:
 
-- the cgf second-derivative part of Hoeffding's lemma;
 - the bounded-variable Bennett mgf estimate and the Bennett-to-Bernstein scalar lower bound;
 - Levy, Levy–Ottaviani and Hoffmann–Jørgensen maximal/moment inequalities;
 - symmetrisation, desymmetrisation, contraction and multiplier inequalities;
 - Khinchin, fourth-moment Rademacher, Gaussian-comparison and other moment/lower-bound inputs not present in the pinned library;
 - Talagrand convex-distance and entropy-method concentration theorems;
+- construction of the conditionally sub-Gaussian Doob certificate from independent product coordinates and `HasBoundedDifferences`, completing McDiarmid;
 - moment inequalities and canonical U-statistic concentration;
 - chaining, Dudley, bracketing and local entropy theorems;
 - VC positivity-space, quantitative Boolean permanence and polynomial packing estimates beyond the finite Sauer–Shelah core;
 - outer Glivenko–Cantelli characterisations for general classes;
-- finite-dimensional central limit theory, asymptotic tightness criteria, pre-Gaussian/Donsker equivalences and local Donsker theorems;
+- the multivariate/Cramér–Wold assembly theorem for full finite-dimensional convergence, asymptotic tightness criteria, pre-Gaussian/Donsker equivalences and local Donsker theorems;
 - all selected exercises whose results are dependencies of the main text.
 
 ## Gate decision
