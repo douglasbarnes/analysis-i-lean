@@ -47,6 +47,8 @@ import InfiniteDimensionalStatistics.Chapter03.SampleBoundedPermanence
 import InfiniteDimensionalStatistics.Chapter03.PseudoMetricLemmas
 import InfiniteDimensionalStatistics.Chapter03.UStatisticLemmas
 import InfiniteDimensionalStatistics.Chapter03.EntropyMethodLemmas
+import InfiniteDimensionalStatistics.Chapter03.RademacherLemmas
+import InfiniteDimensionalStatistics.Chapter03.SymmetryLemmas
 
 /-!
 # Chapter 3: Empirical Processes
@@ -67,9 +69,10 @@ finite-dimensional outer convergence is stable under reindexing;
 population/empirical local difference classes are monotone; prelinear maps and
 `H(𝓕,P)` have their basic algebra; the empirical/population pseudometrics have
 nonnegativity and symmetry; the order-two U-statistic has its elementary
-finite-sum and canonical-kernel algebra; and coordinate-insensitivity,
-self-bounding and bounded-difference predicates have their elementary closure
-properties.  The product-geometry, entropy-growth and Donsker interfaces used
+finite-sum and canonical-kernel algebra; coordinate-insensitivity, self-bounding
+and bounded-difference predicates have elementary closure properties; and the
+Rademacher, independent-copy and symmetric-law interfaces have their basic law
+algebra.  The product-geometry, entropy-growth and Donsker interfaces used
 through Section 3.7 are also present.  Deep entropy, VC and Donsker theorem
 proofs are added only when they have genuine Lean proofs; no assumption or
 placeholder is used to simulate completion.
