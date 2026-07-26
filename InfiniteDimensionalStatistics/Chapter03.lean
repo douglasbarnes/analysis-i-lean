@@ -59,6 +59,7 @@ import InfiniteDimensionalStatistics.Chapter03.VariationLemmas
 import InfiniteDimensionalStatistics.Chapter03.PaleyZygmund
 import InfiniteDimensionalStatistics.Chapter03.RademacherMoments
 import InfiniteDimensionalStatistics.Chapter03.SubgaussianMaximumOptimized
+import InfiniteDimensionalStatistics.Chapter03.BennettOptimization
 
 /-!
 # Chapter 3: Empirical Processes
@@ -90,8 +91,10 @@ monotonicity lemmas; the Lorentz `L₂,₁` functional has invariance and domina
 rules; VC traces, subgraphs, thresholds, indicators and envelopes have their
 structural monotonicity theory; bounded `p`-variation is invariant under output
 translation and negation; Paley–Zygmund has been proved in Hölder square-root
-form; and weighted Rademacher sums have exact first, variance and second-moment
-identities.  The Donsker interfaces used through Section 3.7 are also present.
-Deep entropy, VC and Donsker theorem proofs are added only when they have genuine
-Lean proofs; no assumption or placeholder is used to simulate completion.
+form; weighted Rademacher sums have exact first, variance and second-moment
+identities; and the Bennett Chernoff optimizer is reduced exactly to the
+`h(ct/v)` exponent, conditional on the Bennett mgf estimate.  The Donsker
+interfaces used through Section 3.7 are also present.  Deep entropy, VC and
+Donsker theorem proofs are added only when they have genuine Lean proofs; no
+assumption or placeholder is used to simulate completion.
 -/
