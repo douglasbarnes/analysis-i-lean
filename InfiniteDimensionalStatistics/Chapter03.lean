@@ -43,6 +43,8 @@ import InfiniteDimensionalStatistics.Chapter03.OuterLawPermanence
 import InfiniteDimensionalStatistics.Chapter03.LocalClassPermanence
 import InfiniteDimensionalStatistics.Chapter03.PrelinearityLemmas
 import InfiniteDimensionalStatistics.Chapter03.ConvexClosurePermanence
+import InfiniteDimensionalStatistics.Chapter03.SampleBoundedPermanence
+import InfiniteDimensionalStatistics.Chapter03.PseudoMetricLemmas
 
 /-!
 # Chapter 3: Empirical Processes
@@ -56,14 +58,15 @@ finite-class Glivenko–Cantelli theorem, measurable Portmanteau and Prokhorov
 results, exact VC complement permanence, Boolean trace-cardinality bounds,
 measurable continuous-mapping and Slutsky theorems, Brownian-bridge
 covariance/variance identities, and restriction permanence for Gaussian bridge,
-motion, pre-Gaussian realisations, asymptotic equicontinuity and strong/weak
-Glivenko–Cantelli classes.  Continuous maps also preserve outer convergence in
-law, asymptotic measurability and compact containment; finite-dimensional outer
-convergence is stable under reindexing; population/empirical local difference
-classes are monotone; and prelinear maps and `H(𝓕,P)` have their basic algebra,
-restriction and monotonicity theory.  The product-geometry, entropy-method,
-empirical-entropy, canonical U-statistic, entropy-growth and Donsker interfaces
-used through Section 3.7 are also present.  Deep entropy, VC and Donsker theorem
-proofs are added only when they have genuine Lean proofs; no assumption or
-placeholder is used to simulate completion.
+motion, pre-Gaussian realisations, sample boundedness, asymptotic equicontinuity
+and strong/weak Glivenko–Cantelli classes.  Continuous maps also preserve outer
+convergence in law, asymptotic measurability and compact containment;
+finite-dimensional outer convergence is stable under reindexing;
+population/empirical local difference classes are monotone; prelinear maps and
+`H(𝓕,P)` have their basic algebra; and the empirical/population pseudometrics
+have nonnegativity, symmetry and radius monotonicity infrastructure.  The
+product-geometry, entropy-method, canonical U-statistic, entropy-growth and
+Donsker interfaces used through Section 3.7 are also present.  Deep entropy, VC
+and Donsker theorem proofs are added only when they have genuine Lean proofs; no
+assumption or placeholder is used to simulate completion.
 -/
