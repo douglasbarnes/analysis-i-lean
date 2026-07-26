@@ -219,14 +219,13 @@ theorem integral_pow_four_finsetRademacherSum_le
         hSmeas hYmeas hSindY (by positivity) (abs_nonneg (a i))
         hSbound hYbound hSmean hYmean
       have hS2 := integral_sq_finsetRademacherSum (a := a) hε hindep s
+      have hYmem : MemLp Y 2 μ := by
+        simpa [Y] using memLp_of_bounded
+          (mul_rademacher_mem_Icc (ε i) (a i) (hε i))
+          (hε i).1.aestronglyMeasurable.const_mul 2
       have hY2 : (∫ ω, Y ω ^ 2 ∂μ) = a i ^ 2 := by
-        simpa [Y] using variance_mul_rademacher (ε i) (a i) (hε i) |>.trans <| by
-          symm
-          apply variance_of_integral_eq_zero
-          · exact (memLp_of_bounded
-              (mul_rademacher_mem_Icc (ε i) (a i) (hε i))
-              (hε i).1.aestronglyMeasurable.const_mul 2).aemeasurable
-          · exact hYmean
+        rw [← variance_of_integral_eq_zero hYmem.aemeasurable hYmean]
+        simpa [Y] using variance_mul_rademacher (ε i) (a i) (hε i)
       have hY4 := integral_pow_four_mul_rademacher (a := a) i (hε i)
       calc
         (∫ ω, finsetRademacherSum (insert i s) ε a ω ^ 4 ∂μ)
