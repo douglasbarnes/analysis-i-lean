@@ -11,7 +11,8 @@ import Mathlib.Probability.Moments.Variance
 # Chapter 3: Brownian-bridge covariance lemmas
 
 Identification of the chapter's covariance kernel with Mathlib covariance and
-variance under the source's probability and `L²` hypotheses.
+variance under the source's probability and `L²` hypotheses, including finite
+bilinearity and the variance formula for Cramér–Wold projections.
 -/
 
 noncomputable section
@@ -96,6 +97,53 @@ theorem brownianBridgeMetric_comm
   rw [hneg]
   simpa using ProbabilityTheory.variance_const_mul (-1)
     (fun x ↦ f x - g x) P
+
+/--
+Bilinearity of the bridge covariance for finite linear combinations.
+-/
+theorem brownianBridgeCovariance_linear_combinations
+    {ι κ : Type*} [Fintype ι] [Fintype κ]
+    (a : ι → ℝ) (f : ι → S → ℝ)
+    (b : κ → ℝ) (g : κ → S → ℝ)
+    (hf : ∀ i, MemLp (f i) 2 P)
+    (hg : ∀ j, MemLp (g j) 2 P) :
+    brownianBridgeCovariance P
+        (fun x => ∑ i, a i * f i x)
+        (fun x => ∑ j, b j * g j x) =
+      ∑ i, ∑ j, a i * b j * brownianBridgeCovariance P (f i) (g j) := by
+  have hfa : ∀ i, MemLp (fun x => a i * f i x) 2 P :=
+    fun i => (hf i).const_mul (a i)
+  have hgb : ∀ j, MemLp (fun x => b j * g j x) 2 P :=
+    fun j => (hg j).const_mul (b j)
+  have hsumf : MemLp (fun x => ∑ i, a i * f i x) 2 P :=
+    memLp_finsetSum' _ fun i _ => hfa i
+  have hsumg : MemLp (fun x => ∑ j, b j * g j x) 2 P :=
+    memLp_finsetSum' _ fun j _ => hgb j
+  rw [brownianBridgeCovariance_eq_covariance hsumf hsumg]
+  rw [ProbabilityTheory.covariance_fun_sum_fun_sum hfa hgb]
+  apply Finset.sum_congr rfl
+  intro i _hi
+  apply Finset.sum_congr rfl
+  intro j _hj
+  rw [ProbabilityTheory.covariance_const_mul_left,
+    ProbabilityTheory.covariance_const_mul_right,
+    ← brownianBridgeCovariance_eq_covariance (hf i) (hg j)]
+  ring
+
+/--
+Variance of a finite linear combination in terms of the bridge covariance
+matrix.
+-/
+theorem variance_linear_combination_eq_bridge_covariance
+    {ι : Type*} [Fintype ι]
+    (a : ι → ℝ) (f : ι → S → ℝ)
+    (hf : ∀ i, MemLp (f i) 2 P) :
+    Var[(fun x => ∑ i, a i * f i x); P] =
+      ∑ i, ∑ j, a i * a j * brownianBridgeCovariance P (f i) (f j) := by
+  have hsum : MemLp (fun x => ∑ i, a i * f i x) 2 P :=
+    memLp_finsetSum' _ fun i _ => (hf i).const_mul (a i)
+  rw [← brownianBridgeCovariance_self_eq_variance hsum]
+  exact brownianBridgeCovariance_linear_combinations a f a f hf hf
 
 end BrownianBridge
 
