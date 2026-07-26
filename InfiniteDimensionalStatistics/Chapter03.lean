@@ -63,6 +63,7 @@ import InfiniteDimensionalStatistics.Chapter03.BennettOptimization
 import InfiniteDimensionalStatistics.Chapter03.MourierStrongLaw
 import InfiniteDimensionalStatistics.Chapter03.ScalarCentralLimit
 import InfiniteDimensionalStatistics.Chapter03.AzumaHoeffding
+import InfiniteDimensionalStatistics.Chapter03.McDiarmidReduction
 
 /-!
 # Chapter 3: Empirical Processes
@@ -100,9 +101,11 @@ the Bennett Chernoff optimizer is reduced exactly to the `h(ct/v)` exponent,
 conditional on the Bennett mgf estimate; Corollary 3.7.21 is supplied by the
 Mathlib-backed Mourier Banach-valued strong law; and the scalar, fixed-coordinate
 and finite Cramér–Wold projection central limit theorems are available through
-Mathlib's CLT.  Full multivariate finite-dimensional convergence and the
-bounded-differences-to-Doob-increment bridge remain separate layers.  The
-Donsker interfaces used through Section 3.7 are also present.  Deep entropy, VC
-and Donsker theorem proofs are added only when they have genuine Lean proofs;
-no assumption or placeholder is used to simulate completion.
+Mathlib's CLT.  Full multivariate finite-dimensional convergence remains a
+separate layer.  McDiarmid's two-sided tail theorem is reduced to an explicit
+conditionally sub-Gaussian Doob-increment certificate; constructing that
+certificate from the bounded-differences hypotheses remains open.  The Donsker
+interfaces used through Section 3.7 are also present.  Deep entropy, VC and
+Donsker theorem proofs are added only when they have genuine Lean proofs; no
+assumption or placeholder is used to simulate completion.
 -/
